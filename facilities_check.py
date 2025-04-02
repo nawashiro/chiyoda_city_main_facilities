@@ -55,7 +55,7 @@ def export_to_csv(results, filename):
 def main():
     # データの読み込み
     try:
-        address_data = load_address_data('main_facilities/address.json')
+        address_data = load_address_data('json/main_facilities.json')
         stops_df = load_stops_data('stops.txt')
     except Exception as e:
         print(f"データの読み込みに失敗しました: {e}")
