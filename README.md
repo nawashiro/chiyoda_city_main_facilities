@@ -27,6 +27,7 @@
     "locations": [
       {
         "name": "施設名",
+        "name:en": "Facility name",
         "lat": 緯度,
         "lng": 経度
       },
@@ -48,6 +49,7 @@
     "locations": [
       {
         "name": "施設名（必須）",
+        "name:en": "Facility name",
         "description": "説明（nullを許容する）",
         "imageUri": "写真のURI（nullを許容する）",
         "imageCopylight": "写真の著作権表示（写真のURIが存在しない時のみnullを許容する）",
