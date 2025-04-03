@@ -1,0 +1,2913 @@
+[
+  {
+    "category": "銀行",
+    "category:en": "bank",
+    "locations": [
+      {
+        "name": "八千代銀行",
+        "description": null,
+        "imageUri": null,
+        "imageCopylight": null,
+        "uri": null,
+        "lat": 35.689533,
+        "lng": 139.7682276,
+        "name:en": "Yachiyo bank",
+        "name:ja": "八千代銀行"
+      },
+      {
+        "name": "三菱UFJ銀行",
+        "description": null,
+        "imageUri": null,
+        "imageCopylight": null,
+        "uri": null,
+        "lat": 35.6962494,
+        "lng": 139.7576032,
+        "name:en": "MUFG Bank",
+        "name:ja": "三菱UFJ銀行"
+      },
+      {
+        "name": "三井住友銀行",
+        "description": null,
+        "imageUri": null,
+        "imageCopylight": null,
+        "uri": null,
+        "lat": 35.6700661,
+        "lng": 139.7480894,
+        "name:en": "Sumitomo Mitsui Banking Corporation",
+        "name:ja": "三井住友銀行"
+      },
+      {
+        "name": "野村證券",
+        "description": null,
+        "imageUri": null,
+        "imageCopylight": null,
+        "uri": null,
+        "lat": 35.6705582,
+        "lng": 139.74707,
+        "name:en": "Nomura Securities"
+      },
+      {
+        "name": "商工組合中央金庫神田支店",
+        "description": null,
+        "imageUri": null,
+        "imageCopylight": null,
+        "uri": null,
+        "lat": 35.6940758,
+        "lng": 139.7704445,
+        "name:en": "Shoko Chukin Bank"
+      },
+      {
+        "name": "三菱UFJ銀行",
+        "description": null,
+        "imageUri": null,
+        "imageCopylight": null,
+        "uri": null,
+        "lat": 35.6941707,
+        "lng": 139.7637033,
+        "name:en": "MUFG Bank",
+        "name:ja": "三菱UFJ銀行"
+      },
+      {
+        "name": "朝日信用金庫",
+        "description": null,
+        "imageUri": null,
+        "imageCopylight": null,
+        "uri": null,
+        "lat": 35.6943808,
+        "lng": 139.7625328,
+        "name:en": "Asahi Shinkin"
+      },
+      {
+        "name": "きらぼし銀行",
+        "description": null,
+        "imageUri": null,
+        "imageCopylight": null,
+        "uri": null,
+        "lat": 35.6948655,
+        "lng": 139.7618488,
+        "name:en": "Kiraboshi Bank",
+        "name:ja": "きらぼし銀行"
+      },
+      {
+        "name": "紀陽銀行東京支店",
+        "description": null,
+        "imageUri": null,
+        "imageCopylight": null,
+        "uri": null,
+        "lat": 35.6942129,
+        "lng": 139.7630757,
+        "name:en": "Kiyo Bank"
+      },
+      {
+        "name": "みずほ銀行",
+        "description": null,
+        "imageUri": null,
+        "imageCopylight": null,
+        "uri": "https://www.mizuhobank.co.jp/",
+        "lat": 35.6950076,
+        "lng": 139.7672715,
+        "name:en": "Mizuho Bank",
+        "name:ja": "みずほ銀行",
+        "name:ja_rm": "Mizuho Ginkou"
+      },
+      {
+        "name": "りそな銀行",
+        "description": null,
+        "imageUri": null,
+        "imageCopylight": null,
+        "uri": null,
+        "lat": 35.696023,
+        "lng": 139.7684697,
+        "name:en": "Resona Bank",
+        "name:ja": "りそな銀行"
+      },
+      {
+        "name": "三井住友銀行",
+        "description": null,
+        "imageUri": null,
+        "imageCopylight": null,
+        "uri": null,
+        "lat": 35.6948125,
+        "lng": 139.7666808,
+        "name:en": "Sumitomo Mitsui Banking Corporation",
+        "name:ja": "三井住友銀行"
+      },
+      {
+        "name": "興産信用金庫",
+        "description": null,
+        "imageUri": null,
+        "imageCopylight": null,
+        "uri": null,
+        "lat": 35.696442,
+        "lng": 139.769438,
+        "name:en": "Kosan Shinkin"
+      },
+      {
+        "name": "三菱UFJ銀行",
+        "description": null,
+        "imageUri": null,
+        "imageCopylight": null,
+        "uri": null,
+        "lat": 35.6910036,
+        "lng": 139.7366865,
+        "name:en": "MUFG Bank",
+        "name:ja": "三菱UFJ銀行"
+      },
+      {
+        "name": "みずほ銀行",
+        "description": null,
+        "imageUri": null,
+        "imageCopylight": null,
+        "uri": "https://www.mizuhobank.co.jp/",
+        "lat": 35.6851519,
+        "lng": 139.7652752,
+        "name:en": "Mizuho Bank",
+        "name:ja": "みずほ銀行",
+        "name:ja_rm": "Mizuho Ginkou"
+      },
+      {
+        "name": "みずほ銀行",
+        "description": null,
+        "imageUri": null,
+        "imageCopylight": null,
+        "uri": "https://www.mizuhobank.co.jp/",
+        "lat": 35.6713134,
+        "lng": 139.7567783,
+        "name:en": "Mizuho Bank",
+        "name:ja": "みずほ銀行",
+        "name:ja_rm": "Mizuho Ginkou"
+      },
+      {
+        "name": "みずほ銀行",
+        "description": null,
+        "imageUri": null,
+        "imageCopylight": null,
+        "uri": "https://www.mizuhobank.co.jp/",
+        "lat": 35.6907418,
+        "lng": 139.7356467,
+        "name:en": "Mizuho Bank",
+        "name:ja": "みずほ銀行",
+        "name:ja_rm": "Mizuho Ginkou"
+      },
+      {
+        "name": "みずほ銀行",
+        "description": null,
+        "imageUri": null,
+        "imageCopylight": null,
+        "uri": "https://www.mizuhobank.co.jp/",
+        "lat": 35.6919788,
+        "lng": 139.7718751,
+        "name:en": "Mizuho Bank",
+        "name:ja": "みずほ銀行",
+        "name:ja_rm": "Mizuho Ginkou"
+      },
+      {
+        "name": "みずほ銀行",
+        "description": null,
+        "imageUri": null,
+        "imageCopylight": null,
+        "uri": "https://www.mizuhobank.co.jp/",
+        "lat": 35.6961282,
+        "lng": 139.7555536,
+        "name:en": "Mizuho Bank",
+        "name:ja": "みずほ銀行",
+        "name:ja_rm": "Mizuho Ginkou"
+      },
+      {
+        "name": "みずほ銀行",
+        "description": null,
+        "imageUri": null,
+        "imageCopylight": null,
+        "uri": "https://www.mizuhobank.co.jp/",
+        "lat": 35.6841978,
+        "lng": 139.7381277,
+        "name:en": "Mizuho Bank",
+        "name:ja": "みずほ銀行",
+        "name:ja_rm": "Mizuho Ginkou"
+      },
+      {
+        "name": "みずほ銀行",
+        "description": null,
+        "imageUri": null,
+        "imageCopylight": null,
+        "uri": "https://www.mizuhobank.co.jp/",
+        "lat": 35.684381,
+        "lng": 139.7659558,
+        "name:en": "Mizuho Bank",
+        "name:ja": "みずほ銀行",
+        "name:ja_rm": "Mizuho Ginkou"
+      },
+      {
+        "name": "りそな銀行",
+        "description": null,
+        "imageUri": null,
+        "imageCopylight": null,
+        "uri": null,
+        "lat": 35.6951393,
+        "lng": 139.751775,
+        "name:en": "Resona Bank",
+        "name:ja": "りそな銀行"
+      },
+      {
+        "name": "あおぞら銀行",
+        "description": null,
+        "imageUri": null,
+        "imageCopylight": null,
+        "uri": null,
+        "lat": 35.6944019,
+        "lng": 139.7528319,
+        "name:en": "Aozora Bank",
+        "name:it": "Aozora"
+      },
+      {
+        "name": "三井住友銀行",
+        "description": null,
+        "imageUri": null,
+        "imageCopylight": null,
+        "uri": null,
+        "lat": 35.696296,
+        "lng": 139.760557,
+        "name:en": "Sumitomo Mitsui Banking Corporation",
+        "name:ja": "三井住友銀行"
+      },
+      {
+        "name": "三菱UFJ銀行",
+        "description": null,
+        "imageUri": null,
+        "imageCopylight": null,
+        "uri": null,
+        "lat": 35.6836641,
+        "lng": 139.7378782,
+        "name:en": "MUFG Bank",
+        "name:ja": "三菱UFJ銀行"
+      },
+      {
+        "name": "東日本銀行",
+        "description": null,
+        "imageUri": null,
+        "imageCopylight": null,
+        "uri": null,
+        "lat": 35.7004799,
+        "lng": 139.7475777,
+        "name:en": "Higashi-Nippon Bank",
+        "name:ja": "東日本銀行"
+      },
+      {
+        "name": "城南信用金庫",
+        "description": null,
+        "imageUri": null,
+        "imageCopylight": null,
+        "uri": null,
+        "lat": 35.6956664,
+        "lng": 139.7552312
+      },
+      {
+        "name": "山梨中央銀行",
+        "description": null,
+        "imageUri": null,
+        "imageCopylight": null,
+        "uri": null,
+        "lat": 35.6902612,
+        "lng": 139.7720298,
+        "name:en": "Yamanashi Chuo Bank",
+        "name:ja": "山梨中央銀行"
+      },
+      {
+        "name": "三井住友銀行",
+        "description": null,
+        "imageUri": null,
+        "imageCopylight": null,
+        "uri": null,
+        "lat": 35.676086,
+        "lng": 139.762562,
+        "name:en": "Sumitomo Mitsui Banking Corporation",
+        "name:ja": "三井住友銀行"
+      },
+      {
+        "name": "三菱UFJ銀行",
+        "description": null,
+        "imageUri": null,
+        "imageCopylight": null,
+        "uri": null,
+        "lat": 35.676758,
+        "lng": 139.762796,
+        "name:en": "MUFG Bank",
+        "name:ja": "三菱UFJ銀行"
+      },
+      {
+        "name": "みずほ銀行",
+        "description": null,
+        "imageUri": null,
+        "imageCopylight": null,
+        "uri": null,
+        "lat": 35.6856664,
+        "lng": 139.7643138,
+        "name:en": "Mizuho Bank",
+        "name:ja": "みずほ銀行"
+      },
+      {
+        "name": "興産信用金庫",
+        "description": null,
+        "imageUri": null,
+        "imageCopylight": null,
+        "uri": null,
+        "lat": 35.7018998,
+        "lng": 139.7724198
+      },
+      {
+        "name": "千葉銀行",
+        "description": null,
+        "imageUri": null,
+        "imageCopylight": null,
+        "uri": null,
+        "lat": 35.6957874,
+        "lng": 139.7761256,
+        "name:en": "Chiba Bank",
+        "name:ja": "千葉銀行"
+      },
+      {
+        "name": "三井住友銀行",
+        "description": null,
+        "imageUri": null,
+        "imageCopylight": null,
+        "uri": null,
+        "lat": 35.6853129,
+        "lng": 139.7328862,
+        "name:en": "Sumitomo Mitsui Banking Corporation",
+        "name:ja": "三井住友銀行"
+      },
+      {
+        "name": "興産信用金庫",
+        "description": null,
+        "imageUri": null,
+        "imageCopylight": null,
+        "uri": null,
+        "lat": 35.6930367,
+        "lng": 139.774287
+      },
+      {
+        "name": "東京シティ信用金庫",
+        "description": null,
+        "imageUri": null,
+        "imageCopylight": null,
+        "uri": null,
+        "lat": 35.7007231,
+        "lng": 139.7751957
+      },
+      {
+        "name": "武蔵野銀行",
+        "description": null,
+        "imageUri": null,
+        "imageCopylight": null,
+        "uri": null,
+        "lat": 35.6919962,
+        "lng": 139.7678067,
+        "name:en": "Musashino Bank",
+        "name:ja": "武蔵野銀行"
+      },
+      {
+        "name": "三菱UFJ銀行",
+        "description": null,
+        "imageUri": null,
+        "imageCopylight": null,
+        "uri": null,
+        "lat": 35.6980322,
+        "lng": 139.7757991,
+        "name:en": "MUFG Bank",
+        "name:ja": "三菱UFJ銀行"
+      },
+      {
+        "name": "朝日信用金庫",
+        "description": null,
+        "imageUri": null,
+        "imageCopylight": null,
+        "uri": null,
+        "lat": 35.6956396,
+        "lng": 139.7787255
+      },
+      {
+        "name": "りそな銀行",
+        "description": null,
+        "imageUri": null,
+        "imageCopylight": null,
+        "uri": null,
+        "lat": 35.7002478,
+        "lng": 139.7478425,
+        "name:en": "Resona Bank",
+        "name:ja": "りそな銀行"
+      },
+      {
+        "name": "りそな銀行",
+        "description": null,
+        "imageUri": null,
+        "imageCopylight": null,
+        "uri": null,
+        "lat": 35.6994124,
+        "lng": 139.7758723,
+        "name:en": "Resona Bank",
+        "name:ja": "りそな銀行"
+      },
+      {
+        "name": "興産信用金庫",
+        "description": null,
+        "imageUri": null,
+        "imageCopylight": null,
+        "uri": null,
+        "lat": 35.6991822,
+        "lng": 139.7488552
+      },
+      {
+        "name": "興産信用金庫",
+        "description": null,
+        "imageUri": null,
+        "imageCopylight": null,
+        "uri": null,
+        "lat": 35.6899198,
+        "lng": 139.7356586
+      },
+      {
+        "name": "あおぞら銀行 本店",
+        "description": null,
+        "imageUri": null,
+        "imageCopylight": null,
+        "uri": null,
+        "lat": 35.6846457,
+        "lng": 139.732983
+      },
+      {
+        "name": "みずほ銀行",
+        "description": null,
+        "imageUri": null,
+        "imageCopylight": null,
+        "uri": "https://www.mizuhobank.co.jp/",
+        "lat": 35.6822397,
+        "lng": 139.7698773,
+        "name:en": "Mizuho Bank",
+        "name:ja": "みずほ銀行",
+        "name:ja_rm": "Mizuho Ginkou"
+      },
+      {
+        "name": "東日本銀行",
+        "description": null,
+        "imageUri": null,
+        "imageCopylight": null,
+        "uri": null,
+        "lat": 35.6937729,
+        "lng": 139.772894,
+        "name:en": "Higashi-Nippon Bank",
+        "name:ja": "東日本銀行"
+      },
+      {
+        "name": "京都銀行",
+        "description": null,
+        "imageUri": null,
+        "imageCopylight": null,
+        "uri": null,
+        "lat": 35.683333,
+        "lng": 139.7703972,
+        "name:en": "Bank of Kyoto",
+        "name:ja": "京都銀行"
+      },
+      {
+        "name": "西武信用金庫",
+        "description": null,
+        "imageUri": null,
+        "imageCopylight": null,
+        "uri": null,
+        "lat": 35.6954833,
+        "lng": 139.7684482
+      },
+      {
+        "name": "城南信用金庫",
+        "description": null,
+        "imageUri": null,
+        "imageCopylight": null,
+        "uri": null,
+        "lat": 35.6927158,
+        "lng": 139.7702256
+      },
+      {
+        "name": "中国農業銀行",
+        "description": null,
+        "imageUri": null,
+        "imageCopylight": null,
+        "uri": "http://www.jp.abchina.com/jp",
+        "lat": 35.6816315,
+        "lng": 139.763004,
+        "name:en": "Agricultural Bank of China",
+        "name:ja": "中国農業銀行",
+        "name:zh": "中国农业银行"
+      },
+      {
+        "name": "北日本銀行",
+        "description": null,
+        "imageUri": null,
+        "imageCopylight": null,
+        "uri": null,
+        "lat": 35.6933197,
+        "lng": 139.7647556
+      },
+      {
+        "name": "三井住友銀行",
+        "description": null,
+        "imageUri": null,
+        "imageCopylight": null,
+        "uri": null,
+        "lat": 35.6768142,
+        "lng": 139.7627818,
+        "name:en": "Sumitomo Mitsui Banking Corporation",
+        "name:ja": "三井住友銀行"
+      },
+      {
+        "name": "中央労働金庫",
+        "description": null,
+        "imageUri": null,
+        "imageCopylight": null,
+        "uri": null,
+        "lat": 35.6846532,
+        "lng": 139.7673154
+      },
+      {
+        "name": "城北信用金庫",
+        "description": null,
+        "imageUri": null,
+        "imageCopylight": null,
+        "uri": null,
+        "lat": 35.6898054,
+        "lng": 139.7666864
+      }
+    ]
+  },
+  {
+    "category": "仏教",
+    "category:en": "buddhist",
+    "locations": [
+      {
+        "name": "神田寺",
+        "description": null,
+        "imageUri": null,
+        "imageCopylight": null,
+        "uri": null,
+        "lat": 35.7013571,
+        "lng": 139.7703476,
+        "name:en": "Kandadera Temple",
+        "name:ja_kana": "かんだでら",
+        "name:ja_rm": "Kandadera",
+        "name:ko": "칸다데라"
+      },
+      {
+        "name": "心法寺",
+        "description": null,
+        "imageUri": null,
+        "imageCopylight": null,
+        "uri": null,
+        "lat": 35.6857881,
+        "lng": 139.7331755,
+        "name:en": "Shimpo-ji Temple",
+        "name:es": "Templo Shimpo-ji",
+        "name:ja": "心法寺"
+      },
+      {
+        "name": "みんなのお寺",
+        "description": null,
+        "imageUri": null,
+        "imageCopylight": null,
+        "uri": null,
+        "lat": 35.6974277,
+        "lng": 139.757157
+      }
+    ]
+  },
+  {
+    "category": "喫茶店",
+    "category:en": "cafe",
+    "locations": [
+      {
+        "name": "さぼうる2",
+        "description": null,
+        "imageUri": null,
+        "imageCopylight": null,
+        "uri": null,
+        "lat": 35.6955716,
+        "lng": 139.758563,
+        "name:en": "Saboul2"
+      },
+      {
+        "name": "さぼうる",
+        "description": null,
+        "imageUri": null,
+        "imageCopylight": null,
+        "uri": null,
+        "lat": 35.6955733,
+        "lng": 139.7586758,
+        "name:en": "Saboul"
+      },
+      {
+        "name": "ミロンガ",
+        "description": null,
+        "imageUri": null,
+        "imageCopylight": null,
+        "uri": null,
+        "lat": 35.6957191,
+        "lng": 139.7599364,
+        "name:en": "Mironga",
+        "name:ja": "ミロンガ (ミロンガ・ヌオーバ)"
+      },
+      {
+        "name": "ラドリオ",
+        "description": null,
+        "imageUri": null,
+        "imageCopylight": null,
+        "uri": null,
+        "lat": 35.6956566,
+        "lng": 139.7598036,
+        "name:en": "LADRIO"
+      },
+      {
+        "name": "ショパン",
+        "description": null,
+        "imageUri": null,
+        "imageCopylight": null,
+        "uri": null,
+        "lat": 35.6968968,
+        "lng": 139.7688453,
+        "name:en": "Chopin"
+      },
+      {
+        "name": "穂高",
+        "description": null,
+        "imageUri": null,
+        "imageCopylight": null,
+        "uri": null,
+        "lat": 35.6994011,
+        "lng": 139.7649426,
+        "name:en": "Hodaka"
+      },
+      {
+        "name": "珈琲専門店 エース",
+        "description": null,
+        "imageUri": null,
+        "imageCopylight": null,
+        "uri": null,
+        "lat": 35.6915035,
+        "lng": 139.7692152,
+        "name:en": "Cafe Ace"
+      },
+      {
+        "name": "神田伯剌西爾",
+        "description": null,
+        "imageUri": null,
+        "imageCopylight": null,
+        "uri": null,
+        "lat": 35.6957714,
+        "lng": 139.7595676,
+        "name:en": "KANDA BURAJIRU"
+      },
+      {
+        "name": "高山珈琲",
+        "description": null,
+        "imageUri": null,
+        "imageCopylight": null,
+        "uri": null,
+        "lat": 35.6953511,
+        "lng": 139.7698477
+      },
+      {
+        "name": "古瀬戸珈琲店",
+        "description": null,
+        "imageUri": null,
+        "imageCopylight": null,
+        "uri": null,
+        "lat": 35.6961568,
+        "lng": 139.7613184
+      },
+      {
+        "name": "COFFEE SHOP 司",
+        "description": null,
+        "imageUri": null,
+        "imageCopylight": null,
+        "uri": null,
+        "lat": 35.6960834,
+        "lng": 139.7770032,
+        "name:en": "COFFEE SHOP Tsukasa"
+      }
+    ]
+  },
+  {
+    "category": "キリスト教",
+    "category:en": "christian",
+    "locations": [
+      {
+        "name": "ニコライ堂",
+        "description": null,
+        "imageUri": null,
+        "imageCopylight": null,
+        "uri": null,
+        "lat": 35.6980586,
+        "lng": 139.7657773,
+        "name:en": "Nikolay Do"
+      },
+      {
+        "name": "九段教会",
+        "description": null,
+        "imageUri": null,
+        "imageCopylight": null,
+        "uri": null,
+        "lat": 35.6961359,
+        "lng": 139.7486134
+      },
+      {
+        "name": "カトリック神田教会",
+        "description": null,
+        "imageUri": null,
+        "imageCopylight": null,
+        "uri": null,
+        "lat": 35.6994212,
+        "lng": 139.7575698,
+        "name:en": "Catholic Church of St. Francis Xavier",
+        "name:es": "Iglesia Católica de San Francisco Javier",
+        "name:ja_rm": "Kanda Kyōkai",
+        "name:zh": "神田天主堂"
+      },
+      {
+        "name": "神田キリスト教会",
+        "description": null,
+        "imageUri": null,
+        "imageCopylight": null,
+        "uri": "http://kankiri3.blog133.fc2.com/",
+        "lat": 35.7019158,
+        "lng": 139.7702913,
+        "name:en": "Kanda Christ Church",
+        "name:es": "Iglesia cristiana de Kanda",
+        "name:ja": "神田キリスト教会"
+      },
+      {
+        "name": "お茶の水キリストの教会",
+        "description": null,
+        "imageUri": null,
+        "imageCopylight": null,
+        "uri": null,
+        "lat": 35.700482,
+        "lng": 139.7608409,
+        "name:en": "Ochanomizu Church of Christ",
+        "name:es": "Iglesia de Cristo Ochanomizu",
+        "name:ja": "お茶の水キリストの教会"
+      },
+      {
+        "name": "救世軍日本本営",
+        "description": null,
+        "imageUri": null,
+        "imageCopylight": null,
+        "uri": null,
+        "lat": 35.6951362,
+        "lng": 139.7580323,
+        "name:en": "Salvation Army",
+        "name:es": "Ejército de Salvación"
+      }
+    ]
+  },
+  {
+    "category": "映画館",
+    "category:en": "cinema",
+    "locations": [
+      {
+        "name": "神保町シアター",
+        "description": null,
+        "imageUri": null,
+        "imageCopylight": null,
+        "uri": null,
+        "lat": 35.6950264,
+        "lng": 139.7608196
+      },
+      {
+        "name": "角川シネマ有楽町",
+        "description": null,
+        "imageUri": null,
+        "imageCopylight": null,
+        "uri": null,
+        "lat": 35.6751064,
+        "lng": 139.7626825,
+        "name:en": "Kadokawa-Shinema-Yurakucho"
+      },
+      {
+        "name": "TOHO CINEMAS HIBIYA",
+        "description": null,
+        "imageUri": null,
+        "imageCopylight": null,
+        "uri": null,
+        "lat": 35.6733194,
+        "lng": 139.7594538
+      },
+      {
+        "name": "TOHO CINEMAS HIBIYA",
+        "description": null,
+        "imageUri": null,
+        "imageCopylight": null,
+        "uri": null,
+        "lat": 35.6730666,
+        "lng": 139.7594149,
+        "name:en": "Toho Cinemas",
+        "name:fr": "Cinémas Tōhō",
+        "name:ja-Hira": "とうほうシネマズみゆきざ",
+        "name:ja-Latn": "Tōhō shinemazu Miyuki-za"
+      },
+      {
+        "name": "TOHO CINEMAS CHANTER",
+        "description": null,
+        "imageUri": null,
+        "imageCopylight": null,
+        "uri": null,
+        "lat": 35.6734305,
+        "lng": 139.7604959,
+        "name:en": "TOHO CINEMAS CHANTER",
+        "name:ja": "TOHOシネマズシャンテ"
+      }
+    ]
+  },
+  {
+    "category": "クリニック",
+    "category:en": "clinic",
+    "locations": [
+      {
+        "name": "瀬田クリニック東京",
+        "description": null,
+        "imageUri": null,
+        "imageCopylight": null,
+        "uri": null,
+        "lat": 35.7015978,
+        "lng": 139.7466067
+      },
+      {
+        "name": "飯田橋駅前クリニック",
+        "description": null,
+        "imageUri": null,
+        "imageCopylight": null,
+        "uri": null,
+        "lat": 35.7017658,
+        "lng": 139.745557
+      },
+      {
+        "name": "千代田保健所",
+        "description": null,
+        "imageUri": null,
+        "imageCopylight": null,
+        "uri": null,
+        "lat": 35.6960477,
+        "lng": 139.7521747,
+        "name:en": "Chiyoda Public Health Center",
+        "name:ja": "千代田保健所"
+      },
+      {
+        "name": "市ヶ谷メンタルクリニック",
+        "description": null,
+        "imageUri": null,
+        "imageCopylight": null,
+        "uri": null,
+        "lat": 35.6918496,
+        "lng": 139.7371428
+      },
+      {
+        "name": "イーク丸の内",
+        "description": null,
+        "imageUri": null,
+        "imageCopylight": null,
+        "uri": null,
+        "lat": 35.6789846,
+        "lng": 139.7650349
+      },
+      {
+        "name": "秋葉原スキンクリニック",
+        "description": null,
+        "imageUri": null,
+        "imageCopylight": null,
+        "uri": "http://www.akiba1212.com",
+        "lat": 35.7019502,
+        "lng": 139.7721949
+      },
+      {
+        "name": "飯田橋榎本クリニック",
+        "description": null,
+        "imageUri": null,
+        "imageCopylight": null,
+        "uri": null,
+        "lat": 35.700711,
+        "lng": 139.746682
+      },
+      {
+        "name": "御茶ノ水呼吸ケアクリニック",
+        "description": null,
+        "imageUri": null,
+        "imageCopylight": null,
+        "uri": null,
+        "lat": 35.6992773,
+        "lng": 139.7643361
+      },
+      {
+        "name": "お茶の水血管外科クリニック",
+        "description": null,
+        "imageUri": null,
+        "imageCopylight": null,
+        "uri": null,
+        "lat": 35.699385,
+        "lng": 139.7629092
+      },
+      {
+        "name": "ユアクリニック",
+        "description": null,
+        "imageUri": null,
+        "imageCopylight": null,
+        "uri": null,
+        "lat": 35.69955,
+        "lng": 139.7634512
+      },
+      {
+        "name": "お茶の水メンタルクリニック",
+        "description": null,
+        "imageUri": null,
+        "imageCopylight": null,
+        "uri": null,
+        "lat": 35.6995606,
+        "lng": 139.7634344,
+        "name:en": "Ochanomizu Mental Clinic"
+      },
+      {
+        "name": "駿河台クリニック",
+        "description": null,
+        "imageUri": null,
+        "imageCopylight": null,
+        "uri": null,
+        "lat": 35.6989562,
+        "lng": 139.7626414
+      },
+      {
+        "name": "瀬田クリニック",
+        "description": null,
+        "imageUri": null,
+        "imageCopylight": null,
+        "uri": null,
+        "lat": 35.6989788,
+        "lng": 139.7626253
+      },
+      {
+        "name": "神保町もりたメンタルクリニック",
+        "description": null,
+        "imageUri": null,
+        "imageCopylight": null,
+        "uri": "https://morita1-7-12.jp/",
+        "lat": 35.6957527,
+        "lng": 139.7591152
+      },
+      {
+        "name": "神保町駅前皮膚科",
+        "description": null,
+        "imageUri": null,
+        "imageCopylight": null,
+        "uri": null,
+        "lat": 35.6957627,
+        "lng": 139.7591226
+      },
+      {
+        "name": "寺井クリニック",
+        "description": null,
+        "imageUri": null,
+        "imageCopylight": null,
+        "uri": null,
+        "lat": 35.6996791,
+        "lng": 139.7672312,
+        "name:en": "Terai Clinic"
+      },
+      {
+        "name": "山岡クリニック",
+        "description": null,
+        "imageUri": null,
+        "imageCopylight": null,
+        "uri": null,
+        "lat": 35.6833689,
+        "lng": 139.7380465
+      },
+      {
+        "name": "アイ・ローズ クリニック",
+        "description": null,
+        "imageUri": null,
+        "imageCopylight": null,
+        "uri": null,
+        "lat": 35.6709185,
+        "lng": 139.7504634
+      },
+      {
+        "name": "秋葉原腎クリニック",
+        "description": null,
+        "imageUri": null,
+        "imageCopylight": null,
+        "uri": null,
+        "lat": 35.6973684,
+        "lng": 139.7724528
+      },
+      {
+        "name": "千代田漢方内科クリニック",
+        "description": null,
+        "imageUri": null,
+        "imageCopylight": null,
+        "uri": null,
+        "lat": 35.6820457,
+        "lng": 139.7409909
+      },
+      {
+        "name": "金沢耳鼻咽喉科",
+        "description": null,
+        "imageUri": null,
+        "imageCopylight": null,
+        "uri": null,
+        "lat": 35.6993628,
+        "lng": 139.7763739
+      },
+      {
+        "name": "お茶の水循環器内科",
+        "description": null,
+        "imageUri": null,
+        "imageCopylight": null,
+        "uri": null,
+        "lat": 35.6962109,
+        "lng": 139.7599868
+      },
+      {
+        "name": "証クリニック",
+        "description": null,
+        "imageUri": null,
+        "imageCopylight": null,
+        "uri": null,
+        "lat": 35.6961633,
+        "lng": 139.7617103
+      },
+      {
+        "name": "日本医科大学呼吸ケアクリニック",
+        "description": null,
+        "imageUri": null,
+        "imageCopylight": null,
+        "uri": "https://rcc.nms.ac.jp/",
+        "lat": 35.6915648,
+        "lng": 139.7387171
+      },
+      {
+        "name": "パレスクリニック",
+        "description": null,
+        "imageUri": null,
+        "imageCopylight": null,
+        "uri": null,
+        "lat": 35.6911774,
+        "lng": 139.7573363
+      }
+    ]
+  },
+  {
+    "category": "裁判所",
+    "category:en": "courthouse",
+    "locations": [
+      {
+        "name": "最高裁判所",
+        "description": null,
+        "imageUri": null,
+        "imageCopylight": null,
+        "uri": null,
+        "lat": 35.68032,
+        "lng": 139.743685,
+        "name:en": "Supreme Court",
+        "name:es": "Corte Suprema",
+        "name:ja_rm": "Saikōsaibansho"
+      },
+      {
+        "name": "東京地方裁判所東京第二検察審査会;東京地方裁判所東京第一検察審査会;知的財産高等裁判所;東京地方裁判所;東京高等裁判所",
+        "description": null,
+        "imageUri": null,
+        "imageCopylight": null,
+        "uri": null,
+        "lat": 35.675182,
+        "lng": 139.752768,
+        "name:en": "Tokyo Second Prosecution Committee;Tokyo First Prosecution Committee;Intellectual Property High Court;Tokyo District Court;Tokyo High Court"
+      },
+      {
+        "name": "東京地方裁判所東京簡易裁判所墨田分室(仮庁舎)",
+        "description": null,
+        "imageUri": null,
+        "imageCopylight": null,
+        "uri": null,
+        "lat": 35.6763961,
+        "lng": 139.7533528,
+        "name:en": "Tokyo Summary Court Sumida Branch (temporary office)"
+      },
+      {
+        "name": "東京家庭裁判所;東京地方裁判所東京簡易裁判所;公安審査委員会;公正取引委員会",
+        "description": null,
+        "imageUri": null,
+        "imageCopylight": null,
+        "uri": null,
+        "lat": 35.674738,
+        "lng": 139.754017,
+        "name:en": "Tokyo Family Court;Tokyo Summary Court;Public Security Examination Commission;Japan Fair Trade Commission"
+      }
+    ]
+  },
+  {
+    "category": "診療所",
+    "category:en": "doctors",
+    "locations": [
+      {
+        "name": "飯田橋耳鼻咽喉科",
+        "description": null,
+        "imageUri": null,
+        "imageCopylight": null,
+        "uri": null,
+        "lat": 35.6993827,
+        "lng": 139.7449449
+      },
+      {
+        "name": "神田キリスト教診療所",
+        "description": null,
+        "imageUri": null,
+        "imageCopylight": null,
+        "uri": null,
+        "lat": 35.6944415,
+        "lng": 139.7657224,
+        "name:en": "Kanda Christian Clinic"
+      },
+      {
+        "name": "林医院",
+        "description": null,
+        "imageUri": null,
+        "imageCopylight": null,
+        "uri": null,
+        "lat": 35.7020758,
+        "lng": 139.7701438,
+        "name:en": "Hayashi Clinic",
+        "name:ja": "林医院",
+        "name:ja_rm": "Hayashi iin"
+      },
+      {
+        "name": "品川近視クリニック",
+        "description": null,
+        "imageUri": null,
+        "imageCopylight": null,
+        "uri": "https://www.shinagawa-lasik.com/tokyo/",
+        "lat": 35.6744256,
+        "lng": 139.764013,
+        "name:en": "Shinagawa LASIK Center",
+        "name:it": "Shinagawa Lasik Center",
+        "name:ja": "品川近視クリニック",
+        "name:ja_kana": "しながわ近視クリニック"
+      },
+      {
+        "name": "スバル医院",
+        "description": null,
+        "imageUri": null,
+        "imageCopylight": null,
+        "uri": null,
+        "lat": 35.6730891,
+        "lng": 139.7605539,
+        "name:en": "Subaru Clinic",
+        "name:it": "Subaru"
+      },
+      {
+        "name": "大森胃腸科",
+        "description": null,
+        "imageUri": null,
+        "imageCopylight": null,
+        "uri": null,
+        "lat": 35.6830747,
+        "lng": 139.7419543
+      },
+      {
+        "name": "ゆうメンタルクリニック",
+        "description": null,
+        "imageUri": null,
+        "imageCopylight": null,
+        "uri": null,
+        "lat": 35.6973516,
+        "lng": 139.7757831,
+        "name:en": "Yu Mental Clinic"
+      },
+      {
+        "name": "大塩医院",
+        "description": null,
+        "imageUri": null,
+        "imageCopylight": null,
+        "uri": "http://oshio-clinic.jp",
+        "lat": 35.6970963,
+        "lng": 139.768176
+      },
+      {
+        "name": "飯田橋小池クリニック",
+        "description": null,
+        "imageUri": null,
+        "imageCopylight": null,
+        "uri": null,
+        "lat": 35.7005991,
+        "lng": 139.7465114
+      },
+      {
+        "name": "明神下診療所",
+        "description": null,
+        "imageUri": null,
+        "imageCopylight": null,
+        "uri": null,
+        "lat": 35.7043508,
+        "lng": 139.7724042,
+        "name:en": "Myojinshita Clinic"
+      },
+      {
+        "name": "雪月花メディカルクリニック",
+        "description": null,
+        "imageUri": null,
+        "imageCopylight": null,
+        "uri": null,
+        "lat": 35.7032361,
+        "lng": 139.7714594,
+        "name:en": "Setsugekka Medical Clinic",
+        "name:ja": "雪月花メディカルクリニック"
+      },
+      {
+        "name": "明神下青木皮膚科",
+        "description": null,
+        "imageUri": null,
+        "imageCopylight": null,
+        "uri": null,
+        "lat": 35.6992746,
+        "lng": 139.7688201
+      },
+      {
+        "name": "秋葉原フロンティアクリニック",
+        "description": null,
+        "imageUri": null,
+        "imageCopylight": null,
+        "uri": null,
+        "lat": 35.6992049,
+        "lng": 139.7687879,
+        "name:en": "Akihabara Frontier Clinic"
+      },
+      {
+        "name": "淡路町眼科",
+        "description": null,
+        "imageUri": null,
+        "imageCopylight": null,
+        "uri": null,
+        "lat": 35.6952678,
+        "lng": 139.767705
+      },
+      {
+        "name": "九段嵐山クリニック",
+        "description": null,
+        "imageUri": null,
+        "imageCopylight": null,
+        "uri": null,
+        "lat": 35.6932104,
+        "lng": 139.7440023
+      },
+      {
+        "name": "秋葉原駅クリニック",
+        "description": null,
+        "imageUri": null,
+        "imageCopylight": null,
+        "uri": null,
+        "lat": 35.6974105,
+        "lng": 139.7757869
+      },
+      {
+        "name": "秋葉原あつたアレルギー呼吸器内科クリニック",
+        "description": null,
+        "imageUri": null,
+        "imageCopylight": null,
+        "uri": null,
+        "lat": 35.6958537,
+        "lng": 139.7748698,
+        "name:en": "Akihabara Atsuta Clinic"
+      },
+      {
+        "name": "秋葉原のだ眼科",
+        "description": null,
+        "imageUri": null,
+        "imageCopylight": null,
+        "uri": null,
+        "lat": 35.6958232,
+        "lng": 139.7748598
+      },
+      {
+        "name": "林内科クリニック",
+        "description": null,
+        "imageUri": null,
+        "imageCopylight": null,
+        "uri": null,
+        "lat": 35.7013047,
+        "lng": 139.767593
+      },
+      {
+        "name": "秋葉原メンタルクリニック",
+        "description": null,
+        "imageUri": null,
+        "imageCopylight": null,
+        "uri": null,
+        "lat": 35.6984375,
+        "lng": 139.775815,
+        "name:en": "Akihabara Mental Clinic"
+      },
+      {
+        "name": "坪井医院",
+        "description": null,
+        "imageUri": null,
+        "imageCopylight": null,
+        "uri": null,
+        "lat": 35.699664,
+        "lng": 139.7781441
+      },
+      {
+        "name": "東京女性心理相談室",
+        "description": null,
+        "imageUri": null,
+        "imageCopylight": null,
+        "uri": null,
+        "lat": 35.6989092,
+        "lng": 139.7801762
+      },
+      {
+        "name": "末広町ヒライ耳鼻咽喉科",
+        "description": null,
+        "imageUri": null,
+        "imageCopylight": null,
+        "uri": null,
+        "lat": 35.704206,
+        "lng": 139.7722151
+      },
+      {
+        "name": "SAVE CLINIC AKIHABARA",
+        "description": null,
+        "imageUri": null,
+        "imageCopylight": null,
+        "uri": null,
+        "lat": 35.6988164,
+        "lng": 139.7684883
+      },
+      {
+        "name": "聖堂前クリニック",
+        "description": null,
+        "imageUri": null,
+        "imageCopylight": null,
+        "uri": null,
+        "lat": 35.6995709,
+        "lng": 139.7667843,
+        "name:en": "Seido-mae Clinic"
+      },
+      {
+        "name": "そねクリニック",
+        "description": null,
+        "imageUri": null,
+        "imageCopylight": null,
+        "uri": null,
+        "lat": 35.683365,
+        "lng": 139.7702537
+      },
+      {
+        "name": "榊原サピアタワークリニック",
+        "description": null,
+        "imageUri": null,
+        "imageCopylight": null,
+        "uri": null,
+        "lat": 35.6837618,
+        "lng": 139.768767
+      },
+      {
+        "name": "サピアタワーアイクリニック東京",
+        "description": null,
+        "imageUri": null,
+        "imageCopylight": null,
+        "uri": null,
+        "lat": 35.6837477,
+        "lng": 139.7684055
+      },
+      {
+        "name": "神田鈴木皮膚科",
+        "description": null,
+        "imageUri": null,
+        "imageCopylight": null,
+        "uri": null,
+        "lat": 35.6926473,
+        "lng": 139.7726048
+      },
+      {
+        "name": "ココロモクリニック神田",
+        "description": null,
+        "imageUri": null,
+        "imageCopylight": null,
+        "uri": null,
+        "lat": 35.6925858,
+        "lng": 139.7726284
+      },
+      {
+        "name": "神田ウィメンズクリニック",
+        "description": null,
+        "imageUri": null,
+        "imageCopylight": null,
+        "uri": null,
+        "lat": 35.6925905,
+        "lng": 139.7726945
+      },
+      {
+        "name": "HDCアトラスクリニック",
+        "description": null,
+        "imageUri": null,
+        "imageCopylight": null,
+        "uri": null,
+        "lat": 35.6875448,
+        "lng": 139.7428124
+      },
+      {
+        "name": "イワサキクリニック",
+        "description": null,
+        "imageUri": null,
+        "imageCopylight": null,
+        "uri": null,
+        "lat": 35.6931603,
+        "lng": 139.7719758
+      },
+      {
+        "name": "こころとからだの元氣プラザ",
+        "description": null,
+        "imageUri": null,
+        "imageCopylight": null,
+        "uri": null,
+        "lat": 35.6940954,
+        "lng": 139.7606201
+      },
+      {
+        "name": "東京中央美容外科",
+        "description": null,
+        "imageUri": null,
+        "imageCopylight": null,
+        "uri": null,
+        "lat": 35.697964,
+        "lng": 139.7742314
+      },
+      {
+        "name": "秋葉原DEM内科クリニック",
+        "description": null,
+        "imageUri": null,
+        "imageCopylight": null,
+        "uri": null,
+        "lat": 35.6986135,
+        "lng": 139.7785646
+      },
+      {
+        "name": "奥田医院",
+        "description": null,
+        "imageUri": null,
+        "imageCopylight": null,
+        "uri": null,
+        "lat": 35.6942574,
+        "lng": 139.7689739
+      },
+      {
+        "name": "神田痛みのクリニック",
+        "description": null,
+        "imageUri": null,
+        "imageCopylight": null,
+        "uri": null,
+        "lat": 35.6934035,
+        "lng": 139.7696637,
+        "name:en": "Kanda Itamino Clinic"
+      },
+      {
+        "name": "あたまと体のヘルスケアクリニック神田",
+        "description": null,
+        "imageUri": null,
+        "imageCopylight": null,
+        "uri": null,
+        "lat": 35.6950996,
+        "lng": 139.7689287
+      },
+      {
+        "name": "麹町明光耳鼻咽喉科",
+        "description": null,
+        "imageUri": null,
+        "imageCopylight": null,
+        "uri": null,
+        "lat": 35.6837449,
+        "lng": 139.7419667
+      },
+      {
+        "name": "コハシ文春ビル診療所",
+        "description": null,
+        "imageUri": null,
+        "imageCopylight": null,
+        "uri": null,
+        "lat": 35.6824556,
+        "lng": 139.7380891
+      },
+      {
+        "name": "お茶の水美容整形クリニック",
+        "description": null,
+        "imageUri": null,
+        "imageCopylight": null,
+        "uri": null,
+        "lat": 35.6990111,
+        "lng": 139.7640224
+      },
+      {
+        "name": "お茶の水耳鼻咽喉科・アレルギー科",
+        "description": null,
+        "imageUri": null,
+        "imageCopylight": null,
+        "uri": null,
+        "lat": 35.6988047,
+        "lng": 139.7642152
+      },
+      {
+        "name": "浅井医院",
+        "description": null,
+        "imageUri": null,
+        "imageCopylight": null,
+        "uri": null,
+        "lat": 35.6835577,
+        "lng": 139.7392887
+      },
+      {
+        "name": "肌のクリニック麹町院",
+        "description": null,
+        "imageUri": null,
+        "imageCopylight": null,
+        "uri": null,
+        "lat": 35.6832435,
+        "lng": 139.7394206
+      },
+      {
+        "name": "石川医院",
+        "description": null,
+        "imageUri": null,
+        "imageCopylight": null,
+        "uri": null,
+        "lat": 35.6960698,
+        "lng": 139.7796738
+      },
+      {
+        "name": "お茶の水クリニック",
+        "description": null,
+        "imageUri": null,
+        "imageCopylight": null,
+        "uri": null,
+        "lat": 35.6981493,
+        "lng": 139.7626994
+      },
+      {
+        "name": "第一電建ビル 内科・外科・麻酔科",
+        "description": null,
+        "imageUri": null,
+        "imageCopylight": null,
+        "uri": null,
+        "lat": 35.6903829,
+        "lng": 139.7688432
+      },
+      {
+        "name": "半蔵門胃腸クリニック",
+        "description": null,
+        "imageUri": null,
+        "imageCopylight": null,
+        "uri": null,
+        "lat": 35.6833621,
+        "lng": 139.7437715
+      }
+    ]
+  },
+  {
+    "category": "病院",
+    "category:en": "hospital",
+    "locations": [
+      {
+        "name": "秋葉原メディカルクリニック",
+        "description": null,
+        "imageUri": null,
+        "imageCopylight": null,
+        "uri": null,
+        "lat": 35.6972162,
+        "lng": 139.7724786,
+        "name:en": "Akihabara Medical Clinic"
+      },
+      {
+        "name": "三井記念病院",
+        "description": null,
+        "imageUri": null,
+        "imageCopylight": null,
+        "uri": null,
+        "lat": 35.699902,
+        "lng": 139.779126,
+        "name:en": "Mitsui Memorial Hospital"
+      },
+      {
+        "name": "佐々木研究所附属杏雲堂病院",
+        "description": null,
+        "imageUri": null,
+        "imageCopylight": null,
+        "uri": null,
+        "lat": 35.698402,
+        "lng": 139.762933,
+        "name:en": "Kyoundo Hospital",
+        "name:es": "Hospital Kyoundo",
+        "name:ja": "佐々木研究所附属杏雲堂病院"
+      },
+      {
+        "name": "同仁記念会明和病院",
+        "description": null,
+        "imageUri": null,
+        "imageCopylight": null,
+        "uri": null,
+        "lat": 35.695212,
+        "lng": 139.771346,
+        "name:en": "Meiwa Hospital"
+      },
+      {
+        "name": "名倉クリニック",
+        "description": null,
+        "imageUri": null,
+        "imageCopylight": null,
+        "uri": null,
+        "lat": 35.697486,
+        "lng": 139.766294,
+        "name:en": "Nagura Clinic",
+        "name:es": "Clínica Nagura",
+        "name:ja": "名倉クリニック"
+      },
+      {
+        "name": "小畑会浜田病院",
+        "description": null,
+        "imageUri": null,
+        "imageCopylight": null,
+        "uri": null,
+        "lat": 35.699703,
+        "lng": 139.7613616,
+        "name:en": "Hamada Hospital",
+        "name:ja": "小畑会浜田病院"
+      },
+      {
+        "name": "東京歯科大学水道橋病院",
+        "description": null,
+        "imageUri": null,
+        "imageCopylight": null,
+        "uri": null,
+        "lat": 35.7013549,
+        "lng": 139.7549178,
+        "name:en": "Tokyo Dental College Suidobashi Hospital",
+        "name:ja": "東京歯科大学水道橋病院"
+      },
+      {
+        "name": "東京都教職員互助会三楽病院",
+        "description": null,
+        "imageUri": null,
+        "imageCopylight": null,
+        "uri": null,
+        "lat": 35.7001029,
+        "lng": 139.7612792,
+        "name:en": "Sanraku Hospital",
+        "name:ja": "東京都教職員互助会三楽病院"
+      },
+      {
+        "name": "浩邦会日比谷病院",
+        "description": null,
+        "imageUri": null,
+        "imageCopylight": null,
+        "uri": null,
+        "lat": 35.669627,
+        "lng": 139.756879,
+        "name:en": "Hibiya Hospital"
+      },
+      {
+        "name": "済安堂井上眼科病院",
+        "description": null,
+        "imageUri": null,
+        "imageCopylight": null,
+        "uri": null,
+        "lat": 35.698513,
+        "lng": 139.765516,
+        "name:en": "Inouye Eye Hospital",
+        "name:ko": "이노우에 안과"
+      },
+      {
+        "name": "神尾記念病院",
+        "description": null,
+        "imageUri": null,
+        "imageCopylight": null,
+        "uri": null,
+        "lat": 35.696958,
+        "lng": 139.766599,
+        "name:en": "Kamio Memorial Hospital",
+        "name:ja": "神尾記念病院"
+      },
+      {
+        "name": "茂恵会半蔵門病院",
+        "description": null,
+        "imageUri": null,
+        "imageCopylight": null,
+        "uri": null,
+        "lat": 35.6854722,
+        "lng": 139.7427636,
+        "name:en": "Hanzomon Hospital"
+      },
+      {
+        "name": "九段坂病院",
+        "description": null,
+        "imageUri": null,
+        "imageCopylight": null,
+        "uri": "http://www.kudanzaka.com/",
+        "lat": 35.6938447,
+        "lng": 139.7522986,
+        "name:en": "Kudanzaka Hospital",
+        "name:it": "Kudanzaka"
+      }
+    ]
+  },
+  {
+    "category": "幼稚園",
+    "category:en": "kindergarten",
+    "locations": [
+      {
+        "name": "九段幼稚園",
+        "description": null,
+        "imageUri": null,
+        "imageCopylight": null,
+        "uri": null,
+        "lat": 35.690595,
+        "lng": 139.7410684
+      },
+      {
+        "name": "千代田幼稚園",
+        "description": null,
+        "imageUri": null,
+        "imageCopylight": null,
+        "uri": null,
+        "lat": 35.6929335,
+        "lng": 139.7683897,
+        "name:en": "Chiyoda Kindergarten"
+      },
+      {
+        "name": "四番町保育園",
+        "description": null,
+        "imageUri": null,
+        "imageCopylight": null,
+        "uri": null,
+        "lat": 35.6892471,
+        "lng": 139.739988
+      },
+      {
+        "name": "ふじみこども園",
+        "description": null,
+        "imageUri": null,
+        "imageCopylight": null,
+        "uri": "https://www.city.chiyoda.lg.jp/koho/kosodate/yochien/kuritsu/ichiran/fujimi.html",
+        "lat": 35.69747,
+        "lng": 139.7464373
+      },
+      {
+        "name": "暁星幼稚園",
+        "description": null,
+        "imageUri": null,
+        "imageCopylight": null,
+        "uri": null,
+        "lat": 35.6977506,
+        "lng": 139.7471524
+      },
+      {
+        "name": "東京都助産婦会館八千代保育園",
+        "description": null,
+        "imageUri": null,
+        "imageCopylight": null,
+        "uri": null,
+        "lat": 35.698235,
+        "lng": 139.745739
+      },
+      {
+        "name": "番町幼稚園",
+        "description": null,
+        "imageUri": null,
+        "imageCopylight": null,
+        "uri": null,
+        "lat": 35.6876548,
+        "lng": 139.7335805
+      },
+      {
+        "name": "白百合学園幼稚園",
+        "description": null,
+        "imageUri": null,
+        "imageCopylight": null,
+        "uri": null,
+        "lat": 35.6958128,
+        "lng": 139.7443407,
+        "name:en": "Shirayuri Gakuen Kindergarten",
+        "name:zh": "白百合學園幼稚園"
+      },
+      {
+        "name": "雙葉小学校附属幼稚園",
+        "description": null,
+        "imageUri": null,
+        "imageCopylight": null,
+        "uri": null,
+        "lat": 35.686569,
+        "lng": 139.73238
+      },
+      {
+        "name": "飯田橋保育園",
+        "description": null,
+        "imageUri": null,
+        "imageCopylight": null,
+        "uri": null,
+        "lat": 35.701512,
+        "lng": 139.748489
+      },
+      {
+        "name": "麹町保育園",
+        "description": null,
+        "imageUri": null,
+        "imageCopylight": null,
+        "uri": null,
+        "lat": 35.687875,
+        "lng": 139.742768,
+        "name:en": "Kojimachi Nursery"
+      },
+      {
+        "name": "麹町幼稚園",
+        "description": null,
+        "imageUri": null,
+        "imageCopylight": null,
+        "uri": null,
+        "lat": 35.6855256,
+        "lng": 139.7400675
+      },
+      {
+        "name": "千代田区麹町保育園",
+        "description": null,
+        "imageUri": null,
+        "imageCopylight": null,
+        "uri": null,
+        "lat": 35.6882036,
+        "lng": 139.7427671
+      },
+      {
+        "name": "神田寺幼稚園",
+        "description": null,
+        "imageUri": null,
+        "imageCopylight": null,
+        "uri": null,
+        "lat": 35.7013831,
+        "lng": 139.7702913,
+        "name:en": "Kandadera Kindergarten"
+      },
+      {
+        "name": "千代田せいが保育園",
+        "description": null,
+        "imageUri": null,
+        "imageCopylight": null,
+        "uri": null,
+        "lat": 35.6966488,
+        "lng": 139.7750898
+      }
+    ]
+  },
+  {
+    "category": "図書館",
+    "category:en": "library",
+    "locations": [
+      {
+        "name": "㈶石川文化事業財団お茶の水図書館",
+        "description": null,
+        "imageUri": null,
+        "imageCopylight": null,
+        "uri": null,
+        "lat": 35.7009442,
+        "lng": 139.7591756,
+        "name:en": "Ochanomizu Library, Ishikawa Cultural Enterprise Foundation",
+        "name:ru": "Библиотека Отяномидзу, Фонд учреждений культуры Исикава"
+      },
+      {
+        "name": "千代田区立千代田図書館",
+        "description": null,
+        "imageUri": null,
+        "imageCopylight": null,
+        "uri": null,
+        "lat": 35.6938859,
+        "lng": 139.7535705,
+        "name:en": "Chiyoda Library",
+        "name:it": "Chiyoda",
+        "name:ja_rm": "Chiyoda Toshokan"
+      },
+      {
+        "name": "千代田区立四番町図書館",
+        "description": null,
+        "imageUri": null,
+        "imageCopylight": null,
+        "uri": null,
+        "lat": 35.6894678,
+        "lng": 139.7397296,
+        "name:en": "Yonbancho Library"
+      },
+      {
+        "name": "千代田区立神田まちかど図書館",
+        "description": null,
+        "imageUri": null,
+        "imageCopylight": null,
+        "uri": null,
+        "lat": 35.6929651,
+        "lng": 139.7683614,
+        "name:en": "Kanda Community Library"
+      },
+      {
+        "name": "最高裁判所図書館",
+        "description": null,
+        "imageUri": null,
+        "imageCopylight": null,
+        "uri": null,
+        "lat": 35.680241,
+        "lng": 139.7437082,
+        "name:en": "Supreme Court Library",
+        "name:es": "Biblioteca de la Corte Suprema"
+      },
+      {
+        "name": "千代田区立日比谷図書文化館",
+        "description": null,
+        "imageUri": null,
+        "imageCopylight": null,
+        "uri": null,
+        "lat": 35.671945,
+        "lng": 139.754641,
+        "name:en": "Hibiya Book Culture Hall"
+      },
+      {
+        "name": "昌平まちかど図書館",
+        "description": null,
+        "imageUri": null,
+        "imageCopylight": null,
+        "uri": "http://www.library.chiyoda.tokyo.jp",
+        "lat": 35.7013313,
+        "lng": 139.7700608,
+        "name:en": "Shouhei-Machikado-Library"
+      },
+      {
+        "name": "日本大学経済学部図書館",
+        "description": null,
+        "imageUri": null,
+        "imageCopylight": null,
+        "uri": "https://www.eco.nihon-u.ac.jp/~nueco-library/",
+        "lat": 35.6988082,
+        "lng": 139.7570462
+      }
+    ]
+  },
+  {
+    "category": "公衆浴場",
+    "category:en": "public_bath",
+    "locations": [
+      {
+        "name": "稲荷湯",
+        "description": null,
+        "imageUri": null,
+        "imageCopylight": null,
+        "uri": null,
+        "lat": 35.6901388,
+        "lng": 139.7663029,
+        "name:en": "Inari-yu"
+      },
+      {
+        "name": "RAKU SPA 1010 神田",
+        "description": null,
+        "imageUri": null,
+        "imageCopylight": null,
+        "uri": "https://rakuspa.com/kanda/",
+        "lat": 35.6981356,
+        "lng": 139.7679137
+      },
+      {
+        "name": "於玉湯",
+        "description": null,
+        "imageUri": null,
+        "imageCopylight": null,
+        "uri": null,
+        "lat": 35.6927651,
+        "lng": 139.7755499,
+        "name:en": "Otama Yu Spa"
+      },
+      {
+        "name": "梅の湯",
+        "description": null,
+        "imageUri": null,
+        "imageCopylight": null,
+        "uri": null,
+        "lat": 35.6966741,
+        "lng": 139.7552918
+      },
+      {
+        "name": "SPA大手町",
+        "description": null,
+        "imageUri": null,
+        "imageCopylight": null,
+        "uri": null,
+        "lat": 35.6885516,
+        "lng": 139.7645456,
+        "name:en": "Spa Otemachi"
+      },
+      {
+        "name": "発酵風呂ハッコラ",
+        "description": null,
+        "imageUri": null,
+        "imageCopylight": null,
+        "uri": null,
+        "lat": 35.683313,
+        "lng": 139.7380742
+      }
+    ]
+  },
+  {
+    "category": "神社",
+    "category:en": "shinto",
+    "locations": [
+      {
+        "name": "草分稲荷神社",
+        "description": null,
+        "imageUri": null,
+        "imageCopylight": null,
+        "uri": null,
+        "lat": 35.6977259,
+        "lng": 139.7795248,
+        "name:ja": "草分稲荷神社"
+      },
+      {
+        "name": "金山神社",
+        "description": null,
+        "imageUri": null,
+        "imageCopylight": null,
+        "uri": null,
+        "lat": 35.6920759,
+        "lng": 139.7751528,
+        "name:en": "Kanayama Shrine"
+      },
+      {
+        "name": "五十稲荷神社",
+        "description": null,
+        "imageUri": null,
+        "imageCopylight": null,
+        "uri": null,
+        "lat": 35.6942059,
+        "lng": 139.7620976,
+        "name:en": "Goto Inari shrine",
+        "name:ja": "五十稲荷神社"
+      },
+      {
+        "name": "豊栄稲荷大明神",
+        "description": null,
+        "imageUri": null,
+        "imageCopylight": null,
+        "uri": null,
+        "lat": 35.6835045,
+        "lng": 139.7379926,
+        "name:ja": "豊栄稲荷大明神"
+      },
+      {
+        "name": "幸徳稲荷神社",
+        "description": null,
+        "imageUri": null,
+        "imageCopylight": null,
+        "uri": null,
+        "lat": 35.6954858,
+        "lng": 139.764573
+      },
+      {
+        "name": "山王稲荷神社",
+        "description": null,
+        "imageUri": null,
+        "imageCopylight": null,
+        "uri": null,
+        "lat": 35.6751638,
+        "lng": 139.7396558
+      },
+      {
+        "name": "八坂神社　猿田彦神社",
+        "description": null,
+        "imageUri": null,
+        "imageCopylight": null,
+        "uri": null,
+        "lat": 35.6751632,
+        "lng": 139.7397262
+      },
+      {
+        "name": "毎日神社",
+        "description": null,
+        "imageUri": null,
+        "imageCopylight": null,
+        "uri": null,
+        "lat": 35.6911163,
+        "lng": 139.7576539
+      },
+      {
+        "name": "世継稲荷",
+        "description": null,
+        "imageUri": null,
+        "imageCopylight": null,
+        "uri": null,
+        "lat": 35.6960241,
+        "lng": 139.7498596
+      },
+      {
+        "name": "豊受稲荷",
+        "description": null,
+        "imageUri": null,
+        "imageCopylight": null,
+        "uri": null,
+        "lat": 35.6840666,
+        "lng": 139.7368255
+      },
+      {
+        "name": "三殿宮",
+        "description": null,
+        "imageUri": null,
+        "imageCopylight": null,
+        "uri": null,
+        "lat": 35.6824238,
+        "lng": 139.7411984
+      },
+      {
+        "name": "妙法衛護稲荷神社",
+        "description": null,
+        "imageUri": null,
+        "imageCopylight": null,
+        "uri": null,
+        "lat": 35.6944467,
+        "lng": 139.7554357
+      },
+      {
+        "name": "豊川稲荷神社",
+        "description": null,
+        "imageUri": null,
+        "imageCopylight": null,
+        "uri": null,
+        "lat": 35.6936705,
+        "lng": 139.7628136
+      }
+    ]
+  },
+  {
+    "category": "社会福祉施設",
+    "category:en": "social_facility",
+    "locations": [
+      {
+        "name": "三井記念病院",
+        "description": null,
+        "imageUri": null,
+        "imageCopylight": null,
+        "uri": null,
+        "lat": 35.699815,
+        "lng": 139.779184,
+        "name:en": "Mitsui Memorial Hospital"
+      },
+      {
+        "name": "八千代助産院",
+        "description": null,
+        "imageUri": null,
+        "imageCopylight": null,
+        "uri": null,
+        "lat": 35.698624,
+        "lng": 139.745851
+      },
+      {
+        "name": "千代田区立一番町高齢者在宅介護支援センター",
+        "description": null,
+        "imageUri": null,
+        "imageCopylight": null,
+        "uri": null,
+        "lat": 35.6869902,
+        "lng": 139.7392841
+      },
+      {
+        "name": "千代田区立高齢者センター",
+        "description": null,
+        "imageUri": null,
+        "imageCopylight": null,
+        "uri": null,
+        "lat": 35.697124,
+        "lng": 139.756516
+      },
+      {
+        "name": "社会福祉法人博仁会　千代田区立一番町特別養護老人ホーム",
+        "description": null,
+        "imageUri": null,
+        "imageCopylight": null,
+        "uri": null,
+        "lat": 35.686958,
+        "lng": 139.739296
+      },
+      {
+        "name": "西神田児童・家庭支援センター",
+        "description": null,
+        "imageUri": null,
+        "imageCopylight": null,
+        "uri": null,
+        "lat": 35.6988874,
+        "lng": 139.7547057
+      },
+      {
+        "name": "ＳＳＳ１",
+        "description": null,
+        "imageUri": null,
+        "imageCopylight": null,
+        "uri": null,
+        "lat": 35.692542,
+        "lng": 139.777738
+      },
+      {
+        "name": "ケアリッツお茶の水",
+        "description": null,
+        "imageUri": null,
+        "imageCopylight": null,
+        "uri": null,
+        "lat": 35.6971281,
+        "lng": 139.7570451
+      },
+      {
+        "name": "ウイーザス九段（介護付有料老人ホーム）",
+        "description": null,
+        "imageUri": null,
+        "imageCopylight": null,
+        "uri": null,
+        "lat": 35.6968,
+        "lng": 139.7529282
+      }
+    ]
+  },
+  {
+    "category": "劇場",
+    "category:en": "theatre",
+    "locations": [
+      {
+        "name": "東京宝塚劇場",
+        "description": null,
+        "imageUri": null,
+        "imageCopylight": null,
+        "uri": "https://kageki.hankyu.co.jp/theater/tokyo/",
+        "lat": 35.6728254,
+        "lng": 139.7592046,
+        "name:en": "Tokyo Takarazuka Theater",
+        "name:es": "Teatro Tokyo Takarazuka",
+        "name:fr": "Théâtre Takarazuka",
+        "name:ja-Hira": "とうきょう たからづかげきじょう",
+        "name:ja-Latn": "Tōkyō takaradzuka-gekijō",
+        "name:ru": "Токийский театр Такарадзука",
+        "name:zh": "東京寶塚劇場"
+      },
+      {
+        "name": "日生劇場",
+        "description": null,
+        "imageUri": null,
+        "imageCopylight": null,
+        "uri": "https://www.nissaytheatre.or.jp/",
+        "lat": 35.673259,
+        "lng": 139.7585337,
+        "name:en": "Nissay Theatre",
+        "name:es": "Teatro Nissay",
+        "name:fr": "Théâtre Nissay",
+        "name:ja-Hira": "にっせいげきじょう",
+        "name:ja-Latn": "Nissai-gekijō"
+      },
+      {
+        "name": "大音楽堂",
+        "description": null,
+        "imageUri": null,
+        "imageCopylight": null,
+        "uri": null,
+        "lat": 35.6725003,
+        "lng": 139.7541125,
+        "name:en": "Big Concert Hall",
+        "name:es": "Sala de grandes conciertos",
+        "name:ko": "대음악당"
+      },
+      {
+        "name": "小音楽堂",
+        "description": null,
+        "imageUri": null,
+        "imageCopylight": null,
+        "uri": null,
+        "lat": 35.6740244,
+        "lng": 139.7571197,
+        "name:en": "Small Concert Hall",
+        "name:es": "Sala pequeña de conciertos"
+      },
+      {
+        "name": "よみうりホール",
+        "description": null,
+        "imageUri": null,
+        "imageCopylight": null,
+        "uri": "https://yomi-h.jp/",
+        "lat": 35.6755136,
+        "lng": 139.7632029,
+        "name:en": "Yomiuri Hall",
+        "name:es": "Yomiuri Hall",
+        "name:ja": "よみうりホール",
+        "name:ja_kana": "よみうりホール",
+        "name:ja_rm": "Yomiuri Horu"
+      },
+      {
+        "name": "シアタークリエ",
+        "description": null,
+        "imageUri": null,
+        "imageCopylight": null,
+        "uri": "https://www.toho.co.jp/stage/theatre_crea/",
+        "lat": 35.6725164,
+        "lng": 139.7597291,
+        "name:en": "Theatre Creation",
+        "name:es": "Teatro Clie"
+      },
+      {
+        "name": "一橋講堂",
+        "description": null,
+        "imageUri": null,
+        "imageCopylight": null,
+        "uri": null,
+        "lat": 35.6923833,
+        "lng": 139.7583837,
+        "name:en": "Hitotsubashi Hall",
+        "name:es": "Salón Hitotsubashi",
+        "name:ja": "一橋講堂"
+      },
+      {
+        "name": "共立講堂",
+        "description": null,
+        "imageUri": null,
+        "imageCopylight": null,
+        "uri": null,
+        "lat": 35.6931217,
+        "lng": 139.7583998,
+        "name:en": "Kyoritsu Auditorium",
+        "name:es": "Auditorio Kyoritsu",
+        "name:ja": "共立講堂"
+      },
+      {
+        "name": "秋葉原ディアステージ",
+        "description": null,
+        "imageUri": null,
+        "imageCopylight": null,
+        "uri": null,
+        "lat": 35.7011113,
+        "lng": 139.7708438,
+        "name:en": "Akihabara Dia Stage",
+        "name:ko": "아키하바라 다이아 스테이지"
+      },
+      {
+        "name": "AKB48劇場",
+        "description": null,
+        "imageUri": null,
+        "imageCopylight": null,
+        "uri": null,
+        "lat": 35.7008075,
+        "lng": 139.7719621,
+        "name:en": "AKB48 Theater",
+        "name:ja": "AKB48劇場",
+        "name:ko": "AKB48 극장",
+        "name:zh": "AKB48劇場"
+      },
+      {
+        "name": "イベントホールBELLESALLE",
+        "description": null,
+        "imageUri": null,
+        "imageCopylight": null,
+        "uri": null,
+        "lat": 35.701862,
+        "lng": 139.7474233,
+        "name:en": "Bellesalle Events Room",
+        "name:es": "Salón de eventos Bellesalle",
+        "name:ja_rm": "Ibentohōru BELLESALLE"
+      },
+      {
+        "name": "Twin Box Garage",
+        "description": null,
+        "imageUri": null,
+        "imageCopylight": null,
+        "uri": null,
+        "lat": 35.7003953,
+        "lng": 139.7701143
+      },
+      {
+        "name": "日経ホール",
+        "description": null,
+        "imageUri": null,
+        "imageCopylight": null,
+        "uri": null,
+        "lat": 35.6888749,
+        "lng": 139.7622454,
+        "name:en": "Nikkei Hall",
+        "name:es": "Nikkei Hall"
+      },
+      {
+        "name": "Magic &Live iQ",
+        "description": null,
+        "imageUri": null,
+        "imageCopylight": null,
+        "uri": null,
+        "lat": 35.7010951,
+        "lng": 139.7720432
+      },
+      {
+        "name": "AKIBAカルチャーズ劇場",
+        "description": null,
+        "imageUri": null,
+        "imageCopylight": null,
+        "uri": null,
+        "lat": 35.6995077,
+        "lng": 139.770475,
+        "name:en": "AKIBA Culture's Theatre"
+      },
+      {
+        "name": "カザルスホール",
+        "description": null,
+        "imageUri": null,
+        "imageCopylight": null,
+        "uri": null,
+        "lat": 35.6971204,
+        "lng": 139.7625239
+      },
+      {
+        "name": "神田連雀亭",
+        "description": null,
+        "imageUri": null,
+        "imageCopylight": null,
+        "uri": null,
+        "lat": 35.6967156,
+        "lng": 139.7687852
+      }
+    ]
+  },
+  {
+    "category": "大学",
+    "category:en": "university",
+    "locations": [
+      {
+        "name": "法政大学",
+        "description": null,
+        "imageUri": null,
+        "imageCopylight": null,
+        "uri": null,
+        "lat": 35.6954153,
+        "lng": 139.7406012,
+        "name:en": "Hosei University"
+      },
+      {
+        "name": "グロービス経営大学院大学（東京校）",
+        "description": null,
+        "imageUri": null,
+        "imageCopylight": null,
+        "uri": null,
+        "lat": 35.685325,
+        "lng": 139.736748
+      },
+      {
+        "name": "ビジネス・ブレークスルー大学院大学",
+        "description": null,
+        "imageUri": null,
+        "imageCopylight": null,
+        "uri": null,
+        "lat": 35.687736,
+        "lng": 139.734937
+      },
+      {
+        "name": "上智大学（国際教養学部）",
+        "description": null,
+        "imageUri": null,
+        "imageCopylight": null,
+        "uri": null,
+        "lat": 35.6835994,
+        "lng": 139.731885
+      },
+      {
+        "name": "上智大学（外国語学部）",
+        "description": null,
+        "imageUri": null,
+        "imageCopylight": null,
+        "uri": null,
+        "lat": 35.6835938,
+        "lng": 139.7318522
+      },
+      {
+        "name": "上智大学（文学部）",
+        "description": null,
+        "imageUri": null,
+        "imageCopylight": null,
+        "uri": null,
+        "lat": 35.6836196,
+        "lng": 139.7318492
+      },
+      {
+        "name": "上智大学（比較文化学部）",
+        "description": null,
+        "imageUri": null,
+        "imageCopylight": null,
+        "uri": null,
+        "lat": 35.6836026,
+        "lng": 139.7319296
+      },
+      {
+        "name": "上智大学（法学部）",
+        "description": null,
+        "imageUri": null,
+        "imageCopylight": null,
+        "uri": null,
+        "lat": 35.6836276,
+        "lng": 139.7319207
+      },
+      {
+        "name": "上智大学（理工学部）",
+        "description": null,
+        "imageUri": null,
+        "imageCopylight": null,
+        "uri": null,
+        "lat": 35.6835656,
+        "lng": 139.731881
+      },
+      {
+        "name": "上智大学（神学部）",
+        "description": null,
+        "imageUri": null,
+        "imageCopylight": null,
+        "uri": null,
+        "lat": 35.6835752,
+        "lng": 139.7319177
+      },
+      {
+        "name": "上智大学（経済学部）",
+        "description": null,
+        "imageUri": null,
+        "imageCopylight": null,
+        "uri": null,
+        "lat": 35.6836268,
+        "lng": 139.7318889
+      },
+      {
+        "name": "上智大学（総合人間科学部）",
+        "description": null,
+        "imageUri": null,
+        "imageCopylight": null,
+        "uri": null,
+        "lat": 35.6835704,
+        "lng": 139.7318532
+      },
+      {
+        "name": "共立女子大学（国際文化学部）",
+        "description": null,
+        "imageUri": null,
+        "imageCopylight": null,
+        "uri": null,
+        "lat": 35.6931041,
+        "lng": 139.7574701,
+        "name:en": "Kyoritsu Women's University",
+        "name:ja_rm": "Kyōritsu Joshi Daigaku"
+      },
+      {
+        "name": "共立女子中学高等学校",
+        "description": null,
+        "imageUri": null,
+        "imageCopylight": null,
+        "uri": null,
+        "lat": 35.6931792,
+        "lng": 139.7573011,
+        "name:en": "Kyoritsu Women's University",
+        "name:ja_rm": "Kyōritsu Joshi Daigaku"
+      },
+      {
+        "name": "共立女子大学（文芸学部）",
+        "description": null,
+        "imageUri": null,
+        "imageCopylight": null,
+        "uri": null,
+        "lat": 35.693383,
+        "lng": 139.756825,
+        "name:en": "Kyoritsu Women's University",
+        "name:ja_rm": "Kyōritsu Joshi Daigaku"
+      },
+      {
+        "name": "大原大学院大学",
+        "description": null,
+        "imageUri": null,
+        "imageCopylight": null,
+        "uri": null,
+        "lat": 35.698694,
+        "lng": 139.755608,
+        "name:en": "OHARA Graduate School of Accounting",
+        "name:ja": "大原大学院大学"
+      },
+      {
+        "name": "大妻女子大学（家政学部）",
+        "description": null,
+        "imageUri": null,
+        "imageCopylight": null,
+        "uri": null,
+        "lat": 35.690986,
+        "lng": 139.742629
+      },
+      {
+        "name": "大妻女子大学（文学部）",
+        "description": null,
+        "imageUri": null,
+        "imageCopylight": null,
+        "uri": null,
+        "lat": 35.6908834,
+        "lng": 139.7426387
+      },
+      {
+        "name": "日本大学（その他）",
+        "description": null,
+        "imageUri": null,
+        "imageCopylight": null,
+        "uri": null,
+        "lat": 35.6996358,
+        "lng": 139.7548093
+      },
+      {
+        "name": "日本大学（商学部）",
+        "description": null,
+        "imageUri": null,
+        "imageCopylight": null,
+        "uri": null,
+        "lat": 35.6995904,
+        "lng": 139.7548429
+      },
+      {
+        "name": "日本大学（文理学部）",
+        "description": null,
+        "imageUri": null,
+        "imageCopylight": null,
+        "uri": null,
+        "lat": 35.69954,
+        "lng": 139.7547433
+      },
+      {
+        "name": "日本大学（法学部）",
+        "description": null,
+        "imageUri": null,
+        "imageCopylight": null,
+        "uri": null,
+        "lat": 35.6996003,
+        "lng": 139.7547331,
+        "name:en": "Nihon University College of Law",
+        "name:ja": "日本大学（法学部）"
+      },
+      {
+        "name": "日本大学（法学部）",
+        "description": null,
+        "imageUri": null,
+        "imageCopylight": null,
+        "uri": null,
+        "lat": 35.699707,
+        "lng": 139.754267,
+        "name:en": "Nihon University College of Law"
+      },
+      {
+        "name": "日本大学（理工学部）駿河台校舎",
+        "description": null,
+        "imageUri": null,
+        "imageCopylight": null,
+        "uri": null,
+        "lat": 35.6976834,
+        "lng": 139.7647246,
+        "name:en": "College of Science and Technology, Nihon University, Surugadai Campus"
+      },
+      {
+        "name": "日本大学（経済学部）",
+        "description": null,
+        "imageUri": null,
+        "imageCopylight": null,
+        "uri": null,
+        "lat": 35.6995689,
+        "lng": 139.7547341,
+        "name:en": "Nihon University College of Law"
+      },
+      {
+        "name": "日本大学（経済学部）",
+        "description": null,
+        "imageUri": null,
+        "imageCopylight": null,
+        "uri": null,
+        "lat": 35.700318,
+        "lng": 139.756239,
+        "name:en": "Nihon University College of Economics"
+      },
+      {
+        "name": "日本教育大学院大学",
+        "description": null,
+        "imageUri": null,
+        "imageCopylight": null,
+        "uri": null,
+        "lat": 35.685795,
+        "lng": 139.735143
+      },
+      {
+        "name": "明治大学（商学部）",
+        "description": null,
+        "imageUri": null,
+        "imageCopylight": null,
+        "uri": null,
+        "lat": 35.6984514,
+        "lng": 139.7621579,
+        "name:en": "Meiji University"
+      },
+      {
+        "name": "明治大学（情報コミュニケーション学部）",
+        "description": null,
+        "imageUri": null,
+        "imageCopylight": null,
+        "uri": null,
+        "lat": 35.6984381,
+        "lng": 139.7621985,
+        "name:en": "Meiji University"
+      },
+      {
+        "name": "明治大学（政治経済学部）",
+        "description": null,
+        "imageUri": null,
+        "imageCopylight": null,
+        "uri": null,
+        "lat": 35.6984704,
+        "lng": 139.7621175,
+        "name:en": "Meiji University"
+      },
+      {
+        "name": "明治大学（文学部）",
+        "description": null,
+        "imageUri": null,
+        "imageCopylight": null,
+        "uri": null,
+        "lat": 35.6984696,
+        "lng": 139.7621981,
+        "name:en": "Meiji University"
+      },
+      {
+        "name": "明治大学（法学部）",
+        "description": null,
+        "imageUri": null,
+        "imageCopylight": null,
+        "uri": null,
+        "lat": 35.6984377,
+        "lng": 139.7621177,
+        "name:en": "Meiji University"
+      },
+      {
+        "name": "明治大学（経営学部）",
+        "description": null,
+        "imageUri": null,
+        "imageCopylight": null,
+        "uri": null,
+        "lat": 35.6984212,
+        "lng": 139.7621577,
+        "name:en": "Meiji University"
+      },
+      {
+        "name": "総合研究大学院大学",
+        "description": null,
+        "imageUri": null,
+        "imageCopylight": null,
+        "uri": null,
+        "lat": 35.6925179,
+        "lng": 139.7580176,
+        "name:en": "SOKENDAI",
+        "name:ja": "総合研究大学院大学",
+        "name:ja_rm": "Sōgō Kenkyū Daigakuin Daigaku"
+      },
+      {
+        "name": "ＬＥＣ東京リーガルマインド大学（総合キャリア学部）",
+        "description": null,
+        "imageUri": null,
+        "imageCopylight": null,
+        "uri": null,
+        "lat": 35.699763,
+        "lng": 139.754921,
+        "name:en": "LEC Graduate School of Accounting",
+        "name:ja": "ＬＥＣ東京リーガルマインド大学（総合キャリア学部）"
+      },
+      {
+        "name": "国立情報学研究所",
+        "description": null,
+        "imageUri": null,
+        "imageCopylight": null,
+        "uri": "https://www.nii.ac.jp/",
+        "lat": 35.6927292,
+        "lng": 139.7580176,
+        "name:en": "National Institute for Informatics",
+        "name:ja": "国立情報学研究所"
+      },
+      {
+        "name": "日本工業大学",
+        "description": null,
+        "imageUri": null,
+        "imageCopylight": null,
+        "uri": null,
+        "lat": 35.6957405,
+        "lng": 139.7566685,
+        "name:en": "Nippon Institute of Technology"
+      },
+      {
+        "name": "東京歯科大学 水道橋校舎本館",
+        "description": null,
+        "imageUri": null,
+        "imageCopylight": null,
+        "uri": null,
+        "lat": 35.7015468,
+        "lng": 139.7547839,
+        "name:en": "Tokyo Dental College"
+      },
+      {
+        "name": "東京歯科大学 水道橋校舎新館",
+        "description": null,
+        "imageUri": null,
+        "imageCopylight": null,
+        "uri": "http://www.tdc.ac.jp/",
+        "lat": 35.7002068,
+        "lng": 139.7552957,
+        "name:en": "Tokyo Dental College Suidobashi New Building",
+        "name:ja": "東京歯科大学 水道橋校舎新館"
+      },
+      {
+        "name": "二松学舎大学 Akiba Lab",
+        "description": null,
+        "imageUri": null,
+        "imageCopylight": null,
+        "uri": null,
+        "lat": 35.6991276,
+        "lng": 139.7699627
+      },
+      {
+        "name": "二松学舎大学　九段3号館",
+        "description": null,
+        "imageUri": null,
+        "imageCopylight": null,
+        "uri": null,
+        "lat": 35.6940529,
+        "lng": 139.7466364
+      },
+      {
+        "name": "東京理科大学経営学部",
+        "description": null,
+        "imageUri": null,
+        "imageCopylight": null,
+        "uri": null,
+        "lat": 35.6964463,
+        "lng": 139.7458574
+      },
+      {
+        "name": "明治大学",
+        "description": null,
+        "imageUri": null,
+        "imageCopylight": null,
+        "uri": null,
+        "lat": 35.6966428,
+        "lng": 139.7618457,
+        "name:en": "Meiji University",
+        "name:ja": "明治大学"
+      },
+      {
+        "name": "二松学舎大学 九段5号館",
+        "description": null,
+        "imageUri": null,
+        "imageCopylight": null,
+        "uri": null,
+        "lat": 35.6934442,
+        "lng": 139.7444487
+      }
+    ]
+  }
+]

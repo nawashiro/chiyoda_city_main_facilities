@@ -5,7 +5,7 @@
 ## ディレクトリ
 
 - `json`: 千代田区の市民にとって主要な場所をまとめています。
-- `kazaguruma_json`: 千代田区の市民にとって主要な場所であり、かつ千代田区福祉交通「風ぐるま」の停留所から徒歩圏内（600m 以内）である場所の座標をまとめた JSON データを提供しています。[施設と停留所の距離チェックスクリプト](./施設と停留所の距離チェックスクリプト.md)を実行して`json`から自動的に抽出できます。
+- `kazaguruma_json`: 千代田区の市民にとって主要な場所であり、かつ千代田区福祉交通「風ぐるま」の停留所から徒歩圏内（600m 以内）である場所の座標をまとめた JSON データを提供しています。[施設と停留所の距離チェックスクリプト](./facility_and_stop_distance_check_script.md)を実行して`json`から自動的に抽出できます。
 
 ## ファイル
 
@@ -80,6 +80,10 @@
 
 ## ライセンス
 
-JSON データは[MIT ライセンス](LICENSE)の下で提供されています。
+この JSON データは OpenStreetMap のデータを元に作成されています。OpenStreetMap のデータは [Open Database License (ODbL) 1.0](https://opendatacommons.org/licenses/odbl/) の下で提供されています。従って、この JSON データも同じライセンスが適用されます。
 
-stops.txt は[公共交通オープンデータセンター](https://ckan.odpt.org/dataset/hitachi_automobile_transportation_chiyoda_alllines)から取得しました。このファイルのみ、ライセンスは [Creative Commons Attribution 4.0 International (CC BY 4.0)](https://creativecommons.org/licenses/by/4.0/)です。著作権は日立自動車交通株式会社 / Hitachi Motor Transportation Co. Ltd.に帰属します。
+[© OpenStreetMap contributors](https://www.openstreetmap.org/copyright)
+
+stops.txt は[公共交通オープンデータセンター](https://ckan.odpt.org/dataset/hitachi_automobile_transportation_chiyoda_alllines)から取得しました。この GTFS データは [Creative Commons Attribution 4.0 International (CC BY 4.0)](https://creativecommons.org/licenses/by/4.0/)によって提供されています。
+
+© 日立自動車交通株式会社 / Hitachi Motor Transportation Co. Ltd.
