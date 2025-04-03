@@ -3,16 +3,14 @@
 
 import json
 import pandas as pd
-import csv
 from geopy.distance import geodesic
-from datetime import datetime
 import os
 
 # 設定値
 WARNING_DISTANCE = 600  # メートル
 
-def load_address_data(file_path):
-    """住所データをJSONファイルから読み込む"""
+def load_facilities_data(file_path):
+    """施設データをJSONファイルから読み込む"""
     with open(file_path, 'r', encoding='utf-8') as f:
         return json.load(f)
 
@@ -37,64 +35,72 @@ def calculate_min_distance(location, stops_df):
     
     return nearest_stop, min_distance
 
-def export_to_csv(results, filename):
-    """結果をCSVファイルに出力する"""
+def filter_locations_in_radius(facilities_data, stops_df, max_distance):
+    """半径max_distance以内の施設をフィルタリングする"""
+    filtered_data = []
+    
+    for category_data in facilities_data:
+        category = category_data['category']
+        filtered_locations = []
+        
+        for location in category_data['locations']:
+            nearest_stop, distance = calculate_min_distance(location, stops_df)
+            
+            if distance <= max_distance:
+                # nearest_stopとdistance属性は追加しない
+                filtered_locations.append({
+                    'name': location['name'],
+                    'lat': location['lat'],
+                    'lng': location['lng']
+                })
+        
+        if filtered_locations:
+            filtered_data.append({
+                'category': category,
+                'locations': filtered_locations
+            })
+    
+    return filtered_data
+
+def export_to_json(data, filename):
+    """結果をJSONファイルに出力する"""
     # 出力ディレクトリを確認し、存在しなければ作成
     output_dir = os.path.dirname(filename)
     if output_dir and not os.path.exists(output_dir):
         os.makedirs(output_dir)
         print(f"ディレクトリ {output_dir} を作成しました")
         
-    with open(filename, 'w', encoding='utf-8', newline='') as f:
-        writer = csv.writer(f)
-        writer.writerow(['カテゴリー', '施設名', '最寄り停留所', '距離(m)', 'ステータス'])
-        for row in results:
-            writer.writerow(row)
+    with open(filename, 'w', encoding='utf-8') as f:
+        json.dump(data, f, ensure_ascii=False, indent=2)
+    
     print(f"結果を {filename} に出力しました")
 
 def main():
     # データの読み込み
+    input_file = 'json/main_facilities.json'
     try:
-        address_data = load_address_data('json/main_facilities.json')
+        facilities_data = load_facilities_data(input_file)
         stops_df = load_stops_data('stops.txt')
     except Exception as e:
         print(f"データの読み込みに失敗しました: {e}")
         return
     
-    print("施設チェック開始...")
-    print(f"{WARNING_DISTANCE}m以上離れている施設には警告を表示します")
+    print("施設フィルタリング開始...")
+    print(f"{WARNING_DISTANCE}m以内の施設のみを抽出します")
     print("-" * 80)
     
-    # 結果を保存するリスト
-    results = []
+    # 半径WARNING_DISTANCE以内の施設をフィルタリング
+    filtered_data = filter_locations_in_radius(facilities_data, stops_df, WARNING_DISTANCE)
     
-    # 各カテゴリーと施設について最短距離を計算
-    warning_count = 0
-    for category_data in address_data:
-        category = category_data['category']
-        print(f"\n【{category}】")
-        
-        for location in category_data['locations']:
-            name = location['name']
-            nearest_stop, distance = calculate_min_distance(location, stops_df)
-            
-            status = "OK"
-            if distance >= WARNING_DISTANCE:
-                status = "警告"
-                warning_count += 1
-            
-            print(f"  {name}: 最寄り停留所「{nearest_stop}」まで {distance:.1f}m [{status}]")
-            
-            # 結果をリストに追加
-            results.append([category, name, nearest_stop, f"{distance:.1f}", status])
-    
+    # 結果の概要を表示
+    total_locations = sum(len(category['locations']) for category in filtered_data)
     print("\n" + "-" * 80)
-    print(f"チェック完了: {warning_count}件の警告があります")
+    print(f"フィルタリング完了: {total_locations}件の施設が{WARNING_DISTANCE}m圏内にあります")
     
-    # 結果をCSVファイルに出力
-    timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
-    filename = f"output/facilities_check_result_{timestamp}.csv"
-    export_to_csv(results, filename)
+    # 元のファイル名から出力ファイル名を作成
+    input_filename = os.path.basename(input_file)
+    output_filename = f"kazaguruma_json/{input_filename}"
+    export_to_json(filtered_data, output_filename)
 
 if __name__ == "__main__":
     main() 
