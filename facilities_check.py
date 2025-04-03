@@ -40,25 +40,24 @@ def filter_locations_in_radius(facilities_data, stops_df, max_distance):
     filtered_data = []
     
     for category_data in facilities_data:
-        category = category_data['category']
+        category_dict = {}
+        # カテゴリーの全属性をコピー
+        for key, value in category_data.items():
+            if key != 'locations':
+                category_dict[key] = value
+        
         filtered_locations = []
         
         for location in category_data['locations']:
             nearest_stop, distance = calculate_min_distance(location, stops_df)
             
             if distance <= max_distance:
-                # nearest_stopとdistance属性は追加しない
-                filtered_locations.append({
-                    'name': location['name'],
-                    'lat': location['lat'],
-                    'lng': location['lng']
-                })
+                # 元のオブジェクトの全属性を保持
+                filtered_locations.append(location.copy())
         
         if filtered_locations:
-            filtered_data.append({
-                'category': category,
-                'locations': filtered_locations
-            })
+            category_dict['locations'] = filtered_locations
+            filtered_data.append(category_dict)
     
     return filtered_data
 
@@ -75,9 +74,8 @@ def export_to_json(data, filename):
     
     print(f"結果を {filename} に出力しました")
 
-def main():
-    # データの読み込み
-    input_file = 'json/main_facilities.json'
+def process_file(input_file):
+    """指定されたJSONファイルを処理する"""
     try:
         facilities_data = load_facilities_data(input_file)
         stops_df = load_stops_data('stops.txt')
@@ -85,7 +83,7 @@ def main():
         print(f"データの読み込みに失敗しました: {e}")
         return
     
-    print("施設フィルタリング開始...")
+    print(f"\n{input_file} の処理を開始...")
     print(f"{WARNING_DISTANCE}m以内の施設のみを抽出します")
     print("-" * 80)
     
@@ -94,13 +92,28 @@ def main():
     
     # 結果の概要を表示
     total_locations = sum(len(category['locations']) for category in filtered_data)
-    print("\n" + "-" * 80)
+    print("-" * 80)
     print(f"フィルタリング完了: {total_locations}件の施設が{WARNING_DISTANCE}m圏内にあります")
     
     # 元のファイル名から出力ファイル名を作成
     input_filename = os.path.basename(input_file)
     output_filename = f"kazaguruma_json/{input_filename}"
     export_to_json(filtered_data, output_filename)
+
+def main():
+    # 処理するファイルリスト
+    files_to_process = [
+        'json/main_facilities.json',
+        'json/key_locations.json'
+    ]
+    
+    print("施設フィルタリング開始...")
+    
+    # 各ファイルを処理
+    for input_file in files_to_process:
+        process_file(input_file)
+    
+    print("\nすべてのファイルの処理が完了しました")
 
 if __name__ == "__main__":
     main() 

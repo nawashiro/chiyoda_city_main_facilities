@@ -1,6 +1,7 @@
 [
   {
     "category": "主要な病院",
+    "category:en": "main hospitals",
     "locations": [
       {
         "name": "九段坂病院",
@@ -43,6 +44,7 @@
   },
   {
     "category": "区役所・出張所",
+    "category:en": "city office and branch offices",
     "locations": [
       {
         "name": "千代田区役所",
@@ -90,6 +92,7 @@
   },
   {
     "category": "会館",
+    "category:en": "meeting halls",
     "locations": [
       {
         "name": "麹町区民館",
@@ -173,6 +176,7 @@
   },
   {
     "category": "葬祭施設",
+    "category:en": "funeral facilities",
     "locations": [
       {
         "name": "千代田万世会館（千代田区立葬祭施設）",
@@ -184,6 +188,7 @@
   },
   {
     "category": "区立の学校",
+    "category:en": "public schools",
     "locations": [
       {
         "name": "麹町小学校",
@@ -255,6 +260,7 @@
   },
   {
     "category": "高齢者福祉施設",
+    "category:en": "elderly welfare facilities",
     "locations": [
       {
         "name": "THE BANCHO",
@@ -308,6 +314,7 @@
   },
   {
     "category": "障害者福祉施設",
+    "category:en": "disability welfare facilities",
     "locations": [
       {
         "name": "障害者就労支援センター",
@@ -337,6 +344,7 @@
   },
   {
     "category": "図書館",
+    "category:en": "libraries",
     "locations": [
       {
         "name": "千代田図書館",
@@ -372,6 +380,7 @@
   },
   {
     "category": "リサイクル",
+    "category:en": "recycling",
     "locations": [
       {
         "name": "千代田清掃事務所",
