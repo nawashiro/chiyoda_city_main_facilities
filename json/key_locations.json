@@ -1,585 +1,6 @@
 [
   {
-    "category": "銀行",
-    "category:en": "bank",
-    "locations": [
-      {
-        "name": "八千代銀行",
-        "description": null,
-        "imageUri": null,
-        "imageCopylight": null,
-        "uri": null,
-        "lat": 35.689533,
-        "lng": 139.7682276,
-        "name:en": "Yachiyo bank",
-        "name:ja": "八千代銀行"
-      },
-      {
-        "name": "三菱UFJ銀行",
-        "description": null,
-        "imageUri": null,
-        "imageCopylight": null,
-        "uri": null,
-        "lat": 35.6962494,
-        "lng": 139.7576032,
-        "name:en": "MUFG Bank",
-        "name:ja": "三菱UFJ銀行"
-      },
-      {
-        "name": "三井住友銀行",
-        "description": null,
-        "imageUri": null,
-        "imageCopylight": null,
-        "uri": null,
-        "lat": 35.6700661,
-        "lng": 139.7480894,
-        "name:en": "Sumitomo Mitsui Banking Corporation",
-        "name:ja": "三井住友銀行"
-      },
-      {
-        "name": "野村證券",
-        "description": null,
-        "imageUri": null,
-        "imageCopylight": null,
-        "uri": null,
-        "lat": 35.6705582,
-        "lng": 139.74707,
-        "name:en": "Nomura Securities"
-      },
-      {
-        "name": "商工組合中央金庫神田支店",
-        "description": null,
-        "imageUri": null,
-        "imageCopylight": null,
-        "uri": null,
-        "lat": 35.6940758,
-        "lng": 139.7704445,
-        "name:en": "Shoko Chukin Bank"
-      },
-      {
-        "name": "三菱UFJ銀行",
-        "description": null,
-        "imageUri": null,
-        "imageCopylight": null,
-        "uri": null,
-        "lat": 35.6941707,
-        "lng": 139.7637033,
-        "name:en": "MUFG Bank",
-        "name:ja": "三菱UFJ銀行"
-      },
-      {
-        "name": "朝日信用金庫",
-        "description": null,
-        "imageUri": null,
-        "imageCopylight": null,
-        "uri": null,
-        "lat": 35.6943808,
-        "lng": 139.7625328,
-        "name:en": "Asahi Shinkin"
-      },
-      {
-        "name": "きらぼし銀行",
-        "description": null,
-        "imageUri": null,
-        "imageCopylight": null,
-        "uri": null,
-        "lat": 35.6948655,
-        "lng": 139.7618488,
-        "name:en": "Kiraboshi Bank",
-        "name:ja": "きらぼし銀行"
-      },
-      {
-        "name": "紀陽銀行東京支店",
-        "description": null,
-        "imageUri": null,
-        "imageCopylight": null,
-        "uri": null,
-        "lat": 35.6942129,
-        "lng": 139.7630757,
-        "name:en": "Kiyo Bank"
-      },
-      {
-        "name": "みずほ銀行",
-        "description": null,
-        "imageUri": null,
-        "imageCopylight": null,
-        "uri": "https://www.mizuhobank.co.jp/",
-        "lat": 35.6950076,
-        "lng": 139.7672715,
-        "name:en": "Mizuho Bank",
-        "name:ja": "みずほ銀行",
-        "name:ja_rm": "Mizuho Ginkou"
-      },
-      {
-        "name": "りそな銀行",
-        "description": null,
-        "imageUri": null,
-        "imageCopylight": null,
-        "uri": null,
-        "lat": 35.696023,
-        "lng": 139.7684697,
-        "name:en": "Resona Bank",
-        "name:ja": "りそな銀行"
-      },
-      {
-        "name": "三井住友銀行",
-        "description": null,
-        "imageUri": null,
-        "imageCopylight": null,
-        "uri": null,
-        "lat": 35.6948125,
-        "lng": 139.7666808,
-        "name:en": "Sumitomo Mitsui Banking Corporation",
-        "name:ja": "三井住友銀行"
-      },
-      {
-        "name": "興産信用金庫",
-        "description": null,
-        "imageUri": null,
-        "imageCopylight": null,
-        "uri": null,
-        "lat": 35.696442,
-        "lng": 139.769438,
-        "name:en": "Kosan Shinkin"
-      },
-      {
-        "name": "三菱UFJ銀行",
-        "description": null,
-        "imageUri": null,
-        "imageCopylight": null,
-        "uri": null,
-        "lat": 35.6910036,
-        "lng": 139.7366865,
-        "name:en": "MUFG Bank",
-        "name:ja": "三菱UFJ銀行"
-      },
-      {
-        "name": "みずほ銀行",
-        "description": null,
-        "imageUri": null,
-        "imageCopylight": null,
-        "uri": "https://www.mizuhobank.co.jp/",
-        "lat": 35.6851519,
-        "lng": 139.7652752,
-        "name:en": "Mizuho Bank",
-        "name:ja": "みずほ銀行",
-        "name:ja_rm": "Mizuho Ginkou"
-      },
-      {
-        "name": "みずほ銀行",
-        "description": null,
-        "imageUri": null,
-        "imageCopylight": null,
-        "uri": "https://www.mizuhobank.co.jp/",
-        "lat": 35.6713134,
-        "lng": 139.7567783,
-        "name:en": "Mizuho Bank",
-        "name:ja": "みずほ銀行",
-        "name:ja_rm": "Mizuho Ginkou"
-      },
-      {
-        "name": "みずほ銀行",
-        "description": null,
-        "imageUri": null,
-        "imageCopylight": null,
-        "uri": "https://www.mizuhobank.co.jp/",
-        "lat": 35.6907418,
-        "lng": 139.7356467,
-        "name:en": "Mizuho Bank",
-        "name:ja": "みずほ銀行",
-        "name:ja_rm": "Mizuho Ginkou"
-      },
-      {
-        "name": "みずほ銀行",
-        "description": null,
-        "imageUri": null,
-        "imageCopylight": null,
-        "uri": "https://www.mizuhobank.co.jp/",
-        "lat": 35.6919788,
-        "lng": 139.7718751,
-        "name:en": "Mizuho Bank",
-        "name:ja": "みずほ銀行",
-        "name:ja_rm": "Mizuho Ginkou"
-      },
-      {
-        "name": "みずほ銀行",
-        "description": null,
-        "imageUri": null,
-        "imageCopylight": null,
-        "uri": "https://www.mizuhobank.co.jp/",
-        "lat": 35.6961282,
-        "lng": 139.7555536,
-        "name:en": "Mizuho Bank",
-        "name:ja": "みずほ銀行",
-        "name:ja_rm": "Mizuho Ginkou"
-      },
-      {
-        "name": "みずほ銀行",
-        "description": null,
-        "imageUri": null,
-        "imageCopylight": null,
-        "uri": "https://www.mizuhobank.co.jp/",
-        "lat": 35.6841978,
-        "lng": 139.7381277,
-        "name:en": "Mizuho Bank",
-        "name:ja": "みずほ銀行",
-        "name:ja_rm": "Mizuho Ginkou"
-      },
-      {
-        "name": "みずほ銀行",
-        "description": null,
-        "imageUri": null,
-        "imageCopylight": null,
-        "uri": "https://www.mizuhobank.co.jp/",
-        "lat": 35.684381,
-        "lng": 139.7659558,
-        "name:en": "Mizuho Bank",
-        "name:ja": "みずほ銀行",
-        "name:ja_rm": "Mizuho Ginkou"
-      },
-      {
-        "name": "りそな銀行",
-        "description": null,
-        "imageUri": null,
-        "imageCopylight": null,
-        "uri": null,
-        "lat": 35.6951393,
-        "lng": 139.751775,
-        "name:en": "Resona Bank",
-        "name:ja": "りそな銀行"
-      },
-      {
-        "name": "あおぞら銀行",
-        "description": null,
-        "imageUri": null,
-        "imageCopylight": null,
-        "uri": null,
-        "lat": 35.6944019,
-        "lng": 139.7528319,
-        "name:en": "Aozora Bank",
-        "name:it": "Aozora"
-      },
-      {
-        "name": "三井住友銀行",
-        "description": null,
-        "imageUri": null,
-        "imageCopylight": null,
-        "uri": null,
-        "lat": 35.696296,
-        "lng": 139.760557,
-        "name:en": "Sumitomo Mitsui Banking Corporation",
-        "name:ja": "三井住友銀行"
-      },
-      {
-        "name": "三菱UFJ銀行",
-        "description": null,
-        "imageUri": null,
-        "imageCopylight": null,
-        "uri": null,
-        "lat": 35.6836641,
-        "lng": 139.7378782,
-        "name:en": "MUFG Bank",
-        "name:ja": "三菱UFJ銀行"
-      },
-      {
-        "name": "東日本銀行",
-        "description": null,
-        "imageUri": null,
-        "imageCopylight": null,
-        "uri": null,
-        "lat": 35.7004799,
-        "lng": 139.7475777,
-        "name:en": "Higashi-Nippon Bank",
-        "name:ja": "東日本銀行"
-      },
-      {
-        "name": "城南信用金庫",
-        "description": null,
-        "imageUri": null,
-        "imageCopylight": null,
-        "uri": null,
-        "lat": 35.6956664,
-        "lng": 139.7552312
-      },
-      {
-        "name": "山梨中央銀行",
-        "description": null,
-        "imageUri": null,
-        "imageCopylight": null,
-        "uri": null,
-        "lat": 35.6902612,
-        "lng": 139.7720298,
-        "name:en": "Yamanashi Chuo Bank",
-        "name:ja": "山梨中央銀行"
-      },
-      {
-        "name": "三井住友銀行",
-        "description": null,
-        "imageUri": null,
-        "imageCopylight": null,
-        "uri": null,
-        "lat": 35.676086,
-        "lng": 139.762562,
-        "name:en": "Sumitomo Mitsui Banking Corporation",
-        "name:ja": "三井住友銀行"
-      },
-      {
-        "name": "三菱UFJ銀行",
-        "description": null,
-        "imageUri": null,
-        "imageCopylight": null,
-        "uri": null,
-        "lat": 35.676758,
-        "lng": 139.762796,
-        "name:en": "MUFG Bank",
-        "name:ja": "三菱UFJ銀行"
-      },
-      {
-        "name": "みずほ銀行",
-        "description": null,
-        "imageUri": null,
-        "imageCopylight": null,
-        "uri": null,
-        "lat": 35.6856664,
-        "lng": 139.7643138,
-        "name:en": "Mizuho Bank",
-        "name:ja": "みずほ銀行"
-      },
-      {
-        "name": "興産信用金庫",
-        "description": null,
-        "imageUri": null,
-        "imageCopylight": null,
-        "uri": null,
-        "lat": 35.7018998,
-        "lng": 139.7724198
-      },
-      {
-        "name": "千葉銀行",
-        "description": null,
-        "imageUri": null,
-        "imageCopylight": null,
-        "uri": null,
-        "lat": 35.6957874,
-        "lng": 139.7761256,
-        "name:en": "Chiba Bank",
-        "name:ja": "千葉銀行"
-      },
-      {
-        "name": "三井住友銀行",
-        "description": null,
-        "imageUri": null,
-        "imageCopylight": null,
-        "uri": null,
-        "lat": 35.6853129,
-        "lng": 139.7328862,
-        "name:en": "Sumitomo Mitsui Banking Corporation",
-        "name:ja": "三井住友銀行"
-      },
-      {
-        "name": "興産信用金庫",
-        "description": null,
-        "imageUri": null,
-        "imageCopylight": null,
-        "uri": null,
-        "lat": 35.6930367,
-        "lng": 139.774287
-      },
-      {
-        "name": "東京シティ信用金庫",
-        "description": null,
-        "imageUri": null,
-        "imageCopylight": null,
-        "uri": null,
-        "lat": 35.7007231,
-        "lng": 139.7751957
-      },
-      {
-        "name": "武蔵野銀行",
-        "description": null,
-        "imageUri": null,
-        "imageCopylight": null,
-        "uri": null,
-        "lat": 35.6919962,
-        "lng": 139.7678067,
-        "name:en": "Musashino Bank",
-        "name:ja": "武蔵野銀行"
-      },
-      {
-        "name": "三菱UFJ銀行",
-        "description": null,
-        "imageUri": null,
-        "imageCopylight": null,
-        "uri": null,
-        "lat": 35.6980322,
-        "lng": 139.7757991,
-        "name:en": "MUFG Bank",
-        "name:ja": "三菱UFJ銀行"
-      },
-      {
-        "name": "朝日信用金庫",
-        "description": null,
-        "imageUri": null,
-        "imageCopylight": null,
-        "uri": null,
-        "lat": 35.6956396,
-        "lng": 139.7787255
-      },
-      {
-        "name": "りそな銀行",
-        "description": null,
-        "imageUri": null,
-        "imageCopylight": null,
-        "uri": null,
-        "lat": 35.7002478,
-        "lng": 139.7478425,
-        "name:en": "Resona Bank",
-        "name:ja": "りそな銀行"
-      },
-      {
-        "name": "りそな銀行",
-        "description": null,
-        "imageUri": null,
-        "imageCopylight": null,
-        "uri": null,
-        "lat": 35.6994124,
-        "lng": 139.7758723,
-        "name:en": "Resona Bank",
-        "name:ja": "りそな銀行"
-      },
-      {
-        "name": "興産信用金庫",
-        "description": null,
-        "imageUri": null,
-        "imageCopylight": null,
-        "uri": null,
-        "lat": 35.6991822,
-        "lng": 139.7488552
-      },
-      {
-        "name": "興産信用金庫",
-        "description": null,
-        "imageUri": null,
-        "imageCopylight": null,
-        "uri": null,
-        "lat": 35.6899198,
-        "lng": 139.7356586
-      },
-      {
-        "name": "あおぞら銀行 本店",
-        "description": null,
-        "imageUri": null,
-        "imageCopylight": null,
-        "uri": null,
-        "lat": 35.6846457,
-        "lng": 139.732983
-      },
-      {
-        "name": "みずほ銀行",
-        "description": null,
-        "imageUri": null,
-        "imageCopylight": null,
-        "uri": "https://www.mizuhobank.co.jp/",
-        "lat": 35.6822397,
-        "lng": 139.7698773,
-        "name:en": "Mizuho Bank",
-        "name:ja": "みずほ銀行",
-        "name:ja_rm": "Mizuho Ginkou"
-      },
-      {
-        "name": "東日本銀行",
-        "description": null,
-        "imageUri": null,
-        "imageCopylight": null,
-        "uri": null,
-        "lat": 35.6937729,
-        "lng": 139.772894,
-        "name:en": "Higashi-Nippon Bank",
-        "name:ja": "東日本銀行"
-      },
-      {
-        "name": "京都銀行",
-        "description": null,
-        "imageUri": null,
-        "imageCopylight": null,
-        "uri": null,
-        "lat": 35.683333,
-        "lng": 139.7703972,
-        "name:en": "Bank of Kyoto",
-        "name:ja": "京都銀行"
-      },
-      {
-        "name": "西武信用金庫",
-        "description": null,
-        "imageUri": null,
-        "imageCopylight": null,
-        "uri": null,
-        "lat": 35.6954833,
-        "lng": 139.7684482
-      },
-      {
-        "name": "城南信用金庫",
-        "description": null,
-        "imageUri": null,
-        "imageCopylight": null,
-        "uri": null,
-        "lat": 35.6927158,
-        "lng": 139.7702256
-      },
-      {
-        "name": "中国農業銀行",
-        "description": null,
-        "imageUri": null,
-        "imageCopylight": null,
-        "uri": "http://www.jp.abchina.com/jp",
-        "lat": 35.6816315,
-        "lng": 139.763004,
-        "name:en": "Agricultural Bank of China",
-        "name:ja": "中国農業銀行",
-        "name:zh": "中国农业银行"
-      },
-      {
-        "name": "北日本銀行",
-        "description": null,
-        "imageUri": null,
-        "imageCopylight": null,
-        "uri": null,
-        "lat": 35.6933197,
-        "lng": 139.7647556
-      },
-      {
-        "name": "三井住友銀行",
-        "description": null,
-        "imageUri": null,
-        "imageCopylight": null,
-        "uri": null,
-        "lat": 35.6768142,
-        "lng": 139.7627818,
-        "name:en": "Sumitomo Mitsui Banking Corporation",
-        "name:ja": "三井住友銀行"
-      },
-      {
-        "name": "中央労働金庫",
-        "description": null,
-        "imageUri": null,
-        "imageCopylight": null,
-        "uri": null,
-        "lat": 35.6846532,
-        "lng": 139.7673154
-      },
-      {
-        "name": "城北信用金庫",
-        "description": null,
-        "imageUri": null,
-        "imageCopylight": null,
-        "uri": null,
-        "lat": 35.6898054,
-        "lng": 139.7666864
-      }
-    ]
-  },
-  {
-    "category": "仏教",
+    "category": "仏教施設",
     "category:en": "buddhist",
     "locations": [
       {
@@ -590,6 +11,9 @@
         "uri": null,
         "lat": 35.7013571,
         "lng": 139.7703476,
+        "copyright": "© OpenStreetMap contributors",
+        "licence": "Open Database License (ODbL) 1.0",
+        "licenceUri": "https://opendatacommons.org/licenses/odbl/",
         "name:en": "Kandadera Temple",
         "name:ja_kana": "かんだでら",
         "name:ja_rm": "Kandadera",
@@ -603,6 +27,9 @@
         "uri": null,
         "lat": 35.6857881,
         "lng": 139.7331755,
+        "copyright": "© OpenStreetMap contributors",
+        "licence": "Open Database License (ODbL) 1.0",
+        "licenceUri": "https://opendatacommons.org/licenses/odbl/",
         "name:en": "Shimpo-ji Temple",
         "name:es": "Templo Shimpo-ji",
         "name:ja": "心法寺"
@@ -614,7 +41,10 @@
         "imageCopylight": null,
         "uri": null,
         "lat": 35.6974277,
-        "lng": 139.757157
+        "lng": 139.757157,
+        "copyright": "© OpenStreetMap contributors",
+        "licence": "Open Database License (ODbL) 1.0",
+        "licenceUri": "https://opendatacommons.org/licenses/odbl/"
       }
     ]
   },
@@ -630,6 +60,9 @@
         "uri": null,
         "lat": 35.6955716,
         "lng": 139.758563,
+        "copyright": "© OpenStreetMap contributors",
+        "licence": "Open Database License (ODbL) 1.0",
+        "licenceUri": "https://opendatacommons.org/licenses/odbl/",
         "name:en": "Saboul2"
       },
       {
@@ -640,6 +73,9 @@
         "uri": null,
         "lat": 35.6955733,
         "lng": 139.7586758,
+        "copyright": "© OpenStreetMap contributors",
+        "licence": "Open Database License (ODbL) 1.0",
+        "licenceUri": "https://opendatacommons.org/licenses/odbl/",
         "name:en": "Saboul"
       },
       {
@@ -650,6 +86,9 @@
         "uri": null,
         "lat": 35.6957191,
         "lng": 139.7599364,
+        "copyright": "© OpenStreetMap contributors",
+        "licence": "Open Database License (ODbL) 1.0",
+        "licenceUri": "https://opendatacommons.org/licenses/odbl/",
         "name:en": "Mironga",
         "name:ja": "ミロンガ (ミロンガ・ヌオーバ)"
       },
@@ -661,6 +100,9 @@
         "uri": null,
         "lat": 35.6956566,
         "lng": 139.7598036,
+        "copyright": "© OpenStreetMap contributors",
+        "licence": "Open Database License (ODbL) 1.0",
+        "licenceUri": "https://opendatacommons.org/licenses/odbl/",
         "name:en": "LADRIO"
       },
       {
@@ -671,6 +113,9 @@
         "uri": null,
         "lat": 35.6968968,
         "lng": 139.7688453,
+        "copyright": "© OpenStreetMap contributors",
+        "licence": "Open Database License (ODbL) 1.0",
+        "licenceUri": "https://opendatacommons.org/licenses/odbl/",
         "name:en": "Chopin"
       },
       {
@@ -681,6 +126,9 @@
         "uri": null,
         "lat": 35.6994011,
         "lng": 139.7649426,
+        "copyright": "© OpenStreetMap contributors",
+        "licence": "Open Database License (ODbL) 1.0",
+        "licenceUri": "https://opendatacommons.org/licenses/odbl/",
         "name:en": "Hodaka"
       },
       {
@@ -691,6 +139,9 @@
         "uri": null,
         "lat": 35.6915035,
         "lng": 139.7692152,
+        "copyright": "© OpenStreetMap contributors",
+        "licence": "Open Database License (ODbL) 1.0",
+        "licenceUri": "https://opendatacommons.org/licenses/odbl/",
         "name:en": "Cafe Ace"
       },
       {
@@ -701,6 +152,9 @@
         "uri": null,
         "lat": 35.6957714,
         "lng": 139.7595676,
+        "copyright": "© OpenStreetMap contributors",
+        "licence": "Open Database License (ODbL) 1.0",
+        "licenceUri": "https://opendatacommons.org/licenses/odbl/",
         "name:en": "KANDA BURAJIRU"
       },
       {
@@ -710,7 +164,10 @@
         "imageCopylight": null,
         "uri": null,
         "lat": 35.6953511,
-        "lng": 139.7698477
+        "lng": 139.7698477,
+        "copyright": "© OpenStreetMap contributors",
+        "licence": "Open Database License (ODbL) 1.0",
+        "licenceUri": "https://opendatacommons.org/licenses/odbl/"
       },
       {
         "name": "古瀬戸珈琲店",
@@ -719,7 +176,10 @@
         "imageCopylight": null,
         "uri": null,
         "lat": 35.6961568,
-        "lng": 139.7613184
+        "lng": 139.7613184,
+        "copyright": "© OpenStreetMap contributors",
+        "licence": "Open Database License (ODbL) 1.0",
+        "licenceUri": "https://opendatacommons.org/licenses/odbl/"
       },
       {
         "name": "COFFEE SHOP 司",
@@ -729,6 +189,9 @@
         "uri": null,
         "lat": 35.6960834,
         "lng": 139.7770032,
+        "copyright": "© OpenStreetMap contributors",
+        "licence": "Open Database License (ODbL) 1.0",
+        "licenceUri": "https://opendatacommons.org/licenses/odbl/",
         "name:en": "COFFEE SHOP Tsukasa"
       }
     ]
@@ -745,6 +208,9 @@
         "uri": null,
         "lat": 35.6980586,
         "lng": 139.7657773,
+        "copyright": "© OpenStreetMap contributors",
+        "licence": "Open Database License (ODbL) 1.0",
+        "licenceUri": "https://opendatacommons.org/licenses/odbl/",
         "name:en": "Nikolay Do"
       },
       {
@@ -754,7 +220,10 @@
         "imageCopylight": null,
         "uri": null,
         "lat": 35.6961359,
-        "lng": 139.7486134
+        "lng": 139.7486134,
+        "copyright": "© OpenStreetMap contributors",
+        "licence": "Open Database License (ODbL) 1.0",
+        "licenceUri": "https://opendatacommons.org/licenses/odbl/"
       },
       {
         "name": "カトリック神田教会",
@@ -764,6 +233,9 @@
         "uri": null,
         "lat": 35.6994212,
         "lng": 139.7575698,
+        "copyright": "© OpenStreetMap contributors",
+        "licence": "Open Database License (ODbL) 1.0",
+        "licenceUri": "https://opendatacommons.org/licenses/odbl/",
         "name:en": "Catholic Church of St. Francis Xavier",
         "name:es": "Iglesia Católica de San Francisco Javier",
         "name:ja_rm": "Kanda Kyōkai",
@@ -777,6 +249,9 @@
         "uri": "http://kankiri3.blog133.fc2.com/",
         "lat": 35.7019158,
         "lng": 139.7702913,
+        "copyright": "© OpenStreetMap contributors",
+        "licence": "Open Database License (ODbL) 1.0",
+        "licenceUri": "https://opendatacommons.org/licenses/odbl/",
         "name:en": "Kanda Christ Church",
         "name:es": "Iglesia cristiana de Kanda",
         "name:ja": "神田キリスト教会"
@@ -789,6 +264,9 @@
         "uri": null,
         "lat": 35.700482,
         "lng": 139.7608409,
+        "copyright": "© OpenStreetMap contributors",
+        "licence": "Open Database License (ODbL) 1.0",
+        "licenceUri": "https://opendatacommons.org/licenses/odbl/",
         "name:en": "Ochanomizu Church of Christ",
         "name:es": "Iglesia de Cristo Ochanomizu",
         "name:ja": "お茶の水キリストの教会"
@@ -801,6 +279,9 @@
         "uri": null,
         "lat": 35.6951362,
         "lng": 139.7580323,
+        "copyright": "© OpenStreetMap contributors",
+        "licence": "Open Database License (ODbL) 1.0",
+        "licenceUri": "https://opendatacommons.org/licenses/odbl/",
         "name:en": "Salvation Army",
         "name:es": "Ejército de Salvación"
       }
@@ -817,7 +298,10 @@
         "imageCopylight": null,
         "uri": null,
         "lat": 35.6950264,
-        "lng": 139.7608196
+        "lng": 139.7608196,
+        "copyright": "© OpenStreetMap contributors",
+        "licence": "Open Database License (ODbL) 1.0",
+        "licenceUri": "https://opendatacommons.org/licenses/odbl/"
       },
       {
         "name": "角川シネマ有楽町",
@@ -827,6 +311,9 @@
         "uri": null,
         "lat": 35.6751064,
         "lng": 139.7626825,
+        "copyright": "© OpenStreetMap contributors",
+        "licence": "Open Database License (ODbL) 1.0",
+        "licenceUri": "https://opendatacommons.org/licenses/odbl/",
         "name:en": "Kadokawa-Shinema-Yurakucho"
       },
       {
@@ -836,7 +323,10 @@
         "imageCopylight": null,
         "uri": null,
         "lat": 35.6733194,
-        "lng": 139.7594538
+        "lng": 139.7594538,
+        "copyright": "© OpenStreetMap contributors",
+        "licence": "Open Database License (ODbL) 1.0",
+        "licenceUri": "https://opendatacommons.org/licenses/odbl/"
       },
       {
         "name": "TOHO CINEMAS HIBIYA",
@@ -846,6 +336,9 @@
         "uri": null,
         "lat": 35.6730666,
         "lng": 139.7594149,
+        "copyright": "© OpenStreetMap contributors",
+        "licence": "Open Database License (ODbL) 1.0",
+        "licenceUri": "https://opendatacommons.org/licenses/odbl/",
         "name:en": "Toho Cinemas",
         "name:fr": "Cinémas Tōhō",
         "name:ja-Hira": "とうほうシネマズみゆきざ",
@@ -859,6 +352,9 @@
         "uri": null,
         "lat": 35.6734305,
         "lng": 139.7604959,
+        "copyright": "© OpenStreetMap contributors",
+        "licence": "Open Database License (ODbL) 1.0",
+        "licenceUri": "https://opendatacommons.org/licenses/odbl/",
         "name:en": "TOHO CINEMAS CHANTER",
         "name:ja": "TOHOシネマズシャンテ"
       }
@@ -875,7 +371,10 @@
         "imageCopylight": null,
         "uri": null,
         "lat": 35.7015978,
-        "lng": 139.7466067
+        "lng": 139.7466067,
+        "copyright": "© OpenStreetMap contributors",
+        "licence": "Open Database License (ODbL) 1.0",
+        "licenceUri": "https://opendatacommons.org/licenses/odbl/"
       },
       {
         "name": "飯田橋駅前クリニック",
@@ -884,7 +383,10 @@
         "imageCopylight": null,
         "uri": null,
         "lat": 35.7017658,
-        "lng": 139.745557
+        "lng": 139.745557,
+        "copyright": "© OpenStreetMap contributors",
+        "licence": "Open Database License (ODbL) 1.0",
+        "licenceUri": "https://opendatacommons.org/licenses/odbl/"
       },
       {
         "name": "千代田保健所",
@@ -894,6 +396,9 @@
         "uri": null,
         "lat": 35.6960477,
         "lng": 139.7521747,
+        "copyright": "© OpenStreetMap contributors",
+        "licence": "Open Database License (ODbL) 1.0",
+        "licenceUri": "https://opendatacommons.org/licenses/odbl/",
         "name:en": "Chiyoda Public Health Center",
         "name:ja": "千代田保健所"
       },
@@ -904,7 +409,10 @@
         "imageCopylight": null,
         "uri": null,
         "lat": 35.6918496,
-        "lng": 139.7371428
+        "lng": 139.7371428,
+        "copyright": "© OpenStreetMap contributors",
+        "licence": "Open Database License (ODbL) 1.0",
+        "licenceUri": "https://opendatacommons.org/licenses/odbl/"
       },
       {
         "name": "イーク丸の内",
@@ -913,7 +421,10 @@
         "imageCopylight": null,
         "uri": null,
         "lat": 35.6789846,
-        "lng": 139.7650349
+        "lng": 139.7650349,
+        "copyright": "© OpenStreetMap contributors",
+        "licence": "Open Database License (ODbL) 1.0",
+        "licenceUri": "https://opendatacommons.org/licenses/odbl/"
       },
       {
         "name": "秋葉原スキンクリニック",
@@ -922,7 +433,10 @@
         "imageCopylight": null,
         "uri": "http://www.akiba1212.com",
         "lat": 35.7019502,
-        "lng": 139.7721949
+        "lng": 139.7721949,
+        "copyright": "© OpenStreetMap contributors",
+        "licence": "Open Database License (ODbL) 1.0",
+        "licenceUri": "https://opendatacommons.org/licenses/odbl/"
       },
       {
         "name": "飯田橋榎本クリニック",
@@ -931,7 +445,10 @@
         "imageCopylight": null,
         "uri": null,
         "lat": 35.700711,
-        "lng": 139.746682
+        "lng": 139.746682,
+        "copyright": "© OpenStreetMap contributors",
+        "licence": "Open Database License (ODbL) 1.0",
+        "licenceUri": "https://opendatacommons.org/licenses/odbl/"
       },
       {
         "name": "御茶ノ水呼吸ケアクリニック",
@@ -940,7 +457,10 @@
         "imageCopylight": null,
         "uri": null,
         "lat": 35.6992773,
-        "lng": 139.7643361
+        "lng": 139.7643361,
+        "copyright": "© OpenStreetMap contributors",
+        "licence": "Open Database License (ODbL) 1.0",
+        "licenceUri": "https://opendatacommons.org/licenses/odbl/"
       },
       {
         "name": "お茶の水血管外科クリニック",
@@ -949,7 +469,10 @@
         "imageCopylight": null,
         "uri": null,
         "lat": 35.699385,
-        "lng": 139.7629092
+        "lng": 139.7629092,
+        "copyright": "© OpenStreetMap contributors",
+        "licence": "Open Database License (ODbL) 1.0",
+        "licenceUri": "https://opendatacommons.org/licenses/odbl/"
       },
       {
         "name": "ユアクリニック",
@@ -958,7 +481,10 @@
         "imageCopylight": null,
         "uri": null,
         "lat": 35.69955,
-        "lng": 139.7634512
+        "lng": 139.7634512,
+        "copyright": "© OpenStreetMap contributors",
+        "licence": "Open Database License (ODbL) 1.0",
+        "licenceUri": "https://opendatacommons.org/licenses/odbl/"
       },
       {
         "name": "お茶の水メンタルクリニック",
@@ -968,6 +494,9 @@
         "uri": null,
         "lat": 35.6995606,
         "lng": 139.7634344,
+        "copyright": "© OpenStreetMap contributors",
+        "licence": "Open Database License (ODbL) 1.0",
+        "licenceUri": "https://opendatacommons.org/licenses/odbl/",
         "name:en": "Ochanomizu Mental Clinic"
       },
       {
@@ -977,7 +506,10 @@
         "imageCopylight": null,
         "uri": null,
         "lat": 35.6989562,
-        "lng": 139.7626414
+        "lng": 139.7626414,
+        "copyright": "© OpenStreetMap contributors",
+        "licence": "Open Database License (ODbL) 1.0",
+        "licenceUri": "https://opendatacommons.org/licenses/odbl/"
       },
       {
         "name": "瀬田クリニック",
@@ -986,7 +518,10 @@
         "imageCopylight": null,
         "uri": null,
         "lat": 35.6989788,
-        "lng": 139.7626253
+        "lng": 139.7626253,
+        "copyright": "© OpenStreetMap contributors",
+        "licence": "Open Database License (ODbL) 1.0",
+        "licenceUri": "https://opendatacommons.org/licenses/odbl/"
       },
       {
         "name": "神保町もりたメンタルクリニック",
@@ -995,7 +530,10 @@
         "imageCopylight": null,
         "uri": "https://morita1-7-12.jp/",
         "lat": 35.6957527,
-        "lng": 139.7591152
+        "lng": 139.7591152,
+        "copyright": "© OpenStreetMap contributors",
+        "licence": "Open Database License (ODbL) 1.0",
+        "licenceUri": "https://opendatacommons.org/licenses/odbl/"
       },
       {
         "name": "神保町駅前皮膚科",
@@ -1004,7 +542,10 @@
         "imageCopylight": null,
         "uri": null,
         "lat": 35.6957627,
-        "lng": 139.7591226
+        "lng": 139.7591226,
+        "copyright": "© OpenStreetMap contributors",
+        "licence": "Open Database License (ODbL) 1.0",
+        "licenceUri": "https://opendatacommons.org/licenses/odbl/"
       },
       {
         "name": "寺井クリニック",
@@ -1014,6 +555,9 @@
         "uri": null,
         "lat": 35.6996791,
         "lng": 139.7672312,
+        "copyright": "© OpenStreetMap contributors",
+        "licence": "Open Database License (ODbL) 1.0",
+        "licenceUri": "https://opendatacommons.org/licenses/odbl/",
         "name:en": "Terai Clinic"
       },
       {
@@ -1023,7 +567,10 @@
         "imageCopylight": null,
         "uri": null,
         "lat": 35.6833689,
-        "lng": 139.7380465
+        "lng": 139.7380465,
+        "copyright": "© OpenStreetMap contributors",
+        "licence": "Open Database License (ODbL) 1.0",
+        "licenceUri": "https://opendatacommons.org/licenses/odbl/"
       },
       {
         "name": "アイ・ローズ クリニック",
@@ -1032,7 +579,10 @@
         "imageCopylight": null,
         "uri": null,
         "lat": 35.6709185,
-        "lng": 139.7504634
+        "lng": 139.7504634,
+        "copyright": "© OpenStreetMap contributors",
+        "licence": "Open Database License (ODbL) 1.0",
+        "licenceUri": "https://opendatacommons.org/licenses/odbl/"
       },
       {
         "name": "秋葉原腎クリニック",
@@ -1041,7 +591,10 @@
         "imageCopylight": null,
         "uri": null,
         "lat": 35.6973684,
-        "lng": 139.7724528
+        "lng": 139.7724528,
+        "copyright": "© OpenStreetMap contributors",
+        "licence": "Open Database License (ODbL) 1.0",
+        "licenceUri": "https://opendatacommons.org/licenses/odbl/"
       },
       {
         "name": "千代田漢方内科クリニック",
@@ -1050,7 +603,10 @@
         "imageCopylight": null,
         "uri": null,
         "lat": 35.6820457,
-        "lng": 139.7409909
+        "lng": 139.7409909,
+        "copyright": "© OpenStreetMap contributors",
+        "licence": "Open Database License (ODbL) 1.0",
+        "licenceUri": "https://opendatacommons.org/licenses/odbl/"
       },
       {
         "name": "金沢耳鼻咽喉科",
@@ -1059,7 +615,10 @@
         "imageCopylight": null,
         "uri": null,
         "lat": 35.6993628,
-        "lng": 139.7763739
+        "lng": 139.7763739,
+        "copyright": "© OpenStreetMap contributors",
+        "licence": "Open Database License (ODbL) 1.0",
+        "licenceUri": "https://opendatacommons.org/licenses/odbl/"
       },
       {
         "name": "お茶の水循環器内科",
@@ -1068,7 +627,10 @@
         "imageCopylight": null,
         "uri": null,
         "lat": 35.6962109,
-        "lng": 139.7599868
+        "lng": 139.7599868,
+        "copyright": "© OpenStreetMap contributors",
+        "licence": "Open Database License (ODbL) 1.0",
+        "licenceUri": "https://opendatacommons.org/licenses/odbl/"
       },
       {
         "name": "証クリニック",
@@ -1077,7 +639,10 @@
         "imageCopylight": null,
         "uri": null,
         "lat": 35.6961633,
-        "lng": 139.7617103
+        "lng": 139.7617103,
+        "copyright": "© OpenStreetMap contributors",
+        "licence": "Open Database License (ODbL) 1.0",
+        "licenceUri": "https://opendatacommons.org/licenses/odbl/"
       },
       {
         "name": "日本医科大学呼吸ケアクリニック",
@@ -1086,7 +651,10 @@
         "imageCopylight": null,
         "uri": "https://rcc.nms.ac.jp/",
         "lat": 35.6915648,
-        "lng": 139.7387171
+        "lng": 139.7387171,
+        "copyright": "© OpenStreetMap contributors",
+        "licence": "Open Database License (ODbL) 1.0",
+        "licenceUri": "https://opendatacommons.org/licenses/odbl/"
       },
       {
         "name": "パレスクリニック",
@@ -1095,7 +663,10 @@
         "imageCopylight": null,
         "uri": null,
         "lat": 35.6911774,
-        "lng": 139.7573363
+        "lng": 139.7573363,
+        "copyright": "© OpenStreetMap contributors",
+        "licence": "Open Database License (ODbL) 1.0",
+        "licenceUri": "https://opendatacommons.org/licenses/odbl/"
       }
     ]
   },
@@ -1111,6 +682,9 @@
         "uri": null,
         "lat": 35.68032,
         "lng": 139.743685,
+        "copyright": "© OpenStreetMap contributors",
+        "licence": "Open Database License (ODbL) 1.0",
+        "licenceUri": "https://opendatacommons.org/licenses/odbl/",
         "name:en": "Supreme Court",
         "name:es": "Corte Suprema",
         "name:ja_rm": "Saikōsaibansho"
@@ -1123,6 +697,9 @@
         "uri": null,
         "lat": 35.675182,
         "lng": 139.752768,
+        "copyright": "© OpenStreetMap contributors",
+        "licence": "Open Database License (ODbL) 1.0",
+        "licenceUri": "https://opendatacommons.org/licenses/odbl/",
         "name:en": "Tokyo Second Prosecution Committee;Tokyo First Prosecution Committee;Intellectual Property High Court;Tokyo District Court;Tokyo High Court"
       },
       {
@@ -1133,6 +710,9 @@
         "uri": null,
         "lat": 35.6763961,
         "lng": 139.7533528,
+        "copyright": "© OpenStreetMap contributors",
+        "licence": "Open Database License (ODbL) 1.0",
+        "licenceUri": "https://opendatacommons.org/licenses/odbl/",
         "name:en": "Tokyo Summary Court Sumida Branch (temporary office)"
       },
       {
@@ -1143,6 +723,9 @@
         "uri": null,
         "lat": 35.674738,
         "lng": 139.754017,
+        "copyright": "© OpenStreetMap contributors",
+        "licence": "Open Database License (ODbL) 1.0",
+        "licenceUri": "https://opendatacommons.org/licenses/odbl/",
         "name:en": "Tokyo Family Court;Tokyo Summary Court;Public Security Examination Commission;Japan Fair Trade Commission"
       }
     ]
@@ -1158,7 +741,10 @@
         "imageCopylight": null,
         "uri": null,
         "lat": 35.6993827,
-        "lng": 139.7449449
+        "lng": 139.7449449,
+        "copyright": "© OpenStreetMap contributors",
+        "licence": "Open Database License (ODbL) 1.0",
+        "licenceUri": "https://opendatacommons.org/licenses/odbl/"
       },
       {
         "name": "神田キリスト教診療所",
@@ -1168,6 +754,9 @@
         "uri": null,
         "lat": 35.6944415,
         "lng": 139.7657224,
+        "copyright": "© OpenStreetMap contributors",
+        "licence": "Open Database License (ODbL) 1.0",
+        "licenceUri": "https://opendatacommons.org/licenses/odbl/",
         "name:en": "Kanda Christian Clinic"
       },
       {
@@ -1178,6 +767,9 @@
         "uri": null,
         "lat": 35.7020758,
         "lng": 139.7701438,
+        "copyright": "© OpenStreetMap contributors",
+        "licence": "Open Database License (ODbL) 1.0",
+        "licenceUri": "https://opendatacommons.org/licenses/odbl/",
         "name:en": "Hayashi Clinic",
         "name:ja": "林医院",
         "name:ja_rm": "Hayashi iin"
@@ -1190,6 +782,9 @@
         "uri": "https://www.shinagawa-lasik.com/tokyo/",
         "lat": 35.6744256,
         "lng": 139.764013,
+        "copyright": "© OpenStreetMap contributors",
+        "licence": "Open Database License (ODbL) 1.0",
+        "licenceUri": "https://opendatacommons.org/licenses/odbl/",
         "name:en": "Shinagawa LASIK Center",
         "name:it": "Shinagawa Lasik Center",
         "name:ja": "品川近視クリニック",
@@ -1203,6 +798,9 @@
         "uri": null,
         "lat": 35.6730891,
         "lng": 139.7605539,
+        "copyright": "© OpenStreetMap contributors",
+        "licence": "Open Database License (ODbL) 1.0",
+        "licenceUri": "https://opendatacommons.org/licenses/odbl/",
         "name:en": "Subaru Clinic",
         "name:it": "Subaru"
       },
@@ -1213,7 +811,10 @@
         "imageCopylight": null,
         "uri": null,
         "lat": 35.6830747,
-        "lng": 139.7419543
+        "lng": 139.7419543,
+        "copyright": "© OpenStreetMap contributors",
+        "licence": "Open Database License (ODbL) 1.0",
+        "licenceUri": "https://opendatacommons.org/licenses/odbl/"
       },
       {
         "name": "ゆうメンタルクリニック",
@@ -1223,6 +824,9 @@
         "uri": null,
         "lat": 35.6973516,
         "lng": 139.7757831,
+        "copyright": "© OpenStreetMap contributors",
+        "licence": "Open Database License (ODbL) 1.0",
+        "licenceUri": "https://opendatacommons.org/licenses/odbl/",
         "name:en": "Yu Mental Clinic"
       },
       {
@@ -1232,7 +836,10 @@
         "imageCopylight": null,
         "uri": "http://oshio-clinic.jp",
         "lat": 35.6970963,
-        "lng": 139.768176
+        "lng": 139.768176,
+        "copyright": "© OpenStreetMap contributors",
+        "licence": "Open Database License (ODbL) 1.0",
+        "licenceUri": "https://opendatacommons.org/licenses/odbl/"
       },
       {
         "name": "飯田橋小池クリニック",
@@ -1241,7 +848,10 @@
         "imageCopylight": null,
         "uri": null,
         "lat": 35.7005991,
-        "lng": 139.7465114
+        "lng": 139.7465114,
+        "copyright": "© OpenStreetMap contributors",
+        "licence": "Open Database License (ODbL) 1.0",
+        "licenceUri": "https://opendatacommons.org/licenses/odbl/"
       },
       {
         "name": "明神下診療所",
@@ -1251,6 +861,9 @@
         "uri": null,
         "lat": 35.7043508,
         "lng": 139.7724042,
+        "copyright": "© OpenStreetMap contributors",
+        "licence": "Open Database License (ODbL) 1.0",
+        "licenceUri": "https://opendatacommons.org/licenses/odbl/",
         "name:en": "Myojinshita Clinic"
       },
       {
@@ -1261,6 +874,9 @@
         "uri": null,
         "lat": 35.7032361,
         "lng": 139.7714594,
+        "copyright": "© OpenStreetMap contributors",
+        "licence": "Open Database License (ODbL) 1.0",
+        "licenceUri": "https://opendatacommons.org/licenses/odbl/",
         "name:en": "Setsugekka Medical Clinic",
         "name:ja": "雪月花メディカルクリニック"
       },
@@ -1271,7 +887,10 @@
         "imageCopylight": null,
         "uri": null,
         "lat": 35.6992746,
-        "lng": 139.7688201
+        "lng": 139.7688201,
+        "copyright": "© OpenStreetMap contributors",
+        "licence": "Open Database License (ODbL) 1.0",
+        "licenceUri": "https://opendatacommons.org/licenses/odbl/"
       },
       {
         "name": "秋葉原フロンティアクリニック",
@@ -1281,6 +900,9 @@
         "uri": null,
         "lat": 35.6992049,
         "lng": 139.7687879,
+        "copyright": "© OpenStreetMap contributors",
+        "licence": "Open Database License (ODbL) 1.0",
+        "licenceUri": "https://opendatacommons.org/licenses/odbl/",
         "name:en": "Akihabara Frontier Clinic"
       },
       {
@@ -1290,7 +912,10 @@
         "imageCopylight": null,
         "uri": null,
         "lat": 35.6952678,
-        "lng": 139.767705
+        "lng": 139.767705,
+        "copyright": "© OpenStreetMap contributors",
+        "licence": "Open Database License (ODbL) 1.0",
+        "licenceUri": "https://opendatacommons.org/licenses/odbl/"
       },
       {
         "name": "九段嵐山クリニック",
@@ -1299,7 +924,10 @@
         "imageCopylight": null,
         "uri": null,
         "lat": 35.6932104,
-        "lng": 139.7440023
+        "lng": 139.7440023,
+        "copyright": "© OpenStreetMap contributors",
+        "licence": "Open Database License (ODbL) 1.0",
+        "licenceUri": "https://opendatacommons.org/licenses/odbl/"
       },
       {
         "name": "秋葉原駅クリニック",
@@ -1308,7 +936,10 @@
         "imageCopylight": null,
         "uri": null,
         "lat": 35.6974105,
-        "lng": 139.7757869
+        "lng": 139.7757869,
+        "copyright": "© OpenStreetMap contributors",
+        "licence": "Open Database License (ODbL) 1.0",
+        "licenceUri": "https://opendatacommons.org/licenses/odbl/"
       },
       {
         "name": "秋葉原あつたアレルギー呼吸器内科クリニック",
@@ -1318,6 +949,9 @@
         "uri": null,
         "lat": 35.6958537,
         "lng": 139.7748698,
+        "copyright": "© OpenStreetMap contributors",
+        "licence": "Open Database License (ODbL) 1.0",
+        "licenceUri": "https://opendatacommons.org/licenses/odbl/",
         "name:en": "Akihabara Atsuta Clinic"
       },
       {
@@ -1327,7 +961,10 @@
         "imageCopylight": null,
         "uri": null,
         "lat": 35.6958232,
-        "lng": 139.7748598
+        "lng": 139.7748598,
+        "copyright": "© OpenStreetMap contributors",
+        "licence": "Open Database License (ODbL) 1.0",
+        "licenceUri": "https://opendatacommons.org/licenses/odbl/"
       },
       {
         "name": "林内科クリニック",
@@ -1336,7 +973,10 @@
         "imageCopylight": null,
         "uri": null,
         "lat": 35.7013047,
-        "lng": 139.767593
+        "lng": 139.767593,
+        "copyright": "© OpenStreetMap contributors",
+        "licence": "Open Database License (ODbL) 1.0",
+        "licenceUri": "https://opendatacommons.org/licenses/odbl/"
       },
       {
         "name": "秋葉原メンタルクリニック",
@@ -1346,6 +986,9 @@
         "uri": null,
         "lat": 35.6984375,
         "lng": 139.775815,
+        "copyright": "© OpenStreetMap contributors",
+        "licence": "Open Database License (ODbL) 1.0",
+        "licenceUri": "https://opendatacommons.org/licenses/odbl/",
         "name:en": "Akihabara Mental Clinic"
       },
       {
@@ -1355,7 +998,10 @@
         "imageCopylight": null,
         "uri": null,
         "lat": 35.699664,
-        "lng": 139.7781441
+        "lng": 139.7781441,
+        "copyright": "© OpenStreetMap contributors",
+        "licence": "Open Database License (ODbL) 1.0",
+        "licenceUri": "https://opendatacommons.org/licenses/odbl/"
       },
       {
         "name": "東京女性心理相談室",
@@ -1364,7 +1010,10 @@
         "imageCopylight": null,
         "uri": null,
         "lat": 35.6989092,
-        "lng": 139.7801762
+        "lng": 139.7801762,
+        "copyright": "© OpenStreetMap contributors",
+        "licence": "Open Database License (ODbL) 1.0",
+        "licenceUri": "https://opendatacommons.org/licenses/odbl/"
       },
       {
         "name": "末広町ヒライ耳鼻咽喉科",
@@ -1373,7 +1022,10 @@
         "imageCopylight": null,
         "uri": null,
         "lat": 35.704206,
-        "lng": 139.7722151
+        "lng": 139.7722151,
+        "copyright": "© OpenStreetMap contributors",
+        "licence": "Open Database License (ODbL) 1.0",
+        "licenceUri": "https://opendatacommons.org/licenses/odbl/"
       },
       {
         "name": "SAVE CLINIC AKIHABARA",
@@ -1382,7 +1034,10 @@
         "imageCopylight": null,
         "uri": null,
         "lat": 35.6988164,
-        "lng": 139.7684883
+        "lng": 139.7684883,
+        "copyright": "© OpenStreetMap contributors",
+        "licence": "Open Database License (ODbL) 1.0",
+        "licenceUri": "https://opendatacommons.org/licenses/odbl/"
       },
       {
         "name": "聖堂前クリニック",
@@ -1392,6 +1047,9 @@
         "uri": null,
         "lat": 35.6995709,
         "lng": 139.7667843,
+        "copyright": "© OpenStreetMap contributors",
+        "licence": "Open Database License (ODbL) 1.0",
+        "licenceUri": "https://opendatacommons.org/licenses/odbl/",
         "name:en": "Seido-mae Clinic"
       },
       {
@@ -1401,7 +1059,10 @@
         "imageCopylight": null,
         "uri": null,
         "lat": 35.683365,
-        "lng": 139.7702537
+        "lng": 139.7702537,
+        "copyright": "© OpenStreetMap contributors",
+        "licence": "Open Database License (ODbL) 1.0",
+        "licenceUri": "https://opendatacommons.org/licenses/odbl/"
       },
       {
         "name": "榊原サピアタワークリニック",
@@ -1410,7 +1071,10 @@
         "imageCopylight": null,
         "uri": null,
         "lat": 35.6837618,
-        "lng": 139.768767
+        "lng": 139.768767,
+        "copyright": "© OpenStreetMap contributors",
+        "licence": "Open Database License (ODbL) 1.0",
+        "licenceUri": "https://opendatacommons.org/licenses/odbl/"
       },
       {
         "name": "サピアタワーアイクリニック東京",
@@ -1419,7 +1083,10 @@
         "imageCopylight": null,
         "uri": null,
         "lat": 35.6837477,
-        "lng": 139.7684055
+        "lng": 139.7684055,
+        "copyright": "© OpenStreetMap contributors",
+        "licence": "Open Database License (ODbL) 1.0",
+        "licenceUri": "https://opendatacommons.org/licenses/odbl/"
       },
       {
         "name": "神田鈴木皮膚科",
@@ -1428,7 +1095,10 @@
         "imageCopylight": null,
         "uri": null,
         "lat": 35.6926473,
-        "lng": 139.7726048
+        "lng": 139.7726048,
+        "copyright": "© OpenStreetMap contributors",
+        "licence": "Open Database License (ODbL) 1.0",
+        "licenceUri": "https://opendatacommons.org/licenses/odbl/"
       },
       {
         "name": "ココロモクリニック神田",
@@ -1437,7 +1107,10 @@
         "imageCopylight": null,
         "uri": null,
         "lat": 35.6925858,
-        "lng": 139.7726284
+        "lng": 139.7726284,
+        "copyright": "© OpenStreetMap contributors",
+        "licence": "Open Database License (ODbL) 1.0",
+        "licenceUri": "https://opendatacommons.org/licenses/odbl/"
       },
       {
         "name": "神田ウィメンズクリニック",
@@ -1446,7 +1119,10 @@
         "imageCopylight": null,
         "uri": null,
         "lat": 35.6925905,
-        "lng": 139.7726945
+        "lng": 139.7726945,
+        "copyright": "© OpenStreetMap contributors",
+        "licence": "Open Database License (ODbL) 1.0",
+        "licenceUri": "https://opendatacommons.org/licenses/odbl/"
       },
       {
         "name": "HDCアトラスクリニック",
@@ -1455,7 +1131,10 @@
         "imageCopylight": null,
         "uri": null,
         "lat": 35.6875448,
-        "lng": 139.7428124
+        "lng": 139.7428124,
+        "copyright": "© OpenStreetMap contributors",
+        "licence": "Open Database License (ODbL) 1.0",
+        "licenceUri": "https://opendatacommons.org/licenses/odbl/"
       },
       {
         "name": "イワサキクリニック",
@@ -1464,7 +1143,10 @@
         "imageCopylight": null,
         "uri": null,
         "lat": 35.6931603,
-        "lng": 139.7719758
+        "lng": 139.7719758,
+        "copyright": "© OpenStreetMap contributors",
+        "licence": "Open Database License (ODbL) 1.0",
+        "licenceUri": "https://opendatacommons.org/licenses/odbl/"
       },
       {
         "name": "こころとからだの元氣プラザ",
@@ -1473,7 +1155,10 @@
         "imageCopylight": null,
         "uri": null,
         "lat": 35.6940954,
-        "lng": 139.7606201
+        "lng": 139.7606201,
+        "copyright": "© OpenStreetMap contributors",
+        "licence": "Open Database License (ODbL) 1.0",
+        "licenceUri": "https://opendatacommons.org/licenses/odbl/"
       },
       {
         "name": "東京中央美容外科",
@@ -1482,7 +1167,10 @@
         "imageCopylight": null,
         "uri": null,
         "lat": 35.697964,
-        "lng": 139.7742314
+        "lng": 139.7742314,
+        "copyright": "© OpenStreetMap contributors",
+        "licence": "Open Database License (ODbL) 1.0",
+        "licenceUri": "https://opendatacommons.org/licenses/odbl/"
       },
       {
         "name": "秋葉原DEM内科クリニック",
@@ -1491,7 +1179,10 @@
         "imageCopylight": null,
         "uri": null,
         "lat": 35.6986135,
-        "lng": 139.7785646
+        "lng": 139.7785646,
+        "copyright": "© OpenStreetMap contributors",
+        "licence": "Open Database License (ODbL) 1.0",
+        "licenceUri": "https://opendatacommons.org/licenses/odbl/"
       },
       {
         "name": "奥田医院",
@@ -1500,7 +1191,10 @@
         "imageCopylight": null,
         "uri": null,
         "lat": 35.6942574,
-        "lng": 139.7689739
+        "lng": 139.7689739,
+        "copyright": "© OpenStreetMap contributors",
+        "licence": "Open Database License (ODbL) 1.0",
+        "licenceUri": "https://opendatacommons.org/licenses/odbl/"
       },
       {
         "name": "神田痛みのクリニック",
@@ -1510,6 +1204,9 @@
         "uri": null,
         "lat": 35.6934035,
         "lng": 139.7696637,
+        "copyright": "© OpenStreetMap contributors",
+        "licence": "Open Database License (ODbL) 1.0",
+        "licenceUri": "https://opendatacommons.org/licenses/odbl/",
         "name:en": "Kanda Itamino Clinic"
       },
       {
@@ -1519,7 +1216,10 @@
         "imageCopylight": null,
         "uri": null,
         "lat": 35.6950996,
-        "lng": 139.7689287
+        "lng": 139.7689287,
+        "copyright": "© OpenStreetMap contributors",
+        "licence": "Open Database License (ODbL) 1.0",
+        "licenceUri": "https://opendatacommons.org/licenses/odbl/"
       },
       {
         "name": "麹町明光耳鼻咽喉科",
@@ -1528,7 +1228,10 @@
         "imageCopylight": null,
         "uri": null,
         "lat": 35.6837449,
-        "lng": 139.7419667
+        "lng": 139.7419667,
+        "copyright": "© OpenStreetMap contributors",
+        "licence": "Open Database License (ODbL) 1.0",
+        "licenceUri": "https://opendatacommons.org/licenses/odbl/"
       },
       {
         "name": "コハシ文春ビル診療所",
@@ -1537,7 +1240,10 @@
         "imageCopylight": null,
         "uri": null,
         "lat": 35.6824556,
-        "lng": 139.7380891
+        "lng": 139.7380891,
+        "copyright": "© OpenStreetMap contributors",
+        "licence": "Open Database License (ODbL) 1.0",
+        "licenceUri": "https://opendatacommons.org/licenses/odbl/"
       },
       {
         "name": "お茶の水美容整形クリニック",
@@ -1546,7 +1252,10 @@
         "imageCopylight": null,
         "uri": null,
         "lat": 35.6990111,
-        "lng": 139.7640224
+        "lng": 139.7640224,
+        "copyright": "© OpenStreetMap contributors",
+        "licence": "Open Database License (ODbL) 1.0",
+        "licenceUri": "https://opendatacommons.org/licenses/odbl/"
       },
       {
         "name": "お茶の水耳鼻咽喉科・アレルギー科",
@@ -1555,7 +1264,10 @@
         "imageCopylight": null,
         "uri": null,
         "lat": 35.6988047,
-        "lng": 139.7642152
+        "lng": 139.7642152,
+        "copyright": "© OpenStreetMap contributors",
+        "licence": "Open Database License (ODbL) 1.0",
+        "licenceUri": "https://opendatacommons.org/licenses/odbl/"
       },
       {
         "name": "浅井医院",
@@ -1564,7 +1276,10 @@
         "imageCopylight": null,
         "uri": null,
         "lat": 35.6835577,
-        "lng": 139.7392887
+        "lng": 139.7392887,
+        "copyright": "© OpenStreetMap contributors",
+        "licence": "Open Database License (ODbL) 1.0",
+        "licenceUri": "https://opendatacommons.org/licenses/odbl/"
       },
       {
         "name": "肌のクリニック麹町院",
@@ -1573,7 +1288,10 @@
         "imageCopylight": null,
         "uri": null,
         "lat": 35.6832435,
-        "lng": 139.7394206
+        "lng": 139.7394206,
+        "copyright": "© OpenStreetMap contributors",
+        "licence": "Open Database License (ODbL) 1.0",
+        "licenceUri": "https://opendatacommons.org/licenses/odbl/"
       },
       {
         "name": "石川医院",
@@ -1582,7 +1300,10 @@
         "imageCopylight": null,
         "uri": null,
         "lat": 35.6960698,
-        "lng": 139.7796738
+        "lng": 139.7796738,
+        "copyright": "© OpenStreetMap contributors",
+        "licence": "Open Database License (ODbL) 1.0",
+        "licenceUri": "https://opendatacommons.org/licenses/odbl/"
       },
       {
         "name": "お茶の水クリニック",
@@ -1591,7 +1312,10 @@
         "imageCopylight": null,
         "uri": null,
         "lat": 35.6981493,
-        "lng": 139.7626994
+        "lng": 139.7626994,
+        "copyright": "© OpenStreetMap contributors",
+        "licence": "Open Database License (ODbL) 1.0",
+        "licenceUri": "https://opendatacommons.org/licenses/odbl/"
       },
       {
         "name": "第一電建ビル 内科・外科・麻酔科",
@@ -1600,7 +1324,10 @@
         "imageCopylight": null,
         "uri": null,
         "lat": 35.6903829,
-        "lng": 139.7688432
+        "lng": 139.7688432,
+        "copyright": "© OpenStreetMap contributors",
+        "licence": "Open Database License (ODbL) 1.0",
+        "licenceUri": "https://opendatacommons.org/licenses/odbl/"
       },
       {
         "name": "半蔵門胃腸クリニック",
@@ -1609,7 +1336,10 @@
         "imageCopylight": null,
         "uri": null,
         "lat": 35.6833621,
-        "lng": 139.7437715
+        "lng": 139.7437715,
+        "copyright": "© OpenStreetMap contributors",
+        "licence": "Open Database License (ODbL) 1.0",
+        "licenceUri": "https://opendatacommons.org/licenses/odbl/"
       }
     ]
   },
@@ -1625,6 +1355,9 @@
         "uri": null,
         "lat": 35.6972162,
         "lng": 139.7724786,
+        "copyright": "© OpenStreetMap contributors",
+        "licence": "Open Database License (ODbL) 1.0",
+        "licenceUri": "https://opendatacommons.org/licenses/odbl/",
         "name:en": "Akihabara Medical Clinic"
       },
       {
@@ -1635,6 +1368,9 @@
         "uri": null,
         "lat": 35.699902,
         "lng": 139.779126,
+        "copyright": "© OpenStreetMap contributors",
+        "licence": "Open Database License (ODbL) 1.0",
+        "licenceUri": "https://opendatacommons.org/licenses/odbl/",
         "name:en": "Mitsui Memorial Hospital"
       },
       {
@@ -1645,6 +1381,9 @@
         "uri": null,
         "lat": 35.698402,
         "lng": 139.762933,
+        "copyright": "© OpenStreetMap contributors",
+        "licence": "Open Database License (ODbL) 1.0",
+        "licenceUri": "https://opendatacommons.org/licenses/odbl/",
         "name:en": "Kyoundo Hospital",
         "name:es": "Hospital Kyoundo",
         "name:ja": "佐々木研究所附属杏雲堂病院"
@@ -1657,6 +1396,9 @@
         "uri": null,
         "lat": 35.695212,
         "lng": 139.771346,
+        "copyright": "© OpenStreetMap contributors",
+        "licence": "Open Database License (ODbL) 1.0",
+        "licenceUri": "https://opendatacommons.org/licenses/odbl/",
         "name:en": "Meiwa Hospital"
       },
       {
@@ -1667,6 +1409,9 @@
         "uri": null,
         "lat": 35.697486,
         "lng": 139.766294,
+        "copyright": "© OpenStreetMap contributors",
+        "licence": "Open Database License (ODbL) 1.0",
+        "licenceUri": "https://opendatacommons.org/licenses/odbl/",
         "name:en": "Nagura Clinic",
         "name:es": "Clínica Nagura",
         "name:ja": "名倉クリニック"
@@ -1679,6 +1424,9 @@
         "uri": null,
         "lat": 35.699703,
         "lng": 139.7613616,
+        "copyright": "© OpenStreetMap contributors",
+        "licence": "Open Database License (ODbL) 1.0",
+        "licenceUri": "https://opendatacommons.org/licenses/odbl/",
         "name:en": "Hamada Hospital",
         "name:ja": "小畑会浜田病院"
       },
@@ -1690,6 +1438,9 @@
         "uri": null,
         "lat": 35.7013549,
         "lng": 139.7549178,
+        "copyright": "© OpenStreetMap contributors",
+        "licence": "Open Database License (ODbL) 1.0",
+        "licenceUri": "https://opendatacommons.org/licenses/odbl/",
         "name:en": "Tokyo Dental College Suidobashi Hospital",
         "name:ja": "東京歯科大学水道橋病院"
       },
@@ -1701,6 +1452,9 @@
         "uri": null,
         "lat": 35.7001029,
         "lng": 139.7612792,
+        "copyright": "© OpenStreetMap contributors",
+        "licence": "Open Database License (ODbL) 1.0",
+        "licenceUri": "https://opendatacommons.org/licenses/odbl/",
         "name:en": "Sanraku Hospital",
         "name:ja": "東京都教職員互助会三楽病院"
       },
@@ -1712,6 +1466,9 @@
         "uri": null,
         "lat": 35.669627,
         "lng": 139.756879,
+        "copyright": "© OpenStreetMap contributors",
+        "licence": "Open Database License (ODbL) 1.0",
+        "licenceUri": "https://opendatacommons.org/licenses/odbl/",
         "name:en": "Hibiya Hospital"
       },
       {
@@ -1722,6 +1479,9 @@
         "uri": null,
         "lat": 35.698513,
         "lng": 139.765516,
+        "copyright": "© OpenStreetMap contributors",
+        "licence": "Open Database License (ODbL) 1.0",
+        "licenceUri": "https://opendatacommons.org/licenses/odbl/",
         "name:en": "Inouye Eye Hospital",
         "name:ko": "이노우에 안과"
       },
@@ -1733,6 +1493,9 @@
         "uri": null,
         "lat": 35.696958,
         "lng": 139.766599,
+        "copyright": "© OpenStreetMap contributors",
+        "licence": "Open Database License (ODbL) 1.0",
+        "licenceUri": "https://opendatacommons.org/licenses/odbl/",
         "name:en": "Kamio Memorial Hospital",
         "name:ja": "神尾記念病院"
       },
@@ -1744,6 +1507,9 @@
         "uri": null,
         "lat": 35.6854722,
         "lng": 139.7427636,
+        "copyright": "© OpenStreetMap contributors",
+        "licence": "Open Database License (ODbL) 1.0",
+        "licenceUri": "https://opendatacommons.org/licenses/odbl/",
         "name:en": "Hanzomon Hospital"
       },
       {
@@ -1754,6 +1520,9 @@
         "uri": "http://www.kudanzaka.com/",
         "lat": 35.6938447,
         "lng": 139.7522986,
+        "copyright": "© OpenStreetMap contributors",
+        "licence": "Open Database License (ODbL) 1.0",
+        "licenceUri": "https://opendatacommons.org/licenses/odbl/",
         "name:en": "Kudanzaka Hospital",
         "name:it": "Kudanzaka"
       }
@@ -1770,7 +1539,10 @@
         "imageCopylight": null,
         "uri": null,
         "lat": 35.690595,
-        "lng": 139.7410684
+        "lng": 139.7410684,
+        "copyright": "© OpenStreetMap contributors",
+        "licence": "Open Database License (ODbL) 1.0",
+        "licenceUri": "https://opendatacommons.org/licenses/odbl/"
       },
       {
         "name": "千代田幼稚園",
@@ -1780,6 +1552,9 @@
         "uri": null,
         "lat": 35.6929335,
         "lng": 139.7683897,
+        "copyright": "© OpenStreetMap contributors",
+        "licence": "Open Database License (ODbL) 1.0",
+        "licenceUri": "https://opendatacommons.org/licenses/odbl/",
         "name:en": "Chiyoda Kindergarten"
       },
       {
@@ -1789,7 +1564,10 @@
         "imageCopylight": null,
         "uri": null,
         "lat": 35.6892471,
-        "lng": 139.739988
+        "lng": 139.739988,
+        "copyright": "© OpenStreetMap contributors",
+        "licence": "Open Database License (ODbL) 1.0",
+        "licenceUri": "https://opendatacommons.org/licenses/odbl/"
       },
       {
         "name": "ふじみこども園",
@@ -1798,7 +1576,10 @@
         "imageCopylight": null,
         "uri": "https://www.city.chiyoda.lg.jp/koho/kosodate/yochien/kuritsu/ichiran/fujimi.html",
         "lat": 35.69747,
-        "lng": 139.7464373
+        "lng": 139.7464373,
+        "copyright": "© OpenStreetMap contributors",
+        "licence": "Open Database License (ODbL) 1.0",
+        "licenceUri": "https://opendatacommons.org/licenses/odbl/"
       },
       {
         "name": "暁星幼稚園",
@@ -1807,7 +1588,10 @@
         "imageCopylight": null,
         "uri": null,
         "lat": 35.6977506,
-        "lng": 139.7471524
+        "lng": 139.7471524,
+        "copyright": "© OpenStreetMap contributors",
+        "licence": "Open Database License (ODbL) 1.0",
+        "licenceUri": "https://opendatacommons.org/licenses/odbl/"
       },
       {
         "name": "東京都助産婦会館八千代保育園",
@@ -1816,7 +1600,10 @@
         "imageCopylight": null,
         "uri": null,
         "lat": 35.698235,
-        "lng": 139.745739
+        "lng": 139.745739,
+        "copyright": "© OpenStreetMap contributors",
+        "licence": "Open Database License (ODbL) 1.0",
+        "licenceUri": "https://opendatacommons.org/licenses/odbl/"
       },
       {
         "name": "番町幼稚園",
@@ -1825,7 +1612,10 @@
         "imageCopylight": null,
         "uri": null,
         "lat": 35.6876548,
-        "lng": 139.7335805
+        "lng": 139.7335805,
+        "copyright": "© OpenStreetMap contributors",
+        "licence": "Open Database License (ODbL) 1.0",
+        "licenceUri": "https://opendatacommons.org/licenses/odbl/"
       },
       {
         "name": "白百合学園幼稚園",
@@ -1835,6 +1625,9 @@
         "uri": null,
         "lat": 35.6958128,
         "lng": 139.7443407,
+        "copyright": "© OpenStreetMap contributors",
+        "licence": "Open Database License (ODbL) 1.0",
+        "licenceUri": "https://opendatacommons.org/licenses/odbl/",
         "name:en": "Shirayuri Gakuen Kindergarten",
         "name:zh": "白百合學園幼稚園"
       },
@@ -1845,7 +1638,10 @@
         "imageCopylight": null,
         "uri": null,
         "lat": 35.686569,
-        "lng": 139.73238
+        "lng": 139.73238,
+        "copyright": "© OpenStreetMap contributors",
+        "licence": "Open Database License (ODbL) 1.0",
+        "licenceUri": "https://opendatacommons.org/licenses/odbl/"
       },
       {
         "name": "飯田橋保育園",
@@ -1854,7 +1650,10 @@
         "imageCopylight": null,
         "uri": null,
         "lat": 35.701512,
-        "lng": 139.748489
+        "lng": 139.748489,
+        "copyright": "© OpenStreetMap contributors",
+        "licence": "Open Database License (ODbL) 1.0",
+        "licenceUri": "https://opendatacommons.org/licenses/odbl/"
       },
       {
         "name": "麹町保育園",
@@ -1864,6 +1663,9 @@
         "uri": null,
         "lat": 35.687875,
         "lng": 139.742768,
+        "copyright": "© OpenStreetMap contributors",
+        "licence": "Open Database License (ODbL) 1.0",
+        "licenceUri": "https://opendatacommons.org/licenses/odbl/",
         "name:en": "Kojimachi Nursery"
       },
       {
@@ -1873,7 +1675,10 @@
         "imageCopylight": null,
         "uri": null,
         "lat": 35.6855256,
-        "lng": 139.7400675
+        "lng": 139.7400675,
+        "copyright": "© OpenStreetMap contributors",
+        "licence": "Open Database License (ODbL) 1.0",
+        "licenceUri": "https://opendatacommons.org/licenses/odbl/"
       },
       {
         "name": "千代田区麹町保育園",
@@ -1882,7 +1687,10 @@
         "imageCopylight": null,
         "uri": null,
         "lat": 35.6882036,
-        "lng": 139.7427671
+        "lng": 139.7427671,
+        "copyright": "© OpenStreetMap contributors",
+        "licence": "Open Database License (ODbL) 1.0",
+        "licenceUri": "https://opendatacommons.org/licenses/odbl/"
       },
       {
         "name": "神田寺幼稚園",
@@ -1892,6 +1700,9 @@
         "uri": null,
         "lat": 35.7013831,
         "lng": 139.7702913,
+        "copyright": "© OpenStreetMap contributors",
+        "licence": "Open Database License (ODbL) 1.0",
+        "licenceUri": "https://opendatacommons.org/licenses/odbl/",
         "name:en": "Kandadera Kindergarten"
       },
       {
@@ -1901,7 +1712,10 @@
         "imageCopylight": null,
         "uri": null,
         "lat": 35.6966488,
-        "lng": 139.7750898
+        "lng": 139.7750898,
+        "copyright": "© OpenStreetMap contributors",
+        "licence": "Open Database License (ODbL) 1.0",
+        "licenceUri": "https://opendatacommons.org/licenses/odbl/"
       }
     ]
   },
@@ -1917,6 +1731,9 @@
         "uri": null,
         "lat": 35.7009442,
         "lng": 139.7591756,
+        "copyright": "© OpenStreetMap contributors",
+        "licence": "Open Database License (ODbL) 1.0",
+        "licenceUri": "https://opendatacommons.org/licenses/odbl/",
         "name:en": "Ochanomizu Library, Ishikawa Cultural Enterprise Foundation",
         "name:ru": "Библиотека Отяномидзу, Фонд учреждений культуры Исикава"
       },
@@ -1928,6 +1745,9 @@
         "uri": null,
         "lat": 35.6938859,
         "lng": 139.7535705,
+        "copyright": "© OpenStreetMap contributors",
+        "licence": "Open Database License (ODbL) 1.0",
+        "licenceUri": "https://opendatacommons.org/licenses/odbl/",
         "name:en": "Chiyoda Library",
         "name:it": "Chiyoda",
         "name:ja_rm": "Chiyoda Toshokan"
@@ -1940,6 +1760,9 @@
         "uri": null,
         "lat": 35.6894678,
         "lng": 139.7397296,
+        "copyright": "© OpenStreetMap contributors",
+        "licence": "Open Database License (ODbL) 1.0",
+        "licenceUri": "https://opendatacommons.org/licenses/odbl/",
         "name:en": "Yonbancho Library"
       },
       {
@@ -1950,6 +1773,9 @@
         "uri": null,
         "lat": 35.6929651,
         "lng": 139.7683614,
+        "copyright": "© OpenStreetMap contributors",
+        "licence": "Open Database License (ODbL) 1.0",
+        "licenceUri": "https://opendatacommons.org/licenses/odbl/",
         "name:en": "Kanda Community Library"
       },
       {
@@ -1960,6 +1786,9 @@
         "uri": null,
         "lat": 35.680241,
         "lng": 139.7437082,
+        "copyright": "© OpenStreetMap contributors",
+        "licence": "Open Database License (ODbL) 1.0",
+        "licenceUri": "https://opendatacommons.org/licenses/odbl/",
         "name:en": "Supreme Court Library",
         "name:es": "Biblioteca de la Corte Suprema"
       },
@@ -1971,6 +1800,9 @@
         "uri": null,
         "lat": 35.671945,
         "lng": 139.754641,
+        "copyright": "© OpenStreetMap contributors",
+        "licence": "Open Database License (ODbL) 1.0",
+        "licenceUri": "https://opendatacommons.org/licenses/odbl/",
         "name:en": "Hibiya Book Culture Hall"
       },
       {
@@ -1981,6 +1813,9 @@
         "uri": "http://www.library.chiyoda.tokyo.jp",
         "lat": 35.7013313,
         "lng": 139.7700608,
+        "copyright": "© OpenStreetMap contributors",
+        "licence": "Open Database License (ODbL) 1.0",
+        "licenceUri": "https://opendatacommons.org/licenses/odbl/",
         "name:en": "Shouhei-Machikado-Library"
       },
       {
@@ -1990,7 +1825,10 @@
         "imageCopylight": null,
         "uri": "https://www.eco.nihon-u.ac.jp/~nueco-library/",
         "lat": 35.6988082,
-        "lng": 139.7570462
+        "lng": 139.7570462,
+        "copyright": "© OpenStreetMap contributors",
+        "licence": "Open Database License (ODbL) 1.0",
+        "licenceUri": "https://opendatacommons.org/licenses/odbl/"
       }
     ]
   },
@@ -2006,6 +1844,9 @@
         "uri": null,
         "lat": 35.6901388,
         "lng": 139.7663029,
+        "copyright": "© OpenStreetMap contributors",
+        "licence": "Open Database License (ODbL) 1.0",
+        "licenceUri": "https://opendatacommons.org/licenses/odbl/",
         "name:en": "Inari-yu"
       },
       {
@@ -2015,7 +1856,10 @@
         "imageCopylight": null,
         "uri": "https://rakuspa.com/kanda/",
         "lat": 35.6981356,
-        "lng": 139.7679137
+        "lng": 139.7679137,
+        "copyright": "© OpenStreetMap contributors",
+        "licence": "Open Database License (ODbL) 1.0",
+        "licenceUri": "https://opendatacommons.org/licenses/odbl/"
       },
       {
         "name": "於玉湯",
@@ -2025,6 +1869,9 @@
         "uri": null,
         "lat": 35.6927651,
         "lng": 139.7755499,
+        "copyright": "© OpenStreetMap contributors",
+        "licence": "Open Database License (ODbL) 1.0",
+        "licenceUri": "https://opendatacommons.org/licenses/odbl/",
         "name:en": "Otama Yu Spa"
       },
       {
@@ -2034,7 +1881,10 @@
         "imageCopylight": null,
         "uri": null,
         "lat": 35.6966741,
-        "lng": 139.7552918
+        "lng": 139.7552918,
+        "copyright": "© OpenStreetMap contributors",
+        "licence": "Open Database License (ODbL) 1.0",
+        "licenceUri": "https://opendatacommons.org/licenses/odbl/"
       },
       {
         "name": "SPA大手町",
@@ -2044,6 +1894,9 @@
         "uri": null,
         "lat": 35.6885516,
         "lng": 139.7645456,
+        "copyright": "© OpenStreetMap contributors",
+        "licence": "Open Database License (ODbL) 1.0",
+        "licenceUri": "https://opendatacommons.org/licenses/odbl/",
         "name:en": "Spa Otemachi"
       },
       {
@@ -2053,7 +1906,10 @@
         "imageCopylight": null,
         "uri": null,
         "lat": 35.683313,
-        "lng": 139.7380742
+        "lng": 139.7380742,
+        "copyright": "© OpenStreetMap contributors",
+        "licence": "Open Database License (ODbL) 1.0",
+        "licenceUri": "https://opendatacommons.org/licenses/odbl/"
       }
     ]
   },
@@ -2069,6 +1925,9 @@
         "uri": null,
         "lat": 35.6977259,
         "lng": 139.7795248,
+        "copyright": "© OpenStreetMap contributors",
+        "licence": "Open Database License (ODbL) 1.0",
+        "licenceUri": "https://opendatacommons.org/licenses/odbl/",
         "name:ja": "草分稲荷神社"
       },
       {
@@ -2079,6 +1938,9 @@
         "uri": null,
         "lat": 35.6920759,
         "lng": 139.7751528,
+        "copyright": "© OpenStreetMap contributors",
+        "licence": "Open Database License (ODbL) 1.0",
+        "licenceUri": "https://opendatacommons.org/licenses/odbl/",
         "name:en": "Kanayama Shrine"
       },
       {
@@ -2089,6 +1951,9 @@
         "uri": null,
         "lat": 35.6942059,
         "lng": 139.7620976,
+        "copyright": "© OpenStreetMap contributors",
+        "licence": "Open Database License (ODbL) 1.0",
+        "licenceUri": "https://opendatacommons.org/licenses/odbl/",
         "name:en": "Goto Inari shrine",
         "name:ja": "五十稲荷神社"
       },
@@ -2100,6 +1965,9 @@
         "uri": null,
         "lat": 35.6835045,
         "lng": 139.7379926,
+        "copyright": "© OpenStreetMap contributors",
+        "licence": "Open Database License (ODbL) 1.0",
+        "licenceUri": "https://opendatacommons.org/licenses/odbl/",
         "name:ja": "豊栄稲荷大明神"
       },
       {
@@ -2109,7 +1977,10 @@
         "imageCopylight": null,
         "uri": null,
         "lat": 35.6954858,
-        "lng": 139.764573
+        "lng": 139.764573,
+        "copyright": "© OpenStreetMap contributors",
+        "licence": "Open Database License (ODbL) 1.0",
+        "licenceUri": "https://opendatacommons.org/licenses/odbl/"
       },
       {
         "name": "山王稲荷神社",
@@ -2118,7 +1989,10 @@
         "imageCopylight": null,
         "uri": null,
         "lat": 35.6751638,
-        "lng": 139.7396558
+        "lng": 139.7396558,
+        "copyright": "© OpenStreetMap contributors",
+        "licence": "Open Database License (ODbL) 1.0",
+        "licenceUri": "https://opendatacommons.org/licenses/odbl/"
       },
       {
         "name": "八坂神社　猿田彦神社",
@@ -2127,7 +2001,10 @@
         "imageCopylight": null,
         "uri": null,
         "lat": 35.6751632,
-        "lng": 139.7397262
+        "lng": 139.7397262,
+        "copyright": "© OpenStreetMap contributors",
+        "licence": "Open Database License (ODbL) 1.0",
+        "licenceUri": "https://opendatacommons.org/licenses/odbl/"
       },
       {
         "name": "毎日神社",
@@ -2136,7 +2013,10 @@
         "imageCopylight": null,
         "uri": null,
         "lat": 35.6911163,
-        "lng": 139.7576539
+        "lng": 139.7576539,
+        "copyright": "© OpenStreetMap contributors",
+        "licence": "Open Database License (ODbL) 1.0",
+        "licenceUri": "https://opendatacommons.org/licenses/odbl/"
       },
       {
         "name": "世継稲荷",
@@ -2145,7 +2025,10 @@
         "imageCopylight": null,
         "uri": null,
         "lat": 35.6960241,
-        "lng": 139.7498596
+        "lng": 139.7498596,
+        "copyright": "© OpenStreetMap contributors",
+        "licence": "Open Database License (ODbL) 1.0",
+        "licenceUri": "https://opendatacommons.org/licenses/odbl/"
       },
       {
         "name": "豊受稲荷",
@@ -2154,7 +2037,10 @@
         "imageCopylight": null,
         "uri": null,
         "lat": 35.6840666,
-        "lng": 139.7368255
+        "lng": 139.7368255,
+        "copyright": "© OpenStreetMap contributors",
+        "licence": "Open Database License (ODbL) 1.0",
+        "licenceUri": "https://opendatacommons.org/licenses/odbl/"
       },
       {
         "name": "三殿宮",
@@ -2163,7 +2049,10 @@
         "imageCopylight": null,
         "uri": null,
         "lat": 35.6824238,
-        "lng": 139.7411984
+        "lng": 139.7411984,
+        "copyright": "© OpenStreetMap contributors",
+        "licence": "Open Database License (ODbL) 1.0",
+        "licenceUri": "https://opendatacommons.org/licenses/odbl/"
       },
       {
         "name": "妙法衛護稲荷神社",
@@ -2172,7 +2061,10 @@
         "imageCopylight": null,
         "uri": null,
         "lat": 35.6944467,
-        "lng": 139.7554357
+        "lng": 139.7554357,
+        "copyright": "© OpenStreetMap contributors",
+        "licence": "Open Database License (ODbL) 1.0",
+        "licenceUri": "https://opendatacommons.org/licenses/odbl/"
       },
       {
         "name": "豊川稲荷神社",
@@ -2181,7 +2073,10 @@
         "imageCopylight": null,
         "uri": null,
         "lat": 35.6936705,
-        "lng": 139.7628136
+        "lng": 139.7628136,
+        "copyright": "© OpenStreetMap contributors",
+        "licence": "Open Database License (ODbL) 1.0",
+        "licenceUri": "https://opendatacommons.org/licenses/odbl/"
       }
     ]
   },
@@ -2197,6 +2092,9 @@
         "uri": null,
         "lat": 35.699815,
         "lng": 139.779184,
+        "copyright": "© OpenStreetMap contributors",
+        "licence": "Open Database License (ODbL) 1.0",
+        "licenceUri": "https://opendatacommons.org/licenses/odbl/",
         "name:en": "Mitsui Memorial Hospital"
       },
       {
@@ -2206,7 +2104,10 @@
         "imageCopylight": null,
         "uri": null,
         "lat": 35.698624,
-        "lng": 139.745851
+        "lng": 139.745851,
+        "copyright": "© OpenStreetMap contributors",
+        "licence": "Open Database License (ODbL) 1.0",
+        "licenceUri": "https://opendatacommons.org/licenses/odbl/"
       },
       {
         "name": "千代田区立一番町高齢者在宅介護支援センター",
@@ -2215,7 +2116,10 @@
         "imageCopylight": null,
         "uri": null,
         "lat": 35.6869902,
-        "lng": 139.7392841
+        "lng": 139.7392841,
+        "copyright": "© OpenStreetMap contributors",
+        "licence": "Open Database License (ODbL) 1.0",
+        "licenceUri": "https://opendatacommons.org/licenses/odbl/"
       },
       {
         "name": "千代田区立高齢者センター",
@@ -2224,7 +2128,10 @@
         "imageCopylight": null,
         "uri": null,
         "lat": 35.697124,
-        "lng": 139.756516
+        "lng": 139.756516,
+        "copyright": "© OpenStreetMap contributors",
+        "licence": "Open Database License (ODbL) 1.0",
+        "licenceUri": "https://opendatacommons.org/licenses/odbl/"
       },
       {
         "name": "社会福祉法人博仁会　千代田区立一番町特別養護老人ホーム",
@@ -2233,7 +2140,10 @@
         "imageCopylight": null,
         "uri": null,
         "lat": 35.686958,
-        "lng": 139.739296
+        "lng": 139.739296,
+        "copyright": "© OpenStreetMap contributors",
+        "licence": "Open Database License (ODbL) 1.0",
+        "licenceUri": "https://opendatacommons.org/licenses/odbl/"
       },
       {
         "name": "西神田児童・家庭支援センター",
@@ -2242,7 +2152,10 @@
         "imageCopylight": null,
         "uri": null,
         "lat": 35.6988874,
-        "lng": 139.7547057
+        "lng": 139.7547057,
+        "copyright": "© OpenStreetMap contributors",
+        "licence": "Open Database License (ODbL) 1.0",
+        "licenceUri": "https://opendatacommons.org/licenses/odbl/"
       },
       {
         "name": "ＳＳＳ１",
@@ -2251,7 +2164,10 @@
         "imageCopylight": null,
         "uri": null,
         "lat": 35.692542,
-        "lng": 139.777738
+        "lng": 139.777738,
+        "copyright": "© OpenStreetMap contributors",
+        "licence": "Open Database License (ODbL) 1.0",
+        "licenceUri": "https://opendatacommons.org/licenses/odbl/"
       },
       {
         "name": "ケアリッツお茶の水",
@@ -2260,7 +2176,10 @@
         "imageCopylight": null,
         "uri": null,
         "lat": 35.6971281,
-        "lng": 139.7570451
+        "lng": 139.7570451,
+        "copyright": "© OpenStreetMap contributors",
+        "licence": "Open Database License (ODbL) 1.0",
+        "licenceUri": "https://opendatacommons.org/licenses/odbl/"
       },
       {
         "name": "ウイーザス九段（介護付有料老人ホーム）",
@@ -2269,7 +2188,10 @@
         "imageCopylight": null,
         "uri": null,
         "lat": 35.6968,
-        "lng": 139.7529282
+        "lng": 139.7529282,
+        "copyright": "© OpenStreetMap contributors",
+        "licence": "Open Database License (ODbL) 1.0",
+        "licenceUri": "https://opendatacommons.org/licenses/odbl/"
       }
     ]
   },
@@ -2285,6 +2207,9 @@
         "uri": "https://kageki.hankyu.co.jp/theater/tokyo/",
         "lat": 35.6728254,
         "lng": 139.7592046,
+        "copyright": "© OpenStreetMap contributors",
+        "licence": "Open Database License (ODbL) 1.0",
+        "licenceUri": "https://opendatacommons.org/licenses/odbl/",
         "name:en": "Tokyo Takarazuka Theater",
         "name:es": "Teatro Tokyo Takarazuka",
         "name:fr": "Théâtre Takarazuka",
@@ -2301,6 +2226,9 @@
         "uri": "https://www.nissaytheatre.or.jp/",
         "lat": 35.673259,
         "lng": 139.7585337,
+        "copyright": "© OpenStreetMap contributors",
+        "licence": "Open Database License (ODbL) 1.0",
+        "licenceUri": "https://opendatacommons.org/licenses/odbl/",
         "name:en": "Nissay Theatre",
         "name:es": "Teatro Nissay",
         "name:fr": "Théâtre Nissay",
@@ -2315,6 +2243,9 @@
         "uri": null,
         "lat": 35.6725003,
         "lng": 139.7541125,
+        "copyright": "© OpenStreetMap contributors",
+        "licence": "Open Database License (ODbL) 1.0",
+        "licenceUri": "https://opendatacommons.org/licenses/odbl/",
         "name:en": "Big Concert Hall",
         "name:es": "Sala de grandes conciertos",
         "name:ko": "대음악당"
@@ -2327,6 +2258,9 @@
         "uri": null,
         "lat": 35.6740244,
         "lng": 139.7571197,
+        "copyright": "© OpenStreetMap contributors",
+        "licence": "Open Database License (ODbL) 1.0",
+        "licenceUri": "https://opendatacommons.org/licenses/odbl/",
         "name:en": "Small Concert Hall",
         "name:es": "Sala pequeña de conciertos"
       },
@@ -2338,6 +2272,9 @@
         "uri": "https://yomi-h.jp/",
         "lat": 35.6755136,
         "lng": 139.7632029,
+        "copyright": "© OpenStreetMap contributors",
+        "licence": "Open Database License (ODbL) 1.0",
+        "licenceUri": "https://opendatacommons.org/licenses/odbl/",
         "name:en": "Yomiuri Hall",
         "name:es": "Yomiuri Hall",
         "name:ja": "よみうりホール",
@@ -2352,6 +2289,9 @@
         "uri": "https://www.toho.co.jp/stage/theatre_crea/",
         "lat": 35.6725164,
         "lng": 139.7597291,
+        "copyright": "© OpenStreetMap contributors",
+        "licence": "Open Database License (ODbL) 1.0",
+        "licenceUri": "https://opendatacommons.org/licenses/odbl/",
         "name:en": "Theatre Creation",
         "name:es": "Teatro Clie"
       },
@@ -2363,6 +2303,9 @@
         "uri": null,
         "lat": 35.6923833,
         "lng": 139.7583837,
+        "copyright": "© OpenStreetMap contributors",
+        "licence": "Open Database License (ODbL) 1.0",
+        "licenceUri": "https://opendatacommons.org/licenses/odbl/",
         "name:en": "Hitotsubashi Hall",
         "name:es": "Salón Hitotsubashi",
         "name:ja": "一橋講堂"
@@ -2375,6 +2318,9 @@
         "uri": null,
         "lat": 35.6931217,
         "lng": 139.7583998,
+        "copyright": "© OpenStreetMap contributors",
+        "licence": "Open Database License (ODbL) 1.0",
+        "licenceUri": "https://opendatacommons.org/licenses/odbl/",
         "name:en": "Kyoritsu Auditorium",
         "name:es": "Auditorio Kyoritsu",
         "name:ja": "共立講堂"
@@ -2387,6 +2333,9 @@
         "uri": null,
         "lat": 35.7011113,
         "lng": 139.7708438,
+        "copyright": "© OpenStreetMap contributors",
+        "licence": "Open Database License (ODbL) 1.0",
+        "licenceUri": "https://opendatacommons.org/licenses/odbl/",
         "name:en": "Akihabara Dia Stage",
         "name:ko": "아키하바라 다이아 스테이지"
       },
@@ -2398,6 +2347,9 @@
         "uri": null,
         "lat": 35.7008075,
         "lng": 139.7719621,
+        "copyright": "© OpenStreetMap contributors",
+        "licence": "Open Database License (ODbL) 1.0",
+        "licenceUri": "https://opendatacommons.org/licenses/odbl/",
         "name:en": "AKB48 Theater",
         "name:ja": "AKB48劇場",
         "name:ko": "AKB48 극장",
@@ -2411,6 +2363,9 @@
         "uri": null,
         "lat": 35.701862,
         "lng": 139.7474233,
+        "copyright": "© OpenStreetMap contributors",
+        "licence": "Open Database License (ODbL) 1.0",
+        "licenceUri": "https://opendatacommons.org/licenses/odbl/",
         "name:en": "Bellesalle Events Room",
         "name:es": "Salón de eventos Bellesalle",
         "name:ja_rm": "Ibentohōru BELLESALLE"
@@ -2422,7 +2377,10 @@
         "imageCopylight": null,
         "uri": null,
         "lat": 35.7003953,
-        "lng": 139.7701143
+        "lng": 139.7701143,
+        "copyright": "© OpenStreetMap contributors",
+        "licence": "Open Database License (ODbL) 1.0",
+        "licenceUri": "https://opendatacommons.org/licenses/odbl/"
       },
       {
         "name": "日経ホール",
@@ -2432,6 +2390,9 @@
         "uri": null,
         "lat": 35.6888749,
         "lng": 139.7622454,
+        "copyright": "© OpenStreetMap contributors",
+        "licence": "Open Database License (ODbL) 1.0",
+        "licenceUri": "https://opendatacommons.org/licenses/odbl/",
         "name:en": "Nikkei Hall",
         "name:es": "Nikkei Hall"
       },
@@ -2442,7 +2403,10 @@
         "imageCopylight": null,
         "uri": null,
         "lat": 35.7010951,
-        "lng": 139.7720432
+        "lng": 139.7720432,
+        "copyright": "© OpenStreetMap contributors",
+        "licence": "Open Database License (ODbL) 1.0",
+        "licenceUri": "https://opendatacommons.org/licenses/odbl/"
       },
       {
         "name": "AKIBAカルチャーズ劇場",
@@ -2452,6 +2416,9 @@
         "uri": null,
         "lat": 35.6995077,
         "lng": 139.770475,
+        "copyright": "© OpenStreetMap contributors",
+        "licence": "Open Database License (ODbL) 1.0",
+        "licenceUri": "https://opendatacommons.org/licenses/odbl/",
         "name:en": "AKIBA Culture's Theatre"
       },
       {
@@ -2461,7 +2428,10 @@
         "imageCopylight": null,
         "uri": null,
         "lat": 35.6971204,
-        "lng": 139.7625239
+        "lng": 139.7625239,
+        "copyright": "© OpenStreetMap contributors",
+        "licence": "Open Database License (ODbL) 1.0",
+        "licenceUri": "https://opendatacommons.org/licenses/odbl/"
       },
       {
         "name": "神田連雀亭",
@@ -2470,7 +2440,10 @@
         "imageCopylight": null,
         "uri": null,
         "lat": 35.6967156,
-        "lng": 139.7687852
+        "lng": 139.7687852,
+        "copyright": "© OpenStreetMap contributors",
+        "licence": "Open Database License (ODbL) 1.0",
+        "licenceUri": "https://opendatacommons.org/licenses/odbl/"
       }
     ]
   },
@@ -2486,6 +2459,9 @@
         "uri": null,
         "lat": 35.6954153,
         "lng": 139.7406012,
+        "copyright": "© OpenStreetMap contributors",
+        "licence": "Open Database License (ODbL) 1.0",
+        "licenceUri": "https://opendatacommons.org/licenses/odbl/",
         "name:en": "Hosei University"
       },
       {
@@ -2495,7 +2471,10 @@
         "imageCopylight": null,
         "uri": null,
         "lat": 35.685325,
-        "lng": 139.736748
+        "lng": 139.736748,
+        "copyright": "© OpenStreetMap contributors",
+        "licence": "Open Database License (ODbL) 1.0",
+        "licenceUri": "https://opendatacommons.org/licenses/odbl/"
       },
       {
         "name": "ビジネス・ブレークスルー大学院大学",
@@ -2504,7 +2483,10 @@
         "imageCopylight": null,
         "uri": null,
         "lat": 35.687736,
-        "lng": 139.734937
+        "lng": 139.734937,
+        "copyright": "© OpenStreetMap contributors",
+        "licence": "Open Database License (ODbL) 1.0",
+        "licenceUri": "https://opendatacommons.org/licenses/odbl/"
       },
       {
         "name": "上智大学（国際教養学部）",
@@ -2513,7 +2495,10 @@
         "imageCopylight": null,
         "uri": null,
         "lat": 35.6835994,
-        "lng": 139.731885
+        "lng": 139.731885,
+        "copyright": "© OpenStreetMap contributors",
+        "licence": "Open Database License (ODbL) 1.0",
+        "licenceUri": "https://opendatacommons.org/licenses/odbl/"
       },
       {
         "name": "上智大学（外国語学部）",
@@ -2522,7 +2507,10 @@
         "imageCopylight": null,
         "uri": null,
         "lat": 35.6835938,
-        "lng": 139.7318522
+        "lng": 139.7318522,
+        "copyright": "© OpenStreetMap contributors",
+        "licence": "Open Database License (ODbL) 1.0",
+        "licenceUri": "https://opendatacommons.org/licenses/odbl/"
       },
       {
         "name": "上智大学（文学部）",
@@ -2531,7 +2519,10 @@
         "imageCopylight": null,
         "uri": null,
         "lat": 35.6836196,
-        "lng": 139.7318492
+        "lng": 139.7318492,
+        "copyright": "© OpenStreetMap contributors",
+        "licence": "Open Database License (ODbL) 1.0",
+        "licenceUri": "https://opendatacommons.org/licenses/odbl/"
       },
       {
         "name": "上智大学（比較文化学部）",
@@ -2540,7 +2531,10 @@
         "imageCopylight": null,
         "uri": null,
         "lat": 35.6836026,
-        "lng": 139.7319296
+        "lng": 139.7319296,
+        "copyright": "© OpenStreetMap contributors",
+        "licence": "Open Database License (ODbL) 1.0",
+        "licenceUri": "https://opendatacommons.org/licenses/odbl/"
       },
       {
         "name": "上智大学（法学部）",
@@ -2549,7 +2543,10 @@
         "imageCopylight": null,
         "uri": null,
         "lat": 35.6836276,
-        "lng": 139.7319207
+        "lng": 139.7319207,
+        "copyright": "© OpenStreetMap contributors",
+        "licence": "Open Database License (ODbL) 1.0",
+        "licenceUri": "https://opendatacommons.org/licenses/odbl/"
       },
       {
         "name": "上智大学（理工学部）",
@@ -2558,7 +2555,10 @@
         "imageCopylight": null,
         "uri": null,
         "lat": 35.6835656,
-        "lng": 139.731881
+        "lng": 139.731881,
+        "copyright": "© OpenStreetMap contributors",
+        "licence": "Open Database License (ODbL) 1.0",
+        "licenceUri": "https://opendatacommons.org/licenses/odbl/"
       },
       {
         "name": "上智大学（神学部）",
@@ -2567,7 +2567,10 @@
         "imageCopylight": null,
         "uri": null,
         "lat": 35.6835752,
-        "lng": 139.7319177
+        "lng": 139.7319177,
+        "copyright": "© OpenStreetMap contributors",
+        "licence": "Open Database License (ODbL) 1.0",
+        "licenceUri": "https://opendatacommons.org/licenses/odbl/"
       },
       {
         "name": "上智大学（経済学部）",
@@ -2576,7 +2579,10 @@
         "imageCopylight": null,
         "uri": null,
         "lat": 35.6836268,
-        "lng": 139.7318889
+        "lng": 139.7318889,
+        "copyright": "© OpenStreetMap contributors",
+        "licence": "Open Database License (ODbL) 1.0",
+        "licenceUri": "https://opendatacommons.org/licenses/odbl/"
       },
       {
         "name": "上智大学（総合人間科学部）",
@@ -2585,7 +2591,10 @@
         "imageCopylight": null,
         "uri": null,
         "lat": 35.6835704,
-        "lng": 139.7318532
+        "lng": 139.7318532,
+        "copyright": "© OpenStreetMap contributors",
+        "licence": "Open Database License (ODbL) 1.0",
+        "licenceUri": "https://opendatacommons.org/licenses/odbl/"
       },
       {
         "name": "共立女子大学（国際文化学部）",
@@ -2595,6 +2604,9 @@
         "uri": null,
         "lat": 35.6931041,
         "lng": 139.7574701,
+        "copyright": "© OpenStreetMap contributors",
+        "licence": "Open Database License (ODbL) 1.0",
+        "licenceUri": "https://opendatacommons.org/licenses/odbl/",
         "name:en": "Kyoritsu Women's University",
         "name:ja_rm": "Kyōritsu Joshi Daigaku"
       },
@@ -2606,6 +2618,9 @@
         "uri": null,
         "lat": 35.6931792,
         "lng": 139.7573011,
+        "copyright": "© OpenStreetMap contributors",
+        "licence": "Open Database License (ODbL) 1.0",
+        "licenceUri": "https://opendatacommons.org/licenses/odbl/",
         "name:en": "Kyoritsu Women's University",
         "name:ja_rm": "Kyōritsu Joshi Daigaku"
       },
@@ -2617,6 +2632,9 @@
         "uri": null,
         "lat": 35.693383,
         "lng": 139.756825,
+        "copyright": "© OpenStreetMap contributors",
+        "licence": "Open Database License (ODbL) 1.0",
+        "licenceUri": "https://opendatacommons.org/licenses/odbl/",
         "name:en": "Kyoritsu Women's University",
         "name:ja_rm": "Kyōritsu Joshi Daigaku"
       },
@@ -2628,6 +2646,9 @@
         "uri": null,
         "lat": 35.698694,
         "lng": 139.755608,
+        "copyright": "© OpenStreetMap contributors",
+        "licence": "Open Database License (ODbL) 1.0",
+        "licenceUri": "https://opendatacommons.org/licenses/odbl/",
         "name:en": "OHARA Graduate School of Accounting",
         "name:ja": "大原大学院大学"
       },
@@ -2638,7 +2659,10 @@
         "imageCopylight": null,
         "uri": null,
         "lat": 35.690986,
-        "lng": 139.742629
+        "lng": 139.742629,
+        "copyright": "© OpenStreetMap contributors",
+        "licence": "Open Database License (ODbL) 1.0",
+        "licenceUri": "https://opendatacommons.org/licenses/odbl/"
       },
       {
         "name": "大妻女子大学（文学部）",
@@ -2647,7 +2671,10 @@
         "imageCopylight": null,
         "uri": null,
         "lat": 35.6908834,
-        "lng": 139.7426387
+        "lng": 139.7426387,
+        "copyright": "© OpenStreetMap contributors",
+        "licence": "Open Database License (ODbL) 1.0",
+        "licenceUri": "https://opendatacommons.org/licenses/odbl/"
       },
       {
         "name": "日本大学（その他）",
@@ -2656,7 +2683,10 @@
         "imageCopylight": null,
         "uri": null,
         "lat": 35.6996358,
-        "lng": 139.7548093
+        "lng": 139.7548093,
+        "copyright": "© OpenStreetMap contributors",
+        "licence": "Open Database License (ODbL) 1.0",
+        "licenceUri": "https://opendatacommons.org/licenses/odbl/"
       },
       {
         "name": "日本大学（商学部）",
@@ -2665,7 +2695,10 @@
         "imageCopylight": null,
         "uri": null,
         "lat": 35.6995904,
-        "lng": 139.7548429
+        "lng": 139.7548429,
+        "copyright": "© OpenStreetMap contributors",
+        "licence": "Open Database License (ODbL) 1.0",
+        "licenceUri": "https://opendatacommons.org/licenses/odbl/"
       },
       {
         "name": "日本大学（文理学部）",
@@ -2674,7 +2707,10 @@
         "imageCopylight": null,
         "uri": null,
         "lat": 35.69954,
-        "lng": 139.7547433
+        "lng": 139.7547433,
+        "copyright": "© OpenStreetMap contributors",
+        "licence": "Open Database License (ODbL) 1.0",
+        "licenceUri": "https://opendatacommons.org/licenses/odbl/"
       },
       {
         "name": "日本大学（法学部）",
@@ -2684,6 +2720,9 @@
         "uri": null,
         "lat": 35.6996003,
         "lng": 139.7547331,
+        "copyright": "© OpenStreetMap contributors",
+        "licence": "Open Database License (ODbL) 1.0",
+        "licenceUri": "https://opendatacommons.org/licenses/odbl/",
         "name:en": "Nihon University College of Law",
         "name:ja": "日本大学（法学部）"
       },
@@ -2695,6 +2734,9 @@
         "uri": null,
         "lat": 35.699707,
         "lng": 139.754267,
+        "copyright": "© OpenStreetMap contributors",
+        "licence": "Open Database License (ODbL) 1.0",
+        "licenceUri": "https://opendatacommons.org/licenses/odbl/",
         "name:en": "Nihon University College of Law"
       },
       {
@@ -2705,6 +2747,9 @@
         "uri": null,
         "lat": 35.6976834,
         "lng": 139.7647246,
+        "copyright": "© OpenStreetMap contributors",
+        "licence": "Open Database License (ODbL) 1.0",
+        "licenceUri": "https://opendatacommons.org/licenses/odbl/",
         "name:en": "College of Science and Technology, Nihon University, Surugadai Campus"
       },
       {
@@ -2715,6 +2760,9 @@
         "uri": null,
         "lat": 35.6995689,
         "lng": 139.7547341,
+        "copyright": "© OpenStreetMap contributors",
+        "licence": "Open Database License (ODbL) 1.0",
+        "licenceUri": "https://opendatacommons.org/licenses/odbl/",
         "name:en": "Nihon University College of Law"
       },
       {
@@ -2725,6 +2773,9 @@
         "uri": null,
         "lat": 35.700318,
         "lng": 139.756239,
+        "copyright": "© OpenStreetMap contributors",
+        "licence": "Open Database License (ODbL) 1.0",
+        "licenceUri": "https://opendatacommons.org/licenses/odbl/",
         "name:en": "Nihon University College of Economics"
       },
       {
@@ -2734,7 +2785,10 @@
         "imageCopylight": null,
         "uri": null,
         "lat": 35.685795,
-        "lng": 139.735143
+        "lng": 139.735143,
+        "copyright": "© OpenStreetMap contributors",
+        "licence": "Open Database License (ODbL) 1.0",
+        "licenceUri": "https://opendatacommons.org/licenses/odbl/"
       },
       {
         "name": "明治大学（商学部）",
@@ -2744,6 +2798,9 @@
         "uri": null,
         "lat": 35.6984514,
         "lng": 139.7621579,
+        "copyright": "© OpenStreetMap contributors",
+        "licence": "Open Database License (ODbL) 1.0",
+        "licenceUri": "https://opendatacommons.org/licenses/odbl/",
         "name:en": "Meiji University"
       },
       {
@@ -2754,6 +2811,9 @@
         "uri": null,
         "lat": 35.6984381,
         "lng": 139.7621985,
+        "copyright": "© OpenStreetMap contributors",
+        "licence": "Open Database License (ODbL) 1.0",
+        "licenceUri": "https://opendatacommons.org/licenses/odbl/",
         "name:en": "Meiji University"
       },
       {
@@ -2764,6 +2824,9 @@
         "uri": null,
         "lat": 35.6984704,
         "lng": 139.7621175,
+        "copyright": "© OpenStreetMap contributors",
+        "licence": "Open Database License (ODbL) 1.0",
+        "licenceUri": "https://opendatacommons.org/licenses/odbl/",
         "name:en": "Meiji University"
       },
       {
@@ -2774,6 +2837,9 @@
         "uri": null,
         "lat": 35.6984696,
         "lng": 139.7621981,
+        "copyright": "© OpenStreetMap contributors",
+        "licence": "Open Database License (ODbL) 1.0",
+        "licenceUri": "https://opendatacommons.org/licenses/odbl/",
         "name:en": "Meiji University"
       },
       {
@@ -2784,6 +2850,9 @@
         "uri": null,
         "lat": 35.6984377,
         "lng": 139.7621177,
+        "copyright": "© OpenStreetMap contributors",
+        "licence": "Open Database License (ODbL) 1.0",
+        "licenceUri": "https://opendatacommons.org/licenses/odbl/",
         "name:en": "Meiji University"
       },
       {
@@ -2794,6 +2863,9 @@
         "uri": null,
         "lat": 35.6984212,
         "lng": 139.7621577,
+        "copyright": "© OpenStreetMap contributors",
+        "licence": "Open Database License (ODbL) 1.0",
+        "licenceUri": "https://opendatacommons.org/licenses/odbl/",
         "name:en": "Meiji University"
       },
       {
@@ -2804,6 +2876,9 @@
         "uri": null,
         "lat": 35.6925179,
         "lng": 139.7580176,
+        "copyright": "© OpenStreetMap contributors",
+        "licence": "Open Database License (ODbL) 1.0",
+        "licenceUri": "https://opendatacommons.org/licenses/odbl/",
         "name:en": "SOKENDAI",
         "name:ja": "総合研究大学院大学",
         "name:ja_rm": "Sōgō Kenkyū Daigakuin Daigaku"
@@ -2816,6 +2891,9 @@
         "uri": null,
         "lat": 35.699763,
         "lng": 139.754921,
+        "copyright": "© OpenStreetMap contributors",
+        "licence": "Open Database License (ODbL) 1.0",
+        "licenceUri": "https://opendatacommons.org/licenses/odbl/",
         "name:en": "LEC Graduate School of Accounting",
         "name:ja": "ＬＥＣ東京リーガルマインド大学（総合キャリア学部）"
       },
@@ -2827,6 +2905,9 @@
         "uri": "https://www.nii.ac.jp/",
         "lat": 35.6927292,
         "lng": 139.7580176,
+        "copyright": "© OpenStreetMap contributors",
+        "licence": "Open Database License (ODbL) 1.0",
+        "licenceUri": "https://opendatacommons.org/licenses/odbl/",
         "name:en": "National Institute for Informatics",
         "name:ja": "国立情報学研究所"
       },
@@ -2838,6 +2919,9 @@
         "uri": null,
         "lat": 35.6957405,
         "lng": 139.7566685,
+        "copyright": "© OpenStreetMap contributors",
+        "licence": "Open Database License (ODbL) 1.0",
+        "licenceUri": "https://opendatacommons.org/licenses/odbl/",
         "name:en": "Nippon Institute of Technology"
       },
       {
@@ -2848,6 +2932,9 @@
         "uri": null,
         "lat": 35.7015468,
         "lng": 139.7547839,
+        "copyright": "© OpenStreetMap contributors",
+        "licence": "Open Database License (ODbL) 1.0",
+        "licenceUri": "https://opendatacommons.org/licenses/odbl/",
         "name:en": "Tokyo Dental College"
       },
       {
@@ -2858,6 +2945,9 @@
         "uri": "http://www.tdc.ac.jp/",
         "lat": 35.7002068,
         "lng": 139.7552957,
+        "copyright": "© OpenStreetMap contributors",
+        "licence": "Open Database License (ODbL) 1.0",
+        "licenceUri": "https://opendatacommons.org/licenses/odbl/",
         "name:en": "Tokyo Dental College Suidobashi New Building",
         "name:ja": "東京歯科大学 水道橋校舎新館"
       },
@@ -2868,7 +2958,10 @@
         "imageCopylight": null,
         "uri": null,
         "lat": 35.6991276,
-        "lng": 139.7699627
+        "lng": 139.7699627,
+        "copyright": "© OpenStreetMap contributors",
+        "licence": "Open Database License (ODbL) 1.0",
+        "licenceUri": "https://opendatacommons.org/licenses/odbl/"
       },
       {
         "name": "二松学舎大学　九段3号館",
@@ -2877,7 +2970,10 @@
         "imageCopylight": null,
         "uri": null,
         "lat": 35.6940529,
-        "lng": 139.7466364
+        "lng": 139.7466364,
+        "copyright": "© OpenStreetMap contributors",
+        "licence": "Open Database License (ODbL) 1.0",
+        "licenceUri": "https://opendatacommons.org/licenses/odbl/"
       },
       {
         "name": "東京理科大学経営学部",
@@ -2886,7 +2982,10 @@
         "imageCopylight": null,
         "uri": null,
         "lat": 35.6964463,
-        "lng": 139.7458574
+        "lng": 139.7458574,
+        "copyright": "© OpenStreetMap contributors",
+        "licence": "Open Database License (ODbL) 1.0",
+        "licenceUri": "https://opendatacommons.org/licenses/odbl/"
       },
       {
         "name": "明治大学",
@@ -2896,6 +2995,9 @@
         "uri": null,
         "lat": 35.6966428,
         "lng": 139.7618457,
+        "copyright": "© OpenStreetMap contributors",
+        "licence": "Open Database License (ODbL) 1.0",
+        "licenceUri": "https://opendatacommons.org/licenses/odbl/",
         "name:en": "Meiji University",
         "name:ja": "明治大学"
       },
@@ -2906,7 +3008,10 @@
         "imageCopylight": null,
         "uri": null,
         "lat": 35.6934442,
-        "lng": 139.7444487
+        "lng": 139.7444487,
+        "copyright": "© OpenStreetMap contributors",
+        "licence": "Open Database License (ODbL) 1.0",
+        "licenceUri": "https://opendatacommons.org/licenses/odbl/"
       }
     ]
   }

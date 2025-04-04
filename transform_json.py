@@ -44,7 +44,10 @@ def transform_data():
                     'imageCopylight': None,
                     'uri': None,
                     'lat': element.get('lat'),
-                    'lng': element.get('lon')
+                    'lng': element.get('lon'),
+                    'copyright': "© OpenStreetMap contributors",
+                    'licence': "Open Database License (ODbL) 1.0",
+                    'licenceUri': "https://opendatacommons.org/licenses/odbl/"
                 }
                 
                 # 他言語の名前を追加
@@ -62,10 +65,12 @@ def transform_data():
         
         # カテゴリとロケーションを結果に追加（ロケーションが空でない場合）
         if locations:
-            result.append({
+            category_obj = {
                 'category': category,
+                'category:en': category,  # 英語カテゴリ名（仮）
                 'locations': locations
-            })
+            }
+            result.append(category_obj)
     
     # 結果をJSONファイルに書き込む
     with open(output_file, 'w', encoding='utf-8') as f:

@@ -9,7 +9,7 @@
 
 ## ファイル
 
-- `main_facilities.json`ファイルには、千代田区内の市民にとって主要だと思われる施設の位置情報（緯度・経度）が含まれています。項目はなるべく厳選する必要があります。
+- `main_facilities.json`ファイルには、千代田区内の市民にとって主要だと思われる福祉施設の位置情報（緯度・経度）が含まれています。
 - `key_locations.json`ファイルには、千代田区内のさまざまな場所の位置情報が含まれています。項目は多くを含めることができます。
 
 ## データ形式
@@ -29,7 +29,10 @@
         "name": "施設名",
         "name:en": "Facility name",
         "lat": 緯度,
-        "lng": 経度
+        "lng": 経度,
+        "copyright": "© このアイテムの作者",
+        "licence": "MIT License",
+        "licenceUri": "https://opensource.org/license/mit"
       },
       ...
     ]
@@ -52,10 +55,13 @@
         "name:en": "Facility name",
         "description": "説明（nullを許容する）",
         "imageUri": "写真のURI（nullを許容する）",
-        "imageCopylight": "写真の著作権表示（写真のURIが存在しない時のみnullを許容する）",
+        "imageCopyright": "写真の著作権表示（写真のURIが存在しない時のみnullを許容する）",
         "uri": "URI（nullを許容する）",
         "lat": 緯度（必須）,
-        "lng": 経度（必須）
+        "lng": 経度（必須）,
+        "copyright": "© このアイテムの作者（必須）",
+        "licence": "ライセンス（必須）",
+        "licenceUri": "ライセンスURI（必須）"
       },
       ...
     ]

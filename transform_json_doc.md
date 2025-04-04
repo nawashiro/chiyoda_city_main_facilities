@@ -57,7 +57,10 @@
         "imageCopylight": null,
         "uri": "https://example.com",
         "lat": 35.6728254,
-        "lng": 139.7592046
+        "lng": 139.7592046,
+        "copyright": "© OpenStreetMap contributors",
+        "licence": "Open Database License (ODbL) 1.0",
+        "licenceUri": "https://opendatacommons.org/licenses/odbl/"
       }
       // 他の施設
     ]
