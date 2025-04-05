@@ -49,19 +49,23 @@
 [
   {
     "category": "カテゴリ名（必須）",
+    "category:en": "英語カテゴリ名",
     "locations": [
       {
+        "id": "uuid4（必須）",
         "name": "施設名（必須）",
         "name:en": "Facility name",
         "description": "説明（nullを許容する）",
+        "descriptionCopyright": "© 説明の作者（説明がない場合のみnullを許容する）",
         "imageUri": "写真のURI（nullを許容する）",
-        "imageCopyright": "写真の著作権表示（写真のURIが存在しない時のみnullを許容する）",
+        "imageCopyright": "© 写真の作者（写真のURIが存在しない時のみnullを許容する）",
         "uri": "URI（nullを許容する）",
         "lat": 緯度（必須）,
         "lng": 経度（必須）,
-        "copyright": "© このアイテムの作者（必須）",
+        "nodeCopyright": "© 座標の作者（必須）",
+        "nodeSourceId": 提供元のid（ない場合nullを許容する）,
         "licence": "ライセンス（必須）",
-        "licenceUri": "ライセンスURI（必須）"
+        "licenceUri": "ライセンスURI（必須）",
       },
       ...
     ]
@@ -78,11 +82,7 @@
 2. 既存の施設情報を更新する
 3. 誤った情報を修正する
 
-プルリクエストを歓迎しています。変更を提案する際は、以下の点にご注意ください：
-
-- JSON の構造を維持してください
-- 施設名は正確に記載してください
-- 緯度・経度の値はかならず入力してください
+OSM からデータを受け入れる場合、[JSON 変換スクリプト ドキュメント](./transform_json_doc.md)が使用できます。
 
 ## ライセンス
 
