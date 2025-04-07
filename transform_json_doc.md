@@ -13,7 +13,7 @@
 - 各施設の基本情報（名前、位置情報など）と多言語名を抽出
 - Web サイト情報がある場合は URI として保存
 - 変換したデータを key_locations.json に保存
-- node と way の両方のデータタイプをサポート
+- node、way、relation の 3 種類のデータタイプをサポート
 - 既存データとの重複を`nodeSourceId`で照合して増分更新
 
 ## 技術的詳細
@@ -51,6 +51,28 @@
         "name": "テスト広場",
         "name:en": "Test Square",
         "leisure": "park"
+      }
+    },
+    {
+      "type": "relation",
+      "id": 5415394,
+      "center": {
+        "lat": 35.686472,
+        "lon": 139.7571878
+      },
+      "members": [
+        {
+          "type": "way",
+          "ref": 364218691,
+          "role": "outer"
+        }
+        // 他のメンバー
+      ],
+      "tags": {
+        "name": "皇居東御苑",
+        "name:en": "Imperial Palace East Gardens",
+        "leisure": "park"
+        // その他のタグ
       }
     }
     // 他の施設
@@ -108,10 +130,10 @@ python transform_json.py
 4. 各ファイルについて:
    - ファイル名からカテゴリを抽出
    - JSON データを読み込み
-   - 各要素（node または way）を処理:
+   - 各要素（node、way、または relation）を処理:
      - 名前を持つ施設のみを処理
      - 既存データに存在しない場合のみ追加
-     - 座標情報を取得（node と way で取得方法が異なる）
+     - 座標情報を取得（node の場合は直接 lat/lon、way/relation の場合は center プロパティから取得）
      - 必要な情報を抽出し、新規施設として追加
 5. 新しい施設が追加された場合のみ、結果を JSON ファイルに書き込み
 

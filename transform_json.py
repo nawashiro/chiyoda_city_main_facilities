@@ -63,8 +63,8 @@ def transform_data():
         for element in data.get('elements', []):
             element_type = element.get('type')
             
-            # nodeとwayのみ処理
-            if (element_type == 'node' or element_type == 'way') and 'tags' in element:
+            # node, way, relationを処理
+            if (element_type == 'node' or element_type == 'way' or element_type == 'relation') and 'tags' in element:
                 tags = element.get('tags', {})
                 name = tags.get('name')
                 
@@ -79,13 +79,13 @@ def transform_data():
                 if element_id in existing_nodes:
                     continue
                 
-                # 座標の取得 (nodeとwayで異なる)
+                # 座標の取得 (タイプによって異なる場所から取得)
                 lat = None
                 lng = None
                 if element_type == 'node':
                     lat = element.get('lat')
                     lng = element.get('lon')
-                elif element_type == 'way' and 'center' in element:
+                elif (element_type == 'way' or element_type == 'relation') and 'center' in element:
                     center = element.get('center', {})
                     lat = center.get('lat')
                     lng = center.get('lon')
