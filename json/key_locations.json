@@ -172,11 +172,11 @@
       {
         "id": "1c50f575-c48b-4689-aee0-1d64ac051b60",
         "name": "千鳥ヶ淵公園",
-        "description": "半蔵門公園とも呼ばれます。桜の名所で、春は多くの人が訪れます。",
+        "description": "桜の名所で、春は多くの人が訪れます。お濠の水面に映る桜の姿が美しいです。",
         "descriptionCopyright": "© Nawashiro 2025",
         "imageUri": "https://media.githubusercontent.com/media/nawashiro/chiyoda_city_main_facilities/refs/heads/main/img/park/chidorigahuchi.webp",
         "imageCopyright": "© Nawashiro 2025",
-        "uri": "https://visit-chiyoda.tokyo/app/spot/detail/800",
+        "uri": "https://www.city.chiyoda.lg.jp/shisetsu/koen/chidorigafuchi-ko.html",
         "lat": 35.6859119,
         "lng": 139.7449548,
         "nodeCopyright": "© OpenStreetMap contributors",
