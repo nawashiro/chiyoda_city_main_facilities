@@ -105,6 +105,44 @@
     ]
   },
   {
+    "category": "障害者福祉センター",
+    "category:en": "disability_welfare_center",
+    "locations": [
+      {
+        "id": "b457878a-0e99-4ba9-b794-62eb910e39f3",
+        "name": "えみふる（障害者福祉センター）",
+        "name:en": "Disability Welfare Center emifuru",
+        "description": "障害のある方が利用できる施設です。講習会・リハビリテーションや、グループホーム・ショートステイの機能があります。",
+        "descriptionCopyright": "© Nawashiro 2025",
+        "imageUri": null,
+        "imageCopyright": null,
+        "uri": "https://emifuru.com/",
+        "lat": 35.700506,
+        "lng": 139.760849,
+        "nodeCopyright": "© Nawashiro",
+        "nodeSourceId": null,
+        "licence": "MIT License",
+        "licenceUri": "https://opensource.org/license/mit"
+      },
+      {
+        "id": "615b5a39-82eb-4633-81f6-49c0c9e5f774",
+        "name": "障害者よろず相談Light",
+        "name:en": "Disability Welfare Center Light",
+        "description": "障害のある方の悩みに専門家が相談に乗り、必要に応じて専門機関を紹介してくれます。",
+        "descriptionCopyright": "© Nawashiro 2025",
+        "imageUri": null,
+        "imageCopyright": null,
+        "uri": "https://hirai-luminal.or.jp/office/light/",
+        "lat": 35.691019,
+        "lng": 139.7573,
+        "nodeCopyright": "© Nawashiro",
+        "nodeSourceId": null,
+        "licence": "MIT License",
+        "licenceUri": "https://opensource.org/license/mit"
+      }
+    ]
+  },
+  {
     "category": "公園",
     "category:en": "park",
     "locations": [

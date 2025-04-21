@@ -89,8 +89,8 @@
         "licenceUri": "https://opensource.org/license/mit"
       },
       {
-        "name": "千代田区富士見出張所・区民館",
-        "name:en": "Chiyoda City Fujimi Branch Office and Community Center",
+        "name": "富士見出張所・区民館",
+        "name:en": "Fujimi Branch Office and Community Center",
         "lat": 35.6991024,
         "lng": 139.7463841,
         "copyright": "© OpenStreetMap contributors",
@@ -98,9 +98,9 @@
         "licenceUri": "https://opendatacommons.org/licenses/odbl/"
       },
       {
-        "name": "千代田区神保町出張所・区民館",
-        "name:en": "Chiyoda City Jimbocho Branch Office and Community Center",
-        "name:ja": "千代田区神保町出張所・区民館",
+        "name": "神保町出張所・区民館",
+        "name:en": "Jimbocho Branch Office and Community Center",
+        "name:ja": "神保町出張所・区民館",
         "lat": 35.6977902,
         "lng": 139.7553048,
         "copyright": "© OpenStreetMap contributors",
@@ -108,7 +108,7 @@
         "licenceUri": "https://opendatacommons.org/licenses/odbl/"
       },
       {
-        "name": "千代田区神田公園 出張所・区民館",
+        "name": "神田公園出張所・区民館",
         "name:en": "Kanda Park Branch Office",
         "lat": 35.6927468,
         "lng": 139.7681384,
@@ -117,8 +117,8 @@
         "licenceUri": "https://opendatacommons.org/licenses/odbl/"
       },
       {
-        "name": "千代田区役所和泉橋出張所",
-        "name:en": "Chiyoda City Office Izumibashi Branch",
+        "name": "和泉橋出張所",
+        "name:en": "Izumibashi Branch",
         "lat": 35.6972781,
         "lng": 139.774931,
         "copyright": "© OpenStreetMap contributors",
@@ -159,8 +159,8 @@
         "licenceUri": "https://opendatacommons.org/licenses/odbl/"
       },
       {
-        "name": "千代田区富士見出張所・区民館",
-        "name:en": "Chiyoda City Fujimi Branch Office and Community Center",
+        "name": "富士見出張所・区民館",
+        "name:en": "Fujimi Branch Office and Community Center",
         "lat": 35.6991024,
         "lng": 139.7463841,
         "copyright": "© OpenStreetMap contributors",
@@ -177,9 +177,9 @@
         "licenceUri": "https://opensource.org/license/mit"
       },
       {
-        "name": "千代田区神保町出張所・区民館",
-        "name:en": "Chiyoda City Jimbocho Branch Office and Community Center",
-        "name:ja": "千代田区神保町出張所・区民館",
+        "name": "神保町出張所・区民館",
+        "name:en": "Jimbocho Branch Office and Community Center",
+        "name:ja": "神保町出張所・区民館",
         "lat": 35.6977902,
         "lng": 139.7553048,
         "copyright": "© OpenStreetMap contributors",
@@ -187,7 +187,7 @@
         "licenceUri": "https://opendatacommons.org/licenses/odbl/"
       },
       {
-        "name": "千代田区神田公園 出張所・区民館",
+        "name": "神田公園出張所・区民館",
         "name:en": "Kanda Park Branch Office",
         "lat": 35.6927468,
         "lng": 139.7681384,
@@ -214,7 +214,7 @@
         "licenceUri": "https://opendatacommons.org/licenses/odbl/"
       },
       {
-        "name": "千代田区和泉橋区民館",
+        "name": "和泉橋区民館",
         "name:en": "Izumibashi Community Center",
         "lat": 35.6973605,
         "lng": 139.7749213,
@@ -262,10 +262,10 @@
     "category:en": "public schools",
     "locations": [
       {
-        "name": "千代田区立麹町小学校",
+        "name": "麹町小学校",
         "name:en": "Kōjimachi Chidoya elementary school",
         "name:es": "Escuela primaria de Chiyoda Kōjimachi",
-        "name:ja": "千代田区立麹町小学校",
+        "name:ja": "麹町小学校",
         "lat": 35.6853344,
         "lng": 139.7397664,
         "copyright": "© OpenStreetMap contributors",
@@ -273,7 +273,7 @@
         "licenceUri": "https://opendatacommons.org/licenses/odbl/"
       },
       {
-        "name": "千代田区立 九段小学校",
+        "name": "九段小学校",
         "name:en": "Chiyoda elementary school",
         "name:es": "Escuela primaria de Chiyoda",
         "lat": 35.6903835,
@@ -283,9 +283,8 @@
         "licenceUri": "https://opendatacommons.org/licenses/odbl/"
       },
       {
-        "name": "千代田区立 番町小学校",
-        "name:en": "Chiyoda elementary school",
-        "name:es": "Escuela primaria Chiyoda",
+        "name": "番町小学校",
+        "name:en": "Bancho elementary school",
         "lat": 35.6879795,
         "lng": 139.7337972,
         "copyright": "© OpenStreetMap contributors",
@@ -293,7 +292,7 @@
         "licenceUri": "https://opendatacommons.org/licenses/odbl/"
       },
       {
-        "name": "千代田区立 富士見小学校",
+        "name": "富士見小学校",
         "name:en": "Fujimi Elementary School",
         "name:es": "Escuela primaria Fujimi",
         "lat": 35.6972222,
@@ -303,7 +302,7 @@
         "licenceUri": "https://opendatacommons.org/licenses/odbl/"
       },
       {
-        "name": "千代田区立 お茶の水小学校",
+        "name": "お茶の水小学校",
         "name:en": "Ochanomizu Elementary School",
         "name:es": "Escuela primaria Ochanomizu",
         "lat": 35.6971733,
@@ -313,7 +312,7 @@
         "licenceUri": "https://opendatacommons.org/licenses/odbl/"
       },
       {
-        "name": "千代田区立 千代田小学校",
+        "name": "千代田小学校",
         "name:en": "Chiyoda Elementary School",
         "name:ja": "千代田小学校",
         "lat": 35.6931957,
@@ -323,7 +322,7 @@
         "licenceUri": "https://opendatacommons.org/licenses/odbl/"
       },
       {
-        "name": "千代田区立 昌平小学校",
+        "name": "昌平小学校",
         "name:en": "Shohei Elementary School",
         "name:es": "Escuela primaria Shohei",
         "name:ko": "쇼헤이 소학교",
@@ -334,7 +333,7 @@
         "licenceUri": "https://opendatacommons.org/licenses/odbl/"
       },
       {
-        "name": "千代田区立 和泉小学校",
+        "name": "和泉小学校",
         "name:en": "Izumi Elementary School",
         "name:es": "Escuela de primaria Izumi",
         "lat": 35.6991068,
@@ -344,7 +343,7 @@
         "licenceUri": "https://opendatacommons.org/licenses/odbl/"
       },
       {
-        "name": "千代田区立 麹町中学校",
+        "name": "麹町中学校",
         "name:en": "Kojimachi Junior High School",
         "name:es": "Colegio secundario Kojimachi",
         "lat": 35.6803221,
@@ -354,10 +353,10 @@
         "licenceUri": "https://opendatacommons.org/licenses/odbl/"
       },
       {
-        "name": "千代田区立神田一橋中学校",
+        "name": "神田一橋中学校",
         "name:en": "Kanda Hitotsubashi Junior High School",
         "name:es": "Colegio secundario Kanda Hitotsubashi",
-        "name:ja": "千代田区立神田一橋中学校",
+        "name:ja": "神田一橋中学校",
         "lat": 35.6942143,
         "lng": 139.7569172,
         "copyright": "© OpenStreetMap contributors",
@@ -365,7 +364,7 @@
         "licenceUri": "https://opendatacommons.org/licenses/odbl/"
       },
       {
-        "name": "千代田区立 九段中等教育学校",
+        "name": "九段中等教育学校",
         "name:en": "Kudan Secondary School",
         "name:es": "Colegio Kudan",
         "lat": 35.6961224,
@@ -468,7 +467,7 @@
         "licenceUri": "https://opendatacommons.org/licenses/odbl/"
       },
       {
-        "name": "障害者福祉センター えみふる",
+        "name": "えみふる（障害者福祉センター）",
         "name:en": "Disability Welfare Center emifuru",
         "lat": 35.700506,
         "lng": 139.760849,
@@ -495,7 +494,7 @@
         "licenceUri": "https://opendatacommons.org/licenses/odbl/"
       },
       {
-        "name": "千代田区立障害者就労支援施設 ジョブ・サポート・プラザ ちよだ",
+        "name": "ジョブ・サポート・プラザ ちよだ（千代田区立障害者就労支援施設）",
         "name:en": "Disability Employment Support Facility Job Support Plaza Chiyoda",
         "lat": 35.6941626,
         "lng": 139.7535624,
@@ -510,7 +509,7 @@
     "category:en": "libraries",
     "locations": [
       {
-        "name": "千代田区立千代田図書館",
+        "name": "千代田図書館",
         "name:en": "Chiyoda Library",
         "name:it": "Chiyoda",
         "name:ja_rm": "Chiyoda Toshokan",
@@ -530,7 +529,7 @@
         "licenceUri": "https://opendatacommons.org/licenses/odbl/"
       },
       {
-        "name": "千代田区立神田まちかど図書館",
+        "name": "神田まちかど図書館",
         "name:en": "Kanda Community Library",
         "lat": 35.6929651,
         "lng": 139.7683614,
