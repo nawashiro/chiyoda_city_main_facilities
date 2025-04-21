@@ -477,6 +477,15 @@
         "licenceUri": "https://opensource.org/license/mit"
       },
       {
+        "name": "障害者よろず相談Light",
+        "name:en": "Disability Welfare Center Light",
+        "lat": 35.691019,
+        "lng": 139.7573,
+        "copyright": "© Nawashiro",
+        "licence": "MIT License",
+        "licenceUri": "https://opensource.org/license/mit"
+      },
+      {
         "name": "さくらベーカリー",
         "name:en": "Sakura Bakery",
         "lat": 35.6941626,
