@@ -90,6 +90,10 @@
 
 OSM からデータを受け入れる場合、[JSON 変換スクリプト ドキュメント](./doc/transform_json_doc.md)が使用できます。
 
+[JSON 圧縮ツール](./doc/json_minifier_readme.md)があります。配信用のファイルを作成するために必要です。
+
+Windows をお使いであれば、[施設データ処理バッチ](./doc/process.md)を使用すると風ぐるまデータ変換 → 配信ファイル作成が自動化できます。
+
 ## ライセンス
 
 この JSON データは OpenStreetMap のデータを元に作成されています。OpenStreetMap のデータは [Open Database License (ODbL) 1.0](https://opendatacommons.org/licenses/odbl/) の下で提供されています。従って、この JSON データも同じライセンスが適用されます。
