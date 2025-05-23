@@ -97,9 +97,12 @@
 
 この JSON データは OpenStreetMap のデータを元に作成されています。OpenStreetMap のデータは [Open Database License (ODbL) 1.0](https://opendatacommons.org/licenses/odbl/) の下で提供されています。従って、この JSON データも同じライセンスが適用されます。
 
+## その他のデータ取得元
+
 [© OpenStreetMap contributors](https://www.openstreetmap.org/copyright)
 
 保育所のデータは東京都福祉保健局のデータをもとに作成されています。
+
 [© 東京都福祉保健局 CC BY](https://spec.api.metro.tokyo.lg.jp/spec/t000010d0000000106-187b68210aea92ed432db83b37265504-0)
 
 stops.txt は[公共交通オープンデータセンター](https://ckan.odpt.org/dataset/hitachi_automobile_transportation_chiyoda_alllines)から取得しました。この GTFS データは [Creative Commons Attribution 4.0 International (CC BY 4.0)](https://creativecommons.org/licenses/by/4.0/)によって提供されています。

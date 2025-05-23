@@ -27,8 +27,8 @@
         "name": "千代田区神保町出張所・区民館",
         "description": null,
         "descriptionCopyright": null,
-        "imageUri": null,
-        "imageCopyright": null,
+        "imageUri": "https://media.githubusercontent.com/media/nawashiro/chiyoda_city_main_facilities/refs/heads/main/img/city_office_and_branch_offices/chiyoda-city-jimbocho-branch-office-and-community-center.webp",
+        "imageCopyright": "© Nawashiro 2025",
         "uri": null,
         "lat": 35.6977902,
         "lng": 139.7553048,
@@ -44,23 +44,24 @@
         "name": "千代田区富士見出張所・区民館",
         "description": null,
         "descriptionCopyright": null,
-        "imageUri": null,
-        "imageCopyright": null,
+        "imageUri": "https://media.githubusercontent.com/media/nawashiro/chiyoda_city_main_facilities/refs/heads/main/img/city_office_and_branch_offices/chiyoda-ward-fujimi-branch-office-and-community-center.webp",
+        "imageCopyright": "© Nawashiro 2025",
         "uri": null,
         "lat": 35.6991024,
         "lng": 139.7463841,
         "nodeCopyright": "© OpenStreetMap contributors",
         "nodeSourceId": 144351353,
         "licence": "Open Database License (ODbL) 1.0",
-        "licenceUri": "https://opendatacommons.org/licenses/odbl/"
+        "licenceUri": "https://opendatacommons.org/licenses/odbl/",
+        "name:en": "Fujimi Branch Office / Fujimi Citizen Hall"
       },
       {
         "id": "a91e0bbf-eb46-4f28-9136-e9fceeccb4f2",
-        "name": "千代田区神田公園 出張所・区民館",
+        "name": "千代田区神田公園出張所・区民館",
         "description": null,
         "descriptionCopyright": null,
-        "imageUri": null,
-        "imageCopyright": null,
+        "imageUri": "https://media.githubusercontent.com/media/nawashiro/chiyoda_city_main_facilities/refs/heads/main/img/city_office_and_branch_offices/chiyoda-city-kanda-koen-branch-office-and-community-center.webp",
+        "imageCopyright": "© Nawashiro 2025",
         "uri": null,
         "lat": 35.6927468,
         "lng": 139.7681384,
@@ -68,15 +69,15 @@
         "nodeSourceId": 187756642,
         "licence": "Open Database License (ODbL) 1.0",
         "licenceUri": "https://opendatacommons.org/licenses/odbl/",
-        "name:en": "Community Center"
+        "name:en": "Chiyoda City Kanda-koen Branch Office and Community Center"
       },
       {
         "id": "4d8c5cdb-251e-4657-be8d-878c04214454",
         "name": "千代田区役所 万世橋出張所",
         "description": null,
         "descriptionCopyright": null,
-        "imageUri": null,
-        "imageCopyright": null,
+        "imageUri": "https://media.githubusercontent.com/media/nawashiro/chiyoda_city_main_facilities/refs/heads/main/img/city_office_and_branch_offices/mansei-bashi-branch-office-citizen-hall.webp",
+        "imageCopyright": "© Nawashiro 2025",
         "uri": null,
         "lat": 35.6976015,
         "lng": 139.7706485,
@@ -84,15 +85,15 @@
         "nodeSourceId": 191732177,
         "licence": "Open Database License (ODbL) 1.0",
         "licenceUri": "https://opendatacommons.org/licenses/odbl/",
-        "name:en": "Chiyoda City Hall - Manseibashi Branch Office"
+        "name:en": "Mansei-bashi Branch Office / Citizen Hall"
       },
       {
         "id": "7abfec8b-5d0f-47d4-8151-4e8272fe5a49",
         "name": "千代田区役所和泉橋出張所",
         "description": null,
         "descriptionCopyright": null,
-        "imageUri": null,
-        "imageCopyright": null,
+        "imageUri": "https://media.githubusercontent.com/media/nawashiro/chiyoda_city_main_facilities/refs/heads/main/img/city_office_and_branch_offices/chiyoda-city-izumibashi-branch-office-and-community-center.webp",
+        "imageCopyright": "© Nawashiro 2025",
         "uri": null,
         "lat": 35.6972781,
         "lng": 139.774931,
@@ -100,7 +101,7 @@
         "nodeSourceId": 1636575850,
         "licence": "Open Database License (ODbL) 1.0",
         "licenceUri": "https://opendatacommons.org/licenses/odbl/",
-        "name:en": "Chiyoda City Office Izumibashi Branch"
+        "name:en": "Chiyoda City Izumibashi Branch Office And Community Center"
       }
     ]
   },
