@@ -2,72 +2,72 @@
 setlocal enabledelayedexpansion
 
 echo ========================================================================
-echo ãƒãƒªã‚¢ãƒ•ãƒªãƒ¼æ–½è¨­ãƒ‡ãƒ¼ã‚¿å‡¦ç†ãƒãƒƒãƒ
+echo ƒoƒŠƒAƒtƒŠ[Ž{Ýƒf[ƒ^ˆ—ƒoƒbƒ`
 echo ========================================================================
 echo.
 
-REM ä»®æƒ³ç’°å¢ƒã‚’ã‚¢ã‚¯ãƒ†ã‚£ãƒ™ãƒ¼ãƒˆ
-echo ä»®æƒ³ç’°å¢ƒã‚’ã‚¢ã‚¯ãƒ†ã‚£ãƒ™ãƒ¼ãƒˆã—ã¦ã„ã¾ã™...
-call .\venv\Scripts\activate.bat
+REM ‰¼‘zŠÂ‹«‚ðƒAƒNƒeƒBƒx[ƒg
+echo ‰¼‘zŠÂ‹«‚ðƒAƒNƒeƒBƒx[ƒg‚µ‚Ä‚¢‚Ü‚·...
+call venv\Scripts\activate.bat
 if %ERRORLEVEL% neq 0 (
-    echo ä»®æƒ³ç’°å¢ƒã®ã‚¢ã‚¯ãƒ†ã‚£ãƒ™ãƒ¼ãƒˆã«å¤±æ•—ã—ã¾ã—ãŸã€‚
-    echo venv ãƒ‡ã‚£ãƒ¬ã‚¯ãƒˆãƒªãŒå­˜åœ¨ã™ã‚‹ã‹ç¢ºèªã—ã¦ãã ã•ã„ã€‚
+    echo ‰¼‘zŠÂ‹«‚ÌƒAƒNƒeƒBƒx[ƒg‚ÉŽ¸”s‚µ‚Ü‚µ‚½B
+    echo venv ƒfƒBƒŒƒNƒgƒŠ‚ª‘¶Ý‚·‚é‚©Šm”F‚µ‚Ä‚­‚¾‚³‚¢B
     exit /b 1
 )
-echo ä»®æƒ³ç’°å¢ƒã®ã‚¢ã‚¯ãƒ†ã‚£ãƒ™ãƒ¼ãƒˆãŒå®Œäº†ã—ã¾ã—ãŸã€‚
+echo ‰¼‘zŠÂ‹«‚ÌƒAƒNƒeƒBƒx[ƒg‚ªŠ®—¹‚µ‚Ü‚µ‚½B
 echo.
 
-REM æ–½è¨­ã¨åœç•™æ‰€ã®è·é›¢ãƒã‚§ãƒƒã‚¯ã‚¹ã‚¯ãƒªãƒ—ãƒˆå®Ÿè¡Œ
-echo æ–½è¨­ã¨åœç•™æ‰€ã®è·é›¢ãƒã‚§ãƒƒã‚¯ã‚¹ã‚¯ãƒªãƒ—ãƒˆã‚’å®Ÿè¡Œã—ã¦ã„ã¾ã™...
-python facilities_check.py
+REM Ž{Ý‚Æ’â—¯Š‚Ì‹——£ƒ`ƒFƒbƒNƒXƒNƒŠƒvƒgŽÀs
+echo Ž{Ý‚Æ’â—¯Š‚Ì‹——£ƒ`ƒFƒbƒNƒXƒNƒŠƒvƒg‚ðŽÀs‚µ‚Ä‚¢‚Ü‚·...
+python src/facilities_check.py
 if %ERRORLEVEL% neq 0 (
-    echo è·é›¢ãƒã‚§ãƒƒã‚¯ã‚¹ã‚¯ãƒªãƒ—ãƒˆã®å®Ÿè¡Œã«å¤±æ•—ã—ã¾ã—ãŸã€‚
-    echo ã‚¹ã‚¯ãƒªãƒ—ãƒˆã®ã‚¨ãƒ©ãƒ¼ã‚’ç¢ºèªã—ã¦ãã ã•ã„ã€‚
+    echo ‹——£ƒ`ƒFƒbƒNƒXƒNƒŠƒvƒg‚ÌŽÀs‚ÉŽ¸”s‚µ‚Ü‚µ‚½B
+    echo ƒXƒNƒŠƒvƒg‚ÌƒGƒ‰[‚ðŠm”F‚µ‚Ä‚­‚¾‚³‚¢B
     exit /b 2
 )
-echo è·é›¢ãƒã‚§ãƒƒã‚¯ã‚¹ã‚¯ãƒªãƒ—ãƒˆã®å®Ÿè¡ŒãŒå®Œäº†ã—ã¾ã—ãŸã€‚
+echo ‹——£ƒ`ƒFƒbƒNƒXƒNƒŠƒvƒg‚ÌŽÀs‚ªŠ®—¹‚µ‚Ü‚µ‚½B
 echo.
 
-REM JSONåœ§ç¸®ãƒ„ãƒ¼ãƒ«å®Ÿè¡Œ
-echo å„JSONãƒ•ã‚©ãƒ«ãƒ€ã‚’åœ§ç¸®å‡¦ç†ã—ã¦ã„ã¾ã™...
+REM JSONˆ³kƒc[ƒ‹ŽÀs
+echo ŠeJSONƒtƒHƒ‹ƒ_‚ðˆ³kˆ—‚µ‚Ä‚¢‚Ü‚·...
 
-REM kazaguruma_jsonãƒ•ã‚©ãƒ«ãƒ€ã‚’å‡¦ç†
+REM kazaguruma_jsonƒtƒHƒ‹ƒ_‚ðˆ—
 if exist kazaguruma_json (
-    echo kazaguruma_jsonãƒ•ã‚©ãƒ«ãƒ€ã‚’å‡¦ç†ä¸­...
-    python json_minifier.py kazaguruma_json
+    echo kazaguruma_jsonƒtƒHƒ‹ƒ_‚ðˆ—’†...
+    python src/json_minifier.py kazaguruma_json
     if %ERRORLEVEL% neq 0 (
-        echo kazaguruma_jsonãƒ•ã‚©ãƒ«ãƒ€ã®åœ§ç¸®å‡¦ç†ã«å¤±æ•—ã—ã¾ã—ãŸã€‚
-        echo è©³ç´°ãªã‚¨ãƒ©ãƒ¼ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸ã‚’ç¢ºèªã—ã¦ãã ã•ã„ã€‚
+        echo kazaguruma_jsonƒtƒHƒ‹ƒ_‚Ìˆ³kˆ—‚ÉŽ¸”s‚µ‚Ü‚µ‚½B
+        echo Ú×‚ÈƒGƒ‰[ƒƒbƒZ[ƒW‚ðŠm”F‚µ‚Ä‚­‚¾‚³‚¢B
     ) else (
-        echo kazaguruma_jsonãƒ•ã‚©ãƒ«ãƒ€ã®åœ§ç¸®å‡¦ç†ãŒå®Œäº†ã—ã¾ã—ãŸã€‚
+        echo kazaguruma_jsonƒtƒHƒ‹ƒ_‚Ìˆ³kˆ—‚ªŠ®—¹‚µ‚Ü‚µ‚½B
     )
     echo.
 ) else (
-    echo kazaguruma_jsonãƒ•ã‚©ãƒ«ãƒ€ãŒè¦‹ã¤ã‹ã‚Šã¾ã›ã‚“ã€‚å‡¦ç†ã‚’ã‚¹ã‚­ãƒƒãƒ—ã—ã¾ã™ã€‚
+    echo kazaguruma_jsonƒtƒHƒ‹ƒ_‚ªŒ©‚Â‚©‚è‚Ü‚¹‚ñBˆ—‚ðƒXƒLƒbƒv‚µ‚Ü‚·B
     echo.
 )
 
-REM jsonãƒ•ã‚©ãƒ«ãƒ€ã‚’å‡¦ç†
+REM jsonƒtƒHƒ‹ƒ_‚ðˆ—
 if exist json (
-    echo jsonãƒ•ã‚©ãƒ«ãƒ€ã‚’å‡¦ç†ä¸­...
-    python json_minifier.py json
+    echo jsonƒtƒHƒ‹ƒ_‚ðˆ—’†...
+    python src/json_minifier.py json
     if %ERRORLEVEL% neq 0 (
-        echo jsonãƒ•ã‚©ãƒ«ãƒ€ã®åœ§ç¸®å‡¦ç†ã«å¤±æ•—ã—ã¾ã—ãŸã€‚
-        echo è©³ç´°ãªã‚¨ãƒ©ãƒ¼ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸ã‚’ç¢ºèªã—ã¦ãã ã•ã„ã€‚
+        echo jsonƒtƒHƒ‹ƒ_‚Ìˆ³kˆ—‚ÉŽ¸”s‚µ‚Ü‚µ‚½B
+        echo Ú×‚ÈƒGƒ‰[ƒƒbƒZ[ƒW‚ðŠm”F‚µ‚Ä‚­‚¾‚³‚¢B
     ) else (
-        echo jsonãƒ•ã‚©ãƒ«ãƒ€ã®åœ§ç¸®å‡¦ç†ãŒå®Œäº†ã—ã¾ã—ãŸã€‚
+        echo jsonƒtƒHƒ‹ƒ_‚Ìˆ³kˆ—‚ªŠ®—¹‚µ‚Ü‚µ‚½B
     )
     echo.
 ) else (
-    echo jsonãƒ•ã‚©ãƒ«ãƒ€ãŒè¦‹ã¤ã‹ã‚Šã¾ã›ã‚“ã€‚å‡¦ç†ã‚’ã‚¹ã‚­ãƒƒãƒ—ã—ã¾ã™ã€‚
+    echo jsonƒtƒHƒ‹ƒ_‚ªŒ©‚Â‚©‚è‚Ü‚¹‚ñBˆ—‚ðƒXƒLƒbƒv‚µ‚Ü‚·B
     echo.
 )
 
-REM å‡¦ç†å®Œäº†
+REM ˆ—Š®—¹
 echo ========================================================================
-echo å…¨ã¦ã®å‡¦ç†ãŒå®Œäº†ã—ã¾ã—ãŸã€‚
+echo ‘S‚Ä‚Ìˆ—‚ªŠ®—¹‚µ‚Ü‚µ‚½B
 echo ========================================================================
 
-REM ä»®æƒ³ç’°å¢ƒã‚’éžã‚¢ã‚¯ãƒ†ã‚£ãƒ–åŒ–
+REM ‰¼‘zŠÂ‹«‚ð”ñƒAƒNƒeƒBƒu‰»
 call deactivate
 pause 
