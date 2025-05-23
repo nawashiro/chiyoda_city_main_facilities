@@ -119,7 +119,7 @@
 2. 以下のコマンドでスクリプトを実行:
 
 ```
-python transform_json.py
+python src/transform_json.py
 ```
 
 ## 処理フロー

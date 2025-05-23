@@ -24,13 +24,13 @@
 コマンドラインから以下のように実行します：
 
 ```bash
-python json_minifier.py <対象フォルダパス>
+python src/json_minifier.py <対象フォルダパス>
 ```
 
 ### 例
 
 ```bash
-python json_minifier.py ./json
+python src/json_minifier.py ./json
 ```
 
 この例では、`./json`フォルダ内のすべての JSON ファイルを処理し、`./json_min`フォルダに圧縮された JSON ファイルを保存します。

@@ -29,7 +29,7 @@ pip install -r requirements.txt
 ## 使用方法
 
 ```
-python facilities_check.py
+python src/facilities_check.py
 ```
 
 実行結果が画面に表示され、以下の JSON ファイルが生成されます:
