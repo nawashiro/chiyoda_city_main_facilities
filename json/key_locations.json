@@ -287,7 +287,7 @@
       {
         "id": "32b11e4f-e834-492e-9c3e-95f5f654274d",
         "name": "千代田区立昌平まちかど図書館",
-        "description": "絵本、雑誌、点字本、視聴覚資料、外国語の本があります。",
+        "description": "小学校などの複合施設に入っている図書館です。絵本、雑誌、点字本、視聴覚資料、外国語の本があります。地域の人が気軽に立ち寄れる図書館です。",
         "descriptionCopyright": "© Nawashiro 2025",
         "imageUri": null,
         "imageCopyright": null,
@@ -318,7 +318,7 @@
       {
         "id": "f5d92ee0-1f75-4282-8de4-f6036f007e7e",
         "name": "千代田区立神田まちかど図書館",
-        "description": "絵本、雑誌、点字本、視聴覚資料、外国語の本があります。",
+        "description": "小学校などの複合施設に入っている図書館です。絵本、雑誌、点字本、視聴覚資料、外国語の本があります。地域の人が気軽に立ち寄れる図書館です。",
         "descriptionCopyright": "© Nawashiro 2025",
         "imageUri": null,
         "imageCopyright": null,
@@ -334,8 +334,8 @@
       {
         "id": "ebb57317-8fa9-4939-9c48-6c91707f0e0b",
         "name": "千代田区立ちよだパークサイドプラザ区民図書室",
-        "description": null,
-        "descriptionCopyright": null,
+        "description": "小学校などの複合施設に入っている図書室です。地域の人が気軽に立ち寄れる図書室です。",
+        "descriptionCopyright": "© Nawashiro 2025",
         "imageUri": null,
         "imageCopyright": null,
         "uri": "http://www.library.chiyoda.tokyo.jp",
