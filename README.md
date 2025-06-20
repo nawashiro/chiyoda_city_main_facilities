@@ -97,14 +97,24 @@
 
 この JSON データは OpenStreetMap のデータを元に作成されています。OpenStreetMap のデータは [Open Database License (ODbL) 1.0](https://opendatacommons.org/licenses/odbl/) の下で提供されています。従って、この JSON データも同じライセンスが適用されます。
 
-## その他のデータ取得元
-
 [© OpenStreetMap contributors](https://www.openstreetmap.org/copyright)
 
-保育所のデータは東京都福祉保健局のデータをもとに作成されています。
+## その他のデータ取得元
 
-[© 東京都福祉保健局 CC BY](https://spec.api.metro.tokyo.lg.jp/spec/t000010d0000000106-187b68210aea92ed432db83b37265504-0)
+保育所のデータは東京都福祉保健局から取得しました。
 
-stops.txt は[公共交通オープンデータセンター](https://ckan.odpt.org/dataset/hitachi_automobile_transportation_chiyoda_alllines)から取得しました。この GTFS データは [Creative Commons Attribution 4.0 International (CC BY 4.0)](https://creativecommons.org/licenses/by/4.0/)によって提供されています。
+[© 東京都福祉保健局](https://spec.api.metro.tokyo.lg.jp/spec/t000010d0000000106-187b68210aea92ed432db83b37265504-0)
 
-© 日立自動車交通株式会社 / Hitachi Motor Transportation Co. Ltd.
+[クリエイティブ・コモンズ 表示（CC BY）](https://creativecommons.org/licenses/by/4.0/deed.ja)
+
+幼稚園のデータは千代田区から取得しました。
+
+[© 千代田区](https://catalog.data.metro.tokyo.lg.jp/dataset/t131016d0000000007)
+
+[クリエイティブ・コモンズ 表示（CC BY）](https://creativecommons.org/licenses/by/4.0/deed.ja)
+
+stops.txt は日立自動車交通から取得しました。
+
+[© 日立自動車交通株式会社 / Hitachi Motor Transportation Co. Ltd.](https://ckan.odpt.org/dataset/hitachi_automobile_transportation_chiyoda_alllines)
+
+[Creative Commons Attribution 4.0 International (CC BY 4.0)](https://creativecommons.org/licenses/by/4.0/)
