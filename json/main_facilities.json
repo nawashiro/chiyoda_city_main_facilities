@@ -563,6 +563,15 @@
         "copyright": "© OpenStreetMap contributors",
         "licence": "Open Database License (ODbL) 1.0",
         "licenceUri": "https://opendatacommons.org/licenses/odbl/"
+      },
+      {
+        "name": "四番町図書館",
+        "name:en": "Yonbancho Library",
+        "lat": 35.690444,
+        "lng": 139.74159,
+        "copyright": "© OpenStreetMap contributors",
+        "licence": "Open Database License (ODbL) 1.0",
+        "licenceUri": "https://opendatacommons.org/licenses/odbl/"
       }
     ]
   },
