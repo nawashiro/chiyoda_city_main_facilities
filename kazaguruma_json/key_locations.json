@@ -4077,22 +4077,6 @@
         "name:ko": "궁내청 산노마루 상장관"
       },
       {
-        "id": "ffacabc9-7a23-47fd-b20c-010420d4d4d5",
-        "name": "ニューオータニ美術館",
-        "description": null,
-        "descriptionCopyright": null,
-        "imageUri": null,
-        "imageCopyright": null,
-        "uri": null,
-        "lat": 35.681014,
-        "lng": 139.734103,
-        "nodeCopyright": "© OpenStreetMap contributors",
-        "nodeSourceId": 1420765258,
-        "licence": "Open Database License (ODbL) 1.0",
-        "licenceUri": "https://opendatacommons.org/licenses/odbl/",
-        "name:en": "New Otani Museum"
-      },
-      {
         "id": "ad56e010-5e88-4325-b175-5fc7fbe2530b",
         "name": "天理ギャラリー",
         "description": null,
