@@ -102,6 +102,22 @@
         "licence": "Open Database License (ODbL) 1.0",
         "licenceUri": "https://opendatacommons.org/licenses/odbl/",
         "name:en": "Chiyoda City Izumibashi Branch Office And Community Center"
+      },
+      {
+        "id": "1e0a0faf-ee64-4ddd-ab3b-ee938d6c31fd",
+        "name": "千代田保健所",
+        "description": null,
+        "descriptionCopyright": null,
+        "imageUri": "https://media.githubusercontent.com/media/nawashiro/chiyoda_city_main_facilities/refs/heads/main/img/city_office_and_branch_offices/chiyoda-public-health-center.webp",
+        "imageCopyright": "© Nawashiro 2025",
+        "uri": "https://www.city.chiyoda.lg.jp/shisetsu/hokenjo/chiyoda-hokenjo.html",
+        "lat": 35.6960477,
+        "lng": 139.7521747,
+        "nodeCopyright": "© OpenStreetMap contributors",
+        "nodeSourceId": 3774437979,
+        "licence": "Open Database License (ODbL) 1.0",
+        "licenceUri": "https://opendatacommons.org/licenses/odbl/",
+        "name:en": "Chiyoda Public Health Center"
       }
     ]
   },
@@ -4396,6 +4412,21 @@
         "lng": 139.7529282,
         "nodeCopyright": "© OpenStreetMap contributors",
         "nodeSourceId": 11524806557,
+        "licence": "Open Database License (ODbL) 1.0",
+        "licenceUri": "https://opendatacommons.org/licenses/odbl/"
+      },
+      {
+        "id": "e4fb032d-2ef3-4a12-972b-512a0e433477",
+        "name": "東京しごとセンター",
+        "description": "就職支援を行う東京都の機関です。",
+        "descriptionCopyright": "© Nawashiro 2025",
+        "imageUri": "https://media.githubusercontent.com/media/nawashiro/chiyoda_city_main_facilities/refs/heads/main/img/social_facility/tokyo-shigoto-center.webp",
+        "imageCopyright": "© Nawashiro 2025",
+        "uri": "https://www.tokyoshigoto.jp/",
+        "lat": 35.70038,
+        "lng": 139.749567,
+        "nodeCopyright": "© OpenStreetMap contributors",
+        "nodeSourceId": 1420785407,
         "licence": "Open Database License (ODbL) 1.0",
         "licenceUri": "https://opendatacommons.org/licenses/odbl/"
       }
