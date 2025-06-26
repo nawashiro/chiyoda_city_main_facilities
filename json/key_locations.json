@@ -102,22 +102,6 @@
         "licence": "Open Database License (ODbL) 1.0",
         "licenceUri": "https://opendatacommons.org/licenses/odbl/",
         "name:en": "Chiyoda City Izumibashi Branch Office And Community Center"
-      },
-      {
-        "id": "1e0a0faf-ee64-4ddd-ab3b-ee938d6c31fd",
-        "name": "千代田保健所",
-        "description": null,
-        "descriptionCopyright": null,
-        "imageUri": "https://media.githubusercontent.com/media/nawashiro/chiyoda_city_main_facilities/refs/heads/main/img/city_office_and_branch_offices/chiyoda-public-health-center.webp",
-        "imageCopyright": "© Nawashiro 2025",
-        "uri": "https://www.city.chiyoda.lg.jp/shisetsu/hokenjo/chiyoda-hokenjo.html",
-        "lat": 35.6960477,
-        "lng": 139.7521747,
-        "nodeCopyright": "© OpenStreetMap contributors",
-        "nodeSourceId": 3774437979,
-        "licence": "Open Database License (ODbL) 1.0",
-        "licenceUri": "https://opendatacommons.org/licenses/odbl/",
-        "name:en": "Chiyoda Public Health Center"
       }
     ]
   },
@@ -256,8 +240,8 @@
         "name": "千代田区立四番町図書館",
         "description": "2020年4月1日から所在地が変わりました。絵本、雑誌、点字本、視聴覚資料、外国語の本があります。キッズスペースを備えています。番町・麹町地域や、伝統芸能に関する資料を集めています。",
         "descriptionCopyright": "© Nawashiro 2025",
-        "imageUri": null,
-        "imageCopyright": null,
+        "imageUri": "https://media.githubusercontent.com/media/nawashiro/chiyoda_city_main_facilities/refs/heads/main/img/library/yonbancho-library.webp",
+        "imageCopyright": "© Nawashiro 2025",
         "uri": "https://www.library.chiyoda.tokyo.jp/yonbancho/",
         "lat": 35.690444,
         "lng": 139.74159,
@@ -305,8 +289,8 @@
         "name": "千代田区立昌平まちかど図書館",
         "description": "小学校などの複合施設に入っている図書館です。絵本、雑誌、点字本、視聴覚資料、外国語の本があります。地域の人が気軽に立ち寄れる図書館です。",
         "descriptionCopyright": "© Nawashiro 2025",
-        "imageUri": null,
-        "imageCopyright": null,
+        "imageUri": "https://media.githubusercontent.com/media/nawashiro/chiyoda_city_main_facilities/refs/heads/main/img/library/shouhei-machikado-library.webp",
+        "imageCopyright": "© Nawashiro 2025",
         "uri": "https://www.library.chiyoda.tokyo.jp/shohei/",
         "lat": 35.7013313,
         "lng": 139.7700608,
@@ -336,8 +320,8 @@
         "name": "千代田区立神田まちかど図書館",
         "description": "小学校などの複合施設に入っている図書館です。絵本、雑誌、点字本、視聴覚資料、外国語の本があります。地域の人が気軽に立ち寄れる図書館です。",
         "descriptionCopyright": "© Nawashiro 2025",
-        "imageUri": null,
-        "imageCopyright": null,
+        "imageUri": "https://media.githubusercontent.com/media/nawashiro/chiyoda_city_main_facilities/refs/heads/main/img/library/kanda-community-library.webp",
+        "imageCopyright": "© Nawashiro 2025",
         "uri": "https://www.library.chiyoda.tokyo.jp/kanda/",
         "lat": 35.6929651,
         "lng": 139.7683614,
@@ -352,16 +336,16 @@
         "name": "千代田区立ちよだパークサイドプラザ区民図書室",
         "description": "小学校などの複合施設に入っている図書室です。地域の人が気軽に立ち寄れる図書室です。",
         "descriptionCopyright": "© Nawashiro 2025",
-        "imageUri": null,
-        "imageCopyright": null,
-        "uri": "http://www.library.chiyoda.tokyo.jp",
+        "imageUri": "https://media.githubusercontent.com/media/nawashiro/chiyoda_city_main_facilities/refs/heads/main/img/social_facility/chiyoda-park-side-plaza.webp",
+        "imageCopyright": "© Nawashiro 2025",
+        "uri": "https://www.city.chiyoda.lg.jp/shisetsu/toshokan/parkside-tosho.html",
         "lat": 35.699229,
         "lng": 139.778795,
         "nodeCopyright": "© OpenStreetMap contributors",
-        "nodeSourceId": 1420770192,
-        "licence": "Open Database License (ODbL) 1.0",
-        "licenceUri": "https://opendatacommons.org/licenses/odbl/",
-        "name:en": "Kanda Community Library"
+        "nodeSourceId": null,
+        "licence": "MIT License",
+        "licenceUri": "https://opensource.org/licenses/MIT",
+        "name:en": "Chiyoda Park Side Plaza Library"
       }
     ]
   },
@@ -393,23 +377,24 @@
         "name": "神田児童公園",
         "description": null,
         "descriptionCopyright": null,
-        "imageUri": null,
-        "imageCopyright": null,
+        "imageUri": "https://media.githubusercontent.com/media/nawashiro/chiyoda_city_main_facilities/refs/heads/main/img/natural_environment_park/kanda-childrens-park.webp",
+        "imageCopyright": "© Nawashiro 2025",
         "uri": null,
         "lat": 35.6929407,
         "lng": 139.7679359,
         "nodeCopyright": "© OpenStreetMap contributors",
         "nodeSourceId": 515133705,
         "licence": "Open Database License (ODbL) 1.0",
-        "licenceUri": "https://opendatacommons.org/licenses/odbl/"
+        "licenceUri": "https://opendatacommons.org/licenses/odbl/",
+        "name:en": "Kanda Children's Park"
       },
       {
         "id": "5b0d13f8-10ff-4dfb-bf62-871c327c3260",
         "name": "外濠公園",
         "description": null,
         "descriptionCopyright": null,
-        "imageUri": null,
-        "imageCopyright": null,
+        "imageUri": "https://media.githubusercontent.com/media/nawashiro/chiyoda_city_main_facilities/refs/heads/main/img/natural_environment_park/sotobori-park.webp",
+        "imageCopyright": "© Nawashiro 2025",
         "uri": null,
         "lat": 35.6905631,
         "lng": 139.7348278,
@@ -449,11 +434,11 @@
       },
       {
         "id": "38aae7aa-681a-4e99-8887-4adf40283a00",
-        "name": "東郷元帥記念公園",
+        "name": "東郷公園",
         "description": null,
         "descriptionCopyright": null,
-        "imageUri": null,
-        "imageCopyright": null,
+        "imageUri": "https://media.githubusercontent.com/media/nawashiro/chiyoda_city_main_facilities/refs/heads/main/img/natural_environment_park/togo-park.webp",
+        "imageCopyright": "© Nawashiro 2025",
         "uri": null,
         "lat": 35.6903895,
         "lng": 139.7400815,
@@ -461,6 +446,7 @@
         "nodeSourceId": 132794875,
         "licence": "Open Database License (ODbL) 1.0",
         "licenceUri": "https://opendatacommons.org/licenses/odbl/",
+        "name:en": "Togo Park",
         "name:es": "Parque Togo",
         "name:ja-Hira": "とうごうこうえん",
         "name:ja-Latn": "Tōgō Kōen"
@@ -989,7 +975,7 @@
         "nodeSourceId": null,
         "licence": "CC BY",
         "licenceUri": "https://creativecommons.org/licenses/by/4.0/deed.ja",
-        "name:en": "Kudanzaka Kindergarten"
+        "name:en": "Bancho Kindergarten"
       },
       {
         "id": "c76299f6-f1fc-46de-acf7-e11a81f4b040",
@@ -1005,7 +991,7 @@
         "nodeSourceId": null,
         "licence": "CC BY",
         "licenceUri": "https://creativecommons.org/licenses/by/4.0/deed.ja",
-        "name:en": "Kudanzaka Kindergarten"
+        "name:en": "Shohei Kindergarten"
       },
       {
         "id": "269cec5f-6726-4a4e-8e24-2ae03326dcac",
@@ -1021,7 +1007,7 @@
         "nodeSourceId": null,
         "licence": "CC BY",
         "licenceUri": "https://creativecommons.org/licenses/by/4.0/deed.ja",
-        "name:en": "Kudanzaka Kindergarten"
+        "name:en": "Chiyoda Kindergarten"
       },
       {
         "id": "fd769841-930a-4a00-be7d-6072837f5ddb",
@@ -1037,7 +1023,7 @@
         "nodeSourceId": null,
         "licence": "CC BY",
         "licenceUri": "https://creativecommons.org/licenses/by/4.0/deed.ja",
-        "name:en": "Kudanzaka Kindergarten"
+        "name:en": "Shohei Kindergarten"
       },
       {
         "id": "8778cd62-92b5-4bdb-b930-be29cf5b6d2a",
@@ -1053,7 +1039,7 @@
         "nodeSourceId": null,
         "licence": "CC BY",
         "licenceUri": "https://creativecommons.org/licenses/by/4.0/deed.ja",
-        "name:en": "Kudanzaka Kindergarten"
+        "name:en": "Izumi Kodomoen"
       },
       {
         "id": "388b1663-8695-43f3-ad4a-a6a3dbce1df4",
@@ -1069,7 +1055,7 @@
         "nodeSourceId": null,
         "licence": "CC BY",
         "licenceUri": "https://creativecommons.org/licenses/by/4.0/deed.ja",
-        "name:en": "Kudanzaka Kindergarten"
+        "name:en": "Fujimi Kodomoen"
       }
     ]
   },
@@ -3180,41 +3166,43 @@
     "category:en": "social_facility",
     "locations": [
       {
-        "id": "949f1ed2-853f-44d0-a6de-1df1e3130579",
-        "name": "三井記念病院",
-        "description": null,
-        "descriptionCopyright": null,
-        "imageUri": null,
-        "imageCopyright": null,
-        "uri": null,
-        "lat": 35.699815,
-        "lng": 139.779184,
+        "id": "ebb57317-8fa9-4939-9c48-6c91707f0e0b",
+        "name": "ちよだパークサイドプラザ",
+        "description": "和泉小学校、いずみこども園、いずみこどもプラザなどの複合施設です。サークルやスポーツにも使用できます。",
+        "descriptionCopyright": "© Nawashiro 2025",
+        "imageUri": "https://media.githubusercontent.com/media/nawashiro/chiyoda_city_main_facilities/refs/heads/main/img/social_facility/chiyoda-park-side-plaza.webp",
+        "imageCopyright": "© Nawashiro 2025",
+        "uri": "https://www.city.chiyoda.lg.jp/shisetsu/bunka/parkside.html",
+        "lat": 35.699229,
+        "lng": 139.778795,
         "nodeCopyright": "© OpenStreetMap contributors",
-        "nodeSourceId": 1655901935,
-        "licence": "Open Database License (ODbL) 1.0",
-        "licenceUri": "https://opendatacommons.org/licenses/odbl/",
-        "name:en": "Mitsui Memorial Hospital"
+        "nodeSourceId": null,
+        "licence": "MIT License",
+        "licenceUri": "https://opensource.org/licenses/MIT",
+        "name:en": "Chiyoda Park Side Plaza"
       },
       {
-        "id": "98d14467-15d8-44f1-b270-f02fe0a8de70",
-        "name": "八千代助産院",
-        "description": null,
-        "descriptionCopyright": null,
-        "imageUri": null,
-        "imageCopyright": null,
-        "uri": null,
-        "lat": 35.698624,
-        "lng": 139.745851,
+        "id": "2605dda1-bf15-43bd-bb71-2b65ea558834",
+        "name": "昌平童夢館",
+        "description": "小学校、幼稚園、保育園、児童館、図書館などがある複合施設です。生涯学習やスポーツにも使用できます。",
+        "descriptionCopyright": "© Nawashiro 2025",
+        "imageUri": "https://media.githubusercontent.com/media/nawashiro/chiyoda_city_main_facilities/refs/heads/main/img/social_facility/shohei-domukan-childrens-hall.webp",
+        "imageCopyright": "© Nawashiro 2025",
+        "uri": "https://www.city.chiyoda.lg.jp/shisetsu/bunka/shoheidomu.html",
+        "lat": 35.7012028,
+        "lng": 139.7698588,
         "nodeCopyright": "© OpenStreetMap contributors",
-        "nodeSourceId": 1655904504,
+        "nodeSourceId": 173230196,
         "licence": "Open Database License (ODbL) 1.0",
-        "licenceUri": "https://opendatacommons.org/licenses/odbl/"
+        "licenceUri": "https://opendatacommons.org/licenses/odbl/",
+        "name:en": "Shohei Domukan Children's Hall",
+        "name:ja_rm": "Shōhei Dōmu-kan"
       },
       {
         "id": "2b93b3bc-4467-4590-8c0f-b6b789883386",
-        "name": "千代田区立一番町高齢者在宅介護支援センター",
-        "description": null,
-        "descriptionCopyright": null,
+        "name": "いきいきプラザ一番町",
+        "description": "高齢者サービスを中心に展開している施設です。文化コミュニティや健康、保健の機能も備えています。地域住民のふれあいを促進する多目的な複合施設です。",
+        "descriptionCopyright": "© Nawashiro 2025",
         "imageUri": null,
         "imageCopyright": null,
         "uri": null,
@@ -3222,36 +3210,6 @@
         "lng": 139.7392841,
         "nodeCopyright": "© OpenStreetMap contributors",
         "nodeSourceId": 1655905663,
-        "licence": "Open Database License (ODbL) 1.0",
-        "licenceUri": "https://opendatacommons.org/licenses/odbl/"
-      },
-      {
-        "id": "ba82e8eb-e794-4dbf-9706-03f20ab5ea3f",
-        "name": "千代田区立高齢者センター",
-        "description": null,
-        "descriptionCopyright": null,
-        "imageUri": null,
-        "imageCopyright": null,
-        "uri": null,
-        "lat": 35.697124,
-        "lng": 139.756516,
-        "nodeCopyright": "© OpenStreetMap contributors",
-        "nodeSourceId": 1655905699,
-        "licence": "Open Database License (ODbL) 1.0",
-        "licenceUri": "https://opendatacommons.org/licenses/odbl/"
-      },
-      {
-        "id": "2d726ab9-2f6f-499a-8630-aec860dfe1ba",
-        "name": "社会福祉法人博仁会　千代田区立一番町特別養護老人ホーム",
-        "description": null,
-        "descriptionCopyright": null,
-        "imageUri": null,
-        "imageCopyright": null,
-        "uri": null,
-        "lat": 35.686958,
-        "lng": 139.739296,
-        "nodeCopyright": "© OpenStreetMap contributors",
-        "nodeSourceId": 1655920549,
         "licence": "Open Database License (ODbL) 1.0",
         "licenceUri": "https://opendatacommons.org/licenses/odbl/"
       },
@@ -3271,51 +3229,6 @@
         "licenceUri": "https://opendatacommons.org/licenses/odbl/"
       },
       {
-        "id": "bef8c5ba-ca1a-4b75-a46a-6f7184700894",
-        "name": "ＳＳＳ１",
-        "description": null,
-        "descriptionCopyright": null,
-        "imageUri": null,
-        "imageCopyright": null,
-        "uri": null,
-        "lat": 35.692542,
-        "lng": 139.777738,
-        "nodeCopyright": "© OpenStreetMap contributors",
-        "nodeSourceId": 1655929908,
-        "licence": "Open Database License (ODbL) 1.0",
-        "licenceUri": "https://opendatacommons.org/licenses/odbl/"
-      },
-      {
-        "id": "2b850a07-a93a-4904-a809-6f1551666018",
-        "name": "ケアリッツお茶の水",
-        "description": null,
-        "descriptionCopyright": null,
-        "imageUri": null,
-        "imageCopyright": null,
-        "uri": null,
-        "lat": 35.6971281,
-        "lng": 139.7570451,
-        "nodeCopyright": "© OpenStreetMap contributors",
-        "nodeSourceId": 7030399218,
-        "licence": "Open Database License (ODbL) 1.0",
-        "licenceUri": "https://opendatacommons.org/licenses/odbl/"
-      },
-      {
-        "id": "74b8e077-2b5a-40cd-9957-731fb2553cd2",
-        "name": "ウイーザス九段（介護付有料老人ホーム）",
-        "description": null,
-        "descriptionCopyright": null,
-        "imageUri": null,
-        "imageCopyright": null,
-        "uri": null,
-        "lat": 35.6968,
-        "lng": 139.7529282,
-        "nodeCopyright": "© OpenStreetMap contributors",
-        "nodeSourceId": 11524806557,
-        "licence": "Open Database License (ODbL) 1.0",
-        "licenceUri": "https://opendatacommons.org/licenses/odbl/"
-      },
-      {
         "id": "e4fb032d-2ef3-4a12-972b-512a0e433477",
         "name": "東京しごとセンター",
         "description": "就職支援を行う東京都の機関です。",
@@ -3329,6 +3242,22 @@
         "nodeSourceId": 1420785407,
         "licence": "Open Database License (ODbL) 1.0",
         "licenceUri": "https://opendatacommons.org/licenses/odbl/"
+      },
+      {
+        "id": "1e0a0faf-ee64-4ddd-ab3b-ee938d6c31fd",
+        "name": "千代田保健所",
+        "description": null,
+        "descriptionCopyright": null,
+        "imageUri": "https://media.githubusercontent.com/media/nawashiro/chiyoda_city_main_facilities/refs/heads/main/img/city_office_and_branch_offices/chiyoda-public-health-center.webp",
+        "imageCopyright": "© Nawashiro 2025",
+        "uri": "https://www.city.chiyoda.lg.jp/shisetsu/hokenjo/chiyoda-hokenjo.html",
+        "lat": 35.6960477,
+        "lng": 139.7521747,
+        "nodeCopyright": "© OpenStreetMap contributors",
+        "nodeSourceId": 3774437979,
+        "licence": "Open Database License (ODbL) 1.0",
+        "licenceUri": "https://opendatacommons.org/licenses/odbl/",
+        "name:en": "Chiyoda Public Health Center"
       }
     ]
   },
@@ -4041,8 +3970,8 @@
         "name": "千代田区立四番町図書館",
         "description": null,
         "descriptionCopyright": null,
-        "imageUri": null,
-        "imageCopyright": null,
+        "imageUri": "https://media.githubusercontent.com/media/nawashiro/chiyoda_city_main_facilities/refs/heads/main/img/library/yonbancho-library.webp",
+        "imageCopyright": "© Nawashiro 2025",
         "uri": null,
         "lat": 35.689474,
         "lng": 139.739749,
