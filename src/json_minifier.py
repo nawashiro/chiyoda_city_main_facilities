@@ -73,11 +73,6 @@ def process_folder(folder_path):
     
     # 新しいフォルダが既に存在する場合は確認
     if new_folder.exists():
-        overwrite = input(f"警告: フォルダ '{new_folder}' は既に存在します。上書きしますか？ (y/n): ")
-        if overwrite.lower() != 'y':
-            print("処理を中止しました。")
-            return 0, 0, None
-        
         # 古いフォルダを削除
         shutil.rmtree(new_folder)
     
