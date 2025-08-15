@@ -2,6 +2,22 @@
 
 東京都千代田区内の主要な施設の座標をまとめた json データです。
 
+## 使いかた
+
+ダウンロードするか、CDN を経由して利用してください。
+
+```
+// 主要・簡易
+https://cdn.jsdelivr.net/gh/nawashiro/chiyoda_city_main_facilities@latest/json_min/main_facilities.json
+// 多数・詳細
+https://cdn.jsdelivr.net/gh/nawashiro/chiyoda_city_main_facilities@latest/kazaguruma_json_min/key_locations.json
+
+// 風ぐるまで到達可能な場所（主要・簡易）
+https://cdn.jsdelivr.net/gh/nawashiro/chiyoda_city_main_facilities@latest/kazaguruma_json_min/main_facilities.json
+// 風ぐるまで到達可能な場所（多数・詳細）
+https://cdn.jsdelivr.net/gh/nawashiro/chiyoda_city_main_facilities@latest/kazaguruma_json_min/key_locations.json
+```
+
 ## ディレクトリ
 
 - `json`: 千代田区の市民にとって主要な場所をまとめています。
