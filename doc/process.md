@@ -9,7 +9,7 @@
 
 ## 使用方法
 
-```
+```bash
 .\run_process.bat
 ```
 

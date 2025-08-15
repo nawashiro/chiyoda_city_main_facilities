@@ -252,21 +252,6 @@
     ]
   },
   {
-    "category": "葬祭施設",
-    "category:en": "funeral facilities",
-    "locations": [
-      {
-        "name": "千代田万世会館（千代田区立葬祭施設）",
-        "name:en": "Chiyoda Mansei Hall (Chiyoda City Funeral Facility)",
-        "lat": 35.6979799,
-        "lng": 139.7699721,
-        "copyright": "© OpenStreetMap contributors",
-        "licence": "Open Database License (ODbL) 1.0",
-        "licenceUri": "https://opendatacommons.org/licenses/odbl/"
-      }
-    ]
-  },
-  {
     "category": "区立の学校",
     "category:en": "public schools",
     "locations": [
