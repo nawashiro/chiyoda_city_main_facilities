@@ -117,15 +117,21 @@ https://cdn.jsdelivr.net/gh/nawashiro/chiyoda_city_main_facilities@latest/kazagu
 
 ## その他のデータ取得元
 
-保育所のデータは東京都福祉保健局から取得しました。
+保育所のデータは東京都福祉局から取得しました。
 
-[© 東京都福祉保健局](https://spec.api.metro.tokyo.lg.jp/spec/t000010d0000000106-187b68210aea92ed432db83b37265504-0)
+[© 東京都福祉局](https://catalog.data.metro.tokyo.lg.jp/dataset/t000054d0000000356/resource/f41234cd-bcf2-46df-90fc-6cc7d8398321)
 
 [クリエイティブ・コモンズ 表示（CC BY）](https://creativecommons.org/licenses/by/4.0/deed.ja)
 
 幼稚園のデータは千代田区から取得しました。
 
 [© 千代田区](https://catalog.data.metro.tokyo.lg.jp/dataset/t131016d0000000007)
+
+[クリエイティブ・コモンズ 表示（CC BY）](https://creativecommons.org/licenses/by/4.0/deed.ja)
+
+データの整合性を確認するための公共施設一覧は千代田区から取得しました。
+
+[© 千代田区](https://catalog.data.metro.tokyo.lg.jp/dataset/t131016d0000000001)
 
 [クリエイティブ・コモンズ 表示（CC BY）](https://creativecommons.org/licenses/by/4.0/deed.ja)
 

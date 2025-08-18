@@ -344,7 +344,7 @@
         "nodeCopyright": "© 2025 Nawashiro",
         "nodeSourceId": null,
         "licence": "MIT License",
-        "licenceUri": "https://opensource.org/licenses/MIT",
+        "licenceUri": "https://opensource.org/license/mit",
         "name:en": "Chiyoda Park Side Plaza Library"
       }
     ]
@@ -366,7 +366,7 @@
         "nodeCopyright": "© 2025 Nawashiro",
         "nodeSourceId": null,
         "licence": "MIT License",
-        "licenceUri": "https://opensource.org/licenses/MIT",
+        "licenceUri": "https://opensource.org/license/mit",
         "name:en": "Chiyoda Park Side Plaza"
       },
       {
@@ -383,7 +383,7 @@
         "nodeSourceId": 173230196,
         "licence": "Open Database License (ODbL) 1.0",
         "licenceUri": "https://opendatacommons.org/licenses/odbl/",
-        "name:en": "Shohei Domukan Children's Hall",
+        "name:en": "Shohei Domukan",
         "name:ja_rm": "Shōhei Dōmu-kan"
       },
       {
@@ -402,10 +402,25 @@
         "licenceUri": "https://opendatacommons.org/licenses/odbl/"
       },
       {
+        "id": "1f1d9034-895f-41a5-9d05-f924e8c0c662",
+        "name": "岩本町ほほえみプラザ",
+        "description": "高齢者福祉施設と地域団体の活動の場の複合施設です。",
+        "descriptionCopyright": "© 2025 Nawashiro",
+        "imageUri": null,
+        "imageCopyright": null,
+        "uri": "https://www.tama-dhk.or.jp/iwamoto/",
+        "lat": 35.694232,
+        "lng": 139.777835,
+        "nodeCopyright": "© 2025 Nawashiro",
+        "nodeSourceId": null,
+        "licence": "MIT License",
+        "licenceUri": "https://opensource.org/license/mit"
+      },
+      {
         "id": "883f4f2f-7f8c-4acf-83f9-a7dca3a2254f",
-        "name": "西神田児童・家庭支援センター",
-        "description": null,
-        "descriptionCopyright": null,
+        "name": "西神田コスモス館",
+        "description": "区営住宅、区民住宅、児童・家庭支援センター、体育室、保育園などが入る複合施設です。",
+        "descriptionCopyright": "© 2025 Nawashiro",
         "imageUri": null,
         "imageCopyright": null,
         "uri": null,
@@ -415,6 +430,66 @@
         "nodeSourceId": 1655927382,
         "licence": "Open Database License (ODbL) 1.0",
         "licenceUri": "https://opendatacommons.org/licenses/odbl/"
+      },
+      {
+        "id": "3e3acde1-9175-45cd-aa2a-b46d80db4d7a",
+        "name": "四番町児童館",
+        "description": "四番町保育園との合同庁舎です。学童クラブや子育てひろばなどもあります。",
+        "descriptionCopyright": "© 2025 Nawashiro",
+        "imageUri": null,
+        "imageCopyright": null,
+        "uri": "https://www.city.chiyoda.lg.jp/koho/kosodate/jidocenter/ichiran/4bancho.html",
+        "lat": 35.688289,
+        "lng": 139.736548,
+        "nodeCopyright": "© 2025 Nawashiro",
+        "nodeSourceId": null,
+        "licence": "MIT License",
+        "licenceUri": "https://opensource.org/license/mit"
+      },
+      {
+        "id": "5cd49c86-3c33-4647-b705-9eaa73a5d744",
+        "name": "一番町児童館",
+        "description": null,
+        "descriptionCopyright": null,
+        "imageUri": null,
+        "imageCopyright": null,
+        "uri": "https://www.city.chiyoda.lg.jp/koho/kosodate/jidocenter/ichiran/1bancho.html",
+        "lat": 35.6864514,
+        "lng": 139.7393327,
+        "nodeCopyright": "© OpenStreetMap contributors",
+        "nodeSourceId": 1420765449,
+        "licence": "Open Database License (ODbL) 1.0",
+        "licenceUri": "https://opendatacommons.org/licenses/odbl/"
+      },
+      {
+        "id": "08fd22ce-4b3f-4f08-bec8-de63d3a84be7",
+        "name": "富士見みらい館",
+        "description": "小学校、こども園、わんぱく広場などの複合施設です。生涯学習・スポーツ活動にも利用できます。",
+        "descriptionCopyright": "© 2025 Nawashiro",
+        "imageUri": null,
+        "imageCopyright": null,
+        "uri": "https://www.city.chiyoda.lg.jp/shisetsu/bunka/fujimimirai.html",
+        "lat": 35.6972222,
+        "lng": 139.7463035,
+        "nodeCopyright": "© OpenStreetMap contributors",
+        "nodeSourceId": 179575985,
+        "licence": "Open Database License (ODbL) 1.0",
+        "licenceUri": "https://opendatacommons.org/licenses/odbl/"
+      },
+      {
+        "id": "487e52a8-1b17-4214-8e65-5c96d58d9b0b",
+        "name": "子育てひろば「あい・ぽーと」麹町",
+        "description": null,
+        "descriptionCopyright": null,
+        "imageUri": null,
+        "imageCopyright": null,
+        "uri": "https://www.ai-port.jp/kojimachi/komichi/",
+        "lat": 35.690322,
+        "lng": 139.742245,
+        "nodeCopyright": "© 2025 Nawashiro",
+        "nodeSourceId": null,
+        "licence": "MIT License",
+        "licenceUri": "https://opensource.org/license/mit"
       },
       {
         "id": "e4fb032d-2ef3-4a12-972b-512a0e433477",
@@ -446,44 +521,6 @@
         "licence": "Open Database License (ODbL) 1.0",
         "licenceUri": "https://opendatacommons.org/licenses/odbl/",
         "name:en": "Chiyoda Public Health Center"
-      }
-    ]
-  },
-  {
-    "category": "児童館",
-    "category:en": "children's center",
-    "locations": [
-      {
-        "id": "115bf275-e6d4-4d52-a56f-9db2e51b6266",
-        "name": "いずみこどもプラザ",
-        "description": "ちよだパークサイドプラザ6階にあります。",
-        "descriptionCopyright": "© 2025 Nawashiro",
-        "imageUri": "https://media.githubusercontent.com/media/nawashiro/chiyoda_city_main_facilities/refs/heads/main/img/social_facility/chiyoda-park-side-plaza.webp",
-        "imageCopyright": "© 2025 Nawashiro",
-        "uri": "https://www.city.chiyoda.lg.jp/koho/kosodate/jidocenter/ichiran/izumi.html",
-        "lat": 35.699229,
-        "lng": 139.778795,
-        "nodeCopyright": "© 2025 Nawashiro",
-        "nodeSourceId": null,
-        "licence": "MIT License",
-        "licenceUri": "https://opensource.org/licenses/MIT",
-        "name:en": "Izumi Children’s Plaza"
-      },
-      {
-        "id": "487e52a8-1b17-4214-8e65-5c96d58d9b0b",
-        "name": "子育てひろば「あい・ぽーと」麹町",
-        "description": null,
-        "descriptionCopyright": null,
-        "imageUri": null,
-        "imageCopyright": null,
-        "uri": "https://www.ai-port.jp/kojimachi/komichi/",
-        "lat": 35.690322,
-        "lng": 139.742245,
-        "nodeCopyright": "© 2025 Nawashiro",
-        "nodeSourceId": null,
-        "licence": "MIT License",
-        "licenceUri": "https://opensource.org/license/mit",
-        "name:en": ""
       }
     ]
   },
@@ -1972,7 +2009,7 @@
         "nodeCopyright": "© 2025 Nawashiro",
         "nodeSourceId": null,
         "licence": "MIT License",
-        "licenceUri": "https://opensource.org/licenses/MIT",
+        "licenceUri": "https://opensource.org/license/mit",
         "name:en": "Hibiya Hospital"
       },
       {
@@ -2045,7 +2082,7 @@
       {
         "id": "d41e398c-35c7-4693-9e30-25148a5ba68c",
         "name": "東京逓信病院",
-        "description": "",
+        "description": null,
         "descriptionCopyright": "© 2025 Nawashiro",
         "imageUri": null,
         "imageCopyright": null,

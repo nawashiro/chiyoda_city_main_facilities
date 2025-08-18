@@ -499,6 +499,75 @@
     ]
   },
   {
+    "category": "児童館",
+    "category:en": "children's center",
+    "locations": [
+      {
+        "name": "ちよだパークサイドプラザ",
+        "name:en": "Chiyoda Park Side Plaza",
+        "lat": 35.699229,
+        "lng": 139.778795,
+        "copyright": "© 2025 Nawashiro",
+        "licence": "MIT License",
+        "licenceUri": "https://opensource.org/license/mit"
+      },
+      {
+        "name": "昌平童夢館",
+        "name:en": "Shohei Domukan",
+        "lat": 35.7012028,
+        "lng": 139.7698588,
+        "copyright": "© OpenStreetMap contributors",
+        "licence": "Open Database License (ODbL) 1.0",
+        "licenceUri": "https://opensource.org/license/mit"
+      },
+      {
+        "name": "西神田コスモス館",
+        "name:en": "Nishikanda Cosmos Hall",
+        "lat": 35.6988874,
+        "lng": 139.7547057,
+        "copyright": "© OpenStreetMap contributors",
+        "licence": "Open Database License (ODbL) 1.0",
+        "licenceUri": "https://opensource.org/license/mit"
+      },
+      {
+        "name": "四番町児童館",
+        "name:en": "Yonbancho Children's Center",
+        "lat": 35.688289,
+        "lng": 139.736548,
+        "copyright": "© 2025 Nawashiro",
+        "licence": "MIT License",
+        "licenceUri": "https://opensource.org/license/mit"
+      },
+      {
+        "name": "一番町児童館",
+        "name:en": "Ichibancho Children's Center",
+        "lat": 35.6864514,
+        "lng": 139.7393327,
+        "copyright": "© OpenStreetMap contributors",
+        "licence": "Open Database License (ODbL) 1.0",
+        "licenceUri": "https://opendatacommons.org/licenses/odbl/"
+      },
+      {
+        "name": "富士見みらい館",
+        "name:en": "Fujimi Miraikan",
+        "lat": 35.6972222,
+        "lng": 139.7463035,
+        "copyright": "© 2025 Nawashiro",
+        "licence": "MIT License",
+        "licenceUri": "https://opensource.org/license/mit"
+      },
+      {
+        "name": "子育てひろば「あい・ぽーと」麹町",
+        "name:en": "Childcare Center “Ai Port” Kojimachi",
+        "lat": 35.690322,
+        "lng": 139.742245,
+        "copyright": "© 2025 Nawashiro",
+        "licence": "MIT License",
+        "licenceUri": "https://opensource.org/license/mit"
+      }
+    ]
+  },
+  {
     "category": "図書館",
     "category:en": "libraries",
     "locations": [
