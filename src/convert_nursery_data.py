@@ -35,8 +35,8 @@ def convert_nursery_data(csv_data):
     locations = []
     
     # 決め打ちする値
-    description_copyright = "© 東京都福祉保健局"
-    node_copyright = "© 東京都福祉保健局"
+    description_copyright = "© 東京都福祉局"
+    node_copyright = "© 東京都福祉局"
     licence = "CC BY"
     licence_uri = "https://creativecommons.org/licenses/by/4.0/"
     
