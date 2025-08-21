@@ -16,6 +16,8 @@ https://cdn.jsdelivr.net/gh/nawashiro/chiyoda_city_main_facilities@latest/json_m
 https://cdn.jsdelivr.net/gh/nawashiro/chiyoda_city_main_facilities@latest/kazaguruma_json_min/main_facilities.json
 // 風ぐるまで到達可能な場所（多数・詳細）
 https://cdn.jsdelivr.net/gh/nawashiro/chiyoda_city_main_facilities@latest/kazaguruma_json_min/key_locations.json
+
+// 本番環境ではlatestではなくバージョンを指定してください。互換性に問題が発生するかもしれません。
 ```
 
 ## ディレクトリ
