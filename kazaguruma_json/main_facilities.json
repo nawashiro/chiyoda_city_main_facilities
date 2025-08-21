@@ -498,7 +498,7 @@
         "name:en": "Chiyoda Park Side Plaza",
         "lat": 35.699229,
         "lng": 139.778795,
-        "copyright": "© 2025 Nawashiro",
+        "copyright": "© Nawashiro",
         "licence": "MIT License",
         "licenceUri": "https://opensource.org/license/mit"
       },
@@ -509,7 +509,7 @@
         "lng": 139.7698588,
         "copyright": "© OpenStreetMap contributors",
         "licence": "Open Database License (ODbL) 1.0",
-        "licenceUri": "https://opensource.org/license/mit"
+        "licenceUri": "https://opendatacommons.org/licenses/odbl/"
       },
       {
         "name": "西神田コスモス館",
@@ -518,14 +518,14 @@
         "lng": 139.7547057,
         "copyright": "© OpenStreetMap contributors",
         "licence": "Open Database License (ODbL) 1.0",
-        "licenceUri": "https://opensource.org/license/mit"
+        "licenceUri": "https://opendatacommons.org/licenses/odbl/"
       },
       {
         "name": "四番町児童館",
         "name:en": "Yonbancho Children's Center",
         "lat": 35.688289,
         "lng": 139.736548,
-        "copyright": "© 2025 Nawashiro",
+        "copyright": "© Nawashiro",
         "licence": "MIT License",
         "licenceUri": "https://opensource.org/license/mit"
       },
@@ -543,7 +543,7 @@
         "name:en": "Fujimi Miraikan",
         "lat": 35.6972222,
         "lng": 139.7463035,
-        "copyright": "© 2025 Nawashiro",
+        "copyright": "© Nawashiro",
         "licence": "MIT License",
         "licenceUri": "https://opensource.org/license/mit"
       },
@@ -552,7 +552,7 @@
         "name:en": "Childcare Center “Ai Port” Kojimachi",
         "lat": 35.690322,
         "lng": 139.742245,
-        "copyright": "© 2025 Nawashiro",
+        "copyright": "© Nawashiro",
         "licence": "MIT License",
         "licenceUri": "https://opensource.org/license/mit"
       }

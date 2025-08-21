@@ -107,6 +107,7 @@ https://cdn.jsdelivr.net/gh/nawashiro/chiyoda_city_main_facilities@latest/kazagu
 - OSM からデータを受け入れる場合、[JSON 変換スクリプト](./doc/transform_json_doc.md)が使用できます。
 - 保育所のデータを受け入れる場合、[CSV 変換スクリプト](./doc/nursery_data_conversion.md)が使用できます。
 - [JSON 圧縮ツール](./doc/json_minifier_readme.md)があります。配信用のファイルを作成するために必要です。
+- [リリースノート生成スクリプト](./doc/release_notes_generator.md)があります。データの統計情報をまとめたリリースノートを自動生成できます。
 - Windows をお使いであれば、[施設データ処理バッチ](./doc/process.md)を使用すると風ぐるまデータ変換 → 配信ファイル作成が自動化できます。
 
 ## ライセンス
