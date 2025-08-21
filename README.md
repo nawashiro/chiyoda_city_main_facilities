@@ -92,9 +92,7 @@ https://cdn.jsdelivr.net/gh/nawashiro/chiyoda_city_main_facilities@latest/kazagu
 
 ## 画像
 
-`/img`以下にカテゴリ名でフォルダ分けします。
-
-600x450 の webp 画像です。
+`/img`以下に保存します。600x450 の webp 画像です。
 
 ## 貢献方法
 
