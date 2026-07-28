@@ -7,11 +7,12 @@
 ## 運用原則
 
 - 旧JSON構造との後方互換を要件としない。
-- OSM検索入力は正本ではない。人間入力もWAM入力も、`name + coordinates`または`name + qid`の単純な形式にする。
+- OSM検索入力は正本ではない。作成時にPlace UUIDを先に採番し、人間入力もWAM入力も、`id + name + coordinates`または`id + name + qid`の単純な形式にする。
+- 同じUUIDが`data/registry.json`にあれば正本作成済み、なければ未作成と判断し、別の状態台帳を作らない。
 - QIDを持つ検索入力には座標を書かない。
 - 唯一の正本は`data/registry.json`の5.2 Placeとする。
-- 正本Placeは名称、分類、タグ、OSM由来座標、画像、lifecycle、visibility、OSM・WAM等への参照履歴を持つ。
-- QIDから現在のOSM地物を同定した場合、正本のgeometryにはそのOSM地物の代表点を書き、`geometrySource`でOSM参照と確認時刻を示す。
+- 正本Placeは検索入力と同じUUID、検索入力語を複写した単一`name`、分類、タグ、座標、画像、lifecycle、visibility、OSM・WAM等への参照履歴を持つ。多言語名や別名は作らない。
+- 正本geometryの優先順位はWAM、OSM、検索入力座標とし、`geometrySource`で採用元と確認時刻を示す。
 - OSM IDを新しい値で上書きして消さず、現在・過去のID、確認時刻、失効時刻、短い根拠を残す。以前のIDも次回同定へ使う。
 - 監査記録は時刻、方法、操作、対象だけにする。方法は`language_model`、`calculation_model`、`human_inference`、`field_observation`の4種とする。
 - 長大なAI推論や監査ログを正本へ保存しない。必要時だけ一時レポートにする。
@@ -56,10 +57,11 @@ dist/public/places.geojson              # 正本から作る互換・公開用�
 ## Phase 0: 単純な新設計の土台
 
 - 検索入力と正本の2 Schemaを作る。
-- 名前＋座標、名前＋QID、現在・過去のOSM ID、画像、GeoJSONのfixtureを作る。
+- UUID＋名前＋座標、UUID＋名前＋QID、現在・過去のOSM ID、画像、GeoJSONのfixtureを作る。
 - QIDと座標の併記を拒否する。
 - UUIDv7重複を例外なしで拒否する。
-- geometryと現在のOSM参照の対応を検証する。
+- 検索入力と正本のUUID・単一`name`の対応を検証する。
+- geometryがWAM、OSM、検索入力座標の優先順位に従うことを検証する。
 - OSM ID履歴の時刻と状態を検証する。
 - auditを4キー・4方法へ制限する。
 - 町名、画像、ソース別公開属性を検証する。

@@ -1,15 +1,15 @@
 # 千代田区主要施設データベース 保守・自動更新仕様
 
-- バージョン: 4.4
+- バージョン: 4.5
 - 対象リポジトリ: `nawashiro/chiyoda_city_main_facilities`
 - 基準ブランチ: `main`
 - 更新方針: 一人の体力を主たる部品として消費せず、計算機推論と小さなPull Requestで保守する
 
 ## 0. 結論
 
-1. OSM同定へ渡す検索入力は、名称と座標、または名称とQIDだけを持つ。人間が書く入力とWAM等から作る入力を同じ単純な形式で扱い、正本とは呼ばない。
-2. 唯一の施設正本は`data/registry.json`の5.2 Placeである。名称、分類、タグ、OSM由来座標、画像、lifecycle、visibility、OSM・WAM等への参照とその履歴を保持する。
-3. QIDを持つ検索入力は座標を持たない。QIDから現在のOSM地物を同定できた場合、正本Placeの座標にはそのOSM地物から得た代表点を書き込む。
+1. OSM同定へ渡す検索入力は、先に採番したPlace UUIDと、名称と座標、または名称とQIDだけを持つ。人間が書く入力とWAM等から作る入力を同じ単純な形式で扱い、正本とは呼ばない。
+2. 唯一の施設正本は`data/registry.json`の5.2 Placeである。検索入力と同じUUID、検索入力語を複写した単一`name`、分類、タグ、座標、画像、lifecycle、visibility、OSM・WAM等への参照とその履歴を保持する。
+3. 正本座標の採用優先順位はWAM、OSM、検索入力座標の順とする。QIDを持つ検索入力は座標を持たず、WAM座標がなければ同定したOSM地物の代表点を使う。
 4. OSM参照は現在IDだけへ上書きせず、以前のID、確認時刻、失効時刻、同定根拠を短い履歴として残す。次回同定では以前のOSM IDも検索手掛かりにする。
 5. 監査記録は、時刻、操作、対象、確認方法が`language_model`、`calculation_model`、`human_inference`、`field_observation`のどれかだけを分かる短い記録にする。長大な推論本文を正本へ保存しない。
 6. GeoJSONは正本と版固定した外部ソースから作る互換・公開用の影とし、正本Placeの代表点だけをgeometryへ出す。OSM参照履歴、OSMポリゴン、町名ポリゴンは含めない。
@@ -193,7 +193,7 @@ config/sources.json
 
 ### 5.1 OSM検索入力
 
-検索入力は正本ではない。人間が書く場合も、WAM等から機械的に作る場合も、各検索項目の本体は名前と座標、または名前とQIDだけとする。出所はファイル単位の`source`へ置く。
+検索入力は正本ではない。人間が書く場合も、WAM等から機械的に作る場合も、各検索項目は正本と共通のUUIDを先に持ち、名前と座標、または名前とQIDを持つ。出所はファイル単位の`source`へ置く。
 
 ```json
 {
@@ -204,10 +204,12 @@ config/sources.json
   },
   "queries": [
     {
+      "id": "019c0000-0000-7000-8000-000000000002",
       "name": "ちよだパークサイドプラザ区民図書室",
       "coordinates": [139.7821, 35.6972]
     },
     {
+      "id": "019c0000-0000-7000-8000-000000000001",
       "name": "北の丸公園",
       "qid": "Q1075966"
     }
@@ -218,11 +220,13 @@ config/sources.json
 各検索項目は次のどちらか一方へ厳密に適合させる。
 
 ```text
-name + coordinates
-name + qid
+id + name + coordinates
+id + name + qid
 ```
 
-- `name`は検索文字列であり、正本上の正式名称とは限らない。
+- `id`は検索入力を作る時点で採番するUUIDv7で、正本作成時にも同じ値を使う。
+- 同じ`id`が`data/registry.json`にあれば作成済み、なければ未作成と判断する。別の状態台帳は作らない。
+- `name`は検索語であり、正本Placeへそのまま複写する。この段階では多言語名や別名を取得しない。
 - `coordinates`は`[経度, 緯度]`の代表点とする。
 - `qid`は`^Q[1-9][0-9]*$`に適合させる。
 - `coordinates`と`qid`を同じ検索項目へ併記しない。
@@ -234,22 +238,24 @@ QID検索入力は、以前のOSM同定で同じ地物のWikidataタグを確認
 2. 同定したOSM地物に、同じ地物を指すQIDがあることを確認する。
 3. 次回以降の検索入力には名前とQIDを書き、座標を併記しない。
 4. QIDから現在のOSM地物を同定する。
-5. 正本Placeの`geometry`には、その時点で同定したOSM地物の代表点を書き込む。
+5. 正本Placeの`geometry`には、WAM座標があればそれを使い、なければ同定したOSM地物の代表点を書き込む。
 
 正本Place自身を更新する場合は、正本に残した現在・過去のOSM ID、名称、geometryも検索手掛かりとして使う。これらを検索入力ファイルへ重複コピーする必要はない。
 
 ### 5.2 Place正本
 
-`data/registry.json`のPlaceが唯一の施設正本である。従来どおり、施設の名称、分類、用途タグ、座標、画像、lifecycle、visibility、外部参照を扱う。座標は現在採用しているOSM地物から得た代表点とし、取得元を`geometrySource`で示す。
+`data/registry.json`のPlaceが唯一の施設正本である。従来どおり、施設の名称、分類、用途タグ、座標、画像、lifecycle、visibility、外部参照を扱う。`name`は検索入力語だけを複写し、多言語名や別名の構造を作らない。座標は次の順で最初に利用できるものを採用し、取得元を`geometrySource`で示す。
+
+1. 対応するWAMレコードの座標
+2. 同定した現在のOSM地物の代表点
+3. 検索入力の`coordinates`
+
+検索入力座標を使う場合、`geometrySource.sourceId`は`search-input`、`recordId`は検索入力と共通のUUIDとする。これ以外の座標評価用レイヤーや品質状態は追加しない。
 
 ```json
 {
   "id": "019c0000-0000-7000-8000-000000000001",
-  "names": {
-    "ja": "北の丸公園",
-    "en": "Kitanomaru Park",
-    "aliases": []
-  },
+  "name": "北の丸公園",
   "categoryIds": ["park.public"],
   "tags": [],
   "geometry": {
@@ -383,6 +389,8 @@ URL、ソース、ライセンス、必要な表示を最低限保持する。�
 ### 5.6 IDと外部参照
 
 - Place IDはUUIDv7を原則とし、一度採用したら変更・再利用しない。
+- UUIDは検索入力作成時に採番し、正本Placeへ引き継ぐ。
+- 作成済みかどうかは同じUUIDが`data/registry.json`に存在するかだけで判断し、追加の状態管理を作らない。
 - 旧UUIDは信頼せず、移行時に新IDを割り当てる。
 - UUID重複は常に検証エラーとし、例外指定を認めない。
 - 外部IDを内部主キーにしない。
@@ -398,7 +406,7 @@ URL、ソース、ライセンス、必要な表示を最低限保持する。�
 各Featureのgeometryは、正本Placeの代表点を複写したPointだけとする。OSMのPolygon・MultiPolygon・relation member、町名ポリゴンは出力しない。propertiesは少なくとも次を持つ。
 
 - `id`
-- `names`
+- `name`
 - `categoryIds`
 - `tags`
 - `images`
@@ -421,7 +429,8 @@ GeoJSONのトップレベルには、使用した全ソースのURL、版・取�
 検索入力:
 
 - `schema/search-input.schema.json`へ適合すること
-- 各項目が`name + coordinates`または`name + qid`のどちらか一方であること
+- 各項目が`id + name + coordinates`または`id + name + qid`のどちらか一方であること
+- 検索入力のUUIDが一意で、対応する正本Placeがある場合は同じUUIDと`name`を使っていること
 - QID項目に座標がなく、座標項目にQIDがないこと
 - 座標が`[経度, 緯度]`の順で、QIDが`^Q[1-9][0-9]*$`へ適合すること
 - 入力元がファイル単位の`source`で分かること
@@ -430,7 +439,7 @@ Place正本:
 
 - `data/registry.json`が`schema/registry.schema.json`へ適合すること
 - Place IDがUUIDv7で、一意かつ例外なしであること
-- geometryが現在の`geometrySource`のOSM参照と対応すること
+- geometryがWAM、OSM、検索入力座標の優先順位に従い、`geometrySource`と対応すること
 - OSM参照が型付きで、現在参照が原則一件以下であること
 - `current`参照に確認時刻があり、`superseded`参照に`supersededAt`があること
 - 以前のOSM IDを新しいIDへの更新時に削除していないこと
@@ -733,9 +742,11 @@ python -m src.validate_data .
 実施内容:
 
 - `schema/search-input.schema.json`と`schema/registry.schema.json`の作成
-- 座標検索、QID検索、OSM ID履歴、画像付きPlace、GeoJSONのfixtureと検証CLI
+- UUID付き座標検索、UUID付きQID検索、OSM ID履歴、画像付きPlace、GeoJSONのfixtureと検証CLI
 - UUID重複を例外なしで拒否するテスト
 - QIDと座標の併記を拒否するテスト
+- 検索入力と正本でUUIDと単一`name`が一致するテスト
+- geometryがWAM、OSM、検索入力座標の優先順位に従うテスト
 - OSM ID履歴、geometrySource、短いauditの整合性テスト
 - 画像URL・権利情報の検証テスト
 - 町名point-in-polygonとソース別公開属性の固定fixture
@@ -815,7 +826,9 @@ python -m src.validate_data .
 - 新スキーマのfixtureに対して新検証CLIが成功する。
 - 重複UUIDを例外なしで拒否する。
 - 検索入力とPlace正本の設計がJSON Schemaで表現されている。
-- 検索入力が`name + coordinates`または`name + qid`の一方だけを許す。
+- 検索入力がUUIDを必須とし、`id + name + coordinates`または`id + name + qid`の一方だけを許す。
+- 正本の`name`が検索入力語と一致し、多言語名や別名を要求しない。
+- 正本geometryがWAM、OSM、検索入力座標の優先順位に従う。
 - 正本で現在と過去のOSM ID、時刻、根拠、短い監査方法を保持できる。
 - 固定fixtureから画像、町名、ソース別属性を含むGeoJSONを決定的に生成できる。
 - CI設定が構文上妥当である。
