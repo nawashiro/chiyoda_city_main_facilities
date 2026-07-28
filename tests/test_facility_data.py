@@ -1,3 +1,4 @@
+import hashlib
 import json
 import tempfile
 import unittest
@@ -244,6 +245,9 @@ class PhaseZeroFilesTests(unittest.TestCase):
         registry_schema = json.loads(
             (root / "schema/registry.schema.json").read_text(encoding="utf-8")
         )
+        public_schema = json.loads(
+            (root / "schema/public-geojson.schema.json").read_text(encoding="utf-8")
+        )
         search_fixture = json.loads(
             (root / "tests/fixtures/search-input.json").read_text(encoding="utf-8")
         )
@@ -253,6 +257,10 @@ class PhaseZeroFilesTests(unittest.TestCase):
 
         self.assertEqual(["id", "name"], search_schema["$defs"]["query"]["required"][:2])
         self.assertEqual("Point", registry_schema["$defs"]["place"]["properties"]["geometry"]["properties"]["type"]["const"])
+        self.assertEqual(
+            ["id", "name", "categoryIds", "tags", "town"],
+            public_schema["$defs"]["feature"]["properties"]["properties"]["required"],
+        )
         self.assertEqual([], validate_search_document(search_fixture))
         search_by_id = {item["id"]: item for item in search_fixture["queries"]}
         self.assertEqual([], validate_registry(registry_fixture, search_by_id))
@@ -279,11 +287,32 @@ class PhaseZeroFilesTests(unittest.TestCase):
 
             self.assertEqual([], validate_repository(root))
             self.assertEqual(0, main(["build", str(root)]))
-            public = json.loads(
-                (root / "dist/public/places.geojson").read_text(encoding="utf-8")
+            geojson_path = root / "dist/public/places.geojson"
+            first_bytes = geojson_path.read_bytes()
+            public = json.loads(first_bytes)
+            manifest = json.loads(
+                (root / "dist/public/manifest.json").read_text(encoding="utf-8")
             )
+            self.assertEqual(0, main(["build", str(root)]))
+            second_bytes = geojson_path.read_bytes()
 
         self.assertEqual("Point", public["features"][0]["geometry"]["type"])
+        self.assertEqual(first_bytes, second_bytes)
+        self.assertEqual(hashlib.sha256(first_bytes).hexdigest(), manifest["sha256"])
+        self.assertEqual("places.geojson", manifest["file"])
+
+    def test_readme_and_ci_use_only_the_new_pipeline(self):
+        root = Path(__file__).resolve().parents[1]
+        readme = (root / "README.md").read_text(encoding="utf-8")
+        workflow = (root / ".github/workflows/validate.yml").read_text(encoding="utf-8")
+
+        self.assertIn("dist/public/places.geojson", readme)
+        self.assertIn("python3 -m src.facility_data validate .", readme)
+        self.assertIn("python3 -m src.facility_data build .", readme)
+        self.assertNotIn("json_min", readme)
+        self.assertNotIn("pandas", readme)
+        self.assertIn("python3 -m src.facility_data validate .", workflow)
+        self.assertNotIn("src.validate_data", workflow)
 
 
 class LegacyMigrationTests(unittest.TestCase):

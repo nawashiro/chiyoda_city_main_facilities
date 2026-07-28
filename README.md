@@ -1,143 +1,60 @@
-# 千代田区主要施設座標データ
+# 千代田区主要施設データベース
 
-東京都千代田区内の主要な施設の座標をまとめた json データです。
+千代田区で「生活する・助けてもらう・楽しむ」ために訪れる主要施設を、小規模に保守するデータベースです。
 
-## 使いかた
+## 公開データ
 
-ダウンロードするか、CDN を経由して利用してください。
+公開物はPointだけを収録したGeoJSONです。
 
-```
-// 主要・簡易
-https://cdn.jsdelivr.net/gh/nawashiro/chiyoda_city_main_facilities@latest/json_min/main_facilities.json
-// 多数・詳細
-https://cdn.jsdelivr.net/gh/nawashiro/chiyoda_city_main_facilities@latest/json_min/key_locations.json
-
-// 風ぐるまで到達可能な場所（主要・簡易）
-https://cdn.jsdelivr.net/gh/nawashiro/chiyoda_city_main_facilities@latest/kazaguruma_json_min/main_facilities.json
-// 風ぐるまで到達可能な場所（多数・詳細）
-https://cdn.jsdelivr.net/gh/nawashiro/chiyoda_city_main_facilities@latest/kazaguruma_json_min/key_locations.json
-
-// 本番環境ではlatestではなくバージョンを指定してください。互換性に問題が発生するかもしれません。
+```text
+https://cdn.jsdelivr.net/gh/nawashiro/chiyoda_city_main_facilities@<version>/dist/public/places.geojson
 ```
 
-## ディレクトリ
+本番利用では`latest`ではなくリリースまたはコミットを指定してください。`dist/public/manifest.json`のSHA-256で取得物を確認できます。
 
-- `json`: 千代田区の市民にとって主要な場所をまとめています。
-- `kazaguruma_json`: 千代田区の市民にとって主要な場所であり、かつ千代田区福祉交通「風ぐるま」の停留所から徒歩圏内（600m 以内）である場所の座標をまとめた JSON データを提供しています。[施設と停留所の距離チェックスクリプト](./doc/facility_and_stop_distance_check_script.md)を実行して`json`から自動的に抽出できます。
+公開GeoJSONには名称、分類、製品タグ、代表点、派生町名だけを含めます。OSM ID履歴、監査記録、OSM・町名ポリゴンは含めません。
 
-## ファイル
+## データ構成
 
-- `main_facilities.json`ファイルには、千代田区内の市民にとって主要だと思われる福祉施設の位置情報（緯度・経度）が含まれています。
-- `key_locations.json`ファイルには、千代田区内のさまざまな場所の位置情報が含まれています。項目は多くを含めることができます。
+- `inputs/osm-search/`: OSM同定用の検索入力。正本ではありません
+- `data/registry.json`: 唯一のPlace正本
+- `schema/`: 検索入力、正本、公開GeoJSONの契約
+- `dist/public/places.geojson`: 正本から生成する公開用派生物
+- `reports/`: 一時移行や更新結果の短いレポート
+- `img/`: 正本から参照する画像
 
-## データ形式
+検索入力は次のいずれかです。
 
-### main_facilities.json
-
-主要な施設を簡易な形式でまとめています。
-
-データは次の形式で構成されています：
-
-```json
-[
-  {
-    "category": "カテゴリ名",
-    "locations": [
-      {
-        "name": "施設名",
-        "name:en": "Facility name",
-        "lat": 緯度,
-        "lng": 経度,
-        "copyright": "© このアイテムの作者",
-        "licence": "MIT License",
-        "licenceUri": "https://opensource.org/license/mit"
-      },
-      ...
-    ]
-  },
-  ...
-]
+```text
+UUIDv7 + name + coordinates
+UUIDv7 + name + qid
 ```
 
-### key_locations.json
+同じUUIDを正本Placeへ引き継ぎます。正本の`name`は検索入力語だけです。座標はWAM、OSM、検索入力座標の順で採用します。
 
-主要な場所を、詳細な形式でまとめています。
+## 検証と生成
 
-```json
-[
-  {
-    "category": "カテゴリ名（必須）",
-    "category:en": "英語カテゴリ名",
-    "locations": [
-      {
-        "id": "uuid4（必須）",
-        "name": "施設名（必須）",
-        "name:en": "Facility name",
-        "description": "説明（nullを許容する）",
-        "descriptionCopyright": "© 説明の作者（説明がない場合のみnullを許容する）",
-        "imageUri": "写真のURI（nullを許容する）",
-        "imageCopyright": "© 写真の作者（写真のURIが存在しない時のみnullを許容する）",
-        "uri": "URI（nullを許容する）",
-        "lat": 緯度（必須）,
-        "lng": 経度（必須）,
-        "nodeCopyright": "© 座標の作者（必須）",
-        "nodeSourceId": 提供元のid（ない場合nullを許容する）,
-        "licence": "ライセンス（必須）",
-        "licenceUri": "ライセンスURI（必須）",
-      },
-      ...
-    ]
-  },
-  ...
-]
+外部パッケージは不要です。Python 3.13で実行します。
+
+```bash
+python3 -m unittest discover -s tests -v
+python3 -m src.facility_data validate .
+python3 -m src.facility_data build .
 ```
 
-## 画像
+公開ファイルを直接編集してはいけません。検索入力または`data/registry.json`を更新し、検証後に再生成します。
 
-`/img`以下に保存します。600x450 の webp 画像です。
+## 運用方針
 
-## 貢献方法
+- UUID重複を許容しない
+- 50m以内だけをOSM候補にし、自動的に距離を広げない
+- 曖昧な低リスク同定は3票すべて有効かつ2票以上一致した場合だけ採用する
+- 削除、統合、恒久的な非公開化を合議だけで自動確定しない
+- 監査記録は`at`、`method`、`action`、`target`だけにする
+- 外部ソース取得はソースごとに月1回以下にする
 
-このデータは随時更新していく必要があります。以下の方法で貢献いただけます：
+詳しい設計は[`doc/data_maintenance_spec.md`](doc/data_maintenance_spec.md)を参照してください。
 
-1. 新しい施設を追加する
-2. 既存の施設情報を更新する
-3. 誤った情報を修正する
+## ライセンスと出典
 
-- OSM からデータを受け入れる場合、[JSON 変換スクリプト](./doc/transform_json_doc.md)が使用できます。
-- 保育所のデータを受け入れる場合、[CSV 変換スクリプト](./doc/nursery_data_conversion.md)が使用できます。
-- [JSON 圧縮ツール](./doc/json_minifier_readme.md)があります。配信用のファイルを作成するために必要です。
-- [リリースノート生成スクリプト](./doc/release_notes_generator.md)があります。データの統計情報をまとめたリリースノートを自動生成できます。
-- Windows をお使いであれば、[施設データ処理バッチ](./doc/process.md)を使用すると風ぐるまデータ変換 → 配信ファイル作成が自動化できます。
-
-## ライセンス
-
-この JSON データは OpenStreetMap のデータを元に作成されています。OpenStreetMap のデータは [Open Database License (ODbL) 1.0](https://opendatacommons.org/licenses/odbl/) の下で提供されています。従って、この JSON データも同じライセンスが適用されます。
-
-[© OpenStreetMap contributors](https://www.openstreetmap.org/copyright)
-
-## その他のデータ取得元
-
-保育所のデータは東京都福祉局から取得しました。
-
-[© 東京都福祉局](https://catalog.data.metro.tokyo.lg.jp/dataset/t000054d0000000356/resource/f41234cd-bcf2-46df-90fc-6cc7d8398321)
-
-[クリエイティブ・コモンズ 表示（CC BY）](https://creativecommons.org/licenses/by/4.0/deed.ja)
-
-幼稚園のデータは千代田区から取得しました。
-
-[© 千代田区](https://catalog.data.metro.tokyo.lg.jp/dataset/t131016d0000000007)
-
-[クリエイティブ・コモンズ 表示（CC BY）](https://creativecommons.org/licenses/by/4.0/deed.ja)
-
-データの整合性を確認するための公共施設一覧は千代田区から取得しました。
-
-[© 千代田区](https://catalog.data.metro.tokyo.lg.jp/dataset/t131016d0000000001)
-
-[クリエイティブ・コモンズ 表示（CC BY）](https://creativecommons.org/licenses/by/4.0/deed.ja)
-
-stops.txt は日立自動車交通から取得しました。
-
-[© 日立自動車交通株式会社 / Hitachi Motor Transportation Co. Ltd.](https://ckan.odpt.org/dataset/hitachi_automobile_transportation_chiyoda_alllines)
-
-[Creative Commons Attribution 4.0 International (CC BY 4.0)](https://creativecommons.org/licenses/by/4.0/)
+ソースごとのライセンスと公開時の帰属は[`SOURCES_AND_LICENSES.md`](SOURCES_AND_LICENSES.md)および[`config/sources.json`](config/sources.json)に記録しています。

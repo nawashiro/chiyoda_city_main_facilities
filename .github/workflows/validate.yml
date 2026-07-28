@@ -21,6 +21,13 @@ jobs:
         with:
           python-version: "3.13"
       - name: Run tests
-        run: python -m unittest discover -s tests -v
+        run: python3 -m unittest discover -s tests -v
       - name: Validate repository data
-        run: python -m src.validate_data .
+        run: python3 -m src.facility_data validate .
+      - name: Verify generated public data
+        run: |
+          cp dist/public/places.geojson /tmp/places.geojson
+          cp dist/public/manifest.json /tmp/manifest.json
+          python3 -m src.facility_data build .
+          cmp /tmp/places.geojson dist/public/places.geojson
+          cmp /tmp/manifest.json dist/public/manifest.json

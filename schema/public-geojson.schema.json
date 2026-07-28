@@ -1,0 +1,49 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://nawashiro.github.io/chiyoda_city_main_facilities/schema/public-geojson.schema.json",
+  "title": "Public facility GeoJSON",
+  "type": "object",
+  "required": ["type", "sourceAttributions", "features"],
+  "additionalProperties": false,
+  "properties": {
+    "type": {"const": "FeatureCollection"},
+    "sourceAttributions": {"type": "array"},
+    "features": {"type": "array", "items": {"$ref": "#/$defs/feature"}}
+  },
+  "$defs": {
+    "feature": {
+      "type": "object",
+      "required": ["type", "geometry", "properties"],
+      "additionalProperties": false,
+      "properties": {
+        "type": {"const": "Feature"},
+        "geometry": {
+          "type": "object",
+          "required": ["type", "coordinates"],
+          "additionalProperties": false,
+          "properties": {
+            "type": {"const": "Point"},
+            "coordinates": {
+              "type": "array",
+              "minItems": 2,
+              "maxItems": 2,
+              "items": {"type": "number"}
+            }
+          }
+        },
+        "properties": {
+          "type": "object",
+          "required": ["id", "name", "categoryIds", "tags", "town"],
+          "additionalProperties": false,
+          "properties": {
+            "id": {"type": "string"},
+            "name": {"type": "string"},
+            "categoryIds": {"type": "array", "items": {"type": "string"}},
+            "tags": {"type": "array", "items": {"type": "string"}},
+            "town": {"type": ["string", "null"]}
+          }
+        }
+      }
+    }
+  }
+}

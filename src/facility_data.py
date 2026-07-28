@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import argparse
 import copy
+import hashlib
 import json
 import math
 import re
@@ -303,8 +304,11 @@ def build_repository(root: str | Path) -> Path:
     public = build_public_geojson(registry, attributions, towns)
     output = root / "dist/public/places.geojson"
     output.parent.mkdir(parents=True, exist_ok=True)
-    output.write_text(
-        json.dumps(public, ensure_ascii=False, indent=2) + "\n", encoding="utf-8"
+    payload = (json.dumps(public, ensure_ascii=False, indent=2) + "\n").encode("utf-8")
+    output.write_bytes(payload)
+    _write_json(
+        output.parent / "manifest.json",
+        {"file": output.name, "sha256": hashlib.sha256(payload).hexdigest()},
     )
     return output
 
