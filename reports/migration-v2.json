@@ -1,0 +1,374 @@
+{
+  "migrated": 90,
+  "outOfScope": {
+    "保育所": 24,
+    "幼稚園": 8,
+    "学校": 30,
+    "劇場": 20
+  },
+  "needsSelection": {
+    "病院": 19
+  },
+  "idMap": [
+    {
+      "legacyId": "5e3b1528-8af6-436a-83af-24ca45b58e12",
+      "placeId": "019fa880-5cd4-78e1-aa8b-c4ce83a065bc"
+    },
+    {
+      "legacyId": "dbdcc341-7e14-4b03-a23f-3408c071af86",
+      "placeId": "019fa880-5cd4-7122-bc68-e8a327846042"
+    },
+    {
+      "legacyId": "7aa1ad8e-eea5-4f16-9877-a3bbab93e2a6",
+      "placeId": "019fa880-5cd4-71bb-bab2-80c97e636918"
+    },
+    {
+      "legacyId": "a91e0bbf-eb46-4f28-9136-e9fceeccb4f2",
+      "placeId": "019fa880-5cd4-7b4b-86c4-92d4d1fbe213"
+    },
+    {
+      "legacyId": "4d8c5cdb-251e-4657-be8d-878c04214454",
+      "placeId": "019fa880-5cd4-7ba6-a5af-481b9cb95516"
+    },
+    {
+      "legacyId": "7abfec8b-5d0f-47d4-8151-4e8272fe5a49",
+      "placeId": "019fa880-5cd4-75da-ae8b-ec6d104eb49b"
+    },
+    {
+      "legacyId": "b457878a-0e99-4ba9-b794-62eb910e39f3",
+      "placeId": "019fa880-5cd4-729d-8095-deb5f1a4597f"
+    },
+    {
+      "legacyId": "615b5a39-82eb-4633-81f6-49c0c9e5f774",
+      "placeId": "019fa880-5cd4-7d3c-a9e1-f01c12ebf008"
+    },
+    {
+      "legacyId": "824e1068-d7e5-456c-9934-3e582e6838b7",
+      "placeId": "019fa880-5cd4-7178-bfbc-d7b174721469"
+    },
+    {
+      "legacyId": "6ed4686b-4b9d-4ed7-932d-ba05dbf2d7ce",
+      "placeId": "019fa880-5cd4-7984-988b-923b526a8d9a"
+    },
+    {
+      "legacyId": "954ea722-7a4e-41b9-b54a-663871371a99",
+      "placeId": "019fa880-5cd5-7154-8bff-19d82e0fc560"
+    },
+    {
+      "legacyId": "d6b33760-228f-41ba-81f9-68b8185604e5",
+      "placeId": "019fa880-5cd5-7cf5-8a1f-da236422ebdb"
+    },
+    {
+      "legacyId": "288fe733-8883-4afe-9190-01eb11f5b608",
+      "placeId": "019fa880-5cd5-7455-9cf0-647f62f1d59c"
+    },
+    {
+      "legacyId": "25e30e15-f50c-45a2-8a90-c7bb0a904e2d",
+      "placeId": "019fa880-5cd5-7f0e-8fed-c8f624933c61"
+    },
+    {
+      "legacyId": "3f0d36f0-d343-4a77-aa52-55078802173a",
+      "placeId": "019fa880-5cd5-7d2b-abb0-d80f16d6a04a"
+    },
+    {
+      "legacyId": "cb41b18a-41d3-452b-857f-4b3cf2536dd8",
+      "placeId": "019fa880-5cd5-77f0-ae81-1e52ac5633fa"
+    },
+    {
+      "legacyId": "32b11e4f-e834-492e-9c3e-95f5f654274d",
+      "placeId": "019fa880-5cd5-7537-802b-2421832099f4"
+    },
+    {
+      "legacyId": "6ff7e4b6-accd-4eed-8dd2-7eddfdb82f82",
+      "placeId": "019fa880-5cd5-770e-b950-6cc7603de33e"
+    },
+    {
+      "legacyId": "f5d92ee0-1f75-4282-8de4-f6036f007e7e",
+      "placeId": "019fa880-5cd5-78a9-9ebf-098c6c4cc4ed"
+    },
+    {
+      "legacyId": "ebb57317-8fa9-4939-9c48-6c91707f0e0b",
+      "placeId": "019fa880-5cd5-713a-8135-779f14050ab2"
+    },
+    {
+      "legacyId": "ebb57317-8fa9-4939-9c48-6c91707f0e0b",
+      "placeId": "019fa880-5cd5-7d23-9c07-684d56afd77e"
+    },
+    {
+      "legacyId": "2605dda1-bf15-43bd-bb71-2b65ea558834",
+      "placeId": "019fa880-5cd5-7241-a976-801eef6324a9"
+    },
+    {
+      "legacyId": "2b93b3bc-4467-4590-8c0f-b6b789883386",
+      "placeId": "019fa880-5cd5-7d11-8560-3ac4e0486633"
+    },
+    {
+      "legacyId": "1f1d9034-895f-41a5-9d05-f924e8c0c662",
+      "placeId": "019fa880-5cd5-7d31-9979-79d32157427a"
+    },
+    {
+      "legacyId": "883f4f2f-7f8c-4acf-83f9-a7dca3a2254f",
+      "placeId": "019fa880-5cd5-7b01-9dd8-2e4787f423aa"
+    },
+    {
+      "legacyId": "3e3acde1-9175-45cd-aa2a-b46d80db4d7a",
+      "placeId": "019fa880-5cd5-7e0d-8300-8ab683bd0c1d"
+    },
+    {
+      "legacyId": "5cd49c86-3c33-4647-b705-9eaa73a5d744",
+      "placeId": "019fa880-5cd5-7e95-9ea4-e8808e845cd7"
+    },
+    {
+      "legacyId": "08fd22ce-4b3f-4f08-bec8-de63d3a84be7",
+      "placeId": "019fa880-5cd5-788b-86e8-0ac1e6c4811a"
+    },
+    {
+      "legacyId": "487e52a8-1b17-4214-8e65-5c96d58d9b0b",
+      "placeId": "019fa880-5cd5-7b6f-882e-4d07aad02219"
+    },
+    {
+      "legacyId": "e4fb032d-2ef3-4a12-972b-512a0e433477",
+      "placeId": "019fa880-5cd5-701b-90d2-e3073a1c337b"
+    },
+    {
+      "legacyId": "1e0a0faf-ee64-4ddd-ab3b-ee938d6c31fd",
+      "placeId": "019fa880-5cd5-7740-a44a-9a4e3e81563b"
+    },
+    {
+      "legacyId": "f3e4bd61-d904-43db-b425-edd933f2d230",
+      "placeId": "019fa880-5cd5-7d9b-ae8f-d7d00901be5d"
+    },
+    {
+      "legacyId": "a750f6d0-5c2f-45a3-8fa9-c4c71857bb91",
+      "placeId": "019fa880-5cd5-7ae6-b7e1-8339b7cccb77"
+    },
+    {
+      "legacyId": "5b0d13f8-10ff-4dfb-bf62-871c327c3260",
+      "placeId": "019fa880-5cd5-74c2-836d-5e8b3347e719"
+    },
+    {
+      "legacyId": "f5c4ccc5-ff66-443d-9ef5-6ea09ffc3d45",
+      "placeId": "019fa880-5cd5-7fb2-9df1-c9da871e3bfb"
+    },
+    {
+      "legacyId": "38aae7aa-681a-4e99-8887-4adf40283a00",
+      "placeId": "019fa880-5cd5-7ed6-a8bd-337ac263e5a0"
+    },
+    {
+      "legacyId": "2ae0e85b-e664-44bc-a996-9863586f56d1",
+      "placeId": "019fa880-5cd5-71c8-ba28-7d86e104de84"
+    },
+    {
+      "legacyId": "42823748-4d33-4abe-b89f-ef97da24cee4",
+      "placeId": "019fa880-5cd5-7641-bc19-ad96baeb8230"
+    },
+    {
+      "legacyId": "1c50f575-c48b-4689-aee0-1d64ac051b60",
+      "placeId": "019fa880-5cd5-79f3-8608-d5a71f5492f7"
+    },
+    {
+      "legacyId": "88970c7b-f06d-481a-8304-fb1f4839ed82",
+      "placeId": "019fa880-5cd5-7f94-988c-a8ff8b532a55"
+    },
+    {
+      "legacyId": "7489a108-b639-40f3-8d21-a861ec2a874a",
+      "placeId": "019fa880-5cd5-775a-bbd0-62db8a21fec0"
+    },
+    {
+      "legacyId": "977666bb-94dd-498f-8a28-15663eb5baec",
+      "placeId": "019fa880-5cd5-729a-8d49-670ce25e8723"
+    },
+    {
+      "legacyId": "57c34ce7-fbd9-4336-b565-d3c0a1efcd83",
+      "placeId": "019fa880-5cd5-7851-97e2-3eee063f342b"
+    },
+    {
+      "legacyId": "75719a8b-1e0c-422d-8a7e-80bc5e4af36d",
+      "placeId": "019fa880-5cd5-7c84-9bcf-cac96174129f"
+    },
+    {
+      "legacyId": "63655725-2cd5-4c7e-b760-72d4c945cd93",
+      "placeId": "019fa880-5cd5-7eca-9f6d-ad4b35b2c069"
+    },
+    {
+      "legacyId": "d1a1124e-2cc6-45cb-93c0-20e746cfe5e5",
+      "placeId": "019fa880-5cd5-7031-bc8e-250d0074827b"
+    },
+    {
+      "legacyId": "886b3f1c-d125-4b53-94f6-da883ed87838",
+      "placeId": "019fa880-5cd5-781a-bcd1-ee19d7c897f9"
+    },
+    {
+      "legacyId": "289e283e-860d-4147-a6f1-bef9e3a1945a",
+      "placeId": "019fa880-5cd5-7a69-ace7-2a132f6f2b57"
+    },
+    {
+      "legacyId": "80857fe1-61ff-47d9-a4de-903b45182f4c",
+      "placeId": "019fa880-5cd5-7285-88ba-ab05a68eb601"
+    },
+    {
+      "legacyId": "aa4da496-51bb-449d-9a00-bfea7de5787f",
+      "placeId": "019fa880-5cd5-7ea9-839d-1c2d04dbff2f"
+    },
+    {
+      "legacyId": "4fabe927-9af0-43a1-a757-24a9931515f1",
+      "placeId": "019fa880-5cd5-7459-a206-660bc9edd397"
+    },
+    {
+      "legacyId": "266de71a-c72d-4fa8-ba7f-f5d696dfc23b",
+      "placeId": "019fa880-5cd5-7d22-aef4-68b4e1172660"
+    },
+    {
+      "legacyId": "7533934b-0a9f-459d-9159-8fdfa785c6fc",
+      "placeId": "019fa880-5cd5-7dc7-8e68-e49750a54b8d"
+    },
+    {
+      "legacyId": "98f80f3f-e9da-41a5-8c9a-25a9408551a1",
+      "placeId": "019fa880-5cd5-7fce-b42f-51fa0dac8c01"
+    },
+    {
+      "legacyId": "86bd422b-2958-4177-8008-4b5ad314a1f2",
+      "placeId": "019fa880-5cd5-7bae-838d-111510f35ee9"
+    },
+    {
+      "legacyId": "41757069-1873-4e3c-ac0d-cc7c0547ba1f",
+      "placeId": "019fa880-5cd5-7832-ae65-182a148bfa2f"
+    },
+    {
+      "legacyId": "44aba593-1022-4d99-8aa2-38026bb23f42",
+      "placeId": "019fa880-5cd5-7743-8b45-3ba7622c5083"
+    },
+    {
+      "legacyId": "94a9c91f-cfe5-4f49-bddc-fd149f8541db",
+      "placeId": "019fa880-5cd5-7b37-bb94-a2151c0cdef0"
+    },
+    {
+      "legacyId": "4eb79d4f-637e-456e-8d26-1b22bf88d713",
+      "placeId": "019fa880-5cd5-7d9d-9713-970aa8443759"
+    },
+    {
+      "legacyId": "c601e5e1-2726-483c-80ac-6eaf5446acee",
+      "placeId": "019fa880-5cd5-72a9-9547-c3e9269d9c90"
+    },
+    {
+      "legacyId": "66f5a103-4482-434d-9189-226a0f7ffa61",
+      "placeId": "019fa880-5cd6-7640-8ec1-c2e6c99e5c26"
+    },
+    {
+      "legacyId": "973b6855-9b64-492f-85f6-61adda9232f5",
+      "placeId": "019fa880-5cd6-7d72-ac6c-89e27c90a921"
+    },
+    {
+      "legacyId": "c963b122-6d8e-41a8-9e3f-e082b29dff39",
+      "placeId": "019fa880-5cd6-78d5-8f0d-d2b980c78320"
+    },
+    {
+      "legacyId": "4d450453-5c89-4930-b0bd-deea0bce3e56",
+      "placeId": "019fa880-5cd6-7d49-888d-1ba85637e081"
+    },
+    {
+      "legacyId": "b0bce673-394d-4a1c-952d-526064570df0",
+      "placeId": "019fa880-5cd6-7c1f-8c9c-a227390405ea"
+    },
+    {
+      "legacyId": "72048382-609d-4588-9305-1148dee22ee4",
+      "placeId": "019fa880-5cd6-7359-b619-432ecb07b975"
+    },
+    {
+      "legacyId": "e67c8a9f-db31-42c2-b43c-bc2468d8df1c",
+      "placeId": "019fa880-5cd6-74a8-9544-d37f0c4946c7"
+    },
+    {
+      "legacyId": "c7e24047-f6e6-4472-9fc2-08194f913f13",
+      "placeId": "019fa880-5cd6-7324-b3fe-943c71e289b7"
+    },
+    {
+      "legacyId": "c4f41087-5ce6-4b94-b78e-a28c6770c467",
+      "placeId": "019fa880-5cd6-7d38-b17b-55a1378dd9b8"
+    },
+    {
+      "legacyId": "03a4b060-376f-4890-90da-269b80d00552",
+      "placeId": "019fa880-5cd6-7c6d-8b56-2be683d649a6"
+    },
+    {
+      "legacyId": "d004dfc3-7359-426d-b006-fe918eb07480",
+      "placeId": "019fa880-5cd6-7e0b-9d3a-218e8214e31d"
+    },
+    {
+      "legacyId": "547d3130-64b6-4a2f-8488-03b527daade2",
+      "placeId": "019fa880-5cd6-7aba-bca8-0e770da6c6f9"
+    },
+    {
+      "legacyId": "ad56e010-5e88-4325-b175-5fc7fbe2530b",
+      "placeId": "019fa880-5cd6-78af-b9de-08beeb78d708"
+    },
+    {
+      "legacyId": "b899d541-af37-4ed0-ad72-2de640b37724",
+      "placeId": "019fa880-5cd6-75c3-b465-be5c4466401e"
+    },
+    {
+      "legacyId": "a594307d-f095-4168-bab0-3f27e9992df7",
+      "placeId": "019fa880-5cd6-73ac-bcb9-6bb75bbf99fb"
+    },
+    {
+      "legacyId": "7db790dc-7ae2-4be7-9664-0e4830035f9d",
+      "placeId": "019fa880-5cd6-77ce-be2f-ed10dd5a6a9f"
+    },
+    {
+      "legacyId": "fa45f378-7cf2-4c34-b761-fde53601536f",
+      "placeId": "019fa880-5cd6-7424-81a1-5f4f7a58327a"
+    },
+    {
+      "legacyId": "6c36180a-35db-4255-af28-e80fa62bbae9",
+      "placeId": "019fa880-5cd6-7d71-bbb5-e795c2abccc6"
+    },
+    {
+      "legacyId": "cef85600-16f8-41ff-96aa-27e57835f6bb",
+      "placeId": "019fa880-5cd6-79dd-aaf4-367c7aee85f3"
+    },
+    {
+      "legacyId": "9022195a-d5ed-46e9-b991-99696ce0ed17",
+      "placeId": "019fa880-5cd6-7627-9186-3eb6765242cb"
+    },
+    {
+      "legacyId": "b0ad03fe-a152-451e-aa49-c45ac04c7377",
+      "placeId": "019fa880-5cd6-7a79-a32a-7399951b7539"
+    },
+    {
+      "legacyId": "639ff971-e8d4-4516-98b2-210383fc3d7a",
+      "placeId": "019fa880-5cd6-77c9-917c-e02521540bac"
+    },
+    {
+      "legacyId": "621d2079-3a55-4b55-be79-a2cd391e4fb5",
+      "placeId": "019fa880-5cd6-7046-98c1-b22d2b96d8ad"
+    },
+    {
+      "legacyId": "e1547f04-8ad6-41b7-868b-77196ec3d2be",
+      "placeId": "019fa880-5cd6-74a3-b873-3fc0955ef99a"
+    },
+    {
+      "legacyId": "788d6781-9a5a-493d-b96d-d0a79f1362ae",
+      "placeId": "019fa880-5cd6-7332-a1b5-cf97d281ba93"
+    },
+    {
+      "legacyId": "72a1b323-c5b1-4c0d-9410-8152622a3a78",
+      "placeId": "019fa880-5cd6-77e2-8d4b-1066f9ba07a8"
+    },
+    {
+      "legacyId": "86b04356-17cd-4674-9295-4d9a94de56ac",
+      "placeId": "019fa880-5cd6-740b-bbc1-283f644e1fc1"
+    },
+    {
+      "legacyId": "b2a89db0-924d-4b6b-9cdf-54d512b983b0",
+      "placeId": "019fa880-5cd6-714a-900f-ff3693145790"
+    },
+    {
+      "legacyId": "efa385b8-4ddc-4b97-8c26-05cabcb2983e",
+      "placeId": "019fa880-5cd6-784f-b302-95fddf90b44f"
+    },
+    {
+      "legacyId": "0ca8ca53-9751-4fe0-9124-89bc119497f5",
+      "placeId": "019fa880-5cd6-7075-b7a1-ce1cd3e9a489"
+    }
+  ]
+}

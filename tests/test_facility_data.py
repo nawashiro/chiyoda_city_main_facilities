@@ -8,6 +8,9 @@ from src.facility_data import (
     choose_geometry,
     make_place,
     main,
+    migrate_legacy,
+    migrate_repository,
+    new_uuid7,
     validate_repository,
     validate_registry,
     validate_search_document,
@@ -248,6 +251,120 @@ class PhaseZeroFilesTests(unittest.TestCase):
             )
 
         self.assertEqual("Point", public["features"][0]["geometry"]["type"])
+
+
+class LegacyMigrationTests(unittest.TestCase):
+    def test_generates_uuid7_values(self):
+        value = new_uuid7(timestamp_ms=1_722_124_800_000, random_bits=1)
+
+        self.assertRegex(
+            value,
+            r"^[0-9a-f]{8}-[0-9a-f]{4}-7[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$",
+        )
+
+    def test_migrates_only_in_scope_records_with_new_search_ids(self):
+        def location(old_id, name):
+            return {
+                "id": old_id,
+                "name": name,
+                "name:en": "Ignored multilingual name",
+                "lat": 35.69,
+                "lng": 139.75,
+                "imageUri": None,
+                "imageCopyright": None,
+            }
+
+        legacy = [
+            {"category": "図書館", "locations": [location("duplicate", "図書館A")]},
+            {"category": "学校", "locations": [location("school", "学校A")]},
+            {"category": "病院", "locations": [location("hospital", "病院A")]},
+            {"category": "美術館", "locations": [location("duplicate", "美術館A")]},
+        ]
+        shortcuts = [{"category": "主要", "locations": [{"name": "図書館A"}]}]
+        ids = iter(
+            [
+                "019c0000-0000-7000-8000-000000000020",
+                "019c0000-0000-7000-8000-000000000021",
+            ]
+        )
+
+        search, registry, report = migrate_legacy(
+            legacy, shortcuts, "2026-07-28T00:00:00Z", id_factory=lambda: next(ids)
+        )
+
+        self.assertEqual(2, len(search["queries"]))
+        self.assertEqual(2, len(registry["places"]))
+        self.assertEqual(search["queries"][0]["id"], registry["places"][0]["id"])
+        self.assertEqual({"図書館A", "美術館A"}, {p["name"] for p in registry["places"]})
+        self.assertNotIn("names", str(registry))
+        self.assertIn("kazaguruma.home-shortcut", registry["places"][0]["tags"])
+        self.assertEqual({"学校": 1}, report["outOfScope"])
+        self.assertEqual({"病院": 1}, report["needsSelection"])
+
+    def test_writes_search_registry_and_report_files(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            (root / "json").mkdir()
+            legacy = [
+                {
+                    "category": "図書館",
+                    "locations": [
+                        {
+                            "id": "old",
+                            "name": "図書館A",
+                            "lat": 35.69,
+                            "lng": 139.75,
+                        }
+                    ],
+                }
+            ]
+            (root / "json/key_locations.json").write_text(
+                json.dumps(legacy), encoding="utf-8"
+            )
+            (root / "json/main_facilities.json").write_text("[]", encoding="utf-8")
+
+            migrate_repository(
+                root,
+                "2026-07-28T00:00:00Z",
+                id_factory=lambda: "019c0000-0000-7000-8000-000000000030",
+            )
+
+            self.assertTrue((root / "inputs/osm-search/legacy/migration-v2.json").is_file())
+            self.assertTrue((root / "data/registry.json").is_file())
+            report = json.loads(
+                (root / "reports/migration-v2.json").read_text(encoding="utf-8")
+            )
+        self.assertEqual(1, report["migrated"])
+
+    def test_legacy_code_and_generated_data_are_removed(self):
+        root = Path(__file__).resolve().parents[1]
+        obsolete = [
+            "src/convert_nursery_data.py",
+            "src/facilities_check.py",
+            "src/generate_release_notes.py",
+            "src/json_minifier.py",
+            "src/transform_json.py",
+            "src/validate_data.py",
+            "config/validation_exceptions.json",
+            "json",
+            "json_min",
+            "kazaguruma_json",
+            "kazaguruma_json_min",
+            "run_process.bat",
+            "requirements.txt",
+            "stops.txt",
+            "doc/facility_and_stop_distance_check_script.md",
+            "doc/json_minifier_readme.md",
+            "doc/nursery_data_conversion.md",
+            "doc/process.md",
+            "doc/release_notes_generator.md",
+            "doc/transform_json_doc.md",
+            "CLAUDE.md",
+            "RELEASE_NOTES.md",
+            ".claude",
+        ]
+
+        self.assertEqual([], [path for path in obsolete if (root / path).exists()])
 
 
 if __name__ == "__main__":

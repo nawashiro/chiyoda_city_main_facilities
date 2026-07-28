@@ -5,12 +5,43 @@ from __future__ import annotations
 import argparse
 import json
 import re
+import secrets
+import time
 import uuid
 from pathlib import Path
 from typing import Any
 
 
 _QID = re.compile(r"^Q[1-9][0-9]*$")
+
+_OUT_OF_SCOPE = {"保育所", "幼稚園", "学校", "劇場"}
+_CATEGORY_IDS = {
+    "区役所・出張所": "public-office",
+    "障害者福祉センター": "disability-support",
+    "図書館": "library",
+    "社会福祉施設": "social-welfare",
+    "自然環境公園": "park",
+    "仏教": "buddhist-temple",
+    "キリスト教": "christian-church",
+    "映画館": "cinema",
+    "公衆浴場": "public-bath",
+    "美術館": "art-museum",
+    "博物館": "museum",
+}
+
+
+def new_uuid7(timestamp_ms: int | None = None, random_bits: int | None = None) -> str:
+    """Create a UUIDv7 without adding a package dependency."""
+    timestamp_ms = timestamp_ms if timestamp_ms is not None else time.time_ns() // 1_000_000
+    random_bits = random_bits if random_bits is not None else secrets.randbits(74)
+    value = (
+        ((timestamp_ms & ((1 << 48) - 1)) << 80)
+        | (0x7 << 76)
+        | (((random_bits >> 62) & 0xFFF) << 64)
+        | (0b10 << 62)
+        | (random_bits & ((1 << 62) - 1))
+    )
+    return str(uuid.UUID(int=value))
 
 
 def _is_uuid7(value: Any) -> bool:
@@ -255,6 +286,108 @@ def build_repository(root: str | Path) -> Path:
         json.dumps(public, ensure_ascii=False, indent=2) + "\n", encoding="utf-8"
     )
     return output
+
+
+def migrate_legacy(
+    legacy_categories: list[dict[str, Any]],
+    shortcut_categories: list[dict[str, Any]],
+    at: str,
+    id_factory,
+) -> tuple[dict[str, Any], dict[str, Any], dict[str, Any]]:
+    """Perform the one-time, scope-gated migration from the old JSON layout."""
+    shortcut_names = {
+        location.get("name")
+        for category in shortcut_categories
+        for location in category.get("locations", [])
+    }
+    queries = []
+    places = []
+    out_of_scope: dict[str, int] = {}
+    needs_selection: dict[str, int] = {}
+    migrated_from = []
+    for category in legacy_categories:
+        category_name = category.get("category", "")
+        locations = category.get("locations", [])
+        if category_name in _OUT_OF_SCOPE:
+            out_of_scope[category_name] = len(locations)
+            continue
+        if category_name == "病院":
+            needs_selection[category_name] = len(locations)
+            continue
+        category_id = _CATEGORY_IDS.get(category_name)
+        if category_id is None:
+            out_of_scope[category_name] = len(locations)
+            continue
+        for location in locations:
+            place_id = id_factory()
+            query = {
+                "id": place_id,
+                "name": location["name"],
+                "coordinates": [location["lng"], location["lat"]],
+            }
+            tags = (
+                ["kazaguruma.home-shortcut"]
+                if location["name"] in shortcut_names
+                else []
+            )
+            place = make_place(query, [category_id], tags, at)
+            if location.get("imageUri"):
+                place["images"] = [
+                    {
+                        "url": location["imageUri"],
+                        "rights": location.get("imageCopyright") or "unknown",
+                    }
+                ]
+            queries.append(query)
+            places.append(place)
+            migrated_from.append(
+                {"legacyId": location.get("id"), "placeId": place_id}
+            )
+    return (
+        {
+            "source": {
+                "kind": "human",
+                "sourceId": "legacy_record",
+                "retrievedAt": at,
+            },
+            "queries": queries,
+        },
+        {"schemaVersion": 1, "places": places},
+        {
+            "migrated": len(places),
+            "outOfScope": out_of_scope,
+            "needsSelection": needs_selection,
+            "idMap": migrated_from,
+        },
+    )
+
+
+def _write_json(path: Path, document: Any) -> None:
+    path.parent.mkdir(parents=True, exist_ok=True)
+    path.write_text(
+        json.dumps(document, ensure_ascii=False, indent=2) + "\n", encoding="utf-8"
+    )
+
+
+def migrate_repository(
+    root: str | Path,
+    at: str,
+    id_factory=new_uuid7,
+) -> tuple[Path, Path, Path]:
+    """Write the one-time migration outputs into their final repository paths."""
+    root = Path(root)
+    legacy = json.loads((root / "json/key_locations.json").read_text(encoding="utf-8"))
+    shortcuts = json.loads(
+        (root / "json/main_facilities.json").read_text(encoding="utf-8")
+    )
+    search, registry, report = migrate_legacy(legacy, shortcuts, at, id_factory)
+    search_path = root / "inputs/osm-search/legacy/migration-v2.json"
+    registry_path = root / "data/registry.json"
+    report_path = root / "reports/migration-v2.json"
+    _write_json(search_path, search)
+    _write_json(registry_path, registry)
+    _write_json(report_path, report)
+    return search_path, registry_path, report_path
 
 
 def main(argv: list[str] | None = None) -> int:
