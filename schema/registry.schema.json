@@ -1,0 +1,55 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://nawashiro.github.io/chiyoda_city_main_facilities/schema/registry.schema.json",
+  "title": "Canonical Place registry",
+  "type": "object",
+  "required": ["schemaVersion", "places"],
+  "additionalProperties": false,
+  "properties": {
+    "schemaVersion": {"const": 1},
+    "places": {"type": "array", "items": {"$ref": "#/$defs/place"}}
+  },
+  "$defs": {
+    "place": {
+      "type": "object",
+      "required": [
+        "id", "name", "categoryIds", "tags", "geometry", "geometrySource",
+        "images", "externalRefs", "lifecycle", "visibility", "audit"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-7[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$"
+        },
+        "name": {"type": "string", "minLength": 1},
+        "categoryIds": {
+          "type": "array",
+          "items": {"type": "string"},
+          "minItems": 1
+        },
+        "tags": {"type": "array", "items": {"type": "string"}},
+        "geometry": {
+          "type": "object",
+          "required": ["type", "coordinates"],
+          "additionalProperties": false,
+          "properties": {
+            "type": {"const": "Point"},
+            "coordinates": {
+              "type": "array",
+              "minItems": 2,
+              "maxItems": 2,
+              "items": {"type": "number"}
+            }
+          }
+        },
+        "geometrySource": {"type": "object"},
+        "images": {"type": "array"},
+        "externalRefs": {"type": "array"},
+        "lifecycle": {"type": "object"},
+        "visibility": {"type": "object"},
+        "audit": {"type": "array"}
+      }
+    }
+  }
+}

@@ -1,0 +1,18 @@
+{
+  "schemaVersion": 1,
+  "places": [
+    {
+      "id": "019c0000-0000-7000-8000-000000000010",
+      "name": "北の丸公園",
+      "categoryIds": ["park"],
+      "tags": [],
+      "geometry": {"type": "Point", "coordinates": [139.7507425, 35.691527]},
+      "geometrySource": {"sourceId": "search-input", "recordId": "019c0000-0000-7000-8000-000000000010", "confirmedAt": "2026-07-28T00:00:00Z"},
+      "images": [],
+      "externalRefs": [],
+      "lifecycle": {"status": "active", "changedAt": "2026-07-28T00:00:00Z"},
+      "visibility": {"status": "public", "changedAt": "2026-07-28T00:00:00Z"},
+      "audit": [{"at": "2026-07-28T00:00:00Z", "method": "human_inference", "action": "created", "target": "place"}]
+    }
+  ]
+}
