@@ -3,7 +3,9 @@
 from __future__ import annotations
 
 import argparse
+import copy
 import json
+import math
 import re
 import secrets
 import time
@@ -162,6 +164,25 @@ def validate_registry(
             issues.append(f"place {place_id}: name differs from search input")
         if place.get("geometry", {}).get("type") != "Point":
             issues.append(f"place {place_id}: geometry must be Point")
+        current_osm = [
+            ref
+            for ref in place.get("externalRefs", [])
+            if ref.get("sourceId") == "openstreetmap" and ref.get("status") == "current"
+        ]
+        if len(current_osm) > 1:
+            issues.append(f"place {place_id}: multiple current OSM refs")
+        for audit in place.get("audit", []):
+            if set(audit) != {"at", "method", "action", "target"}:
+                issues.append(f"place {place_id}: audit must have exactly four keys")
+            if audit.get("method") not in {
+                "language_model",
+                "calculation_model",
+                "human_inference",
+                "field_observation",
+            }:
+                issues.append(
+                    f"place {place_id}: invalid audit method: {audit.get('method')}"
+                )
     return issues
 
 
@@ -388,6 +409,109 @@ def migrate_repository(
     _write_json(registry_path, registry)
     _write_json(report_path, report)
     return search_path, registry_path, report_path
+
+
+def _distance_metres(first: list[float], second: list[float]) -> float:
+    lon1, lat1 = map(math.radians, first)
+    lon2, lat2 = map(math.radians, second)
+    dlon = lon2 - lon1
+    dlat = lat2 - lat1
+    a = math.sin(dlat / 2) ** 2 + math.cos(lat1) * math.cos(lat2) * math.sin(dlon / 2) ** 2
+    return 6_371_000 * 2 * math.atan2(math.sqrt(a), math.sqrt(1 - a))
+
+
+def match_osm_candidates(
+    query: dict[str, Any], candidates: list[dict[str, Any]], max_distance_m: float = 50
+) -> list[dict[str, Any]]:
+    """Return deterministic OSM candidates without widening the 50m boundary."""
+    matches = []
+    for candidate in candidates:
+        if "qid" in query:
+            if candidate.get("qid") != query["qid"]:
+                continue
+            distance = None
+        else:
+            if candidate.get("name") != query["name"]:
+                continue
+            distance = _distance_metres(query["coordinates"], candidate["coordinates"])
+            if distance > max_distance_m:
+                continue
+        matches.append(
+            {
+                **candidate,
+                "recordId": f"{candidate['type']}/{candidate['id']}",
+                "distanceMeters": distance,
+            }
+        )
+    return sorted(matches, key=lambda item: (item["distanceMeters"] is None, item["distanceMeters"] or 0, item["recordId"]))
+
+
+def decide_consensus(votes: list[dict[str, Any]]) -> str | None:
+    """Accept a low-risk link only when all three votes are valid and two agree."""
+    if len(votes) != 3:
+        return None
+    if any(set(vote) != {"candidateId", "decision"} for vote in votes):
+        return None
+    link_counts: dict[str, int] = {}
+    for vote in votes:
+        if vote["decision"] not in {"link", "reject", "review"}:
+            return None
+        if vote["decision"] == "link" and isinstance(vote["candidateId"], str):
+            candidate_id = vote["candidateId"]
+            link_counts[candidate_id] = link_counts.get(candidate_id, 0) + 1
+    winners = [candidate_id for candidate_id, count in link_counts.items() if count >= 2]
+    return winners[0] if len(winners) == 1 else None
+
+
+def compact_audit(at: str, method: str, action: str, target: str) -> dict[str, str]:
+    """Create the entire persisted audit record—no traces or explanations."""
+    return {"at": at, "method": method, "action": action, "target": target}
+
+
+def update_osm_reference(
+    place: dict[str, Any],
+    osm_record: dict[str, Any],
+    at: str,
+    basis: str,
+    method: str,
+) -> dict[str, Any]:
+    """Keep typed current/superseded OSM IDs and append one compact audit item."""
+    updated = copy.deepcopy(place)
+    refs = updated.setdefault("externalRefs", [])
+    record_id = f"{osm_record['type']}/{osm_record['id']}"
+    current = next(
+        (
+            ref
+            for ref in refs
+            if ref.get("sourceId") == "openstreetmap"
+            and ref.get("recordId") == record_id
+            and ref.get("status") == "current"
+        ),
+        None,
+    )
+    if current is not None:
+        current["lastConfirmedAt"] = at
+        current["basis"] = basis
+    else:
+        for ref in refs:
+            if ref.get("sourceId") == "openstreetmap" and ref.get("status") == "current":
+                ref["status"] = "superseded"
+                ref["supersededAt"] = at
+        refs.append(
+            {
+                "sourceId": "openstreetmap",
+                "recordId": record_id,
+                "status": "current",
+                "firstConfirmedAt": at,
+                "lastConfirmedAt": at,
+                "supersededAt": None,
+                "basis": basis,
+            }
+        )
+    updated.setdefault("audit", []).append(
+        compact_audit(at, method, "linked_osm", record_id)
+    )
+    return updated
 
 
 def main(argv: list[str] | None = None) -> int:

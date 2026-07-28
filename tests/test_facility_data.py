@@ -6,11 +6,15 @@ from pathlib import Path
 from src.facility_data import (
     build_public_geojson,
     choose_geometry,
+    compact_audit,
+    decide_consensus,
+    match_osm_candidates,
     make_place,
     main,
     migrate_legacy,
     migrate_repository,
     new_uuid7,
+    update_osm_reference,
     validate_repository,
     validate_registry,
     validate_search_document,
@@ -151,6 +155,35 @@ class RegistryValidationTests(unittest.TestCase):
         self.assertIn(f"duplicate place id: {query['id']}", issues)
         self.assertIn(f"place {query['id']}: name differs from search input", issues)
         self.assertIn(f"place {query['id']}: geometry must be Point", issues)
+
+    def test_rejects_long_audit_and_multiple_current_osm_refs(self):
+        query = {
+            "id": "019c0000-0000-7000-8000-000000000043",
+            "name": "施設J",
+            "coordinates": [139.70, 35.60],
+        }
+        place = make_place(query, ["park"], [], "2026-07-28T00:00:00Z")
+        place["audit"] = [
+            {
+                "at": "2026-07-28T00:00:00Z",
+                "method": "unknown",
+                "action": "created",
+                "target": "place",
+                "reasoning": "must not persist",
+            }
+        ]
+        place["externalRefs"] = [
+            {"sourceId": "openstreetmap", "recordId": "node/1", "status": "current"},
+            {"sourceId": "openstreetmap", "recordId": "way/2", "status": "current"},
+        ]
+
+        issues = validate_registry(
+            {"schemaVersion": 1, "places": [place]}, {query["id"]: query}
+        )
+
+        self.assertIn(f"place {query['id']}: audit must have exactly four keys", issues)
+        self.assertIn(f"place {query['id']}: invalid audit method: unknown", issues)
+        self.assertIn(f"place {query['id']}: multiple current OSM refs", issues)
 
 
 class PublicGeoJsonTests(unittest.TestCase):
@@ -365,6 +398,90 @@ class LegacyMigrationTests(unittest.TestCase):
         ]
 
         self.assertEqual([], [path for path in obsolete if (root / path).exists()])
+
+
+class CandidateMatchingTests(unittest.TestCase):
+    def test_filters_by_qid_or_fifty_metre_limit_without_expansion(self):
+        qid_query = {
+            "id": "019c0000-0000-7000-8000-000000000040",
+            "name": "施設G",
+            "qid": "Q123",
+        }
+        coordinate_query = {
+            "id": "019c0000-0000-7000-8000-000000000041",
+            "name": "施設H",
+            "coordinates": [139.75, 35.69],
+        }
+        candidates = [
+            {"type": "node", "id": "1", "name": "別名", "qid": "Q123", "coordinates": [140, 36]},
+            {"type": "node", "id": "2", "name": "施設H", "coordinates": [139.7503, 35.69]},
+            {"type": "node", "id": "3", "name": "施設H", "coordinates": [139.751, 35.69]},
+        ]
+
+        self.assertEqual(["node/1"], [c["recordId"] for c in match_osm_candidates(qid_query, candidates)])
+        self.assertEqual(["node/2"], [c["recordId"] for c in match_osm_candidates(coordinate_query, candidates)])
+
+    def test_requires_three_valid_votes_and_two_agreeing_votes(self):
+        votes = [
+            {"candidateId": "node/2", "decision": "link"},
+            {"candidateId": "node/2", "decision": "link"},
+            {"candidateId": "node/3", "decision": "reject"},
+        ]
+
+        self.assertEqual("node/2", decide_consensus(votes))
+        self.assertIsNone(decide_consensus(votes[:2]))
+        self.assertIsNone(
+            decide_consensus(
+                [
+                    {"candidateId": "node/2", "decision": "merge"},
+                    {"candidateId": "node/2", "decision": "merge"},
+                    {"candidateId": "node/2", "decision": "merge"},
+                ]
+            )
+        )
+
+    def test_compact_audit_has_only_four_keys(self):
+        audit = compact_audit(
+            "2026-07-28T00:00:00Z", "language_model", "linked", "node/2"
+        )
+
+        self.assertEqual({"at", "method", "action", "target"}, set(audit))
+
+    def test_keeps_superseded_osm_id_and_short_audit(self):
+        query = {
+            "id": "019c0000-0000-7000-8000-000000000042",
+            "name": "施設I",
+            "coordinates": [139.75, 35.69],
+        }
+        place = make_place(query, ["park"], [], "2026-07-01T00:00:00Z")
+        place["externalRefs"] = [
+            {
+                "sourceId": "openstreetmap",
+                "recordId": "node/1",
+                "status": "current",
+                "firstConfirmedAt": "2026-07-01T00:00:00Z",
+                "lastConfirmedAt": "2026-07-01T00:00:00Z",
+                "supersededAt": None,
+                "basis": "name_coordinates",
+            }
+        ]
+
+        updated = update_osm_reference(
+            place,
+            {"type": "way", "id": "2", "coordinates": [139.751, 35.691]},
+            at="2026-07-28T00:00:00Z",
+            basis="qid",
+            method="language_model",
+        )
+
+        refs = updated["externalRefs"]
+        self.assertEqual("superseded", refs[0]["status"])
+        self.assertEqual("2026-07-28T00:00:00Z", refs[0]["supersededAt"])
+        self.assertEqual("current", refs[1]["status"])
+        self.assertEqual("way/2", refs[1]["recordId"])
+        self.assertEqual(
+            {"at", "method", "action", "target"}, set(updated["audit"][-1])
+        )
 
 
 if __name__ == "__main__":
