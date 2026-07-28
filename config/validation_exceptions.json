@@ -1,0 +1,14 @@
+{
+  "id": [
+    {
+      "value": "ebb57317-8fa9-4939-9c48-6c91707f0e0b",
+      "reason": "Known legacy duplicate: Chiyoda Parkside Plaza and its public library room. Resolve during the canonical-data migration phase."
+    }
+  ],
+  "nodeSourceId": [
+    {
+      "value": "179575985",
+      "reason": "Known legacy shared OSM source: Fujimi Mirai-kan and Chiyoda City Fujimi Elementary School. Preserve until typed OSM identifiers are introduced."
+    }
+  ]
+}
