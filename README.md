@@ -32,6 +32,32 @@ UUIDv7 + name + qid
 
 同じUUIDを正本Placeへ引き継ぎます。正本の`name`は検索入力語だけです。座標はWAM、OSM、検索入力座標の順で採用します。
 
+手入力は、たとえば`inputs/osm-search/human/202607.json`として次の形で作ります。座標順は`[経度, 緯度]`です。
+
+```json
+{
+  "source": {"kind": "human", "sourceId": null, "retrievedAt": null},
+  "queries": [
+    {
+      "id": "019ca6b1-dc00-7000-8000-000000000001",
+      "name": "施設名",
+      "coordinates": [139.75, 35.69]
+    },
+    {
+      "id": "019ca6b1-dc00-7000-8000-000000000002",
+      "name": "QIDで探す施設名",
+      "qid": "Q12345"
+    }
+  ]
+}
+```
+
+UUIDv7は次のコマンドで1件ずつ生成できます。
+
+```bash
+python3 -c 'from src.facility_data import new_uuid7; print(new_uuid7())'
+```
+
 ## 検証と生成
 
 外部パッケージは不要です。Python 3.13で実行します。
@@ -64,6 +90,7 @@ GitHub Actionsでは`LLM_API_KEY`をActions secret、`LLM_MODEL`をActions varia
 AT=$(date --iso-8601=seconds)
 python3 -m src.retrieve_wam . --release <YYYYMM> --at "$AT"
 python3 -m src.facility_data update . --source wam --at "$AT"
+python3 -m src.facility_data validate .
 
 # 千代田区内の対象カテゴリをOverpassへ1回だけ問い合わせ、
 # 既存のOSM参照、QID一意一致、または名称完全一致かつ
@@ -72,6 +99,7 @@ AT=$(date --iso-8601=seconds)
 python3 -m src.retrieve_osm . --at "$AT"
 python3 -m src.resolve_osm_candidates .
 python3 -m src.facility_data update . --source openstreetmap --at "$AT"
+python3 -m src.facility_data validate .
 
 # 町名Polygonをfull commit SHAで固定取得して公開物を再生成
 AT=$(date --iso-8601=seconds)
@@ -80,7 +108,9 @@ python3 -m src.retrieve_towns . \
 python3 -m src.facility_data build .
 ```
 
-合議できなかった候補だけが`reports/osm-review-needed.json`へ残ります。通常、人が確認するのはこのファイルだけです。候補なしの施設はOSM参照を付けず、WAMまたは検索入力の座標をそのまま使います。
+`facility_data update`は正本と公開GeoJSONをまとめて再生成するため、WAM／OSM更新後に別の`build`は不要です。
+
+合議できなかった候補だけが`reports/osm-review-needed.json`へ残ります。通常、人が確認するのはこのファイルだけです。候補なしの場合、既存Placeは今の座標を保ちます。QIDだけを持つ新規検索入力で、WAMにもOSMにも対応データがなければ、新しいPlaceはまだ作られません。
 
 GitHub Actionsの`Update WAM data`、`Update OpenStreetMap data`、`Update town polygons`からも同じ経路を手動実行できます。WAMは`YYYYMM`版、町名はfull commit SHAだけを入力し、OSMは入力不要です。各Actionはリポジトリへ直接pushせず、ソースごとの取得物・台帳・生成物とレビュー用diffを14日間artifactとして保存します。
 

@@ -28,6 +28,8 @@ WAM NETから取り込むのは相談支援4サービスだけである。
 
 QIDと座標の併記は禁止する。同じUUIDが正本にあれば作成済み、なければ未作成と判断する。
 
+人が作るファイルの例は`inputs/osm-search/human/202607.json`で、`source`は`{"kind": "human", "sourceId": null, "retrievedAt": null}`とする。座標順は`[経度, 緯度]`である。UUIDv7は`python3 -c 'from src.facility_data import new_uuid7; print(new_uuid7())'`で生成できる。完成したJSON例はREADMEを参照する。
+
 ### 2.2 正本
 
 `data/registry.json`が唯一のPlace正本である。Placeは検索入力と同じUUIDと`name`を保持する。正本には代表点、分類、用途タグ、画像欄、lifecycle、visibility、外部参照履歴、短いauditがある。
@@ -127,6 +129,8 @@ python3 -m src.facility_data validate .
 
 適用時はnormalized recordを検索入力とretained raw rowsの双方に照らして再検証する。WAM recordがあるのにraw rowsがない場合は適用を拒否する。
 
+`facility_data update`は正本、公開GeoJSON、manifestをまとめて再生成する。更新後は`validate`だけを実行すればよく、別の`build`は不要である。
+
 ## 5. OpenStreetMap更新
 
 手動実行例:
@@ -147,6 +151,8 @@ python3 -m src.facility_data validate .
 3. 検索入力から50m以内、かつ名称完全一致の一意候補
 
 残った近傍候補はOpenAI互換APIへ独立した3回の判断を依頼する。3つの有効票のうち2票以上が同じ候補へのlinkで一致すれば`matchBasis: language_model`として適用し、2票以上がrejectで一致すれば自動却下する。合議不成立だけを`reports/osm-review-needed.json`へ残す。候補がない施設は人手確認へ送らず、OSM参照なしのまま扱う。
+
+候補がない既存Placeは今の座標を保つ。QIDだけを持つ新規検索入力で、WAMにもOSMにも対応データがなければ、新しいPlaceは作らない。
 
 LLMには検索入力の名称と、取得済みの候補だけを渡す。候補一覧にないIDは受理しない。長い推論本文は保存せず、短い票と結果だけを候補レポートへ残す。Overpass応答に`remark`または`error`がある場合は部分応答として拒否する。
 
@@ -182,7 +188,7 @@ review diff生成前に`git add -N .`を行い、新規ファイルもbinary dif
 
 1. `reports/*-update.diff`を確認する。
 2. 正本Placeの削除、UUID変更、名称変更がないことを確認する。
-3. WAMは8相談支援施設という対象範囲を維持しているか確認する。
+3. WAMの施設数・元レコード数が前回から大きく変わっていないか確認する。202603版の8施設・13元レコードは現在の目安であり、固定要件ではない。
 4. OSMの合議不成立候補だけが`reports/osm-review-needed.json`へ残っているか確認する。
 5. `sourceAttributions`と取得台帳の版・SHAを確認する。
 6. tests、validate、決定的buildを再実行する。
