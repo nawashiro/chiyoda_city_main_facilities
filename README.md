@@ -44,6 +44,24 @@ python3 -m src.facility_data build .
 
 公開ファイルを直接編集してはいけません。検索入力または`data/registry.json`を更新し、検証後に再生成します。
 
+## ソースsnapshotの更新
+
+取得したrawファイルは版を確認してから一括正規化します。施設ごとの詳細問い合わせは行いません。
+
+```bash
+# 現在・過去の既知OSM IDを一度に取得するOverpass queryを表示
+python3 -m src.update_osm query .
+
+# 版固定済みraw snapshotを正規化（同一ソースは30日未満の再取得を拒否）
+python3 -m src.update_osm normalize . --raw /path/to/osm.json --at 2026-07-28T00:00:00Z
+python3 -m src.update_wam /path/to/wam.json . --at 2026-07-28T00:00:00Z
+
+# snapshotを正本へ適用して公開物を再生成
+python3 -m src.facility_data update . --at 2026-07-28T00:00:00Z
+```
+
+外部から消えたという理由だけでPlaceは削除しません。WAMは公式公開後の年2回、OSMと町名は四半期または手動を基本とし、更新は一ソース版ずつ扱います。
+
 ## 運用方針
 
 - UUID重複を許容しない

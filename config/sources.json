@@ -15,18 +15,11 @@
       "license_url": "https://creativecommons.org/publicdomain/zero/1.0/"
     },
     {
-      "id": "tokyo-welfare-nursery",
-      "title": "東京都福祉局 保育所データ",
-      "url": "https://catalog.data.metro.tokyo.lg.jp/dataset/t000054d0000000356/resource/f41234cd-bcf2-46df-90fc-6cc7d8398321",
-      "license": "Creative Commons Attribution 4.0 International",
-      "license_url": "https://creativecommons.org/licenses/by/4.0/"
-    },
-    {
-      "id": "chiyoda-kindergarten",
-      "title": "千代田区 幼稚園データ",
-      "url": "https://catalog.data.metro.tokyo.lg.jp/dataset/t131016d0000000007",
-      "license": "Creative Commons Attribution 4.0 International",
-      "license_url": "https://creativecommons.org/licenses/by/4.0/"
+      "id": "wam",
+      "title": "WAM NET",
+      "url": "https://www.wam.go.jp/content/wamnet/pcpub/top/",
+      "license": "WAM NETの利用条件に従う",
+      "license_url": "https://www.wam.go.jp/content/wamnet/pcpub/top/"
     },
     {
       "id": "chiyoda-city-town-geojson",
@@ -35,13 +28,6 @@
       "license": "Creative Commons Attribution-ShareAlike 4.0 International",
       "license_url": "https://creativecommons.org/licenses/by-sa/4.0/",
       "attribution": "© Linked Open Addresses Japan"
-    },
-    {
-      "id": "hitachi-kazaguruma",
-      "title": "日立自動車交通 千代田区風ぐるまGTFS",
-      "url": "https://ckan.odpt.org/dataset/hitachi_automobile_transportation_chiyoda_alllines",
-      "license": "Creative Commons Attribution 4.0 International",
-      "license_url": "https://creativecommons.org/licenses/by/4.0/"
     }
   ]
 }

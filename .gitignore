@@ -1,3 +1,5 @@
 venv
 output
 .temp
+__pycache__/
+*.py[cod]

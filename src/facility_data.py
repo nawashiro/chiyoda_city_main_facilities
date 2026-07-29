@@ -11,6 +11,7 @@ import re
 import secrets
 import time
 import uuid
+from datetime import datetime, timedelta
 from pathlib import Path
 from typing import Any
 
@@ -472,6 +473,96 @@ def compact_audit(at: str, method: str, action: str, target: str) -> dict[str, s
     return {"at": at, "method": method, "action": action, "target": target}
 
 
+def source_refresh_due(last_retrieved_at: str | None, now: str) -> bool:
+    """Enforce the shared at-most-monthly retrieval boundary."""
+    if last_retrieved_at is None:
+        return True
+    previous = datetime.fromisoformat(last_retrieved_at.replace("Z", "+00:00"))
+    current = datetime.fromisoformat(now.replace("Z", "+00:00"))
+    return current - previous >= timedelta(days=30)
+
+
+def normalize_wam_rows(rows: list[dict[str, Any]]) -> list[dict[str, Any]]:
+    """Normalize selected WAM rows; visiting-only services are not places."""
+    normalized = []
+    for index, row in enumerate(rows):
+        if "訪問" in str(row.get("serviceType", "")):
+            continue
+        coordinates = [row.get("longitude"), row.get("latitude")]
+        if (
+            not _is_uuid7(row.get("placeId"))
+            or not isinstance(row.get("facilityId"), (str, int))
+            or not str(row.get("facilityId", "")).strip()
+            or not isinstance(row.get("name"), str)
+            or not row["name"].strip()
+            or not _valid_coordinates(coordinates)
+        ):
+            raise ValueError(f"invalid WAM row at index {index}")
+        normalized.append(
+            {
+                "queryId": row["placeId"],
+                "id": str(row["facilityId"]),
+                "name": row["name"],
+                "coordinates": coordinates,
+            }
+        )
+    return normalized
+
+
+def normalize_osm_elements(elements: list[dict[str, Any]]) -> list[dict[str, Any]]:
+    """Normalize Overpass elements to representative points only."""
+    normalized = []
+    for element in elements:
+        if element.get("type") not in {"node", "way", "relation"}:
+            continue
+        if element.get("type") == "node":
+            coordinates = [element.get("lon"), element.get("lat")]
+        else:
+            center = element.get("center", {})
+            coordinates = [center.get("lon"), center.get("lat")]
+        if not _valid_coordinates(coordinates):
+            continue
+        tags = element.get("tags", {})
+        record = {
+            "type": element["type"],
+            "id": str(element["id"]),
+            "name": tags.get("name"),
+            "coordinates": coordinates,
+        }
+        if tags.get("wikidata"):
+            record["qid"] = tags["wikidata"]
+        normalized.append(record)
+    return normalized
+
+
+def collect_osm_ids(registry: dict[str, Any]) -> list[str]:
+    """Collect typed current and historical IDs for one batch refresh."""
+    ids = {
+        str(ref["recordId"])
+        for place in registry.get("places", [])
+        for ref in place.get("externalRefs", [])
+        if ref.get("sourceId") == "openstreetmap"
+        and re.fullmatch(r"(?:node|way|relation)/[1-9][0-9]*", str(ref.get("recordId", "")))
+    }
+    return sorted(ids)
+
+
+def build_osm_batch_query(typed_ids: list[str]) -> str:
+    """Build one Overpass query; never one request per place."""
+    if not typed_ids:
+        return ""
+    grouped: dict[str, list[str]] = {"node": [], "way": [], "relation": []}
+    for typed_id in typed_ids:
+        record_type, record_id = typed_id.split("/", 1)
+        grouped[record_type].append(record_id)
+    selectors = "".join(
+        f"{record_type}(id:{','.join(grouped[record_type])});"
+        for record_type in ("node", "way", "relation")
+        if grouped[record_type]
+    )
+    return f"[out:json];({selectors});out center;"
+
+
 def update_osm_reference(
     place: dict[str, Any],
     osm_record: dict[str, Any],
@@ -518,11 +609,153 @@ def update_osm_reference(
     return updated
 
 
+def _update_wam_reference(
+    place: dict[str, Any], wam_record: dict[str, Any], at: str
+) -> dict[str, Any]:
+    updated = copy.deepcopy(place)
+    refs = updated.setdefault("externalRefs", [])
+    record_id = str(wam_record["id"])
+    current = next(
+        (
+            ref
+            for ref in refs
+            if ref.get("sourceId") == "wam"
+            and ref.get("recordId") == record_id
+            and ref.get("status") == "current"
+        ),
+        None,
+    )
+    if current is not None:
+        current["lastConfirmedAt"] = at
+    else:
+        for ref in refs:
+            if ref.get("sourceId") == "wam" and ref.get("status") == "current":
+                ref["status"] = "superseded"
+                ref["supersededAt"] = at
+        refs.append(
+            {
+                "sourceId": "wam",
+                "recordId": record_id,
+                "status": "current",
+                "firstConfirmedAt": at,
+                "lastConfirmedAt": at,
+                "supersededAt": None,
+                "basis": "source_record",
+            }
+        )
+    return updated
+
+
+def apply_source_updates(
+    registry: dict[str, Any],
+    search_by_id: dict[str, dict[str, Any]],
+    wam_records: list[dict[str, Any]],
+    osm_records: list[dict[str, Any]],
+    at: str,
+) -> dict[str, Any]:
+    """Apply already-selected batch snapshots with WAM > OSM > search priority."""
+    updated = copy.deepcopy(registry)
+    wam_by_id: dict[str, dict[str, Any]] = {}
+    for record in wam_records:
+        query_id = str(record.get("queryId"))
+        if query_id not in search_by_id:
+            raise ValueError(f"unknown WAM queryId: {query_id}")
+        if query_id in wam_by_id:
+            raise ValueError(f"duplicate WAM queryId: {query_id}")
+        wam_by_id[query_id] = record
+    osm_by_id: dict[str, dict[str, Any]] = {}
+    for record in osm_records:
+        query_id = str(record.get("queryId"))
+        if query_id not in search_by_id:
+            raise ValueError(f"unknown OSM queryId: {query_id}")
+        if query_id in osm_by_id:
+            raise ValueError(f"duplicate OSM queryId: {query_id}")
+        osm_by_id[query_id] = record
+    places = []
+    for original in updated.get("places", []):
+        place_id = str(original["id"])
+        query = search_by_id[place_id]
+        wam_record = wam_by_id.get(place_id)
+        osm_record = osm_by_id.get(place_id)
+        place = original
+        if wam_record is not None:
+            place = _update_wam_reference(place, wam_record, at)
+        if osm_record is not None:
+            place = update_osm_reference(
+                place, osm_record, at, "source_record", "calculation_model"
+            )
+        if wam_record is not None or osm_record is not None:
+            coordinates, source_id, record_id = choose_geometry(
+                query, wam_record, osm_record
+            )
+            previous = place.get("geometry", {}).get("coordinates")
+            previous_source = place.get("geometrySource", {}).get("sourceId")
+            place["geometry"] = {"type": "Point", "coordinates": coordinates}
+            place["geometrySource"] = {
+                "sourceId": source_id,
+                "recordId": record_id,
+                "confirmedAt": at,
+            }
+            if previous != coordinates or previous_source != source_id:
+                place.setdefault("audit", []).append(
+                    compact_audit(at, "calculation_model", "updated_geometry", place_id)
+                )
+        places.append(place)
+    updated["places"] = places
+    return updated
+
+
+def update_repository(root: str | Path, at: str) -> Path:
+    """Apply local source snapshots atomically, then rebuild public data."""
+    root = Path(root)
+    search_by_id: dict[str, dict[str, Any]] = {}
+    for path in sorted((root / "inputs/osm-search").rglob("*.json")):
+        document = _read_json(path)
+        search_by_id.update(
+            {str(query["id"]): query for query in document.get("queries", [])}
+        )
+    registry = _read_json(root / "data/registry.json")
+
+    def records(path: Path) -> list[dict[str, Any]]:
+        return _read_json(path).get("records", []) if path.exists() else []
+
+    updated = apply_source_updates(
+        registry,
+        search_by_id,
+        records(root / "imports/wam/normalized.json"),
+        records(root / "imports/openstreetmap/normalized.json"),
+        at,
+    )
+    issues = validate_registry(updated, search_by_id)
+    if issues:
+        raise ValueError("; ".join(issues))
+    _write_json(root / "data/registry.json", updated)
+    build_repository(root)
+    report_path = root / "reports/latest-update.json"
+    _write_json(
+        report_path,
+        {
+            "at": at,
+            "places": len(updated.get("places", [])),
+            "wamRecords": len(records(root / "imports/wam/normalized.json")),
+            "osmRecords": len(records(root / "imports/openstreetmap/normalized.json")),
+        },
+    )
+    return report_path
+
+
 def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(description="Maintain Chiyoda Place data")
-    parser.add_argument("command", choices=("validate", "build"))
+    parser.add_argument("command", choices=("validate", "build", "update"))
     parser.add_argument("root", nargs="?", default=".")
+    parser.add_argument("--at")
     args = parser.parse_args(argv)
+    if args.command == "update":
+        if args.at is None:
+            print("ERROR: update requires --at")
+            return 1
+        print(update_repository(args.root, args.at))
+        return 0
     issues = validate_repository(args.root)
     if issues:
         for issue in issues:

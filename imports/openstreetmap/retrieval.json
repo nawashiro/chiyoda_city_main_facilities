@@ -1,0 +1,7 @@
+{
+  "sourceId": "openstreetmap",
+  "retrievedAt": null,
+  "rawVersion": null,
+  "minimumIntervalDays": 30,
+  "cadence": "quarterly-or-manual"
+}

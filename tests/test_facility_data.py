@@ -5,8 +5,11 @@ import unittest
 from pathlib import Path
 
 from src.facility_data import (
+    apply_source_updates,
+    build_osm_batch_query,
     build_public_geojson,
     choose_geometry,
+    collect_osm_ids,
     compact_audit,
     decide_consensus,
     match_osm_candidates,
@@ -15,11 +18,16 @@ from src.facility_data import (
     migrate_legacy,
     migrate_repository,
     new_uuid7,
+    normalize_osm_elements,
+    normalize_wam_rows,
     update_osm_reference,
+    update_repository,
     validate_repository,
     validate_registry,
     validate_search_document,
+    source_refresh_due,
 )
+from src.update_wam import main as update_wam_main
 
 
 class SearchInputTests(unittest.TestCase):
@@ -511,6 +519,306 @@ class CandidateMatchingTests(unittest.TestCase):
         self.assertEqual(
             {"at", "method", "action", "target"}, set(updated["audit"][-1])
         )
+
+
+class SourceUpdateTests(unittest.TestCase):
+    def test_wam_cli_requires_a_pinned_raw_version(self):
+        with tempfile.TemporaryDirectory() as temp_dir:
+            root = Path(temp_dir)
+            (root / "imports/wam").mkdir(parents=True)
+            (root / "imports/wam/retrieval.json").write_text(
+                json.dumps({"retrievedAt": None, "minimumIntervalDays": 30}),
+                encoding="utf-8",
+            )
+            raw = root / "raw.json"
+            raw.write_text(json.dumps({"rows": []}), encoding="utf-8")
+
+            result = update_wam_main(
+                [str(raw), str(root), "--at", "2026-07-28T00:00:00Z"]
+            )
+
+        self.assertEqual(1, result)
+
+    def test_repository_has_small_manual_source_update_contract(self):
+        root = Path(__file__).resolve().parents[1]
+        required = [
+            "src/update_wam.py",
+            "src/update_osm.py",
+            "imports/wam/normalized.json",
+            "imports/wam/retrieval.json",
+            "imports/openstreetmap/normalized.json",
+            "imports/openstreetmap/retrieval.json",
+            ".github/workflows/update-wam.yml",
+            ".github/workflows/update-osm.yml",
+        ]
+        for relative in required:
+            self.assertTrue((root / relative).is_file(), relative)
+        for source in ("wam", "openstreetmap"):
+            metadata = json.loads(
+                (root / f"imports/{source}/retrieval.json").read_text(encoding="utf-8")
+            )
+            self.assertGreaterEqual(metadata["minimumIntervalDays"], 30)
+        workflows = "\n".join(
+            (root / f".github/workflows/update-{source}.yml").read_text(encoding="utf-8")
+            for source in ("wam", "osm")
+        )
+        self.assertIn("workflow_dispatch", workflows)
+        self.assertNotIn("schedule:", workflows)
+        self.assertNotIn("curl ", workflows)
+        sources = json.loads((root / "config/sources.json").read_text(encoding="utf-8"))
+        source_ids = {source["id"] for source in sources["sources"]}
+        self.assertIn("wam", source_ids)
+        self.assertNotIn("tokyo-welfare-nursery", source_ids)
+        self.assertNotIn("chiyoda-kindergarten", source_ids)
+        self.assertNotIn("hitachi-kazaguruma", source_ids)
+
+    def test_source_refresh_is_due_only_after_thirty_days(self):
+        self.assertFalse(
+            source_refresh_due(
+                "2026-07-01T00:00:00Z", "2026-07-28T00:00:00Z"
+            )
+        )
+        self.assertTrue(
+            source_refresh_due(
+                "2026-06-28T00:00:00Z", "2026-07-28T00:00:00Z"
+            )
+        )
+        self.assertTrue(source_refresh_due(None, "2026-07-28T00:00:00Z"))
+
+    def test_normalizes_only_stationary_wam_facilities(self):
+        rows = [
+            {
+                "placeId": "019c0000-0000-7000-8000-000000000050",
+                "facilityId": "wam-1",
+                "name": "施設K",
+                "longitude": 139.75,
+                "latitude": 35.69,
+                "serviceType": "通所",
+            },
+            {
+                "placeId": "019c0000-0000-7000-8000-000000000051",
+                "facilityId": "wam-2",
+                "name": "訪問サービス",
+                "longitude": 139.76,
+                "latitude": 35.70,
+                "serviceType": "訪問介護",
+            },
+        ]
+
+        self.assertEqual(
+            [
+                {
+                    "queryId": "019c0000-0000-7000-8000-000000000050",
+                    "id": "wam-1",
+                    "name": "施設K",
+                    "coordinates": [139.75, 35.69],
+                }
+            ],
+            normalize_wam_rows(rows),
+        )
+        with self.assertRaises(ValueError):
+            normalize_wam_rows(
+                [
+                    {
+                        "placeId": "019c0000-0000-7000-8000-000000000050",
+                        "facilityId": "wam-bad",
+                        "name": "壊れた施設",
+                        "longitude": 139.75,
+                        "latitude": 95.0,
+                        "serviceType": "通所",
+                    }
+                ]
+            )
+
+    def test_normalizes_osm_centres_without_polygons_or_members(self):
+        elements = [
+            {"type": "node", "id": 1, "lat": 35.69, "lon": 139.75, "tags": {"name": "施設L"}},
+            {
+                "type": "relation",
+                "id": 2,
+                "center": {"lat": 35.70, "lon": 139.76},
+                "members": [{"type": "way", "ref": 9}],
+                "geometry": [{"lat": 35.7, "lon": 139.7}],
+                "tags": {"name": "施設M", "wikidata": "Q123"},
+            },
+            {
+                "type": "area",
+                "id": 3,
+                "center": {"lat": 35.71, "lon": 139.77},
+                "tags": {"name": "非対応型"},
+            },
+        ]
+
+        normalized = normalize_osm_elements(elements)
+
+        self.assertEqual(2, len(normalized))
+
+        self.assertEqual([139.75, 35.69], normalized[0]["coordinates"])
+        self.assertEqual("Q123", normalized[1]["qid"])
+        self.assertNotIn("members", str(normalized))
+        self.assertNotIn("geometry", str(normalized))
+
+    def test_applies_wam_geometry_before_osm_and_keeps_osm_reference(self):
+        query = {
+            "id": "019c0000-0000-7000-8000-000000000052",
+            "name": "施設N",
+            "coordinates": [139.70, 35.60],
+        }
+        place = make_place(query, ["social-welfare"], [], "2026-07-01T00:00:00Z")
+        wam = {
+            "queryId": query["id"],
+            "id": "wam-52",
+            "name": "施設N",
+            "coordinates": [139.71, 35.61],
+        }
+        osm = {
+            "queryId": query["id"],
+            "type": "node",
+            "id": "52",
+            "name": "施設N",
+            "coordinates": [139.72, 35.62],
+        }
+
+        updated = apply_source_updates(
+            {"schemaVersion": 1, "places": [place]},
+            {query["id"]: query},
+            [wam],
+            [osm],
+            "2026-07-28T00:00:00Z",
+        )
+
+        result = updated["places"][0]
+        self.assertEqual([139.71, 35.61], result["geometry"]["coordinates"])
+        self.assertEqual("wam", result["geometrySource"]["sourceId"])
+        self.assertEqual("node/52", result["externalRefs"][-1]["recordId"])
+        self.assertEqual({"at", "method", "action", "target"}, set(result["audit"][-1]))
+
+    def test_builds_one_batch_query_for_current_and_historical_osm_ids(self):
+        registry = {
+            "places": [
+                {
+                    "externalRefs": [
+                        {"sourceId": "openstreetmap", "recordId": "node/2", "status": "current"},
+                        {"sourceId": "openstreetmap", "recordId": "way/3", "status": "superseded"},
+                        {"sourceId": "openstreetmap", "recordId": "node/2", "status": "superseded"},
+                    ]
+                }
+            ]
+        }
+
+        ids = collect_osm_ids(registry)
+        query = build_osm_batch_query(ids)
+
+        self.assertEqual(["node/2", "way/3"], ids)
+        self.assertEqual(1, query.count("[out:json]"))
+        self.assertIn("node(id:2)", query)
+        self.assertIn("way(id:3)", query)
+        self.assertIn("out center", query)
+        self.assertEqual("", build_osm_batch_query([]))
+
+    def test_repository_update_uses_snapshots_without_deleting_places(self):
+        query = {
+            "id": "019c0000-0000-7000-8000-000000000053",
+            "name": "施設O",
+            "coordinates": [139.70, 35.60],
+        }
+        place = make_place(query, ["community"], [], "2026-07-01T00:00:00Z")
+        with tempfile.TemporaryDirectory() as temp_dir:
+            root = Path(temp_dir)
+            (root / "inputs/osm-search/manual").mkdir(parents=True)
+            (root / "data").mkdir()
+            (root / "config").mkdir()
+            (root / "imports/wam").mkdir(parents=True)
+            (root / "imports/openstreetmap").mkdir(parents=True)
+            (root / "inputs/osm-search/manual/batch.json").write_text(
+                json.dumps({"schemaVersion": 1, "queries": [query]}), encoding="utf-8"
+            )
+            (root / "data/registry.json").write_text(
+                json.dumps({"schemaVersion": 1, "places": [place]}), encoding="utf-8"
+            )
+            (root / "config/sources.json").write_text(
+                json.dumps({"sources": []}), encoding="utf-8"
+            )
+            (root / "imports/wam/normalized.json").write_text(
+                json.dumps({"records": []}), encoding="utf-8"
+            )
+            (root / "imports/openstreetmap/normalized.json").write_text(
+                json.dumps(
+                    {
+                        "records": [
+                            {
+                                "queryId": query["id"],
+                                "type": "node",
+                                "id": "53",
+                                "name": "施設O",
+                                "coordinates": [139.71, 35.61],
+                            }
+                        ]
+                    }
+                ),
+                encoding="utf-8",
+            )
+
+            update_repository(root, "2026-07-28T00:00:00Z")
+            self.assertEqual(
+                0,
+                main(["update", str(root), "--at", "2026-07-28T00:00:00Z"]),
+            )
+            updated = json.loads((root / "data/registry.json").read_text(encoding="utf-8"))
+
+        self.assertEqual(1, len(updated["places"]))
+        self.assertEqual([139.71, 35.61], updated["places"][0]["geometry"]["coordinates"])
+
+    def test_empty_snapshots_do_not_touch_registry(self):
+        query = {
+            "id": "019c0000-0000-7000-8000-000000000054",
+            "name": "施設P",
+            "coordinates": [139.70, 35.60],
+        }
+        registry = {
+            "schemaVersion": 1,
+            "places": [make_place(query, ["community"], [], "2026-07-01T00:00:00Z")],
+        }
+
+        updated = apply_source_updates(
+            registry, {query["id"]: query}, [], [], "2026-07-28T00:00:00Z"
+        )
+
+        self.assertEqual(registry, updated)
+
+    def test_rejects_duplicate_or_unknown_snapshot_query_ids(self):
+        query = {
+            "id": "019c0000-0000-7000-8000-000000000055",
+            "name": "施設Q",
+            "coordinates": [139.70, 35.60],
+        }
+        registry = {
+            "schemaVersion": 1,
+            "places": [make_place(query, ["community"], [], "2026-07-01T00:00:00Z")],
+        }
+        record = {
+            "queryId": query["id"],
+            "id": "wam-55",
+            "name": "施設Q",
+            "coordinates": [139.71, 35.61],
+        }
+
+        with self.assertRaises(ValueError):
+            apply_source_updates(
+                registry,
+                {query["id"]: query},
+                [record, record],
+                [],
+                "2026-07-28T00:00:00Z",
+            )
+        with self.assertRaises(ValueError):
+            apply_source_updates(
+                registry,
+                {query["id"]: query},
+                [{**record, "queryId": "019c0000-0000-7000-8000-000000000099"}],
+                [],
+                "2026-07-28T00:00:00Z",
+            )
 
 
 if __name__ == "__main__":

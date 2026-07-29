@@ -12,24 +12,14 @@
       "licenseUrl": "https://creativecommons.org/publicdomain/zero/1.0/"
     },
     {
-      "sourceId": "tokyo-welfare-nursery",
-      "license": "Creative Commons Attribution 4.0 International",
-      "licenseUrl": "https://creativecommons.org/licenses/by/4.0/"
-    },
-    {
-      "sourceId": "chiyoda-kindergarten",
-      "license": "Creative Commons Attribution 4.0 International",
-      "licenseUrl": "https://creativecommons.org/licenses/by/4.0/"
+      "sourceId": "wam",
+      "license": "WAM NETの利用条件に従う",
+      "licenseUrl": "https://www.wam.go.jp/content/wamnet/pcpub/top/"
     },
     {
       "sourceId": "chiyoda-city-town-geojson",
       "license": "Creative Commons Attribution-ShareAlike 4.0 International",
       "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/"
-    },
-    {
-      "sourceId": "hitachi-kazaguruma",
-      "license": "Creative Commons Attribution 4.0 International",
-      "licenseUrl": "https://creativecommons.org/licenses/by/4.0/"
     }
   ],
   "features": [

@@ -43,6 +43,15 @@ READMEで従来から宣言しているとおり、データベースは Open Da
 
 これらは旧JSONの来歴表示のために残します。新正本への継続取込ソースにはしません。
 
+## WAM NET
+
+- 提供: 独立行政法人福祉医療機構
+- URL: https://www.wam.go.jp/content/wamnet/pcpub/top/
+- 利用条件: 取得する公開版ごとにWAM NET上の利用条件を確認する
+- 用途: 版固定snapshotから、施設名、安定ID、代表点を選択して正本候補へ利用
+
+WAM snapshotを取得しただけでは公開しません。利用条件、取得時刻、元版を`imports/wam/retrieval.json`で確認し、訪問サービスをPlaceとして取り込みません。
+
 ## 千代田区町名GeoJSON
 
 - リポジトリ: https://github.com/nawashiro/chiyoda_city_town_geojson
@@ -52,12 +61,6 @@ READMEで従来から宣言しているとおり、データベースは Open Da
 - 加工内容: 元データから丁目以降を削除し、ポリゴンを統合
 
 町名は正本へ書き込まず、版固定した町名GeoJSONと正本代表点のpoint-in-polygonにより公開GeoJSON生成時だけ導出します。
-
-## 日立自動車交通 風ぐるまGTFS
-
-- 出典: 日立自動車交通株式会社 / Hitachi Motor Transportation Co. Ltd.
-- URL: https://ckan.odpt.org/dataset/hitachi_automobile_transportation_chiyoda_alllines
-- License: Creative Commons Attribution 4.0 International
 
 ## 更新時のルール
 
