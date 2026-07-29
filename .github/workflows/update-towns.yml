@@ -1,10 +1,10 @@
-name: Update WAM data
+name: Update town polygons
 
 on:
   workflow_dispatch:
     inputs:
-      release:
-        description: WAM release (YYYYMM)
+      commit:
+        description: Full commit SHA from nawashiro/chiyoda_city_town_geojson
         required: true
         type: string
 
@@ -14,34 +14,31 @@ permissions:
 jobs:
   process:
     runs-on: ubuntu-latest
-    timeout-minutes: 30
+    timeout-minutes: 15
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
         with:
           python-version: "3.13"
-      - name: Retrieve WAM release and update data
+      - name: Retrieve town polygons and rebuild public data
         env:
-          RELEASE: ${{ inputs.release }}
+          TOWN_COMMIT: ${{ inputs.commit }}
         run: |
           RETRIEVED_AT=$(date --iso-8601=seconds)
-          python3 -m src.retrieve_wam . --release "$RELEASE" --at "$RETRIEVED_AT"
-          python3 -m src.facility_data update . --source wam --at "$RETRIEVED_AT"
+          python3 -m src.retrieve_towns . --commit "$TOWN_COMMIT" --at "$RETRIEVED_AT"
+          python3 -m src.facility_data build .
       - run: python3 -m src.facility_data validate .
       - run: python3 -m unittest discover -s tests -v
       - name: Produce review diff
         run: |
           git add -N .
-          git diff --binary > reports/wam-update.diff
+          git diff --binary > reports/town-update.diff
       - name: Save generated update for manual review
         uses: actions/upload-artifact@v4
         with:
-          name: wam-update-${{ inputs.release }}
+          name: town-update-${{ inputs.commit }}
           retention-days: 14
           path: |
-            inputs/osm-search/wam/
-            imports/wam/
-            data/registry.json
+            data/pinned/
             dist/public/
-            reports/latest-update.json
-            reports/wam-update.diff
+            reports/town-update.diff

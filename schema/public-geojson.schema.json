@@ -7,10 +7,39 @@
   "additionalProperties": false,
   "properties": {
     "type": {"const": "FeatureCollection"},
-    "sourceAttributions": {"type": "array"},
+    "sourceAttributions": {
+      "type": "array",
+      "items": {"$ref": "#/$defs/sourceAttribution"}
+    },
     "features": {"type": "array", "items": {"$ref": "#/$defs/feature"}}
   },
   "$defs": {
+    "sourceAttribution": {
+      "type": "object",
+      "required": [
+        "sourceId",
+        "url",
+        "license",
+        "licenseUrl",
+        "version",
+        "retrievedAt",
+        "sha256",
+        "attribution",
+        "transformation"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "sourceId": {"type": "string"},
+        "url": {"type": "string", "format": "uri"},
+        "license": {"type": "string"},
+        "licenseUrl": {"type": "string", "format": "uri"},
+        "version": {"type": "string"},
+        "retrievedAt": {"type": "string", "format": "date-time"},
+        "sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+        "attribution": {"type": "string"},
+        "transformation": {"type": "string"}
+      }
+    },
     "feature": {
       "type": "object",
       "required": ["type", "geometry", "properties"],

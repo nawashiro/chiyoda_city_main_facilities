@@ -94,6 +94,8 @@ class SearchInputTests(unittest.TestCase):
 
         issues = validate_search_document(document)
 
+        self.assertIn("source must be an object", issues)
+        self.assertIn("unexpected top-level fields: unexpected", validate_search_document({"source": {"kind": "human", "sourceId": None, "retrievedAt": None}, "queries": [], "unexpected": True}))
         self.assertIn("queries[0]: name must be a non-empty string", issues)
         self.assertIn("queries[0]: invalid qid: Q0", issues)
         self.assertIn("queries[0]: unexpected fields: name:en", issues)
@@ -259,6 +261,43 @@ class PublicGeoJsonTests(unittest.TestCase):
         self.assertNotIn("audit", rendered)
         self.assertNotIn("Polygon", rendered)
 
+    def test_derives_short_town_name_from_multipolygon(self):
+        query = {
+            "id": "019c0000-0000-7000-8000-000000000008",
+            "name": "施設G",
+            "coordinates": [139.75, 35.69],
+        }
+        place = make_place(query, ["public-office"], [], "2026-07-28T00:00:00Z")
+        towns = {
+            "type": "FeatureCollection",
+            "features": [
+                {
+                    "type": "Feature",
+                    "properties": {"name": "東京都千代田区内幸町"},
+                    "geometry": {
+                        "type": "MultiPolygon",
+                        "coordinates": [
+                            [
+                                [
+                                    [139.7, 35.6],
+                                    [139.8, 35.6],
+                                    [139.8, 35.7],
+                                    [139.7, 35.7],
+                                    [139.7, 35.6],
+                                ]
+                            ]
+                        ],
+                    },
+                }
+            ],
+        }
+
+        public = build_public_geojson(
+            {"schemaVersion": 1, "places": [place]}, [], towns
+        )
+
+        self.assertEqual("内幸町", public["features"][0]["properties"]["town"])
+
 
 class PhaseZeroFilesTests(unittest.TestCase):
     def test_schema_and_fixture_files_define_the_new_contract(self):
@@ -288,6 +327,46 @@ class PhaseZeroFilesTests(unittest.TestCase):
         self.assertEqual([], validate_search_document(search_fixture))
         search_by_id = {item["id"]: item for item in search_fixture["queries"]}
         self.assertEqual([], validate_registry(registry_fixture, search_by_id))
+
+    def test_pinned_town_source_populates_every_current_place(self):
+        root = Path(__file__).resolve().parents[1]
+        towns_path = root / "data/pinned/towns.geojson"
+        metadata = json.loads(
+            (root / "data/pinned/towns.retrieval.json").read_text(encoding="utf-8")
+        )
+        payload = towns_path.read_bytes()
+
+        self.assertEqual(
+            "0be816edaa8d0f8d22714a2f1146f2d9e133e09f", metadata["commit"]
+        )
+        self.assertEqual(hashlib.sha256(payload).hexdigest(), metadata["sha256"])
+        registry = json.loads(
+            (root / "data/registry.json").read_text(encoding="utf-8")
+        )
+        public = json.loads(
+            (root / "dist/public/places.geojson").read_text(encoding="utf-8")
+        )
+        self.assertEqual(len(registry["places"]), len(public["features"]))
+        self.assertTrue(
+            all(feature["properties"]["town"] for feature in public["features"])
+        )
+        self.assertEqual(
+            {"openstreetmap", "wam", "chiyoda-city-town-geojson"},
+            {item["sourceId"] for item in public["sourceAttributions"]},
+        )
+        for attribution in public["sourceAttributions"]:
+            self.assertTrue(
+                {
+                    "sourceId",
+                    "url",
+                    "license",
+                    "version",
+                    "retrievedAt",
+                    "sha256",
+                    "attribution",
+                    "transformation",
+                }.issubset(attribution)
+            )
 
     def test_repository_cli_validates_and_builds_public_geojson(self):
         repository = Path(__file__).resolve().parents[1]
@@ -333,6 +412,11 @@ class PhaseZeroFilesTests(unittest.TestCase):
         self.assertIn("dist/public/places.geojson", readme)
         self.assertIn("python3 -m src.facility_data validate .", readme)
         self.assertIn("python3 -m src.facility_data build .", readme)
+        self.assertIn("python3 -m src.retrieve_wam", readme)
+        self.assertIn("python3 -m src.retrieve_osm", readme)
+        self.assertIn("python3 -m src.retrieve_towns", readme)
+        self.assertNotIn("/path/to/wam.json", readme)
+        self.assertNotIn("/path/to/osm.json", readme)
         self.assertNotIn("json_min", readme)
         self.assertNotIn("pandas", readme)
         self.assertIn("python3 -m src.facility_data validate .", workflow)
@@ -583,8 +667,20 @@ class SourceUpdateTests(unittest.TestCase):
 
             issues = validate_repository(root)
 
+            osm_document = json.loads(
+                (root / "imports/openstreetmap/normalized.json").read_text(encoding="utf-8")
+            )
+            osm_document["records"][0]["matchBasis"] = "name_coordinates"
+            (root / "imports/openstreetmap/normalized.json").write_text(
+                json.dumps(osm_document), encoding="utf-8"
+            )
+            name_coordinate_issues = validate_repository(root)
+
         self.assertIn("imports/wam/normalized.json: records must be an array", issues)
         self.assertTrue(any("invalid OSM matchBasis" in issue for issue in issues))
+        self.assertFalse(
+            any("invalid OSM matchBasis" in issue for issue in name_coordinate_issues)
+        )
 
     def test_wam_cli_requires_a_pinned_raw_version(self):
         with tempfile.TemporaryDirectory() as temp_dir:
@@ -692,8 +788,8 @@ class SourceUpdateTests(unittest.TestCase):
     def test_repository_has_small_manual_source_update_contract(self):
         root = Path(__file__).resolve().parents[1]
         required = [
-            "src/update_wam.py",
-            "src/update_osm.py",
+            "src/retrieve_wam.py",
+            "src/retrieve_osm.py",
             "imports/wam/normalized.json",
             "imports/wam/retrieval.json",
             "imports/openstreetmap/normalized.json",
@@ -714,11 +810,16 @@ class SourceUpdateTests(unittest.TestCase):
         )
         self.assertIn("workflow_dispatch", workflows)
         self.assertNotIn("schedule:", workflows)
+        self.assertNotIn("raw_path", workflows)
         self.assertNotIn("curl ", workflows)
-        self.assertIn("src.update_wam", workflows)
-        self.assertIn("src.update_osm normalize", workflows)
+        self.assertIn("src.retrieve_wam", workflows)
+        self.assertIn("src.retrieve_osm", workflows)
+        self.assertIn("src.resolve_osm_candidates", workflows)
+        self.assertIn("secrets.LLM_API_KEY", workflows)
+        self.assertIn("vars.LLM_MODEL", workflows)
         self.assertEqual(2, workflows.count("src.facility_data update"))
         self.assertEqual(2, workflows.count("actions/upload-artifact"))
+        self.assertEqual(2, workflows.count("git add -N ."))
         sources = json.loads((root / "config/sources.json").read_text(encoding="utf-8"))
         source_ids = {source["id"] for source in sources["sources"]}
         self.assertIn("wam", source_ids)
@@ -881,16 +982,38 @@ class SourceUpdateTests(unittest.TestCase):
         wam = {
             "queryId": query["id"],
             "id": "wam-52",
+            "sourceRecordIds": ["wam-52", "wam-70"],
+            "officeIds": ["office-52", "office-70"],
+            "serviceCodes": ["52", "70"],
+            "serviceTypes": ["計画相談支援", "障害児相談支援"],
             "name": "施設N",
-            "coordinates": [139.71, 35.61],
+            "coordinates": [139.7001, 35.6001],
         }
+        wam_raw_rows = [
+            {
+                "sourceRecordId": "wam-52",
+                "officeId": "office-52",
+                "serviceCode": "52",
+                "serviceType": "計画相談支援",
+                "name": "施設N",
+                "coordinates": [139.7001, 35.6001],
+            },
+            {
+                "sourceRecordId": "wam-70",
+                "officeId": "office-70",
+                "serviceCode": "70",
+                "serviceType": "障害児相談支援",
+                "name": "施設N",
+                "coordinates": [139.7001, 35.6001],
+            },
+        ]
         osm = {
             "queryId": query["id"],
             "type": "node",
             "id": "52",
             "name": "施設N",
-            "coordinates": [139.72, 35.62],
-            "matchBasis": "qid",
+            "coordinates": [139.7001, 35.6001],
+            "matchBasis": "name_coordinates",
         }
 
         updated = apply_source_updates(
@@ -899,26 +1022,146 @@ class SourceUpdateTests(unittest.TestCase):
             [wam],
             [osm],
             "2026-07-28T00:00:00Z",
+            wam_raw_rows=wam_raw_rows,
         )
 
         result = updated["places"][0]
-        self.assertEqual([139.71, 35.61], result["geometry"]["coordinates"])
+        self.assertEqual([139.7001, 35.6001], result["geometry"]["coordinates"])
         self.assertEqual("wam", result["geometrySource"]["sourceId"])
         self.assertEqual("node/52", result["externalRefs"][-1]["recordId"])
-        self.assertEqual("qid", result["externalRefs"][-1]["basis"])
+        self.assertEqual("name_coordinates", result["externalRefs"][-1]["basis"])
         self.assertEqual({"at", "method", "action", "target"}, set(result["audit"][-1]))
         self.assertIn("linked_wam", [item["action"] for item in result["audit"]])
+        self.assertEqual(
+            {"wam-52", "wam-70"},
+            {
+                ref["recordId"]
+                for ref in result["externalRefs"]
+                if ref["sourceId"] == "wam" and ref["status"] == "current"
+            },
+        )
 
         osm_only = apply_source_updates(
             updated,
             {query["id"]: query},
             [],
-            [{**osm, "id": "53", "coordinates": [139.73, 35.63]}],
+            [{**osm, "id": "53", "coordinates": [139.7002, 35.6002]}],
             "2026-10-28T00:00:00Z",
         )["places"][0]
-        self.assertEqual([139.71, 35.61], osm_only["geometry"]["coordinates"])
+        self.assertEqual([139.7001, 35.6001], osm_only["geometry"]["coordinates"])
         self.assertEqual("wam", osm_only["geometrySource"]["sourceId"])
         self.assertEqual("node/53", osm_only["externalRefs"][-1]["recordId"])
+
+    def test_revalidates_wam_record_against_query_and_raw_rows(self):
+        query = {
+            "id": "019c0000-0000-7000-8000-000000000053",
+            "name": "施設W",
+            "coordinates": [139.75, 35.69],
+        }
+        place = make_place(query, ["disability-support"], [], "2026-07-01T00:00:00Z")
+        raw_rows = [
+            {
+                "sourceRecordId": "wam-1",
+                "officeId": "office-1",
+                "serviceCode": "52",
+                "serviceType": "計画相談支援",
+                "name": "施設W",
+                "coordinates": [139.7501, 35.6901],
+            }
+        ]
+        record = {
+            "queryId": query["id"],
+            "id": "wam-1",
+            "sourceRecordIds": ["wam-1"],
+            "officeIds": ["office-1"],
+            "serviceCodes": ["52"],
+            "serviceTypes": ["計画相談支援"],
+            "name": "施設W",
+            "coordinates": [139.7501, 35.6901],
+        }
+
+        for forged, rows in (
+            ({**record, "name": "別施設"}, raw_rows),
+            ({**record, "coordinates": [0, 0]}, raw_rows),
+            ({**record, "sourceRecordIds": ["wam-2"], "id": "wam-2"}, raw_rows),
+            ({**record, "serviceCodes": ["70"]}, raw_rows),
+            (record, None),
+        ):
+            with self.subTest(forged=forged, rows=rows):
+                with self.assertRaises(ValueError):
+                    apply_source_updates(
+                        {"schemaVersion": 1, "places": [place]},
+                        {query["id"]: query},
+                        [forged],
+                        [],
+                        "2026-07-29T00:00:00Z",
+                        wam_raw_rows=rows,
+                    )
+
+    def test_revalidates_osm_match_basis_before_application(self):
+        query = {
+            "id": "019c0000-0000-7000-8000-000000000054",
+            "name": "施設O",
+            "coordinates": [139.75, 35.69],
+        }
+        place = make_place(query, ["community"], [], "2026-07-01T00:00:00Z")
+        base = {
+            "queryId": query["id"],
+            "type": "node",
+            "id": "54",
+            "name": "施設O",
+            "coordinates": [139.75, 35.69],
+        }
+        forged_records = [
+            base,
+            {**base, "matchBasis": "qid", "qid": "Q123"},
+            {
+                **base,
+                "matchBasis": "name_coordinates",
+                "name": "別施設",
+                "coordinates": [140.5, 36.5],
+            },
+            {**base, "matchBasis": "source_record"},
+        ]
+
+        for record in forged_records:
+            with self.subTest(record=record):
+                with self.assertRaises(ValueError):
+                    apply_source_updates(
+                        {"schemaVersion": 1, "places": [place]},
+                        {query["id"]: query},
+                        [],
+                        [record],
+                        "2026-07-29T00:00:00Z",
+                    )
+
+    def test_applies_nearby_candidate_selected_by_language_model_consensus(self):
+        query = {
+            "id": "019c0000-0000-7000-8000-000000000055",
+            "name": "相談支援センター",
+            "coordinates": [139.75, 35.69],
+        }
+        place = make_place(query, ["disability-support"], [], "2026-07-01T00:00:00Z")
+        record = {
+            "queryId": query["id"],
+            "type": "node",
+            "id": "55",
+            "name": "同じ建物の別表記",
+            "coordinates": [139.7501, 35.6901],
+            "matchBasis": "language_model",
+        }
+
+        updated = apply_source_updates(
+            {"schemaVersion": 1, "places": [place]},
+            {query["id"]: query},
+            [],
+            [record],
+            "2026-07-29T00:00:00Z",
+        )
+
+        result = updated["places"][0]
+        self.assertEqual("node/55", result["geometrySource"]["recordId"])
+        self.assertEqual("language_model", result["externalRefs"][-1]["basis"])
 
     def test_builds_one_batch_query_for_current_and_historical_osm_ids(self):
         registry = {
@@ -945,6 +1188,7 @@ class SourceUpdateTests(unittest.TestCase):
         self.assertEqual("", build_osm_batch_query([], []))
 
     def test_repository_update_uses_snapshots_without_deleting_places(self):
+        repository = Path(__file__).resolve().parents[1]
         query = {
             "id": "019c0000-0000-7000-8000-000000000053",
             "name": "施設O",
@@ -959,13 +1203,59 @@ class SourceUpdateTests(unittest.TestCase):
             (root / "imports/wam").mkdir(parents=True)
             (root / "imports/openstreetmap").mkdir(parents=True)
             (root / "inputs/osm-search/manual/batch.json").write_text(
-                json.dumps({"schemaVersion": 1, "queries": [query]}), encoding="utf-8"
+                json.dumps(
+                    {
+                        "source": {
+                            "kind": "human",
+                            "sourceId": None,
+                            "retrievedAt": None,
+                        },
+                        "queries": [query],
+                    }
+                ),
+                encoding="utf-8",
             )
             (root / "data/registry.json").write_text(
                 json.dumps({"schemaVersion": 1, "places": [place]}), encoding="utf-8"
             )
             (root / "config/sources.json").write_text(
-                json.dumps({"sources": []}), encoding="utf-8"
+                (repository / "config/sources.json").read_text(encoding="utf-8"),
+                encoding="utf-8",
+            )
+            wam_raw = {
+                "version": "202603",
+                "rows": [
+                    {
+                        "sourceRecordId": "stale-wam",
+                        "officeId": "office-stale",
+                        "serviceCode": "52",
+                        "serviceType": "計画相談支援",
+                        "name": "施設O",
+                        "coordinates": [139.7002, 35.6002],
+                    }
+                ],
+            }
+            wam_raw_payload = (json.dumps(wam_raw, ensure_ascii=False, indent=2) + "\n").encode()
+            (root / "imports/wam/raw.json").write_bytes(wam_raw_payload)
+            (root / "imports/wam/retrieval.json").write_text(
+                json.dumps(
+                    {
+                        "rawVersion": "202603",
+                        "retrievedAt": "2026-07-28T00:00:00Z",
+                        "rawSha256": hashlib.sha256(wam_raw_payload).hexdigest(),
+                    }
+                ),
+                encoding="utf-8",
+            )
+            (root / "imports/openstreetmap/retrieval.json").write_text(
+                json.dumps(
+                    {
+                        "rawVersion": "2026-07-28T00:00:00Z",
+                        "retrievedAt": "2026-07-28T00:00:00Z",
+                        "rawSha256": "0" * 64,
+                    }
+                ),
+                encoding="utf-8",
             )
             (root / "imports/wam/normalized.json").write_text(
                 json.dumps(
@@ -974,8 +1264,12 @@ class SourceUpdateTests(unittest.TestCase):
                             {
                                 "queryId": query["id"],
                                 "id": "stale-wam",
+                                "sourceRecordIds": ["stale-wam"],
+                                "officeIds": ["office-stale"],
+                                "serviceCodes": ["52"],
+                                "serviceTypes": ["計画相談支援"],
                                 "name": "施設O",
-                                "coordinates": [139.99, 35.99],
+                                "coordinates": [139.7002, 35.6002],
                             }
                         ]
                     }
@@ -991,7 +1285,8 @@ class SourceUpdateTests(unittest.TestCase):
                                 "type": "node",
                                 "id": "53",
                                 "name": "施設O",
-                                "coordinates": [139.71, 35.61],
+                                "coordinates": [139.7001, 35.6001],
+                                "matchBasis": "name_coordinates",
                             }
                         ]
                     }
@@ -1016,7 +1311,7 @@ class SourceUpdateTests(unittest.TestCase):
             updated = json.loads((root / "data/registry.json").read_text(encoding="utf-8"))
 
         self.assertEqual(1, len(updated["places"]))
-        self.assertEqual([139.71, 35.61], updated["places"][0]["geometry"]["coordinates"])
+        self.assertEqual([139.7001, 35.6001], updated["places"][0]["geometry"]["coordinates"])
 
     def test_update_does_not_write_registry_when_public_build_fails(self):
         query = {
@@ -1035,7 +1330,17 @@ class SourceUpdateTests(unittest.TestCase):
             (root / "config").mkdir()
             (root / "imports/openstreetmap").mkdir(parents=True)
             (root / "inputs/osm-search/manual/batch.json").write_text(
-                json.dumps({"queries": [query]}), encoding="utf-8"
+                json.dumps(
+                    {
+                        "source": {
+                            "kind": "human",
+                            "sourceId": None,
+                            "retrievedAt": None,
+                        },
+                        "queries": [query],
+                    }
+                ),
+                encoding="utf-8",
             )
             registry_path = root / "data/registry.json"
             registry_path.write_text(json.dumps(registry), encoding="utf-8")
@@ -1051,7 +1356,9 @@ class SourceUpdateTests(unittest.TestCase):
                                 "queryId": query["id"],
                                 "type": "node",
                                 "id": "62",
-                                "coordinates": [139.71, 35.61],
+                                "name": "施設R",
+                                "coordinates": [139.7001, 35.6001],
+                                "matchBasis": "name_coordinates",
                             }
                         ]
                     }

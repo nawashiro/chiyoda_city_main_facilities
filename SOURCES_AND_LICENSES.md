@@ -1,56 +1,49 @@
-# データソースとライセンス
+# データソースと利用条件
 
-このリポジトリは、由来と利用条件の異なる複数のデータを含みます。正本の編集値と、公開GeoJSONへソース別名前空間で直接含める外部レコードでは適用条件が異なります。再配布時は`sourceAttributions`と本書を確認してください。
-
-機械可読なソース台帳は [`config/sources.json`](config/sources.json) です。
+このrepositoryは由来と条件の異なるデータを組み合わせる。機械可読な台帳は [`config/sources.json`](config/sources.json)、公開物に実際に寄与したソースは`dist/public/places.geojson`の`sourceAttributions`を参照する。
 
 ## プロジェクトのデータベース
 
-READMEで従来から宣言しているとおり、データベースは Open Data Commons Open Database License 1.0 の条件で提供します。全文は [`LICENSE`](LICENSE) を参照してください。
+データベースはOpen Data Commons Open Database License 1.0で提供する。全文は[`LICENSE`](LICENSE)を参照する。
 
 - License: Open Data Commons Open Database License 1.0
 - URL: https://opendatacommons.org/licenses/odbl/1-0/
 
-正本と互換GeoJSON全体を単一の包括ライセンスだけで説明しません。個別の画像、説明、町名、OSMタグ、Wikidataレコード、WAMレコード等には、下記に示す各ソースの条件が適用されます。
+外部由来のデータには以下の各条件も適用される。個別ソースの条件をプロジェクトの包括ライセンスだけで置き換えない。
 
 ## OpenStreetMap
 
 - 出典: © OpenStreetMap contributors
 - URL: https://www.openstreetmap.org/copyright
 - License: Open Data Commons Open Database License 1.0
+- License URL: https://opendatacommons.org/licenses/odbl/1-0/
+- 加工: 千代田区内の対象候補を抽出し、同定済み施設の代表Point座標として利用
+
+取得・照合手順は[`doc/data_maintenance_spec.md`](doc/data_maintenance_spec.md)に記載する。
 
 ## Wikidata
 
 - URL: https://www.wikidata.org/wiki/Wikidata:Licensing
 - License: Creative Commons CC0 1.0 Universal
-- 用途: 以前のOSM同定で同じ地物を指すと確認できたItem IDを、名前と組み合わせた次回のOSM検索入力として利用
-- 注意: Wikidata Itemを内部主キーにせず、組織・建物・サービスとの対象範囲が一致しないItemを登録しない
+- License URL: https://creativecommons.org/publicdomain/zero/1.0/
+- 用途: 以前のOSM同定で同じ地物を指すと確認できたQIDを、次回のOSM検索入力に利用
 
-## 旧データの出典（新設計では自動取込対象外）
-
-### 東京都福祉局 保育所データ
-
-- 出典: 東京都福祉局
-- URL: https://catalog.data.metro.tokyo.lg.jp/dataset/t000054d0000000356/resource/f41234cd-bcf2-46df-90fc-6cc7d8398321
-- License: Creative Commons Attribution 4.0 International
-
-### 千代田区 幼稚園データ・公共施設一覧
-
-- 出典: 千代田区
-- 幼稚園: https://catalog.data.metro.tokyo.lg.jp/dataset/t131016d0000000007
-- 公共施設一覧: https://catalog.data.metro.tokyo.lg.jp/dataset/t131016d0000000001
-- License: Creative Commons Attribution 4.0 International
-
-これらは旧JSONの来歴表示のために残します。新正本への継続取込ソースにはしません。
+Wikidata Itemを内部主キーにはしない。
 
 ## WAM NET
 
 - 提供: 独立行政法人福祉医療機構
-- URL: https://www.wam.go.jp/content/wamnet/pcpub/top/
-- 利用条件: 取得する公開版ごとにWAM NET上の利用条件を確認する
-- 用途: 版固定snapshotから、施設名、安定ID、代表点を選択して正本候補へ利用
+- 配布ページ: https://www.wam.go.jp/content/wamnet/pcpub/top/sfkopendata/
+- 帰属表示: WAM NET
+- 加工: 相談支援4サービスから東京都千代田区の行を抽出し、同一施設を集約
 
-WAM snapshotを取得しただけでは公開しません。利用条件、取得時刻、元版を`imports/wam/retrieval.json`で確認し、訪問サービスをPlaceとして取り込みません。
+公式配布ページはオープンデータを「営利目的、非営利目的を問わず二次利用可能なルールが適用されたもの」「無償で利用できるもの」と説明し、掲載データを「利用規約の条件の下、自由にご利用いただけます」と記載している。
+
+ただし、2026年7月29日の確認時点で、そのページ内に独立した規約本文へのリンクは見つからなかった。このrepositoryは架空の規約名やURLを補わず、利用条件欄から配布ページ自体を参照する。
+
+公式配布ZIPそのものはrepositoryやGitHub Actions artifactへ恒久保存しない。取得台帳にはURL、版、取得時刻、content length、SHA-256等を残す。適用に必要な東京都千代田区の抽出rowは`imports/wam/raw.json`へ保持し、そのSHA-256を`imports/wam/retrieval.json`へ記録する。
+
+対象コードは`52`、`53`、`54`、`70`だけである。
 
 ## 千代田区町名GeoJSON
 
@@ -58,16 +51,32 @@ WAM snapshotを取得しただけでは公開しません。利用条件、取�
 - 元データ・表示: © Linked Open Addresses Japan
 - License: Creative Commons Attribution-ShareAlike 4.0 International
 - License URL: https://creativecommons.org/licenses/by-sa/4.0/
-- 加工内容: 元データから丁目以降を削除し、ポリゴンを統合
+- 加工: 上流で丁目以降を削除して統合した町名ポリゴンと、施設Pointの包含判定により町名を付与
 
-町名は正本へ書き込まず、版固定した町名GeoJSONと正本代表点のpoint-in-polygonにより公開GeoJSON生成時だけ導出します。
+町名は正本へ書き込まず、公開GeoJSON生成時だけ導出する。町名ポリゴン自体は公開GeoJSONへ含めない。
 
-## 更新時のルール
+## 旧データの出典
 
-新しいソースを追加するときは、次を同じ変更に含めてください。
+以下は旧データの来歴表示のために残す。現在の継続取込ソースではない。
+
+### 東京都福祉局 保育所データ
+
+- URL: https://catalog.data.metro.tokyo.lg.jp/dataset/t000054d0000000356/resource/f41234cd-bcf2-46df-90fc-6cc7d8398321
+- License: Creative Commons Attribution 4.0 International
+
+### 千代田区 幼稚園データ・公共施設一覧
+
+- 幼稚園: https://catalog.data.metro.tokyo.lg.jp/dataset/t131016d0000000007
+- 公共施設一覧: https://catalog.data.metro.tokyo.lg.jp/dataset/t131016d0000000001
+- License: Creative Commons Attribution 4.0 International
+
+## 新しいソースを追加するとき
+
+同じ変更に次を含める。
 
 1. `config/sources.json`への登録
-2. 出典URLとライセンスURL
-3. 取得日またはソース版
-4. 抽出・変換した旨の表示
-5. 必要な著作権表示
+2. 出典URLと確認できた利用条件URL
+3. 取得日時または固定版
+4. 抽出・変換内容
+5. 必要な帰属表示
+6. raw snapshotまたは保持しない理由と検証可能なhash

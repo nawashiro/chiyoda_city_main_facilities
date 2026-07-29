@@ -2,27 +2,173 @@
   "type": "FeatureCollection",
   "sourceAttributions": [
     {
-      "sourceId": "openstreetmap",
-      "license": "Open Database License (ODbL) 1.0",
-      "licenseUrl": "https://opendatacommons.org/licenses/odbl/1-0/"
+      "sourceId": "chiyoda-city-town-geojson",
+      "url": "https://github.com/nawashiro/chiyoda_city_town_geojson",
+      "license": "Creative Commons Attribution-ShareAlike 4.0 International",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+      "version": "0be816edaa8d0f8d22714a2f1146f2d9e133e09f",
+      "retrievedAt": "2026-07-29T04:46:05Z",
+      "sha256": "30fb0d3489698baed43e2adb834cd00f85e4d218cd0406f1431f93f97858ed2b",
+      "attribution": "© Linked Open Addresses Japan",
+      "transformation": "丁目以降を削除して統合した町名ポリゴンとの点包含判定により各施設へ町名を付与"
     },
     {
-      "sourceId": "wikidata",
-      "license": "Creative Commons CC0 1.0 Universal",
-      "licenseUrl": "https://creativecommons.org/publicdomain/zero/1.0/"
+      "sourceId": "openstreetmap",
+      "url": "https://www.openstreetmap.org/copyright",
+      "license": "Open Database License (ODbL) 1.0",
+      "licenseUrl": "https://opendatacommons.org/licenses/odbl/1-0/",
+      "version": "2026-07-29T06:30:36Z",
+      "retrievedAt": "2026-07-29T06:32:29+00:00",
+      "sha256": "095fae838bef414e68af7cdd9ab7c35869ccf8c8fcf1d5da9840b622090830f1",
+      "attribution": "© OpenStreetMap contributors",
+      "transformation": "千代田区内の対象候補を抽出し、同定済み施設のPoint座標へ変換"
     },
     {
       "sourceId": "wam",
-      "license": "WAM NETの利用条件に従う",
-      "licenseUrl": "https://www.wam.go.jp/content/wamnet/pcpub/top/"
-    },
-    {
-      "sourceId": "chiyoda-city-town-geojson",
-      "license": "Creative Commons Attribution-ShareAlike 4.0 International",
-      "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/"
+      "url": "https://www.wam.go.jp/content/wamnet/pcpub/top/sfkopendata/",
+      "license": "WAM NET配布ページ記載のオープンデータ利用条件",
+      "licenseUrl": "https://www.wam.go.jp/content/wamnet/pcpub/top/sfkopendata/",
+      "version": "202603",
+      "retrievedAt": "2026-07-29T06:25:18+00:00",
+      "sha256": "cd120d0c1c2c884021e5d92432126bb6f826651f9dabc378ffc6032d8511ed0b",
+      "attribution": "WAM NET",
+      "transformation": "相談支援4サービスから東京都千代田区の施設を抽出し、同一施設を集約"
     }
   ],
   "features": [
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          139.77524876,
+          35.70089939
+        ]
+      },
+      "properties": {
+        "id": "019ca6b1-dc00-71c7-a6b9-a16327abd921",
+        "name": "相談支援事業所みつき",
+        "categoryIds": [
+          "disability-support"
+        ],
+        "tags": [],
+        "town": "神田松永町"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          139.77751572,
+          35.6925809
+        ]
+      },
+      "properties": {
+        "id": "019ca6b1-dc00-7215-add9-ba2573e674e5",
+        "name": "相談支援センターＡｋｉｂａ",
+        "categoryIds": [
+          "disability-support"
+        ],
+        "tags": [],
+        "town": "岩本町"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          139.7639912,
+          35.69358874
+        ]
+      },
+      "properties": {
+        "id": "019ca6b1-dc00-74d7-b1ea-409942f9799c",
+        "name": "ビーンズ相談支援センター",
+        "categoryIds": [
+          "disability-support"
+        ],
+        "tags": [],
+        "town": "神田錦町"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          139.7451538,
+          35.6996129
+        ]
+      },
+      "properties": {
+        "id": "019ca6b1-dc00-7571-905a-f4a52e6913f4",
+        "name": "特定非営利活動法人ホープ",
+        "categoryIds": [
+          "disability-support"
+        ],
+        "tags": [],
+        "town": "富士見"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          139.74691158,
+          35.70036253
+        ]
+      },
+      "properties": {
+        "id": "019ca6b1-dc00-7774-920a-bdcf4344c0c0",
+        "name": "相談支援事業所　樹",
+        "categoryIds": [
+          "disability-support"
+        ],
+        "tags": [],
+        "town": "飯田橋"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          139.76839375,
+          35.6931778
+        ]
+      },
+      "properties": {
+        "id": "019ca6b1-dc00-7de7-8c55-4303aa3676d1",
+        "name": "千代田区立子ども発達センター",
+        "categoryIds": [
+          "disability-support"
+        ],
+        "tags": [],
+        "town": "神田司町"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          139.75723876,
+          35.69569665
+        ]
+      },
+      "properties": {
+        "id": "019ca6b1-dc00-7e93-9ef6-266039bd8e81",
+        "name": "相談支援事業所Ｍｏｉ",
+        "categoryIds": [
+          "disability-support"
+        ],
+        "tags": [],
+        "town": "神田神保町"
+      }
+    },
     {
       "type": "Feature",
       "geometry": {
@@ -39,7 +185,7 @@
           "public-office"
         ],
         "tags": [],
-        "town": null
+        "town": "神田神保町"
       }
     },
     {
@@ -58,7 +204,7 @@
           "library"
         ],
         "tags": [],
-        "town": null
+        "town": "隼町"
       }
     },
     {
@@ -77,7 +223,7 @@
           "public-office"
         ],
         "tags": [],
-        "town": null
+        "town": "富士見"
       }
     },
     {
@@ -85,8 +231,8 @@
       "geometry": {
         "type": "Point",
         "coordinates": [
-          139.760849,
-          35.700506
+          139.76083553,
+          35.70039345
         ]
       },
       "properties": {
@@ -98,7 +244,7 @@
         "tags": [
           "kazaguruma.home-shortcut"
         ],
-        "town": null
+        "town": "神田駿河台"
       }
     },
     {
@@ -117,7 +263,7 @@
           "public-office"
         ],
         "tags": [],
-        "town": null
+        "town": "神田佐久間町"
       }
     },
     {
@@ -138,7 +284,7 @@
         "tags": [
           "kazaguruma.home-shortcut"
         ],
-        "town": null
+        "town": "九段南"
       }
     },
     {
@@ -157,7 +303,7 @@
           "library"
         ],
         "tags": [],
-        "town": null
+        "town": "永田町"
       }
     },
     {
@@ -176,7 +322,7 @@
           "public-office"
         ],
         "tags": [],
-        "town": null
+        "town": "神田司町"
       }
     },
     {
@@ -195,7 +341,7 @@
           "public-office"
         ],
         "tags": [],
-        "town": null
+        "town": "外神田"
       }
     },
     {
@@ -216,7 +362,7 @@
         "tags": [
           "kazaguruma.home-shortcut"
         ],
-        "town": null
+        "town": "一ツ橋"
       }
     },
     {
@@ -235,7 +381,7 @@
           "social-welfare"
         ],
         "tags": [],
-        "town": null
+        "town": "飯田橋"
       }
     },
     {
@@ -254,7 +400,7 @@
           "christian-church"
         ],
         "tags": [],
-        "town": null
+        "town": "九段北"
       }
     },
     {
@@ -273,7 +419,7 @@
           "library"
         ],
         "tags": [],
-        "town": null
+        "town": "神田和泉町"
       }
     },
     {
@@ -292,7 +438,7 @@
           "library"
         ],
         "tags": [],
-        "town": null
+        "town": "神田猿楽町"
       }
     },
     {
@@ -311,7 +457,7 @@
           "park"
         ],
         "tags": [],
-        "town": null
+        "town": "三番町"
       }
     },
     {
@@ -332,7 +478,7 @@
         "tags": [
           "kazaguruma.home-shortcut"
         ],
-        "town": null
+        "town": "外神田"
       }
     },
     {
@@ -351,7 +497,7 @@
           "christian-church"
         ],
         "tags": [],
-        "town": null
+        "town": "麹町"
       }
     },
     {
@@ -370,7 +516,7 @@
           "park"
         ],
         "tags": [],
-        "town": null
+        "town": "日比谷公園"
       }
     },
     {
@@ -389,7 +535,7 @@
           "cinema"
         ],
         "tags": [],
-        "town": null
+        "town": "有楽町"
       }
     },
     {
@@ -408,7 +554,7 @@
           "library"
         ],
         "tags": [],
-        "town": null
+        "town": "九段南"
       }
     },
     {
@@ -427,7 +573,7 @@
           "christian-church"
         ],
         "tags": [],
-        "town": null
+        "town": "九段北"
       }
     },
     {
@@ -446,7 +592,7 @@
           "park"
         ],
         "tags": [],
-        "town": null
+        "town": "五番町"
       }
     },
     {
@@ -465,7 +611,7 @@
           "library"
         ],
         "tags": [],
-        "town": null
+        "town": "外神田"
       }
     },
     {
@@ -484,7 +630,7 @@
           "park"
         ],
         "tags": [],
-        "town": null
+        "town": "千代田"
       }
     },
     {
@@ -503,7 +649,7 @@
           "library"
         ],
         "tags": [],
-        "town": null
+        "town": "西神田"
       }
     },
     {
@@ -522,7 +668,7 @@
           "social-welfare"
         ],
         "tags": [],
-        "town": null
+        "town": "九段北"
       }
     },
     {
@@ -541,7 +687,7 @@
           "cinema"
         ],
         "tags": [],
-        "town": null
+        "town": "有楽町"
       }
     },
     {
@@ -560,7 +706,7 @@
           "park"
         ],
         "tags": [],
-        "town": null
+        "town": "永田町"
       }
     },
     {
@@ -579,7 +725,7 @@
           "library"
         ],
         "tags": [],
-        "town": null
+        "town": "日比谷公園"
       }
     },
     {
@@ -598,7 +744,7 @@
           "christian-church"
         ],
         "tags": [],
-        "town": null
+        "town": "神田駿河台"
       }
     },
     {
@@ -617,7 +763,7 @@
           "cinema"
         ],
         "tags": [],
-        "town": null
+        "town": "神田神保町"
       }
     },
     {
@@ -636,7 +782,7 @@
           "buddhist-temple"
         ],
         "tags": [],
-        "town": null
+        "town": "外神田"
       }
     },
     {
@@ -657,7 +803,7 @@
         "tags": [
           "kazaguruma.home-shortcut"
         ],
-        "town": null
+        "town": "富士見"
       }
     },
     {
@@ -676,7 +822,7 @@
           "library"
         ],
         "tags": [],
-        "town": null
+        "town": "神田司町"
       }
     },
     {
@@ -695,7 +841,7 @@
           "park"
         ],
         "tags": [],
-        "town": null
+        "town": "一番町"
       }
     },
     {
@@ -703,8 +849,8 @@
       "geometry": {
         "type": "Point",
         "coordinates": [
-          139.7443644,
-          35.6993741
+          139.7443601,
+          35.6993714
         ]
       },
       "properties": {
@@ -714,7 +860,7 @@
           "christian-church"
         ],
         "tags": [],
-        "town": null
+        "town": "富士見"
       }
     },
     {
@@ -733,7 +879,7 @@
           "park"
         ],
         "tags": [],
-        "town": null
+        "town": "神田司町"
       }
     },
     {
@@ -754,7 +900,7 @@
         "tags": [
           "kazaguruma.home-shortcut"
         ],
-        "town": null
+        "town": "西神田"
       }
     },
     {
@@ -773,7 +919,7 @@
           "cinema"
         ],
         "tags": [],
-        "town": null
+        "town": "有楽町"
       }
     },
     {
@@ -794,7 +940,7 @@
         "tags": [
           "kazaguruma.home-shortcut"
         ],
-        "town": null
+        "town": "三番町"
       }
     },
     {
@@ -813,7 +959,7 @@
           "christian-church"
         ],
         "tags": [],
-        "town": null
+        "town": "神田神保町"
       }
     },
     {
@@ -832,7 +978,7 @@
           "buddhist-temple"
         ],
         "tags": [],
-        "town": null
+        "town": "麹町"
       }
     },
     {
@@ -851,7 +997,7 @@
           "library"
         ],
         "tags": [],
-        "town": null
+        "town": "神田駿河台"
       }
     },
     {
@@ -872,7 +1018,7 @@
         "tags": [
           "kazaguruma.home-shortcut"
         ],
-        "town": null
+        "town": "一番町"
       }
     },
     {
@@ -891,7 +1037,7 @@
           "christian-church"
         ],
         "tags": [],
-        "town": null
+        "town": "西神田"
       }
     },
     {
@@ -912,7 +1058,7 @@
         "tags": [
           "kazaguruma.home-shortcut"
         ],
-        "town": null
+        "town": "神田和泉町"
       }
     },
     {
@@ -920,8 +1066,8 @@
       "geometry": {
         "type": "Point",
         "coordinates": [
-          139.7437082,
-          35.680241
+          139.743661,
+          35.680424
         ]
       },
       "properties": {
@@ -931,7 +1077,7 @@
           "library"
         ],
         "tags": [],
-        "town": null
+        "town": "隼町"
       }
     },
     {
@@ -952,7 +1098,7 @@
         "tags": [
           "kazaguruma.home-shortcut"
         ],
-        "town": null
+        "town": "岩本町"
       }
     },
     {
@@ -971,7 +1117,7 @@
           "park"
         ],
         "tags": [],
-        "town": null
+        "town": "神田猿楽町"
       }
     },
     {
@@ -990,7 +1136,7 @@
           "cinema"
         ],
         "tags": [],
-        "town": null
+        "town": "有楽町"
       }
     },
     {
@@ -1009,7 +1155,7 @@
           "christian-church"
         ],
         "tags": [],
-        "town": null
+        "town": "外神田"
       }
     },
     {
@@ -1030,7 +1176,7 @@
         "tags": [
           "kazaguruma.home-shortcut"
         ],
-        "town": null
+        "town": "四番町"
       }
     },
     {
@@ -1051,7 +1197,7 @@
         "tags": [
           "kazaguruma.home-shortcut"
         ],
-        "town": null
+        "town": "一番町"
       }
     },
     {
@@ -1059,8 +1205,8 @@
       "geometry": {
         "type": "Point",
         "coordinates": [
-          139.7657773,
-          35.6980586
+          139.7654865,
+          35.698016
         ]
       },
       "properties": {
@@ -1070,7 +1216,7 @@
           "christian-church"
         ],
         "tags": [],
-        "town": null
+        "town": "神田駿河台"
       }
     },
     {
@@ -1089,7 +1235,7 @@
           "buddhist-temple"
         ],
         "tags": [],
-        "town": null
+        "town": "神田神保町"
       }
     },
     {
@@ -1108,7 +1254,7 @@
           "park"
         ],
         "tags": [],
-        "town": null
+        "town": "三番町"
       }
     },
     {
@@ -1116,8 +1262,8 @@
       "geometry": {
         "type": "Point",
         "coordinates": [
-          139.74159,
-          35.690444
+          139.7415971,
+          35.6904422
         ]
       },
       "properties": {
@@ -1127,7 +1273,7 @@
           "library"
         ],
         "tags": [],
-        "town": null
+        "town": "三番町"
       }
     },
     {
@@ -1146,7 +1292,7 @@
           "park"
         ],
         "tags": [],
-        "town": null
+        "town": "紀尾井町"
       }
     },
     {
@@ -1165,7 +1311,7 @@
           "park"
         ],
         "tags": [],
-        "town": null
+        "town": "北の丸公園"
       }
     },
     {
@@ -1184,7 +1330,7 @@
           "christian-church"
         ],
         "tags": [],
-        "town": null
+        "town": "神田駿河台"
       }
     },
     {
@@ -1203,7 +1349,7 @@
           "museum"
         ],
         "tags": [],
-        "town": null
+        "town": "九段北"
       }
     },
     {
@@ -1222,7 +1368,7 @@
           "museum"
         ],
         "tags": [],
-        "town": null
+        "town": "丸の内"
       }
     },
     {
@@ -1241,7 +1387,7 @@
           "museum"
         ],
         "tags": [],
-        "town": null
+        "town": "神田駿河台"
       }
     },
     {
@@ -1260,7 +1406,7 @@
           "art-museum"
         ],
         "tags": [],
-        "town": null
+        "town": "神田須田町"
       }
     },
     {
@@ -1279,7 +1425,7 @@
           "museum"
         ],
         "tags": [],
-        "town": null
+        "town": "四番町"
       }
     },
     {
@@ -1298,7 +1444,7 @@
           "public-bath"
         ],
         "tags": [],
-        "town": null
+        "town": "麹町"
       }
     },
     {
@@ -1317,7 +1463,7 @@
           "art-museum"
         ],
         "tags": [],
-        "town": null
+        "town": "丸の内"
       }
     },
     {
@@ -1336,7 +1482,7 @@
           "museum"
         ],
         "tags": [],
-        "town": null
+        "town": "一番町"
       }
     },
     {
@@ -1355,7 +1501,7 @@
           "art-museum"
         ],
         "tags": [],
-        "town": null
+        "town": "丸の内"
       }
     },
     {
@@ -1374,7 +1520,7 @@
           "museum"
         ],
         "tags": [],
-        "town": null
+        "town": "九段南"
       }
     },
     {
@@ -1393,7 +1539,7 @@
           "art-museum"
         ],
         "tags": [],
-        "town": null
+        "town": "神田小川町"
       }
     },
     {
@@ -1401,8 +1547,8 @@
       "geometry": {
         "type": "Point",
         "coordinates": [
-          139.766472,
-          35.682441
+          139.7664939,
+          35.6824302
         ]
       },
       "properties": {
@@ -1412,7 +1558,7 @@
           "art-museum"
         ],
         "tags": [],
-        "town": null
+        "town": "丸の内"
       }
     },
     {
@@ -1431,7 +1577,7 @@
           "museum"
         ],
         "tags": [],
-        "town": null
+        "town": "北の丸公園"
       }
     },
     {
@@ -1450,7 +1596,7 @@
           "public-bath"
         ],
         "tags": [],
-        "town": null
+        "town": "内神田"
       }
     },
     {
@@ -1469,7 +1615,7 @@
           "museum"
         ],
         "tags": [],
-        "town": null
+        "town": "永田町"
       }
     },
     {
@@ -1488,7 +1634,7 @@
           "art-museum"
         ],
         "tags": [],
-        "town": null
+        "town": "丸の内"
       }
     },
     {
@@ -1507,7 +1653,7 @@
           "museum"
         ],
         "tags": [],
-        "town": null
+        "town": "九段南"
       }
     },
     {
@@ -1526,7 +1672,7 @@
           "museum"
         ],
         "tags": [],
-        "town": null
+        "town": "九段南"
       }
     },
     {
@@ -1545,7 +1691,7 @@
           "art-museum"
         ],
         "tags": [],
-        "town": null
+        "town": "神田錦町"
       }
     },
     {
@@ -1564,7 +1710,7 @@
           "public-bath"
         ],
         "tags": [],
-        "town": null
+        "town": "岩本町"
       }
     },
     {
@@ -1583,7 +1729,7 @@
           "museum"
         ],
         "tags": [],
-        "town": null
+        "town": "北の丸公園"
       }
     },
     {
@@ -1602,7 +1748,7 @@
           "museum"
         ],
         "tags": [],
-        "town": null
+        "town": "外神田"
       }
     },
     {
@@ -1610,8 +1756,8 @@
       "geometry": {
         "type": "Point",
         "coordinates": [
-          139.7592409,
-          35.6865243
+          139.7589461,
+          35.6865373
         ]
       },
       "properties": {
@@ -1621,7 +1767,7 @@
           "art-museum"
         ],
         "tags": [],
-        "town": null
+        "town": "千代田"
       }
     },
     {
@@ -1640,7 +1786,7 @@
           "public-bath"
         ],
         "tags": [],
-        "town": null
+        "town": "大手町"
       }
     },
     {
@@ -1659,7 +1805,7 @@
           "art-museum"
         ],
         "tags": [],
-        "town": null
+        "town": "北の丸公園"
       }
     },
     {
@@ -1678,7 +1824,7 @@
           "art-museum"
         ],
         "tags": [],
-        "town": null
+        "town": "神田神保町"
       }
     },
     {
@@ -1697,7 +1843,7 @@
           "public-bath"
         ],
         "tags": [],
-        "town": null
+        "town": "神田神保町"
       }
     },
     {
@@ -1716,7 +1862,7 @@
           "art-museum"
         ],
         "tags": [],
-        "town": null
+        "town": "大手町"
       }
     },
     {
@@ -1735,7 +1881,7 @@
           "public-bath"
         ],
         "tags": [],
-        "town": null
+        "town": "神田淡路町"
       }
     },
     {
@@ -1743,8 +1889,8 @@
       "geometry": {
         "type": "Point",
         "coordinates": [
-          139.763169,
-          35.6784739
+          139.7631636,
+          35.6784664
         ]
       },
       "properties": {
@@ -1754,7 +1900,7 @@
           "art-museum"
         ],
         "tags": [],
-        "town": null
+        "town": "丸の内"
       }
     }
   ]

@@ -1,0 +1,336 @@
+from __future__ import annotations
+
+import argparse
+import hashlib
+import json
+import math
+import re
+from pathlib import Path
+from typing import Any
+from urllib.parse import urlencode
+from urllib.request import Request, urlopen
+
+from src.facility_data import collect_osm_ids, normalize_osm_elements, source_refresh_due
+from src.http_utils import read_limited_response
+
+
+_QID = re.compile(r"Q[1-9][0-9]*")
+_TYPED_ID = re.compile(r"(node|way|relation)/([1-9][0-9]*)")
+OVERPASS_ENDPOINT = "https://overpass-api.de/api/interpreter"
+MAX_OVERPASS_BYTES = 32 * 1024 * 1024
+
+
+def _distance_metres(first: list[float], second: list[float]) -> float:
+    lon1, lat1 = map(math.radians, first)
+    lon2, lat2 = map(math.radians, second)
+    dlon = lon2 - lon1
+    dlat = lat2 - lat1
+    a = math.sin(dlat / 2) ** 2 + math.cos(lat1) * math.cos(lat2) * math.sin(dlon / 2) ** 2
+    return 6_371_000 * 2 * math.atan2(math.sqrt(a), math.sqrt(1 - a))
+
+
+def build_discovery_query(typed_ids: list[str], qids: list[str]) -> str:
+    """Build one bounded Overpass query for refresh and Chiyoda discovery."""
+    grouped: dict[str, list[str]] = {"node": [], "way": [], "relation": []}
+    for typed_id in sorted(set(typed_ids)):
+        match = _TYPED_ID.fullmatch(typed_id)
+        if match is None:
+            raise ValueError(f"invalid OSM typed ID: {typed_id}")
+        grouped[match.group(1)].append(match.group(2))
+    qids = sorted(set(qids))
+    if any(_QID.fullmatch(qid) is None for qid in qids):
+        raise ValueError("invalid QID in OSM discovery query")
+    selectors = [
+        f"{record_type}(id:{','.join(grouped[record_type])});"
+        for record_type in ("node", "way", "relation")
+        if grouped[record_type]
+    ]
+    selectors.extend(f'nwr["wikidata"="{qid}"];' for qid in qids)
+    selectors.extend(
+        [
+            'nwr(area.searchArea)["amenity"~"^(cinema|community_centre|hospital|library|place_of_worship|public_bath|social_facility|townhall)$"];',
+            'nwr(area.searchArea)["tourism"~"^(gallery|museum)$"];',
+            'nwr(area.searchArea)["leisure"="park"];',
+            'nwr(area.searchArea)["office"="government"];',
+        ]
+    )
+    return (
+        '[out:json][timeout:180];'
+        'area["boundary"="administrative"]["admin_level"="7"]["name"="千代田区"]->.searchArea;'
+        f"({''.join(selectors)});"
+        "out center;"
+    )
+
+
+def prepare_osm_snapshot(
+    registry: dict[str, Any],
+    search_documents: list[dict[str, Any]],
+    raw: dict[str, Any],
+) -> tuple[dict[str, Any], dict[str, Any]]:
+    """Select safe links and retain all local 50m candidates for review."""
+    if not isinstance(raw.get("version"), str) or not raw["version"].strip():
+        raise ValueError("OSM raw snapshot requires a version")
+    if not isinstance(raw.get("elements"), list):
+        raise ValueError("OSM raw snapshot requires an elements array")
+    queries = [
+        query
+        for document in search_documents
+        for query in document.get("queries", [])
+    ]
+    query_by_id = {query["id"]: query for query in queries}
+    if len(query_by_id) != len(queries):
+        raise ValueError("duplicate search query ID")
+    qid_to_query_id: dict[str, str] = {}
+    for query in queries:
+        if "qid" in query:
+            if query["qid"] in qid_to_query_id:
+                raise ValueError(f"duplicate search QID: {query['qid']}")
+            qid_to_query_id[query["qid"]] = query["id"]
+
+    current_by_record_id: dict[str, str] = {}
+    place_by_id = {str(place["id"]): place for place in registry.get("places", [])}
+    superseded_record_ids: set[str] = set()
+    for place in registry.get("places", []):
+        for ref in place.get("externalRefs", []):
+            if ref.get("sourceId") != "openstreetmap":
+                continue
+            record_id = str(ref.get("recordId"))
+            if ref.get("status") == "current":
+                if record_id in current_by_record_id:
+                    raise ValueError(f"OSM record is current for multiple places: {record_id}")
+                current_by_record_id[record_id] = place["id"]
+            elif ref.get("status") == "superseded":
+                superseded_record_ids.add(record_id)
+
+    candidates_by_record_id: dict[str, dict[str, Any]] = {}
+    for record in normalize_osm_elements(raw["elements"]):
+        record_id = f"{record['type']}/{record['id']}"
+        if record_id in candidates_by_record_id:
+            raise ValueError(f"duplicate OSM element: {record_id}")
+        candidates_by_record_id[record_id] = record
+
+    selected: dict[str, dict[str, Any]] = {}
+    report_queries = []
+    for query in sorted(queries, key=lambda item: item["id"]):
+        report_candidates = []
+        exact_candidates = []
+        for record_id, record in candidates_by_record_id.items():
+            if record_id in superseded_record_ids and record_id not in current_by_record_id:
+                continue
+            if "qid" in query:
+                if record.get("qid") != query["qid"]:
+                    continue
+                distance = None
+            else:
+                distance = _distance_metres(query["coordinates"], record["coordinates"])
+                if distance > 50:
+                    continue
+            candidate = {
+                **record,
+                "recordId": record_id,
+                "distanceMeters": distance,
+            }
+            report_candidates.append(candidate)
+            if "coordinates" in query and record.get("name") == query["name"]:
+                exact_candidates.append(record)
+
+        current_matches = [
+            record
+            for record_id, record in candidates_by_record_id.items()
+            if current_by_record_id.get(record_id) == query["id"]
+            and _distance_metres(
+                place_by_id[query["id"]]["geometry"]["coordinates"],
+                record["coordinates"],
+            )
+            <= 50
+            and (record.get("name") is None or record.get("name") == query["name"])
+            and (
+                "qid" not in query
+                or record.get("qid") is None
+                or record.get("qid") == query["qid"]
+            )
+        ]
+        qid_matches = [
+            record
+            for record in candidates_by_record_id.values()
+            if "qid" in query
+            and record.get("qid") == query["qid"]
+            and f"{record['type']}/{record['id']}" not in superseded_record_ids
+        ]
+        chosen = None
+        basis = None
+        if len(current_matches) == 1:
+            chosen, basis = current_matches[0], "source_record"
+        elif len(current_matches) > 1:
+            raise ValueError(f"multiple current OSM elements for query: {query['id']}")
+        elif len(qid_matches) == 1:
+            chosen, basis = qid_matches[0], "qid"
+        elif len(exact_candidates) == 1:
+            chosen, basis = exact_candidates[0], "name_coordinates"
+        if chosen is not None:
+            selected[query["id"]] = {
+                "queryId": query["id"],
+                "matchBasis": basis,
+                **chosen,
+            }
+        if chosen is not None:
+            status = "linked"
+        elif len(exact_candidates) > 1 or len(qid_matches) > 1:
+            status = "ambiguous"
+        elif report_candidates:
+            status = "candidates"
+        else:
+            status = "none"
+        report_queries.append(
+            {
+                "queryId": query["id"],
+                "name": query["name"],
+                "status": status,
+                "candidates": sorted(
+                    report_candidates,
+                    key=lambda item: (
+                        item["distanceMeters"] is None,
+                        item["distanceMeters"] or 0,
+                        item["recordId"],
+                    ),
+                ),
+            }
+        )
+
+    selected_record_ids: dict[str, list[str]] = {}
+    for query_id, record in selected.items():
+        record_id = f"{record['type']}/{record['id']}"
+        selected_record_ids.setdefault(record_id, []).append(query_id)
+    collisions = {
+        query_id
+        for query_ids in selected_record_ids.values()
+        if len(query_ids) > 1
+        for query_id in query_ids
+    }
+    for item in report_queries:
+        if item["queryId"] in collisions:
+            item["status"] = "ambiguous"
+    records = [
+        record
+        for query_id, record in sorted(selected.items())
+        if query_id not in collisions
+    ]
+    return {"records": records}, {"version": raw["version"], "queries": report_queries}
+
+
+def _write_json(path: Path, document: dict[str, Any]) -> None:
+    path.parent.mkdir(parents=True, exist_ok=True)
+    path.write_text(
+        json.dumps(document, ensure_ascii=False, indent=2) + "\n", encoding="utf-8"
+    )
+
+
+def run_osm_retrieval(
+    root: str | Path,
+    at: str,
+    post,
+) -> tuple[Path, Path]:
+    """Retrieve one Overpass batch and prepare reviewable local artifacts."""
+    root = Path(root)
+    metadata_path = root / "imports/openstreetmap/retrieval.json"
+    metadata = json.loads(metadata_path.read_text(encoding="utf-8"))
+    if not source_refresh_due(metadata.get("retrievedAt"), at):
+        raise ValueError("OSM snapshot was retrieved less than 30 days ago")
+    registry = json.loads((root / "data/registry.json").read_text(encoding="utf-8"))
+    search_documents = [
+        json.loads(path.read_text(encoding="utf-8"))
+        for path in sorted((root / "inputs/osm-search").rglob("*.json"))
+    ]
+    qids = sorted(
+        {
+            query["qid"]
+            for document in search_documents
+            for query in document.get("queries", [])
+            if "qid" in query
+        }
+    )
+    query = build_discovery_query(collect_osm_ids(registry), qids)
+    payload, headers = post(OVERPASS_ENDPOINT, query)
+    if not isinstance(payload, bytes) or not payload:
+        raise ValueError("empty Overpass response")
+    if len(payload) > MAX_OVERPASS_BYTES:
+        raise ValueError("Overpass response is too large")
+    response = json.loads(payload)
+    if response.get("remark") is not None or response.get("error") is not None:
+        raise ValueError("Overpass returned a partial or errored response")
+    timestamp = response.get("osm3s", {}).get("timestamp_osm_base")
+    if not isinstance(timestamp, str) or not timestamp.strip():
+        raise ValueError("Overpass response lacks timestamp_osm_base")
+    if not isinstance(response.get("elements"), list):
+        raise ValueError("Overpass response lacks elements array")
+    raw = {
+        "version": timestamp,
+        "overpassApiVersion": response.get("version"),
+        "generator": response.get("generator"),
+        "osm3s": response.get("osm3s"),
+        "elements": response["elements"],
+    }
+    raw_payload = (json.dumps(raw, ensure_ascii=False, indent=2) + "\n").encode("utf-8")
+    query_payload = query.encode("utf-8")
+    normalized, report = prepare_osm_snapshot(registry, search_documents, raw)
+    retrieval = {
+        **metadata,
+        "sourceId": "openstreetmap",
+        "retrievedAt": at,
+        "rawVersion": timestamp,
+        "endpoint": OVERPASS_ENDPOINT,
+        "querySha256": hashlib.sha256(query_payload).hexdigest(),
+        "responseSha256": hashlib.sha256(payload).hexdigest(),
+        "rawSha256": hashlib.sha256(raw_payload).hexdigest(),
+        "queryRetained": True,
+        "responseRetained": True,
+        "etag": headers.get("ETag"),
+        "lastModified": headers.get("Last-Modified"),
+    }
+    normalized_path = root / "imports/openstreetmap/normalized.json"
+    report_path = root / "reports/osm-candidates.json"
+    imports_path = root / "imports/openstreetmap"
+    imports_path.mkdir(parents=True, exist_ok=True)
+    (imports_path / "raw-response.json").write_bytes(payload)
+    (imports_path / "query.overpassql").write_bytes(query_payload)
+    (imports_path / "raw.json").write_bytes(raw_payload)
+    _write_json(normalized_path, normalized)
+    _write_json(report_path, report)
+    _write_json(metadata_path, retrieval)
+    return normalized_path, report_path
+
+
+def _http_post(endpoint: str, query: str) -> tuple[bytes, dict[str, str | None]]:
+    request = Request(
+        endpoint,
+        data=urlencode({"data": query}).encode(),
+        headers={
+            "Content-Type": "application/x-www-form-urlencoded",
+            "User-Agent": "chiyoda-city-main-facilities/1",
+        },
+        method="POST",
+    )
+    with urlopen(request, timeout=240) as response:
+        return read_limited_response(response, MAX_OVERPASS_BYTES, "Overpass"), {
+            "ETag": response.headers.get("ETag"),
+            "Last-Modified": response.headers.get("Last-Modified"),
+        }
+
+
+def main(argv: list[str] | None = None) -> int:
+    parser = argparse.ArgumentParser(description="Retrieve one bounded OSM discovery batch")
+    parser.add_argument("root", nargs="?", default=".")
+    parser.add_argument("--at", required=True)
+    args = parser.parse_args(argv)
+    try:
+        normalized_path, report_path = run_osm_retrieval(args.root, args.at, _http_post)
+    except (OSError, ValueError, json.JSONDecodeError) as error:
+        print(f"ERROR: {error}")
+        return 1
+    print(normalized_path)
+    print(report_path)
+    return 0
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())

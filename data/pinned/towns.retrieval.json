@@ -1,0 +1,10 @@
+{
+  "sourceId": "chiyoda-city-town-geojson",
+  "repository": "https://github.com/nawashiro/chiyoda_city_town_geojson",
+  "commit": "0be816edaa8d0f8d22714a2f1146f2d9e133e09f",
+  "path": "chiyoda_city.json",
+  "retrievedAt": "2026-07-29T04:46:05Z",
+  "sha256": "30fb0d3489698baed43e2adb834cd00f85e4d218cd0406f1431f93f97858ed2b",
+  "license": "CC BY-SA 4.0",
+  "attribution": "© Linked Open Addresses Japan"
+}

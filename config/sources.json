@@ -5,7 +5,9 @@
       "title": "OpenStreetMap",
       "url": "https://www.openstreetmap.org/copyright",
       "license": "Open Database License (ODbL) 1.0",
-      "license_url": "https://opendatacommons.org/licenses/odbl/1-0/"
+      "license_url": "https://opendatacommons.org/licenses/odbl/1-0/",
+      "attribution": "© OpenStreetMap contributors",
+      "transformation": "千代田区内の対象候補を抽出し、同定済み施設のPoint座標へ変換"
     },
     {
       "id": "wikidata",
@@ -17,9 +19,11 @@
     {
       "id": "wam",
       "title": "WAM NET",
-      "url": "https://www.wam.go.jp/content/wamnet/pcpub/top/",
-      "license": "WAM NETの利用条件に従う",
-      "license_url": "https://www.wam.go.jp/content/wamnet/pcpub/top/"
+      "url": "https://www.wam.go.jp/content/wamnet/pcpub/top/sfkopendata/",
+      "license": "WAM NET配布ページ記載のオープンデータ利用条件",
+      "license_url": "https://www.wam.go.jp/content/wamnet/pcpub/top/sfkopendata/",
+      "attribution": "WAM NET",
+      "transformation": "相談支援4サービスから東京都千代田区の施設を抽出し、同一施設を集約"
     },
     {
       "id": "chiyoda-city-town-geojson",
@@ -27,7 +31,8 @@
       "url": "https://github.com/nawashiro/chiyoda_city_town_geojson",
       "license": "Creative Commons Attribution-ShareAlike 4.0 International",
       "license_url": "https://creativecommons.org/licenses/by-sa/4.0/",
-      "attribution": "© Linked Open Addresses Japan"
+      "attribution": "© Linked Open Addresses Japan",
+      "transformation": "丁目以降を削除して統合した町名ポリゴンとの点包含判定により各施設へ町名を付与"
     }
   ]
 }

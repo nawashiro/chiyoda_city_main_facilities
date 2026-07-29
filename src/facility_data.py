@@ -10,6 +10,7 @@ import math
 import re
 import secrets
 import time
+import unicodedata
 import uuid
 from datetime import datetime, timedelta
 from pathlib import Path
@@ -87,9 +88,43 @@ def _valid_coordinates(value: Any) -> bool:
 def validate_search_document(document: dict[str, Any]) -> list[str]:
     """Return compact validation issues for an OSM search-input document."""
     issues: list[str] = []
+    if not isinstance(document, dict):
+        return ["search document must be an object"]
+    extra_top = set(document) - {"source", "queries"}
+    if extra_top:
+        issues.append(f"unexpected top-level fields: {', '.join(sorted(extra_top))}")
+    source = document.get("source")
+    if not isinstance(source, dict):
+        issues.append("source must be an object")
+    else:
+        extra_source = set(source) - {"kind", "sourceId", "retrievedAt"}
+        if extra_source:
+            issues.append(
+                f"source has unexpected fields: {', '.join(sorted(extra_source))}"
+            )
+        if source.get("kind") not in {"human", "source"}:
+            issues.append("source.kind must be human or source")
+        if source.get("kind") == "source":
+            if not isinstance(source.get("sourceId"), str) or not source["sourceId"].strip():
+                issues.append("source.sourceId must be a non-empty string")
+            retrieved_at = source.get("retrievedAt")
+            if not isinstance(retrieved_at, str):
+                issues.append("source.retrievedAt must be timezone-aware ISO 8601")
+            else:
+                try:
+                    source_refresh_due(None, retrieved_at)
+                except ValueError:
+                    issues.append("source.retrievedAt must be timezone-aware ISO 8601")
+    queries = document.get("queries")
+    if not isinstance(queries, list):
+        issues.append("queries must be an array")
+        return issues
     seen: set[str] = set()
-    for index, query in enumerate(document.get("queries", [])):
+    for index, query in enumerate(queries):
         prefix = f"queries[{index}]"
+        if not isinstance(query, dict):
+            issues.append(f"{prefix}: query must be an object")
+            continue
         extra = set(query) - {"id", "name", "coordinates", "qid"}
         if extra:
             issues.append(f"{prefix}: unexpected fields: {', '.join(sorted(extra))}")
@@ -228,13 +263,24 @@ def _town_for_point(point: list[float], towns: dict[str, Any] | None) -> str | N
     matches = []
     for feature in towns.get("features", []):
         geometry = feature.get("geometry", {})
-        if geometry.get("type") != "Polygon" or not geometry.get("coordinates"):
+        coordinates = geometry.get("coordinates")
+        if geometry.get("type") == "Polygon":
+            polygons = [coordinates]
+        elif geometry.get("type") == "MultiPolygon":
+            polygons = coordinates
+        else:
             continue
-        rings = geometry["coordinates"]
-        if _inside_ring(point, rings[0]) and not any(
-            _inside_ring(point, hole) for hole in rings[1:]
+        if not polygons:
+            continue
+        if any(
+            rings
+            and _inside_ring(point, rings[0])
+            and not any(_inside_ring(point, hole) for hole in rings[1:])
+            for rings in polygons
         ):
-            matches.append(feature.get("properties", {}).get("name"))
+            name = feature.get("properties", {}).get("name")
+            if isinstance(name, str) and name:
+                matches.append(name.removeprefix("東京都千代田区"))
     return matches[0] if len(matches) == 1 else None
 
 
@@ -300,6 +346,7 @@ def validate_repository(root: str | Path) -> list[str]:
                 issues.append(f"duplicate search id across files: {query_id}")
             search_by_id[query_id] = query
     issues.extend(validate_registry(registry, search_by_id))
+    place_by_id = {str(place["id"]): place for place in registry.get("places", [])}
     for source in ("wam", "openstreetmap"):
         relative = f"imports/{source}/normalized.json"
         path = Path(root) / relative
@@ -313,6 +360,23 @@ def validate_repository(root: str | Path) -> list[str]:
         if not isinstance(records, list):
             issues.append(f"{relative}: records must be an array")
             continue
+        wam_raw_by_id: dict[str, dict[str, Any]] | None = None
+        if source == "wam" and records:
+            raw_path = Path(root) / "imports/wam/raw.json"
+            metadata_path = Path(root) / "imports/wam/retrieval.json"
+            try:
+                raw_payload = raw_path.read_bytes()
+                raw_document = json.loads(raw_payload)
+                metadata = _read_json(metadata_path)
+                expected_hash = metadata.get("rawSha256")
+                actual_hash = hashlib.sha256(raw_payload).hexdigest()
+                if expected_hash != actual_hash:
+                    raise ValueError("WAM rawSha256 does not match retained raw bytes")
+                if raw_document.get("version") != metadata.get("rawVersion"):
+                    raise ValueError("WAM raw version differs from retrieval metadata")
+                wam_raw_by_id = _index_wam_raw_rows(raw_document.get("rows"))
+            except (OSError, ValueError, TypeError, json.JSONDecodeError) as error:
+                issues.append(f"imports/wam/raw.json: {error}")
         seen_snapshot_ids = set()
         for index, record in enumerate(records):
             prefix = f"{relative}: records[{index}]"
@@ -337,6 +401,22 @@ def validate_repository(root: str | Path) -> list[str]:
                     issues.append(f"{prefix}: invalid WAM id")
                 if not isinstance(record.get("name"), str) or not record["name"].strip():
                     issues.append(f"{prefix}: invalid WAM name")
+                source_record_ids = record.get("sourceRecordIds")
+                if (
+                    not isinstance(source_record_ids, list)
+                    or not source_record_ids
+                    or any(not isinstance(item, str) or not item for item in source_record_ids)
+                    or len(source_record_ids) != len(set(source_record_ids))
+                    or str(record_id) not in source_record_ids
+                ):
+                    issues.append(f"{prefix}: invalid WAM sourceRecordIds")
+                if query_id in search_by_id and wam_raw_by_id is not None:
+                    try:
+                        _validate_wam_record_match(
+                            record, search_by_id[query_id], wam_raw_by_id
+                        )
+                    except (KeyError, TypeError, ValueError) as error:
+                        issues.append(f"{prefix}: {error}")
             else:
                 if record.get("type") not in {"node", "way", "relation"}:
                     issues.append(f"{prefix}: invalid OSM type")
@@ -345,29 +425,68 @@ def validate_repository(root: str | Path) -> list[str]:
                     issues.append(f"{prefix}: invalid OSM id")
                 if record.get("qid") is not None and not _QID.fullmatch(str(record["qid"])):
                     issues.append(f"{prefix}: invalid OSM QID")
-                if record.get("matchBasis") not in {None, "source_record", "qid"}:
+                if record.get("matchBasis") not in {
+                    "source_record",
+                    "qid",
+                    "name_coordinates",
+                    "language_model",
+                }:
                     issues.append(f"{prefix}: invalid OSM matchBasis")
                 if record.get("matchBasis") == "qid" and record.get("qid") is None:
                     issues.append(f"{prefix}: qid matchBasis requires qid")
+                if query_id in search_by_id:
+                    try:
+                        _validate_osm_record_match(
+                            record,
+                            search_by_id[query_id],
+                            place_by_id.get(query_id),
+                        )
+                    except (KeyError, TypeError, ValueError) as error:
+                        issues.append(f"{prefix}: {error}")
     return issues
 
 
 def _build_public_document(root: Path, registry: dict[str, Any]) -> dict[str, Any]:
     source_document = _read_json(root / "config/sources.json")
-    attributions = [
-        {
-            "sourceId": source["id"],
-            "license": source["license"],
-            **(
-                {"licenseUrl": source["license_url"]}
-                if source.get("license_url")
-                else {}
-            ),
-        }
-        for source in source_document.get("sources", [])
-    ]
     towns_path = root / "data/pinned/towns.geojson"
     towns = _read_json(towns_path) if towns_path.is_file() else None
+    used_source_ids = {
+        place.get("geometrySource", {}).get("sourceId")
+        for place in registry.get("places", [])
+    } & {"openstreetmap", "wam"}
+    if towns is not None:
+        used_source_ids.add("chiyoda-city-town-geojson")
+    metadata_paths = {
+        "openstreetmap": root / "imports/openstreetmap/retrieval.json",
+        "wam": root / "imports/wam/retrieval.json",
+        "chiyoda-city-town-geojson": root / "data/pinned/towns.retrieval.json",
+    }
+    sources_by_id = {
+        source["id"]: source for source in source_document.get("sources", [])
+    }
+    attributions = []
+    for source_id in sorted(used_source_ids):
+        source = sources_by_id[source_id]
+        metadata = _read_json(metadata_paths[source_id])
+        if source_id == "chiyoda-city-town-geojson":
+            version = metadata["commit"]
+            sha256 = metadata["sha256"]
+        else:
+            version = metadata["rawVersion"]
+            sha256 = metadata["rawSha256"]
+        attributions.append(
+            {
+                "sourceId": source_id,
+                "url": source["url"],
+                "license": source["license"],
+                "licenseUrl": source["license_url"],
+                "version": version,
+                "retrievedAt": metadata["retrievedAt"],
+                "sha256": sha256,
+                "attribution": source["attribution"],
+                "transformation": source["transformation"],
+            }
+        )
     return build_public_geojson(registry, attributions, towns)
 
 
@@ -496,6 +615,140 @@ def _distance_metres(first: list[float], second: list[float]) -> float:
     dlat = lat2 - lat1
     a = math.sin(dlat / 2) ** 2 + math.cos(lat1) * math.cos(lat2) * math.sin(dlon / 2) ** 2
     return 6_371_000 * 2 * math.atan2(math.sqrt(a), math.sqrt(1 - a))
+
+
+def _validate_osm_record_match(
+    record: dict[str, Any],
+    query: dict[str, Any],
+    place: dict[str, Any] | None,
+) -> None:
+    basis = record.get("matchBasis")
+    if basis not in {"source_record", "qid", "name_coordinates", "language_model"}:
+        raise ValueError("OSM matchBasis is required")
+    if basis == "language_model":
+        if "coordinates" in query and _distance_metres(
+            query["coordinates"], record["coordinates"]
+        ) > 50:
+            raise ValueError("OSM language_model match exceeds 50 metres")
+        if "qid" in query and record.get("qid") != query["qid"]:
+            raise ValueError("OSM language_model match has a conflicting QID")
+        return
+    if basis == "qid":
+        if "qid" not in query or record.get("qid") != query["qid"]:
+            raise ValueError("OSM qid match does not match the search query")
+        return
+    if basis == "name_coordinates":
+        if "coordinates" not in query:
+            raise ValueError("OSM name_coordinates match requires query coordinates")
+        if record.get("name") != query["name"]:
+            raise ValueError("OSM name_coordinates match requires an exact name")
+        if _distance_metres(query["coordinates"], record["coordinates"]) > 50:
+            raise ValueError("OSM name_coordinates match exceeds 50 metres")
+        return
+    if place is None:
+        raise ValueError("OSM source_record match requires an existing place")
+    record_id = f"{record['type']}/{record['id']}"
+    if not any(
+        ref.get("sourceId") == "openstreetmap"
+        and ref.get("status") == "current"
+        and ref.get("recordId") == record_id
+        for ref in place.get("externalRefs", [])
+    ):
+        raise ValueError("OSM source_record is not the current reference")
+    if record.get("name") is not None and record["name"] != query["name"]:
+        raise ValueError("OSM current record has a conflicting name")
+    if (
+        "qid" in query
+        and record.get("qid") is not None
+        and record["qid"] != query["qid"]
+    ):
+        raise ValueError("OSM current record has a conflicting QID")
+    if _distance_metres(
+        place["geometry"]["coordinates"], record["coordinates"]
+    ) > 50:
+        raise ValueError("OSM current record moved more than 50 metres")
+
+
+def _wam_comparison_name(value: str) -> str:
+    normalized = unicodedata.normalize("NFKC", value).casefold()
+    normalized = normalized.replace("千代田区立", "")
+    return re.sub(r"[^0-9a-zぁ-んァ-ヶ一-龠々ー]+", "", normalized)
+
+
+def _wam_names_match(first: str, second: str) -> bool:
+    left = _wam_comparison_name(first)
+    right = _wam_comparison_name(second)
+    if left == right:
+        return True
+    shorter, longer = sorted((left, right), key=len)
+    return len(shorter) >= 6 and shorter in longer
+
+
+def _index_wam_raw_rows(rows: Any) -> dict[str, dict[str, Any]]:
+    if not isinstance(rows, list):
+        raise ValueError("WAM raw rows must be an array")
+    indexed: dict[str, dict[str, Any]] = {}
+    required_strings = {
+        "sourceRecordId",
+        "officeId",
+        "serviceCode",
+        "serviceType",
+        "name",
+    }
+    for index, row in enumerate(rows):
+        if not isinstance(row, dict):
+            raise ValueError(f"WAM raw row {index} must be an object")
+        if any(not isinstance(row.get(field), str) or not row[field] for field in required_strings):
+            raise ValueError(f"WAM raw row {index} has invalid required fields")
+        if not _valid_coordinates(row.get("coordinates")):
+            raise ValueError(f"WAM raw row {index} has invalid coordinates")
+        source_id = row["sourceRecordId"]
+        if source_id in indexed:
+            raise ValueError(f"duplicate WAM raw sourceRecordId: {source_id}")
+        indexed[source_id] = row
+    return indexed
+
+
+def _validate_wam_record_match(
+    record: dict[str, Any],
+    query: dict[str, Any],
+    raw_by_id: dict[str, dict[str, Any]],
+) -> None:
+    if not _valid_coordinates(record.get("coordinates")):
+        raise ValueError("WAM record has invalid coordinates")
+    if not isinstance(record.get("name"), str) or not _wam_names_match(
+        record["name"], query["name"]
+    ):
+        raise ValueError("WAM name does not match the search query")
+    if "coordinates" in query and _distance_metres(
+        query["coordinates"], record["coordinates"]
+    ) > 50:
+        raise ValueError("WAM record exceeds 50 metres from the search query")
+
+    source_ids = record.get("sourceRecordIds")
+    if (
+        not isinstance(source_ids, list)
+        or not source_ids
+        or any(not isinstance(item, str) or not item for item in source_ids)
+        or source_ids != sorted(set(source_ids))
+    ):
+        raise ValueError("WAM sourceRecordIds are invalid")
+    if any(source_id not in raw_by_id for source_id in source_ids):
+        raise ValueError("WAM sourceRecordIds are not present in raw rows")
+    rows = [raw_by_id[source_id] for source_id in source_ids]
+    primary = rows[0]
+    expected = {
+        "id": primary["sourceRecordId"],
+        "sourceRecordIds": source_ids,
+        "officeIds": sorted({row["officeId"] for row in rows}),
+        "serviceCodes": sorted({row["serviceCode"] for row in rows}),
+        "serviceTypes": sorted({row["serviceType"] for row in rows}),
+        "name": primary["name"],
+        "coordinates": primary["coordinates"],
+    }
+    for field, value in expected.items():
+        if record.get(field) != value:
+            raise ValueError(f"WAM {field} differs from retained raw rows")
 
 
 def match_osm_candidates(
@@ -715,24 +968,30 @@ def _update_wam_reference(
 ) -> dict[str, Any]:
     updated = copy.deepcopy(place)
     refs = updated.setdefault("externalRefs", [])
-    record_id = str(wam_record["id"])
-    current = next(
-        (
-            ref
-            for ref in refs
-            if ref.get("sourceId") == "wam"
-            and ref.get("recordId") == record_id
+    record_ids = [str(item) for item in wam_record.get("sourceRecordIds", [wam_record["id"]])]
+    wanted = set(record_ids)
+    for ref in refs:
+        if (
+            ref.get("sourceId") == "wam"
             and ref.get("status") == "current"
-        ),
-        None,
-    )
-    if current is not None:
-        current["lastConfirmedAt"] = at
-    else:
-        for ref in refs:
-            if ref.get("sourceId") == "wam" and ref.get("status") == "current":
-                ref["status"] = "superseded"
-                ref["supersededAt"] = at
+            and ref.get("recordId") not in wanted
+        ):
+            ref["status"] = "superseded"
+            ref["supersededAt"] = at
+    for record_id in record_ids:
+        current = next(
+            (
+                ref
+                for ref in refs
+                if ref.get("sourceId") == "wam"
+                and ref.get("recordId") == record_id
+                and ref.get("status") == "current"
+            ),
+            None,
+        )
+        if current is not None:
+            current["lastConfirmedAt"] = at
+            continue
         refs.append(
             {
                 "sourceId": "wam",
@@ -745,7 +1004,7 @@ def _update_wam_reference(
             }
         )
     updated.setdefault("audit", []).append(
-        compact_audit(at, "calculation_model", "linked_wam", record_id)
+        compact_audit(at, "calculation_model", "linked_wam", str(wam_record["id"]))
     )
     return updated
 
@@ -756,16 +1015,24 @@ def apply_source_updates(
     wam_records: list[dict[str, Any]],
     osm_records: list[dict[str, Any]],
     at: str,
+    wam_raw_rows: list[dict[str, Any]] | None = None,
 ) -> dict[str, Any]:
     """Apply already-selected batch snapshots with WAM > OSM > search priority."""
     updated = copy.deepcopy(registry)
+    original_by_id = {
+        str(place["id"]): place for place in updated.get("places", [])
+    }
     wam_by_id: dict[str, dict[str, Any]] = {}
+    if wam_records and wam_raw_rows is None:
+        raise ValueError("retained WAM raw rows are required for application")
+    wam_raw_by_id = _index_wam_raw_rows(wam_raw_rows or [])
     for record in wam_records:
         query_id = str(record.get("queryId"))
         if query_id not in search_by_id:
             raise ValueError(f"unknown WAM queryId: {query_id}")
         if query_id in wam_by_id:
             raise ValueError(f"duplicate WAM queryId: {query_id}")
+        _validate_wam_record_match(record, search_by_id[query_id], wam_raw_by_id)
         wam_by_id[query_id] = record
     osm_by_id: dict[str, dict[str, Any]] = {}
     for record in osm_records:
@@ -774,9 +1041,26 @@ def apply_source_updates(
             raise ValueError(f"unknown OSM queryId: {query_id}")
         if query_id in osm_by_id:
             raise ValueError(f"duplicate OSM queryId: {query_id}")
+        _validate_osm_record_match(
+            record,
+            search_by_id[query_id],
+            original_by_id.get(query_id),
+        )
         osm_by_id[query_id] = record
     places = []
-    for original in updated.get("places", []):
+    originals = list(updated.get("places", []))
+    existing_place_ids = {str(place["id"]) for place in originals}
+    for query_id in sorted(wam_by_id):
+        if query_id not in existing_place_ids:
+            originals.append(
+                make_place(
+                    search_by_id[query_id],
+                    ["disability-support"],
+                    [],
+                    at,
+                )
+            )
+    for original in originals:
         place_id = str(original["id"])
         query = search_by_id[place_id]
         wam_record = wam_by_id.get(place_id)
@@ -789,7 +1073,7 @@ def apply_source_updates(
                 place,
                 osm_record,
                 at,
-                osm_record.get("matchBasis", "source_record"),
+                osm_record["matchBasis"],
                 "calculation_model",
             )
         if wam_record is not None or osm_record is not None:
@@ -839,6 +1123,11 @@ def update_repository(root: str | Path, at: str, source: str) -> Path:
         return _read_json(path).get("records", []) if path.exists() else []
 
     wam_records = records(root / "imports/wam/normalized.json") if source == "wam" else []
+    wam_raw_rows = (
+        _read_json(root / "imports/wam/raw.json").get("rows", [])
+        if source == "wam"
+        else None
+    )
     osm_records = (
         records(root / "imports/openstreetmap/normalized.json")
         if source == "openstreetmap"
@@ -850,6 +1139,7 @@ def update_repository(root: str | Path, at: str, source: str) -> Path:
         wam_records,
         osm_records,
         at,
+        wam_raw_rows=wam_raw_rows,
     )
     issues = validate_registry(updated, search_by_id)
     if issues:

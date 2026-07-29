@@ -2,125 +2,100 @@
 
 ## 目的
 
-千代田区で「生活する・助けてもらう・楽しむ」ために実際に訪れる主要施設を、一人の体力と判断を主たる部品にせず保守する。網羅性より、使える単純さと誤案内を避けることを優先する。
+主要施設DBを、一人でも継続して扱える小さな単位で更新する。網羅性より、誤案内を避けることと、変更根拠を後から確認できることを優先する。
 
-## 運用原則
+現行仕様は [`data_maintenance_spec.md`](data_maintenance_spec.md) を正とする。本書は作業チェックリストである。
 
-- 旧JSON構造との後方互換を要件としない。
-- OSM検索入力は正本ではない。作成時にPlace UUIDを先に採番し、人間入力もWAM入力も、`id + name + coordinates`または`id + name + qid`の単純な形式にする。
-- 同じUUIDが`data/registry.json`にあれば正本作成済み、なければ未作成と判断し、別の状態台帳を作らない。
-- QIDを持つ検索入力には座標を書かない。
-- 唯一の正本は`data/registry.json`の5.2 Placeとする。
-- 正本Placeは検索入力と同じUUID、検索入力語を複写した単一`name`、分類、タグ、座標、画像、lifecycle、visibility、OSM・WAM等への参照履歴を持つ。多言語名や別名は作らない。
-- 正本geometryの優先順位はWAM、OSM、検索入力座標とし、`geometrySource`で採用元と確認時刻を示す。
-- OSM IDを新しい値で上書きして消さず、現在・過去のID、確認時刻、失効時刻、短い根拠を残す。以前のIDも次回同定へ使う。
-- 監査記録は時刻、方法、操作、対象だけにする。方法は`language_model`、`calculation_model`、`human_inference`、`field_observation`の4種とする。
-- 長大なAI推論や監査ログを正本へ保存しない。必要時だけ一時レポートにする。
-- 5.2 Placeは画像URLと権利情報を持つ`images`を含む。
-- 住所、町名、包含関係、統合済みの運営者、サービス、連絡先、アクセシビリティを正本へ置かない。
-- 町名は`nawashiro/chiyoda_city_town_geojson`とのpoint-in-polygonで公開時だけ導出する。
-- OSM、WAM等の属性はGeoJSONへソース別名前空間のまま含め、統合値へ丸めない。
-- 公開GeoJSONのgeometryは正本Placeの代表点Pointだけとし、OSMポリゴンと町名ポリゴンを含めない。
-- OSM ID履歴、確認時刻、失効時刻、根拠、auditは正本だけに保持し、公開GeoJSONへ含めない。
-- 旧JSONは未検証の`legacy_record`として扱い、そのまま正本へコピーしない。
-- 既知の重複UUIDは不具合であり、新正本では例外として許容しない。
-- 風ぐるま乗換案内はクライアント実行時にデータを取得せず、版固定したGeoJSONをビルド時に読み込んで静的生成する。
-- `key`と`main`を別マスタにせず、ショートカットはPlaceの`kazaguruma.home-shortcut`タグで表す。
-- 外部サービスへ施設ごとの問い合わせを行わず、一括取得とローカル照合を使う。
-- 自動取得・変更確認は月1回以下とする。
-- LLMを確率的であることだけを理由に排除しない。自動同定は独立した最低3体の有効票と3分の2以上の一致を必要条件にする。
-- 推論レポートが必要な場合は根拠・反証・不確実性を先に置き、候補IDと最終判断を最後に置く。
-- 現地確認は`field_observation`、ヒトが記憶・資料・既有知識から導いた判断は`human_inference`とする。
-- 正本Placeの削除と`visibility.status: review_hold`による一時掲載停止を分離する。
+## 現在のデータ構成
 
-## データ構造
+- 検索入力: `inputs/osm-search/`
+- 唯一の正本: `data/registry.json`
+- WAM snapshot: `imports/wam/`
+- OSM snapshot: `imports/openstreetmap/`
+- 固定町名ポリゴン: `data/pinned/`
+- レビューレポート: `reports/`
+- 公開生成物: `dist/public/`
+- ソース・利用条件台帳: `config/sources.json`
 
-```text
-inputs/osm-search/{source}/{batch}.json # 人間、WAM等から作る検索入力
-data/registry.json                     # 5.2 Placeを持つ唯一の正本
-schema/search-input.schema.json         # 検索入力Schema
-schema/registry.schema.json             # 正本Schema
-config/sources.json                     # ソース・ライセンス台帳
-imports/{source}/normalized.json        # 取得・正規化結果
-reports/migration-v2.json               # 旧データ移行結果
-reports/inference/{run-id}.json         # 必要時だけ残す推論実行記録
-dist/public/places.geojson              # 正本から作る互換・公開用の影
+公開GeoJSONは`visibility.status == "public"`のPlaceだけをPointとして出力する。propertiesは`id`、`name`、`categoryIds`、`tags`、`town`だけである。
+
+## 更新前チェック
+
+- [ ] `main`とremoteの差分を確認した
+- [ ] 作業branchを作った
+- [ ] 同一ソースの前回取得から30日以上経過している
+- [ ] WAMなら公式配布版`YYYYMM`を確認した
+- [ ] 町名なら上流の40文字commit SHAを確認した
+- [ ] 変更前のtestsとvalidateが成功する
+
+## WAM更新
+
+対象は相談支援4サービスだけである。
+
+- [ ] `52` 計画相談支援
+- [ ] `53` 地域相談支援（地域移行）
+- [ ] `54` 地域相談支援（地域定着）
+- [ ] `70` 障害児相談支援
+
+確認事項:
+
+- [ ] 千代田区以外のrowがraw snapshotへ入っていない
+- [ ] 利用可能時間の空欄を理由に除外していない
+- [ ] normalized 8施設の範囲が意図どおりか確認した
+- [ ] 13元レコードの全IDが正本参照へ保持される
+- [ ] raw snapshotのSHA-256が取得台帳と一致する
+- [ ] normalized recordがraw rowから再計算した値と一致する
+- [ ] 公式ZIPそのものをrepositoryやartifactへ恒久保存していない
+
+## OSM更新
+
+確認事項:
+
+- [ ] Overpassを単一batch queryで呼び出している
+- [ ] `remark`／`error`付き部分応答を拒否している
+- [ ] current ID照合に名称・QID競合や50m超の移動がない
+- [ ] QID照合は検索入力QIDと一致する一意候補だけ
+- [ ] 名称＋座標照合は完全一致かつ50m以内の一意候補だけ
+- [ ] 3票のうち2票以上一致した候補またはrejectが自動処理された
+- [ ] 合議不成立だけが`reports/osm-review-needed.json`へ残った
+- [ ] 成功した新規取得ではquery／response／canonical rawのhashとretention flagが一致する
+
+## 町名更新
+
+確認事項:
+
+- [ ] 上流commitを40文字SHAで固定した
+- [ ] Polygon／MultiPolygon、閉ring、3つ以上の異なる頂点、非ゼロ面積を検証した
+- [ ] 全公開Pointの町名が意図どおりか確認した
+- [ ] 町名ポリゴンを公開GeoJSONへ含めていない
+
+## 共通品質ゲート
+
+```bash
+python3 -m unittest discover -s tests -v
+python3 -m src.facility_data validate .
+python3 -m src.facility_data build .
 ```
 
-## 掲載責務
+- [ ] `git diff --check`が成功する
+- [ ] buildを2回実行して同一hashになる
+- [ ] Place削除がない
+- [ ] 既存PlaceのUUID・`name`変更がない
+- [ ] current OSM IDが重複していない
+- [ ] 公開Feature数と正本のpublic Place数が一致する
+- [ ] `sourceAttributions`が実際の寄与ソースだけを含む
+- [ ] clean cloneでtests、validate、buildが成功する
+- [ ] exact commit SHAのGitHub Actionsが成功する
 
-- 保育所、幼稚園、学校、劇場は`out_of_scope`とし、施設ごとの移行判定を行わない。
-- 病院は一般入院機能と一般利用可能性がある比較的大きな病院に限定する。
-- 診療所、単科病院、特定組織向け病院は原則対象外とする。
-- 新カテゴリは具体的利用場面、保守意思、信頼できる更新元が揃う場合だけ追加する。
+## 自動化頻度の目安
 
-## Phase 0: 単純な新設計の土台
-
-- 検索入力と正本の2 Schemaを作る。
-- UUID＋名前＋座標、UUID＋名前＋QID、現在・過去のOSM ID、画像、GeoJSONのfixtureを作る。
-- QIDと座標の併記を拒否する。
-- UUIDv7重複を例外なしで拒否する。
-- 検索入力と正本のUUID・単一`name`の対応を検証する。
-- geometryがWAM、OSM、検索入力座標の優先順位に従うことを検証する。
-- OSM ID履歴の時刻と状態を検証する。
-- auditを4キー・4方法へ制限する。
-- 町名、画像、ソース別公開属性を検証する。
-- GeoJSONがPointだけを持ち、OSM来歴とポリゴンを含まないことを検証する。
-- Pull Request CIを整える。
-
-完了条件:
-
-- すべてのfixtureが検証を通る。
-- 無効なQID＋座標fixtureと重複UUID fixtureが失敗する。
-- OSM ID更新fixtureで旧IDが`superseded`として残る。
-- `review_hold`でも正本Placeが残り、通常GeoJSONからだけ除外される。
-
-## Phase 1: 旧データの批判的インポート
-
-- 旧`key_locations.json`と`main_facilities.json`を`legacy_record`として読む。
-- 責務外カテゴリを先に一括除外する。
-- 病院を再選定する。
-- 旧UUIDを捨て、新しい一意なUUIDv7を割り当てる。
-- 重複UUIDの2施設を別Placeにし、包含関係は作らない。
-- 型を欠く旧OSM IDを未検証候補として再照合する。
-- 対象候補を`imported`、`merged`、`split`、`rejected`、`unresolved`へ分類する。
-
-## Phase 2: OSM同定とLLM合議
-
-- 人間入力とWAM入力を同じ検索入力Schemaへ変換する。
-- 既存Placeでは現在OSM ID、過去OSM ID、QID、名前と座標の順に検索手掛かりを使う。
-- 地理候補の既定上限は50mとし、自動的に100mへ広げない。
-- 決定的規則で候補を絞ってから最低3体へ独立に渡す。
-- 3分の2以上の一致後もID、距離、カテゴリ、座標、ライセンスを検証する。
-- 合議成立時、正本には長文ではなく短いauditだけを残す。
-- 高リスク変更と合議不成立だけをヒト確認候補にし、期限を課さない。
-
-## Phase 3: 正本・GeoJSON・風ぐるま乗換案内の切替
-
-- `data/registry.json`を唯一のPlace正本として確定する。
-- 現在と過去のOSM ID、時刻、根拠、短い監査記録を保持する。
-- 正本と外部スナップショットから`dist/public/places.geojson`を決定的に生成する。
-- GeoJSONには現在の代表点と公開属性だけを出し、OSM ID履歴、audit、OSM・町名ポリゴンを出力しない。
-- 町名GeoJSONと外部ソースの版、SHA-256、ライセンスを`sourceAttributions`へ含める。
-- 同じ入力から2回生成して同一ハッシュになることを確認する。
-- 風ぐるま乗換案内を版固定したGeoJSONのビルド時読込へ切り替える。
-- `kazaguruma.home-shortcut`タグからショートカットを静的生成する。
-
-## Phase 4: 継続更新
-
-- WAMは年2回の公式公開後に確認する。
-- OSMは現在・過去の型付きIDを一括確認し、必要時だけ範囲候補を取得する。
-- QID検索結果から同定した最新OSM座標を正本geometryへ反映する。
-- 町名GeoJSONは版を固定し、四半期または必要時だけ更新する。
-- Place削除や`inactive`への恒久変更はLLM合議だけで行わない。
-- 正本を保持した`review_hold`への一時掲載停止は、合議と決定的検証で行える。
-
-## 自動化の頻度
-
-| 対象 | 最短頻度 |
+| 対象 | 目安 |
 |---|---|
-| 障害福祉データ | 年2回の公式公開後 |
-| OSM既知施設 | 四半期または手動 |
-| 町名GeoJSON | 四半期または手動 |
-| 依存関係更新 | 月1回 |
-| LLM合議 | 入力または外部ソースに意味差分がある時だけ |
+| WAM相談支援 | 年2回の公式公開後 |
+| OSM | 四半期または必要時 |
+| 町名GeoJSON | 四半期または必要時 |
+| 依存関係 | 月1回以下 |
+
+## 将来候補
+
+OSM候補の3票合議は実装済みである。`review_hold`自動移行と画像権利の自動検証は現在の実行経路にない。追加する場合は、実行経路・tests・失敗時の扱い・文書を同じ変更で整える。

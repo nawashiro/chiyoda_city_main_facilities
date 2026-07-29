@@ -1,16 +1,7 @@
-name: Process OSM snapshot
+name: Update OpenStreetMap data
 
 on:
   workflow_dispatch:
-    inputs:
-      raw_path:
-        description: Path to a version-pinned Overpass raw JSON file in this ref
-        required: true
-        type: string
-      retrieved_at:
-        description: Retrieval time with timezone (ISO 8601)
-        required: true
-        type: string
 
 permissions:
   contents: read
@@ -18,28 +9,38 @@ permissions:
 jobs:
   process:
     runs-on: ubuntu-latest
+    timeout-minutes: 30
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
         with:
           python-version: "3.13"
-      - name: Normalize snapshot
+      - name: Retrieve OpenStreetMap data and update data
         env:
-          RAW_PATH: ${{ inputs.raw_path }}
-          RETRIEVED_AT: ${{ inputs.retrieved_at }}
-        run: python3 -m src.update_osm normalize . --raw "$RAW_PATH" --at "$RETRIEVED_AT"
-      - name: Apply only OpenStreetMap
-        env:
-          RETRIEVED_AT: ${{ inputs.retrieved_at }}
-        run: python3 -m src.facility_data update . --source openstreetmap --at "$RETRIEVED_AT"
+          LLM_API_KEY: ${{ secrets.LLM_API_KEY }}
+          LLM_MODEL: ${{ vars.LLM_MODEL }}
+          LLM_BASE_URL: ${{ vars.LLM_BASE_URL }}
+        run: |
+          RETRIEVED_AT=$(date --iso-8601=seconds)
+          python3 -m src.retrieve_osm . --at "$RETRIEVED_AT"
+          python3 -m src.resolve_osm_candidates .
+          python3 -m src.facility_data update . --source openstreetmap --at "$RETRIEVED_AT"
       - run: python3 -m src.facility_data validate .
       - run: python3 -m unittest discover -s tests -v
+      - name: Produce review diff
+        run: |
+          git add -N .
+          git diff --binary > reports/osm-update.diff
       - name: Save generated update for manual review
         uses: actions/upload-artifact@v4
         with:
           name: osm-update
+          retention-days: 14
           path: |
             imports/openstreetmap/
             data/registry.json
             dist/public/
             reports/latest-update.json
+            reports/osm-candidates.json
+            reports/osm-review-needed.json
+            reports/osm-update.diff

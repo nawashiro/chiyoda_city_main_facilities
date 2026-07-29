@@ -1,7 +1,42 @@
 {
   "sourceId": "wam",
-  "retrievedAt": null,
-  "rawVersion": null,
+  "retrievedAt": "2026-07-29T06:25:18+00:00",
+  "rawVersion": "202603",
   "minimumIntervalDays": 30,
-  "cadence": "semiannual"
+  "cadence": "semiannual",
+  "artifacts": [
+    {
+      "serviceCode": "52",
+      "url": "https://www.wam.go.jp/content/files/pcpub/top/sfkopendata/202603/sfkopendata_202603_52.zip",
+      "sha256": "42623507021b34a1e1c65422ee94d93125755de31ca7995b5dd06e3b73373b45",
+      "etag": "\"1bfeb8-64f8e548148d2\"",
+      "lastModified": "Thu, 16 Apr 2026 06:56:21 GMT",
+      "contentLength": 1834680
+    },
+    {
+      "serviceCode": "53",
+      "url": "https://www.wam.go.jp/content/files/pcpub/top/sfkopendata/202603/sfkopendata_202603_53.zip",
+      "sha256": "35ac4d1071d049f8b91cb05a5787b365589fc6d0cd682b48f0f1a7e4344b4b5d",
+      "etag": "\"86a61-64f8e5482d746\"",
+      "lastModified": "Thu, 16 Apr 2026 06:56:22 GMT",
+      "contentLength": 551521
+    },
+    {
+      "serviceCode": "54",
+      "url": "https://www.wam.go.jp/content/files/pcpub/top/sfkopendata/202603/sfkopendata_202603_54.zip",
+      "sha256": "3550db1b3e2b10e01ec08e6b23605b98e0db2409de0aca77556b993aa678d290",
+      "etag": "\"81914-64f8e54845deb\"",
+      "lastModified": "Thu, 16 Apr 2026 06:56:22 GMT",
+      "contentLength": 530708
+    },
+    {
+      "serviceCode": "70",
+      "url": "https://www.wam.go.jp/content/files/pcpub/top/sfkopendata/202603/sfkopendata_202603_70.zip",
+      "sha256": "a4e509edc9e734fe65ee49f953339e21b80cbc55c91db4ca851f057d6e54f710",
+      "etag": "\"154071-64f8e549cc065\"",
+      "lastModified": "Thu, 16 Apr 2026 06:56:23 GMT",
+      "contentLength": 1392753
+    }
+  ],
+  "rawSha256": "cd120d0c1c2c884021e5d92432126bb6f826651f9dabc378ffc6032d8511ed0b"
 }

@@ -1,0 +1,148 @@
+{
+  "version": "202603",
+  "rows": [
+    {
+      "sourceRecordId": "A0000038689",
+      "officeId": "1370100057",
+      "serviceCode": "70",
+      "serviceType": "障害児相談支援",
+      "name": "相談支援事業所Ｍｏｉ",
+      "coordinates": [
+        139.75723876,
+        35.69569665
+      ]
+    },
+    {
+      "sourceRecordId": "A0000042182",
+      "officeId": "1330100692",
+      "serviceCode": "52",
+      "serviceType": "計画相談支援",
+      "name": "千代田区立子ども発達センター",
+      "coordinates": [
+        139.76839375,
+        35.6931778
+      ]
+    },
+    {
+      "sourceRecordId": "A0000043069",
+      "officeId": "1370100065",
+      "serviceCode": "70",
+      "serviceType": "障害児相談支援",
+      "name": "千代田区立子ども発達センター",
+      "coordinates": [
+        139.76839375,
+        35.6931778
+      ]
+    },
+    {
+      "sourceRecordId": "A0000069174",
+      "officeId": "1370100081",
+      "serviceCode": "70",
+      "serviceType": "障害児相談支援",
+      "name": "相談支援センターＡｋｉｂａ",
+      "coordinates": [
+        139.77751572,
+        35.6925809
+      ]
+    },
+    {
+      "sourceRecordId": "A0000072518",
+      "officeId": "1370100099",
+      "serviceCode": "70",
+      "serviceType": "障害児相談支援",
+      "name": "相談支援事業所　樹",
+      "coordinates": [
+        139.74691158,
+        35.70036253
+      ]
+    },
+    {
+      "sourceRecordId": "A0000072543",
+      "officeId": "1330100726",
+      "serviceCode": "52",
+      "serviceType": "計画相談支援",
+      "name": "相談支援事業所　樹",
+      "coordinates": [
+        139.74691158,
+        35.70036253
+      ]
+    },
+    {
+      "sourceRecordId": "A0000103706",
+      "officeId": "1330100734",
+      "serviceCode": "52",
+      "serviceType": "計画相談支援",
+      "name": "ビーンズ相談支援センター",
+      "coordinates": [
+        139.7639912,
+        35.69358874
+      ]
+    },
+    {
+      "sourceRecordId": "A0000110598",
+      "officeId": "1330100304",
+      "serviceCode": "52",
+      "serviceType": "計画相談支援",
+      "name": "千代田区立障害者福祉センター",
+      "coordinates": [
+        139.76083553,
+        35.70039345
+      ]
+    },
+    {
+      "sourceRecordId": "A0000115231",
+      "officeId": "1330100759",
+      "serviceCode": "52",
+      "serviceType": "計画相談支援",
+      "name": "相談支援事業所みつき",
+      "coordinates": [
+        139.77524876,
+        35.70089939
+      ]
+    },
+    {
+      "sourceRecordId": "A0000117795",
+      "officeId": "1370100107",
+      "serviceCode": "70",
+      "serviceType": "障害児相談支援",
+      "name": "相談支援事業所みつき",
+      "coordinates": [
+        139.77524876,
+        35.70089939
+      ]
+    },
+    {
+      "sourceRecordId": "A0000117796",
+      "officeId": "1370100107",
+      "serviceCode": "70",
+      "serviceType": "障害児相談支援",
+      "name": "相談支援事業所みつき",
+      "coordinates": [
+        139.77524876,
+        35.70089939
+      ]
+    },
+    {
+      "sourceRecordId": "E0000085562",
+      "officeId": "1330100452",
+      "serviceCode": "52",
+      "serviceType": "計画相談支援",
+      "name": "特定非営利活動法人ホープ",
+      "coordinates": [
+        139.7451538,
+        35.6996129
+      ]
+    },
+    {
+      "sourceRecordId": "E0000087996",
+      "officeId": "1370100040",
+      "serviceCode": "70",
+      "serviceType": "障害児相談支援",
+      "name": "特定非営利活動法人ホープ",
+      "coordinates": [
+        139.74515344,
+        35.69961257
+      ]
+    }
+  ]
+}

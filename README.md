@@ -12,7 +12,7 @@ https://cdn.jsdelivr.net/gh/nawashiro/chiyoda_city_main_facilities@<version>/dis
 
 本番利用では`latest`ではなくリリースまたはコミットを指定してください。`dist/public/manifest.json`のSHA-256で取得物を確認できます。
 
-公開GeoJSONには名称、分類、製品タグ、代表点、派生町名だけを含めます。OSM ID履歴、監査記録、OSM・町名ポリゴンは含めません。
+公開GeoJSONには名称、分類、用途タグ、代表点、派生町名だけを含めます。OSM ID履歴、監査記録、OSM・町名ポリゴンは含めません。
 
 ## データ構成
 
@@ -46,29 +46,55 @@ python3 -m src.facility_data build .
 
 ## ソースsnapshotの更新
 
-取得したrawファイルは版を確認してから一括正規化します。施設ごとの詳細問い合わせは行いません。
+外部ソースを一括取得し、取得版・時刻・ハッシュを記録してから正規化・適用・公開物生成を行います。施設ごとの問い合わせは行わず、同一ソースの取得間隔は30日以上とします。
+
+OSMの曖昧候補はOpenAI互換APIへ独立した3回の判断を依頼し、2票以上が一致すれば自動処理します。最初に次を設定します。
 
 ```bash
-# 現在・過去の既知OSM IDを一度に取得するOverpass queryを表示
-python3 -m src.update_osm query .
-
-# 版固定済みraw snapshotを正規化（同一ソースは30日未満の再取得を拒否）
-python3 -m src.update_osm normalize . --raw /path/to/osm.json --at 2026-07-28T00:00:00Z
-python3 -m src.update_wam /path/to/wam.json . --at 2026-07-28T00:00:00Z
-
-# snapshotを正本へ一ソースずつ適用して公開物を再生成
-python3 -m src.facility_data update . --source openstreetmap --at 2026-07-28T00:00:00Z
-python3 -m src.facility_data update . --source wam --at 2026-07-28T00:00:00Z
+export LLM_API_KEY="..."
+export LLM_MODEL="使用するモデル名"
+# OpenAI以外を使う場合だけ設定
+export LLM_BASE_URL="https://api.example.com/v1"
 ```
 
+GitHub Actionsでは`LLM_API_KEY`をActions secret、`LLM_MODEL`をActions variableとして登録します。OpenAI以外を使う場合だけ`LLM_BASE_URL`もvariableへ登録します。
+
+```bash
+# WAM公式版の相談支援4サービスを取得・適用
+AT=$(date --iso-8601=seconds)
+python3 -m src.retrieve_wam . --release <YYYYMM> --at "$AT"
+python3 -m src.facility_data update . --source wam --at "$AT"
+
+# 千代田区内の対象カテゴリをOverpassへ1回だけ問い合わせ、
+# 既存のOSM参照、QID一意一致、または名称完全一致かつ
+# 50m以内で一意な候補を適用
+AT=$(date --iso-8601=seconds)
+python3 -m src.retrieve_osm . --at "$AT"
+python3 -m src.resolve_osm_candidates .
+python3 -m src.facility_data update . --source openstreetmap --at "$AT"
+
+# 町名Polygonをfull commit SHAで固定取得して公開物を再生成
+AT=$(date --iso-8601=seconds)
+python3 -m src.retrieve_towns . \
+  --commit <40-character-commit-sha> --at "$AT"
+python3 -m src.facility_data build .
+```
+
+合議できなかった候補だけが`reports/osm-review-needed.json`へ残ります。通常、人が確認するのはこのファイルだけです。候補なしの施設はOSM参照を付けず、WAMまたは検索入力の座標をそのまま使います。
+
+GitHub Actionsの`Update WAM data`、`Update OpenStreetMap data`、`Update town polygons`からも同じ経路を手動実行できます。WAMは`YYYYMM`版、町名はfull commit SHAだけを入力し、OSMは入力不要です。各Actionはリポジトリへ直接pushせず、ソースごとの取得物・台帳・生成物とレビュー用diffを14日間artifactとして保存します。
+
 外部から消えたという理由だけでPlaceは削除しません。WAMは公式公開後の年2回、OSMと町名は四半期または手動を基本とし、更新は一ソース版ずつ扱います。
+
+WAMから取得するのは、計画相談支援、地域移行、地域定着、障害児相談支援の4サービスです。
 
 ## 運用方針
 
 - UUID重複を許容しない
-- 50m以内だけをOSM候補にし、自動的に距離を広げない
-- 曖昧な低リスク同定は3票すべて有効かつ2票以上一致した場合だけ採用する
-- 削除、統合、恒久的な非公開化を合議だけで自動確定しない
+- OSMは決定規則で解ける候補を先に適用し、残りを3回のLLM判断へ渡す
+- 2票以上が同じ候補またはrejectで一致すれば、人の確認なしで処理する
+- 合議不成立だけを`reports/osm-review-needed.json`へ出す
+- 外部ソースから消えたという理由だけでPlaceを削除しない
 - 監査記録は`at`、`method`、`action`、`target`だけにする
 - 外部ソース取得はソースごとに月1回以下にする
 

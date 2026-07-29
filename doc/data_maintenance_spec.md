@@ -1,848 +1,195 @@
-# 千代田区主要施設データベース 保守・自動更新仕様
+# 千代田区主要施設データベース 保守仕様
 
-- バージョン: 4.5
-- 対象リポジトリ: `nawashiro/chiyoda_city_main_facilities`
-- 基準ブランチ: `main`
-- 更新方針: 一人の体力を主たる部品として消費せず、計算機推論と小さなPull Requestで保守する
+## 1. 目的と範囲
 
-## 0. 結論
+この文書は、現在のrepositoryに実装されているデータ保守契約を記述する。将来案は末尾へ分離し、現行機能として扱わない。
 
-1. OSM同定へ渡す検索入力は、先に採番したPlace UUIDと、名称と座標、または名称とQIDだけを持つ。人間が書く入力とWAM等から作る入力を同じ単純な形式で扱い、正本とは呼ばない。
-2. 唯一の施設正本は`data/registry.json`の5.2 Placeである。検索入力と同じUUID、検索入力語を複写した単一`name`、分類、タグ、座標、画像、lifecycle、visibility、OSM・WAM等への参照とその履歴を保持する。
-3. 正本座標の採用優先順位はWAM、OSM、検索入力座標の順とする。QIDを持つ検索入力は座標を持たず、WAM座標がなければ同定したOSM地物の代表点を使う。
-4. OSM参照は現在IDだけへ上書きせず、以前のID、確認時刻、失効時刻、同定根拠を短い履歴として残す。次回同定では以前のOSM IDも検索手掛かりにする。
-5. 監査記録は、時刻、操作、対象、確認方法が`language_model`、`calculation_model`、`human_inference`、`field_observation`のどれかだけを分かる短い記録にする。長大な推論本文を正本へ保存しない。
-6. GeoJSONは正本と版固定した外部ソースから作る互換・公開用の影とし、正本Placeの代表点だけをgeometryへ出す。OSM参照履歴、OSMポリゴン、町名ポリゴンは含めない。
-7. 旧JSON構造との後方互換を要件としない。風ぐるま乗換案内はクライアント実行時にデータを取得せず、ビルド時にGeoJSONを読み込み、必要な画面とデータを静的生成する。
-8. 外部データは施設ごとに問い合わせず一括取得し、絞り込み・照合・推論はローカルまたは管理された実行環境で行う。
-9. 町名は正本に保存せず、公開生成時に`nawashiro/chiyoda_city_town_geojson`とのpoint-in-polygonで導出する。
-10. 外部ソースから消えたという理由だけで施設を自動削除しない。
-11. 自動取得・変更確認は月1回以下とし、変更は原則として専用ブランチとPull Requestを経由する。
-12. **LLMはヒトと同様に確率的な推論器である。** この文書ではヒトの判断をLLMより上位に置くが、その理由は、千代田区に主たる活動を置くヒトがこのシステムの多数派な当事者であり、唯一の真実たる地物にアクセスできるからである。この文書ではそれ以上の理由を認めない。ネットワークシステムと同様に、一定の確率で妥当な品質を出せればよいのであって、正統性の根拠に血統を持ち出すのは愚かである。そして、ヒトを主たる部品として組み込む設計は、ヒトを摩耗させる。
-13. 計算機による推論は唯一の真実たる地物を直接扱わないため、入力データが乏しく、品質が劣化しやすい。自動的に同定結果を書き込む場合は、最低3体の独立した推論器に判断させ、3分の2以上の一致を必要条件とする。
-14. 確率的な推論器が仮定に仮定を重ねることは避ける。現地でヒトが直接観測して導いた判断は`field_observation`、記憶・資料・既有知識から導いた判断は`human_inference`とする。唯一の真実たる現地に由来しない推論結果は、原則として次の推論の根拠に使用しない。
+対象は、千代田区で生活・支援・余暇のために実際に訪れる主要施設である。網羅性より、単独保守できる単純さと誤案内を避けることを優先する。
 
-## 1. 目的
+WAM NETから取り込むのは相談支援4サービスだけである。
 
-千代田区で「生活する・助けてもらう・楽しむ」ために実際に訪問する必要がある施設データを、低負荷かつ継続可能な方法で保守する。千代田区内の施設を網羅すること自体は目的にしない。
+- 計画相談支援: `52`
+- 地域相談支援（地域移行）: `53`
+- 地域相談支援（地域定着）: `54`
+- 障害児相談支援: `70`
 
-優先順位は次のとおり。
+利用可能時間の空欄では除外しない。就労、生活介護、児童発達、居住等のサービスはこの取込対象に含めない。
 
-1. 誤同定・誤更新・誤削除の防止
-2. 出典とライセンスの追跡
-3. ヒト、とくに単独メンテナの判断負荷と摩耗の削減
-4. データモデルの明確さと検証可能性
-5. 手作業の削減
-6. 外部サービスへの負荷抑制
-7. 推論品質の計測可能性と再検証可能性
+## 2. 正本と生成物
 
-自動取得・変更確認は**月1回以下**とする。週間・日次の定期実行は行わない。
+### 2.1 検索入力
 
-## 2. 対象範囲
+`inputs/osm-search/{source}/{batch}.json`は外部ソース照合の入力であり、正本ではない。
 
-### 2.1 対象
+各queryは先に採番したUUIDv7と検索語を持ち、次のどちらか一方だけを持つ。
 
-- OSM検索入力、唯一の正本`data/registry.json`、互換・公開用GeoJSON
-- 既存JSONを未検証の移行元として解析し、対象範囲に入る候補だけを採否・統合・分割する移行処理
-- 障害福祉サービス事業所
-- OpenStreetMap由来の座標・基本属性
-- ソース台帳、取得記録、ライセンス表示
-- LLMを含む推論器による候補同定、合議結果、推論来歴
-- GitHub Actionsによる検証と更新候補Pull Request
+- `id + name + coordinates`
+- `id + name + qid`
 
-### 2.2 対象外
+QIDと座標の併記は禁止する。同じUUIDが正本にあれば作成済み、なければ未作成と判断する。
 
-- 施設ごとの常時監視
-- 営業時間などの個別ページ巡回
-- 外部データだけを根拠にした自動削除
-- 単一の確率的推論器だけによる同定結果の自動確定
-- 根拠データを参照できない推論結果の採用
-- 推論結果を根拠として再帰的に推論を重ねること
-- 常設データベースサーバー
-- 常設検索API
-- 重い管理画面
-- 更新ごとの大量な生成物コミット
+### 2.2 正本
 
-### 2.3 掲載責務とカテゴリ方針
+`data/registry.json`が唯一のPlace正本である。Placeは検索入力と同じUUIDと`name`を保持する。正本には代表点、分類、用途タグ、画像欄、lifecycle、visibility、外部参照履歴、短いauditがある。
 
-このデータベースは千代田区内の全施設一覧ではない。掲載責務は、生活上の手続き、相談・福祉、一般的な医療、実際に利用する文化・余暇に必要な場所へ限定する。カテゴリが公的データに存在することだけを掲載理由にしない。
+代表点の更新優先順位は次のとおり。
 
-旧データのうち、次は移行対象からカテゴリ単位で除外する。
+1. WAM
+2. OpenStreetMap
+3. 検索入力座標
 
-| 旧カテゴリ | 旧`key_locations.json`件数 | 方針 |
-|---|---:|---|
-| 保育所 | 24 | 対象外。通所者が自分の施設の場所を知る用途を本プロジェクトの責務にしない |
-| 幼稚園 | 8 | 対象外 |
-| 学校 | 30 | 対象外 |
-| 劇場 | 20 | 対象外。現在の利用実態と保守意思がなく、網羅責務も負わない |
+OSMとWAMの参照は`externalRefs`へ保持する。OSM IDが変わった場合、旧IDを削除せず`superseded`へ変更する。
 
-旧`main_facilities.json`の「区立の学校」11件も対象外とする。これらは施設ごとのLLM判定へ送らず、カテゴリ規則により`out_of_scope`として一括除外できる。
+### 2.3 公開GeoJSON
 
-病院は旧19件を一括移行しない。掲載対象は、一般の利用者が入院を伴う医療を受けられる比較的大きな病院とする。診療所、歯科単科、眼科・耳鼻科等の単科病院、特定組織の構成員を主対象とする病院は原則対象外とし、公式情報で入院機能と一般利用可能性を確認する。旧`main_facilities.json`の「主要な病院」6件は候補集合として利用できるが、正解データとはみなさない。
+`dist/public/places.geojson`は正本から決定的に生成する公開用の影である。
 
-新しいカテゴリを追加するには、「生活する・助けてもらう・楽しむ」のどの具体的利用場面に必要か、継続して保守する意思があるか、信頼できる更新元があるかを記録する。網羅性のためだけには追加しない。
-
-## 3. 旧データの評価
-
-2026年7月17日に確認した`main`の基準コミットは次のとおり。
-
-```text
-15b6e5187030e03f3e8c5a5c491cd21ee09de79c
-```
-
-旧`json/key_locations.json`は16カテゴリ・191レコードを含むが、短期間に手作業で作成された即席データである。191件は移行目標件数ではない。新設計では、これを信頼済み正本、互換性の基準、正解データのいずれにも置かない。旧レコードの根拠型は`legacy_record`とし、対象範囲に残った候補の名称、座標、分類、外部ID、ライセンスを再検証するためだけに使う。
-
-旧`main_facilities.json`は別の正本ではない。風ぐるま乗換案内のトップページへ置くショートカットを手作業で抜き出した表示用リストである。実データでは64件で、内部IDを持たず、旧keyと名称が完全一致するものは16件だけだった。新設計では、正本Placeへ`kazaguruma.home-shortcut`タグを付けて表す。旧mainにあるという事実はタグ候補の根拠にはなるが、施設の同定や掲載範囲の根拠にはしない。名称だけで自動付与せず、座標、カテゴリ、町名、外部ソース候補等でPlaceを同定してからタグを移す。
-
-既知の利用ソフトウェアは風ぐるま乗換案内である。公開切替前にリポジトリ、デプロイ設定、CDN参照を検索して利用箇所を確認するが、未知の利用者を仮定して旧構造を永続させることはしない。破壊的変更として版を上げ、旧版はGitタグとReleaseで参照可能にする。
-
-### 3.1 重複UUIDは不具合
-
-次のUUID重複は意味のある同一性表現ではなく、旧データ作成時の不具合である。
-
-```text
-ebb57317-8fa9-4939-9c48-6c91707f0e0b
-```
-
-対象:
-
-- 千代田区立ちよだパークサイドプラザ区民図書室
-- ちよだパークサイドプラザ
-
-新しい正本Placeでは両者へ異なるIDを割り当てる。包含関係は確実に判定できないため作らない。**重複UUIDは既知例外として許容しない。** `config/validation_exceptions.json`は旧データ診断にだけ使用し、新しい検証経路から除去する。
-
-### 3.2 旧外部IDは未検証候補
-
-旧`nodeSourceId=179575985`は「富士見みらい館」と「千代田区立富士見小学校」に重複している。学校レコードは対象外として移行しない。富士見みらい館を対象範囲へ残す場合だけ、型を欠く数値IDをそのまま使わず、OSMの`node`、`way`、`relation`を含む外部参照候補として再照合する。
-
-## 4. 基本構成
-
-### 4.1 入力・正本・GeoJSON
-
-```text
-inputs/osm-search/{source}/{batch}.json # 人間、WAM等から作るOSM検索入力
-data/registry.json                     # 5.2 Placeを持つ唯一の施設正本
-schema/search-input.schema.json         # 検索入力のJSON Schema
-schema/registry.schema.json             # 正本のJSON Schema
-config/sources.json                     # 外部ソースとライセンスの台帳
-imports/{source}/normalized.json        # 機械管理する取得・正規化結果
-reports/migration-v2.json               # 旧レコードごとの採否・統合・分割
-reports/inference/{run-id}.json         # 必要時だけ残す推論実行記録
-dist/public/places.geojson              # 正本から作る互換・公開用の影
-```
-
-責務は次の三つに分ける。
-
-1. **検索入力**: OSMを検索・同定するための名前と座標、または名前とQID。人間入力もWAM入力も同じ形式にする。正本ではない。
-2. **5.2 Place正本**: 採用した施設状態、現在と過去のOSM・WAM参照、参照根拠、短い監査記録を保持する。人または承認済み処理が更新する。
-3. **互換GeoJSON**: 正本と取得済みOSM・WAM等から作る影。町名ポリゴンは町名の導出にだけ使い、成果物へ埋め込まない。直接編集しない。
-
-検索入力の出所はファイルの`source`メタデータで表し、各検索項目へ長い来歴を繰り返し埋め込まない。3体合議の完全な応答は障害調査や評価に必要な場合だけ`reports/inference/`へ一時保存し、正本には結論を確認した方法だけを短く残す。
-
-配列順、オブジェクトのキー順、数値表現を正規化し、同じ正本と版固定した外部スナップショットからGeoJSONを決定的に直列化する。
-
-旧`json/`、`json_min/`、`kazaguruma_json/`、`kazaguruma_json_min/`は移行入力であり、移行後の生成対象にはしない。`key`と`main`に対応する別々の正本も作らない。旧版はGit履歴とタグに残し、同じファイル群を新設計へ持ち込まない。
-
-### 4.2 風ぐるま乗換案内との境界
-
-風ぐるま乗換案内は`dist/public/places.geojson`をビルド時に読み込む。ブラウザから本リポジトリ、CDN、APIへ実行時アクセスしない。
-
-- 通常の施設ページは`visibility.status == listed`等の条件で静的生成する。
-- トップページのショートカットは`tags`に`kazaguruma.home-shortcut`を含むPlaceから静的生成する。
-- 風ぐるま停留所からの距離等、乗換案内固有の条件は乗換案内のビルド側で計算する。
-- ビルド時入力はデータベースのリリース版またはコミットを固定し、取得元URLとSHA-256をビルド記録へ残す。
-- データ取得に失敗したビルドは、空の施設一覧で成功させず非0終了する。
-
-### 4.3 ソース台帳
-
-```text
-config/sources.json
-```
-
-最低限、次を持つ。
-
-```json
-{
-  "id": "openstreetmap",
-  "title": "OpenStreetMap",
-  "url": "https://www.openstreetmap.org/copyright",
-  "license": "Open Database License (ODbL) 1.0",
-  "license_url": "https://opendatacommons.org/licenses/odbl/1-0/"
-}
-```
-
-### 4.4 取得記録
-
-自動取得を導入するPhaseでは、ソースごとに次を保存する。
-
-```json
-{
-  "source_id": "wam-net",
-  "retrieved_at": "2026-08-15T03:00:00Z",
-  "source_url": "https://www.wam.go.jp/content/wamnet/pcpub/top/sfkopendata/",
-  "etag": "...",
-  "last_modified": "...",
-  "sha256": "...",
-  "source_version": "2026-08"
-}
-```
-
-原本を毎回Gitへ保存する必要はない。再現や監査に必要な場合だけRelease artifactまたは短期artifactとして保存する。
-
-## 5. 検索入力と正本スキーマ
-
-### 5.1 OSM検索入力
-
-検索入力は正本ではない。人間が書く場合も、WAM等から機械的に作る場合も、各検索項目は正本と共通のUUIDを先に持ち、名前と座標、または名前とQIDを持つ。出所はファイル単位の`source`へ置く。
-
-```json
-{
-  "source": {
-    "kind": "human",
-    "sourceId": null,
-    "retrievedAt": null
-  },
-  "queries": [
-    {
-      "id": "019c0000-0000-7000-8000-000000000002",
-      "name": "ちよだパークサイドプラザ区民図書室",
-      "coordinates": [139.7821, 35.6972]
-    },
-    {
-      "id": "019c0000-0000-7000-8000-000000000001",
-      "name": "北の丸公園",
-      "qid": "Q1075966"
-    }
-  ]
-}
-```
-
-各検索項目は次のどちらか一方へ厳密に適合させる。
-
-```text
-id + name + coordinates
-id + name + qid
-```
-
-- `id`は検索入力を作る時点で採番するUUIDv7で、正本作成時にも同じ値を使う。
-- 同じ`id`が`data/registry.json`にあれば作成済み、なければ未作成と判断する。別の状態台帳は作らない。
-- `name`は検索語であり、正本Placeへそのまま複写する。この段階では多言語名や別名を取得しない。
-- `coordinates`は`[経度, 緯度]`の代表点とする。
-- `qid`は`^Q[1-9][0-9]*$`に適合させる。
-- `coordinates`と`qid`を同じ検索項目へ併記しない。
-- WAM入力は`source.kind: source`、`source.sourceId: wam-net`等とし、検索項目自体を肥大化させない。
-
-QID検索入力は、以前のOSM同定で同じ地物のWikidataタグを確認できた結果である。流れは次のとおり。
-
-1. 名前と座標でOSM地物を同定する。
-2. 同定したOSM地物に、同じ地物を指すQIDがあることを確認する。
-3. 次回以降の検索入力には名前とQIDを書き、座標を併記しない。
-4. QIDから現在のOSM地物を同定する。
-5. 正本Placeの`geometry`には、WAM座標があればそれを使い、なければ同定したOSM地物の代表点を書き込む。
-
-正本Place自身を更新する場合は、正本に残した現在・過去のOSM ID、名称、geometryも検索手掛かりとして使う。これらを検索入力ファイルへ重複コピーする必要はない。
-
-### 5.2 Place正本
-
-`data/registry.json`のPlaceが唯一の施設正本である。従来どおり、施設の名称、分類、用途タグ、座標、画像、lifecycle、visibility、外部参照を扱う。`name`は検索入力語だけを複写し、多言語名や別名の構造を作らない。座標は次の順で最初に利用できるものを採用し、取得元を`geometrySource`で示す。
-
-1. 対応するWAMレコードの座標
-2. 同定した現在のOSM地物の代表点
-3. 検索入力の`coordinates`
-
-検索入力座標を使う場合、`geometrySource.sourceId`は`search-input`、`recordId`は検索入力と共通のUUIDとする。これ以外の座標評価用レイヤーや品質状態は追加しない。
-
-```json
-{
-  "id": "019c0000-0000-7000-8000-000000000001",
-  "name": "北の丸公園",
-  "categoryIds": ["park.public"],
-  "tags": [],
-  "geometry": {
-    "type": "Point",
-    "coordinates": [139.7507425, 35.691527]
-  },
-  "geometrySource": {
-    "sourceId": "openstreetmap",
-    "recordType": "relation",
-    "recordId": "3551876",
-    "observedAt": "<timestamp>"
-  },
-  "images": [],
-  "externalRefs": [
-    {
-      "sourceId": "openstreetmap",
-      "recordType": "relation",
-      "recordId": "3551876",
-      "status": "current",
-      "firstConfirmedAt": "<timestamp>",
-      "lastConfirmedAt": "<timestamp>",
-      "supersededAt": null,
-      "basis": "qid"
-    },
-    {
-      "sourceId": "openstreetmap",
-      "recordType": "way",
-      "recordId": "<previous-osm-id>",
-      "status": "superseded",
-      "firstConfirmedAt": "<timestamp>",
-      "lastConfirmedAt": "<timestamp>",
-      "supersededAt": "<timestamp>",
-      "basis": "name_coordinates"
-    },
-    {
-      "sourceId": "wam-net",
-      "recordType": "facility",
-      "recordId": "<wam-record-id>",
-      "status": "current",
-      "firstConfirmedAt": "<timestamp>",
-      "lastConfirmedAt": "<timestamp>",
-      "supersededAt": null,
-      "basis": "source_record"
-    }
-  ],
-  "lifecycle": {
-    "status": "active",
-    "changedAt": null
-  },
-  "visibility": {
-    "status": "listed",
-    "changedAt": null
-  },
-  "audit": [
-    {
-      "at": "<timestamp>",
-      "method": "language_model",
-      "action": "reference_confirmed",
-      "target": "openstreetmap/relation/3551876"
-    }
-  ]
-}
-```
-
-山括弧付きの値はSchema説明用のプレースホルダーである。実データでは検証済みの値へ置換する。北の丸公園例の`geometry`はOSM relation `3551876`の代表点であり、Wikidata座標の転記ではない。
-
-住所、町名、`containedInPlaceId`、統合済みの運営者・サービス・連絡先・アクセシビリティはPlace正本へ置かない。これらがOSM、WAM等に存在する場合は、公開GeoJSONのソース別名前空間へ元レコードと取得時点を伴って置く。
-
-### 5.3 OSM ID履歴
-
-OSM IDは現在値だけへ上書きしない。`externalRefs`に現在と過去を同じ形式で残す。
-
-- 現在採用している参照は`status: current`とする。
-- 新しいOSM地物へ移った場合、以前の参照を`status: superseded`へ変え、`supersededAt`を記録する。
-- 同じ参照を再確認した場合は`lastConfirmedAt`だけを更新する。
-- 以前のOSM IDを削除しない。次回同定では現在IDに続く検索手掛かりとして使う。
-- 旧IDが消失していても、それだけでPlaceを削除または`inactive`にしない。
-- 同時に`current`になれるOSM参照は原則一件とする。入口node等、複数参照が必要な具体的利用要件が出た場合だけ役割キーを追加する。
-
-`basis`は参照を採用した短い根拠で、次の列挙値を基本とする。
-
-```text
-previous_osm_id
-name_coordinates
-qid
-source_record
-field_observation
-```
-
-文章による長い根拠説明はPlaceへ埋め込まない。
-
-### 5.4 短い監査記録
-
-`audit`は「いつ、どの方法が、何を確認または変更したか」だけを記録する。各項目は次の4キーを基本とする。
-
-```text
-at
-method
-action
-target
-```
-
-`method`は次のいずれかとする。
-
-```text
-language_model      # AI・3体合議を含む
-calculation_model   # 距離、規則、分類器等
-human_inference     # ヒトの記憶・資料・既有知識による判断
-field_observation   # 現地確認または妥当な現地写真
-```
-
-モデルの長い思考過程、賛否全文、反証全文を正本へ保存しない。3体合議を行った場合も、正本には`method: language_model`の短い結果だけを残す。完全応答が評価や障害調査に必要な場合だけ一時レポートへ保存し、日常の監査に必須としない。
-
-### 5.5 画像
-
-Placeは`images`配列を持てる。
-
-```json
-{
-  "role": "primary",
-  "url": "<image-url>",
-  "sourceId": "<image-source>",
-  "sourceRecordId": "<image-record-id>",
-  "license": "<license>",
-  "attribution": "<attribution>"
-}
-```
-
-URL、ソース、ライセンス、必要な表示を最低限保持する。権利条件が不明な画像は正本とGeoJSONへ含めない。画像の更新監査も、詳細ログではなく`audit`へ時刻・方法・操作・対象だけを残す。
-
-### 5.6 IDと外部参照
-
-- Place IDはUUIDv7を原則とし、一度採用したら変更・再利用しない。
-- UUIDは検索入力作成時に採番し、正本Placeへ引き継ぐ。
-- 作成済みかどうかは同じUUIDが`data/registry.json`に存在するかだけで判断し、追加の状態管理を作らない。
-- 旧UUIDは信頼せず、移行時に新IDを割り当てる。
-- UUID重複は常に検証エラーとし、例外指定を認めない。
-- 外部IDを内部主キーにしない。
-- OSM由来IDは`node`、`way`、`relation`の型を必ず保持する。
-- WAM等の参照もソースID、レコード型、レコードIDを保持する。
-- QIDはOSM検索入力として扱う。必要がなければPlaceの外部参照へ重複保存しない。
-- 外部IDが消えても内部UUIDを削除しない。
-
-### 5.7 互換・公開用GeoJSON
-
-`dist/public/places.geojson`は正本と取得時点の外部ソースから作る影であり、編集対象にしない。RFC 7946のFeatureCollectionとし、`visibility.status == listed`のPlaceだけを通常出力する。
-
-各Featureのgeometryは、正本Placeの代表点を複写したPointだけとする。OSMのPolygon・MultiPolygon・relation member、町名ポリゴンは出力しない。propertiesは少なくとも次を持つ。
+公開条件は`visibility.status == "public"`である。各FeatureはPointだけを持ち、propertiesは次の5項目だけを持つ。
 
 - `id`
 - `name`
 - `categoryIds`
 - `tags`
-- `images`
 - `town`
-- `lifecycleStatus`
-- `sources`
 
-町名は正本geometryと、版固定した`chiyoda_city_town_geojson`からpoint-in-polygonで生成する。町名が一意に決まらない場合は`town: null`とし、正本へ書き戻さない。
+画像、lifecycle、visibility、外部参照、audit、OSM属性、OSMポリゴン、町名ポリゴンは公開GeoJSONへ含めない。
 
-OSM、WAM等の公開レコードは、正本の現在参照を使って取得済みスナップショットから結合する。`sources.openstreetmap`へ現在レコードの型・IDと公開に必要な属性を含めることはできるが、正本の`externalRefs`、過去OSM ID、`firstConfirmedAt`、`lastConfirmedAt`、`supersededAt`、`basis`、`audit`はGeoJSONへ出力しない。運営者、サービス、連絡先、アクセシビリティ等をトップレベルの統合値へ変換せず、ソース別名前空間に置く。
+`sourceAttributions`には、公開物の生成に実際に寄与したソースのURL、版、取得日時、SHA-256、利用条件、帰属、加工内容を含める。
 
-GeoJSONのトップレベルには、使用した全ソースのURL、版・取得日時、SHA-256、ライセンス、表示義務を持つ`sourceAttributions`をRFC 7946の外部メンバーとして付ける。
+`dist/public/manifest.json`には公開GeoJSONのSHA-256を記録する。
 
-`tags`は重複のない文字列配列とし、予約名前空間`kazaguruma.*`は風ぐるま乗換案内のビルド用途に使う。ショートカット以外の施設も同じGeoJSONへ含め、別の`main`出力は作らない。
+## 3. 現在実装されている検証
 
-## 6. 検証
+`python3 -m src.facility_data validate .`は、現在次を確認する。
 
-新しい検証CLIは検索入力、Place正本、GeoJSONを別々に検査する。
+### 検索入力
 
-検索入力:
+- documentとqueryの許可フィールド
+- source種別
+- UUIDv7形式と重複
+- 非空の`name`
+- QID形式
+- QIDと座標の排他
+- 座標の型と範囲
+- 複数ファイル間のquery ID重複
 
-- `schema/search-input.schema.json`へ適合すること
-- 各項目が`id + name + coordinates`または`id + name + qid`のどちらか一方であること
-- 検索入力のUUIDが一意で、対応する正本Placeがある場合は同じUUIDと`name`を使っていること
-- QID項目に座標がなく、座標項目にQIDがないこと
-- 座標が`[経度, 緯度]`の順で、QIDが`^Q[1-9][0-9]*$`へ適合すること
-- 入力元がファイル単位の`source`で分かること
+### 正本
 
-Place正本:
+- Place IDの重複
+- 対応する検索入力の存在
+- 検索入力との`name`一致
+- Point geometryと座標範囲
+- current OSM参照が最大1件
+- auditが4キーであること
+- audit methodが許可値であること
 
-- `data/registry.json`が`schema/registry.schema.json`へ適合すること
-- Place IDがUUIDv7で、一意かつ例外なしであること
-- geometryがWAM、OSM、検索入力座標の優先順位に従い、`geometrySource`と対応すること
-- OSM参照が型付きで、現在参照が原則一件以下であること
-- `current`参照に確認時刻があり、`superseded`参照に`supersededAt`があること
-- 以前のOSM IDを新しいIDへの更新時に削除していないこと
-- 外部参照の`basis`が許可された短い列挙値であること
-- `audit`が`at`、`method`、`action`、`target`の短い記録であること
-- `method`が`language_model`、`calculation_model`、`human_inference`、`field_observation`のいずれかであること
-- lifecycleとvisibilityが許可された状態であること
-- `tags`が重複のない文字列配列で、予約名前空間の規則に適合すること
-- 画像にURL、ソース、ライセンス、必要な表示があること
+### WAM snapshot
 
-互換・公開用GeoJSON:
+- normalized documentとrecordの基本形式
+- query IDの存在と重複
+- WAM ID、`sourceRecordIds`、名称、座標
+- `imports/wam/raw.json`のSHA-256と取得台帳の一致
+- raw版と取得台帳の版の一致
+- raw rowの必須フィールド、座標、source ID重複
+- normalized recordの全source IDがrawに存在すること
+- primary ID、事業所番号、サービスコード・種別、名称、座標がraw groupから再計算した値と一致すること
+- 検索入力との名称照合
+- 座標検索入力の場合は50m以内であること
 
-- 町名が版固定した町名GeoJSONから導出され、正本へ書き戻されていないこと
-- 全FeatureのgeometryがPointで、Polygon、MultiPolygon、OSM relation member、町名ポリゴンを含まないこと
-- `externalRefs`、過去OSM ID、確認時刻、失効時刻、根拠、`audit`をGeoJSONへ出力しないこと
-- ソース別属性に、元レコードID、版または取得時点、出典、ライセンスがあること
-- GeoJSONがRFC 7946と公開propertiesの契約に適合すること
-- 同じ正本と外部スナップショットから2回生成して同一ハッシュになること
-- `review_hold`でも正本Placeは消えず、通常公開用GeoJSONだけから除外されること
+### OSM snapshot
 
-移行時は、保育所、幼稚園、学校、劇場をカテゴリ単位で`out_of_scope`とし、カテゴリ名・旧件数・除外理由を移行レポートへ記録する。対象範囲に残った候補だけを`imported`、`merged`、`split`、`rejected`、`unresolved`のいずれかへ分類する。旧値とのバイト一致や旧JSON構造との契約テストは行わない。代わりに、正本とGeoJSONのSchema検証、および風ぐるま乗換案内が版固定したGeoJSONから静的生成できることを契約テストする。
+- typeと正のID
+- QID形式
+- `matchBasis`が`source_record`、`qid`、`name_coordinates`、`language_model`のいずれか
+- QID照合では検索入力QIDとの一致
+- 名称＋座標照合では名称完全一致かつ50m以内
+- current参照照合では既存current IDであること、名称・QIDの競合がないこと、既存代表点から50m以内であること
 
-旧形式用の`src.validate_data`と`config/validation_exceptions.json`は移行元の問題を診断する一時ツールとしてのみ残せるが、新しい正本とGeoJSONの合否判定には使用しない。
+町名GeoJSONのPolygon/MultiPolygon構造、閉ring、異なる頂点数、非ゼロ面積、座標範囲、町名重複は`src.retrieve_towns`の取得時に検証する。
 
-## 7. データソース別の更新
+この一覧にないSchema全体、画像権利、業務上の正しさを`validate`が自動判定するとはみなさない。
 
-### 7.1 WAM NET 障害福祉オープンデータ
+## 4. WAM更新
 
-公式一覧:
-
-https://www.wam.go.jp/content/wamnet/pcpub/top/sfkopendata/
-
-公式公開は原則として3月末版と9月末版である。自動確認は4月15日と10月15日の年2回とし、週間・月内反復確認はしない。
-
-取得方法:
-
-1. 公式一覧ページを1回取得する。
-2. 最新年月とサービス別ZIP URLを抽出する。
-3. 必要なサービス種別だけを取得する。
-4. ZIP内CSVをローカルで処理する。
-5. 市区町村が東京都千代田区の事業所へ絞る。
-6. 原本SHA-256、`ETag`、`Last-Modified`、対象年月を記録する。
-
-地図対象から除外する訪問系コード:
-
-| コード | サービス |
-|---|---|
-| 11 | 居宅介護 |
-| 12 | 重度訪問介護 |
-| 13 | 行動援護 |
-| 14 | 重度障害者等包括支援 |
-| 15 | 同行援護 |
-| 66 | 居宅訪問型児童発達支援 |
-| 67 | 保育所等訪問支援 |
-
-自立生活援助や相談系は訪問を含む場合があるため、自動除外せず確認待ちにする。
-
-WAMの利用条件は標準ライセンス名へ推測変換せず、公式オープンデータ利用条件として出典文書へ記載する。
-
-### 7.2 OpenStreetMap
-
-通常更新:
-
-- 初期は四半期または手動実行とする。
-- 承認済みの`type/id`をまとめて1回のPOSTで取得する。
-- 施設ごとの`around`検索を禁止する。
-- 必要な場合だけ500 ID程度で分割する。
-
-新規・リンク切れ候補:
-
-- 新規施設または古いリンクがあるときだけ実行する。
-- 千代田区を覆う範囲の必要カテゴリを1回で取得する。
-- 区境界判定と候補照合はローカルで行う。
-- 全要素履歴は取得しない。
-- 公共インスタンスを無断で並列巡回しない。
-
-保存する情報:
-
-- 型付きID
-- 要素バージョン
-- 変更セット番号
-- 取得日時
-- 使用したタグ
-
-OSM要素の消失だけを理由に施設を廃止しない。
-
-## 8. 候補照合と推論
-
-候補生成には決定的な規則を優先するが、曖昧な地物同定にはLLMを含む確率的推論器を組み込む。ヒトは常時すべての候補を確認する主たる部品ではなく、現地へアクセスできる当事者、異議申立ての主体、合議不能時の確認者として位置づける。
-
-### 8.1 正規化
-
-- Unicode NFKC
-- 全角・半角空白の統一
-- 連続空白の圧縮
-- 法人格などの比較用接頭辞除去
-- 電話番号の数字列化
-- URLのホスト名正規化
-
-正規化は候補照合用の一時値に限る。名称、電話番号、URL等のソース値を統合値として正本へ転記せず、互換GeoJSONでは各ソースの名前空間内で原値を保持する。
-
-### 8.2 候補絞り込み
-
-1. 採用済みの型付き外部ID
-2. **50m以内**の代表点候補
-3. 正規化名称
-4. 施設カテゴリ
-5. 代表点から導出した町名、またはソース側の行政区域
-6. ソース側の電話番号、URL、運営者、サービス等の補助的一致
-
-50mは候補生成の既定上限であり、同一地物を意味する閾値ではない。50mを超える候補を自動的に100mへ拡張せず、ソース座標の精度不足が明示されている場合だけ別の低確信候補として扱う。名前、町名、電話番号、URL等の一要素だけでは確定しない。
-
-### 8.3 状態
-
-- `candidate`: 未確認候補
-- `confirmed`: 現地根拠を持つヒト、または有効な3体合議によって確認済み
-- `rejected`: 誤候補として却下
-- `stale`: 外部参照が古い、または消失
-- `needs_review`: 条件が食い違う
-
-却下結果を保存し、同じ誤候補を毎回提示しない。
-
-照合状態とは別に、Placeの`visibility.status`へ`listed`または`review_hold`を記録する。
-
-### 8.4 根拠と推論の型
-
-採用値と同定判断は、少なくとも次の型を持つ。
-
-| 型 | 意味 | 次の推論への入力 |
-|---|---|---|
-| `field_observation` | ヒトが現地で直接観測して導いた判断、位置情報付き写真、撮影日時・方位等の妥当なメタデータ | 可 |
-| `authoritative_record` | 自治体、施設、法令上の登録主体等による記録。ただし現況との時間差を持ちうる | 可。取得日時を必須とする |
-| `human_inference` | ヒトが記憶・資料・既有知識から導いた判断 | 原則不可。参照可能な元資料があれば元資料を渡す |
-| `computational_inference` | 距離、名称類似度、分類器等による判断 | 原則不可。入力データと計算結果を渡す |
-| `language_model_inference` | LLMが根拠束から導いた判断 | 不可。元の根拠束を渡す |
-
-現地で観測したヒトが、その場で看板、建物、入口、営業状態等から直接導いた判断は`human_inference`ではなく`field_observation`として記録する。観測日時、位置、対象、観測方法を可能な限り付ける。現地を離れた後の記憶だけによる補完や、資料・一般知識を組み合わせた判断は`human_inference`とする。
-
-写真を根拠にする場合は、可能な範囲で撮影日時、位置、方位、提供者、ファイルハッシュを記録する。画像そのものが生成物または転載物である可能性も記録し、真正性が不明な画像は`field_observation`へ昇格させない。
-
-### 8.5 3体合議プロトコル
-
-自動的に同定結果を正本または更新ブランチへ書き込む処理は、次を満たさなければならない。
-
-1. 最低3体の推論器を使用する。
-2. 各推論器は、他の推論器の回答を見ずに、同じ根拠束と候補集合から独立に判断する。
-3. 推論器は、可能な限り異なるモデル、モデル系列、提供者、または実行設定を使い、同一障害モードへの依存を減らす。同一モデルを複数回使う場合は、その事実を記録する。
-4. 出力は自由文だけでなく構造化形式にする。生成順序は、参照した根拠、根拠から読み取れる事実、支持材料、反証、欠けている情報、不確実性、確信度の順とし、**候補IDと最終判断を最後に置く**。プロンプト、出力スキーマ、正規化後の直列化でもこの順序を維持し、判断を先に生成して理由を後付けする形を避ける。
-5. 同じ候補IDと同じ判断に3分の2以上が一致した場合だけ、合議成立とする。
-6. 合議成立後も、ID衝突、距離上限、カテゴリ矛盾、座標範囲、ライセンス等の決定的検証を通す。
-7. 合議不成立、根拠不足、複数候補の競合は`needs_review`または`unresolved`として保存する。ヒトへ確認を求める場合はこの集合へ限定する。
-
-2対1の少数意見も実行レポートには残せるが、正本へ長文を埋め込まない。Placeの削除、複数Placeの統合、`lifecycle.status`を`active`から`inactive`へ変える恒久変更など取り返しのつきにくい変更は、合議だけで自動確定しない。一方、正本Placeを保持したまま`visibility.status`を`review_hold`として既定の公開一覧から一時的に掲載を停止することは認める。
-
-`needs_review`や`unresolved`が存在しても、単独メンテナに確認期限や処理義務を課さない。未解決のまま公開状態を維持できることを、正常な運用状態として認める。
-
-### 8.6 推論記録
-
-各推論実行の長大なログは保存しない。日常運用で正本へ残すのは5.4の短い`audit`だけとする。
-
-評価または障害調査で必要な場合に限り、実行レポートへ次の要約を一時保存できる。
-
-- 実行IDと日時
-- 使用したモデルの識別子
-- 入力スナップショットのハッシュ
-- 各票と合議結果
-- 採用した操作とPull Request
-
-各モデルの長文出力や思考過程は通常保存しない。APIキー、個人情報、非公開写真そのものは一時レポートにも含めない。
-
-### 8.7 推論の積み重ね禁止
-
-`human_inference`、`calculation_model`、`language_model`として採用された結論だけを、次の推論器へ事実として渡してはならない。次回は元の`field_observation`、公的記録、生の外部レコードへ戻る。
-
-過去の推論結果は、候補の再提示を抑止する索引、品質評価、監査には利用できる。ただし、過去に採用されたという事実を、同一性の新たな証拠として加点しない。ヒトの記憶や以前の手動承認も同様に、それ自体を現況の証拠としない。
-
-### 8.8 品質評価
-
-- 現地確認または十分な写真記録で正解が分かっている地物を評価セットにする。
-- 自動確定では再現率より適合率を優先する。
-- モデル、プロンプト、候補生成規則を変更したときは、同じ評価セットで比較する。
-- 3体が同じ誤りをする相関障害を測り、モデルの多様化または根拠束の改善につなげる。
-- 推論器の品質が基準を下回った場合は、自動書き込みを停止し、候補生成だけへ降格する。
-- 合意率、誤確定率、判断不能率、ヒトへ送られた件数を実行ごとに集計する。
-
-### 8.9 要確認による一時掲載停止
-
-正本Placeの削除と、一時的な掲載停止を分離する。
-
-- `lifecycle.status`は地物の存続状態を表し、`visibility.status`は公開一覧への掲載状態を表す。
-- `visibility.status: listed`は通常掲載、`visibility.status: review_hold`は要確認による一時掲載停止とする。
-- `review_hold`でも正本Place、内部UUID、外部参照履歴、以前の値を削除しない。
-- 既定の人間向け一覧と通常の派生JSONからは除外できるが、正本には`visibility.status`、`changedAt`、対応する短い`audit`を残す。
-- 有効な3体合議で3分の2以上が「現在の掲載は誤案内になる可能性が高い」と判断し、決定的検証も通った場合は、自動的に`review_hold`へ移せる。
-- 公式ソースでの消失だけを根拠にする場合も、削除や`inactive`確定ではなく`review_hold`までに留める。
-- 掲載再開は、新しい現地観測、十分な写真記録、更新された公式記録、またはそれらを根拠とする新たな3体合議で行える。ヒトの承認を必須としない。
-- 再確認は元ソースの通常更新周期に合わせ、`review_hold`だけを理由に取得頻度を上げない。
-- `review_hold`案件に処理期限を設けず、単独メンテナへ確認義務を課さない。
-
-## 9. 差分とPull Request
-
-外部データ更新は`main`へ直接pushしない。
-
-1. 専用ブランチを作る。
-2. ソースを一括取得する。
-3. 正規化してローカル照合する。
-4. 差分レポートを作る。
-5. テストを実行する。
-6. 変更がある場合だけPull Requestを作る。
-7. 低リスクの同定・属性変更は、3体合議、決定的検証、品質基準をすべて満たす場合に限り、人の都度確認なしでマージできる。
-8. 合議不成立、高リスク変更、現地根拠との矛盾だけをヒトの確認対象にする。
-
-差分レポートには次を含める。
-
-- ソース名と版
-- 取得日時
-- 原本SHA-256
-- 追加候補
-- 更新候補
-- 消失候補
-- 確認待ち
-- 推論器ごとの判断と3体合議結果
-- 使用した根拠型と推論来歴
-- ライセンスまたは利用条件
-
-一つのPull Requestには一つのソース版だけを含める。
-
-### 9.1 自動削除禁止
-
-ソースから消えたレコードは次の順で扱う。
-
-1. `stale`または消失候補として報告する。
-2. 誤案内の可能性が高く、有効な3体合議と決定的検証が成立した場合は`visibility.status: review_hold`として一時掲載停止できる。
-3. 正本Placeと内部UUIDは維持する。
-4. 公式ページ、別ソース、現地観測等から、移転、名称変更、統合、休止、廃止を区別する。
-5. `inactive`への恒久変更または削除は、一時掲載停止とは別の高リスク処理として扱う。
-
-## 10. GitHub Actions
-
-### 10.1 Pull Request検証
-
-`.github/workflows/validate.yml`で次を実行する。
+手動実行例:
 
 ```bash
-python3 -m unittest discover -s tests -v
+python3 -m src.retrieve_wam . --release "$WAM_RELEASE" --at "$RETRIEVED_AT"
+python3 -m src.facility_data update . --source wam --at "$RETRIEVED_AT"
 python3 -m src.facility_data validate .
 ```
 
-この検証では外部APIや配布サイトへ接続しない。`imports/*/normalized.json`も検証対象とし、未知・重複UUID、不正な座標・型・外部IDを拒否する。
+`WAM_RELEASE`は公式配布版の`YYYYMM`を明示指定する。
 
-### 10.2 外部ソース更新ジョブ
+取得処理は4サービスZIPを各1回だけ読み、応答サイズ、ZIP展開サイズ、圧縮率、CSV行数を制限する。東京都千代田区の有効行だけを`imports/wam/raw.json`へ保持し、normalized snapshotを作る。
 
-| ジョブ | 頻度 |
-|---|---|
-| WAM NET | 公式公開後の年2回、手動起動 |
-| OSM既知施設 | 四半期または手動起動 |
-| 町名GeoJSON | 四半期または手動 |
-| 依存関係更新 | 月1回 |
-| LLM合議 | 外部ソースに意味差分がある時だけ。単独の定期実行はしない |
+公式ZIPそのものはrepositoryやActions artifactへ恒久保存しない。`imports/wam/retrieval.json`には取得URL、content length、ETag等、ZIPのSHA-256を記録する。
 
-WAM・OSMジョブは`workflow_dispatch`で版固定rawのリポジトリ内パスとタイムゾーン付き取得時刻を受け取る。正規化後、指定した一ソースだけを正本へ適用し、検証と単体テストを行う。変更は直接pushせず、正規化snapshot、正本、公開物、短い更新レポートをartifactとして保存し、人が専用ブランチで差分を確認する。
+適用時はnormalized recordを検索入力とretained raw rowsの双方に照らして再検証する。WAM recordがあるのにraw rowsがない場合は適用を拒否する。
 
-同一ソースの取得時刻が前回から30日未満なら非0終了する。ジョブ自身は外部サイトへ接続せず、施設ごとの問い合わせも行わない。
+## 5. OpenStreetMap更新
 
-### 10.3 推論実行の失敗
+手動実行例:
 
-- 3体すべての票が有効でなければ、何も書き込まない。3分の2は「3回試して2回応答した」という意味ではなく、3つの有効な独立判断のうち2つ以上が一致することを意味する。
-- 推論器が根拠にない情報を主要理由として挙げた場合、その票を無効にする。
-- 構造化出力の検証に失敗した票を、都合よく自由文から補完しない。
-- 推論サービスの障害を公開データの欠落へ波及させない。
-- コスト上限と実行回数上限をジョブごとに設定する。
+```bash
+python3 -m src.retrieve_osm . --at "$RETRIEVED_AT"
+python3 -m src.resolve_osm_candidates .
+python3 -m src.facility_data update . --source openstreetmap --at "$RETRIEVED_AT"
+python3 -m src.facility_data validate .
+```
 
-## 11. ライセンスと出典
+既知ID、QID、千代田区内の対象カテゴリを単一Overpass queryで取得する。施設ごとのN+1問い合わせは行わない。
 
-- 正本Placeの編集値に対する従来のデータベースライセンス宣言を維持し、`LICENSE`へODbL 1.0本文を置く。
-- GeoJSONへ含める外部レコードや画像を、正本のライセンスだけで包括しない。
-- `SOURCES_AND_LICENSES.md`へソース別条件を書き、`config/sources.json`を機械可読な台帳にする。
-- GeoJSONの`sourceAttributions`へ、ソースURL、版・取得日時、SHA-256、ライセンス、必要な表示を含める。
-- OSM由来要素はODbL、WikidataはCC0 1.0、町名GeoJSONはCC BY-SA 4.0と© Linked Open Addresses Japan、WAMは公式利用条件にそれぞれ帰属させる。
-- 標準ライセンス名が不明なソースを推測でCCライセンスへ置き換えない。
-- 加工した場合は、出典に加えて加工した旨を表示する。
-- 複数ライセンスのデータを一つのGeoJSONへ含める前に、再配布条件と表示方法の適合性を検証する。適合性を確認できないソース属性は公開物へ含めず、ビルドを失敗させるか対象ソースを除外する。
+自動適用経路は次の3つである。
 
-## 12. 復旧
+1. 既存current OSM参照
+2. 検索入力QIDと一致する一意候補
+3. 検索入力から50m以内、かつ名称完全一致の一意候補
 
-公開後に問題が判明した場合は、履歴を書き換えない。
+残った近傍候補はOpenAI互換APIへ独立した3回の判断を依頼する。3つの有効票のうち2票以上が同じ候補へのlinkで一致すれば`matchBasis: language_model`として適用し、2票以上がrejectで一致すれば自動却下する。合議不成立だけを`reports/osm-review-needed.json`へ残す。候補がない施設は人手確認へ送らず、OSM参照なしのまま扱う。
 
-1. 問題のPull Requestまたはコミットを特定する。
-2. `git revert`用ブランチを作る。
-3. テストと検証を実行する。
-4. revert Pull Requestをマージする。
-5. 正しい修正を別Pull Requestで行う。
+LLMには検索入力の名称と、取得済みの候補だけを渡す。候補一覧にないIDは受理しない。長い推論本文は保存せず、短い票と結果だけを候補レポートへ残す。Overpass応答に`remark`または`error`がある場合は部分応答として拒否する。
 
-公開物はmainから再生成できるようにし、古い手元ファイルだけに依存しない。
+成功した新規取得ではquery bytes、HTTP response bytes、canonical rawを別々に保存し、それぞれのSHA-256を記録する。過去snapshotでexact query/responseが残っていない場合はretention flagを`false`とし、存在しないbytesを保持済みと主張しない。
 
-## 13. Phase計画
+## 6. 町名更新
 
-### Phase 0: 新設計の土台
+町名GeoJSONは`nawashiro/chiyoda_city_town_geojson`の40文字commit SHAを指定して取得する。
 
-実施内容:
+```bash
+python3 -m src.retrieve_towns . --commit "$TOWN_COMMIT" --at "$RETRIEVED_AT"
+python3 -m src.facility_data build .
+python3 -m src.facility_data validate .
+```
 
-- `schema/search-input.schema.json`と`schema/registry.schema.json`の作成
-- UUID付き座標検索、UUID付きQID検索、OSM ID履歴、画像付きPlace、GeoJSONのfixtureと検証CLI
-- UUID重複を例外なしで拒否するテスト
-- QIDと座標の併記を拒否するテスト
-- 検索入力と正本でUUIDと単一`name`が一致するテスト
-- geometryがWAM、OSM、検索入力座標の優先順位に従うテスト
-- OSM ID履歴、geometrySource、短いauditの整合性テスト
-- 画像URL・権利情報の検証テスト
-- 町名point-in-polygonとソース別公開属性の固定fixture
-- ソース台帳
-- ライセンス本文
-- ソース別権利表示
-- Pull Request CI
-- 本仕様書
+町名は正本へ書き込まない。公開build時に代表点と町名ポリゴンのpoint-in-polygonで導出する。一意に決まらない場合は`null`になる。
 
-制約:
+## 7. GitHub Actions
 
-- 旧JSONは診断対象に留め、新スキーマへコピーして正本化しない。
-- 旧形式の互換生成器は作らない。
+次のworkflowはすべて`workflow_dispatch`による手動実行である。
 
-### Phase 1: 旧データの批判的インポート
+- `Update WAM data`
+- `Update OpenStreetMap data`
+- `Update town polygons`
 
-実施内容:
+workflowは取得、正規化、適用またはbuild、validate、unit testsを実行する。repositoryへcommit/pushせず、手動レビュー用artifactだけを作る。
 
-- 旧`key_locations.json`と`main_facilities.json`を`legacy_record`根拠として読み込む
-- 保育所、幼稚園、学校、劇場をカテゴリ規則で`out_of_scope`として先に除外し、施設ごとの同定・LLM合議を行わない
-- 病院は一般入院機能と一般利用可能性を公式情報で確認できた候補だけを残す
-- 旧UUIDを捨て、新しい一意なUUIDv7を割り当てる
-- 重複UUIDの2施設を別Placeとして作成し、包含関係は作らない
-- 旧`nodeSourceId`を未検証の型付き外部参照候補へ変換する
-- 対象範囲に残った候補を`imported`、`merged`、`split`、`rejected`、`unresolved`に分類する
-- カテゴリ単位の`out_of_scope`件数と、対象候補の処理結果を`reports/migration-v2.json`へ記録する
-- 旧mainの対象施設を同定できた場合は`kazaguruma.home-shortcut`タグ候補として記録する
+review diff生成前に`git add -N .`を行い、新規ファイルもbinary diffへ含める。
 
-### Phase 2: LLM合議による移行判定
+同一ソースの再取得は30日未満では拒否する。運用目安はWAMが公式公開後の年2回、OSMと町名が四半期または必要時である。
 
-実施内容:
+## 8. レビュー手順
 
-- 検索入力と候補集合の機械可読形式
-- 正本へ入れる短い監査記録スキーマ
-- 3体の独立推論と3分の2合議
-- 決定的検証との組合せ
-- 現地確認済み評価セットによる品質測定
-- 合議不成立だけをヒトへ渡すキュー
-- 低リスク変更の自動マージ条件と停止条件
+1. `reports/*-update.diff`を確認する。
+2. 正本Placeの削除、UUID変更、名称変更がないことを確認する。
+3. WAMは8相談支援施設という対象範囲を維持しているか確認する。
+4. OSMの合議不成立候補だけが`reports/osm-review-needed.json`へ残っているか確認する。
+5. `sourceAttributions`と取得台帳の版・SHAを確認する。
+6. tests、validate、決定的buildを再実行する。
+7. clean cloneでも同じ検証を行う。
 
-初期運用では、既知の正解を隠して同定させるシャドー評価を行う。品質基準を満たすまで、LLMは正本Placeを変更せず候補レポートだけを生成する。
+## 9. 現在未実装の将来候補
 
-### Phase 3: 検索入力・Place正本・互換GeoJSON・利用側の切替
+OSM候補の3票合議は取得workflowへ接続済みである。`review_hold`への自動移行、画像権利の自動検証、Schema全体のruntime検証は現行運用ではない。
 
-実施内容:
-
-- 人間入力とWAM入力を同じOSM検索入力形式へ変換する
-- `data/registry.json`を唯一のPlace正本として確定する
-- 現在と過去のOSM ID、確認時刻、根拠、短い監査記録を正本へ保持する
-- 正本と版固定した外部スナップショットから`dist/public/places.geojson`を決定的に生成する
-- 町名GeoJSONと外部スナップショットの版・ハッシュ・ライセンスを`sourceAttributions`へ含める
-- GeoJSONを2回生成する再現性テスト
-- 風ぐるま乗換案内のビルド処理を、版固定した公開GeoJSONの読込へ更新する
-- `kazaguruma.home-shortcut`タグからトップページのショートカットを静的生成する
-- クライアント実行時の外部データ取得を廃止する
-- 利用箇所を検索し、デプロイを新しい静的生成物へ切り替える
-- 新メジャーバージョンを公開し、旧版はGitタグとReleaseに残す
-
-### Phase 4: 外部ソースによる継続更新
-
-実施内容:
-
-- WAMの年2回更新と訪問系サービスコード・表示名による除外
-- currentとsupersededを含む承認済み型付きOSM IDの一括取得（正本適用はcurrentを優先）
-- 検索入力QIDと一致するOSM要素からの新規参照追加
-- 一回につき一ソース版だけを正本へ適用し、別ソースの古いsnapshotを再確認扱いにしない
-- 正本・公開GeoJSON・manifest・更新レポートを事前生成・検証してから置換する
-- 不正日時、版なしraw、配列欠落、未知型・ID・QID・座標、重複・未知UUIDを非0終了で拒否する
-- GitHub Actionsで版固定rawを正規化・適用・検証し、直接pushせずartifactとして保存する
-- 町名GeoJSONの版固定更新とpoint-in-polygonの再生成
-- 必要時だけの範囲候補取得
-- ローカル候補照合
-- LLM合議による同定
-- 合議不成立・高リスク変更だけの人手確認
-
-## 14. Phase 0完了条件
-
-次をすべて満たすこと。
-
-- 専用ブランチに変更がある。
-- すべての単体テストが成功する。
-- 新スキーマのfixtureに対して新検証CLIが成功する。
-- 重複UUIDを例外なしで拒否する。
-- 検索入力とPlace正本の設計がJSON Schemaで表現されている。
-- 検索入力がUUIDを必須とし、`id + name + coordinates`または`id + name + qid`の一方だけを許す。
-- 正本の`name`が検索入力語と一致し、多言語名や別名を要求しない。
-- 正本geometryがWAM、OSM、検索入力座標の優先順位に従う。
-- 正本で現在と過去のOSM ID、時刻、根拠、短い監査方法を保持できる。
-- 固定fixtureから画像、町名、ソース別属性を含むGeoJSONを決定的に生成できる。
-- CI設定が構文上妥当である。
-- `LICENSE`と`SOURCES_AND_LICENSES.md`が存在する。
-- 自動更新頻度に月1回より短い設定がない。
-- LLMを含む推論について、根拠型、3体合議、3分の2一致、推論の積み重ね禁止が仕様化されている。
-- 旧JSONとの後方互換を完了条件に含めていない。
-- `main`へ直接pushしていない。
-
-## 15. 次の判断
-
-まずPhase 0として、検索入力とPlace正本のJSON Schema、固定fixture、新検証CLI、町名・画像・外部ソース結合器を作る。旧形式用の検証器や例外ファイルを新設計へ拡張しない。次にPhase 1の移行レポートを作る。保育所、幼稚園、学校、劇場はカテゴリ単位で除外し、191件すべてを個別処理しない。Phase 2のシャドー評価でLLM合議の品質を確認してからPlace正本を確定し、Phase 3でGeoJSONと風ぐるま乗換案内の静的生成を切り替える。
+これらを実装する場合は、実行経路、失敗時の扱い、tests、文書を同じ変更で追加する。
