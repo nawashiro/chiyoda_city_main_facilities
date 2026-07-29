@@ -22,10 +22,16 @@ _WAM_VISITING_SERVICE_TYPES = {
     "12",
     "13",
     "14",
-    "訪問介護",
-    "訪問入浴介護",
-    "訪問看護",
-    "訪問リハビリテーション",
+    "15",
+    "66",
+    "67",
+    "居宅介護",
+    "重度訪問介護",
+    "行動援護",
+    "重度障害者等包括支援",
+    "同行援護",
+    "居宅訪問型児童発達支援",
+    "保育所等訪問支援",
 }
 
 _OUT_OF_SCOPE = {"保育所", "幼稚園", "学校", "劇場"}
@@ -339,6 +345,10 @@ def validate_repository(root: str | Path) -> list[str]:
                     issues.append(f"{prefix}: invalid OSM id")
                 if record.get("qid") is not None and not _QID.fullmatch(str(record["qid"])):
                     issues.append(f"{prefix}: invalid OSM QID")
+                if record.get("matchBasis") not in {None, "source_record", "qid"}:
+                    issues.append(f"{prefix}: invalid OSM matchBasis")
+                if record.get("matchBasis") == "qid" and record.get("qid") is None:
+                    issues.append(f"{prefix}: qid matchBasis requires qid")
     return issues
 
 
@@ -776,7 +786,11 @@ def apply_source_updates(
             place = _update_wam_reference(place, wam_record, at)
         if osm_record is not None:
             place = update_osm_reference(
-                place, osm_record, at, "source_record", "calculation_model"
+                place,
+                osm_record,
+                at,
+                osm_record.get("matchBasis", "source_record"),
+                "calculation_model",
             )
         if wam_record is not None or osm_record is not None:
             preserve_wam_geometry = (
@@ -808,6 +822,7 @@ def update_repository(root: str | Path, at: str, source: str) -> Path:
     """Apply one local source snapshot, validate, then rebuild public data."""
     if source not in {"wam", "openstreetmap"}:
         raise ValueError(f"unsupported update source: {source}")
+    source_refresh_due(None, at)
     root = Path(root)
     existing_issues = validate_repository(root)
     if existing_issues:

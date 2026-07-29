@@ -70,12 +70,17 @@ def main(argv: list[str] | None = None) -> int:
     for record in normalize_osm_elements(raw["elements"]):
         typed_id = f"{record['type']}/{record['id']}"
         query_id = current_by_record_id.get(typed_id)
+        match_basis = "source_record"
         if query_id is None and typed_id in superseded_record_ids:
             continue
         if query_id is None and record.get("qid") is not None:
             query_id = qid_by_query_id.get(record["qid"])
+            if query_id is not None:
+                match_basis = "qid"
         if query_id is not None:
-            records.append({"queryId": query_id, **record})
+            records.append(
+                {"queryId": query_id, "matchBasis": match_basis, **record}
+            )
     normalized_path = root / "imports/openstreetmap/normalized.json"
     normalized_path.write_text(
         json.dumps({"records": records}, ensure_ascii=False, indent=2) + "\n",

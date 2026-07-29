@@ -546,6 +546,7 @@ class SourceUpdateTests(unittest.TestCase):
             (root / "data").mkdir()
             (root / "config").mkdir()
             (root / "imports/wam").mkdir(parents=True)
+            (root / "imports/openstreetmap").mkdir(parents=True)
             (root / "inputs/osm-search/manual/base.json").write_text(
                 (repository / "tests/fixtures/search-input.json").read_text(encoding="utf-8"),
                 encoding="utf-8",
@@ -560,10 +561,30 @@ class SourceUpdateTests(unittest.TestCase):
             (root / "imports/wam/normalized.json").write_text(
                 json.dumps({"records": "not-an-array"}), encoding="utf-8"
             )
+            query_id = json.loads(
+                (repository / "tests/fixtures/search-input.json").read_text(encoding="utf-8")
+            )["queries"][0]["id"]
+            (root / "imports/openstreetmap/normalized.json").write_text(
+                json.dumps(
+                    {
+                        "records": [
+                            {
+                                "queryId": query_id,
+                                "type": "node",
+                                "id": "1",
+                                "coordinates": [139.75, 35.69],
+                                "matchBasis": "invented",
+                            }
+                        ]
+                    }
+                ),
+                encoding="utf-8",
+            )
 
             issues = validate_repository(root)
 
         self.assertIn("imports/wam/normalized.json: records must be an array", issues)
+        self.assertTrue(any("invalid OSM matchBasis" in issue for issue in issues))
 
     def test_wam_cli_requires_a_pinned_raw_version(self):
         with tempfile.TemporaryDirectory() as temp_dir:
@@ -665,6 +686,8 @@ class SourceUpdateTests(unittest.TestCase):
             [(current_query["id"], "node", "2"), (qid_query["id"], "relation", "4")],
             [(record["queryId"], record["type"], record["id"]) for record in records],
         )
+        self.assertEqual("source_record", records[0]["matchBasis"])
+        self.assertEqual("qid", records[1]["matchBasis"])
 
     def test_repository_has_small_manual_source_update_contract(self):
         root = Path(__file__).resolve().parents[1]
@@ -723,6 +746,10 @@ class SourceUpdateTests(unittest.TestCase):
             with self.assertRaises(ValueError):
                 source_refresh_due(previous, current)
 
+    def test_repository_update_rejects_invalid_timestamp_before_io(self):
+        with self.assertRaisesRegex(ValueError, "retrieval time"):
+            update_repository(Path("/does/not/exist"), "not-a-time", "wam")
+
     def test_normalizes_only_stationary_wam_facilities(self):
         rows = [
             {
@@ -734,22 +761,6 @@ class SourceUpdateTests(unittest.TestCase):
                 "serviceType": "通所",
             },
             {
-                "placeId": "019c0000-0000-7000-8000-000000000051",
-                "facilityId": "wam-2",
-                "name": "訪問サービス",
-                "longitude": 139.76,
-                "latitude": 35.70,
-                "serviceType": "訪問介護",
-            },
-            {
-                "placeId": "019c0000-0000-7000-8000-000000000052",
-                "facilityId": "wam-3",
-                "name": "コードだけの訪問介護",
-                "longitude": 139.76,
-                "latitude": 35.70,
-                "serviceType": 11,
-            },
-            {
                 "placeId": "019c0000-0000-7000-8000-000000000064",
                 "facilityId": "wam-4",
                 "name": "非訪問型施設",
@@ -758,6 +769,33 @@ class SourceUpdateTests(unittest.TestCase):
                 "serviceType": "非訪問型",
             },
         ]
+        visiting_types = [
+            11,
+            12,
+            13,
+            14,
+            15,
+            66,
+            67,
+            "居宅介護",
+            "重度訪問介護",
+            "行動援護",
+            "重度障害者等包括支援",
+            "同行援護",
+            "居宅訪問型児童発達支援",
+            "保育所等訪問支援",
+        ]
+        rows.extend(
+            {
+                "placeId": f"019c0000-0000-7000-8000-{100 + index:012x}",
+                "facilityId": f"wam-visiting-{index}",
+                "name": f"訪問系{index}",
+                "longitude": 139.76,
+                "latitude": 35.70,
+                "serviceType": service_type,
+            }
+            for index, service_type in enumerate(visiting_types)
+        )
 
         self.assertEqual(
             [
@@ -852,6 +890,7 @@ class SourceUpdateTests(unittest.TestCase):
             "id": "52",
             "name": "施設N",
             "coordinates": [139.72, 35.62],
+            "matchBasis": "qid",
         }
 
         updated = apply_source_updates(
@@ -866,6 +905,7 @@ class SourceUpdateTests(unittest.TestCase):
         self.assertEqual([139.71, 35.61], result["geometry"]["coordinates"])
         self.assertEqual("wam", result["geometrySource"]["sourceId"])
         self.assertEqual("node/52", result["externalRefs"][-1]["recordId"])
+        self.assertEqual("qid", result["externalRefs"][-1]["basis"])
         self.assertEqual({"at", "method", "action", "target"}, set(result["audit"][-1]))
         self.assertIn("linked_wam", [item["action"] for item in result["audit"]])
 
