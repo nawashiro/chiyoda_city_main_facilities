@@ -1,18 +1,45 @@
-name: Validate WAM snapshot
+name: Process WAM snapshot
 
 on:
   workflow_dispatch:
+    inputs:
+      raw_path:
+        description: Path to a version-pinned WAM raw JSON file in this ref
+        required: true
+        type: string
+      retrieved_at:
+        description: Retrieval time with timezone (ISO 8601)
+        required: true
+        type: string
 
 permissions:
   contents: read
 
 jobs:
-  validate:
+  process:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
         with:
           python-version: "3.13"
-      - run: python3 -m unittest tests.test_facility_data.SourceUpdateTests -v
+      - name: Normalize snapshot
+        env:
+          RAW_PATH: ${{ inputs.raw_path }}
+          RETRIEVED_AT: ${{ inputs.retrieved_at }}
+        run: python3 -m src.update_wam "$RAW_PATH" . --at "$RETRIEVED_AT"
+      - name: Apply only WAM
+        env:
+          RETRIEVED_AT: ${{ inputs.retrieved_at }}
+        run: python3 -m src.facility_data update . --source wam --at "$RETRIEVED_AT"
       - run: python3 -m src.facility_data validate .
+      - run: python3 -m unittest discover -s tests -v
+      - name: Save generated update for manual review
+        uses: actions/upload-artifact@v4
+        with:
+          name: wam-update
+          path: |
+            imports/wam/
+            data/registry.json
+            dist/public/
+            reports/latest-update.json

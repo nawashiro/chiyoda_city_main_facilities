@@ -23,7 +23,10 @@ def main(argv: list[str] | None = None) -> int:
     if not isinstance(raw.get("version"), str) or not raw["version"].strip():
         print("ERROR: WAM raw snapshot requires a version")
         return 1
-    records = normalize_wam_rows(raw.get("rows", []))
+    if not isinstance(raw.get("rows"), list):
+        print("ERROR: WAM raw snapshot requires a rows array")
+        return 1
+    records = normalize_wam_rows(raw["rows"])
     normalized_path = root / "imports/wam/normalized.json"
     normalized_path.write_text(
         json.dumps({"records": records}, ensure_ascii=False, indent=2) + "\n",

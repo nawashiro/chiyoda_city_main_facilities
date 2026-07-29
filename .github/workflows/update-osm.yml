@@ -1,19 +1,45 @@
-name: Validate OSM snapshot
+name: Process OSM snapshot
 
 on:
   workflow_dispatch:
+    inputs:
+      raw_path:
+        description: Path to a version-pinned Overpass raw JSON file in this ref
+        required: true
+        type: string
+      retrieved_at:
+        description: Retrieval time with timezone (ISO 8601)
+        required: true
+        type: string
 
 permissions:
   contents: read
 
 jobs:
-  validate:
+  process:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
         with:
           python-version: "3.13"
-      - run: python3 -m src.update_osm query .
-      - run: python3 -m unittest tests.test_facility_data.SourceUpdateTests -v
+      - name: Normalize snapshot
+        env:
+          RAW_PATH: ${{ inputs.raw_path }}
+          RETRIEVED_AT: ${{ inputs.retrieved_at }}
+        run: python3 -m src.update_osm normalize . --raw "$RAW_PATH" --at "$RETRIEVED_AT"
+      - name: Apply only OpenStreetMap
+        env:
+          RETRIEVED_AT: ${{ inputs.retrieved_at }}
+        run: python3 -m src.facility_data update . --source openstreetmap --at "$RETRIEVED_AT"
       - run: python3 -m src.facility_data validate .
+      - run: python3 -m unittest discover -s tests -v
+      - name: Save generated update for manual review
+        uses: actions/upload-artifact@v4
+        with:
+          name: osm-update
+          path: |
+            imports/openstreetmap/
+            data/registry.json
+            dist/public/
+            reports/latest-update.json

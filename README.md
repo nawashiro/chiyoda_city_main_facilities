@@ -56,8 +56,9 @@ python3 -m src.update_osm query .
 python3 -m src.update_osm normalize . --raw /path/to/osm.json --at 2026-07-28T00:00:00Z
 python3 -m src.update_wam /path/to/wam.json . --at 2026-07-28T00:00:00Z
 
-# snapshotを正本へ適用して公開物を再生成
-python3 -m src.facility_data update . --at 2026-07-28T00:00:00Z
+# snapshotを正本へ一ソースずつ適用して公開物を再生成
+python3 -m src.facility_data update . --source openstreetmap --at 2026-07-28T00:00:00Z
+python3 -m src.facility_data update . --source wam --at 2026-07-28T00:00:00Z
 ```
 
 外部から消えたという理由だけでPlaceは削除しません。WAMは公式公開後の年2回、OSMと町名は四半期または手動を基本とし、更新は一ソース版ずつ扱います。

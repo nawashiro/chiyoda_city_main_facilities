@@ -684,25 +684,25 @@ OSM要素の消失だけを理由に施設を廃止しない。
 `.github/workflows/validate.yml`で次を実行する。
 
 ```bash
-python -m unittest discover -s tests -v
-python -m src.validate_data .
+python3 -m unittest discover -s tests -v
+python3 -m src.facility_data validate .
 ```
 
-この検証では外部APIや配布サイトへ接続しない。
+この検証では外部APIや配布サイトへ接続しない。`imports/*/normalized.json`も検証対象とし、未知・重複UUID、不正な座標・型・外部IDを拒否する。
 
-### 10.2 将来の更新ジョブ
+### 10.2 外部ソース更新ジョブ
 
 | ジョブ | 頻度 |
 |---|---|
-| WAM NET | 4月15日・10月15日 |
-| OSM既知施設 | 四半期または手動 |
+| WAM NET | 公式公開後の年2回、手動起動 |
+| OSM既知施設 | 四半期または手動起動 |
 | 町名GeoJSON | 四半期または手動 |
 | 依存関係更新 | 月1回 |
 | LLM合議 | 外部ソースに意味差分がある時だけ。単独の定期実行はしない |
 
-全ジョブに`workflow_dispatch`を付け、障害時は手動で再実行できるようにする。
+WAM・OSMジョブは`workflow_dispatch`で版固定rawのリポジトリ内パスとタイムゾーン付き取得時刻を受け取る。正規化後、指定した一ソースだけを正本へ適用し、検証と単体テストを行う。変更は直接pushせず、正規化snapshot、正本、公開物、短い更新レポートをartifactとして保存し、人が専用ブランチで差分を確認する。
 
-同じソースへ失敗直後に繰り返し接続しない。再試行は最大3回、指数バックオフを使う。
+同一ソースの取得時刻が前回から30日未満なら非0終了する。ジョブ自身は外部サイトへ接続せず、施設ごとの問い合わせも行わない。
 
 ### 10.3 推論実行の失敗
 
@@ -809,8 +809,13 @@ python -m src.validate_data .
 
 実施内容:
 
-- WAMの年2回更新と訪問系除外
-- 承認済み型付きIDの一括更新
+- WAMの年2回更新と訪問系サービスコード・表示名による除外
+- currentとsupersededを含む承認済み型付きOSM IDの一括取得（正本適用はcurrentを優先）
+- 検索入力QIDと一致するOSM要素からの新規参照追加
+- 一回につき一ソース版だけを正本へ適用し、別ソースの古いsnapshotを再確認扱いにしない
+- 正本・公開GeoJSON・manifest・更新レポートを事前生成・検証してから置換する
+- 不正日時、版なしraw、配列欠落、未知型・ID・QID・座標、重複・未知UUIDを非0終了で拒否する
+- GitHub Actionsで版固定rawを正規化・適用・検証し、直接pushせずartifactとして保存する
 - 町名GeoJSONの版固定更新とpoint-in-polygonの再生成
 - 必要時だけの範囲候補取得
 - ローカル候補照合

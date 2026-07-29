@@ -17,6 +17,16 @@ from typing import Any
 
 
 _QID = re.compile(r"^Q[1-9][0-9]*$")
+_WAM_VISITING_SERVICE_TYPES = {
+    "11",
+    "12",
+    "13",
+    "14",
+    "訪問介護",
+    "訪問入浴介護",
+    "訪問看護",
+    "訪問リハビリテーション",
+}
 
 _OUT_OF_SCOPE = {"保育所", "幼稚園", "学校", "劇場"}
 _CATEGORY_IDS = {
@@ -164,8 +174,11 @@ def validate_registry(
             issues.append(f"place {place_id}: search input not found")
         elif place.get("name") != query.get("name"):
             issues.append(f"place {place_id}: name differs from search input")
-        if place.get("geometry", {}).get("type") != "Point":
+        geometry = place.get("geometry", {})
+        if geometry.get("type") != "Point":
             issues.append(f"place {place_id}: geometry must be Point")
+        elif not _valid_coordinates(geometry.get("coordinates")):
+            issues.append(f"place {place_id}: invalid Point coordinates")
         current_osm = [
             ref
             for ref in place.get("externalRefs", [])
@@ -281,13 +294,56 @@ def validate_repository(root: str | Path) -> list[str]:
                 issues.append(f"duplicate search id across files: {query_id}")
             search_by_id[query_id] = query
     issues.extend(validate_registry(registry, search_by_id))
+    for source in ("wam", "openstreetmap"):
+        relative = f"imports/{source}/normalized.json"
+        path = Path(root) / relative
+        if not path.exists():
+            continue
+        snapshot = _read_json(path)
+        if not isinstance(snapshot, dict):
+            issues.append(f"{relative}: document must be an object")
+            continue
+        records = snapshot.get("records")
+        if not isinstance(records, list):
+            issues.append(f"{relative}: records must be an array")
+            continue
+        seen_snapshot_ids = set()
+        for index, record in enumerate(records):
+            prefix = f"{relative}: records[{index}]"
+            if not isinstance(record, dict):
+                issues.append(f"{prefix}: record must be an object")
+                continue
+            query_id = record.get("queryId")
+            if not _is_uuid7(query_id) or query_id not in search_by_id:
+                issues.append(f"{prefix}: unknown or invalid queryId")
+            elif query_id in seen_snapshot_ids:
+                issues.append(f"{prefix}: duplicate queryId")
+            seen_snapshot_ids.add(query_id)
+            if not _valid_coordinates(record.get("coordinates")):
+                issues.append(f"{prefix}: invalid coordinates")
+            if source == "wam":
+                record_id = record.get("id")
+                if (
+                    isinstance(record_id, bool)
+                    or not isinstance(record_id, (str, int))
+                    or not str(record_id).strip()
+                ):
+                    issues.append(f"{prefix}: invalid WAM id")
+                if not isinstance(record.get("name"), str) or not record["name"].strip():
+                    issues.append(f"{prefix}: invalid WAM name")
+            else:
+                if record.get("type") not in {"node", "way", "relation"}:
+                    issues.append(f"{prefix}: invalid OSM type")
+                record_id = record.get("id")
+                if not isinstance(record_id, str) or not record_id.isdigit() or int(record_id) <= 0:
+                    issues.append(f"{prefix}: invalid OSM id")
+                if record.get("qid") is not None and not _QID.fullmatch(str(record["qid"])):
+                    issues.append(f"{prefix}: invalid OSM QID")
     return issues
 
 
-def build_repository(root: str | Path) -> Path:
-    """Build the public GeoJSON from the canonical registry."""
-    root = Path(root)
-    _, registry, source_document = _repository_documents(root)
+def _build_public_document(root: Path, registry: dict[str, Any]) -> dict[str, Any]:
+    source_document = _read_json(root / "config/sources.json")
     attributions = [
         {
             "sourceId": source["id"],
@@ -302,7 +358,14 @@ def build_repository(root: str | Path) -> Path:
     ]
     towns_path = root / "data/pinned/towns.geojson"
     towns = _read_json(towns_path) if towns_path.is_file() else None
-    public = build_public_geojson(registry, attributions, towns)
+    return build_public_geojson(registry, attributions, towns)
+
+
+def build_repository(root: str | Path) -> Path:
+    """Build the public GeoJSON from the canonical registry."""
+    root = Path(root)
+    _, registry, _ = _repository_documents(root)
+    public = _build_public_document(root, registry)
     output = root / "dist/public/places.geojson"
     output.parent.mkdir(parents=True, exist_ok=True)
     payload = (json.dumps(public, ensure_ascii=False, indent=2) + "\n").encode("utf-8")
@@ -475,10 +538,22 @@ def compact_audit(at: str, method: str, action: str, target: str) -> dict[str, s
 
 def source_refresh_due(last_retrieved_at: str | None, now: str) -> bool:
     """Enforce the shared at-most-monthly retrieval boundary."""
+    try:
+        current = datetime.fromisoformat(now.replace("Z", "+00:00"))
+    except (AttributeError, ValueError) as error:
+        raise ValueError("invalid current retrieval time") from error
+    if current.tzinfo is None or current.utcoffset() is None:
+        raise ValueError("retrieval time must include a timezone")
     if last_retrieved_at is None:
         return True
-    previous = datetime.fromisoformat(last_retrieved_at.replace("Z", "+00:00"))
-    current = datetime.fromisoformat(now.replace("Z", "+00:00"))
+    try:
+        previous = datetime.fromisoformat(last_retrieved_at.replace("Z", "+00:00"))
+    except (AttributeError, ValueError) as error:
+        raise ValueError("invalid previous retrieval time") from error
+    if previous.tzinfo is None or previous.utcoffset() is None:
+        raise ValueError("previous retrieval time must include a timezone")
+    if previous > current:
+        raise ValueError("previous retrieval time is in the future")
     return current - previous >= timedelta(days=30)
 
 
@@ -486,11 +561,13 @@ def normalize_wam_rows(rows: list[dict[str, Any]]) -> list[dict[str, Any]]:
     """Normalize selected WAM rows; visiting-only services are not places."""
     normalized = []
     for index, row in enumerate(rows):
-        if "訪問" in str(row.get("serviceType", "")):
+        service_type = str(row.get("serviceType", "")).strip()
+        if service_type in _WAM_VISITING_SERVICE_TYPES:
             continue
         coordinates = [row.get("longitude"), row.get("latitude")]
         if (
             not _is_uuid7(row.get("placeId"))
+            or isinstance(row.get("facilityId"), bool)
             or not isinstance(row.get("facilityId"), (str, int))
             or not str(row.get("facilityId", "")).strip()
             or not isinstance(row.get("name"), str)
@@ -512,17 +589,27 @@ def normalize_wam_rows(rows: list[dict[str, Any]]) -> list[dict[str, Any]]:
 def normalize_osm_elements(elements: list[dict[str, Any]]) -> list[dict[str, Any]]:
     """Normalize Overpass elements to representative points only."""
     normalized = []
-    for element in elements:
+    for index, element in enumerate(elements):
         if element.get("type") not in {"node", "way", "relation"}:
-            continue
+            raise ValueError(f"unsupported OSM type at index {index}")
+        if (
+            isinstance(element.get("id"), bool)
+            or not isinstance(element.get("id"), int)
+            or element["id"] <= 0
+        ):
+            raise ValueError(f"invalid OSM id at index {index}")
         if element.get("type") == "node":
             coordinates = [element.get("lon"), element.get("lat")]
         else:
             center = element.get("center", {})
             coordinates = [center.get("lon"), center.get("lat")]
         if not _valid_coordinates(coordinates):
-            continue
+            raise ValueError(f"invalid OSM coordinates at index {index}")
         tags = element.get("tags", {})
+        if not isinstance(tags, dict):
+            raise ValueError(f"invalid OSM tags at index {index}")
+        if tags.get("wikidata") is not None and not _QID.fullmatch(str(tags["wikidata"])):
+            raise ValueError(f"invalid OSM Wikidata QID at index {index}")
         record = {
             "type": element["type"],
             "id": str(element["id"]),
@@ -547,9 +634,12 @@ def collect_osm_ids(registry: dict[str, Any]) -> list[str]:
     return sorted(ids)
 
 
-def build_osm_batch_query(typed_ids: list[str]) -> str:
-    """Build one Overpass query; never one request per place."""
-    if not typed_ids:
+def build_osm_batch_query(typed_ids: list[str], qids: list[str]) -> str:
+    """Build one Overpass query for known IDs and search-input QIDs."""
+    qids = sorted(set(qids))
+    if any(not _QID.fullmatch(qid) for qid in qids):
+        raise ValueError("invalid QID in OSM batch query")
+    if not typed_ids and not qids:
         return ""
     grouped: dict[str, list[str]] = {"node": [], "way": [], "relation": []}
     for typed_id in typed_ids:
@@ -560,6 +650,7 @@ def build_osm_batch_query(typed_ids: list[str]) -> str:
         for record_type in ("node", "way", "relation")
         if grouped[record_type]
     )
+    selectors += "".join(f'nwr["wikidata"="{qid}"];' for qid in qids)
     return f"[out:json];({selectors});out center;"
 
 
@@ -643,6 +734,9 @@ def _update_wam_reference(
                 "basis": "source_record",
             }
         )
+    updated.setdefault("audit", []).append(
+        compact_audit(at, "calculation_model", "linked_wam", record_id)
+    )
     return updated
 
 
@@ -685,29 +779,39 @@ def apply_source_updates(
                 place, osm_record, at, "source_record", "calculation_model"
             )
         if wam_record is not None or osm_record is not None:
-            coordinates, source_id, record_id = choose_geometry(
-                query, wam_record, osm_record
+            preserve_wam_geometry = (
+                wam_record is None
+                and original.get("geometrySource", {}).get("sourceId") == "wam"
             )
-            previous = place.get("geometry", {}).get("coordinates")
-            previous_source = place.get("geometrySource", {}).get("sourceId")
-            place["geometry"] = {"type": "Point", "coordinates": coordinates}
-            place["geometrySource"] = {
-                "sourceId": source_id,
-                "recordId": record_id,
-                "confirmedAt": at,
-            }
-            if previous != coordinates or previous_source != source_id:
-                place.setdefault("audit", []).append(
-                    compact_audit(at, "calculation_model", "updated_geometry", place_id)
+            if not preserve_wam_geometry:
+                coordinates, source_id, record_id = choose_geometry(
+                    query, wam_record, osm_record
                 )
+                previous = place.get("geometry", {}).get("coordinates")
+                previous_source = place.get("geometrySource", {}).get("sourceId")
+                place["geometry"] = {"type": "Point", "coordinates": coordinates}
+                place["geometrySource"] = {
+                    "sourceId": source_id,
+                    "recordId": record_id,
+                    "confirmedAt": at,
+                }
+                if previous != coordinates or previous_source != source_id:
+                    place.setdefault("audit", []).append(
+                        compact_audit(at, "calculation_model", "updated_geometry", place_id)
+                    )
         places.append(place)
     updated["places"] = places
     return updated
 
 
-def update_repository(root: str | Path, at: str) -> Path:
-    """Apply local source snapshots atomically, then rebuild public data."""
+def update_repository(root: str | Path, at: str, source: str) -> Path:
+    """Apply one local source snapshot, validate, then rebuild public data."""
+    if source not in {"wam", "openstreetmap"}:
+        raise ValueError(f"unsupported update source: {source}")
     root = Path(root)
+    existing_issues = validate_repository(root)
+    if existing_issues:
+        raise ValueError("; ".join(existing_issues))
     search_by_id: dict[str, dict[str, Any]] = {}
     for path in sorted((root / "inputs/osm-search").rglob("*.json")):
         document = _read_json(path)
@@ -719,29 +823,80 @@ def update_repository(root: str | Path, at: str) -> Path:
     def records(path: Path) -> list[dict[str, Any]]:
         return _read_json(path).get("records", []) if path.exists() else []
 
+    wam_records = records(root / "imports/wam/normalized.json") if source == "wam" else []
+    osm_records = (
+        records(root / "imports/openstreetmap/normalized.json")
+        if source == "openstreetmap"
+        else []
+    )
     updated = apply_source_updates(
         registry,
         search_by_id,
-        records(root / "imports/wam/normalized.json"),
-        records(root / "imports/openstreetmap/normalized.json"),
+        wam_records,
+        osm_records,
         at,
     )
     issues = validate_registry(updated, search_by_id)
     if issues:
         raise ValueError("; ".join(issues))
-    _write_json(root / "data/registry.json", updated)
-    build_repository(root)
-    report_path = root / "reports/latest-update.json"
-    _write_json(
-        report_path,
-        {
-            "at": at,
-            "places": len(updated.get("places", [])),
-            "wamRecords": len(records(root / "imports/wam/normalized.json")),
-            "osmRecords": len(records(root / "imports/openstreetmap/normalized.json")),
-        },
+
+    public = _build_public_document(root, updated)
+    public_payload = (json.dumps(public, ensure_ascii=False, indent=2) + "\n").encode(
+        "utf-8"
     )
-    return report_path
+    report = {
+        "at": at,
+        "source": source,
+        "places": len(updated.get("places", [])),
+        "records": len(wam_records) + len(osm_records),
+    }
+    targets = {
+        root / "data/registry.json": (
+            json.dumps(updated, ensure_ascii=False, indent=2) + "\n"
+        ).encode("utf-8"),
+        root / "dist/public/places.geojson": public_payload,
+        root / "dist/public/manifest.json": (
+            json.dumps(
+                {
+                    "file": "places.geojson",
+                    "sha256": hashlib.sha256(public_payload).hexdigest(),
+                },
+                ensure_ascii=False,
+                indent=2,
+            )
+            + "\n"
+        ).encode("utf-8"),
+        root / "reports/latest-update.json": (
+            json.dumps(report, ensure_ascii=False, indent=2) + "\n"
+        ).encode("utf-8"),
+    }
+    temporary_paths = []
+    try:
+        for target, payload in targets.items():
+            target.parent.mkdir(parents=True, exist_ok=True)
+            temporary = target.with_name(f".{target.name}.tmp")
+            temporary.write_bytes(payload)
+            temporary_paths.append(temporary)
+        originals = {
+            target: target.read_bytes() if target.exists() else None for target in targets
+        }
+        replaced = []
+        try:
+            for temporary, target in zip(temporary_paths, targets, strict=True):
+                temporary.replace(target)
+                replaced.append(target)
+        except OSError:
+            for target in replaced:
+                original = originals[target]
+                if original is None:
+                    target.unlink(missing_ok=True)
+                else:
+                    target.write_bytes(original)
+            raise
+    finally:
+        for temporary in temporary_paths:
+            temporary.unlink(missing_ok=True)
+    return root / "reports/latest-update.json"
 
 
 def main(argv: list[str] | None = None) -> int:
@@ -749,12 +904,13 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument("command", choices=("validate", "build", "update"))
     parser.add_argument("root", nargs="?", default=".")
     parser.add_argument("--at")
+    parser.add_argument("--source", choices=("wam", "openstreetmap"))
     args = parser.parse_args(argv)
     if args.command == "update":
-        if args.at is None:
-            print("ERROR: update requires --at")
+        if args.at is None or args.source is None:
+            print("ERROR: update requires --source and --at")
             return 1
-        print(update_repository(args.root, args.at))
+        print(update_repository(args.root, args.at, args.source))
         return 0
     issues = validate_repository(args.root)
     if issues:

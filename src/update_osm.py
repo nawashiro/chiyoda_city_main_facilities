@@ -21,8 +21,22 @@ def main(argv: list[str] | None = None) -> int:
     args = parser.parse_args(argv)
     root = Path(args.root)
     registry = json.loads((root / "data/registry.json").read_text(encoding="utf-8"))
+    qid_by_query_id = {}
+    for path in sorted((root / "inputs/osm-search").rglob("*.json")):
+        document = json.loads(path.read_text(encoding="utf-8"))
+        for query in document.get("queries", []):
+            qid = query.get("qid")
+            if qid is not None:
+                if qid in qid_by_query_id:
+                    print(f"ERROR: duplicate search QID: {qid}")
+                    return 1
+                qid_by_query_id[qid] = query["id"]
     if args.command == "query":
-        print(build_osm_batch_query(collect_osm_ids(registry)))
+        print(
+            build_osm_batch_query(
+                collect_osm_ids(registry), sorted(qid_by_query_id)
+            )
+        )
         return 0
     if args.raw is None or args.at is None:
         print("ERROR: normalize requires --raw and --at")
@@ -36,15 +50,30 @@ def main(argv: list[str] | None = None) -> int:
     if not isinstance(raw.get("version"), str) or not raw["version"].strip():
         print("ERROR: OSM raw snapshot requires a version")
         return 1
-    by_record_id = {
+    if not isinstance(raw.get("elements"), list):
+        print("ERROR: OSM raw snapshot requires an elements array")
+        return 1
+    current_by_record_id = {
         ref["recordId"]: place["id"]
         for place in registry.get("places", [])
         for ref in place.get("externalRefs", [])
+        if ref.get("sourceId") == "openstreetmap" and ref.get("status") == "current"
+    }
+    superseded_record_ids = {
+        ref["recordId"]
+        for place in registry.get("places", [])
+        for ref in place.get("externalRefs", [])
         if ref.get("sourceId") == "openstreetmap"
+        and ref.get("status") == "superseded"
     }
     records = []
-    for record in normalize_osm_elements(raw.get("elements", [])):
-        query_id = by_record_id.get(f"{record['type']}/{record['id']}")
+    for record in normalize_osm_elements(raw["elements"]):
+        typed_id = f"{record['type']}/{record['id']}"
+        query_id = current_by_record_id.get(typed_id)
+        if query_id is None and typed_id in superseded_record_ids:
+            continue
+        if query_id is None and record.get("qid") is not None:
+            query_id = qid_by_query_id.get(record["qid"])
         if query_id is not None:
             records.append({"queryId": query_id, **record})
     normalized_path = root / "imports/openstreetmap/normalized.json"
