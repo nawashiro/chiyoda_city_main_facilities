@@ -109,7 +109,7 @@ OSMとWAMの参照は`externalRefs`へ保持する。OSM IDが変わった場合
 - QID形式
 - `matchBasis`が`source_record`、`qid`、`name_coordinates`、`language_model`のいずれか
 - QID照合では検索入力QIDとの一致
-- 名称＋座標照合では名称完全一致かつ50m以内
+- 名称＋座標照合では、NFKC正規化と空白・記号除去後に6文字以上あり、編集距離が名称長の15%以内（最低1文字、最大3文字）かつ50m以内
 - current参照照合では既存current IDであること、名称・QIDの競合がないこと、既存代表点から50m以内であること
 
 町名GeoJSONのPolygon/MultiPolygon構造、閉ring、異なる頂点数、非ゼロ面積、座標範囲、町名重複は`src.retrieve_towns`の取得時に検証する。
@@ -128,7 +128,7 @@ python3 -m src.facility_data validate .
 
 `WAM_RELEASE`は公式配布版の`YYYYMM`を明示指定する。
 
-取得処理は4サービスZIPを各1回だけ読み、応答サイズ、ZIP展開サイズ、圧縮率、CSV行数を制限する。東京都千代田区の有効行だけを`imports/wam/raw.json`へ保持し、normalized snapshotを作る。
+取得処理は4サービスZIPを各1回だけ読み、応答サイズ、ZIP展開サイズ、圧縮率、CSV行数を制限する。東京都千代田区の有効行だけを`imports/wam/raw.json`へ保持し、normalized snapshotを作る。raw rowの`attributes`には公式CSVの29列を列名そのまま（空欄は空文字）で保持し、法人・事業所の住所、電話、FAX、URL、利用時間、定休日、定員等を公開GeoJSONから直接利用できるようにする。
 
 公式ZIPそのものはrepositoryやActions artifactへ恒久保存しない。`imports/wam/retrieval.json`には取得URL、content length、ETag等、ZIPのSHA-256を記録する。
 
@@ -153,7 +153,7 @@ python3 -m src.facility_data validate .
 
 1. 既存current OSM参照
 2. 検索入力QIDと一致する一意候補
-3. 検索入力から50m以内、かつ名称完全一致の一意候補
+3. 検索入力から50m以内、かつ正規化後に6文字以上あり、編集距離が名称長の15%以内（最低1文字、最大3文字）の一意候補
 
 残った近傍候補はOpenAI互換APIへ独立した3回の判断を依頼する。3つの有効票のうち2票以上が同じ候補へのlinkで一致すれば`matchBasis: language_model`として適用し、2票以上がrejectで一致すれば自動却下する。合議不成立だけを`reports/osm-review-needed.json`へ残す。候補がない施設は人手確認へ送らず、OSM参照なしのまま扱う。
 

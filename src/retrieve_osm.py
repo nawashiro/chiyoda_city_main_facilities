@@ -10,7 +10,12 @@ from typing import Any
 from urllib.parse import urlencode
 from urllib.request import Request, urlopen
 
-from src.facility_data import collect_osm_ids, normalize_osm_elements, source_refresh_due
+from src.facility_data import (
+    _osm_names_match,
+    collect_osm_ids,
+    normalize_osm_elements,
+    source_refresh_due,
+)
 from src.http_utils import read_limited_response
 
 
@@ -131,7 +136,11 @@ def prepare_osm_snapshot(
                 "distanceMeters": distance,
             }
             report_candidates.append(candidate)
-            if "coordinates" in query and record.get("name") == query["name"]:
+            if (
+                "coordinates" in query
+                and isinstance(record.get("name"), str)
+                and _osm_names_match(record["name"], query["name"])
+            ):
                 exact_candidates.append(record)
 
         current_matches = [
@@ -143,7 +152,13 @@ def prepare_osm_snapshot(
                 record["coordinates"],
             )
             <= 50
-            and (record.get("name") is None or record.get("name") == query["name"])
+            and (
+                record.get("name") is None
+                or (
+                    isinstance(record.get("name"), str)
+                    and _osm_names_match(record["name"], query["name"])
+                )
+            )
             and (
                 "qid" not in query
                 or record.get("qid") is None

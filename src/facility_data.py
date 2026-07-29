@@ -16,6 +16,8 @@ from datetime import datetime, timedelta
 from pathlib import Path
 from typing import Any
 
+from src.wam_contract import WAM_PUBLIC_ATTRIBUTE_HEADERS, WAM_PUBLIC_ATTRIBUTE_SET
+
 
 _QID = re.compile(r"^Q[1-9][0-9]*$")
 _WAM_VISITING_SERVICE_TYPES = {
@@ -366,7 +368,7 @@ def validate_repository(root: str | Path) -> list[str]:
             issues.append(f"{relative}: records must be an array")
             continue
         wam_raw_by_id: dict[str, dict[str, Any]] | None = None
-        if source == "wam" and records:
+        if source == "wam":
             raw_path = Path(root) / "imports/wam/raw.json"
             metadata_path = Path(root) / "imports/wam/retrieval.json"
             try:
@@ -510,18 +512,14 @@ def _public_source_records(root: Path) -> dict[str, dict[str, Any]]:
         normalized = _read_json(wam_normalized_path).get("records", [])
         raw_rows = _read_json(wam_raw_path).get("rows", [])
         metadata = _read_json(wam_metadata_path)
-        raw_by_id = {}
-        for row in raw_rows:
-            record_id = str(row["sourceRecordId"])
-            if record_id in raw_by_id:
-                raise ValueError(f"duplicate WAM raw record: {record_id}")
-            raw_by_id[record_id] = row
+        raw_by_id = _index_wam_raw_rows(raw_rows)
         for selected in normalized:
             public_rows = []
             for record_id in selected["sourceRecordIds"]:
                 raw = raw_by_id.get(str(record_id))
                 if raw is None:
                     raise ValueError(f"selected WAM raw record is missing: {record_id}")
+                attributes = raw["attributes"]
                 public_rows.append(
                     {
                         "sourceRecordId": str(raw["sourceRecordId"]),
@@ -530,6 +528,10 @@ def _public_source_records(root: Path) -> dict[str, dict[str, Any]]:
                         "serviceType": str(raw["serviceType"]),
                         "name": str(raw["name"]),
                         "coordinates": list(raw["coordinates"]),
+                        "attributes": {
+                            name: attributes[name]
+                            for name in WAM_PUBLIC_ATTRIBUTE_HEADERS
+                        },
                     }
                 )
             source_records.setdefault(selected["queryId"], {})["wam"] = {
@@ -730,6 +732,43 @@ def _distance_metres(first: list[float], second: list[float]) -> float:
     return 6_371_000 * 2 * math.atan2(math.sqrt(a), math.sqrt(1 - a))
 
 
+def _osm_comparison_name(value: str) -> str:
+    normalized = unicodedata.normalize("NFKC", value).casefold()
+    return re.sub(r"[^0-9a-zぁ-んァ-ヶ一-龠々ー]+", "", normalized)
+
+
+def _edit_distance(first: str, second: str) -> int:
+    if len(first) > len(second):
+        first, second = second, first
+    previous = list(range(len(first) + 1))
+    for row, right_character in enumerate(second, start=1):
+        current = [row]
+        for column, left_character in enumerate(first, start=1):
+            current.append(
+                min(
+                    current[-1] + 1,
+                    previous[column] + 1,
+                    previous[column - 1] + (left_character != right_character),
+                )
+            )
+        previous = current
+    return previous[-1]
+
+
+def _osm_names_match(first: str, second: str) -> bool:
+    left = _osm_comparison_name(first)
+    right = _osm_comparison_name(second)
+    if not left or not right:
+        return False
+    if left == right:
+        return True
+    if min(len(left), len(right)) < 6:
+        return False
+    maximum_length = max(len(left), len(right))
+    allowed_distance = min(3, max(1, round(maximum_length * 0.15)))
+    return _edit_distance(left, right) <= allowed_distance
+
+
 def _validate_osm_record_match(
     record: dict[str, Any],
     query: dict[str, Any],
@@ -753,8 +792,10 @@ def _validate_osm_record_match(
     if basis == "name_coordinates":
         if "coordinates" not in query:
             raise ValueError("OSM name_coordinates match requires query coordinates")
-        if record.get("name") != query["name"]:
-            raise ValueError("OSM name_coordinates match requires an exact name")
+        if not isinstance(record.get("name"), str) or not _osm_names_match(
+            record["name"], query["name"]
+        ):
+            raise ValueError("OSM name_coordinates match exceeds the allowed name distance")
         if _distance_metres(query["coordinates"], record["coordinates"]) > 50:
             raise ValueError("OSM name_coordinates match exceeds 50 metres")
         return
@@ -768,7 +809,10 @@ def _validate_osm_record_match(
         for ref in place.get("externalRefs", [])
     ):
         raise ValueError("OSM source_record is not the current reference")
-    if record.get("name") is not None and record["name"] != query["name"]:
+    if record.get("name") is not None and (
+        not isinstance(record["name"], str)
+        or not _osm_names_match(record["name"], query["name"])
+    ):
         raise ValueError("OSM current record has a conflicting name")
     if (
         "qid" in query
@@ -815,6 +859,15 @@ def _index_wam_raw_rows(rows: Any) -> dict[str, dict[str, Any]]:
             raise ValueError(f"WAM raw row {index} has invalid required fields")
         if not _valid_coordinates(row.get("coordinates")):
             raise ValueError(f"WAM raw row {index} has invalid coordinates")
+        attributes = row.get("attributes")
+        if (
+            not isinstance(attributes, dict)
+            or set(attributes) != WAM_PUBLIC_ATTRIBUTE_SET
+            or any(not isinstance(value, str) for value in attributes.values())
+        ):
+            raise ValueError(
+                f"WAM raw row {index} attributes must match the official 29-column contract"
+            )
         source_id = row["sourceRecordId"]
         if source_id in indexed:
             raise ValueError(f"duplicate WAM raw sourceRecordId: {source_id}")
@@ -875,7 +928,9 @@ def match_osm_candidates(
                 continue
             distance = None
         else:
-            if candidate.get("name") != query["name"]:
+            if not isinstance(candidate.get("name"), str) or not _osm_names_match(
+                candidate["name"], query["name"]
+            ):
                 continue
             distance = _distance_metres(query["coordinates"], candidate["coordinates"])
             if distance > max_distance_m:
@@ -1053,7 +1108,6 @@ def update_osm_reference(
     )
     if current is not None:
         current["lastConfirmedAt"] = at
-        current["basis"] = basis
     else:
         for ref in refs:
             if ref.get("sourceId") == "openstreetmap" and ref.get("status") == "current":
@@ -1070,9 +1124,9 @@ def update_osm_reference(
                 "basis": basis,
             }
         )
-    updated.setdefault("audit", []).append(
-        compact_audit(at, method, "linked_osm", record_id)
-    )
+        updated.setdefault("audit", []).append(
+            compact_audit(at, method, "linked_osm", record_id)
+        )
     return updated
 
 

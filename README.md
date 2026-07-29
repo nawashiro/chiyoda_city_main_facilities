@@ -93,8 +93,8 @@ python3 -m src.facility_data update . --source wam --at "$AT"
 python3 -m src.facility_data validate .
 
 # 千代田区内の対象カテゴリをOverpassへ1回だけ問い合わせ、
-# 既存のOSM参照、QID一意一致、または名称完全一致かつ
-# 50m以内で一意な候補を適用
+# 既存のOSM参照、QID一意一致、または50m以内で
+# 正規化・編集距離を満たす一意な名称候補を適用
 AT=$(date --iso-8601=seconds)
 python3 -m src.retrieve_osm . --at "$AT"
 python3 -m src.resolve_osm_candidates .
@@ -116,7 +116,7 @@ GitHub Actionsの`Update WAM data`、`Update OpenStreetMap data`、`Update town 
 
 外部から消えたという理由だけでPlaceは削除しません。WAMは公式公開後の年2回、OSMと町名は四半期または手動を基本とし、更新は一ソース版ずつ扱います。
 
-WAMから取得するのは、計画相談支援、地域移行、地域定着、障害児相談支援の4サービスです。
+WAMから取得するのは、計画相談支援、地域移行、地域定着、障害児相談支援の4サービスです。対象行では公式CSVの29列（法人・事業所の住所、電話、FAX、URL、利用時間、定休日、定員等）を`attributes`として保持し、公開GeoJSONへ含めます。
 
 ## 運用方針
 

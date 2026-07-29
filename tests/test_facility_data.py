@@ -30,6 +30,13 @@ from src.facility_data import (
 )
 from src.update_osm import main as update_osm_main
 from src.update_wam import main as update_wam_main
+from src.wam_contract import WAM_PUBLIC_ATTRIBUTE_HEADERS
+
+
+def wam_attributes(overrides=None):
+    attributes = {name: "" for name in WAM_PUBLIC_ATTRIBUTE_HEADERS}
+    attributes.update(overrides or {})
+    return attributes
 
 
 class SearchInputTests(unittest.TestCase):
@@ -435,24 +442,25 @@ class PublicSourceRecordTests(unittest.TestCase):
             (path / "retrieval.json").write_text(
                 json.dumps({"retrievedAt": "2026-07-28T00:00:00Z"}), encoding="utf-8"
             )
-            (path / "raw.json").write_text(
-                json.dumps(
-                    {
-                        "rows": [
-                            {
-                                "sourceRecordId": "wam-1",
-                                "officeId": "office-1",
-                                "serviceCode": "52",
-                                "serviceType": "計画相談支援",
-                                "name": "施設F",
-                                "coordinates": [139.75, 35.69],
-                                "internalHistory": "must not be public",
-                            }
-                        ]
-                    }
+            raw_row = {
+                "sourceRecordId": "wam-1",
+                "officeId": "office-1",
+                "serviceCode": "52",
+                "serviceType": "計画相談支援",
+                "name": "施設F",
+                "coordinates": [139.75, 35.69],
+                "attributes": wam_attributes(
+                    {"事業所電話番号": "03-1234-5678"}
                 ),
-                encoding="utf-8",
-            )
+                "internalHistory": "must not be public",
+            }
+
+            def write_wam_row(row):
+                (path / "raw.json").write_text(
+                    json.dumps({"rows": [row]}, ensure_ascii=False), encoding="utf-8"
+                )
+
+            write_wam_row(raw_row)
             records = _public_source_records(root)
             public_row = records["019c0000-0000-7000-8000-000000000007"]["wam"]["records"][0]
             self.assertEqual(
@@ -463,9 +471,24 @@ class PublicSourceRecordTests(unittest.TestCase):
                     "serviceType",
                     "name",
                     "coordinates",
+                    "attributes",
                 },
                 set(public_row),
             )
+            self.assertEqual(
+                "03-1234-5678", public_row["attributes"]["事業所電話番号"]
+            )
+            missing_attributes = dict(raw_row["attributes"])
+            missing_attributes.pop("事業所電話番号")
+            write_wam_row({**raw_row, "attributes": missing_attributes})
+            with self.assertRaisesRegex(ValueError, "official 29-column contract"):
+                _public_source_records(root)
+
+            unexpected_attributes = dict(raw_row["attributes"])
+            unexpected_attributes["internalMemo"] = "must not be public"
+            write_wam_row({**raw_row, "attributes": unexpected_attributes})
+            with self.assertRaisesRegex(ValueError, "official 29-column contract"):
+                _public_source_records(root)
 
 
 class PhaseZeroFilesTests(unittest.TestCase):
@@ -486,6 +509,16 @@ class PhaseZeroFilesTests(unittest.TestCase):
         registry_fixture = json.loads(
             (root / "tests/fixtures/registry.json").read_text(encoding="utf-8")
         )
+        wam_attributes_schema = public_schema["$defs"]["wamRecord"]["properties"][
+            "attributes"
+        ]
+        self.assertEqual(
+            set(WAM_PUBLIC_ATTRIBUTE_HEADERS), set(wam_attributes_schema["required"])
+        )
+        self.assertEqual(
+            set(WAM_PUBLIC_ATTRIBUTE_HEADERS), set(wam_attributes_schema["properties"])
+        )
+        self.assertIs(wam_attributes_schema["additionalProperties"], False)
 
         self.assertEqual(["id", "name"], search_schema["$defs"]["query"]["required"][:2])
         self.assertEqual("Point", registry_schema["$defs"]["place"]["properties"]["geometry"]["properties"]["type"]["const"])
@@ -573,6 +606,25 @@ class PhaseZeroFilesTests(unittest.TestCase):
                 row["sourceRecordId"]
                 for row in wam_properties["sources"]["wam"]["records"]
             ],
+        )
+        public_wam_rows = [
+            row
+            for feature in features.values()
+            for row in feature["properties"]["sources"].get("wam", {}).get("records", [])
+        ]
+        self.assertEqual(13, len(public_wam_rows))
+        self.assertTrue(all(len(row["attributes"]) == 29 for row in public_wam_rows))
+        self.assertTrue(
+            all(row["attributes"]["事業所電話番号"] for row in public_wam_rows)
+        )
+        kanda = features["019fa880-5cd4-7b4b-86c4-92d4d1fbe213"]["properties"]
+        self.assertEqual(
+            "way",
+            kanda["sources"]["openstreetmap"]["record"]["type"],
+        )
+        self.assertEqual(
+            "187756642",
+            kanda["sources"]["openstreetmap"]["record"]["id"],
         )
 
     def test_repository_cli_validates_and_builds_public_geojson(self):
@@ -791,6 +843,38 @@ class CandidateMatchingTests(unittest.TestCase):
 
         self.assertEqual({"at", "method", "action", "target"}, set(audit))
 
+    def test_reconfirming_same_osm_id_preserves_basis_without_link_audit(self):
+        query = {
+            "id": "019c0000-0000-7000-8000-000000000043",
+            "name": "施設J",
+            "coordinates": [139.75, 35.69],
+        }
+        place = make_place(query, ["park"], [], "2026-07-01T00:00:00Z")
+        place["externalRefs"] = [
+            {
+                "sourceId": "openstreetmap",
+                "recordId": "node/1",
+                "status": "current",
+                "firstConfirmedAt": "2026-07-01T00:00:00Z",
+                "lastConfirmedAt": "2026-07-01T00:00:00Z",
+                "supersededAt": None,
+                "basis": "name_coordinates",
+            }
+        ]
+        original_audit = list(place["audit"])
+
+        updated = update_osm_reference(
+            place,
+            {"type": "node", "id": "1", "coordinates": [139.75, 35.69]},
+            at="2026-07-28T00:00:00Z",
+            basis="source_record",
+            method="calculation_model",
+        )
+
+        self.assertEqual("2026-07-28T00:00:00Z", updated["externalRefs"][0]["lastConfirmedAt"])
+        self.assertEqual("name_coordinates", updated["externalRefs"][0]["basis"])
+        self.assertEqual(original_audit, updated["audit"])
+
     def test_keeps_superseded_osm_id_and_short_audit(self):
         query = {
             "id": "019c0000-0000-7000-8000-000000000042",
@@ -829,6 +913,76 @@ class CandidateMatchingTests(unittest.TestCase):
 
 
 class SourceUpdateTests(unittest.TestCase):
+    def test_empty_wam_normalized_snapshot_still_validates_raw_attribute_contract(self):
+        repository = Path(__file__).resolve().parents[1]
+        with tempfile.TemporaryDirectory() as temp_dir:
+            root = Path(temp_dir)
+            (root / "inputs/osm-search/manual").mkdir(parents=True)
+            (root / "data").mkdir()
+            (root / "config").mkdir()
+            (root / "imports/wam").mkdir(parents=True)
+            (root / "config/sources.json").write_text(
+                (repository / "config/sources.json").read_text(encoding="utf-8"),
+                encoding="utf-8",
+            )
+            (root / "inputs/osm-search/manual/base.json").write_text(
+                (repository / "tests/fixtures/search-input.json").read_text(
+                    encoding="utf-8"
+                ),
+                encoding="utf-8",
+            )
+            (root / "data/registry.json").write_text(
+                (repository / "tests/fixtures/registry.json").read_text(
+                    encoding="utf-8"
+                ),
+                encoding="utf-8",
+            )
+            (root / "imports/wam/normalized.json").write_text(
+                json.dumps({"records": []}), encoding="utf-8"
+            )
+            row = {
+                "sourceRecordId": "wam-1",
+                "officeId": "office-1",
+                "serviceCode": "52",
+                "serviceType": "計画相談支援",
+                "name": "施設W",
+                "coordinates": [139.75, 35.69],
+                "attributes": wam_attributes(),
+            }
+
+            def write_snapshot(attributes):
+                payload = (
+                    json.dumps(
+                        {"version": "202603", "rows": [{**row, "attributes": attributes}]},
+                        ensure_ascii=False,
+                        indent=2,
+                    )
+                    + "\n"
+                ).encode()
+                (root / "imports/wam/raw.json").write_bytes(payload)
+                (root / "imports/wam/retrieval.json").write_text(
+                    json.dumps(
+                        {
+                            "rawVersion": "202603",
+                            "rawSha256": hashlib.sha256(payload).hexdigest(),
+                        }
+                    ),
+                    encoding="utf-8",
+                )
+
+            missing = wam_attributes()
+            missing.pop("事業所電話番号")
+            write_snapshot(missing)
+            self.assertTrue(
+                any("official 29-column contract" in issue for issue in validate_repository(root))
+            )
+
+            unexpected = wam_attributes({"internalMemo": "must not be public"})
+            write_snapshot(unexpected)
+            self.assertTrue(
+                any("official 29-column contract" in issue for issue in validate_repository(root))
+            )
+
     def test_repository_validation_checks_normalized_snapshots(self):
         repository = Path(__file__).resolve().parents[1]
         with tempfile.TemporaryDirectory() as temp_dir:
@@ -1204,6 +1358,7 @@ class SourceUpdateTests(unittest.TestCase):
                 "serviceType": "計画相談支援",
                 "name": "施設N",
                 "coordinates": [139.7001, 35.6001],
+                "attributes": wam_attributes(),
             },
             {
                 "sourceRecordId": "wam-70",
@@ -1212,6 +1367,7 @@ class SourceUpdateTests(unittest.TestCase):
                 "serviceType": "障害児相談支援",
                 "name": "施設N",
                 "coordinates": [139.7001, 35.6001],
+                "attributes": wam_attributes(),
             },
         ]
         osm = {
@@ -1274,6 +1430,7 @@ class SourceUpdateTests(unittest.TestCase):
                 "serviceType": "計画相談支援",
                 "name": "施設W",
                 "coordinates": [139.7501, 35.6901],
+                "attributes": wam_attributes(),
             }
         ]
         record = {
@@ -1439,6 +1596,7 @@ class SourceUpdateTests(unittest.TestCase):
                         "serviceType": "計画相談支援",
                         "name": "施設O",
                         "coordinates": [139.7002, 35.6002],
+                        "attributes": wam_attributes(),
                     }
                 ],
             }

@@ -17,19 +17,10 @@ from src.retrieve_wam import (
     prepare_wam_release,
     run_wam_retrieval,
 )
+from src.wam_contract import WAM_PUBLIC_ATTRIBUTE_HEADERS
 
 
-WAM_HEADERS = [
-    "都道府県コード又は市区町村コード",
-    "NO（※システム内の固有の番号、連番）",
-    "サービス種別",
-    "事業所の名称",
-    "事業所番号",
-    "事業所住所（市区町村）",
-    "事業所緯度",
-    "事業所経度",
-    "利用可能な時間帯（平日）",
-]
+WAM_HEADERS = list(WAM_PUBLIC_ATTRIBUTE_HEADERS)
 
 
 def wam_zip(rows):
@@ -185,10 +176,14 @@ class WamRetrievalTests(unittest.TestCase):
                 {
                     "都道府県コード又は市区町村コード": "13000",
                     "NO（※システム内の固有の番号、連番）": "A0001",
+                    "法人の名称": "法人A",
+                    "法人URL": "https://example.com/corporation",
                     "サービス種別": "生活介護",
                     "事業所の名称": "施設A",
                     "事業所番号": "1310100001",
                     "事業所住所（市区町村）": "東京都千代田区",
+                    "事業所住所（番地以降）": "神田一丁目1-1",
+                    "事業所電話番号": "03-1234-5678",
                     "事業所緯度": "35.69",
                     "事業所経度": "139.75",
                 },
@@ -207,18 +202,19 @@ class WamRetrievalTests(unittest.TestCase):
 
         rows = parse_wam_zip(payload, "22")
 
+        self.assertEqual(1, len(rows))
+        self.assertEqual("A0001", rows[0]["sourceRecordId"])
+        self.assertEqual("1310100001", rows[0]["officeId"])
+        self.assertEqual("22", rows[0]["serviceCode"])
+        self.assertEqual("生活介護", rows[0]["serviceType"])
+        self.assertEqual("施設A", rows[0]["name"])
+        self.assertEqual([139.75, 35.69], rows[0]["coordinates"])
+        self.assertEqual(set(WAM_HEADERS), set(rows[0]["attributes"]))
+        self.assertEqual("03-1234-5678", rows[0]["attributes"]["事業所電話番号"])
+        self.assertEqual("神田一丁目1-1", rows[0]["attributes"]["事業所住所（番地以降）"])
+        self.assertEqual("法人A", rows[0]["attributes"]["法人の名称"])
         self.assertEqual(
-            [
-                {
-                    "sourceRecordId": "A0001",
-                    "officeId": "1310100001",
-                    "serviceCode": "22",
-                    "serviceType": "生活介護",
-                    "name": "施設A",
-                    "coordinates": [139.75, 35.69],
-                }
-            ],
-            rows,
+            "https://example.com/corporation", rows[0]["attributes"]["法人URL"]
         )
 
     def test_groups_services_and_reuses_existing_alias_query(self):
@@ -281,6 +277,7 @@ class WamRetrievalTests(unittest.TestCase):
             "serviceType": "就労移行支援",
             "name": "新しい支援施設",
             "coordinates": [139.75, 35.69],
+            "attributes": {name: "" for name in WAM_HEADERS},
         }
         search, normalized = prepare_wam_release(
             [row], [], "202603", "2026-04-16T00:00:00Z"

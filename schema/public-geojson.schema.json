@@ -3,22 +3,37 @@
   "$id": "https://nawashiro.github.io/chiyoda_city_main_facilities/schema/public-geojson.schema.json",
   "title": "Public facility GeoJSON",
   "type": "object",
-  "required": ["type", "sourceAttributions", "features"],
+  "required": [
+    "type",
+    "sourceAttributions",
+    "features"
+  ],
   "additionalProperties": false,
   "properties": {
-    "type": {"const": "FeatureCollection"},
+    "type": {
+      "const": "FeatureCollection"
+    },
     "sourceAttributions": {
       "type": "array",
-      "items": {"$ref": "#/$defs/sourceAttribution"}
+      "items": {
+        "$ref": "#/$defs/sourceAttribution"
+      }
     },
-    "features": {"type": "array", "items": {"$ref": "#/$defs/feature"}}
+    "features": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/feature"
+      }
+    }
   },
   "$defs": {
     "coordinates": {
       "type": "array",
       "minItems": 2,
       "maxItems": 2,
-      "items": {"type": "number"}
+      "items": {
+        "type": "number"
+      }
     },
     "sourceAttribution": {
       "type": "object",
@@ -35,34 +50,80 @@
       ],
       "additionalProperties": false,
       "properties": {
-        "sourceId": {"type": "string"},
-        "url": {"type": "string", "format": "uri"},
-        "license": {"type": "string"},
-        "licenseUrl": {"type": "string", "format": "uri"},
-        "version": {"type": "string"},
-        "retrievedAt": {"type": "string", "format": "date-time"},
-        "sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
-        "attribution": {"type": "string"},
-        "transformation": {"type": "string"}
+        "sourceId": {
+          "type": "string"
+        },
+        "url": {
+          "type": "string",
+          "format": "uri"
+        },
+        "license": {
+          "type": "string"
+        },
+        "licenseUrl": {
+          "type": "string",
+          "format": "uri"
+        },
+        "version": {
+          "type": "string"
+        },
+        "retrievedAt": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "attribution": {
+          "type": "string"
+        },
+        "transformation": {
+          "type": "string"
+        }
       }
     },
     "openstreetmapSource": {
       "type": "object",
-      "required": ["retrievedAt", "record"],
+      "required": [
+        "retrievedAt",
+        "record"
+      ],
       "additionalProperties": false,
       "properties": {
-        "retrievedAt": {"type": "string", "format": "date-time"},
+        "retrievedAt": {
+          "type": "string",
+          "format": "date-time"
+        },
         "record": {
           "type": "object",
-          "required": ["type", "id", "coordinates", "tags"],
+          "required": [
+            "type",
+            "id",
+            "coordinates",
+            "tags"
+          ],
           "additionalProperties": false,
           "properties": {
-            "type": {"enum": ["node", "way", "relation"]},
-            "id": {"type": "string", "pattern": "^[1-9][0-9]*$"},
-            "coordinates": {"$ref": "#/$defs/coordinates"},
+            "type": {
+              "enum": [
+                "node",
+                "way",
+                "relation"
+              ]
+            },
+            "id": {
+              "type": "string",
+              "pattern": "^[1-9][0-9]*$"
+            },
+            "coordinates": {
+              "$ref": "#/$defs/coordinates"
+            },
             "tags": {
               "type": "object",
-              "additionalProperties": {"type": "string"}
+              "additionalProperties": {
+                "type": "string"
+              }
             }
           }
         }
@@ -76,28 +137,173 @@
         "serviceCode",
         "serviceType",
         "name",
-        "coordinates"
+        "coordinates",
+        "attributes"
       ],
       "additionalProperties": false,
       "properties": {
-        "sourceRecordId": {"type": "string"},
-        "officeId": {"type": "string"},
-        "serviceCode": {"type": "string"},
-        "serviceType": {"type": "string"},
-        "name": {"type": "string"},
-        "coordinates": {"$ref": "#/$defs/coordinates"}
+        "sourceRecordId": {
+          "type": "string"
+        },
+        "officeId": {
+          "type": "string"
+        },
+        "serviceCode": {
+          "type": "string"
+        },
+        "serviceType": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "coordinates": {
+          "$ref": "#/$defs/coordinates"
+        },
+        "attributes": {
+          "type": "object",
+          "required": [
+            "都道府県コード又は市区町村コード",
+            "NO（※システム内の固有の番号、連番）",
+            "指定機関名",
+            "法人の名称",
+            "法人の名称_かな",
+            "法人番号",
+            "法人住所（市区町村）",
+            "法人住所（番地以降）",
+            "法人電話番号",
+            "法人FAX番号",
+            "法人URL",
+            "サービス種別",
+            "事業所の名称",
+            "事業所の名称_かな",
+            "事業所番号",
+            "事業所住所（市区町村）",
+            "事業所住所（番地以降）",
+            "事業所電話番号",
+            "事業所FAX番号",
+            "事業所URL",
+            "事業所緯度",
+            "事業所経度",
+            "利用可能な時間帯（平日）",
+            "利用可能な時間帯（土曜）",
+            "利用可能な時間帯（日曜）",
+            "利用可能な時間帯（祝日）",
+            "定休日",
+            "利用可能曜日特記事項（留意事項）",
+            "定員"
+          ],
+          "additionalProperties": false,
+          "properties": {
+            "都道府県コード又は市区町村コード": {
+              "type": "string"
+            },
+            "NO（※システム内の固有の番号、連番）": {
+              "type": "string"
+            },
+            "指定機関名": {
+              "type": "string"
+            },
+            "法人の名称": {
+              "type": "string"
+            },
+            "法人の名称_かな": {
+              "type": "string"
+            },
+            "法人番号": {
+              "type": "string"
+            },
+            "法人住所（市区町村）": {
+              "type": "string"
+            },
+            "法人住所（番地以降）": {
+              "type": "string"
+            },
+            "法人電話番号": {
+              "type": "string"
+            },
+            "法人FAX番号": {
+              "type": "string"
+            },
+            "法人URL": {
+              "type": "string"
+            },
+            "サービス種別": {
+              "type": "string"
+            },
+            "事業所の名称": {
+              "type": "string"
+            },
+            "事業所の名称_かな": {
+              "type": "string"
+            },
+            "事業所番号": {
+              "type": "string"
+            },
+            "事業所住所（市区町村）": {
+              "type": "string"
+            },
+            "事業所住所（番地以降）": {
+              "type": "string"
+            },
+            "事業所電話番号": {
+              "type": "string"
+            },
+            "事業所FAX番号": {
+              "type": "string"
+            },
+            "事業所URL": {
+              "type": "string"
+            },
+            "事業所緯度": {
+              "type": "string"
+            },
+            "事業所経度": {
+              "type": "string"
+            },
+            "利用可能な時間帯（平日）": {
+              "type": "string"
+            },
+            "利用可能な時間帯（土曜）": {
+              "type": "string"
+            },
+            "利用可能な時間帯（日曜）": {
+              "type": "string"
+            },
+            "利用可能な時間帯（祝日）": {
+              "type": "string"
+            },
+            "定休日": {
+              "type": "string"
+            },
+            "利用可能曜日特記事項（留意事項）": {
+              "type": "string"
+            },
+            "定員": {
+              "type": "string"
+            }
+          }
+        }
       }
     },
     "wamSource": {
       "type": "object",
-      "required": ["retrievedAt", "records"],
+      "required": [
+        "retrievedAt",
+        "records"
+      ],
       "additionalProperties": false,
       "properties": {
-        "retrievedAt": {"type": "string", "format": "date-time"},
+        "retrievedAt": {
+          "type": "string",
+          "format": "date-time"
+        },
         "records": {
           "type": "array",
           "minItems": 1,
-          "items": {"$ref": "#/$defs/wamRecord"}
+          "items": {
+            "$ref": "#/$defs/wamRecord"
+          }
         }
       }
     },
@@ -105,23 +311,40 @@
       "type": "object",
       "additionalProperties": false,
       "properties": {
-        "openstreetmap": {"$ref": "#/$defs/openstreetmapSource"},
-        "wam": {"$ref": "#/$defs/wamSource"}
+        "openstreetmap": {
+          "$ref": "#/$defs/openstreetmapSource"
+        },
+        "wam": {
+          "$ref": "#/$defs/wamSource"
+        }
       }
     },
     "feature": {
       "type": "object",
-      "required": ["type", "geometry", "properties"],
+      "required": [
+        "type",
+        "geometry",
+        "properties"
+      ],
       "additionalProperties": false,
       "properties": {
-        "type": {"const": "Feature"},
+        "type": {
+          "const": "Feature"
+        },
         "geometry": {
           "type": "object",
-          "required": ["type", "coordinates"],
+          "required": [
+            "type",
+            "coordinates"
+          ],
           "additionalProperties": false,
           "properties": {
-            "type": {"const": "Point"},
-            "coordinates": {"$ref": "#/$defs/coordinates"}
+            "type": {
+              "const": "Point"
+            },
+            "coordinates": {
+              "$ref": "#/$defs/coordinates"
+            }
           }
         },
         "properties": {
@@ -138,14 +361,42 @@
           ],
           "additionalProperties": false,
           "properties": {
-            "id": {"type": "string"},
-            "name": {"type": "string"},
-            "categoryIds": {"type": "array", "items": {"type": "string"}},
-            "tags": {"type": "array", "items": {"type": "string"}},
-            "images": {"type": "array", "items": {"type": "object"}},
-            "town": {"type": ["string", "null"]},
-            "lifecycleStatus": {"type": "string"},
-            "sources": {"$ref": "#/$defs/sources"}
+            "id": {
+              "type": "string"
+            },
+            "name": {
+              "type": "string"
+            },
+            "categoryIds": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "tags": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "images": {
+              "type": "array",
+              "items": {
+                "type": "object"
+              }
+            },
+            "town": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "lifecycleStatus": {
+              "type": "string"
+            },
+            "sources": {
+              "$ref": "#/$defs/sources"
+            }
           }
         }
       }

@@ -4,6 +4,7 @@ import tempfile
 import unittest
 from pathlib import Path
 
+from src.facility_data import _osm_names_match
 from src.retrieve_osm import (
     OVERPASS_ENDPOINT,
     build_discovery_query,
@@ -13,6 +14,72 @@ from src.retrieve_osm import (
 
 
 class OsmRetrievalTests(unittest.TestCase):
+    def test_name_edit_distance_has_boundary_and_rejects_short_false_positives(self):
+        self.assertTrue(_osm_names_match("abcdefghij", "abcdefxxij"))
+        self.assertFalse(_osm_names_match("abcdefghij", "abcdexxxij"))
+        self.assertFalse(_osm_names_match("公園A", "公園B"))
+
+    def test_auto_links_unique_nearby_name_with_minor_spacing_or_edit_difference(self):
+        query_id = "019fa880-5cd4-7b4b-86c4-92d4d1fbe213"
+        search_documents = [
+            {
+                "queries": [
+                    {
+                        "id": query_id,
+                        "name": "千代田区神田公園出張所・区民館",
+                        "coordinates": [139.7681384, 35.6927468],
+                    }
+                ]
+            }
+        ]
+        raw = {
+            "version": "2026-07-29T00:00:00Z",
+            "elements": [
+                {
+                    "type": "way",
+                    "id": 187756642,
+                    "center": {"lon": 139.7681384, "lat": 35.6927468},
+                    "tags": {"name": "千代田区神田公園 出張所・区民館"},
+                },
+                {
+                    "type": "node",
+                    "id": 2,
+                    "lon": 139.7682,
+                    "lat": 35.6928,
+                    "tags": {"name": "千代田区神田児童公園"},
+                },
+            ],
+        }
+
+        normalized, report = prepare_osm_snapshot(
+            {"schemaVersion": 1, "places": []}, search_documents, raw
+        )
+
+        self.assertEqual("187756642", normalized["records"][0]["id"])
+        self.assertEqual("name_coordinates", normalized["records"][0]["matchBasis"])
+        self.assertEqual("linked", report["queries"][0]["status"])
+
+        raw["elements"][0]["tags"]["name"] = "千代田区神田公園出張処・区民館"
+        normalized, _ = prepare_osm_snapshot(
+            {"schemaVersion": 1, "places": []}, search_documents, raw
+        )
+        self.assertEqual("187756642", normalized["records"][0]["id"])
+
+        raw["elements"].append(
+            {
+                "type": "node",
+                "id": 3,
+                "lon": 139.7681,
+                "lat": 35.6927,
+                "tags": {"name": "千代田区神田公園出張所・区民舘"},
+            }
+        )
+        normalized, report = prepare_osm_snapshot(
+            {"schemaVersion": 1, "places": []}, search_documents, raw
+        )
+        self.assertEqual([], normalized["records"])
+        self.assertEqual("ambiguous", report["queries"][0]["status"])
+
     def test_rejects_partial_overpass_response_with_remark(self):
         def post(endpoint, query):
             return (

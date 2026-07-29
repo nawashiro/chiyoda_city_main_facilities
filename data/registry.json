@@ -213,9 +213,9 @@
         ]
       },
       "geometrySource": {
-        "sourceId": "search-input",
-        "recordId": "019fa880-5cd4-7b4b-86c4-92d4d1fbe213",
-        "confirmedAt": "2026-07-28T11:33:32Z"
+        "sourceId": "openstreetmap",
+        "recordId": "way/187756642",
+        "confirmedAt": "2026-07-29T06:32:29+00:00"
       },
       "images": [
         {
@@ -223,7 +223,17 @@
           "rights": "© Nawashiro"
         }
       ],
-      "externalRefs": [],
+      "externalRefs": [
+        {
+          "sourceId": "openstreetmap",
+          "recordId": "way/187756642",
+          "status": "current",
+          "firstConfirmedAt": "2026-07-29T06:32:29+00:00",
+          "lastConfirmedAt": "2026-07-29T06:32:29+00:00",
+          "supersededAt": null,
+          "basis": "name_coordinates"
+        }
+      ],
       "lifecycle": {
         "status": "active",
         "changedAt": "2026-07-28T11:33:32Z"
@@ -238,6 +248,18 @@
           "method": "human_inference",
           "action": "created",
           "target": "place"
+        },
+        {
+          "at": "2026-07-29T06:32:29+00:00",
+          "method": "calculation_model",
+          "action": "linked_osm",
+          "target": "way/187756642"
+        },
+        {
+          "at": "2026-07-29T06:32:29+00:00",
+          "method": "calculation_model",
+          "action": "updated_geometry",
+          "target": "019fa880-5cd4-7b4b-86c4-92d4d1fbe213"
         }
       ]
     },

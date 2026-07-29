@@ -2,7 +2,7 @@
   "records": [
     {
       "queryId": "019fa880-5cd4-7122-bc68-e8a327846042",
-      "matchBasis": "name_coordinates",
+      "matchBasis": "source_record",
       "type": "node",
       "id": "3777876586",
       "name": "千代田区神保町出張所・区民館",
@@ -13,7 +13,7 @@
     },
     {
       "queryId": "019fa880-5cd4-7178-bfbc-d7b174721469",
-      "matchBasis": "name_coordinates",
+      "matchBasis": "source_record",
       "type": "way",
       "id": "23974981",
       "name": "伝統芸能情報センター",
@@ -24,7 +24,7 @@
     },
     {
       "queryId": "019fa880-5cd4-71bb-bab2-80c97e636918",
-      "matchBasis": "name_coordinates",
+      "matchBasis": "source_record",
       "type": "way",
       "id": "144351353",
       "name": "千代田区富士見出張所・区民館",
@@ -35,7 +35,7 @@
     },
     {
       "queryId": "019fa880-5cd4-75da-ae8b-ec6d104eb49b",
-      "matchBasis": "name_coordinates",
+      "matchBasis": "source_record",
       "type": "node",
       "id": "1636575850",
       "name": "千代田区役所和泉橋出張所",
@@ -46,7 +46,7 @@
     },
     {
       "queryId": "019fa880-5cd4-78e1-aa8b-c4ce83a065bc",
-      "matchBasis": "name_coordinates",
+      "matchBasis": "source_record",
       "type": "node",
       "id": "1420770185",
       "name": "千代田区役所",
@@ -58,7 +58,7 @@
     },
     {
       "queryId": "019fa880-5cd4-7984-988b-923b526a8d9a",
-      "matchBasis": "name_coordinates",
+      "matchBasis": "source_record",
       "type": "way",
       "id": "193000544",
       "name": "国立国会図書館・東京本館",
@@ -69,8 +69,19 @@
       "qid": "Q477675"
     },
     {
-      "queryId": "019fa880-5cd4-7ba6-a5af-481b9cb95516",
+      "queryId": "019fa880-5cd4-7b4b-86c4-92d4d1fbe213",
       "matchBasis": "name_coordinates",
+      "type": "way",
+      "id": "187756642",
+      "name": "千代田区神田公園 出張所・区民館",
+      "coordinates": [
+        139.7681384,
+        35.6927468
+      ]
+    },
+    {
+      "queryId": "019fa880-5cd4-7ba6-a5af-481b9cb95516",
+      "matchBasis": "source_record",
       "type": "way",
       "id": "191732177",
       "name": "千代田区役所 万世橋出張所",
@@ -81,7 +92,7 @@
     },
     {
       "queryId": "019fa880-5cd5-7154-8bff-19d82e0fc560",
-      "matchBasis": "name_coordinates",
+      "matchBasis": "source_record",
       "type": "way",
       "id": "210372594",
       "name": "明治大学米沢嘉博記念図書館",
@@ -93,7 +104,7 @@
     },
     {
       "queryId": "019fa880-5cd5-7285-88ba-ab05a68eb601",
-      "matchBasis": "name_coordinates",
+      "matchBasis": "source_record",
       "type": "way",
       "id": "377728267",
       "name": "聖イグナチオ教会",
@@ -105,7 +116,7 @@
     },
     {
       "queryId": "019fa880-5cd5-729a-8d49-670ce25e8723",
-      "matchBasis": "name_coordinates",
+      "matchBasis": "source_record",
       "type": "way",
       "id": "145408909",
       "name": "日比谷公園",
@@ -117,7 +128,7 @@
     },
     {
       "queryId": "019fa880-5cd5-72a9-9547-c3e9269d9c90",
-      "matchBasis": "name_coordinates",
+      "matchBasis": "source_record",
       "type": "node",
       "id": "6900192226",
       "name": "TOHO CINEMAS CHANTER",
@@ -129,7 +140,7 @@
     },
     {
       "queryId": "019fa880-5cd5-7455-9cf0-647f62f1d59c",
-      "matchBasis": "name_coordinates",
+      "matchBasis": "source_record",
       "type": "node",
       "id": "1420770187",
       "name": "千代田区立千代田図書館",
@@ -141,7 +152,7 @@
     },
     {
       "queryId": "019fa880-5cd5-7459-a206-660bc9edd397",
-      "matchBasis": "name_coordinates",
+      "matchBasis": "source_record",
       "type": "node",
       "id": "988763665",
       "name": "九段教会",
@@ -152,7 +163,7 @@
     },
     {
       "queryId": "019fa880-5cd5-74c2-836d-5e8b3347e719",
-      "matchBasis": "name_coordinates",
+      "matchBasis": "source_record",
       "type": "relation",
       "id": "17416865",
       "name": "外濠公園",
@@ -164,7 +175,7 @@
     },
     {
       "queryId": "019fa880-5cd5-7641-bc19-ad96baeb8230",
-      "matchBasis": "name_coordinates",
+      "matchBasis": "source_record",
       "type": "relation",
       "id": "5415394",
       "name": "皇居東御苑",
@@ -176,7 +187,7 @@
     },
     {
       "queryId": "019fa880-5cd5-770e-b950-6cc7603de33e",
-      "matchBasis": "name_coordinates",
+      "matchBasis": "source_record",
       "type": "node",
       "id": "3606732125",
       "name": "日本大学経済学部図書館",
@@ -187,7 +198,7 @@
     },
     {
       "queryId": "019fa880-5cd5-7743-8b45-3ba7622c5083",
-      "matchBasis": "name_coordinates",
+      "matchBasis": "source_record",
       "type": "node",
       "id": "6575768686",
       "name": "角川シネマ有楽町",
@@ -198,7 +209,7 @@
     },
     {
       "queryId": "019fa880-5cd5-77f0-ae81-1e52ac5633fa",
-      "matchBasis": "name_coordinates",
+      "matchBasis": "source_record",
       "type": "node",
       "id": "1420785508",
       "name": "千代田区立日比谷図書文化館",
@@ -210,7 +221,7 @@
     },
     {
       "queryId": "019fa880-5cd5-7832-ae65-182a148bfa2f",
-      "matchBasis": "name_coordinates",
+      "matchBasis": "source_record",
       "type": "node",
       "id": "3762241704",
       "name": "神保町シアター",
@@ -222,7 +233,7 @@
     },
     {
       "queryId": "019fa880-5cd5-7851-97e2-3eee063f342b",
-      "matchBasis": "name_coordinates",
+      "matchBasis": "source_record",
       "type": "node",
       "id": "1916524834",
       "name": "神田寺",
@@ -234,7 +245,7 @@
     },
     {
       "queryId": "019fa880-5cd5-78a9-9ebf-098c6c4cc4ed",
-      "matchBasis": "name_coordinates",
+      "matchBasis": "source_record",
       "type": "node",
       "id": "1420770192",
       "name": "千代田区立神田まちかど図書館",
@@ -246,7 +257,7 @@
     },
     {
       "queryId": "019fa880-5cd5-79f3-8608-d5a71f5492f7",
-      "matchBasis": "name_coordinates",
+      "matchBasis": "source_record",
       "type": "way",
       "id": "43941104",
       "name": "千鳥ヶ淵公園",
@@ -258,7 +269,7 @@
     },
     {
       "queryId": "019fa880-5cd5-7a69-ace7-2a132f6f2b57",
-      "matchBasis": "name_coordinates",
+      "matchBasis": "source_record",
       "type": "way",
       "id": "344414571",
       "name": "日本キリスト教団富士見町教会",
@@ -269,7 +280,7 @@
     },
     {
       "queryId": "019fa880-5cd5-7ae6-b7e1-8339b7cccb77",
-      "matchBasis": "name_coordinates",
+      "matchBasis": "source_record",
       "type": "way",
       "id": "515133705",
       "name": "神田児童公園",
@@ -281,7 +292,7 @@
     },
     {
       "queryId": "019fa880-5cd5-7bae-838d-111510f35ee9",
-      "matchBasis": "name_coordinates",
+      "matchBasis": "source_record",
       "type": "node",
       "id": "810027509",
       "name": "救世軍日本本営",
@@ -292,7 +303,7 @@
     },
     {
       "queryId": "019fa880-5cd5-7c84-9bcf-cac96174129f",
-      "matchBasis": "name_coordinates",
+      "matchBasis": "source_record",
       "type": "node",
       "id": "1928727937",
       "name": "心法寺",
@@ -304,7 +315,7 @@
     },
     {
       "queryId": "019fa880-5cd5-7cf5-8a1f-da236422ebdb",
-      "matchBasis": "name_coordinates",
+      "matchBasis": "source_record",
       "type": "node",
       "id": "1420763756",
       "name": "㈶石川文化事業財団お茶の水図書館",
@@ -315,7 +326,7 @@
     },
     {
       "queryId": "019fa880-5cd5-7d22-aef4-68b4e1172660",
-      "matchBasis": "name_coordinates",
+      "matchBasis": "source_record",
       "type": "node",
       "id": "1376774653",
       "name": "カトリック神田教会",
@@ -327,7 +338,7 @@
     },
     {
       "queryId": "019fa880-5cd5-7d2b-abb0-d80f16d6a04a",
-      "matchBasis": "name_coordinates",
+      "matchBasis": "source_record",
       "type": "node",
       "id": "1420781684",
       "name": "最高裁判所図書館",
@@ -339,7 +350,7 @@
     },
     {
       "queryId": "019fa880-5cd5-7d9b-ae8f-d7d00901be5d",
-      "matchBasis": "name_coordinates",
+      "matchBasis": "source_record",
       "type": "way",
       "id": "184577229",
       "name": "錦華公園",
@@ -351,7 +362,7 @@
     },
     {
       "queryId": "019fa880-5cd5-7dc7-8e68-e49750a54b8d",
-      "matchBasis": "name_coordinates",
+      "matchBasis": "source_record",
       "type": "node",
       "id": "1916530506",
       "name": "神田キリスト教会",
@@ -362,7 +373,7 @@
     },
     {
       "queryId": "019fa880-5cd5-7e95-9ea4-e8808e845cd7",
-      "matchBasis": "name_coordinates",
+      "matchBasis": "source_record",
       "type": "node",
       "id": "1420765449",
       "name": "一番町児童館",
@@ -373,7 +384,7 @@
     },
     {
       "queryId": "019fa880-5cd5-7ea9-839d-1c2d04dbff2f",
-      "matchBasis": "name_coordinates",
+      "matchBasis": "source_record",
       "type": "relation",
       "id": "4080936",
       "name": "ニコライ堂",
@@ -385,7 +396,7 @@
     },
     {
       "queryId": "019fa880-5cd5-7eca-9f6d-ad4b35b2c069",
-      "matchBasis": "name_coordinates",
+      "matchBasis": "source_record",
       "type": "node",
       "id": "6768292062",
       "name": "みんなのお寺",
@@ -396,7 +407,7 @@
     },
     {
       "queryId": "019fa880-5cd5-7ed6-a8bd-337ac263e5a0",
-      "matchBasis": "name_coordinates",
+      "matchBasis": "source_record",
       "type": "way",
       "id": "132794875",
       "name": "東郷公園",
@@ -408,7 +419,7 @@
     },
     {
       "queryId": "019fa880-5cd5-7f0e-8fed-c8f624933c61",
-      "matchBasis": "name_coordinates",
+      "matchBasis": "source_record",
       "type": "node",
       "id": "1420770188",
       "name": "千代田区立四番町図書館",
@@ -420,7 +431,7 @@
     },
     {
       "queryId": "019fa880-5cd5-7f94-988c-a8ff8b532a55",
-      "matchBasis": "name_coordinates",
+      "matchBasis": "source_record",
       "type": "way",
       "id": "666471139",
       "name": "清水谷公園",
@@ -432,7 +443,7 @@
     },
     {
       "queryId": "019fa880-5cd5-7fb2-9df1-c9da871e3bfb",
-      "matchBasis": "name_coordinates",
+      "matchBasis": "source_record",
       "type": "way",
       "id": "624081603",
       "name": "北の丸公園",
@@ -444,7 +455,7 @@
     },
     {
       "queryId": "019fa880-5cd5-7fce-b42f-51fa0dac8c01",
-      "matchBasis": "name_coordinates",
+      "matchBasis": "source_record",
       "type": "node",
       "id": "3781782008",
       "name": "お茶の水キリストの教会",
@@ -455,7 +466,7 @@
     },
     {
       "queryId": "019fa880-5cd6-7046-98c1-b22d2b96d8ad",
-      "matchBasis": "name_coordinates",
+      "matchBasis": "source_record",
       "type": "way",
       "id": "144379628",
       "name": "遊就館",
@@ -467,7 +478,7 @@
     },
     {
       "queryId": "019fa880-5cd6-7075-b7a1-ce1cd3e9a489",
-      "matchBasis": "name_coordinates",
+      "matchBasis": "source_record",
       "type": "node",
       "id": "4272532291",
       "name": "インターメディアテク",
@@ -478,7 +489,7 @@
     },
     {
       "queryId": "019fa880-5cd6-714a-900f-ff3693145790",
-      "matchBasis": "name_coordinates",
+      "matchBasis": "source_record",
       "type": "node",
       "id": "1420781347",
       "name": "明治大学博物館",
@@ -490,7 +501,7 @@
     },
     {
       "queryId": "019fa880-5cd6-7359-b619-432ecb07b975",
-      "matchBasis": "name_coordinates",
+      "matchBasis": "source_record",
       "type": "node",
       "id": "10595395388",
       "name": "発酵風呂ハッコラ",
@@ -501,7 +512,7 @@
     },
     {
       "queryId": "019fa880-5cd6-73ac-bcb9-6bb75bbf99fb",
-      "matchBasis": "name_coordinates",
+      "matchBasis": "source_record",
       "type": "node",
       "id": "3666894176",
       "name": "相田みつを美術館",
@@ -513,7 +524,7 @@
     },
     {
       "queryId": "019fa880-5cd6-740b-bbc1-283f644e1fc1",
-      "matchBasis": "name_coordinates",
+      "matchBasis": "source_record",
       "type": "node",
       "id": "1420780980",
       "name": "日本カメラ博物館",
@@ -525,7 +536,7 @@
     },
     {
       "queryId": "019fa880-5cd6-7424-81a1-5f4f7a58327a",
-      "matchBasis": "name_coordinates",
+      "matchBasis": "source_record",
       "type": "node",
       "id": "11334772769",
       "name": "静嘉堂美術館",
@@ -536,7 +547,7 @@
     },
     {
       "queryId": "019fa880-5cd6-74a3-b873-3fc0955ef99a",
-      "matchBasis": "name_coordinates",
+      "matchBasis": "source_record",
       "type": "node",
       "id": "988763541",
       "name": "昭和館",
@@ -548,7 +559,7 @@
     },
     {
       "queryId": "019fa880-5cd6-75c3-b465-be5c4466401e",
-      "matchBasis": "name_coordinates",
+      "matchBasis": "source_record",
       "type": "node",
       "id": "3164340661",
       "name": "東京ステーションギャラリー",
@@ -560,7 +571,7 @@
     },
     {
       "queryId": "019fa880-5cd6-7627-9186-3eb6765242cb",
-      "matchBasis": "name_coordinates",
+      "matchBasis": "source_record",
       "type": "way",
       "id": "43934323",
       "name": "国立公文書館",
@@ -572,7 +583,7 @@
     },
     {
       "queryId": "019fa880-5cd6-7640-8ec1-c2e6c99e5c26",
-      "matchBasis": "name_coordinates",
+      "matchBasis": "source_record",
       "type": "node",
       "id": "1744076702",
       "name": "稲荷湯",
@@ -583,7 +594,7 @@
     },
     {
       "queryId": "019fa880-5cd6-77c9-917c-e02521540bac",
-      "matchBasis": "name_coordinates",
+      "matchBasis": "source_record",
       "type": "way",
       "id": "140099041",
       "name": "憲政記念館",
@@ -595,7 +606,7 @@
     },
     {
       "queryId": "019fa880-5cd6-77e2-8d4b-1066f9ba07a8",
-      "matchBasis": "name_coordinates",
+      "matchBasis": "source_record",
       "type": "node",
       "id": "1420770260",
       "name": "千秋文庫博物館",
@@ -607,7 +618,7 @@
     },
     {
       "queryId": "019fa880-5cd6-78af-b9de-08beeb78d708",
-      "matchBasis": "name_coordinates",
+      "matchBasis": "source_record",
       "type": "node",
       "id": "1420774624",
       "name": "天理ギャラリー",
@@ -618,7 +629,7 @@
     },
     {
       "queryId": "019fa880-5cd6-78d5-8f0d-d2b980c78320",
-      "matchBasis": "name_coordinates",
+      "matchBasis": "source_record",
       "type": "node",
       "id": "6463426486",
       "name": "於玉湯",
@@ -629,7 +640,7 @@
     },
     {
       "queryId": "019fa880-5cd6-79dd-aaf4-367c7aee85f3",
-      "matchBasis": "name_coordinates",
+      "matchBasis": "source_record",
       "type": "way",
       "id": "43898324",
       "name": "科学技術館",
@@ -641,7 +652,7 @@
     },
     {
       "queryId": "019fa880-5cd6-7a79-a32a-7399951b7539",
-      "matchBasis": "name_coordinates",
+      "matchBasis": "source_record",
       "type": "way",
       "id": "91234941",
       "name": "神田明神資料館",
@@ -652,7 +663,7 @@
     },
     {
       "queryId": "019fa880-5cd6-7aba-bca8-0e770da6c6f9",
-      "matchBasis": "name_coordinates",
+      "matchBasis": "source_record",
       "type": "way",
       "id": "145501856",
       "name": "宮内庁 三の丸尚蔵館",
@@ -664,7 +675,7 @@
     },
     {
       "queryId": "019fa880-5cd6-7c1f-8c9c-a227390405ea",
-      "matchBasis": "name_coordinates",
+      "matchBasis": "source_record",
       "type": "node",
       "id": "6709554588",
       "name": "SPA大手町",
@@ -675,7 +686,7 @@
     },
     {
       "queryId": "019fa880-5cd6-7c6d-8b56-2be683d649a6",
-      "matchBasis": "name_coordinates",
+      "matchBasis": "source_record",
       "type": "way",
       "id": "43934324",
       "name": "東京国立近代美術館",
@@ -687,7 +698,7 @@
     },
     {
       "queryId": "019fa880-5cd6-7d38-b17b-55a1378dd9b8",
-      "matchBasis": "name_coordinates",
+      "matchBasis": "source_record",
       "type": "node",
       "id": "5445799065",
       "name": "Gallery Hinoki",
@@ -698,7 +709,7 @@
     },
     {
       "queryId": "019fa880-5cd6-7d49-888d-1ba85637e081",
-      "matchBasis": "name_coordinates",
+      "matchBasis": "source_record",
       "type": "node",
       "id": "6463473885",
       "name": "梅の湯",
@@ -709,7 +720,7 @@
     },
     {
       "queryId": "019fa880-5cd6-7d72-ac6c-89e27c90a921",
-      "matchBasis": "name_coordinates",
+      "matchBasis": "source_record",
       "type": "node",
       "id": "6463426485",
       "name": "RAKU SPA 1010 神田",
@@ -720,7 +731,7 @@
     },
     {
       "queryId": "019fa880-5cd6-7e0b-9d3a-218e8214e31d",
-      "matchBasis": "name_coordinates",
+      "matchBasis": "source_record",
       "type": "way",
       "id": "306116935",
       "name": "三菱一号館",

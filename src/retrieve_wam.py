@@ -17,6 +17,7 @@ from urllib.request import Request, urlopen
 
 from src.facility_data import source_refresh_due
 from src.http_utils import read_limited_response
+from src.wam_contract import WAM_PUBLIC_ATTRIBUTE_HEADERS, WAM_PUBLIC_ATTRIBUTE_SET
 
 
 _WAM_ADDRESS = "東京都千代田区"
@@ -25,15 +26,7 @@ MAX_CSV_BYTES = 64 * 1024 * 1024
 MAX_COMPRESSION_RATIO = 100
 MAX_CSV_ROWS = 500_000
 WAM_INCLUDED_SERVICE_CODES = ("52", "53", "54", "70")
-_REQUIRED_HEADERS = {
-    "NO（※システム内の固有の番号、連番）",
-    "サービス種別",
-    "事業所の名称",
-    "事業所番号",
-    "事業所住所（市区町村）",
-    "事業所緯度",
-    "事業所経度",
-}
+_REQUIRED_HEADERS = WAM_PUBLIC_ATTRIBUTE_SET
 
 
 def _distance_metres(first: list[float], second: list[float]) -> float:
@@ -159,6 +152,10 @@ def parse_wam_zip(payload: bytes, service_code: str) -> list[dict[str, Any]]:
                 "serviceType": service_type,
                 "name": name,
                 "coordinates": coordinates,
+                "attributes": {
+                    header: (source.get(header) or "").strip()
+                    for header in WAM_PUBLIC_ATTRIBUTE_HEADERS
+                },
             }
         )
     return rows
