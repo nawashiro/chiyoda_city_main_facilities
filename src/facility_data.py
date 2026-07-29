@@ -288,8 +288,10 @@ def build_public_geojson(
     registry: dict[str, Any],
     source_attributions: list[dict[str, Any]],
     towns: dict[str, Any] | None = None,
+    source_records: dict[str, dict[str, Any]] | None = None,
 ) -> dict[str, Any]:
-    """Build the deterministic consumer-minimal public GeoJSON shadow."""
+    """Build the deterministic public GeoJSON shadow."""
+    source_records = source_records or {}
     features = []
     for place in sorted(registry.get("places", []), key=lambda item: item["id"]):
         if place.get("visibility", {}).get("status") != "public":
@@ -304,7 +306,10 @@ def build_public_geojson(
                     "name": place["name"],
                     "categoryIds": place["categoryIds"],
                     "tags": place["tags"],
+                    "images": place.get("images", []),
                     "town": _town_for_point(point, towns),
+                    "lifecycleStatus": place.get("lifecycle", {}).get("status"),
+                    "sources": source_records.get(place["id"], {}),
                 },
             }
         )
@@ -446,14 +451,117 @@ def validate_repository(root: str | Path) -> list[str]:
     return issues
 
 
+def _public_source_records(root: Path) -> dict[str, dict[str, Any]]:
+    source_records: dict[str, dict[str, Any]] = {}
+
+    osm_normalized_path = root / "imports/openstreetmap/normalized.json"
+    osm_raw_path = root / "imports/openstreetmap/raw.json"
+    osm_metadata_path = root / "imports/openstreetmap/retrieval.json"
+    osm_paths = (osm_normalized_path, osm_raw_path, osm_metadata_path)
+    if any(path.is_file() for path in osm_paths) and not all(
+        path.is_file() for path in osm_paths
+    ):
+        raise ValueError("incomplete OpenStreetMap snapshot")
+    if all(path.is_file() for path in osm_paths):
+        normalized = _read_json(osm_normalized_path).get("records", [])
+        raw_payload = osm_raw_path.read_bytes()
+        metadata = _read_json(osm_metadata_path)
+        if hashlib.sha256(raw_payload).hexdigest() != metadata.get("rawSha256"):
+            raise ValueError("OSM rawSha256 does not match retained raw bytes")
+        raw_elements = json.loads(raw_payload).get("elements", [])
+        raw_by_id = {}
+        for element in raw_elements:
+            key = (element.get("type"), str(element.get("id")))
+            if key in raw_by_id:
+                raise ValueError(f"duplicate OSM raw record: {key[0]}/{key[1]}")
+            raw_by_id[key] = element
+        for selected in normalized:
+            key = (selected.get("type"), str(selected.get("id")))
+            raw = raw_by_id.get(key)
+            if raw is None:
+                raise ValueError(
+                    f"selected OSM raw record is missing: {key[0]}/{key[1]}"
+                )
+            raw_tags = raw.get("tags", {})
+            if not isinstance(raw_tags, dict) or any(
+                not isinstance(tag, str) or not isinstance(value, str)
+                for tag, value in raw_tags.items()
+            ):
+                raise ValueError("OSM tags must contain only strings")
+            source_records.setdefault(selected["queryId"], {})["openstreetmap"] = {
+                "retrievedAt": metadata["retrievedAt"],
+                "record": {
+                    "type": selected["type"],
+                    "id": str(selected["id"]),
+                    "coordinates": list(selected["coordinates"]),
+                    "tags": copy.deepcopy(raw_tags),
+                },
+            }
+
+    wam_normalized_path = root / "imports/wam/normalized.json"
+    wam_raw_path = root / "imports/wam/raw.json"
+    wam_metadata_path = root / "imports/wam/retrieval.json"
+    wam_paths = (wam_normalized_path, wam_raw_path, wam_metadata_path)
+    if any(path.is_file() for path in wam_paths) and not all(
+        path.is_file() for path in wam_paths
+    ):
+        raise ValueError("incomplete WAM snapshot")
+    if all(path.is_file() for path in wam_paths):
+        normalized = _read_json(wam_normalized_path).get("records", [])
+        raw_rows = _read_json(wam_raw_path).get("rows", [])
+        metadata = _read_json(wam_metadata_path)
+        raw_by_id = {}
+        for row in raw_rows:
+            record_id = str(row["sourceRecordId"])
+            if record_id in raw_by_id:
+                raise ValueError(f"duplicate WAM raw record: {record_id}")
+            raw_by_id[record_id] = row
+        for selected in normalized:
+            public_rows = []
+            for record_id in selected["sourceRecordIds"]:
+                raw = raw_by_id.get(str(record_id))
+                if raw is None:
+                    raise ValueError(f"selected WAM raw record is missing: {record_id}")
+                public_rows.append(
+                    {
+                        "sourceRecordId": str(raw["sourceRecordId"]),
+                        "officeId": str(raw["officeId"]),
+                        "serviceCode": str(raw["serviceCode"]),
+                        "serviceType": str(raw["serviceType"]),
+                        "name": str(raw["name"]),
+                        "coordinates": list(raw["coordinates"]),
+                    }
+                )
+            source_records.setdefault(selected["queryId"], {})["wam"] = {
+                "retrievedAt": metadata["retrievedAt"],
+                "records": public_rows,
+            }
+    return source_records
+
+
 def _build_public_document(root: Path, registry: dict[str, Any]) -> dict[str, Any]:
     source_document = _read_json(root / "config/sources.json")
     towns_path = root / "data/pinned/towns.geojson"
     towns = _read_json(towns_path) if towns_path.is_file() else None
-    used_source_ids = {
-        place.get("geometrySource", {}).get("sourceId")
+    source_records = _public_source_records(root)
+    public_places = [
+        place
         for place in registry.get("places", [])
-    } & {"openstreetmap", "wam"}
+        if place.get("visibility", {}).get("status") == "public"
+    ]
+    for place in public_places:
+        source_id = place.get("geometrySource", {}).get("sourceId")
+        if source_id in {"openstreetmap", "wam"} and source_id not in source_records.get(
+            place["id"], {}
+        ):
+            raise ValueError(
+                f"public source record is missing for place {place['id']}: {source_id}"
+            )
+    used_source_ids = {
+        source_id
+        for place in public_places
+        for source_id in source_records.get(place["id"], {})
+    }
     if towns is not None:
         used_source_ids.add("chiyoda-city-town-geojson")
     metadata_paths = {
@@ -487,7 +595,12 @@ def _build_public_document(root: Path, registry: dict[str, Any]) -> dict[str, An
                 "transformation": source["transformation"],
             }
         )
-    return build_public_geojson(registry, attributions, towns)
+    return build_public_geojson(
+        registry,
+        attributions,
+        towns,
+        source_records=source_records,
+    )
 
 
 def build_repository(root: str | Path) -> Path:

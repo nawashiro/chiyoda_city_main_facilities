@@ -14,6 +14,12 @@
     "features": {"type": "array", "items": {"$ref": "#/$defs/feature"}}
   },
   "$defs": {
+    "coordinates": {
+      "type": "array",
+      "minItems": 2,
+      "maxItems": 2,
+      "items": {"type": "number"}
+    },
     "sourceAttribution": {
       "type": "object",
       "required": [
@@ -40,6 +46,69 @@
         "transformation": {"type": "string"}
       }
     },
+    "openstreetmapSource": {
+      "type": "object",
+      "required": ["retrievedAt", "record"],
+      "additionalProperties": false,
+      "properties": {
+        "retrievedAt": {"type": "string", "format": "date-time"},
+        "record": {
+          "type": "object",
+          "required": ["type", "id", "coordinates", "tags"],
+          "additionalProperties": false,
+          "properties": {
+            "type": {"enum": ["node", "way", "relation"]},
+            "id": {"type": "string", "pattern": "^[1-9][0-9]*$"},
+            "coordinates": {"$ref": "#/$defs/coordinates"},
+            "tags": {
+              "type": "object",
+              "additionalProperties": {"type": "string"}
+            }
+          }
+        }
+      }
+    },
+    "wamRecord": {
+      "type": "object",
+      "required": [
+        "sourceRecordId",
+        "officeId",
+        "serviceCode",
+        "serviceType",
+        "name",
+        "coordinates"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "sourceRecordId": {"type": "string"},
+        "officeId": {"type": "string"},
+        "serviceCode": {"type": "string"},
+        "serviceType": {"type": "string"},
+        "name": {"type": "string"},
+        "coordinates": {"$ref": "#/$defs/coordinates"}
+      }
+    },
+    "wamSource": {
+      "type": "object",
+      "required": ["retrievedAt", "records"],
+      "additionalProperties": false,
+      "properties": {
+        "retrievedAt": {"type": "string", "format": "date-time"},
+        "records": {
+          "type": "array",
+          "minItems": 1,
+          "items": {"$ref": "#/$defs/wamRecord"}
+        }
+      }
+    },
+    "sources": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "openstreetmap": {"$ref": "#/$defs/openstreetmapSource"},
+        "wam": {"$ref": "#/$defs/wamSource"}
+      }
+    },
     "feature": {
       "type": "object",
       "required": ["type", "geometry", "properties"],
@@ -52,24 +121,31 @@
           "additionalProperties": false,
           "properties": {
             "type": {"const": "Point"},
-            "coordinates": {
-              "type": "array",
-              "minItems": 2,
-              "maxItems": 2,
-              "items": {"type": "number"}
-            }
+            "coordinates": {"$ref": "#/$defs/coordinates"}
           }
         },
         "properties": {
           "type": "object",
-          "required": ["id", "name", "categoryIds", "tags", "town"],
+          "required": [
+            "id",
+            "name",
+            "categoryIds",
+            "tags",
+            "images",
+            "town",
+            "lifecycleStatus",
+            "sources"
+          ],
           "additionalProperties": false,
           "properties": {
             "id": {"type": "string"},
             "name": {"type": "string"},
             "categoryIds": {"type": "array", "items": {"type": "string"}},
             "tags": {"type": "array", "items": {"type": "string"}},
-            "town": {"type": ["string", "null"]}
+            "images": {"type": "array", "items": {"type": "object"}},
+            "town": {"type": ["string", "null"]},
+            "lifecycleStatus": {"type": "string"},
+            "sources": {"$ref": "#/$defs/sources"}
           }
         }
       }

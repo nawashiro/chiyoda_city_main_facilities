@@ -5,6 +5,7 @@ import unittest
 from pathlib import Path
 
 from src.facility_data import (
+    _public_source_records,
     apply_source_updates,
     build_osm_batch_query,
     build_public_geojson,
@@ -214,13 +215,16 @@ class RegistryValidationTests(unittest.TestCase):
 
 
 class PublicGeoJsonTests(unittest.TestCase):
-    def test_emits_only_public_point_and_display_properties(self):
+    def test_emits_images_lifecycle_and_source_namespaces(self):
         query = {
             "id": "019c0000-0000-7000-8000-000000000007",
             "name": "施設F",
             "coordinates": [139.75, 35.69],
         }
         place = make_place(query, ["park"], ["featured"], "2026-07-28T00:00:00Z")
+        place["images"] = [
+            {"url": "https://example.com/facility.webp", "rights": "© Photographer"}
+        ]
         place["externalRefs"] = [
             {
                 "sourceId": "openstreetmap",
@@ -248,17 +252,62 @@ class PublicGeoJsonTests(unittest.TestCase):
             {"schemaVersion": 1, "places": [place]},
             source_attributions=[{"sourceId": "openstreetmap", "license": "ODbL-1.0"}],
             towns=towns,
+            source_records={
+                query["id"]: {
+                    "openstreetmap": {
+                        "retrievedAt": "2026-07-28T00:00:00Z",
+                        "record": {
+                            "type": "node",
+                            "id": "1",
+                            "coordinates": [139.75, 35.69],
+                            "tags": {
+                                "name": "施設F",
+                                "operator": "運営者F",
+                                "wheelchair": "yes",
+                            },
+                        },
+                    },
+                    "wam": {
+                        "retrievedAt": "2026-07-28T00:00:00Z",
+                        "records": [
+                            {
+                                "sourceRecordId": "wam-1",
+                                "officeId": "office-1",
+                                "serviceCode": "52",
+                                "serviceType": "計画相談支援",
+                                "name": "施設F",
+                                "coordinates": [139.75, 35.69],
+                            }
+                        ],
+                    },
+                }
+            },
         )
 
         self.assertEqual("Point", public["features"][0]["geometry"]["type"])
         self.assertEqual(
-            {"id", "name", "categoryIds", "tags", "town"},
+            {
+                "id",
+                "name",
+                "categoryIds",
+                "tags",
+                "images",
+                "town",
+                "lifecycleStatus",
+                "sources",
+            },
             set(public["features"][0]["properties"]),
         )
-        self.assertEqual("北の丸公園", public["features"][0]["properties"]["town"])
+        properties = public["features"][0]["properties"]
+        self.assertEqual("北の丸公園", properties["town"])
+        self.assertEqual(place["images"], properties["images"])
+        self.assertEqual("active", properties["lifecycleStatus"])
+        self.assertEqual("運営者F", properties["sources"]["openstreetmap"]["record"]["tags"]["operator"])
+        self.assertEqual("計画相談支援", properties["sources"]["wam"]["records"][0]["serviceType"])
         rendered = str(public)
         self.assertNotIn("externalRefs", rendered)
         self.assertNotIn("audit", rendered)
+        self.assertNotIn("matchBasis", rendered)
         self.assertNotIn("Polygon", rendered)
 
     def test_derives_short_town_name_from_multipolygon(self):
@@ -299,6 +348,126 @@ class PublicGeoJsonTests(unittest.TestCase):
         self.assertEqual("内幸町", public["features"][0]["properties"]["town"])
 
 
+class PublicSourceRecordTests(unittest.TestCase):
+    def test_rejects_tampered_or_missing_osm_raw_records_and_invalid_tags(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            path = root / "imports/openstreetmap"
+            path.mkdir(parents=True)
+            (path / "normalized.json").write_text(
+                json.dumps(
+                    {
+                        "records": [
+                            {
+                                "queryId": "019c0000-0000-7000-8000-000000000007",
+                                "type": "node",
+                                "id": "1",
+                                "coordinates": [139.75, 35.69],
+                            }
+                        ]
+                    }
+                ),
+                encoding="utf-8",
+            )
+
+            def write_raw(document):
+                payload = (json.dumps(document, ensure_ascii=False, indent=2) + "\n").encode()
+                (path / "raw.json").write_bytes(payload)
+                (path / "retrieval.json").write_text(
+                    json.dumps(
+                        {
+                            "retrievedAt": "2026-07-28T00:00:00Z",
+                            "rawSha256": hashlib.sha256(payload).hexdigest(),
+                        }
+                    ),
+                    encoding="utf-8",
+                )
+
+            write_raw({"elements": []})
+            with self.assertRaisesRegex(ValueError, "selected OSM raw record is missing"):
+                _public_source_records(root)
+
+            write_raw(
+                {"elements": [{"type": "node", "id": 1, "tags": {"name": "施設F"}}]}
+            )
+            self.assertEqual(
+                "施設F",
+                _public_source_records(root)[
+                    "019c0000-0000-7000-8000-000000000007"
+                ]["openstreetmap"]["record"]["tags"]["name"],
+            )
+            (path / "raw.json").write_text(
+                json.dumps(
+                    {"elements": [{"type": "node", "id": 1, "tags": {"name": "改変"}}]}
+                ),
+                encoding="utf-8",
+            )
+            with self.assertRaisesRegex(ValueError, "OSM rawSha256 does not match"):
+                _public_source_records(root)
+
+            write_raw(
+                {"elements": [{"type": "node", "id": 1, "tags": {"name": 123}}]}
+            )
+            with self.assertRaisesRegex(ValueError, "OSM tags must contain only strings"):
+                _public_source_records(root)
+
+    def test_projects_only_public_wam_fields_and_rejects_missing_components(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            path = root / "imports/wam"
+            path.mkdir(parents=True)
+            (path / "normalized.json").write_text(
+                json.dumps(
+                    {
+                        "records": [
+                            {
+                                "queryId": "019c0000-0000-7000-8000-000000000007",
+                                "sourceRecordIds": ["wam-1"],
+                            }
+                        ]
+                    }
+                ),
+                encoding="utf-8",
+            )
+            with self.assertRaisesRegex(ValueError, "incomplete WAM snapshot"):
+                _public_source_records(root)
+
+            (path / "retrieval.json").write_text(
+                json.dumps({"retrievedAt": "2026-07-28T00:00:00Z"}), encoding="utf-8"
+            )
+            (path / "raw.json").write_text(
+                json.dumps(
+                    {
+                        "rows": [
+                            {
+                                "sourceRecordId": "wam-1",
+                                "officeId": "office-1",
+                                "serviceCode": "52",
+                                "serviceType": "計画相談支援",
+                                "name": "施設F",
+                                "coordinates": [139.75, 35.69],
+                                "internalHistory": "must not be public",
+                            }
+                        ]
+                    }
+                ),
+                encoding="utf-8",
+            )
+            records = _public_source_records(root)
+            public_row = records["019c0000-0000-7000-8000-000000000007"]["wam"]["records"][0]
+            self.assertEqual(
+                {
+                    "sourceRecordId",
+                    "officeId",
+                    "serviceCode",
+                    "serviceType",
+                    "name",
+                    "coordinates",
+                },
+                set(public_row),
+            )
+
+
 class PhaseZeroFilesTests(unittest.TestCase):
     def test_schema_and_fixture_files_define_the_new_contract(self):
         root = Path(__file__).resolve().parents[1]
@@ -321,7 +490,16 @@ class PhaseZeroFilesTests(unittest.TestCase):
         self.assertEqual(["id", "name"], search_schema["$defs"]["query"]["required"][:2])
         self.assertEqual("Point", registry_schema["$defs"]["place"]["properties"]["geometry"]["properties"]["type"]["const"])
         self.assertEqual(
-            ["id", "name", "categoryIds", "tags", "town"],
+            [
+                "id",
+                "name",
+                "categoryIds",
+                "tags",
+                "images",
+                "town",
+                "lifecycleStatus",
+                "sources",
+            ],
             public_schema["$defs"]["feature"]["properties"]["properties"]["required"],
         )
         self.assertEqual([], validate_search_document(search_fixture))
@@ -367,6 +545,35 @@ class PhaseZeroFilesTests(unittest.TestCase):
                     "transformation",
                 }.issubset(attribution)
             )
+
+    def test_current_public_data_contains_images_and_direct_source_attributes(self):
+        root = Path(__file__).resolve().parents[1]
+        public = json.loads(
+            (root / "dist/public/places.geojson").read_text(encoding="utf-8")
+        )
+        features = {item["properties"]["id"]: item for item in public["features"]}
+        registry = json.loads((root / "data/registry.json").read_text(encoding="utf-8"))
+        places = {item["id"]: item for item in registry["places"]}
+        osm_record = json.loads(
+            (root / "imports/openstreetmap/normalized.json").read_text(encoding="utf-8")
+        )["records"][0]
+        wam_record = json.loads(
+            (root / "imports/wam/normalized.json").read_text(encoding="utf-8")
+        )["records"][0]
+
+        osm_properties = features[osm_record["queryId"]]["properties"]
+        wam_properties = features[wam_record["queryId"]]["properties"]
+        self.assertEqual(places[osm_record["queryId"]]["images"], osm_properties["images"])
+        self.assertEqual("active", osm_properties["lifecycleStatus"])
+        self.assertEqual(osm_record["type"], osm_properties["sources"]["openstreetmap"]["record"]["type"])
+        self.assertTrue(osm_properties["sources"]["openstreetmap"]["record"]["tags"])
+        self.assertEqual(
+            wam_record["sourceRecordIds"],
+            [
+                row["sourceRecordId"]
+                for row in wam_properties["sources"]["wam"]["records"]
+            ],
+        )
 
     def test_repository_cli_validates_and_builds_public_geojson(self):
         repository = Path(__file__).resolve().parents[1]
@@ -1257,6 +1464,28 @@ class SourceUpdateTests(unittest.TestCase):
                 ),
                 encoding="utf-8",
             )
+            (root / "imports/openstreetmap/raw.json").write_text(
+                json.dumps(
+                    {
+                        "elements": [
+                            {
+                                "type": "node",
+                                "id": 53,
+                                "lat": 35.6001,
+                                "lon": 139.7001,
+                                "tags": {"name": "施設O"},
+                            }
+                        ]
+                    }
+                ),
+                encoding="utf-8",
+            )
+            osm_metadata_path = root / "imports/openstreetmap/retrieval.json"
+            osm_metadata = json.loads(osm_metadata_path.read_text(encoding="utf-8"))
+            osm_metadata["rawSha256"] = hashlib.sha256(
+                (root / "imports/openstreetmap/raw.json").read_bytes()
+            ).hexdigest()
+            osm_metadata_path.write_text(json.dumps(osm_metadata), encoding="utf-8")
             (root / "imports/wam/normalized.json").write_text(
                 json.dumps(
                     {
@@ -1361,6 +1590,34 @@ class SourceUpdateTests(unittest.TestCase):
                                 "matchBasis": "name_coordinates",
                             }
                         ]
+                    }
+                ),
+                encoding="utf-8",
+            )
+            (root / "imports/openstreetmap/raw.json").write_text(
+                json.dumps(
+                    {
+                        "elements": [
+                            {
+                                "type": "node",
+                                "id": 62,
+                                "lat": 35.6001,
+                                "lon": 139.7001,
+                                "tags": {"name": "施設R"},
+                            }
+                        ]
+                    }
+                ),
+                encoding="utf-8",
+            )
+            (root / "imports/openstreetmap/retrieval.json").write_text(
+                json.dumps(
+                    {
+                        "rawVersion": "2026-07-28T00:00:00Z",
+                        "retrievedAt": "2026-07-28T00:00:00Z",
+                        "rawSha256": hashlib.sha256(
+                            (root / "imports/openstreetmap/raw.json").read_bytes()
+                        ).hexdigest(),
                     }
                 ),
                 encoding="utf-8",

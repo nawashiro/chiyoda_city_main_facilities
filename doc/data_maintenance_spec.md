@@ -46,15 +46,20 @@ OSMとWAMの参照は`externalRefs`へ保持する。OSM IDが変わった場合
 
 `dist/public/places.geojson`は正本から決定的に生成する公開用の影である。
 
-公開条件は`visibility.status == "public"`である。各FeatureはPointだけを持ち、propertiesは次の5項目だけを持つ。
+公開条件は`visibility.status == "public"`である。各Featureのgeometryは正本の代表点を複写したPointだけとし、propertiesは次を持つ。
 
 - `id`
 - `name`
 - `categoryIds`
 - `tags`
+- `images`
 - `town`
+- `lifecycleStatus`
+- `sources`
 
-画像、lifecycle、visibility、外部参照、audit、OSM属性、OSMポリゴン、町名ポリゴンは公開GeoJSONへ含めない。
+`images`は正本の画像を公開利用者が直接扱える形で含める。`sources.openstreetmap`には現在採用したOSMレコードの型・ID・代表点・タグと取得時刻を、`sources.wam`には対応するWAM元レコードのID・事業所ID・サービスコード・サービス種別・名称・座標と取得時刻を含める。住所、運営者、連絡先、アクセシビリティ等はトップレベルへ統合せず、OSMタグまたはWAMレコードのソース別名前空間で公開する。
+
+正本の`externalRefs`、過去OSM ID、確認時刻、失効時刻、同定根拠、`audit`、OSMポリゴン・relation member、町名ポリゴンは公開GeoJSONへ含めない。内部データの重複を削減する場合も、公開利用者が直接扱う画像・OSM属性・WAM属性は削らず、検索入力、正本、normalized snapshot等の内部ファイル間で重複を減らす。
 
 `sourceAttributions`には、公開物の生成に実際に寄与したソースのURL、版、取得日時、SHA-256、利用条件、帰属、加工内容を含める。
 

@@ -4,7 +4,7 @@
 
 ## 公開データ
 
-公開物はPointだけを収録したGeoJSONです。
+公開物は代表点をPointで収録し、画像・OSM属性・WAM属性を各Featureから直接利用できるGeoJSONです。
 
 ```text
 https://cdn.jsdelivr.net/gh/nawashiro/chiyoda_city_main_facilities@<version>/dist/public/places.geojson
@@ -12,7 +12,7 @@ https://cdn.jsdelivr.net/gh/nawashiro/chiyoda_city_main_facilities@<version>/dis
 
 本番利用では`latest`ではなくリリースまたはコミットを指定してください。`dist/public/manifest.json`のSHA-256で取得物を確認できます。
 
-公開GeoJSONには名称、分類、用途タグ、代表点、派生町名だけを含めます。OSM ID履歴、監査記録、OSM・町名ポリゴンは含めません。
+公開GeoJSONには名称、分類、用途タグ、画像、代表点、派生町名、lifecycle、ソース別のOSM/WAM属性を含めます。OSMの過去ID・同定監査、OSMポリゴン・relation member、町名ポリゴンは含めません。
 
 ## データ構成
 

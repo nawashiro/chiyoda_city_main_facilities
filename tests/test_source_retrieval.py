@@ -309,9 +309,6 @@ class WamRetrievalTests(unittest.TestCase):
             (root / "imports/wam/normalized.json").write_text(
                 json.dumps(normalized), encoding="utf-8"
             )
-            (root / "imports/openstreetmap/normalized.json").write_text(
-                json.dumps({"records": []}), encoding="utf-8"
-            )
             raw_payload = (
                 json.dumps({"version": "202603", "rows": [row]}, ensure_ascii=False, indent=2)
                 + "\n"
