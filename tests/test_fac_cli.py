@@ -68,8 +68,7 @@ class FacilityListCliTests(unittest.TestCase):
             "  id=019c0000-0000-7000-8000-000000000301\n"
             "  cat=public-office tags=true img=false osm=current wam=superseded "
             "life=active vis=public\n"
-            "  geo:35.6941626,139.7535624?q=35.6941626,139.7535624"
-            "(%E5%8D%83%E4%BB%A3%E7%94%B0%E5%8C%BA%E5%BD%B9%E6%89%80)\n",
+            "  geo:35.6941626,139.7535624?q=%E5%8D%83%E4%BB%A3%E7%94%B0%E5%8C%BA%E5%BD%B9%E6%89%80\n",
             output.getvalue(),
         )
 
@@ -113,10 +112,7 @@ class FacilityListCliTests(unittest.TestCase):
         self.assertIn("\x1b[36mcat\x1b[0m=disability-support", text)
         self.assertIn("\x1b[31mfalse\x1b[0m", text)
         self.assertIn("\x1b[32mtrue\x1b[0m", text)
-        geo_uri = (
-            "geo:35.69,139.75?q=35.69,139.75"
-            "(%E5%AF%BE%E8%B1%A1%E6%96%BD%E8%A8%AD)"
-        )
+        geo_uri = "geo:35.69,139.75?q=%E5%AF%BE%E8%B1%A1%E6%96%BD%E8%A8%AD"
         self.assertIn(f"\x1b]8;;{geo_uri}\x1b\\{geo_uri}\x1b]8;;\x1b\\", text)
 
     def test_filters_places_without_adding_town_to_output(self):
@@ -612,7 +608,7 @@ class SearchInputCliTests(unittest.TestCase):
         self.assertEqual(0, result)
         self.assertEqual(
             f"座標施設\n  id={PLACE_ID}\n"
-            "  geo:35.69,139.75?q=35.69,139.75(%E5%BA%A7%E6%A8%99%E6%96%BD%E8%A8%AD)\n"
+            "  geo:35.69,139.75?q=%E5%BA%A7%E6%A8%99%E6%96%BD%E8%A8%AD\n"
             f"QID施設\n  id={qid_id}\n  qid=Q12345\n",
             output.getvalue(),
         )
