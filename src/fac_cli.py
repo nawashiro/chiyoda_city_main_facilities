@@ -5,6 +5,7 @@ from __future__ import annotations
 import argparse
 import copy
 import json
+import os
 import re
 import sys
 import uuid
@@ -150,6 +151,33 @@ def _coordinates_geo_uri(name: str, coordinates_value: list[float]) -> str:
     return f"geo:{coordinates}?q={coordinates}({quote(name, safe='')})"
 
 
+def _display_mode_enabled(mode: str, *, color: bool = False) -> bool:
+    if mode == "always":
+        return True
+    if mode == "never":
+        return False
+    if color and "NO_COLOR" in os.environ:
+        return False
+    return bool(getattr(sys.stdout, "isatty", lambda: False)())
+
+
+def _attribute(name: str, value: str, *, color: bool) -> str:
+    if not color:
+        return f"{name}={value}"
+    styled_value = value
+    if value == "true":
+        styled_value = f"\x1b[32m{value}\x1b[0m"
+    elif value == "false":
+        styled_value = f"\x1b[31m{value}\x1b[0m"
+    return f"\x1b[36m{name}\x1b[0m={styled_value}"
+
+
+def _hyperlink(uri: str, *, enabled: bool) -> str:
+    if not enabled:
+        return uri
+    return f"\x1b]8;;{uri}\x1b\\{uri}\x1b]8;;\x1b\\"
+
+
 def _geo_uri(place: dict[str, Any]) -> str:
     return _coordinates_geo_uri(place["name"], place["geometry"]["coordinates"])
 
@@ -173,6 +201,8 @@ def _print_places(
     name: str | None = None,
     osm: str | None = None,
     life: str | None = None,
+    color_mode: str = "auto",
+    hyperlink_mode: str = "auto",
 ) -> None:
     registry = _validated_registry(root)
     towns_by_id = _towns_by_id(root) if town is not None else {}
@@ -187,17 +217,26 @@ def _print_places(
         and (life is None or place.get("lifecycle", {}).get("status") == life)
     ]
     blocks = []
+    color = _display_mode_enabled(color_mode, color=True)
+    links = _display_mode_enabled(hyperlink_mode)
     for place in places:
-        categories = ",".join(place.get("categoryIds", []))
-        attributes = (
-            f"  cat={categories} tags={str(bool(place.get('tags'))).lower()} "
-            f"img={str(bool(place.get('images'))).lower()} "
-            f"osm={_source_status(place, _SOURCE_ALIASES['osm'])} "
-            f"wam={_source_status(place, _SOURCE_ALIASES['wam'])} "
-            f"life={place.get('lifecycle', {}).get('status', 'false')} "
-            f"vis={place.get('visibility', {}).get('status', 'false')}"
+        values = [
+            ("cat", ",".join(place.get("categoryIds", []))),
+            ("tags", str(bool(place.get("tags"))).lower()),
+            ("img", str(bool(place.get("images"))).lower()),
+            ("osm", _source_status(place, _SOURCE_ALIASES["osm"])),
+            ("wam", _source_status(place, _SOURCE_ALIASES["wam"])),
+            ("life", place.get("lifecycle", {}).get("status", "false")),
+            ("vis", place.get("visibility", {}).get("status", "false")),
+        ]
+        attributes = "  " + " ".join(
+            _attribute(key, value, color=color) for key, value in values
         )
-        blocks.append(f"{place['name']}\n{attributes}\n  {_geo_uri(place)}")
+        geo_uri = _geo_uri(place)
+        blocks.append(
+            f"{place['name']}\n  id={place['id']}\n{attributes}\n"
+            f"  {_hyperlink(geo_uri, enabled=links)}"
+        )
     if blocks:
         print("\n".join(blocks))
 
@@ -474,6 +513,12 @@ def _main(argv: list[str] | None = None) -> int:
     list_parser.add_argument("--name")
     list_parser.add_argument("--osm", choices=("current", "superseded", "false"))
     list_parser.add_argument("--life")
+    list_parser.add_argument(
+        "--color", choices=("auto", "always", "never"), default="auto"
+    )
+    list_parser.add_argument(
+        "--hyperlink", choices=("auto", "always", "never"), default="auto"
+    )
     get_parser = subparsers.add_parser("get", help="show one canonical place")
     get_parser.add_argument("root", nargs="?", default=".")
     get_parser.add_argument("place_id")
@@ -521,6 +566,8 @@ def _main(argv: list[str] | None = None) -> int:
             name=args.name,
             osm=args.osm,
             life=args.life,
+            color_mode=args.color,
+            hyperlink_mode=args.hyperlink,
         )
         return 0
     if args.command == "get":

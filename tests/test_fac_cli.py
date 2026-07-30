@@ -65,12 +65,59 @@ class FacilityListCliTests(unittest.TestCase):
         self.assertEqual(0, result)
         self.assertEqual(
             "千代田区役所\n"
+            "  id=019c0000-0000-7000-8000-000000000301\n"
             "  cat=public-office tags=true img=false osm=current wam=superseded "
             "life=active vis=public\n"
             "  geo:35.6941626,139.7535624?q=35.6941626,139.7535624"
             "(%E5%8D%83%E4%BB%A3%E7%94%B0%E5%8C%BA%E5%BD%B9%E6%89%80)\n",
             output.getvalue(),
         )
+
+    def test_lists_clickable_geo_uri_and_colored_attributes_when_forced(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            place = {
+                "id": PLACE_ID,
+                "name": "対象施設",
+                "categoryIds": ["disability-support"],
+                "tags": [],
+                "geometry": {"type": "Point", "coordinates": [139.75, 35.69]},
+                "geometrySource": {},
+                "images": ["image"],
+                "externalRefs": [],
+                "lifecycle": {"status": "active"},
+                "visibility": {"status": "public"},
+                "audit": [],
+            }
+            write_json(
+                root / "data/registry.json",
+                {"schemaVersion": 1, "places": [place]},
+            )
+            output = StringIO()
+            with redirect_stdout(output):
+                result = main(
+                    [
+                        "ls",
+                        str(root),
+                        "--color",
+                        "always",
+                        "--hyperlink",
+                        "always",
+                    ]
+                )
+
+        text = output.getvalue()
+        self.assertEqual(0, result)
+        self.assertIn("対象施設\n", text)
+        self.assertIn(f"  id={PLACE_ID}\n", text)
+        self.assertIn("\x1b[36mcat\x1b[0m=disability-support", text)
+        self.assertIn("\x1b[31mfalse\x1b[0m", text)
+        self.assertIn("\x1b[32mtrue\x1b[0m", text)
+        geo_uri = (
+            "geo:35.69,139.75?q=35.69,139.75"
+            "(%E5%AF%BE%E8%B1%A1%E6%96%BD%E8%A8%AD)"
+        )
+        self.assertIn(f"\x1b]8;;{geo_uri}\x1b\\{geo_uri}\x1b]8;;\x1b\\", text)
 
     def test_filters_places_without_adding_town_to_output(self):
         with tempfile.TemporaryDirectory() as directory:
