@@ -18,10 +18,12 @@ https://cdn.jsdelivr.net/gh/nawashiro/chiyoda_city_main_facilities@<version>/dis
 
 - `inputs/osm-search/`: OSM同定用の検索入力。正本ではありません
 - `data/registry.json`: 唯一のPlace正本
-- `schema/`: 検索入力、正本、公開GeoJSONの契約
 - `dist/public/places.geojson`: 正本から生成する公開用派生物
+- `schema/`: 検索入力、正本、公開GeoJSONの契約
 - `reports/`: 一時移行や更新結果の短いレポート
 - `img/`: 正本から参照する画像
+
+各ファイルの属性と取りうる値の詳細は[`doc/attributes.md`](doc/attributes.md)を参照してください。
 
 検索入力は次のいずれかです。
 
