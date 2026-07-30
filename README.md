@@ -92,19 +92,42 @@ python3 -c 'from src.facility_data import new_uuid7; print(new_uuid7())'
 
 `./fac ls` が表示する各行の意味と取りうる値です。
 
+```text
+千代田区役所
+  id=019fa880-5cd4-78e1-aa8b-c4ce83a065bc
+  cat=public-office tags=true img=true osm=current wam=false life=active vis=public
+  geo:35.6941626,139.7535624?q=%E5%8D%83%E4%BB%A3%E7%94%B0%E5%8C%BA%E5%BD%B9%E6%89%80
+```
+
 | 属性 | 意味 | 取りうる値 |
 |------|------|-----------|
-| `id` | 施設の永続識別子。検索入力から引き継ぐUUIDv7 | `019…` 形式のUUIDv7文字列 |
-| `cat` | 分類（`categoryIds`）。複数ある場合は `,` 区切り | `art-museum` `buddhist-temple` `christian-church` `cinema` `disability-support` `library` `museum` `park` `public-bath` `public-office` `social-welfare` |
-| `tags` | ショートカットタグの有無 | `true`（あり） `false`（なし） |
+| `id` | 施設の永続識別子。UUIDv7形式 | 例: `019fa880-5cd4-78e1-aa8b-c4ce83a065bc` |
+| `cat` | 分類（`categoryIds`）。複数ある場合は `,` 区切り | 下表参照 |
+| `tags` | ショートカットタグ（`kazaguruma.home-shortcut` 等、`./fac set --tag` で保守する任意の文字列ラベル）の有無 | `true`（1件以上あり） `false`（なし） |
 | `img` | 画像の有無 | `true`（あり） `false`（なし） |
 | `osm` | OpenStreetMap 参照の状態 | `current`（現在の参照あり） `superseded`（過去の参照のみ） `false`（参照なし） |
-| `wam` | WAM 参照の状態 | `current` `superseded` `false`（`osm` と同じ意味） |
-| `life` | 施設の運用状態（`lifecycle.status`） | `active`（運用中）— 将来 `closed`（閉鎖）`planned`（計画中）等も想定 |
-| `vis` | 公開範囲（`visibility.status`） | `public`（公開）— 将来 `restricted`（制限付き）等も想定 |
-| `geo:` | クリック可能な地図URI。座標は `geo:緯度,経度` 形式 | RFC 5870 準拠のgeo URI |
+| `wam` | WAM（福祉行政報告例）参照の状態 | `current` `superseded` `false`（意味は `osm` と同じ） |
+| `life` | 施設の運用状態（`lifecycle.status`） | 現在は `active`（運用中）のみ。将来 `closed`（閉鎖）等を追加予定 |
+| `vis` | 公開範囲（`visibility.status`） | 現在は `public`（公開）のみ。将来 `restricted`（制限付き）等を追加予定 |
+| `geo:` | クリック可能な地図URI（RFC 5870準拠、末尾の `:` はURIスキーム部） | `geo:緯度,経度?q=URLエンコード済み名称` |
 
-`osm`と`wam`は、正本`externalRefs`内の参照のうち最新の`status`を集約して表示します。`current`が一件でもあれば`current`、`current`がなく`superseded`があれば`superseded`、一件もなければ`false`です。
+`osm`と`wam`は、正本`externalRefs`内の参照のうち最新の`status`を集約して表示します。`current`が一件でもあれば`current`、`current`がなく`superseded`があれば`superseded`、一件もなければ`false`です。`tags`の内容は `./fac get <UUID>` で確認できます。
+
+#### カテゴリ一覧
+
+| 値 | 意味 |
+|----|------|
+| `art-museum` | 美術館 |
+| `buddhist-temple` | 寺院 |
+| `christian-church` | 教会 |
+| `cinema` | 映画館 |
+| `disability-support` | 障害者相談支援事業所 |
+| `library` | 図書館 |
+| `museum` | 博物館 |
+| `park` | 公園 |
+| `public-bath` | 公衆浴場・銭湯 |
+| `public-office` | 区役所・出張所等の公的窓口 |
+| `social-welfare` | 社会福祉施設 |
 
 `ref`による手動確定は`basis=human_review`と`human_inference`監査を記録し、同じ型付きOSM IDが別Placeのcurrent参照にならないことを検証してから原子的に保存します。参照追加だけでは代表点を変更しません。保存済みrawを反映するには、commit後に`Re-identify retained source snapshots`を実行します。
 
