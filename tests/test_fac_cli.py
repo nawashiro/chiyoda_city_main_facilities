@@ -108,12 +108,16 @@ class FacilityListCliTests(unittest.TestCase):
         text = output.getvalue()
         self.assertEqual(0, result)
         self.assertIn("対象施設\n", text)
-        self.assertIn(f"  id={PLACE_ID}\n", text)
+        self.assertIn(f"  \x1b[36mid\x1b[0m={PLACE_ID}\n", text)
         self.assertIn("\x1b[36mcat\x1b[0m=disability-support", text)
         self.assertIn("\x1b[31mfalse\x1b[0m", text)
         self.assertIn("\x1b[32mtrue\x1b[0m", text)
+        self.assertIn("\x1b[32mactive\x1b[0m", text)
+        self.assertIn("\x1b[32mpublic\x1b[0m", text)
         geo_uri = "geo:35.69,139.75?q=%E5%AF%BE%E8%B1%A1%E6%96%BD%E8%A8%AD"
-        self.assertIn(f"\x1b]8;;{geo_uri}\x1b\\{geo_uri}\x1b]8;;\x1b\\", text)
+        self.assertIn(
+            f"\x1b]8;;{geo_uri}\x1b\\\x1b[34m{geo_uri}\x1b[0m\x1b]8;;\x1b\\", text
+        )
 
     def test_filters_places_without_adding_town_to_output(self):
         with tempfile.TemporaryDirectory() as directory:

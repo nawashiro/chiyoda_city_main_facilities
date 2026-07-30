@@ -164,9 +164,9 @@ def _attribute(name: str, value: str, *, color: bool) -> str:
     if not color:
         return f"{name}={value}"
     styled_value = value
-    if value == "true":
+    if value in ("true", "current", "active", "public"):
         styled_value = f"\x1b[32m{value}\x1b[0m"
-    elif value == "false":
+    elif value in ("false", "superseded"):
         styled_value = f"\x1b[31m{value}\x1b[0m"
     return f"\x1b[36m{name}\x1b[0m={styled_value}"
 
@@ -174,7 +174,7 @@ def _attribute(name: str, value: str, *, color: bool) -> str:
 def _hyperlink(uri: str, *, enabled: bool) -> str:
     if not enabled:
         return uri
-    return f"\x1b]8;;{uri}\x1b\\{uri}\x1b]8;;\x1b\\"
+    return f"\x1b]8;;{uri}\x1b\\\x1b[34m{uri}\x1b[0m\x1b]8;;\x1b\\"
 
 
 def _geo_uri(place: dict[str, Any]) -> str:
@@ -233,7 +233,9 @@ def _print_places(
         )
         geo_uri = _geo_uri(place)
         blocks.append(
-            f"{place['name']}\n  id={place['id']}\n{attributes}\n"
+            f"{place['name']}\n"
+            f"  {_attribute('id', place['id'], color=color)}\n"
+            f"{attributes}\n"
             f"  {_hyperlink(geo_uri, enabled=links)}"
         )
     if blocks:
