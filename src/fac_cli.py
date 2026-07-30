@@ -147,8 +147,7 @@ def _source_status(place: dict[str, Any], source_id: str) -> str:
 
 def _coordinates_geo_uri(name: str, coordinates_value: list[float]) -> str:
     longitude, latitude = coordinates_value
-    coordinates = f"{latitude},{longitude}"
-    return f"geo:{coordinates}?q={coordinates}({quote(name, safe='')})"
+    return f"geo:{latitude},{longitude}?q={quote(name, safe='')}"
 
 
 def _display_mode_enabled(mode: str, *, color: bool = False) -> bool:
