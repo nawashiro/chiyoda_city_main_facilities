@@ -70,6 +70,8 @@ python3 -c 'from src.facility_data import new_uuid7; print(new_uuid7())'
 ./fac ls --name 図書館
 ./fac ls --osm false
 ./fac ls --life active
+# 色・クリック可能なgeo URIは対応端末で自動有効。明示指定も可能
+./fac ls --color always --hyperlink always
 
 # 正本Placeを完全なJSONで確認
 ./fac get <UUID>
@@ -83,6 +85,8 @@ python3 -c 'from src.facility_data import new_uuid7; print(new_uuid7())'
 # 現在参照を解除し、履歴だけ残す
 ./fac ref <UUID> osm none
 ```
+
+`--color`と`--hyperlink`の既定値は`auto`です。対応する対話端末では属性名をシアン、`true`を緑、`false`を赤で表示し、`geo:` URIをOSC 8ハイパーリンクにします。パイプやファイルへの出力は平文のままです。端末の自動判定を上書きする場合は、それぞれ`always`または`never`を指定します。色を無効化する標準的な`NO_COLOR`環境変数にも対応します。
 
 `ref`による手動確定は`basis=human_review`と`human_inference`監査を記録し、同じ型付きOSM IDが別Placeのcurrent参照にならないことを検証してから原子的に保存します。参照追加だけでは代表点を変更しません。保存済みrawを反映するには、commit後に`Re-identify retained source snapshots`を実行します。
 
