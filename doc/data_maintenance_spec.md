@@ -155,11 +155,11 @@ python3 -m src.facility_data validate .
 2. 検索入力QIDと一致する一意候補
 3. 検索入力から50m以内、かつ正規化後に6文字以上あり、編集距離が名称長の15%以内（最低1文字、最大3文字）の一意候補
 
-残った近傍候補はOpenAI互換APIへ独立した3回の判断を依頼する。3つの有効票のうち2票以上が同じ候補へのlinkで一致すれば`matchBasis: language_model`として適用し、2票以上がrejectで一致すれば自動却下する。合議不成立だけを`reports/osm-review-needed.json`へ残す。候補がない施設は人手確認へ送らず、OSM参照なしのまま扱う。
+残った近傍候補は、検索入力1件と50m以内の全候補を分割せず一括提示し、OpenAI互換APIへ3回の判断を依頼する。3回は単なる番号違いではなく、訪問者として同じ地物か、利用者として同じ用途か、現地スタッフとして同じチームかを判断する別プロンプトである。3つの有効票のうち2票以上が同じ候補へのlinkで一致すれば`matchBasis: language_model`として適用し、2票以上がrejectで一致すれば自動却下する。個人プロトタイプとして過度な確信度条件を加えず、一定の証拠があれば最も妥当な候補を選ばせる。合議不成立だけを`reports/osm-review-needed.json`へ残す。候補がない施設は人手確認へ送らず、OSM参照なしのまま扱う。
 
 候補がない既存Placeは今の座標を保つ。QIDだけを持つ新規検索入力で、WAMにもOSMにも対応データがなければ、新しいPlaceは作らない。
 
-LLMには検索入力の名称と、取得済みの候補だけを渡す。候補一覧にないIDは受理しない。長い推論本文は保存せず、短い票と結果だけを候補レポートへ残す。Overpass応答に`remark`または`error`がある場合は部分応答として拒否する。
+LLMには検索入力の全項目、対応するWAM record・raw rowsがあればその属性、取得済みOSM候補の型付きID・座標・距離・raw由来の全タグを渡す。候補一覧にないIDは受理しない。長い推論本文は保存せず、視点名、短い票、結果だけを候補レポートへ残す。Overpass応答に`remark`または`error`がある場合は部分応答として拒否する。
 
 成功した新規取得ではquery bytes、HTTP response bytes、canonical rawを別々に保存し、それぞれのSHA-256を記録する。過去snapshotでexact query/responseが残っていない場合はretention flagを`false`とし、存在しないbytesを保持済みと主張しない。
 
@@ -182,8 +182,13 @@ python3 -m src.facility_data validate .
 - `Update WAM data`
 - `Update OpenStreetMap data`
 - `Update town polygons`
+- `Re-identify retained source snapshots`
 
-workflowは取得、正規化、適用またはbuild、validate、unit testsを実行する。repositoryへcommit/pushせず、手動レビュー用artifactだけを作る。
+通常の更新workflowは取得、正規化、適用またはbuild、validate、unit testsを実行する。OSMで合議不成立がなければ生成差分のPull Requestを作る。合議不成立があれば更新run固有のartifactを30日保持し、全候補を選べるGitHub Issueを一つ作る。
+
+Issue本文のチェックボックスは検索入力ごとに一つだけ選択し、最後の適用チェックを押す。`Apply OSM human review` workflowはIssueに埋め込まれたrun IDとartifact名から元artifactを取得し、候補レポートSHA、候補集合、選択数を再検証する。`matchBasis: human_review`として反映し、監査方法を`human_inference`として正本・公開物を再生成し、testsとvalidate後にPull Requestを作る。人がJSONを編集・uploadする経路は設けない。
+
+`Re-identify retained source snapshots`は検索入力修正後のbranchで手動実行する。外部取得コマンドを呼ばず、保存済みWAM・OSM rawと取得台帳のSHA・版を検証し、現在の検索入力に対してWAM normalizedとOSM候補を再生成する。処理時刻とsource取得時刻を分離し、正本名を修正後の検索名へ同期した後、WAM→OSMの順で適用する。合議不成立時は同じIssue経路へ進む。
 
 review diff生成前に`git add -N .`を行い、新規ファイルもbinary diffへ含める。
 
@@ -192,15 +197,15 @@ review diff生成前に`git add -N .`を行い、新規ファイルもbinary dif
 ## 8. レビュー手順
 
 1. `reports/*-update.diff`を確認する。
-2. 正本Placeの削除、UUID変更、名称変更がないことを確認する。
+2. 正本Placeの削除・UUID変更がなく、名称変更は意図した検索入力修正だけであることを確認する。
 3. WAMの施設数・元レコード数が前回から大きく変わっていないか確認する。202603版の8施設・13元レコードは現在の目安であり、固定要件ではない。
-4. OSMの合議不成立候補だけが`reports/osm-review-needed.json`へ残っているか確認する。
+4. OSMの合議不成立時は自動作成されたIssueで検索入力ごとに一候補または「どれとも一致しない」を選ぶ。
 5. `sourceAttributions`と取得台帳の版・SHAを確認する。
 6. tests、validate、決定的buildを再実行する。
 7. clean cloneでも同じ検証を行う。
 
 ## 9. 現在未実装の将来候補
 
-OSM候補の3票合議は取得workflowへ接続済みである。`review_hold`への自動移行、画像権利の自動検証、Schema全体のruntime検証は現行運用ではない。
+画像権利の自動検証、Schema全体のruntime検証は現行運用ではない。
 
 これらを実装する場合は、実行経路、失敗時の扱い、tests、文書を同じ変更で追加する。

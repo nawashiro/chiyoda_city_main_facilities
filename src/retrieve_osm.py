@@ -200,6 +200,7 @@ def prepare_osm_snapshot(
             {
                 "queryId": query["id"],
                 "name": query["name"],
+                "target": dict(query),
                 "status": status,
                 "candidates": sorted(
                     report_candidates,

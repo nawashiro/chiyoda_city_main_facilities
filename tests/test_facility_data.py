@@ -27,6 +27,7 @@ from src.facility_data import (
     validate_registry,
     validate_search_document,
     source_refresh_due,
+    synchronize_registry_names,
 )
 from src.update_osm import main as update_osm_main
 from src.update_wam import main as update_wam_main
@@ -219,6 +220,35 @@ class RegistryValidationTests(unittest.TestCase):
         self.assertIn(f"place {query['id']}: audit must have exactly four keys", issues)
         self.assertIn(f"place {query['id']}: invalid audit method: unknown", issues)
         self.assertIn(f"place {query['id']}: multiple current OSM refs", issues)
+
+    def test_rejects_current_osm_ref_shared_by_multiple_places(self):
+        queries = [
+            {
+                "id": f"019c0000-0000-7000-8000-00000000006{index}",
+                "name": f"施設{index}",
+                "coordinates": [139.70 + index / 1000, 35.60],
+            }
+            for index in (4, 5)
+        ]
+        places = [
+            make_place(query, ["park"], [], "2026-07-28T00:00:00Z")
+            for query in queries
+        ]
+        for place in places:
+            place["externalRefs"] = [
+                {
+                    "sourceId": "openstreetmap",
+                    "recordId": "node/1",
+                    "status": "current",
+                }
+            ]
+
+        issues = validate_registry(
+            {"schemaVersion": 1, "places": places},
+            {query["id"]: query for query in queries},
+        )
+
+        self.assertIn("duplicate current OSM recordId node/1", issues)
 
 
 class PublicGeoJsonTests(unittest.TestCase):
@@ -875,6 +905,46 @@ class CandidateMatchingTests(unittest.TestCase):
         self.assertEqual("name_coordinates", updated["externalRefs"][0]["basis"])
         self.assertEqual(original_audit, updated["audit"])
 
+    def test_probabilistic_reconfirmation_of_current_osm_id_updates_basis_and_audit(self):
+        query = {
+            "id": "019c0000-0000-7000-8000-000000000044",
+            "name": "施設J2",
+            "coordinates": [139.75, 35.69],
+        }
+        place = make_place(query, ["park"], [], "2026-07-01T00:00:00Z")
+        place["externalRefs"] = [
+            {
+                "sourceId": "openstreetmap",
+                "recordId": "node/1",
+                "status": "current",
+                "firstConfirmedAt": "2026-07-01T00:00:00Z",
+                "lastConfirmedAt": "2026-07-01T00:00:00Z",
+                "supersededAt": None,
+                "basis": "name_coordinates",
+            }
+        ]
+
+        updated = update_osm_reference(
+            place,
+            {"type": "node", "id": "1", "coordinates": [139.75, 35.69]},
+            at="2026-07-28T00:00:00Z",
+            basis="human_review",
+            method="human_inference",
+            audit_at="2026-08-02T12:00:00Z",
+        )
+
+        self.assertEqual("human_review", updated["externalRefs"][0]["basis"])
+        self.assertEqual("2026-07-28T00:00:00Z", updated["externalRefs"][0]["lastConfirmedAt"])
+        self.assertEqual(
+            {
+                "at": "2026-08-02T12:00:00Z",
+                "method": "human_inference",
+                "action": "linked_osm",
+                "target": "node/1",
+            },
+            updated["audit"][-1],
+        )
+
     def test_keeps_superseded_osm_id_and_short_audit(self):
         query = {
             "id": "019c0000-0000-7000-8000-000000000042",
@@ -1386,6 +1456,7 @@ class SourceUpdateTests(unittest.TestCase):
             [osm],
             "2026-07-28T00:00:00Z",
             wam_raw_rows=wam_raw_rows,
+            decision_at="2026-08-02T12:00:00Z",
         )
 
         result = updated["places"][0]
@@ -1395,6 +1466,20 @@ class SourceUpdateTests(unittest.TestCase):
         self.assertEqual("name_coordinates", result["externalRefs"][-1]["basis"])
         self.assertEqual({"at", "method", "action", "target"}, set(result["audit"][-1]))
         self.assertIn("linked_wam", [item["action"] for item in result["audit"]])
+        self.assertTrue(
+            any(
+                item["action"] == "linked_wam"
+                and item["at"] == "2026-08-02T12:00:00Z"
+                for item in result["audit"]
+            )
+        )
+        self.assertTrue(
+            all(
+                ref["lastConfirmedAt"] == "2026-07-28T00:00:00Z"
+                for ref in result["externalRefs"]
+                if ref["sourceId"] == "wam" and ref["status"] == "current"
+            )
+        )
         self.assertEqual(
             {"wam-52", "wam-70"},
             {
@@ -1526,6 +1611,78 @@ class SourceUpdateTests(unittest.TestCase):
         result = updated["places"][0]
         self.assertEqual("node/55", result["geometrySource"]["recordId"])
         self.assertEqual("language_model", result["externalRefs"][-1]["basis"])
+        self.assertTrue(
+            any(
+                audit["method"] == "language_model" and audit["action"] == "linked_osm"
+                for audit in result["audit"]
+            )
+        )
+
+    def test_applies_github_issue_choice_as_human_inference(self):
+        query = {
+            "id": "019c0000-0000-7000-8000-000000000056",
+            "name": "確認対象",
+            "coordinates": [139.75, 35.69],
+        }
+        place = make_place(query, ["community"], [], "2026-07-01T00:00:00Z")
+        record = {
+            "queryId": query["id"],
+            "type": "way",
+            "id": "56",
+            "name": "候補の名称",
+            "coordinates": [139.7501, 35.6901],
+            "matchBasis": "human_review",
+        }
+
+        updated = apply_source_updates(
+            {"schemaVersion": 1, "places": [place]},
+            {query["id"]: query},
+            [],
+            [record],
+            "2026-07-29T00:00:00Z",
+            decision_at="2026-08-02T12:00:00Z",
+        )
+
+        result = updated["places"][0]
+        self.assertEqual("human_review", result["externalRefs"][-1]["basis"])
+        self.assertEqual(
+            "2026-07-29T00:00:00Z", result["externalRefs"][-1]["lastConfirmedAt"]
+        )
+        self.assertTrue(
+            any(
+                audit["at"] == "2026-08-02T12:00:00Z"
+                and audit["method"] == "human_inference"
+                and audit["action"] == "linked_osm"
+                for audit in result["audit"]
+            )
+        )
+
+    def test_synchronizes_canonical_name_after_manual_search_input_edit(self):
+        original_query = {
+            "id": "019c0000-0000-7000-8000-000000000057",
+            "name": "修正前",
+            "coordinates": [139.75, 35.69],
+        }
+        corrected_query = {**original_query, "name": "修正後"}
+        place = make_place(original_query, ["community"], [], "2026-07-01T00:00:00Z")
+
+        updated = synchronize_registry_names(
+            {"schemaVersion": 1, "places": [place]},
+            {corrected_query["id"]: corrected_query},
+            "2026-07-29T02:00:00Z",
+        )
+
+        self.assertEqual("修正後", updated["places"][0]["name"])
+        self.assertEqual("修正前", place["name"])
+        self.assertEqual(
+            {
+                "at": "2026-07-29T02:00:00Z",
+                "method": "human_inference",
+                "action": "updated_name",
+                "target": corrected_query["id"],
+            },
+            updated["places"][0]["audit"][-1],
+        )
 
     def test_builds_one_batch_query_for_current_and_historical_osm_ids(self):
         registry = {

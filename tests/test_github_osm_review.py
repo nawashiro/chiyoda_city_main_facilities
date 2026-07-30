@@ -1,0 +1,200 @@
+import copy
+import hashlib
+import json
+import tempfile
+import unittest
+from pathlib import Path
+
+from src.github_osm_review import apply_issue_selections, build_issue_document
+
+
+class GithubOsmReviewTests(unittest.TestCase):
+    def review_report(self):
+        return {
+            "version": "2026-07-29T00:00:00Z",
+            "queries": [
+                {
+                    "queryId": "019c0000-0000-7000-8000-000000000301",
+                    "name": "施設A",
+                    "target": {
+                        "id": "019c0000-0000-7000-8000-000000000301",
+                        "name": "施設A",
+                        "coordinates": [139.75, 35.69],
+                    },
+                    "status": "needs_review",
+                    "llmVotes": [
+                        {"perspective": "visitor", "decision": "link", "candidateId": "node/1"},
+                        {"perspective": "user", "decision": "reject", "candidateId": None},
+                        {"perspective": "staff", "decision": "review", "candidateId": None},
+                    ],
+                    "candidates": [
+                        {
+                            "type": "node",
+                            "id": "1",
+                            "name": "候補A",
+                            "coordinates": [139.7501, 35.6901],
+                            "recordId": "node/1",
+                            "distanceMeters": 12.0,
+                            "tags": {
+                                "name": "候補A",
+                                "operator": "法人A",
+                                "contact:phone": "03-0000-0000",
+                            },
+                        },
+                        {
+                            "type": "way",
+                            "id": "2",
+                            "name": "候補B",
+                            "coordinates": [139.7502, 35.6902],
+                            "recordId": "way/2",
+                            "distanceMeters": 18.0,
+                            "tags": {"name": "候補B", "amenity": "library"},
+                        },
+                    ],
+                }
+            ],
+        }
+
+    def test_builds_one_clickable_issue_with_all_candidate_attributes(self):
+        report = self.review_report()
+        payload = (json.dumps(report, ensure_ascii=False, indent=2) + "\n").encode()
+
+        issue = build_issue_document(
+            report,
+            run_id="12345",
+            artifact_name="osm-update-12345",
+            report_sha256=hashlib.sha256(payload).hexdigest(),
+        )
+
+        self.assertEqual("OSM候補の人間確認（Actions run 12345）", issue["title"])
+        self.assertIn("osm-human-review", issue["labels"])
+        self.assertIn("operator", issue["body"])
+        self.assertIn("contact:phone", issue["body"])
+        self.assertIn("https://www.openstreetmap.org/node/1", issue["body"])
+        self.assertIn("<!-- osm-choice:019c0000-0000-7000-8000-000000000301:link:node/1 -->", issue["body"])
+        self.assertIn("<!-- osm-choice:019c0000-0000-7000-8000-000000000301:reject:none -->", issue["body"])
+        self.assertIn("<!-- osm-apply -->", issue["body"])
+
+    def test_applies_exactly_one_checked_choice_after_artifact_hash_validation(self):
+        report = self.review_report()
+        payload = (json.dumps(report, ensure_ascii=False, indent=2) + "\n").encode()
+        report_sha = hashlib.sha256(payload).hexdigest()
+        issue = build_issue_document(
+            report,
+            run_id="12345",
+            artifact_name="osm-update-12345",
+            report_sha256=report_sha,
+        )
+        body = issue["body"].replace(
+            "- [ ] <!-- osm-choice:019c0000-0000-7000-8000-000000000301:link:node/1 -->",
+            "- [x] <!-- osm-choice:019c0000-0000-7000-8000-000000000301:link:node/1 -->",
+        ).replace("- [ ] <!-- osm-apply -->", "- [x] <!-- osm-apply -->")
+
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            (root / "reports").mkdir()
+            (root / "imports/openstreetmap").mkdir(parents=True)
+            (root / "reports/osm-candidates.json").write_bytes(payload)
+            (root / "imports/openstreetmap/normalized.json").write_text(
+                json.dumps({"records": []}), encoding="utf-8"
+            )
+
+            result = apply_issue_selections(
+                root,
+                body,
+                issue_url="https://github.com/example/repo/issues/7",
+            )
+            normalized = json.loads(
+                (root / "imports/openstreetmap/normalized.json").read_text()
+            )
+            updated_report = json.loads(
+                (root / "reports/osm-candidates.json").read_text()
+            )
+
+        self.assertEqual("12345", result["runId"])
+        self.assertEqual("osm-update-12345", result["artifactName"])
+        self.assertEqual("human_review", normalized["records"][0]["matchBasis"])
+        self.assertEqual("node/1", f"{normalized['records'][0]['type']}/{normalized['records'][0]['id']}")
+        self.assertEqual("linked_human", updated_report["queries"][0]["status"])
+        self.assertEqual(
+            "https://github.com/example/repo/issues/7",
+            updated_report["queries"][0]["humanReview"]["issueUrl"],
+        )
+
+    def test_rejects_tampered_or_incomplete_issue_selection(self):
+        report = self.review_report()
+        payload = (json.dumps(report, ensure_ascii=False, indent=2) + "\n").encode()
+        issue = build_issue_document(
+            report,
+            run_id="12345",
+            artifact_name="osm-update-12345",
+            report_sha256=hashlib.sha256(payload).hexdigest(),
+        )
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            (root / "reports").mkdir()
+            (root / "imports/openstreetmap").mkdir(parents=True)
+            (root / "reports/osm-candidates.json").write_bytes(payload)
+            (root / "imports/openstreetmap/normalized.json").write_text(
+                json.dumps({"records": []}), encoding="utf-8"
+            )
+            with self.assertRaisesRegex(ValueError, "apply checkbox"):
+                apply_issue_selections(root, issue["body"], issue_url="https://example/7")
+
+            tampered = issue["body"].replace(report["queries"][0]["name"], "改ざん", 1)
+            tampered = tampered.replace("- [ ] <!-- osm-apply -->", "- [x] <!-- osm-apply -->")
+            with self.assertRaisesRegex(ValueError, "exactly one choice"):
+                apply_issue_selections(root, tampered, issue_url="https://example/7")
+
+    def test_rejects_same_osm_candidate_selected_for_multiple_queries(self):
+        report = self.review_report()
+        second = copy.deepcopy(report["queries"][0])
+        second["queryId"] = "019c0000-0000-7000-8000-000000000302"
+        second["name"] = "施設B"
+        second["target"] = {
+            "id": second["queryId"],
+            "name": second["name"],
+            "coordinates": [139.75, 35.69],
+        }
+        report["queries"].append(second)
+        payload = (json.dumps(report, ensure_ascii=False, indent=2) + "\n").encode()
+        issue = build_issue_document(
+            report,
+            run_id="12345",
+            artifact_name="osm-update-12345",
+            report_sha256=hashlib.sha256(payload).hexdigest(),
+        )
+        body = issue["body"]
+        for query_id in (report["queries"][0]["queryId"], second["queryId"]):
+            body = body.replace(
+                f"- [ ] <!-- osm-choice:{query_id}:link:node/1 -->",
+                f"- [x] <!-- osm-choice:{query_id}:link:node/1 -->",
+            )
+        body = body.replace("- [ ] <!-- osm-apply -->", "- [x] <!-- osm-apply -->")
+
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            (root / "reports").mkdir()
+            (root / "imports/openstreetmap").mkdir(parents=True)
+            (root / "reports/osm-candidates.json").write_bytes(payload)
+            (root / "imports/openstreetmap/normalized.json").write_text(
+                json.dumps({"records": []}), encoding="utf-8"
+            )
+            with self.assertRaisesRegex(ValueError, "duplicate current OSM recordId"):
+                apply_issue_selections(root, body, issue_url="https://example/7")
+
+    def test_rejects_review_body_over_github_issue_limit(self):
+        report = self.review_report()
+        report["queries"][0]["candidates"][0]["tags"]["oversized"] = "x" * 70000
+
+        with self.assertRaisesRegex(ValueError, "GitHub Issue body limit"):
+            build_issue_document(
+                report,
+                run_id="12345",
+                artifact_name="osm-update-12345",
+                report_sha256="0" * 64,
+            )
+
+
+if __name__ == "__main__":
+    unittest.main()
