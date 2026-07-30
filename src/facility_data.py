@@ -207,6 +207,7 @@ def validate_registry(
     """Return issues for canonical Place records and their search-row identity."""
     issues: list[str] = []
     seen: set[str] = set()
+    current_osm_owners: dict[str, str] = {}
     for place in registry.get("places", []):
         place_id = str(place.get("id"))
         if place_id in seen:
@@ -229,6 +230,13 @@ def validate_registry(
         ]
         if len(current_osm) > 1:
             issues.append(f"place {place_id}: multiple current OSM refs")
+        for ref in current_osm:
+            record_id = str(ref.get("recordId"))
+            owner = current_osm_owners.get(record_id)
+            if owner is not None and owner != place_id:
+                issues.append(f"duplicate current OSM recordId {record_id}")
+            else:
+                current_osm_owners[record_id] = place_id
         for audit in place.get("audit", []):
             if set(audit) != {"at", "method", "action", "target"}:
                 issues.append(f"place {place_id}: audit must have exactly four keys")
@@ -437,6 +445,7 @@ def validate_repository(root: str | Path) -> list[str]:
                     "qid",
                     "name_coordinates",
                     "language_model",
+                    "human_review",
                 }:
                     issues.append(f"{prefix}: invalid OSM matchBasis")
                 if record.get("matchBasis") == "qid" and record.get("qid") is None:
@@ -775,15 +784,21 @@ def _validate_osm_record_match(
     place: dict[str, Any] | None,
 ) -> None:
     basis = record.get("matchBasis")
-    if basis not in {"source_record", "qid", "name_coordinates", "language_model"}:
+    if basis not in {
+        "source_record",
+        "qid",
+        "name_coordinates",
+        "language_model",
+        "human_review",
+    }:
         raise ValueError("OSM matchBasis is required")
-    if basis == "language_model":
+    if basis in {"language_model", "human_review"}:
         if "coordinates" in query and _distance_metres(
             query["coordinates"], record["coordinates"]
         ) > 50:
-            raise ValueError("OSM language_model match exceeds 50 metres")
+            raise ValueError(f"OSM {basis} match exceeds 50 metres")
         if "qid" in query and record.get("qid") != query["qid"]:
-            raise ValueError("OSM language_model match has a conflicting QID")
+            raise ValueError(f"OSM {basis} match has a conflicting QID")
         return
     if basis == "qid":
         if "qid" not in query or record.get("qid") != query["qid"]:
@@ -1039,6 +1054,11 @@ def normalize_osm_elements(elements: list[dict[str, Any]]) -> list[dict[str, Any
         tags = element.get("tags", {})
         if not isinstance(tags, dict):
             raise ValueError(f"invalid OSM tags at index {index}")
+        if any(
+            not isinstance(tag, str) or not isinstance(value, str)
+            for tag, value in tags.items()
+        ):
+            raise ValueError(f"invalid OSM tag value at index {index}")
         if tags.get("wikidata") is not None and not _QID.fullmatch(str(tags["wikidata"])):
             raise ValueError(f"invalid OSM Wikidata QID at index {index}")
         record = {
@@ -1046,6 +1066,7 @@ def normalize_osm_elements(elements: list[dict[str, Any]]) -> list[dict[str, Any
             "id": str(element["id"]),
             "name": tags.get("name"),
             "coordinates": coordinates,
+            "tags": copy.deepcopy(tags),
         }
         if tags.get("wikidata"):
             record["qid"] = tags["wikidata"]
@@ -1091,6 +1112,7 @@ def update_osm_reference(
     at: str,
     basis: str,
     method: str,
+    audit_at: str | None = None,
 ) -> dict[str, Any]:
     """Keep typed current/superseded OSM IDs and append one compact audit item."""
     updated = copy.deepcopy(place)
@@ -1108,6 +1130,11 @@ def update_osm_reference(
     )
     if current is not None:
         current["lastConfirmedAt"] = at
+        if method in {"language_model", "human_inference"}:
+            current["basis"] = basis
+            updated.setdefault("audit", []).append(
+                compact_audit(audit_at or at, method, "linked_osm", record_id)
+            )
     else:
         for ref in refs:
             if ref.get("sourceId") == "openstreetmap" and ref.get("status") == "current":
@@ -1125,13 +1152,16 @@ def update_osm_reference(
             }
         )
         updated.setdefault("audit", []).append(
-            compact_audit(at, method, "linked_osm", record_id)
+            compact_audit(audit_at or at, method, "linked_osm", record_id)
         )
     return updated
 
 
 def _update_wam_reference(
-    place: dict[str, Any], wam_record: dict[str, Any], at: str
+    place: dict[str, Any],
+    wam_record: dict[str, Any],
+    at: str,
+    audit_at: str | None = None,
 ) -> dict[str, Any]:
     updated = copy.deepcopy(place)
     refs = updated.setdefault("externalRefs", [])
@@ -1171,7 +1201,12 @@ def _update_wam_reference(
             }
         )
     updated.setdefault("audit", []).append(
-        compact_audit(at, "calculation_model", "linked_wam", str(wam_record["id"]))
+        compact_audit(
+            audit_at or at,
+            "calculation_model",
+            "linked_wam",
+            str(wam_record["id"]),
+        )
     )
     return updated
 
@@ -1183,8 +1218,11 @@ def apply_source_updates(
     osm_records: list[dict[str, Any]],
     at: str,
     wam_raw_rows: list[dict[str, Any]] | None = None,
+    decision_at: str | None = None,
 ) -> dict[str, Any]:
     """Apply already-selected batch snapshots with WAM > OSM > search priority."""
+    if decision_at is not None:
+        source_refresh_due(None, decision_at)
     updated = copy.deepcopy(registry)
     original_by_id = {
         str(place["id"]): place for place in updated.get("places", [])
@@ -1234,14 +1272,19 @@ def apply_source_updates(
         osm_record = osm_by_id.get(place_id)
         place = original
         if wam_record is not None:
-            place = _update_wam_reference(place, wam_record, at)
+            place = _update_wam_reference(place, wam_record, at, audit_at=decision_at)
         if osm_record is not None:
+            osm_method = {
+                "language_model": "language_model",
+                "human_review": "human_inference",
+            }.get(osm_record["matchBasis"], "calculation_model")
             place = update_osm_reference(
                 place,
                 osm_record,
                 at,
                 osm_record["matchBasis"],
-                "calculation_model",
+                osm_method,
+                audit_at=decision_at,
             )
         if wam_record is not None or osm_record is not None:
             preserve_wam_geometry = (
@@ -1262,20 +1305,57 @@ def apply_source_updates(
                 }
                 if previous != coordinates or previous_source != source_id:
                     place.setdefault("audit", []).append(
-                        compact_audit(at, "calculation_model", "updated_geometry", place_id)
+                        compact_audit(
+                            decision_at or at,
+                            "calculation_model",
+                            "updated_geometry",
+                            place_id,
+                        )
                     )
         places.append(place)
     updated["places"] = places
     return updated
 
 
-def update_repository(root: str | Path, at: str, source: str) -> Path:
+def synchronize_registry_names(
+    registry: dict[str, Any],
+    search_by_id: dict[str, dict[str, Any]],
+    at: str,
+) -> dict[str, Any]:
+    """Copy manually edited search names into existing canonical Places."""
+    source_refresh_due(None, at)
+    updated = copy.deepcopy(registry)
+    for place in updated.get("places", []):
+        place_id = str(place["id"])
+        query = search_by_id.get(place_id)
+        if query is None or place.get("name") == query.get("name"):
+            continue
+        place["name"] = query["name"]
+        place.setdefault("audit", []).append(
+            compact_audit(at, "human_inference", "updated_name", place_id)
+        )
+    return updated
+
+
+def update_repository(
+    root: str | Path,
+    at: str,
+    source: str,
+    *,
+    sync_search_names: bool = False,
+    name_sync_at: str | None = None,
+    decision_at: str | None = None,
+) -> Path:
     """Apply one local source snapshot, validate, then rebuild public data."""
     if source not in {"wam", "openstreetmap"}:
         raise ValueError(f"unsupported update source: {source}")
     source_refresh_due(None, at)
     root = Path(root)
     existing_issues = validate_repository(root)
+    if sync_search_names:
+        existing_issues = [
+            issue for issue in existing_issues if "name differs from search input" not in issue
+        ]
     if existing_issues:
         raise ValueError("; ".join(existing_issues))
     search_by_id: dict[str, dict[str, Any]] = {}
@@ -1285,6 +1365,10 @@ def update_repository(root: str | Path, at: str, source: str) -> Path:
             {str(query["id"]): query for query in document.get("queries", [])}
         )
     registry = _read_json(root / "data/registry.json")
+    if sync_search_names:
+        if name_sync_at is None:
+            raise ValueError("name_sync_at is required when synchronizing search names")
+        registry = synchronize_registry_names(registry, search_by_id, name_sync_at)
 
     def records(path: Path) -> list[dict[str, Any]]:
         return _read_json(path).get("records", []) if path.exists() else []
@@ -1307,6 +1391,7 @@ def update_repository(root: str | Path, at: str, source: str) -> Path:
         osm_records,
         at,
         wam_raw_rows=wam_raw_rows,
+        decision_at=decision_at,
     )
     issues = validate_registry(updated, search_by_id)
     if issues:
@@ -1377,12 +1462,24 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument("root", nargs="?", default=".")
     parser.add_argument("--at")
     parser.add_argument("--source", choices=("wam", "openstreetmap"))
+    parser.add_argument("--sync-search-names", action="store_true")
+    parser.add_argument("--name-sync-at")
+    parser.add_argument("--decision-at")
     args = parser.parse_args(argv)
     if args.command == "update":
         if args.at is None or args.source is None:
             print("ERROR: update requires --source and --at")
             return 1
-        print(update_repository(args.root, args.at, args.source))
+        print(
+            update_repository(
+                args.root,
+                args.at,
+                args.source,
+                sync_search_names=args.sync_search_names,
+                name_sync_at=args.name_sync_at,
+                decision_at=args.decision_at,
+            )
+        )
         return 0
     issues = validate_repository(args.root)
     if issues:

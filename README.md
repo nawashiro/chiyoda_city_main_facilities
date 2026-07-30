@@ -74,7 +74,7 @@ python3 -m src.facility_data build .
 
 外部ソースを一括取得し、取得版・時刻・ハッシュを記録してから正規化・適用・公開物生成を行います。施設ごとの問い合わせは行わず、同一ソースの取得間隔は30日以上とします。
 
-OSMの曖昧候補はOpenAI互換APIへ独立した3回の判断を依頼し、2票以上が一致すれば自動処理します。最初に次を設定します。
+OSMの曖昧候補は、検索入力1件と50m以内の全候補を一括でOpenAI互換APIへ提示します。候補にはOSM rawの全タグを含め、訪問者（同じ地物か）、利用者（同じ用途か）、現地スタッフ（同じチームか）という異なる3つのプロンプトで判断します。2票以上が同じ候補またはrejectで一致すれば自動処理します。最初に次を設定します。
 
 ```bash
 export LLM_API_KEY="..."
@@ -110,9 +110,13 @@ python3 -m src.facility_data build .
 
 `facility_data update`は正本と公開GeoJSONをまとめて再生成するため、WAM／OSM更新後に別の`build`は不要です。
 
-合議できなかった候補だけが`reports/osm-review-needed.json`へ残ります。通常、人が確認するのはこのファイルだけです。候補なしの場合、既存Placeは今の座標を保ちます。QIDだけを持つ新規検索入力で、WAMにもOSMにも対応データがなければ、新しいPlaceはまだ作られません。
+合議できなかった候補は内部的には`reports/osm-review-needed.json`へ残りますが、人がJSONを編集する必要はありません。`Update OpenStreetMap data`が、検索入力、三者の票、全候補とその全属性、OSMリンク、選択チェックボックスをまとめたGitHub Issueを自動作成します。各検索入力で一つを選び、最後の適用チェックを押すと、別のActionが元のartifactと候補レポートSHAを検証し、正本と公開GeoJSONを再生成してPull Requestを作ります。
 
-GitHub Actionsの`Update WAM data`、`Update OpenStreetMap data`、`Update town polygons`からも同じ経路を手動実行できます。WAMは`YYYYMM`版、町名はfull commit SHAだけを入力し、OSMは入力不要です。各Actionはリポジトリへ直接pushせず、ソースごとの取得物・台帳・生成物とレビュー用diffを14日間artifactとして保存します。
+候補なしの場合、既存Placeは今の座標を保ちます。QIDだけを持つ新規検索入力で、WAMにもOSMにも対応データがなければ、新しいPlaceはまだ作られません。
+
+GitHub Actionsの`Update WAM data`、`Update OpenStreetMap data`、`Update town polygons`からも同じ経路を手動実行できます。WAMは`YYYYMM`版、町名はfull commit SHAだけを入力し、OSMは入力不要です。OSM更新で人間確認が残らなければPull Requestを作り、残れば30日間のartifactに結び付いた確認Issueを作ります。WAMと町名は従来どおりレビュー用artifactを作ります。
+
+検索入力を手動修正してcommitした後は、修正したbranchを選んで`Re-identify retained source snapshots`を実行します。このActionは外部通信や再取得をせず、保存済みWAM・OSM rawのSHAと版を検証してから現在の検索入力に対する同定を再実行します。WAM→OSMの順で適用し、検索名の変更は正本名へ同期します。合議不成立時は同じGitHub Issue経路へ進み、すべて解決できた場合は直接Pull Requestを作ります。
 
 外部から消えたという理由だけでPlaceは削除しません。WAMは公式公開後の年2回、OSMと町名は四半期または手動を基本とし、更新は一ソース版ずつ扱います。
 
@@ -121,9 +125,9 @@ WAMから取得するのは、計画相談支援、地域移行、地域定着�
 ## 運用方針
 
 - UUID重複を許容しない
-- OSMは決定規則で解ける候補を先に適用し、残りを3回のLLM判断へ渡す
+- OSMは決定規則で解ける候補を先に適用し、残りの全候補・全属性を三視点のLLM判断へ渡す
 - 2票以上が同じ候補またはrejectで一致すれば、人の確認なしで処理する
-- 合議不成立だけを`reports/osm-review-needed.json`へ出す
+- 合議不成立はGitHub Issueのチェックボックスで選び、JSONを人が手入力しない
 - 外部ソースから消えたという理由だけでPlaceを削除しない
 - 監査記録は`at`、`method`、`action`、`target`だけにする
 - 外部ソース取得はソースごとに月1回以下にする

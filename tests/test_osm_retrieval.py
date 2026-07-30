@@ -14,6 +14,41 @@ from src.retrieve_osm import (
 
 
 class OsmRetrievalTests(unittest.TestCase):
+    def test_candidate_report_retains_every_osm_tag_and_complete_search_target(self):
+        query_id = "019c0000-0000-7000-8000-000000000105"
+        query = {
+            "id": query_id,
+            "name": "施設タグ",
+            "coordinates": [139.75, 35.69],
+        }
+        tags = {
+            "name": "別名候補",
+            "official_name": "正式名称",
+            "operator": "運営法人",
+            "contact:phone": "03-0000-0000",
+            "custom:unanticipated": "削ってはならない属性",
+        }
+
+        _, report = prepare_osm_snapshot(
+            {"schemaVersion": 1, "places": []},
+            [{"queries": [query]}],
+            {
+                "version": "2026-07-29T00:00:00Z",
+                "elements": [
+                    {
+                        "type": "node",
+                        "id": 11,
+                        "lon": 139.7501,
+                        "lat": 35.6901,
+                        "tags": tags,
+                    }
+                ],
+            },
+        )
+
+        self.assertEqual(query, report["queries"][0]["target"])
+        self.assertEqual(tags, report["queries"][0]["candidates"][0]["tags"])
+
     def test_name_edit_distance_has_boundary_and_rejects_short_false_positives(self):
         self.assertTrue(_osm_names_match("abcdefghij", "abcdefxxij"))
         self.assertFalse(_osm_names_match("abcdefghij", "abcdexxxij"))

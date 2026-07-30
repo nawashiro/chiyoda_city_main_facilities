@@ -56,9 +56,21 @@
 - [ ] current ID照合に名称・QID競合や50m超の移動がない
 - [ ] QID照合は検索入力QIDと一致する一意候補だけ
 - [ ] 名称＋座標照合は完全一致かつ50m以内の一意候補だけ
+- [ ] 全候補が一度に提示され、OSM rawの全タグが候補属性へ含まれた
+- [ ] 訪問者・利用者・現地スタッフの3視点で判定された
 - [ ] 3票のうち2票以上一致した候補またはrejectが自動処理された
-- [ ] 合議不成立だけが`reports/osm-review-needed.json`へ残った
+- [ ] 合議不成立だけがGitHub確認Issueへ出た
+- [ ] IssueではJSONを編集せず、検索入力ごとにチェックボックスを一つ選べる
 - [ ] 成功した新規取得ではquery／response／canonical rawのhashとretention flagが一致する
+
+## 検索入力修正後の再同定
+
+- [ ] 修正をcommitしたbranchで`Re-identify retained source snapshots`を実行した
+- [ ] WAM・OSMのrawと取得台帳が実行前後で同一だった
+- [ ] raw SHA・版を検証してからnormalizedと候補を再生成した
+- [ ] 正本名が修正後の検索名へ同期された
+- [ ] WAM→OSMの順で適用された
+- [ ] 合議不成立はGitHub確認Issue、全解決時はPull Requestへ進んだ
 
 ## 町名更新
 
@@ -80,7 +92,7 @@ python3 -m src.facility_data build .
 - [ ] `git diff --check`が成功する
 - [ ] buildを2回実行して同一hashになる
 - [ ] Place削除がない
-- [ ] 既存PlaceのUUID・`name`変更がない
+- [ ] 既存PlaceのUUID変更がなく、`name`変更は意図した検索入力修正だけである
 - [ ] current OSM IDが重複していない
 - [ ] 公開Feature数と正本のpublic Place数が一致する
 - [ ] `sourceAttributions`が実際の寄与ソースだけを含む

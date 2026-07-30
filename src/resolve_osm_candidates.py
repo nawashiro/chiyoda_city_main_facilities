@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import argparse
+import copy
 import json
 import os
 from collections import Counter
@@ -10,7 +11,24 @@ from urllib.request import Request, urlopen
 
 
 Vote = dict[str, Any]
-Voter = Callable[[dict[str, Any], int], Vote]
+Voter = Callable[[dict[str, Any], str], Vote]
+
+REVIEW_PERSPECTIVES = ("visitor", "user", "staff")
+
+_PERSPECTIVE_PROMPTS = {
+    "visitor": (
+        "Judge as a visitor trying to reach the target. Decide which candidate is the same "
+        "real-world geographic feature or destination as the target."
+    ),
+    "user": (
+        "Judge as a person intending to use the target. Decide which candidate provides the "
+        "same purpose, facility, or service as the target."
+    ),
+    "staff": (
+        "Judge as on-site staff. Decide which candidate belongs to the same operating team, "
+        "office, or organizational unit as the target."
+    ),
+}
 
 
 def _write_json(path: Path, document: dict[str, Any]) -> None:
@@ -42,15 +60,54 @@ def _consensus(votes: list[Vote | None]) -> Vote | None:
     return {"decision": winner[0], "candidateId": winner[1]}
 
 
+def _enrich_targets_with_wam(root: Path, report: dict[str, Any]) -> None:
+    normalized_path = root / "imports/wam/normalized.json"
+    raw_path = root / "imports/wam/raw.json"
+    if not normalized_path.exists() and not raw_path.exists():
+        return
+    if not normalized_path.exists() or not raw_path.exists():
+        raise ValueError("incomplete retained WAM snapshot for OSM review")
+    normalized = json.loads(normalized_path.read_text(encoding="utf-8"))
+    raw = json.loads(raw_path.read_text(encoding="utf-8"))
+    records = {
+        str(record["queryId"]): record for record in normalized.get("records", [])
+    }
+    rows = {}
+    for row in raw.get("rows", []):
+        source_id = str(row["sourceRecordId"])
+        if source_id in rows:
+            raise ValueError(f"duplicate retained WAM row: {source_id}")
+        rows[source_id] = row
+    for query in report.get("queries", []):
+        record = records.get(str(query.get("queryId")))
+        if record is None:
+            continue
+        query.setdefault(
+            "target", {"id": query["queryId"], "name": query["name"]}
+        )["wam"] = {
+            "normalized": copy.deepcopy(record),
+            "rows": [
+                copy.deepcopy(rows[source_id])
+                for source_id in record.get("sourceRecordIds", [])
+                if source_id in rows
+            ],
+        }
+
+
 def resolve_osm_candidates(root: str | Path, voter: Voter) -> tuple[Path, Path]:
     root = Path(root)
     report_path = root / "reports/osm-candidates.json"
     normalized_path = root / "imports/openstreetmap/normalized.json"
     review_path = root / "reports/osm-review-needed.json"
     report = json.loads(report_path.read_text(encoding="utf-8"))
+    _enrich_targets_with_wam(root, report)
     normalized = json.loads(normalized_path.read_text(encoding="utf-8"))
     records = list(normalized.get("records", []))
     existing_query_ids = {record["queryId"] for record in records}
+    record_owners = {
+        f"{record['type']}/{record['id']}": str(record["queryId"])
+        for record in records
+    }
     review_queries = []
 
     for query in report.get("queries", []):
@@ -63,18 +120,26 @@ def resolve_osm_candidates(root: str | Path, voter: Voter) -> tuple[Path, Path]:
             continue
         candidate_ids = {candidate["recordId"] for candidate in candidates}
         votes: list[Vote | None] = []
-        for reviewer_number in range(1, 4):
+        for perspective in REVIEW_PERSPECTIVES:
             try:
-                vote = voter(query, reviewer_number)
+                vote = voter(query, perspective)
             except Exception:
                 vote = None
-            votes.append(_valid_vote(vote, candidate_ids))
+            valid_vote = _valid_vote(vote, candidate_ids)
+            if valid_vote is not None:
+                valid_vote["perspective"] = perspective
+            votes.append(valid_vote)
         query["llmVotes"] = votes
         result = _consensus(votes)
         if result and result["decision"] == "link":
             candidate = next(
                 item for item in candidates if item["recordId"] == result["candidateId"]
             )
+            candidate_id = str(candidate["recordId"])
+            if candidate_id in record_owners:
+                query["status"] = "needs_review"
+                review_queries.append(query)
+                continue
             records.append(
                 {
                     "queryId": query["queryId"],
@@ -87,6 +152,7 @@ def resolve_osm_candidates(root: str | Path, voter: Voter) -> tuple[Path, Path]:
                 }
             )
             existing_query_ids.add(query["queryId"])
+            record_owners[candidate_id] = str(query["queryId"])
             query["status"] = "linked_llm"
         elif result and result["decision"] == "reject":
             query["status"] = "rejected_llm"
@@ -117,13 +183,14 @@ def openai_compatible_voter(
 ) -> Voter:
     endpoint = base_url.rstrip("/") + "/chat/completions"
 
-    def vote(query: dict[str, Any], reviewer_number: int) -> Vote:
+    def vote(query: dict[str, Any], perspective: str) -> Vote:
+        if perspective not in _PERSPECTIVE_PROMPTS:
+            raise ValueError(f"unsupported review perspective: {perspective}")
         candidate_ids = [item["recordId"] for item in query["candidates"]]
         prompt = {
-            "target": {
-                "name": query["name"],
-                "queryId": query["queryId"],
-            },
+            "target": query.get(
+                "target", {"name": query["name"], "queryId": query["queryId"]}
+            ),
             "candidates": query["candidates"],
             "allowedCandidateIds": candidate_ids,
         }
@@ -136,15 +203,18 @@ def openai_compatible_voter(
                     {
                         "role": "system",
                         "content": (
-                            "You are independent map reviewer %d of 3. Decide whether one OSM "
-                            "candidate is the same real-world facility as the target. Reply only "
+                            "You are one member of a three-perspective map review. %s "
+                            "Compare every candidate together in this single request. Reply only "
                             "with JSON: {\"decision\":\"link\",\"candidateId\":\"node/1\"}, "
                             "{\"decision\":\"reject\",\"candidateId\":null}, or "
                             "{\"decision\":\"review\",\"candidateId\":null}. Use only an "
-                            "allowed candidate ID. Reject means the candidates are clearly other "
-                            "places; review means genuinely uncertain."
+                            "allowed candidate ID. Reject means all candidates are other places; "
+                            "review means the available attributes genuinely do not support a "
+                            "choice. This is a low-stakes personal prototype: choose the most "
+                            "plausible candidate when the evidence is reasonably sufficient and "
+                            "do not demand certainty."
                         )
-                        % reviewer_number,
+                        % _PERSPECTIVE_PROMPTS[perspective],
                     },
                     {
                         "role": "user",
