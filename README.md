@@ -52,11 +52,55 @@ UUIDv7 + name + qid
 }
 ```
 
-UUIDv7は次のコマンドで1件ずつ生成できます。
+UUIDv7はCLIで自動生成します。個別に値だけ必要な場合は、次でも生成できます。
 
 ```bash
 python3 -c 'from src.facility_data import new_uuid7; print(new_uuid7())'
 ```
+
+## 保守CLI
+
+リポジトリ直下の`fac`から、正本とOSM検索入力を短いコマンドで確認・更新できます。
+
+```bash
+# 正本一覧。名称、主要属性の有無・状態、geo URIを表示
+./fac ls
+./fac ls --town 神田神保町
+./fac ls --cat library
+./fac ls --name 図書館
+./fac ls --osm false
+./fac ls --life active
+
+# 正本Placeを完全なJSONで確認
+./fac get <UUID>
+
+# 人が保守する正本項目を更新。--catと--tagは複数指定可能
+./fac set <UUID> --cat library --tag kazaguruma.home-shortcut
+./fac set <UUID> --life active --vis public
+
+# OSM参照を手動確定。既存currentは同時にsupersededとなる
+./fac ref <UUID> osm way/123456
+# 現在参照を解除し、履歴だけ残す
+./fac ref <UUID> osm none
+```
+
+`ref`による手動確定は`basis=human_review`と`human_inference`監査を記録し、同じ型付きOSM IDが別Placeのcurrent参照にならないことを検証してから原子的に保存します。参照追加だけでは代表点を変更しません。保存済みrawを反映するには、commit後に`Re-identify retained source snapshots`を実行します。
+
+検索入力は`in`配下で扱います。
+
+```bash
+./fac in ls
+./fac in get <UUID>
+./fac in add "施設名" --lon 139.75 --lat 35.69
+./fac in add "施設名" --qid Q12345
+./fac in set <UUID> --name "修正後の施設名"
+./fac in set <UUID> --lon 139.75 --lat 35.69
+./fac in set <UUID> --qid Q12345
+```
+
+`--lon`と`--lat`は常に組で指定します。内部のGeoJSON座標は`[経度, 緯度]`、一覧に出す`geo:` URIは`geo:緯度,経度`です。`in set`で座標とQIDを切り替えると、以前の検索キーは自動的に除去されます。
+
+別のcheckoutを操作するテストや保守スクリプトでは、各コマンドのUUID等より前にrootパスを指定できます（例：`./fac ref /tmp/checkout <UUID> osm node/1`）。通常はリポジトリ直下で実行するため指定不要です。
 
 ## 検証と生成
 
@@ -68,7 +112,7 @@ python3 -m src.facility_data validate .
 python3 -m src.facility_data build .
 ```
 
-公開ファイルを直接編集してはいけません。検索入力または`data/registry.json`を更新し、検証後に再生成します。
+公開ファイルを直接編集してはいけません。通常は`./fac`で検索入力または正本の許可された項目を更新し、検証後に再生成します。緊急時にJSONへ戻れるようファイル形式自体は保ちますが、正本の`geometry`、`geometrySource`、`audit`は直接編集しません。
 
 ## ソースsnapshotの更新
 
