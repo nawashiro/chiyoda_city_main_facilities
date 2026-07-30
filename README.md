@@ -86,7 +86,25 @@ python3 -c 'from src.facility_data import new_uuid7; print(new_uuid7())'
 ./fac ref <UUID> osm none
 ```
 
-`--color`と`--hyperlink`の既定値は`auto`です。対応する対話端末では属性名をシアン、`true`を緑、`false`を赤で表示し、`geo:` URIをOSC 8ハイパーリンクにします。パイプやファイルへの出力は平文のままです。端末の自動判定を上書きする場合は、それぞれ`always`または`never`を指定します。色を無効化する標準的な`NO_COLOR`環境変数にも対応します。
+`--color`と`--hyperlink`の既定値は`auto`です。対応する対話端末では属性名をシアン、`true`/`current`/`active`/`public`を緑、`false`/`superseded`を赤で表示し、`geo:` URIを青のOSC 8ハイパーリンクにします。パイプやファイルへの出力は平文のままです。端末の自動判定を上書きする場合は、それぞれ`always`または`never`を指定します。色を無効化する標準的な`NO_COLOR`環境変数にも対応します。
+
+### 一覧の属性
+
+`./fac ls` が表示する各行の意味と取りうる値です。
+
+| 属性 | 意味 | 取りうる値 |
+|------|------|-----------|
+| `id` | 施設の永続識別子。検索入力から引き継ぐUUIDv7 | `019…` 形式のUUIDv7文字列 |
+| `cat` | 分類（`categoryIds`）。複数ある場合は `,` 区切り | `art-museum` `buddhist-temple` `christian-church` `cinema` `disability-support` `library` `museum` `park` `public-bath` `public-office` `social-welfare` |
+| `tags` | ショートカットタグの有無 | `true`（あり） `false`（なし） |
+| `img` | 画像の有無 | `true`（あり） `false`（なし） |
+| `osm` | OpenStreetMap 参照の状態 | `current`（現在の参照あり） `superseded`（過去の参照のみ） `false`（参照なし） |
+| `wam` | WAM 参照の状態 | `current` `superseded` `false`（`osm` と同じ意味） |
+| `life` | 施設の運用状態（`lifecycle.status`） | `active`（運用中）— 将来 `closed`（閉鎖）`planned`（計画中）等も想定 |
+| `vis` | 公開範囲（`visibility.status`） | `public`（公開）— 将来 `restricted`（制限付き）等も想定 |
+| `geo:` | クリック可能な地図URI。座標は `geo:緯度,経度` 形式 | RFC 5870 準拠のgeo URI |
+
+`osm`と`wam`は、正本`externalRefs`内の参照のうち最新の`status`を集約して表示します。`current`が一件でもあれば`current`、`current`がなく`superseded`があれば`superseded`、一件もなければ`false`です。
 
 `ref`による手動確定は`basis=human_review`と`human_inference`監査を記録し、同じ型付きOSM IDが別Placeのcurrent参照にならないことを検証してから原子的に保存します。参照追加だけでは代表点を変更しません。保存済みrawを反映するには、commit後に`Re-identify retained source snapshots`を実行します。
 
