@@ -1270,6 +1270,23 @@ def apply_source_updates(
         query = search_by_id[place_id]
         wam_record = wam_by_id.get(place_id)
         osm_record = osm_by_id.get(place_id)
+        if (
+            osm_record is not None
+            and osm_record.get("matchBasis") == "source_record"
+        ):
+            record_id = f"{osm_record['type']}/{osm_record['id']}"
+            current_osm = next(
+                (
+                    ref
+                    for ref in original.get("externalRefs", [])
+                    if ref.get("sourceId") == "openstreetmap"
+                    and ref.get("status") == "current"
+                    and ref.get("recordId") == record_id
+                ),
+                None,
+            )
+            if current_osm is not None:
+                osm_record = None
         place = original
         if wam_record is not None:
             place = _update_wam_reference(place, wam_record, at, audit_at=decision_at)

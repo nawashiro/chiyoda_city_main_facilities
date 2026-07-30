@@ -1943,6 +1943,71 @@ class SourceUpdateTests(unittest.TestCase):
 
             self.assertEqual(before, registry_path.read_bytes())
 
+    def test_skips_unchanged_source_record_osm_match(self):
+        query = {
+            "id": "019c0000-0000-7000-8000-000000000053",
+            "name": "施設SR",
+            "coordinates": [139.70, 35.60],
+        }
+        registry = {
+            "schemaVersion": 1,
+            "places": [
+                {
+                    "id": query["id"],
+                    "name": query["name"],
+                    "categoryIds": ["community"],
+                    "tags": [],
+                    "geometry": {"type": "Point", "coordinates": [139.7001, 35.6001]},
+                    "geometrySource": {
+                        "sourceId": "openstreetmap",
+                        "recordId": "node/53",
+                        "confirmedAt": "2026-07-01T00:00:00Z",
+                    },
+                    "images": [],
+                    "externalRefs": [
+                        {
+                            "sourceId": "openstreetmap",
+                            "recordId": "node/53",
+                            "status": "current",
+                            "firstConfirmedAt": "2026-07-01T00:00:00Z",
+                            "lastConfirmedAt": "2026-07-01T00:00:00Z",
+                            "supersededAt": None,
+                            "basis": "source_record",
+                        }
+                    ],
+                    "lifecycle": {"status": "active", "changedAt": "2026-07-01T00:00:00Z"},
+                    "visibility": {"status": "public", "changedAt": "2026-07-01T00:00:00Z"},
+                    "audit": [
+                        {
+                            "at": "2026-07-01T00:00:00Z",
+                            "method": "human_inference",
+                            "action": "created",
+                            "target": "place",
+                        }
+                    ],
+                }
+            ],
+        }
+        osm_record = {
+            "queryId": query["id"],
+            "type": "node",
+            "id": "53",
+            "name": "施設SR",
+            "coordinates": [139.7001, 35.6001],
+            "matchBasis": "source_record",
+        }
+
+        updated = apply_source_updates(
+            registry,
+            {query["id"]: query},
+            [],
+            [osm_record],
+            "2026-07-28T00:00:00Z",
+        )
+
+        # Unchanged source_record match should be skipped — registry must be identical
+        self.assertEqual(registry, updated)
+
     def test_empty_snapshots_do_not_touch_registry(self):
         query = {
             "id": "019c0000-0000-7000-8000-000000000054",
