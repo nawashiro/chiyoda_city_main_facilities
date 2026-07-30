@@ -1,6 +1,21 @@
 {
   "records": [
     {
+      "queryId": "019ca6b1-dc00-7de7-8c55-4303aa3676d1",
+      "matchBasis": "language_model",
+      "type": "node",
+      "id": "5285952021",
+      "name": "教育研究所 児童・家庭支援センター さくらキッズ",
+      "coordinates": [
+        139.7683265,
+        35.692996
+      ],
+      "tags": {
+        "amenity": "community_centre",
+        "name": "教育研究所 児童・家庭支援センター さくらキッズ"
+      }
+    },
+    {
       "queryId": "019fa880-5cd4-7122-bc68-e8a327846042",
       "matchBasis": "source_record",
       "type": "node",
@@ -9,7 +24,18 @@
       "coordinates": [
         139.7553048,
         35.6977902
-      ]
+      ],
+      "tags": {
+        "fax": "+81-3-3288-1525",
+        "government": "yes",
+        "name": "千代田区神保町出張所・区民館",
+        "name:en": "Chiyoda City Jimbocho Branch Office and Community Center",
+        "name:ja": "千代田区神保町出張所・区民館",
+        "office": "government",
+        "opening_hours": "Mo-Fr 08:30-17:00; PH off; Dec 29-Jan 03 off",
+        "phone": "+81-3-3263-0741",
+        "website": "https://www.city.chiyoda.lg.jp/shisetsu/kuyakusho/jinbocho-shuchojo.html"
+      }
     },
     {
       "queryId": "019fa880-5cd4-7178-bfbc-d7b174721469",
@@ -20,7 +46,14 @@
       "coordinates": [
         139.7426631,
         35.6811899
-      ]
+      ],
+      "tags": {
+        "amenity": "library",
+        "building": "yes",
+        "name": "伝統芸能情報センター",
+        "name:en": "Traditional Performing Arts information centre",
+        "name:ja": "伝統芸能情報センター"
+      }
     },
     {
       "queryId": "019fa880-5cd4-71bb-bab2-80c97e636918",
@@ -31,7 +64,53 @@
       "coordinates": [
         139.7463841,
         35.6991024
-      ]
+      ],
+      "tags": {
+        "building": "yes",
+        "email": "fujimi@city.chiyoda.lg.jp",
+        "fax": "+81-3-3263-3866",
+        "government": "public_service",
+        "name": "千代田区富士見出張所・区民館",
+        "office": "government",
+        "opening_hours": "Mo-Fr 08:30-17:00; PH off; Dec 29-Jan 03 off",
+        "phone": "+81-3-3263-3841",
+        "source": "Bing,2007-04",
+        "website": "https://www.city.chiyoda.lg.jp/shisetsu/kuyakusho/fujimi-shuchojo.html"
+      }
+    },
+    {
+      "queryId": "019fa880-5cd4-729d-8095-deb5f1a4597f",
+      "matchBasis": "language_model",
+      "type": "node",
+      "id": "13465461815",
+      "name": "千代田区立障害者福祉センター　えみふる",
+      "coordinates": [
+        139.7608154,
+        35.7004236
+      ],
+      "tags": {
+        "addr:block_number": "5",
+        "addr:city": "千代田区",
+        "addr:neighbourhood": "神田駿河台二丁目",
+        "addr:postcode": "101-0062",
+        "addr:province": "東京都",
+        "addr:quarter": "神田駿河台",
+        "amenity": "social_facility",
+        "contact:facebook": "https://www.facebook.com/chiyoda.emifuru/",
+        "description": "障害のある方が利用できる施設です。講習会・リハビリテーションや、グループホーム・ショートステイの機能があります。",
+        "fax": "+81-3-3291-0608",
+        "image": "https://commons.wikimedia.org/wiki/File:障害者福祉センターえみふる・お茶の水キリストの教会.jpg",
+        "internet_access": "wlan",
+        "name": "千代田区立障害者福祉センター　えみふる",
+        "opening_hours": "Mo-Fr 09:00-21:00; Sa-Su 09:00-17:00; PH 09:00-17:00; Su[2] off",
+        "operator": "社会福祉法人武蔵野会",
+        "operator:type": "public",
+        "phone": "+81-3-3291-0600",
+        "social_facility": "outreach",
+        "social_facility:for": "disabled",
+        "website": "https://emifuru.com/",
+        "wheelchair": "yes"
+      }
     },
     {
       "queryId": "019fa880-5cd4-75da-ae8b-ec6d104eb49b",
@@ -42,7 +121,18 @@
       "coordinates": [
         139.774931,
         35.6972781
-      ]
+      ],
+      "tags": {
+        "amenity": "townhall",
+        "email": "izumibashi@city.chiyoda.lg.jp",
+        "fax": "+81-3-5256-1238",
+        "name": "千代田区役所和泉橋出張所",
+        "name:en": "Chiyoda City Office Izumibashi Branch",
+        "opening_hours": "Mo-Fr 08:30-17:00; PH off; Dec 29-Jan 03 off",
+        "operator": "千代田区",
+        "phone": "+81-3-3253-4931",
+        "website": "https://www.city.chiyoda.lg.jp/shisetsu/kuyakusho/izumibashi-shuchojo.html"
+      }
     },
     {
       "queryId": "019fa880-5cd4-78e1-aa8b-c4ce83a065bc",
@@ -54,6 +144,26 @@
         139.7535624,
         35.6941626
       ],
+      "tags": {
+        "addr:postcode": "102-8688",
+        "amenity": "townhall",
+        "name": "千代田区役所",
+        "name:en": "Chiyoda City Hall",
+        "name:ja": "千代田区役所",
+        "name:ja_rm": "Chiyoda Kuyakusho",
+        "name:zh": "千代田區公所",
+        "note": "National-Land Numerical Information (Public Facility) 2006, MLIT Japan",
+        "note:ja": "国土数値情報（公共施設データ）平成19年　国土交通省",
+        "opening_hours": "Mo-Fr 08:30-17:00; PH off",
+        "phone": "+81-3-32642111",
+        "source": "KSJ2値;(URL)",
+        "source_ref": "http://nlftp.mlit.go.jp/ksj/jpgis/datalist/KsjTmplt-P02-v2_0.html",
+        "toilets:wheelchair": "yes",
+        "website": "https://www.city.chiyoda.lg.jp/",
+        "wheelchair": "yes",
+        "wikidata": "Q11405293",
+        "wikipedia": "ja:千代田区役所"
+      },
       "qid": "Q11405293"
     },
     {
@@ -66,18 +176,47 @@
         139.7443356,
         35.6786257
       ],
+      "tags": {
+        "alt_name": "NDL",
+        "amenity": "library",
+        "name": "国立国会図書館・東京本館",
+        "name:en": "National Diet Library - Tokyo Main",
+        "name:es": "Biblioteca Nacional de la Dieta",
+        "name:ja": "国立国会図書館・東京本館",
+        "name:ko": "국립국회도서관 도쿄본관",
+        "name:ru": "Национальная парламентская библиотека (Токийское отделение)",
+        "opening_hours": "Mo-Fr 09:30-19:00; Sa 09:30-17:00",
+        "source": "Bing, 1980/1-2007/4",
+        "website": "https://www.ndl.go.jp/jp/service/tokyo/",
+        "wikidata": "Q477675",
+        "wikipedia": "ja:国立国会図書館"
+      },
       "qid": "Q477675"
     },
     {
       "queryId": "019fa880-5cd4-7b4b-86c4-92d4d1fbe213",
-      "matchBasis": "name_coordinates",
+      "matchBasis": "source_record",
       "type": "way",
       "id": "187756642",
       "name": "千代田区神田公園 出張所・区民館",
       "coordinates": [
         139.7681384,
         35.6927468
-      ]
+      ],
+      "tags": {
+        "amenity": "community_centre",
+        "building": "yes",
+        "email": "kandakouen@city.chiyoda.lg.jp",
+        "fax": "+81-3-5256-1239",
+        "name": "千代田区神田公園 出張所・区民館",
+        "name:en": "Community Center",
+        "opening_hours": "Mo-Fr 08:30-17:00; PH off; Dec 29-Jan 03 off",
+        "operator": "千代田区",
+        "operator:type": "government",
+        "phone": "+81-3-3252-7691",
+        "source": "Bing",
+        "website": "https://www.city.chiyoda.lg.jp/shisetsu/kuyakusho/kandakoen-shuchojo.html"
+      }
     },
     {
       "queryId": "019fa880-5cd4-7ba6-a5af-481b9cb95516",
@@ -88,7 +227,100 @@
       "coordinates": [
         139.7706485,
         35.6976015
-      ]
+      ],
+      "tags": {
+        "amenity": "townhall",
+        "building": "public",
+        "building:levels": "8",
+        "email": "manseibashi@city.chiyoda.lg.jp",
+        "fax": "+81-3-5256-1240",
+        "name": "千代田区役所 万世橋出張所",
+        "name:en": "Chiyoda City Hall - Manseibashi Branch Office",
+        "opening_hours": "Mo-Fr 08:30-17:00; PH off; Dec 29-Jan 03 off",
+        "operator": "千代田区",
+        "phone": "+81-3-3251-4691",
+        "website": "https://www.city.chiyoda.lg.jp/shisetsu/kuyakusho/manseibashi-shuchojo.html",
+        "wheelchair": "yes"
+      }
+    },
+    {
+      "queryId": "019fa880-5cd4-7d3c-a9e1-f01c12ebf008",
+      "matchBasis": "language_model",
+      "type": "node",
+      "id": "13465379795",
+      "name": "千代田区障害者よろず相談 Light",
+      "coordinates": [
+        139.7572963,
+        35.6909272
+      ],
+      "tags": {
+        "addr:block_number": "1",
+        "addr:city": "千代田区",
+        "addr:neighbourhood": "一ツ橋一丁目",
+        "addr:province": "東京都",
+        "addr:quarter": "一ツ橋",
+        "amenity": "social_facility",
+        "contact:facebook": "https://www.facebook.com/healightnet/",
+        "description": "障害のある方の悩みに専門家が相談に乗り、必要に応じて専門機関を紹介します。",
+        "email": "info@hirai-luminal.or.jp",
+        "fax": "+81-3-6269-9754",
+        "image": "https://commons.wikimedia.org/wiki/File:%E5%8D%83%E4%BB%A3%E7%94%B0%E5%8C%BA%E9%9A%9C%E5%AE%B3%E8%80%85%E3%82%88%E3%82%8D%E3%81%9A%E7%9B%B8%E8%AB%87_Light.jpg",
+        "internet_access": "wlan",
+        "internet_access:ssid": "yorozu-free",
+        "level": "0",
+        "name": "千代田区障害者よろず相談 Light",
+        "opening_hours": "Mo-Fr 09:00-19:00; Sa 09:00-18:00; PH off",
+        "operator": "社会福祉法人ひらいルミナル",
+        "operator:type": "public",
+        "phone": "+81-3-6269-9755",
+        "social_facility": "outreach",
+        "social_facility:for": "disabled",
+        "website": "https://hirai-luminal.or.jp/office/light/"
+      }
+    },
+    {
+      "queryId": "019fa880-5cd5-701b-90d2-e3073a1c337b",
+      "matchBasis": "language_model",
+      "type": "node",
+      "id": "1420785407",
+      "name": "東京都産業労働局労働相談情報センター",
+      "coordinates": [
+        139.749567,
+        35.70038
+      ],
+      "tags": {
+        "name": "東京都産業労働局労働相談情報センター",
+        "note": "National-Land Numerical Information (Public Facility) 2006, MLIT Japan",
+        "note:ja": "国土数値情報（公共施設データ）平成19年 国土交通省",
+        "office": "government",
+        "source": "KSJ2",
+        "source_ref": "http://nlftp.mlit.go.jp/ksj/jpgis/datalist/KsjTmplt-P02-v2_0.html"
+      }
+    },
+    {
+      "queryId": "019fa880-5cd5-713a-8135-779f14050ab2",
+      "matchBasis": "language_model",
+      "type": "node",
+      "id": "13468335880",
+      "name": "ちよだパークサイドプラザ区民図書室",
+      "coordinates": [
+        139.7788067,
+        35.6992879
+      ],
+      "tags": {
+        "addr:block_number": "1",
+        "addr:city": "千代田区",
+        "addr:neighbourhood": "神田和泉町",
+        "addr:province": "東京都",
+        "amenity": "library",
+        "level": "4",
+        "name": "ちよだパークサイドプラザ区民図書室",
+        "opening_hours": "Mo-Fr 09:00-19:00; Su 09:00-17:00; PH 09:00-17:00; Su[3] off",
+        "operator": "千代田区",
+        "operator:type": "public",
+        "phone": "+81-3-3864-8931",
+        "ref:isil": "none"
+      }
     },
     {
       "queryId": "019fa880-5cd5-7154-8bff-19d82e0fc560",
@@ -100,7 +332,35 @@
         139.75973,
         35.6990086
       ],
+      "tags": {
+        "amenity": "library",
+        "building": "yes",
+        "name": "明治大学米沢嘉博記念図書館",
+        "name:en": "Yoshihiro Yonezawa Memorial Library of Manga and Subculture",
+        "name:es": "Librería conmemorativa de Manga y Subcultura Yoshihiro Yonezawa",
+        "source": "Bing",
+        "wikidata": "Q113160405"
+      },
       "qid": "Q113160405"
+    },
+    {
+      "queryId": "019fa880-5cd5-7241-a976-801eef6324a9",
+      "matchBasis": "language_model",
+      "type": "node",
+      "id": "2263796343",
+      "name": "神田児童館",
+      "coordinates": [
+        139.7696731,
+        35.7011916
+      ],
+      "tags": {
+        "amenity": "community_centre",
+        "level": "4",
+        "name": "神田児童館",
+        "name:en": "Kanda Children's Hall",
+        "source": "survey",
+        "wheelchair": "yes"
+      }
     },
     {
       "queryId": "019fa880-5cd5-7285-88ba-ab05a68eb601",
@@ -112,6 +372,32 @@
         139.7312545,
         35.6851483
       ],
+      "tags": {
+        "addr:block_number": "5",
+        "addr:city": "千代田区",
+        "addr:housenumber": "1",
+        "addr:neighbourhood": "6丁目",
+        "addr:postcode": "102-0083",
+        "addr:province": "東京都",
+        "addr:quarter": "麹町",
+        "alt_name": "麹町教会",
+        "alt_name:en": "Kojimachi Catholic Church",
+        "alt_name:zh": "麴町教會",
+        "amenity": "place_of_worship",
+        "building": "yes",
+        "denomination": "catholic",
+        "name": "聖イグナチオ教会",
+        "name:en": "Kojimachi St. Ignatius Church",
+        "name:es": "Iglesia de San Ignacio de Kojimachi",
+        "name:ja": "麹町聖イグナチオ教会",
+        "name:zh": "麴町聖依納爵堂",
+        "religion": "christian",
+        "source": "Bing,2007-04;survey",
+        "website": "https://www.ignatius.gr.jp/",
+        "wikidata": "Q11610869",
+        "wikimedia_commons": "Category:St. Ignatius Church, Tokyo",
+        "wikipedia": "ja:聖イグナチオ教会"
+      },
       "qid": "Q11610869"
     },
     {
@@ -124,6 +410,22 @@
         139.7561768,
         35.6737111
       ],
+      "tags": {
+        "leisure": "park",
+        "name": "日比谷公園",
+        "name:en": "Hibiya Park",
+        "name:es": "Parque Hibiya",
+        "name:fr": "Parc Hibiya",
+        "name:ja-Hira": "ひびやこうえん",
+        "name:ja-Latn": "Hibiya Kōen",
+        "name:ko": "히비야공원",
+        "name:ru": "Парк Хибия",
+        "source": "GSImaps/std;Bing",
+        "wheelchair": "yes",
+        "wikidata": "Q1378533",
+        "wikimedia_commons": "Category:Hibiya Park",
+        "wikipedia": "ja:日比谷公園"
+      },
       "qid": "Q1378533"
     },
     {
@@ -136,6 +438,21 @@
         139.7604959,
         35.6734305
       ],
+      "tags": {
+        "amenity": "cinema",
+        "brand": "TOHOシネマズ",
+        "brand:en": "TOHO CINEMAS",
+        "brand:ja": "TOHOシネマズ",
+        "brand:short": "TOHO",
+        "brand:wikidata": "Q11235261",
+        "name": "TOHO CINEMAS CHANTER",
+        "name:en": "TOHO CINEMAS CHANTER",
+        "name:ja": "TOHOシネマズシャンテ",
+        "operator": "東宝",
+        "source": "survey",
+        "wikidata": "Q11249601",
+        "wikipedia": "ja:TOHOシネマズシャンテ"
+      },
       "qid": "Q11249601"
     },
     {
@@ -148,6 +465,36 @@
         139.7535705,
         35.6938859
       ],
+      "tags": {
+        "addr:block_number": "2",
+        "addr:city": "千代田区",
+        "addr:neighbourhood": "九段南一丁目",
+        "addr:postcode": "102-8688",
+        "addr:province": "東京都",
+        "amenity": "library",
+        "baby_feeding": "room",
+        "changing_table": "yes",
+        "description": "千代田区役所に入る図書館です。",
+        "image": "https://upload.wikimedia.org/wikipedia/commons/6/68/Kudan_Common_Government_Office_Building_No-3.JPG",
+        "internet_access": "yes",
+        "internet_access:fee": "no",
+        "level": "8;9",
+        "name": "千代田区立千代田図書館",
+        "name:en": "Chiyoda Library",
+        "name:it": "Chiyoda",
+        "name:ja_rm": "Chiyoda Toshokan",
+        "note": "National-Land Numerical Information (Public Facility) 2006, MLIT Japan",
+        "note:ja": "国土数値情報（公共施設データ）平成19年 国土交通省",
+        "opening_hours": "Mo-Fr 10:00-22:00; Sa 10:00-19:00; Su 10:00-17:00; PH 10:00-17:00",
+        "phone": "+81-3-5211-4290",
+        "ref:isil": "JP-1000909",
+        "source": "KSJ2",
+        "source_ref": "http://nlftp.mlit.go.jp/ksj/jpgis/datalist/KsjTmplt-P02-v2_0.html",
+        "toilets": "yes",
+        "website": "https://www.library.chiyoda.tokyo.jp/chiyoda/",
+        "wheelchair": "yes",
+        "wikidata": "Q61886796"
+      },
       "qid": "Q61886796"
     },
     {
@@ -159,7 +506,13 @@
       "coordinates": [
         139.7486134,
         35.6961359
-      ]
+      ],
+      "tags": {
+        "amenity": "place_of_worship",
+        "denomination:ja": "日本基督教団",
+        "name": "九段教会",
+        "religion": "christian"
+      }
     },
     {
       "queryId": "019fa880-5cd5-74c2-836d-5e8b3347e719",
@@ -171,7 +524,51 @@
         139.7348278,
         35.6905631
       ],
+      "tags": {
+        "contact:tripadvisor": "3634787",
+        "fee": "no",
+        "leisure": "park",
+        "name": "外濠公園",
+        "name:en": "Sotobori Park",
+        "name:es": "Parque Sotobori",
+        "name:etymology:wikidata": "Q11430499",
+        "name:etymology:wikipedia": "ja:外濠 (東京都)",
+        "name:fr": "Parc Sotobori",
+        "name:ja-Hira": "そとぼりこうえん",
+        "name:ja-Latn": "Sotobori-kōen",
+        "opening_hours": "24/7",
+        "start_date": "1927-08-31",
+        "type": "multipolygon",
+        "wikidata": "Q11430498",
+        "wikimedia_commons": "Category:Sotobori Park",
+        "wikipedia": "ja:外濠公園"
+      },
       "qid": "Q11430498"
+    },
+    {
+      "queryId": "019fa880-5cd5-7537-802b-2421832099f4",
+      "matchBasis": "language_model",
+      "type": "node",
+      "id": "2059303798",
+      "name": "昌平まちかど図書館",
+      "coordinates": [
+        139.7700608,
+        35.7013313
+      ],
+      "tags": {
+        "amenity": "library",
+        "contact:phone": "+81 3 3251 5641",
+        "level": "0",
+        "name": "昌平まちかど図書館",
+        "name:en": "Shouhei-Machikado-Library",
+        "opening_hours": "09:00-20:00",
+        "operator": "千代田区立図書館",
+        "source": "survey",
+        "website": "http://www.library.chiyoda.tokyo.jp",
+        "wheelchair": "yes",
+        "wikidata": "Q61886799"
+      },
+      "qid": "Q61886799"
     },
     {
       "queryId": "019fa880-5cd5-7641-bc19-ad96baeb8230",
@@ -183,6 +580,31 @@
         139.7571878,
         35.686472
       ],
+      "tags": {
+        "contact:tripadvisor": "320625",
+        "contact:website": "https://www.kunaicho.go.jp/event/higashigyoen/higashigyoen.html",
+        "fee": "no",
+        "leisure": "park",
+        "name": "皇居東御苑",
+        "name:en": "Imperial Palace East Gardens",
+        "name:es": "Jardines Este del Palacio Imperial",
+        "name:fr": "Jardins est du palais impérial de Tokyo",
+        "name:ja-Hira": "こうきょひがしぎょえん",
+        "name:ja-Latn": "Kōkyo Higashi-gyoen",
+        "name:ko": "황거동어원",
+        "name:ru": "Восточные сады Императорского дворца",
+        "name:zh": "皇居东御苑",
+        "opening_hours": "Mar 01-Apr 14 Tu-Th,Sa-Su 09:00-17:00; Apr 15-Aug 31 Tu-Th,Sa-Su 09:00-18:00; Sep Tu-Th,Sa-Su 09:00-17:00; Oct Tu-Th,Sa-Su 09:00-16:30; Nov 01-Feb 29 Tu-Th,Sa-Su 09:00-16:00; Dec 28-Jan 03 off; Feb 23 off; Mo,Fr off",
+        "operator": "宮内庁",
+        "operator:wikidata": "Q1143602",
+        "source": "Bing,2007-04",
+        "start_date": "1968-10-01",
+        "type": "multipolygon",
+        "wheelchair": "yes",
+        "wikidata": "Q6631907",
+        "wikimedia_commons": "Category:East Gardens of Tokyo Imperial Palace",
+        "wikipedia": "ja:皇居東御苑"
+      },
       "qid": "Q6631907"
     },
     {
@@ -194,7 +616,16 @@
       "coordinates": [
         139.7570462,
         35.6988082
-      ]
+      ],
+      "tags": {
+        "addr:province": "東京都",
+        "amenity": "library",
+        "name": "日本大学経済学部図書館",
+        "operator": "日本大学経済学部",
+        "phone": "+81 3-3219-3334",
+        "website": "https://www.eco.nihon-u.ac.jp/~nueco-library/",
+        "wheelchair": "yes"
+      }
     },
     {
       "queryId": "019fa880-5cd5-7743-8b45-3ba7622c5083",
@@ -205,7 +636,13 @@
       "coordinates": [
         139.7626825,
         35.6751064
-      ]
+      ],
+      "tags": {
+        "amenity": "cinema",
+        "name": "角川シネマ有楽町",
+        "name:en": "Kadokawa-Shinema-Yurakucho",
+        "wheelchair": "yes"
+      }
     },
     {
       "queryId": "019fa880-5cd5-77f0-ae81-1e52ac5633fa",
@@ -217,6 +654,19 @@
         139.754641,
         35.671945
       ],
+      "tags": {
+        "amenity": "library",
+        "name": "千代田区立日比谷図書文化館",
+        "name:en": "Hibiya Book Culture Hall",
+        "name:ja": "千代田区立日比谷図書文化館",
+        "note": "National-Land Numerical Information (Public Facility) 2006, MLIT Japan",
+        "note:ja": "国土数値情報（公共施設データ）平成19年 国土交通省",
+        "source": "KSJ2",
+        "source_ref": "http://nlftp.mlit.go.jp/ksj/jpgis/datalist/KsjTmplt-P02-v2_0.html",
+        "wikidata": "Q11509583",
+        "wikimedia_commons": "Category:Hibiya Library & Museum",
+        "wikipedia": "ja:日比谷図書文化館"
+      },
       "qid": "Q11509583"
     },
     {
@@ -229,6 +679,15 @@
         139.7608196,
         35.6950264
       ],
+      "tags": {
+        "amenity": "cinema",
+        "name": "神保町シアター",
+        "payment:cash": "yes",
+        "phone": "+81-3-5281-5132",
+        "website": "https://www.shogakukan.co.jp/jinbocho-theater/",
+        "wikidata": "Q4409942",
+        "wikipedia": "ja:神保町シアタービル"
+      },
       "qid": "Q4409942"
     },
     {
@@ -241,6 +700,18 @@
         139.7703476,
         35.7013571
       ],
+      "tags": {
+        "amenity": "place_of_worship",
+        "name": "神田寺",
+        "name:en": "Kandadera Temple",
+        "name:ja-Hira": "かんだでら",
+        "name:ja_rm": "Kandadera",
+        "name:ko": "칸다데라",
+        "religion": "buddhist",
+        "wheelchair": "limited",
+        "wikidata": "Q106020484",
+        "wikipedia": "ja:神田寺"
+      },
       "qid": "Q106020484"
     },
     {
@@ -253,6 +724,16 @@
         139.7683614,
         35.6929651
       ],
+      "tags": {
+        "amenity": "library",
+        "name": "千代田区立神田まちかど図書館",
+        "name:en": "Kanda Community Library",
+        "note": "National-Land Numerical Information (Public Facility) 2006, MLIT Japan",
+        "note:ja": "国土数値情報（公共施設データ）平成19年　国土交通省",
+        "source": "KSJ2",
+        "source_ref": "http://nlftp.mlit.go.jp/ksj/jpgis/datalist/KsjTmplt-P02-v2_0.html",
+        "wikidata": "Q61886800"
+      },
       "qid": "Q61886800"
     },
     {
@@ -265,6 +746,25 @@
         139.7449548,
         35.6859119
       ],
+      "tags": {
+        "alt_name:fr": "Parc de Chidorigafuchi",
+        "contact:tripadvisor": "3784305",
+        "leisure": "park",
+        "name": "千鳥ヶ淵公園",
+        "name:en": "Chidorigafuchi",
+        "name:es": "Chidorigafuchi",
+        "name:etymology:wikidata": "Q4204321",
+        "name:etymology:wikipedia": "ja:千鳥ヶ淵",
+        "name:fr": "Parc de la douve de Chidori",
+        "name:ja-Hira": "ちどりがふちこうえん",
+        "name:ja-Latn": "Chidori-ga-fuchi kōen",
+        "source": "NRPB of MLIT Japan",
+        "source:ja": "国土画像情報（オルソ化空中写真）国土計画局",
+        "start_date": "1919",
+        "wikidata": "Q6631821",
+        "wikimedia_commons": "Category:Chidorigafuchi Park",
+        "wikipedia": "ja:千鳥ヶ淵公園"
+      },
       "qid": "Q6631821"
     },
     {
@@ -276,7 +776,16 @@
       "coordinates": [
         139.7443601,
         35.6993714
-      ]
+      ],
+      "tags": {
+        "amenity": "place_of_worship",
+        "building": "yes",
+        "building:levels": "3",
+        "name": "日本キリスト教団富士見町教会",
+        "religion": "christian",
+        "roof:levels": "1",
+        "source": "Bing"
+      }
     },
     {
       "queryId": "019fa880-5cd5-7ae6-b7e1-8339b7cccb77",
@@ -288,7 +797,59 @@
         139.7679359,
         35.6929407
       ],
+      "tags": {
+        "leisure": "park",
+        "name": "神田児童公園",
+        "wikidata": "Q42311502"
+      },
       "qid": "Q42311502"
+    },
+    {
+      "queryId": "019fa880-5cd5-7b01-9dd8-2e4787f423aa",
+      "matchBasis": "language_model",
+      "type": "node",
+      "id": "1655927382",
+      "name": "西神田児童・家庭支援センター",
+      "coordinates": [
+        139.754706,
+        35.698887
+      ],
+      "tags": {
+        "addr:full": "東京都千代田区西神田2-6-2",
+        "amenity": "social_facility",
+        "name": "西神田児童・家庭支援センター",
+        "note": "National-Land Numerical Information (Public Facility) 2006, MLIT Japan",
+        "note:ja": "国土数値情報（公共施設データ）平成19年 国土交通省",
+        "operator": "東京都千代田区",
+        "social_facility": "assisted_living",
+        "source": "KSJ2",
+        "source_ref": "http://nlftp.mlit.go.jp/ksj/jpgis/datalist/KsjTmplt-P02-v2_0.html"
+      }
+    },
+    {
+      "queryId": "019fa880-5cd5-7b37-bb94-a2151c0cdef0",
+      "matchBasis": "language_model",
+      "type": "node",
+      "id": "6900192224",
+      "name": "TOHO CINEMAS HIBIYA",
+      "coordinates": [
+        139.7594538,
+        35.6733194
+      ],
+      "tags": {
+        "amenity": "cinema",
+        "brand": "TOHOシネマズ",
+        "brand:en": "TOHO CINEMAS",
+        "brand:ja": "TOHOシネマズ",
+        "brand:short": "TOHO",
+        "brand:wikidata": "Q11235261",
+        "name": "TOHO CINEMAS HIBIYA",
+        "name:en": "Toho Cinemas",
+        "name:ja": "TOHOシネマズ",
+        "operator": "東宝",
+        "source": "survey",
+        "wheelchair": "limited"
+      }
     },
     {
       "queryId": "019fa880-5cd5-7bae-838d-111510f35ee9",
@@ -299,7 +860,15 @@
       "coordinates": [
         139.7580323,
         35.6951362
-      ]
+      ],
+      "tags": {
+        "amenity": "place_of_worship",
+        "denomination": "salvation_army",
+        "name": "救世軍日本本営",
+        "name:en": "Salvation Army",
+        "name:es": "Ejército de Salvación",
+        "religion": "christian"
+      }
     },
     {
       "queryId": "019fa880-5cd5-7c84-9bcf-cac96174129f",
@@ -311,6 +880,17 @@
         139.7331755,
         35.6857881
       ],
+      "tags": {
+        "amenity": "place_of_worship",
+        "name": "心法寺",
+        "name:en": "Shimpo-ji Temple",
+        "name:es": "Templo Shimpo-ji",
+        "name:ja": "心法寺",
+        "religion": "buddhist",
+        "source": "Bing 2010",
+        "wikidata": "Q107391078",
+        "wikipedia": "ja:心法寺"
+      },
       "qid": "Q107391078"
     },
     {
@@ -322,7 +902,40 @@
       "coordinates": [
         139.7591756,
         35.7009442
-      ]
+      ],
+      "tags": {
+        "amenity": "library",
+        "name": "㈶石川文化事業財団お茶の水図書館",
+        "name:en": "Ochanomizu Library, Ishikawa Cultural Enterprise Foundation",
+        "name:ru": "Библиотека Отяномидзу, Фонд учреждений культуры Исикава",
+        "note": "National-Land Numerical Information (Public Facility) 2006, MLIT Japan",
+        "note:ja": "国土数値情報（公共施設データ）平成19年　国土交通省",
+        "source": "KSJ2",
+        "source_ref": "http://nlftp.mlit.go.jp/ksj/jpgis/datalist/KsjTmplt-P02-v2_0.html"
+      }
+    },
+    {
+      "queryId": "019fa880-5cd5-7d11-8560-3ac4e0486633",
+      "matchBasis": "language_model",
+      "type": "node",
+      "id": "1655905663",
+      "name": "千代田区立一番町高齢者在宅介護支援センター",
+      "coordinates": [
+        139.739284,
+        35.68699
+      ],
+      "tags": {
+        "addr:full": "東京都千代田区一番町12",
+        "amenity": "social_facility",
+        "name": "千代田区立一番町高齢者在宅介護支援センター",
+        "note": "National-Land Numerical Information (Public Facility) 2006, MLIT Japan",
+        "note:ja": "国土数値情報（公共施設データ）平成19年 国土交通省",
+        "operator": "東京都千代田区",
+        "social_facility": "outreach",
+        "social_facility:for": "senior",
+        "source": "KSJ2",
+        "source_ref": "http://nlftp.mlit.go.jp/ksj/jpgis/datalist/KsjTmplt-P02-v2_0.html"
+      }
     },
     {
       "queryId": "019fa880-5cd5-7d22-aef4-68b4e1172660",
@@ -334,6 +947,19 @@
         139.7575698,
         35.6994212
       ],
+      "tags": {
+        "amenity": "place_of_worship",
+        "denomination": "catholic",
+        "name": "カトリック神田教会",
+        "name:en": "Catholic Church of St. Francis Xavier",
+        "name:es": "Iglesia Católica de San Francisco Javier",
+        "name:ja_rm": "Kanda Kyōkai",
+        "name:zh": "神田天主堂",
+        "religion": "christian",
+        "wikidata": "Q11590603",
+        "wikimedia_commons": "Category:St. Frances Xavier Church (Tokyo)",
+        "wikipedia": "ja:カトリック神田教会"
+      },
       "qid": "Q11590603"
     },
     {
@@ -346,6 +972,23 @@
         139.743661,
         35.680424
       ],
+      "tags": {
+        "access": "permit",
+        "addr:full": "東京都千代田区隼町4-2",
+        "amenity": "library",
+        "name": "最高裁判所図書館",
+        "name:en": "Supreme Court Library",
+        "name:es": "Biblioteca de la Corte Suprema",
+        "name:ja": "最高裁判所図書館",
+        "note": "National-Land Numerical Information (Public Facility) 2006, MLIT Japan",
+        "note:ja": "国土数値情報（公共施設データ）平成19年 国土交通省",
+        "phone": "+81 3 3264 8537",
+        "source": "KSJ2",
+        "source_ref": "http://nlftp.mlit.go.jp/ksj/jpgis/datalist/KsjTmplt-P02-v2_0.html",
+        "website": "https://www.courts.go.jp/saikosai/tosyokan/index.html",
+        "wikidata": "Q11515702",
+        "wikipedia": "ja:最高裁判所図書館"
+      },
       "qid": "Q11515702"
     },
     {
@@ -358,7 +1001,51 @@
         139.7605387,
         35.6977313
       ],
+      "tags": {
+        "leisure": "park",
+        "name": "錦華公園",
+        "name:en": "Kinka Park",
+        "name:es": "Parque Kinka",
+        "name:ja": "錦華公園",
+        "name:ja-Hira": "きんかこうえん",
+        "operator": "千代田区",
+        "smoking": "no",
+        "wikidata": "Q42311499"
+      },
       "qid": "Q42311499"
+    },
+    {
+      "queryId": "019fa880-5cd5-7d9d-9713-970aa8443759",
+      "matchBasis": "language_model",
+      "type": "node",
+      "id": "6900192225",
+      "name": "TOHO CINEMAS HIBIYA",
+      "coordinates": [
+        139.7594149,
+        35.6730666
+      ],
+      "tags": {
+        "amenity": "cinema",
+        "brand": "TOHOシネマズ",
+        "brand:en": "TOHO CINEMAS",
+        "brand:ja": "TOHOシネマズ",
+        "brand:short": "TOHO",
+        "brand:wikidata": "Q11235261",
+        "name": "TOHO CINEMAS HIBIYA",
+        "name:en": "Toho Cinemas",
+        "name:fr": "Cinémas Tōhō",
+        "name:ja": "TOHOシネマズ",
+        "name:ja-Hira": "とうほうシネマズみゆきざ",
+        "name:ja-Latn": "Tōhō shinemazu Miyuki-za",
+        "operator": "東宝",
+        "operator:wikidata": "Q875920",
+        "short_name": "TOHO",
+        "source": "survey",
+        "wheelchair": "yes",
+        "wikidata": "Q11249598",
+        "wikipedia": "ja:TOHOシネマズみゆき座"
+      },
+      "qid": "Q11249598"
     },
     {
       "queryId": "019fa880-5cd5-7dc7-8e68-e49750a54b8d",
@@ -369,7 +1056,17 @@
       "coordinates": [
         139.7702913,
         35.7019158
-      ]
+      ],
+      "tags": {
+        "amenity": "place_of_worship",
+        "denomination": "anglican",
+        "name": "神田キリスト教会",
+        "name:en": "Kanda Christ Church",
+        "name:es": "Iglesia cristiana de Kanda",
+        "name:ja": "神田キリスト教会",
+        "religion": "christian",
+        "website": "http://kankiri3.blog133.fc2.com/"
+      }
     },
     {
       "queryId": "019fa880-5cd5-7e95-9ea4-e8808e845cd7",
@@ -380,7 +1077,15 @@
       "coordinates": [
         139.7393327,
         35.6864514
-      ]
+      ],
+      "tags": {
+        "amenity": "community_centre",
+        "name": "一番町児童館",
+        "note": "National-Land Numerical Information (Public Facility) 2006, MLIT Japan",
+        "note:ja": "国土数値情報（公共施設データ）平成19年　国土交通省",
+        "source": "KSJ2",
+        "source_ref": "http://nlftp.mlit.go.jp/ksj/jpgis/datalist/KsjTmplt-P02-v2_0.html"
+      }
     },
     {
       "queryId": "019fa880-5cd5-7ea9-839d-1c2d04dbff2f",
@@ -392,6 +1097,34 @@
         139.7654865,
         35.698016
       ],
+      "tags": {
+        "addr:block_number": "1",
+        "addr:city": "千代田区",
+        "addr:country": "JP",
+        "addr:housenumber": "3",
+        "addr:neighbourhood": "神田駿河台四丁目",
+        "addr:postcode": "101-0062",
+        "addr:province": "東京都",
+        "amenity": "place_of_worship",
+        "building": "cathedral",
+        "denomination": "japanese_orthodox",
+        "email": "ocj.tokyo@gmail.com",
+        "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f9/Nikolai-do.jpg/300px-Nikolai-do.jpg",
+        "name": "ニコライ堂",
+        "name:en": "Holy Resurrection Cathedral (Nikolai-do)",
+        "name:ja": "ニコライ堂",
+        "name:zh": "尼古拉堂",
+        "official_name": "東京復活大聖堂",
+        "official_name:ja": "東京復活大聖堂",
+        "official_name:ru": "Токийский Кафедральный собор Воскресения Христова",
+        "opening_hours": "Apr-Sep 13:00-16:00; Oct-Mar 13:00-15:30",
+        "phone": "+81 3-3295-6879",
+        "religion": "christian",
+        "type": "multipolygon",
+        "website": "http://www.geocities.jp/ynicojp2/index.html",
+        "wikidata": "Q2660430",
+        "wikipedia": "ja:ニコライ堂"
+      },
       "qid": "Q2660430"
     },
     {
@@ -403,7 +1136,12 @@
       "coordinates": [
         139.757157,
         35.6974277
-      ]
+      ],
+      "tags": {
+        "amenity": "place_of_worship",
+        "name": "みんなのお寺",
+        "religion": "buddhist"
+      }
     },
     {
       "queryId": "019fa880-5cd5-7ed6-a8bd-337ac263e5a0",
@@ -415,6 +1153,18 @@
         139.7400815,
         35.6903895
       ],
+      "tags": {
+        "designation": "東郷公園 Parque Togo",
+        "leisure": "park",
+        "name": "東郷公園",
+        "name:en": "Togo Park",
+        "name:es": "Parque Togo",
+        "name:ja": "東郷公園",
+        "name:ja-Hira": "とうごうこうえん",
+        "name:ja-Latn": "Tōgō Kōen",
+        "source": "Survey",
+        "wikidata": "Q42311484"
+      },
       "qid": "Q42311484"
     },
     {
@@ -427,6 +1177,32 @@
         139.7415971,
         35.6904422
       ],
+      "tags": {
+        "addr:block_number": "14",
+        "addr:city": "千代田区",
+        "addr:housenumber": "7",
+        "addr:neighbourhood": "三番町",
+        "addr:postcode": "102-0075",
+        "addr:province": "東京都",
+        "amenity": "library",
+        "baby_feeding": "room",
+        "changing_table": "yes",
+        "image": "https://upload.wikimedia.org/wikipedia/commons/2/2e/Yonbancho-library.webp",
+        "internet_access": "yes",
+        "internet_access:fee": "no",
+        "name": "千代田区立四番町図書館",
+        "name:en": "Yonbancho Library",
+        "note": "National-Land Numerical Information (Public Facility) 2006, MLIT Japan",
+        "note:ja": "国土数値情報（公共施設データ）平成19年 国土交通省",
+        "opening_hours": "Mo-Fr 09:00-20:00; Sa 09:00-19:00; Su 09:00-17:00; PH 09:00-17:00; Sa[1] off",
+        "operator": "千代田区",
+        "operator:type": "public",
+        "ref:isil": "JP-1000910",
+        "source": "KSJ2",
+        "source_ref": "http://nlftp.mlit.go.jp/ksj/jpgis/datalist/KsjTmplt-P02-v2_0.html",
+        "toilets": "yes",
+        "wikidata": "Q61886798"
+      },
       "qid": "Q61886798"
     },
     {
@@ -439,6 +1215,15 @@
         139.7358866,
         35.6816756
       ],
+      "tags": {
+        "leisure": "park",
+        "name": "清水谷公園",
+        "name:en": "Shimizudani Park",
+        "name:ko": "시미즈다니 공원",
+        "wikidata": "Q11561179",
+        "wikimedia_commons": "Category:Shimizudani Park",
+        "wikipedia": "ja:清水谷公園"
+      },
       "qid": "Q11561179"
     },
     {
@@ -451,6 +1236,21 @@
         139.7509767,
         35.6921178
       ],
+      "tags": {
+        "leisure": "park",
+        "name": "北の丸公園",
+        "name:en": "Kitanomaru Park",
+        "name:es": "Parque Kitanomaru",
+        "name:fr": "Parc Kitanomaru",
+        "name:ja-Hira": "きたのまるこうえん",
+        "name:ja-Latn": "Kitanomaru-Kōen",
+        "name:ko": "기타노마루 공원",
+        "name:ru": "Китаномару-Коэн",
+        "start_date": "1969",
+        "wikidata": "Q1075966",
+        "wikimedia_commons": "Category:Kitanomaru Park",
+        "wikipedia": "ja:北の丸公園"
+      },
       "qid": "Q1075966"
     },
     {
@@ -462,7 +1262,15 @@
       "coordinates": [
         139.7608409,
         35.700482
-      ]
+      ],
+      "tags": {
+        "amenity": "place_of_worship",
+        "name": "お茶の水キリストの教会",
+        "name:en": "Ochanomizu Church of Christ",
+        "name:es": "Iglesia de Cristo Ochanomizu",
+        "name:ja": "お茶の水キリストの教会",
+        "religion": "christian"
+      }
     },
     {
       "queryId": "019fa880-5cd6-7046-98c1-b22d2b96d8ad",
@@ -474,6 +1282,33 @@
         139.7433692,
         35.6953152
       ],
+      "tags": {
+        "addr:postcode": "102-8246",
+        "building": "museum",
+        "building:levels": "2",
+        "contact:tripadvisor": "9974357",
+        "contact:website": "https://www.yasukuni.or.jp/yusyukan/",
+        "contact:youtube": "https://www.youtube.com/watch?v=q_SG2MAsm0E&t=2s",
+        "description:en": "Yūshūkan Japanese military & war museum",
+        "museum": "military",
+        "name": "遊就館",
+        "name:en": "Yūshūkan",
+        "name:es": "Yūshūkan",
+        "name:fr": "Yūshūkan",
+        "name:zh": "游就馆",
+        "note": "National-Land Numerical Information (Public Facility) 2006, MLIT Japan",
+        "note:ja": "国土数値情報（公共施設データ）平成19年 国土交通省",
+        "official_name:en": "Yūshūkan Museum",
+        "roof:shape": "hipped",
+        "source": "Bing,2007-04;KSJ2",
+        "source_ref": "http://nlftp.mlit.go.jp/ksj/jpgis/datalist/KsjTmplt-P02-v2_0.html",
+        "start_date": "1882-02-25",
+        "tourism": "museum",
+        "website": "https://www.yasukuni.or.jp/yusyukan/",
+        "wikidata": "Q2855971",
+        "wikimedia_commons": "Category:Yūshūkan",
+        "wikipedia": "ja:遊就館"
+      },
       "qid": "Q2855971"
     },
     {
@@ -485,7 +1320,19 @@
       "coordinates": [
         139.764534,
         35.6800322
-      ]
+      ],
+      "tags": {
+        "level": "1;2",
+        "museum": "science",
+        "name": "インターメディアテク",
+        "name:en": "Intermediatheque",
+        "name:ja_rm": "Intāmediateku",
+        "opening_hours": "11:00-18:00; Fr,Sa 11:00-20:00; Mo closed",
+        "operator:type": "private",
+        "tourism": "museum",
+        "website": "http://www.intermediatheque.jp/",
+        "wheelchair": "yes"
+      }
     },
     {
       "queryId": "019fa880-5cd6-714a-900f-ff3693145790",
@@ -497,6 +1344,30 @@
         139.7621517,
         35.6986987
       ],
+      "tags": {
+        "addr:block_number": "1",
+        "addr:city": "千代田区",
+        "addr:neighbourhood": "神田駿河台一丁目",
+        "addr:province": "東京都",
+        "contact:facebook": "https://www.facebook.com/meijimuseum/",
+        "contact:instagram": "https://www.instagram.com/meijimuseum/",
+        "contact:twitter": "https://x.com/meiji_museum",
+        "fee": "no",
+        "layer": "-1",
+        "museum": "education;history",
+        "name": "明治大学博物館",
+        "name:en": "Meiji University Museum",
+        "name:es": "Museo de la Universidad Meiji",
+        "note": "National-Land Numerical Information (Public Facility) 2006, MLIT Japan",
+        "note:ja": "国土数値情報（公共施設データ）平成19年 国土交通省",
+        "opening_hours": "Mo-Su 10:00-16:30",
+        "source": "KSJ2",
+        "source_ref": "http://nlftp.mlit.go.jp/ksj/jpgis/datalist/KsjTmplt-P02-v2_0.html",
+        "tourism": "museum",
+        "website": "https://www.meiji.ac.jp/museum/",
+        "wikidata": "Q85880847",
+        "wikipedia": "ja:明治大学博物館"
+      },
       "qid": "Q85880847"
     },
     {
@@ -508,7 +1379,13 @@
       "coordinates": [
         139.7380742,
         35.683313
-      ]
+      ],
+      "tags": {
+        "amenity": "public_bath",
+        "check_date": "2023-01-31",
+        "level": "1",
+        "name": "発酵風呂ハッコラ"
+      }
     },
     {
       "queryId": "019fa880-5cd6-73ac-bcb9-6bb75bbf99fb",
@@ -520,6 +1397,40 @@
         139.7645151,
         35.6774598
       ],
+      "tags": {
+        "addr:block_number": "5",
+        "addr:city": "千代田区",
+        "addr:floor": "B1F",
+        "addr:housename": "東京国際フォーラム",
+        "addr:housenumber": "1",
+        "addr:neighbourhood": "丸の内三丁目",
+        "addr:postcode": "100-0005",
+        "addr:province": "東京都",
+        "contact:fax": "+81 3-6212-3201",
+        "contact:instagram": "mitsuoaida_museum",
+        "contact:phone": "+81 3-5675-6521",
+        "contact:tripadvisor": "1903771",
+        "contact:twitter": "Mitsuo_Museum",
+        "contact:website": "https://www.mitsuo.co.jp/museum/index.html",
+        "contact:youtube": "UCVKx2_d_DDnqstbYBZylpEw",
+        "level": "-1",
+        "level:ref": "B1",
+        "name": "相田みつを美術館",
+        "name:en": "Mitsuo Aida Museum",
+        "name:etymology": "相田みつを",
+        "name:etymology:wikidata": "Q403849",
+        "name:fr": "Musée d'art Aida Mitsuo",
+        "name:ja-Hira": "あいだみつを びじゅつかん",
+        "name:ja-Latn": "Aida Mitsuwo bijutsukan",
+        "opening_hours": "Tu-Su 10:00-17:30",
+        "subject:wikidata": "Q403849",
+        "subject:wikipedia": "相田みつを",
+        "tourism": "museum",
+        "wheelchair": "yes",
+        "wikidata": "Q11582309",
+        "wikimedia_commons": "Category:Mitsuo Aida Museum",
+        "wikipedia": "ja:相田みつを美術館"
+      },
       "qid": "Q11582309"
     },
     {
@@ -532,6 +1443,28 @@
         139.7428472,
         35.6860582
       ],
+      "tags": {
+        "addr:block_number": "25",
+        "addr:city": "千代田区",
+        "addr:neighbourhood": "一番町",
+        "addr:province": "東京都",
+        "contact:twitter": "https://x.com/JCIICameraMus",
+        "contact:youtube": "https://www.youtube.com/channel/UCVRHR70H4_ozxNZ8yEe-TvQ",
+        "level": "-1",
+        "museum": "photography",
+        "name": "日本カメラ博物館",
+        "name:en": "JCII Camera Museum",
+        "note": "National-Land Numerical Information (Public Facility) 2006, MLIT Japan",
+        "note:ja": "国土数値情報（公共施設データ）平成19年 国土交通省",
+        "opening_hours": "Tu-Su 10:00-17:00",
+        "source": "KSJ2",
+        "source_ref": "http://nlftp.mlit.go.jp/ksj/jpgis/datalist/KsjTmplt-P02-v2_0.html",
+        "tourism": "museum",
+        "website": "https://www.jcii-cameramuseum.jp/",
+        "wikidata": "Q21019310",
+        "wikimedia_commons": "Category:JCII Camera Museum",
+        "wikipedia": "ja:日本カメラ博物館"
+      },
       "qid": "Q21019310"
     },
     {
@@ -543,7 +1476,17 @@
       "coordinates": [
         139.7614042,
         35.6787799
-      ]
+      ],
+      "tags": {
+        "museum": "art;person",
+        "name": "静嘉堂美術館",
+        "name:en": "Seikado Bunko Art Museum",
+        "name:ja": "静嘉堂文庫美術館",
+        "opening_hours": "Tu-Th, Sa-Su 10:00-17:00; Fr 10:00-18:00",
+        "tourism": "museum",
+        "website": "https://www.seikado.or.jp/",
+        "wheelchair": "limited"
+      }
     },
     {
       "queryId": "019fa880-5cd6-74a3-b873-3fc0955ef99a",
@@ -555,6 +1498,24 @@
         139.7509066,
         35.6951109
       ],
+      "tags": {
+        "alt_name:en": "Showakan",
+        "contact:facebook": "https://www.facebook.com/showakankudan/",
+        "contact:twitter": "https://x.com/showakankudan",
+        "contact:youtube": "https://www.youtube.com/channel/UCAfoUh020NR5ZSKe3ccat3Q",
+        "museum": "history",
+        "name": "昭和館",
+        "name:en": "National Showa Memorial Museum",
+        "name:es": "Museo conmemorativo nacional Showa",
+        "name:ja-Latn": "Shōwakan",
+        "opening_hours": "Tu-Su 10:00-17:30",
+        "short_name:en": "Showa-kan",
+        "tourism": "museum",
+        "website": "https://www.showakan.go.jp/",
+        "wikidata": "Q3788883",
+        "wikimedia_commons": "Category:National Showa Memorial Museum",
+        "wikipedia": "en:National Showa Memorial Museum"
+      },
       "qid": "Q3788883"
     },
     {
@@ -567,6 +1528,20 @@
         139.7664939,
         35.6824302
       ],
+      "tags": {
+        "name": "東京ステーションギャラリー",
+        "name:en": "Tokyo Station Gallery",
+        "name:es": "Galería de la Estación de Tokio",
+        "name:ko": "도쿄역갤러리",
+        "name:zh": "東京車站畫廊",
+        "opening_hours": "Tu-Th 10:00-18:00, Fr 10:00-20:00, Sa-Su 10:00-18:00",
+        "tourism": "museum",
+        "website": "http://www.ejrcf.or.jp/gallery/",
+        "wheelchair": "yes",
+        "wikidata": "Q115265693",
+        "wikimedia_commons": "Category:Tokyo Station Gallery",
+        "wikipedia": "ja:東京ステーションギャラリー"
+      },
       "qid": "Q115265693"
     },
     {
@@ -579,6 +1554,28 @@
         139.7538782,
         35.6902601
       ],
+      "tags": {
+        "amenity": "library",
+        "building": "yes",
+        "fee": "no",
+        "name": "国立公文書館",
+        "name:en": "National Archives of Japan",
+        "name:es": "Archivos Nacionales de Japón",
+        "name:ja": "国立公文書館",
+        "name:ja-Hira": "こくりつこうぶんしょかん",
+        "name:ja_rm": "Hojin Kokuritsu Kōbunshokan",
+        "name:ru": "Национальный архив Японии",
+        "name:zh": "國立公文書館",
+        "note": "National-Land Numerical Information (Public Facility) 2006, MLIT Japan",
+        "note:ja": "国土数値情報（公共施設データ）平成19年 国土交通省",
+        "source": "Bing;NRPB of MLIT Japan;KSJ2",
+        "source:ja": "国土画像情報（オルソ化空中写真）国土計画局",
+        "source_ref": "http://nlftp.mlit.go.jp/ksj/jpgis/datalist/KsjTmplt-P02-v2_0.html",
+        "website": "https://www.archives.go.jp/index.html",
+        "wikidata": "Q1072875",
+        "wikimedia_commons": "Category:National Archives of Japan",
+        "wikipedia": "ja:国立公文書館"
+      },
       "qid": "Q1072875"
     },
     {
@@ -590,7 +1587,15 @@
       "coordinates": [
         139.7663029,
         35.6901388
-      ]
+      ],
+      "tags": {
+        "amenity": "public_bath",
+        "bath:type": "sento",
+        "fee": "yes",
+        "name": "稲荷湯",
+        "name:en": "Inari-yu",
+        "opening_hours": "Mo-Sa 14:40-22:30"
+      }
     },
     {
       "queryId": "019fa880-5cd6-77c9-917c-e02521540bac",
@@ -602,6 +1607,25 @@
         139.7470123,
         35.678347
       ],
+      "tags": {
+        "building": "yes",
+        "name": "憲政記念館",
+        "name:en": "Parliamentary Museum",
+        "name:es": "Museo del Parlamento",
+        "name:ja": "憲政記念館",
+        "name:ko": "헌정기념관",
+        "name:ru": "Музей памяти Конституционного правительства",
+        "note": "National-Land Numerical Information (Public Facility) 2006, MLIT Japan",
+        "note:ja": "国土数値情報（公共施設データ）平成19年　国土交通省",
+        "opening_hours": "Mo-Su 09:30-17:00",
+        "phone": "0335811651",
+        "source": "Bing,2007-04;KSJ2",
+        "source_ref": "http://nlftp.mlit.go.jp/ksj/jpgis/datalist/KsjTmplt-P02-v2_0.html",
+        "tourism": "museum",
+        "website": "http://www.shugiin.go.jp",
+        "wikidata": "Q11495238",
+        "wikimedia_commons": "Category:Kensei Kinenkan"
+      },
       "qid": "Q11495238"
     },
     {
@@ -614,6 +1638,22 @@
         139.74649,
         35.693263
       ],
+      "tags": {
+        "museum": "history;person",
+        "name": "千秋文庫博物館",
+        "name:en": "Senshu Bunko",
+        "name:es": "Senshu Bunko",
+        "note": "National-Land Numerical Information (Public Facility) 2006, MLIT Japan",
+        "note:ja": "国土数値情報（公共施設データ）平成19年 国土交通省",
+        "official_name:en": "The Senshu-Bunko Museum",
+        "source": "KSJ2",
+        "source_ref": "http://nlftp.mlit.go.jp/ksj/jpgis/datalist/KsjTmplt-P02-v2_0.html",
+        "tourism": "museum",
+        "website": "https://www.senshu-bunko.or.jp/",
+        "wikidata": "Q11405795",
+        "wikimedia_commons": "Category:Senshu-Bunko Museum",
+        "wikipedia": "ja:千秋文庫"
+      },
       "qid": "Q11405795"
     },
     {
@@ -625,7 +1665,24 @@
       "coordinates": [
         139.764418,
         35.691776
-      ]
+      ],
+      "tags": {
+        "addr:block_number": "1",
+        "addr:city": "千代田区",
+        "addr:housenumber": "9",
+        "addr:neighbourhood": "神田錦町",
+        "addr:province": "東京都",
+        "name": "天理ギャラリー",
+        "name:en": "Tenri Gallery",
+        "note": "National-Land Numerical Information (Public Facility) 2006, MLIT Japan",
+        "note:ja": "国土数値情報（公共施設データ）平成19年 国土交通省",
+        "opening_hours": "Mo-Fr 10:00-18:00; Sa-Su 10:00-16:00",
+        "source": "KSJ2",
+        "source_ref": "http://nlftp.mlit.go.jp/ksj/jpgis/datalist/KsjTmplt-P02-v2_0.html",
+        "tourism": "museum",
+        "website": "https://tokyotenrikyokan.co.jp/gallery/",
+        "wheelchair": "no"
+      }
     },
     {
       "queryId": "019fa880-5cd6-78d5-8f0d-d2b980c78320",
@@ -636,7 +1693,13 @@
       "coordinates": [
         139.7755499,
         35.6927651
-      ]
+      ],
+      "tags": {
+        "amenity": "public_bath",
+        "name": "於玉湯",
+        "name:en": "Otama Yu Spa",
+        "opening_hours": "Su-Fr 14:40-20:30"
+      }
     },
     {
       "queryId": "019fa880-5cd6-79dd-aaf4-367c7aee85f3",
@@ -648,6 +1711,45 @@
         139.7530799,
         35.6915625
       ],
+      "tags": {
+        "addr:block_number": "2",
+        "addr:city": "千代田区",
+        "addr:county": "東京都",
+        "addr:housenumber": "1",
+        "addr:neighbourhood": "北の丸公園",
+        "addr:postcode": "102-0091",
+        "architect": "松下清夫; 平山嵩",
+        "architect:wikidata": "Q79018012;Q11482510",
+        "building": "public",
+        "contact:facebook": "ScienceMuseum.jp",
+        "contact:instagram": "sciencemuseum.jp",
+        "contact:tripadvisor": "1637721",
+        "contact:twitter": "JSF_SMT",
+        "contact:website": "https://www.jsf.or.jp/",
+        "contact:youtube": "UC49I9-_5zsYNO4ue1lTI-OQ",
+        "name": "科学技術館",
+        "name:en": "Science Museum",
+        "name:es": "Museo de Ciencia",
+        "name:fr": "Musée des sciences",
+        "name:ja-Hira": "かがくぎじゅつかん",
+        "name:ja-Latn": "Kagakugijutsu-kan",
+        "name:ko": "과학박물관",
+        "name:zh": "科学技术馆",
+        "name:zh-Hant": "科學技術館",
+        "note": "National-Land Numerical Information (Public Facility) 2006, MLIT Japan",
+        "note:ja": "国土数値情報（公共施設データ）平成19年 国土交通省",
+        "official_name": "科学技術館",
+        "official_name:en": "Science and Technology Museum",
+        "source": "NRPB of MLIT Japan;KSJ2",
+        "source:ja": "国土画像情報（オルソ化空中写真）国土計画局",
+        "source_ref": "http://nlftp.mlit.go.jp/ksj/jpgis/datalist/KsjTmplt-P02-v2_0.html",
+        "start_date": "1964-04-12",
+        "tourism": "museum",
+        "website": "https://www.jsf.or.jp/",
+        "wikidata": "Q10855424",
+        "wikimedia_commons": "Category:Science Museum (Tokyo)",
+        "wikipedia": "ja:科学技術館"
+      },
       "qid": "Q10855424"
     },
     {
@@ -659,7 +1761,18 @@
       "coordinates": [
         139.7678448,
         35.7022569
-      ]
+      ],
+      "tags": {
+        "alt_name:en": "The Kanda Myoujin Shrine Museum",
+        "building": "museum",
+        "name": "神田明神資料館",
+        "name:en": "Kanda Myojin Museum",
+        "name:fr": "Musée de Kanda-myōjin",
+        "name:ja-Hira": "かんだ みょうじん しりょうかん",
+        "name:ja-Latn": "Kanda myōjin shiryōkan",
+        "tourism": "museum",
+        "website": "https://www.kandamyoujin.or.jp/museum/"
+      }
     },
     {
       "queryId": "019fa880-5cd6-7aba-bca8-0e770da6c6f9",
@@ -671,6 +1784,32 @@
         139.7589461,
         35.6865373
       ],
+      "tags": {
+        "building": "public",
+        "check_date": "2026-02-21",
+        "contact:instagram": "https://www.instagram.com/shozokan_pr/",
+        "contact:youtube": "https://www.youtube.com/@shozokan_pr",
+        "fee": "yes",
+        "landuse": "construction",
+        "museum": "art",
+        "name": "宮内庁 三の丸尚蔵館",
+        "name:en": "Sannomaru Shozokan",
+        "name:es": "Museo de colecciones imperiales",
+        "name:fr": "Musée des collections impériales",
+        "name:ja-Hira": "さんのまるしょうぞうかん",
+        "name:ja-Latn": "Kunaichou Sannomaru-Shōzōkan",
+        "name:ko": "궁내청 산노마루 상장관",
+        "note": "Museum will open at the end of 2026",
+        "official_name:en": "The Museum of the Imperial Collections, Sannomaru Shozokan",
+        "opening_hours": "Tu-Th, Su 09:30-16:30; Fr-Sa 09:30-19:30",
+        "source": "Bing",
+        "tourism": "museum",
+        "website": "https://shozokan.nich.go.jp/",
+        "wheelchair": "yes",
+        "wikidata": "Q3076188",
+        "wikimedia_commons": "Category:Museum of the Imperial Collections",
+        "wikipedia": "ja:皇居三の丸尚蔵館"
+      },
       "qid": "Q3076188"
     },
     {
@@ -682,7 +1821,13 @@
       "coordinates": [
         139.7645456,
         35.6885516
-      ]
+      ],
+      "tags": {
+        "amenity": "public_bath",
+        "name": "SPA大手町",
+        "name:en": "Spa Otemachi",
+        "wheelchair": "limited"
+      }
     },
     {
       "queryId": "019fa880-5cd6-7c6d-8b56-2be683d649a6",
@@ -694,6 +1839,39 @@
         139.7546203,
         35.6904946
       ],
+      "tags": {
+        "addr:city": "千代田区",
+        "addr:housenumber": "3-1",
+        "addr:neighbourhood": "1丁目",
+        "addr:postcode": "102-8322",
+        "addr:province": "東京都",
+        "building": "yes",
+        "contact:facebook": "https://www.facebook.com/momat.pr",
+        "contact:instagram": "https://www.instagram.com/momat_museum/",
+        "contact:twitter": "https://x.com/MOMAT_museum",
+        "contact:youtube": "https://www.youtube.com/user/MOMAT60th",
+        "fee": "yes",
+        "museum": "art",
+        "name": "東京国立近代美術館",
+        "name:en": "National Museum of Modern Art, Tokyo",
+        "name:es": "Museo Nacional de Arte Moderno de Tokio",
+        "name:ja": "東京国立近代美術館",
+        "name:ru": "Национальный музей современного искусства (Токио)",
+        "name:zh": "東京國立近代美術館",
+        "official_name:en": "The National Museum of Modern Art, Tokyo",
+        "opening_hours": "Sa-Th 10:00-17:00; Fr 10:00-20:00",
+        "operator:en": "National Museum of Art",
+        "phone": "+81357778600",
+        "short_name": "MOMAT",
+        "source": "Bing;NRPB of MLIT Japan",
+        "source:ja": "国土画像情報（オルソ化空中写真）国土計画局",
+        "tourism": "museum",
+        "website": "https://www.momat.go.jp/",
+        "website:en": "https://www.momat.go.jp/en",
+        "wikidata": "Q1359908",
+        "wikimedia_commons": "Category:National Museum of Modern Art, Tokyo",
+        "wikipedia": "ja:東京国立近代美術館"
+      },
       "qid": "Q1359908"
     },
     {
@@ -705,7 +1883,11 @@
       "coordinates": [
         139.7597075,
         35.6952821
-      ]
+      ],
+      "tags": {
+        "name": "Gallery Hinoki",
+        "tourism": "gallery"
+      }
     },
     {
       "queryId": "019fa880-5cd6-7d49-888d-1ba85637e081",
@@ -716,7 +1898,19 @@
       "coordinates": [
         139.7552918,
         35.6966741
-      ]
+      ],
+      "tags": {
+        "access": "yes",
+        "amenity": "public_bath",
+        "bath:open_air": "no",
+        "bath:type": "sento",
+        "fee": "520",
+        "name": "梅の湯",
+        "opening_hours": "Mo-Sa 15:00-22:00",
+        "shower": "yes",
+        "toilets": "yes",
+        "wheelchair": "no"
+      }
     },
     {
       "queryId": "019fa880-5cd6-7d72-ac6c-89e27c90a921",
@@ -727,7 +1921,15 @@
       "coordinates": [
         139.7679137,
         35.6981356
-      ]
+      ],
+      "tags": {
+        "amenity": "public_bath",
+        "bath:open_air": "no",
+        "bath:sand_bath": "no",
+        "name": "RAKU SPA 1010 神田",
+        "opening_hours": "Mo-Su 11:00-08:00",
+        "website": "https://rakuspa.com/kanda/"
+      }
     },
     {
       "queryId": "019fa880-5cd6-7e0b-9d3a-218e8214e31d",
@@ -739,6 +1941,42 @@
         139.7631636,
         35.6784664
       ],
+      "tags": {
+        "alt_name:fr": "Musée d'art Mitsubishi Ichigokan",
+        "building": "public",
+        "building:architecture": "queen_anne",
+        "building:architecture:wikidata": "Q529819",
+        "building:levels": "3",
+        "building:wikidata": "Q11357064",
+        "charge:adult": "2300 JPY",
+        "contact:instagram": "mitsubishi_ichigokan_museum",
+        "contact:tripadvisor": "1604472",
+        "contact:twitter": "ichigokan_PR",
+        "contact:website": "https://mimt.jp/",
+        "contact:youtube": "UCKrLJ7bZGrdd2KjF0RjJ53Q",
+        "description:fr": "Anciens bureaux de la société Mitsubishi",
+        "fee": "yes",
+        "museum": "art",
+        "name": "三菱一号館",
+        "name:en": "Mitsubishi Ichigokan Museum",
+        "name:es": "Museo Mitsubishi Ichigokan",
+        "name:etymology:wikidata": "Q11357064",
+        "name:fr": "Musée Mitsubishi Ichigokan",
+        "name:ja-Hira": "みつびしいちごうかんびじゅつかん",
+        "name:ja-Latn": "Mitsubishi Ichigōkan Bijutsukan",
+        "name:zh": "三菱一號館",
+        "opening_hours": "Sa-Su, Tu-Th 10:00-18:00; Fr,We[2] 10:00-20:00; Mo off",
+        "roof:levels": "1",
+        "roof:orientation": "along",
+        "roof:shape": "gabled",
+        "start_date": "2010-04-06",
+        "start_date:building": "1894-06-30",
+        "tourism": "museum",
+        "wheelchair": "no",
+        "wikidata": "Q3815458",
+        "wikimedia_commons": "Category:Mitsubishi Ichigokan Museum",
+        "wikipedia": "ja:三菱一号館美術館"
+      },
       "qid": "Q3815458"
     }
   ]

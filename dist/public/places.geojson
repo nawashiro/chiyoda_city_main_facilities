@@ -574,6 +574,21 @@
         "town": "神田司町",
         "lifecycleStatus": "active",
         "sources": {
+          "openstreetmap": {
+            "retrievedAt": "2026-07-29T06:32:29+00:00",
+            "record": {
+              "type": "node",
+              "id": "5285952021",
+              "coordinates": [
+                139.7683265,
+                35.692996
+              ],
+              "tags": {
+                "amenity": "community_centre",
+                "name": "教育研究所 児童・家庭支援センター さくらキッズ"
+              }
+            }
+          },
           "wam": {
             "retrievedAt": "2026-07-29T20:37:18+00:00",
             "records": [
@@ -905,6 +920,40 @@
         "town": "神田駿河台",
         "lifecycleStatus": "active",
         "sources": {
+          "openstreetmap": {
+            "retrievedAt": "2026-07-29T06:32:29+00:00",
+            "record": {
+              "type": "node",
+              "id": "13465461815",
+              "coordinates": [
+                139.7608154,
+                35.7004236
+              ],
+              "tags": {
+                "addr:block_number": "5",
+                "addr:city": "千代田区",
+                "addr:neighbourhood": "神田駿河台二丁目",
+                "addr:postcode": "101-0062",
+                "addr:province": "東京都",
+                "addr:quarter": "神田駿河台",
+                "amenity": "social_facility",
+                "contact:facebook": "https://www.facebook.com/chiyoda.emifuru/",
+                "description": "障害のある方が利用できる施設です。講習会・リハビリテーションや、グループホーム・ショートステイの機能があります。",
+                "fax": "+81-3-3291-0608",
+                "image": "https://commons.wikimedia.org/wiki/File:障害者福祉センターえみふる・お茶の水キリストの教会.jpg",
+                "internet_access": "wlan",
+                "name": "千代田区立障害者福祉センター　えみふる",
+                "opening_hours": "Mo-Fr 09:00-21:00; Sa-Su 09:00-17:00; PH 09:00-17:00; Su[2] off",
+                "operator": "社会福祉法人武蔵野会",
+                "operator:type": "public",
+                "phone": "+81-3-3291-0600",
+                "social_facility": "outreach",
+                "social_facility:for": "disabled",
+                "website": "https://emifuru.com/",
+                "wheelchair": "yes"
+              }
+            }
+          },
           "wam": {
             "retrievedAt": "2026-07-29T20:37:18+00:00",
             "records": [
@@ -1226,8 +1275,8 @@
       "geometry": {
         "type": "Point",
         "coordinates": [
-          139.7573,
-          35.691019
+          139.7572963,
+          35.6909272
         ]
       },
       "properties": {
@@ -1247,7 +1296,43 @@
         ],
         "town": "一ツ橋",
         "lifecycleStatus": "active",
-        "sources": {}
+        "sources": {
+          "openstreetmap": {
+            "retrievedAt": "2026-07-29T06:32:29+00:00",
+            "record": {
+              "type": "node",
+              "id": "13465379795",
+              "coordinates": [
+                139.7572963,
+                35.6909272
+              ],
+              "tags": {
+                "addr:block_number": "1",
+                "addr:city": "千代田区",
+                "addr:neighbourhood": "一ツ橋一丁目",
+                "addr:province": "東京都",
+                "addr:quarter": "一ツ橋",
+                "amenity": "social_facility",
+                "contact:facebook": "https://www.facebook.com/healightnet/",
+                "description": "障害のある方の悩みに専門家が相談に乗り、必要に応じて専門機関を紹介します。",
+                "email": "info@hirai-luminal.or.jp",
+                "fax": "+81-3-6269-9754",
+                "image": "https://commons.wikimedia.org/wiki/File:%E5%8D%83%E4%BB%A3%E7%94%B0%E5%8C%BA%E9%9A%9C%E5%AE%B3%E8%80%85%E3%82%88%E3%82%8D%E3%81%9A%E7%9B%B8%E8%AB%87_Light.jpg",
+                "internet_access": "wlan",
+                "internet_access:ssid": "yorozu-free",
+                "level": "0",
+                "name": "千代田区障害者よろず相談 Light",
+                "opening_hours": "Mo-Fr 09:00-19:00; Sa 09:00-18:00; PH off",
+                "operator": "社会福祉法人ひらいルミナル",
+                "operator:type": "public",
+                "phone": "+81-3-6269-9755",
+                "social_facility": "outreach",
+                "social_facility:for": "disabled",
+                "website": "https://hirai-luminal.or.jp/office/light/"
+              }
+            }
+          }
+        }
       }
     },
     {
@@ -1274,7 +1359,27 @@
         ],
         "town": "飯田橋",
         "lifecycleStatus": "active",
-        "sources": {}
+        "sources": {
+          "openstreetmap": {
+            "retrievedAt": "2026-07-29T06:32:29+00:00",
+            "record": {
+              "type": "node",
+              "id": "1420785407",
+              "coordinates": [
+                139.749567,
+                35.70038
+              ],
+              "tags": {
+                "name": "東京都産業労働局労働相談情報センター",
+                "note": "National-Land Numerical Information (Public Facility) 2006, MLIT Japan",
+                "note:ja": "国土数値情報（公共施設データ）平成19年 国土交通省",
+                "office": "government",
+                "source": "KSJ2",
+                "source_ref": "http://nlftp.mlit.go.jp/ksj/jpgis/datalist/KsjTmplt-P02-v2_0.html"
+              }
+            }
+          }
+        }
       }
     },
     {
@@ -1304,8 +1409,8 @@
       "geometry": {
         "type": "Point",
         "coordinates": [
-          139.778795,
-          35.699229
+          139.7788067,
+          35.6992879
         ]
       },
       "properties": {
@@ -1323,7 +1428,33 @@
         ],
         "town": "神田和泉町",
         "lifecycleStatus": "active",
-        "sources": {}
+        "sources": {
+          "openstreetmap": {
+            "retrievedAt": "2026-07-29T06:32:29+00:00",
+            "record": {
+              "type": "node",
+              "id": "13468335880",
+              "coordinates": [
+                139.7788067,
+                35.6992879
+              ],
+              "tags": {
+                "addr:block_number": "1",
+                "addr:city": "千代田区",
+                "addr:neighbourhood": "神田和泉町",
+                "addr:province": "東京都",
+                "amenity": "library",
+                "level": "4",
+                "name": "ちよだパークサイドプラザ区民図書室",
+                "opening_hours": "Mo-Fr 09:00-19:00; Su 09:00-17:00; PH 09:00-17:00; Su[3] off",
+                "operator": "千代田区",
+                "operator:type": "public",
+                "phone": "+81-3-3864-8931",
+                "ref:isil": "none"
+              }
+            }
+          }
+        }
       }
     },
     {
@@ -1396,8 +1527,8 @@
       "geometry": {
         "type": "Point",
         "coordinates": [
-          139.7698588,
-          35.7012028
+          139.7696731,
+          35.7011916
         ]
       },
       "properties": {
@@ -1417,7 +1548,27 @@
         ],
         "town": "外神田",
         "lifecycleStatus": "active",
-        "sources": {}
+        "sources": {
+          "openstreetmap": {
+            "retrievedAt": "2026-07-29T06:32:29+00:00",
+            "record": {
+              "type": "node",
+              "id": "2263796343",
+              "coordinates": [
+                139.7696731,
+                35.7011916
+              ],
+              "tags": {
+                "amenity": "community_centre",
+                "level": "4",
+                "name": "神田児童館",
+                "name:en": "Kanda Children's Hall",
+                "source": "survey",
+                "wheelchair": "yes"
+              }
+            }
+          }
+        }
       }
     },
     {
@@ -1770,7 +1921,32 @@
         ],
         "town": "外神田",
         "lifecycleStatus": "active",
-        "sources": {}
+        "sources": {
+          "openstreetmap": {
+            "retrievedAt": "2026-07-29T06:32:29+00:00",
+            "record": {
+              "type": "node",
+              "id": "2059303798",
+              "coordinates": [
+                139.7700608,
+                35.7013313
+              ],
+              "tags": {
+                "amenity": "library",
+                "contact:phone": "+81 3 3251 5641",
+                "level": "0",
+                "name": "昌平まちかど図書館",
+                "name:en": "Shouhei-Machikado-Library",
+                "opening_hours": "09:00-20:00",
+                "operator": "千代田区立図書館",
+                "source": "survey",
+                "website": "http://www.library.chiyoda.tokyo.jp",
+                "wheelchair": "yes",
+                "wikidata": "Q61886799"
+              }
+            }
+          }
+        }
       }
     },
     {
@@ -2350,8 +2526,8 @@
       "geometry": {
         "type": "Point",
         "coordinates": [
-          139.7547057,
-          35.6988874
+          139.754706,
+          35.698887
         ]
       },
       "properties": {
@@ -2371,7 +2547,30 @@
         ],
         "town": "西神田",
         "lifecycleStatus": "active",
-        "sources": {}
+        "sources": {
+          "openstreetmap": {
+            "retrievedAt": "2026-07-29T06:32:29+00:00",
+            "record": {
+              "type": "node",
+              "id": "1655927382",
+              "coordinates": [
+                139.754706,
+                35.698887
+              ],
+              "tags": {
+                "addr:full": "東京都千代田区西神田2-6-2",
+                "amenity": "social_facility",
+                "name": "西神田児童・家庭支援センター",
+                "note": "National-Land Numerical Information (Public Facility) 2006, MLIT Japan",
+                "note:ja": "国土数値情報（公共施設データ）平成19年 国土交通省",
+                "operator": "東京都千代田区",
+                "social_facility": "assisted_living",
+                "source": "KSJ2",
+                "source_ref": "http://nlftp.mlit.go.jp/ksj/jpgis/datalist/KsjTmplt-P02-v2_0.html"
+              }
+            }
+          }
+        }
       }
     },
     {
@@ -2393,7 +2592,33 @@
         "images": [],
         "town": "有楽町",
         "lifecycleStatus": "active",
-        "sources": {}
+        "sources": {
+          "openstreetmap": {
+            "retrievedAt": "2026-07-29T06:32:29+00:00",
+            "record": {
+              "type": "node",
+              "id": "6900192224",
+              "coordinates": [
+                139.7594538,
+                35.6733194
+              ],
+              "tags": {
+                "amenity": "cinema",
+                "brand": "TOHOシネマズ",
+                "brand:en": "TOHO CINEMAS",
+                "brand:ja": "TOHOシネマズ",
+                "brand:short": "TOHO",
+                "brand:wikidata": "Q11235261",
+                "name": "TOHO CINEMAS HIBIYA",
+                "name:en": "Toho Cinemas",
+                "name:ja": "TOHOシネマズ",
+                "operator": "東宝",
+                "source": "survey",
+                "wheelchair": "limited"
+              }
+            }
+          }
+        }
       }
     },
     {
@@ -2556,8 +2781,8 @@
       "geometry": {
         "type": "Point",
         "coordinates": [
-          139.7392841,
-          35.6869902
+          139.739284,
+          35.68699
         ]
       },
       "properties": {
@@ -2572,7 +2797,31 @@
         "images": [],
         "town": "一番町",
         "lifecycleStatus": "active",
-        "sources": {}
+        "sources": {
+          "openstreetmap": {
+            "retrievedAt": "2026-07-29T06:32:29+00:00",
+            "record": {
+              "type": "node",
+              "id": "1655905663",
+              "coordinates": [
+                139.739284,
+                35.68699
+              ],
+              "tags": {
+                "addr:full": "東京都千代田区一番町12",
+                "amenity": "social_facility",
+                "name": "千代田区立一番町高齢者在宅介護支援センター",
+                "note": "National-Land Numerical Information (Public Facility) 2006, MLIT Japan",
+                "note:ja": "国土数値情報（公共施設データ）平成19年 国土交通省",
+                "operator": "東京都千代田区",
+                "social_facility": "outreach",
+                "social_facility:for": "senior",
+                "source": "KSJ2",
+                "source_ref": "http://nlftp.mlit.go.jp/ksj/jpgis/datalist/KsjTmplt-P02-v2_0.html"
+              }
+            }
+          }
+        }
       }
     },
     {
@@ -2790,7 +3039,40 @@
         "images": [],
         "town": "有楽町",
         "lifecycleStatus": "active",
-        "sources": {}
+        "sources": {
+          "openstreetmap": {
+            "retrievedAt": "2026-07-29T06:32:29+00:00",
+            "record": {
+              "type": "node",
+              "id": "6900192225",
+              "coordinates": [
+                139.7594149,
+                35.6730666
+              ],
+              "tags": {
+                "amenity": "cinema",
+                "brand": "TOHOシネマズ",
+                "brand:en": "TOHO CINEMAS",
+                "brand:ja": "TOHOシネマズ",
+                "brand:short": "TOHO",
+                "brand:wikidata": "Q11235261",
+                "name": "TOHO CINEMAS HIBIYA",
+                "name:en": "Toho Cinemas",
+                "name:fr": "Cinémas Tōhō",
+                "name:ja": "TOHOシネマズ",
+                "name:ja-Hira": "とうほうシネマズみゆきざ",
+                "name:ja-Latn": "Tōhō shinemazu Miyuki-za",
+                "operator": "東宝",
+                "operator:wikidata": "Q875920",
+                "short_name": "TOHO",
+                "source": "survey",
+                "wheelchair": "yes",
+                "wikidata": "Q11249598",
+                "wikipedia": "ja:TOHOシネマズみゆき座"
+              }
+            }
+          }
+        }
       }
     },
     {
