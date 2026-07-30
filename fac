@@ -1,0 +1,8 @@
+#!/usr/bin/env python3
+"""Run the short maintainer CLI from a repository checkout."""
+
+from src.fac_cli import main
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())
