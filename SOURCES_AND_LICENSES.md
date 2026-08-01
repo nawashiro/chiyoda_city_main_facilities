@@ -11,7 +11,7 @@
 
 外部由来のデータには以下の各条件も適用される。個別ソースの条件をプロジェクトの包括ライセンスだけで置き換えない。
 
-## OpenStreetMap
+## OSM (OpenStreetMap)
 
 - 出典: © OpenStreetMap contributors
 - URL: https://www.openstreetmap.org/copyright
@@ -71,6 +71,27 @@ Wikidata Itemを内部主キーにはしない。
 - License: Creative Commons Attribution 4.0 International
 
 ## 新しいソースを追加するとき
+
+台帳だけを変更しても、公開生成処理へ新しいソースは追加されない。取得、正規化、適用、検証、公開生成、workflow、testsが必要な場合は、同じPull Requestで実装も変更する。
+
+公開物へ実際に寄与したソースは、生成後に次を確認する。
+
+```bash
+python3 -m src.facility_data validate .
+python3 - <<'PY'
+import json
+from pathlib import Path
+
+public = json.loads(Path("dist/public/places.geojson").read_text())
+ledger = json.loads(Path("config/sources.json").read_text())
+known = {item["id"] for item in ledger["sources"]}
+used = {item["sourceId"] for item in public["sourceAttributions"]}
+assert used <= known, (used - known)
+print("attributed sources:", ", ".join(sorted(used)))
+PY
+```
+
+各`sourceAttributions`の`version`、`retrievedAt`、`sha256`は、対応する取得台帳と照合する。旧データの出典は履歴情報であり、現在の取得対象や公開物への寄与を意味しない。旧ソースを削除する場合は、正本、公開生成物、テスト、台帳に参照が残っていないことを確認する。
 
 同じ変更に次を含める。
 

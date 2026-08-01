@@ -8,6 +8,8 @@
 
 WAM NETから取り込むのは相談支援4サービスだけである。
 
+初参加者は、まずREADMEの「初めて作業する人へ」を読み、作業branchを作成する。通常のデータ修正では、検索入力または正本だけを変更し、公開生成物を直接編集しない。
+
 - 計画相談支援: `52`
 - 地域相談支援（地域移行）: `53`
 - 地域相談支援（地域定着）: `54`
@@ -34,10 +36,10 @@ QIDと座標の併記は禁止する。同じUUIDが正本にあれば作成済�
 
 `data/registry.json`が唯一のPlace正本である。Placeは検索入力と同じUUIDと`name`を保持する。正本には代表点、分類、用途タグ、画像欄、lifecycle、visibility、外部参照履歴、短いauditがある。
 
-代表点の更新優先順位は次のとおり。
+代表点の更新優先順位は次のとおりです。
 
 1. WAM
-2. OpenStreetMap
+2. OSM (OpenStreetMap)
 3. 検索入力座標
 
 OSMとWAMの参照は`externalRefs`へ保持する。OSM IDが変わった場合、旧IDを削除せず`superseded`へ変更する。
@@ -155,7 +157,13 @@ python3 -m src.facility_data validate .
 2. 検索入力QIDと一致する一意候補
 3. 検索入力から50m以内、かつ正規化後に6文字以上あり、編集距離が名称長の15%以内（最低1文字、最大3文字）の一意候補
 
-残った近傍候補は、検索入力1件と50m以内の全候補を分割せず一括提示し、OpenAI互換APIへ3回の判断を依頼する。3回は単なる番号違いではなく、訪問者として同じ地物か、利用者として同じ用途か、現地スタッフとして同じチームかを判断する別プロンプトである。3つの有効票のうち2票以上が同じ候補へのlinkで一致すれば`matchBasis: language_model`として適用し、2票以上がrejectで一致すれば自動却下する。個人プロトタイプとして過度な確信度条件を加えず、一定の証拠があれば最も妥当な候補を選ばせる。合議不成立だけを`reports/osm-review-needed.json`へ残す。候補がない施設は人手確認へ送らず、OSM参照なしのまま扱う。
+残った近傍候補は、検索入力1件と50m以内の全候補を一括提示します。
+OpenAI互換APIへ3回の判断を依頼します。
+3回の判断では、訪問者、利用者、現地スタッフの視点を使います。
+2票以上が同じ候補へのlinkで一致した場合は、`matchBasis: language_model`として適用します。
+2票以上がrejectで一致した場合は、自動却下します。
+合議不成立だけを`reports/osm-review-needed.json`へ残します。
+候補がない施設は人手確認へ送らず、OSM参照なしのまま扱います。
 
 候補がない既存Placeは今の座標を保つ。QIDだけを持つ新規検索入力で、WAMにもOSMにも対応データがなければ、新しいPlaceは作らない。
 
@@ -183,6 +191,8 @@ python3 -m src.facility_data validate .
 - `Update OpenStreetMap data`
 - `Update town polygons`
 - `Re-identify retained source snapshots`
+
+GitHub Actionsの更新workflowは、対象branchを選び、必要な版またはcommitを入力して実行する。WAMと町名の更新結果はartifactで確認し、必要な修正をbranchへ反映してPull Requestを作成する。OSMの確認Issueでは、検索入力ごとに候補を一つまたは「どれとも一致しない」を選び、最後に適用チェックを入れる。
 
 通常の更新workflowは取得、正規化、適用またはbuild、validate、unit testsを実行する。OSMで合議不成立がなければ生成差分のPull Requestを作る。合議不成立があれば更新run固有のartifactを30日保持し、全候補を選べるGitHub Issueを一つ作る。
 

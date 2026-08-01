@@ -11,18 +11,20 @@
 - 検索入力: `inputs/osm-search/`
 - 唯一の正本: `data/registry.json`
 - WAM snapshot: `imports/wam/`
-- OSM snapshot: `imports/openstreetmap/`
+- OSM (OpenStreetMap) snapshot: `imports/openstreetmap/`
 - 固定町名ポリゴン: `data/pinned/`
 - レビューレポート: `reports/`
 - 公開生成物: `dist/public/`
 - ソース・利用条件台帳: `config/sources.json`
 
-公開GeoJSONは`visibility.status == "public"`のPlaceだけをPointとして出力する。propertiesは`id`、`name`、`categoryIds`、`tags`、`town`だけである。
+公開GeoJSONは`visibility.status == "public"`のPlaceだけをPointとして出力する。propertiesには`id`、`name`、`categoryIds`、`tags`、`images`、`town`、`lifecycleStatus`、`sources`を含める。
 
 ## 更新前チェック
 
+- [ ] READMEの「初めて作業する人へ」を読んだ
 - [ ] `main`とremoteの差分を確認した
 - [ ] 作業branchを作った
+- [ ] `python3 --version`がPython 3.13である
 - [ ] 同一ソースの前回取得から30日以上経過している
 - [ ] WAMなら公式配布版`YYYYMM`を確認した
 - [ ] 町名なら上流の40文字commit SHAを確認した
@@ -55,7 +57,7 @@
 - [ ] `remark`／`error`付き部分応答を拒否している
 - [ ] current ID照合に名称・QID競合や50m超の移動がない
 - [ ] QID照合は検索入力QIDと一致する一意候補だけ
-- [ ] 名称＋座標照合は完全一致かつ50m以内の一意候補だけ
+- [ ] 名称＋座標照合は正規化後6文字以上、編集距離15%以内、50m以内の一意候補だけ
 - [ ] 全候補が一度に提示され、OSM rawの全タグが候補属性へ含まれた
 - [ ] 訪問者・利用者・現地スタッフの3視点で判定された
 - [ ] 3票のうち2票以上一致した候補またはrejectが自動処理された
@@ -81,6 +83,8 @@
 - [ ] 全公開Pointの町名が意図どおりか確認した
 - [ ] 町名ポリゴンを公開GeoJSONへ含めていない
 
+GitHub Actionsのartifactを取得する場合は、READMEのartifact取込手順を使う。`update-wam.yml`と`update-towns.yml`はartifactを作成するが、Pull Requestを作成しない。
+
 ## 共通品質ゲート
 
 ```bash
@@ -98,6 +102,8 @@ python3 -m src.facility_data build .
 - [ ] `sourceAttributions`が実際の寄与ソースだけを含む
 - [ ] clean cloneでtests、validate、buildが成功する
 - [ ] exact commit SHAのGitHub Actionsが成功する
+
+Pull Requestでは、`Validate data`の実行結果を対象commitで確認する。workflowが実行されていない場合は、成功とは扱わず原因を確認する。
 
 ## 自動化頻度の目安
 

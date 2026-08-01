@@ -2,6 +2,62 @@
 
 千代田区で「生活する・助けてもらう・楽しむ」ために訪れる主要施設を、小規模に保守するデータベースです。
 
+## 初めて作業する人へ
+
+このリポジトリは、外部パッケージなしでPython 3.13から実行できます。データ更新では、検索入力、正本、公開生成物を順に確認します。
+
+### 1. リポジトリを準備する
+
+```bash
+git clone git@github.com:nawashiro/chiyoda_city_main_facilities.git
+cd chiyoda_city_main_facilities
+git switch -c data/<作業内容>
+```
+
+SSH鍵を使えない場合は、GitHubのHTTPS URLを`git clone`へ指定してください。既存の作業がある場合は、作業前に`git status`で未コミット変更を確認してください。
+
+### 2. 現在の状態を検証する
+
+```bash
+python3 -m unittest discover -s tests -v
+python3 -m src.facility_data validate .
+python3 -m src.facility_data build .
+git diff --check
+```
+
+既存の検証が失敗した場合は、データを変更せずに失敗内容をIssueへ報告してください。`build`は`data/registry.json`と固定済みソースから公開GeoJSONとmanifestを再生成します。
+
+### 3. 作業の入口を選ぶ
+
+| 目的 | 最初に読む文書 | 主な入口 |
+|---|---|---|
+| 施設の分類、タグ、公開状態を直す | [`doc/attributes.md`](doc/attributes.md) | `./fac set` |
+| OSM検索入力を追加・修正する | [`doc/data_maintenance_spec.md`](doc/data_maintenance_spec.md) | `./fac in add`、`./fac in set` |
+| WAM、OSM、町名を更新する | [`doc/maintenance_plan.md`](doc/maintenance_plan.md) | GitHub Actionsまたは更新コマンド |
+| 公開データの出典と利用条件を確認する | [`SOURCES_AND_LICENSES.md`](SOURCES_AND_LICENSES.md) | `config/sources.json`、`sourceAttributions` |
+
+通常の変更は、作業branchで入力または正本を更新し、検証、再生成、差分確認の順に進めます。`dist/public/`を直接編集してはいけません。作業終了時はPull Requestを作成し、GitHub Actionsの`Validate data`が対象commitで成功したことを確認してください。
+
+### 4. 最初の変更からPull Requestまで
+
+施設の分類、タグ、ライフサイクル、公開範囲を変更する場合は、次を実行します。
+
+```bash
+./fac ls
+./fac set <UUID> --cat library --tag example.tag
+python3 -m src.facility_data validate .
+python3 -m src.facility_data build .
+git diff --check
+git diff -- data/registry.json dist/public/
+git add data/registry.json dist/public/
+git commit -m "data: update facility metadata"
+git push -u origin data/<作業内容>
+```
+
+OSM検索入力を変更する場合は、`./fac in add`または`./fac in set`を実行してから、同じ検証とPull Requestの手順へ進みます。`./fac set`の`--cat`、`--tag`は指定した値で配列全体を置き換えるため、既存値を残す場合は先に`./fac get <UUID>`で確認してください。
+
+WAMまたは町名をGitHub Actionsで更新する場合は、後述のartifact取込手順を使います。更新workflowは自動でPull Requestを作成しません。
+
 ## 公開データ
 
 公開物は代表点をPointで収録し、画像・OSM属性・WAM属性を各Featureから直接利用できるGeoJSONです。
@@ -12,7 +68,8 @@ https://cdn.jsdelivr.net/gh/nawashiro/chiyoda_city_main_facilities@<version>/dis
 
 本番利用では`latest`ではなくリリースまたはコミットを指定してください。`dist/public/manifest.json`のSHA-256で取得物を確認できます。
 
-公開GeoJSONには名称、分類、用途タグ、画像、代表点、派生町名、lifecycle、ソース別のOSM/WAM属性を含めます。OSMの過去ID・同定監査、OSMポリゴン・relation member、町名ポリゴンは含めません。
+公開GeoJSONには名称、分類、用途タグ、画像、代表点、派生町名、lifecycle、ソース別のOSM (OpenStreetMap)・WAM属性を含めます。
+OSMの過去ID・同定監査、OSMポリゴン・relation member、町名ポリゴンは含めません。
 
 ## データ構成
 
@@ -124,7 +181,11 @@ python3 -m src.facility_data build .
 
 外部ソースを一括取得し、取得版・時刻・ハッシュを記録してから正規化・適用・公開物生成を行います。施設ごとの問い合わせは行わず、同一ソースの取得間隔は30日以上とします。
 
-OSMの曖昧候補は、検索入力1件と50m以内の全候補を一括でOpenAI互換APIへ提示します。候補にはOSM rawの全タグを含め、訪問者（同じ地物か）、利用者（同じ用途か）、現地スタッフ（同じチームか）という異なる3つのプロンプトで判断します。2票以上が同じ候補またはrejectで一致すれば自動処理します。最初に次を設定します。
+OSM (OpenStreetMap)の曖昧候補は、検索入力1件と50m以内の全候補を一括でOpenAI互換APIへ提示します。
+候補にはOSM rawの全タグを含めます。
+訪問者、利用者、現地スタッフの3つのプロンプトで判断します。
+2票以上が同じ候補またはrejectで一致すれば自動処理します。
+最初に次を設定します。
 
 ```bash
 export LLM_API_KEY="..."
@@ -133,7 +194,9 @@ export LLM_MODEL="使用するモデル名"
 export LLM_BASE_URL="https://api.example.com/v1"
 ```
 
-GitHub Actionsでは`LLM_API_KEY`をActions secret、`LLM_MODEL`をActions variableとして登録します。OpenAI以外を使う場合だけ`LLM_BASE_URL`もvariableへ登録します。
+GitHub Actionsでは`LLM_API_KEY`をActions secretとして登録します。
+`LLM_MODEL`をActions variableとして登録します。
+OpenAI以外を使う場合は`LLM_BASE_URL`もvariableへ登録します。
 
 ```bash
 # WAM公式版の相談支援4サービスを取得・適用
@@ -164,7 +227,37 @@ python3 -m src.facility_data build .
 
 候補なしの場合、既存Placeは今の座標を保ちます。QIDだけを持つ新規検索入力で、WAMにもOSMにも対応データがなければ、新しいPlaceはまだ作られません。
 
-GitHub Actionsの`Update WAM data`、`Update OpenStreetMap data`、`Update town polygons`からも同じ経路を手動実行できます。WAMは`YYYYMM`版、町名はfull commit SHAだけを入力し、OSMは入力不要です。OSM更新で人間確認が残らなければPull Requestを作り、残れば30日間のartifactに結び付いた確認Issueを作ります。WAMと町名は従来どおりレビュー用artifactを作ります。
+GitHub Actionsの`Update WAM data`、`Update OpenStreetMap data`、`Update town polygons`からも同じ経路を手動実行できます。
+WAMは`YYYYMM`版を入力します。
+町名はfull commit SHAを入力します。
+OSMは入力不要です。
+OSM更新で人間確認が残らなければPull Requestを作ります。
+人間確認が残れば、30日間のartifactに結び付いた確認Issueを作ります。
+WAMと町名はレビュー用artifactを作ります。
+
+WAMまたは町名の更新artifactをPull Requestへ取り込むには、GitHub CLI（GitHub Command Line Interface）を使います。
+`<RUN_ID>`はActionsの実行番号です。
+`<ARTIFACT_NAME>`は実行画面に表示されたartifact名です。
+
+```bash
+gh run download <RUN_ID> --name <ARTIFACT_NAME> --dir /tmp/chiyoda-update
+cp -a /tmp/chiyoda-update/. .
+python3 -m src.facility_data validate .
+python3 -m unittest discover -s tests -v
+python3 -m src.facility_data build .
+git diff --check
+git diff --stat
+git add inputs imports data dist reports
+git commit -m "data: apply source update"
+git push -u origin data/<作業内容>
+```
+
+artifactの差分を確認してください。
+意図しない削除やUUID変更がないことを確認してください。
+確認後にcommitしてください。
+WAM更新artifactの保存期間は14日です。
+OSM更新artifactの保存期間は30日です。
+町名更新artifactの保存期間は14日です。
 
 検索入力を手動修正してcommitした後は、修正したbranchを選んで`Re-identify retained source snapshots`を実行します。このActionは外部通信や再取得をせず、保存済みWAM・OSM rawのSHAと版を検証してから現在の検索入力に対する同定を再実行します。WAM→OSMの順で適用し、検索名の変更は正本名へ同期します。合議不成立時は同じGitHub Issue経路へ進み、すべて解決できた場合は直接Pull Requestを作ります。
 
