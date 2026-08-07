@@ -126,6 +126,8 @@ def prepare_osm_snapshot(
 
     candidates_by_record_id: dict[str, dict[str, Any]] = {}
     for record in normalize_osm_elements(raw["elements"]):
+        if not record.get("tags"):
+            continue
         record_id = f"{record['type']}/{record['id']}"
         if record_id in candidates_by_record_id:
             raise ValueError(f"duplicate OSM element: {record_id}")

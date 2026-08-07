@@ -216,11 +216,13 @@ class GithubOsmReviewTests(unittest.TestCase):
             review_branch="automation/osm-review-12345",
         )
 
-        self.assertIn('decision: null', review_yaml)
-        self.assertIn('candidateId: null', review_yaml)
+        self.assertIn("# 操作手順", review_yaml)
+        self.assertIn('"候補 node/1: 候補A": false', review_yaml)
+        self.assertIn('"候補なし（どの候補とも一致しない）": false', review_yaml)
+        self.assertIn("contact:phone", review_yaml)
         self.assertLess(len(issue["body"]), 65_536)
         self.assertIn('/edit/automation/osm-review-12345/reports/osm-review-needed.yaml', issue["body"])
-        self.assertIn('/blob/automation/osm-review-12345/reports/osm-candidates.json', issue["body"])
+        self.assertNotIn("osm-candidates.json", issue["body"])
         self.assertNotIn("oversized", issue["body"])
 
     def test_prepare_build_writes_yaml_without_rendering_an_oversized_issue(self):
@@ -250,9 +252,7 @@ class GithubOsmReviewTests(unittest.TestCase):
         payload = (json.dumps(report, ensure_ascii=False, indent=2) + "\n").encode()
         review_yaml = build_review_yaml(
             report, report_sha256=hashlib.sha256(payload).hexdigest()
-        ).replace("decision: null", "decision: link").replace(
-            "candidateId: null", "candidateId: node/1"
-        )
+        ).replace('"候補 node/1: 候補A": false', '"候補 node/1: 候補A": true')
 
         with tempfile.TemporaryDirectory() as directory:
             root = Path(directory)

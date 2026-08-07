@@ -57,57 +57,101 @@ def parse_issue_metadata(body: str) -> dict[str, Any]:
     return metadata
 
 
+def _yaml_scalar(value: Any) -> str:
+    return json.dumps(value, ensure_ascii=False)
+
+
 def build_review_yaml(report: dict[str, Any], *, report_sha256: str) -> str:
-    """Render a deliberately small, GitHub-editable YAML decision sheet."""
+    """Render candidates and one-true Japanese options for GitHub editing."""
     queries = [query for query in report.get("queries", []) if query.get("status") == "needs_review"]
-    lines = ["schemaVersion: 1", f"reportSha256: {report_sha256}", "choices:"]
+    lines = [
+        "# OSM候補の人間確認",
+        "# 操作手順",
+        "# 1. 各「選択肢」で採用する候補を一つだけtrueに変更します。",
+        "# 2. 採用しない場合は「候補なし（どの候補とも一致しない）」をtrueに変更します。",
+        "# 3. それ以外のtrue/false、ID、候補詳細、reportSha256は変更しません。",
+        "# 4. GitHubでコミットした後、Issueの適用チェックを入れます。",
+        "schemaVersion: 2",
+        f"reportSha256: {report_sha256}",
+        "確認対象:",
+    ]
     for query in queries:
+        query_id = str(query["queryId"])
         lines.extend(
             [
-                f'  - queryId: {json.dumps(str(query["queryId"]))}',
-                "    decision: null",
-                "    candidateId: null",
+                f"  - 検索ID: {_yaml_scalar(query_id)}",
+                f"    施設名: {_yaml_scalar(query['name'])}",
+                f"    検索入力: {_yaml_scalar(query.get('target', {}))}",
+                "    LLMの判断:",
             ]
         )
+        for vote in query.get("llmVotes", []):
+            lines.append(f"      - {_yaml_scalar(vote)}")
+        lines.append("    候補の詳細:")
+        for candidate in query.get("candidates", []):
+            lines.extend(
+                [
+                    f"      - ID: {_yaml_scalar(candidate['recordId'])}",
+                    f"        名称: {_yaml_scalar(candidate.get('name') or candidate.get('tags', {}).get('name') or '名称なし')}",
+                    f"        座標: {_yaml_scalar(candidate.get('coordinates'))}",
+                    f"        距離メートル: {_yaml_scalar(candidate.get('distanceMeters'))}",
+                    f"        タグ: {_yaml_scalar(candidate.get('tags', {}))}",
+                ]
+            )
+        lines.append("    選択肢:")
+        for candidate in query.get("candidates", []):
+            name = candidate.get("name") or candidate.get("tags", {}).get("name") or "名称なし"
+            label = f"候補 {candidate['recordId']}: {name}"
+            lines.append(f"      {_yaml_scalar(label)}: false")
+        lines.append(f"      {_yaml_scalar('候補なし（どの候補とも一致しない）')}: false")
     return "\n".join(lines) + "\n"
-
-
-def _parse_yaml_value(value: str) -> str | None:
-    value = value.strip()
-    if value == "null":
-        return None
-    if value.startswith('"'):
-        parsed = json.loads(value)
-        if not isinstance(parsed, str):
-            raise ValueError("OSM review YAML value is invalid")
-        return parsed
-    if not value or any(character.isspace() for character in value):
-        raise ValueError("OSM review YAML value is invalid")
-    return value
 
 
 def _parse_review_yaml(text: str) -> dict[str, Any]:
     lines = text.splitlines()
-    if len(lines) < 3 or lines[:3] != ["schemaVersion: 1", f"reportSha256: {lines[1][14:]}", "choices:"]:
-        raise ValueError("OSM review YAML has an unsupported shape")
-    report_sha256 = lines[1].removeprefix("reportSha256: ")
-    if not re.fullmatch(r"[0-9a-f]{64}", report_sha256):
+    report_sha256 = next((line.removeprefix("reportSha256: ") for line in lines if line.startswith("reportSha256: ")), None)
+    if not isinstance(report_sha256, str) or not re.fullmatch(r"[0-9a-f]{64}", report_sha256):
         raise ValueError("OSM review YAML report hash is invalid")
     choices = []
-    for index in range(3, len(lines), 3):
-        group = lines[index : index + 3]
-        if len(group) != 3 or not group[0].startswith("  - queryId: ") or not group[1].startswith("    decision: ") or not group[2].startswith("    candidateId: "):
-            raise ValueError("OSM review YAML choice is invalid")
-        choices.append(
-            {
-                "queryId": _parse_yaml_value(group[0].removeprefix("  - queryId: ")),
-                "decision": _parse_yaml_value(group[1].removeprefix("    decision: ")),
-                "candidateId": _parse_yaml_value(group[2].removeprefix("    candidateId: ")),
-            }
-        )
-    if not choices or not all(isinstance(choice["queryId"], str) for choice in choices):
-        raise ValueError("OSM review YAML choices are invalid")
-    return {"reportSha256": report_sha256, "choices": choices}
+    current_query_id: str | None = None
+    in_options = False
+    for line in lines:
+        if line.startswith("  - 検索ID: "):
+            current_query_id = json.loads(line.removeprefix("  - 検索ID: "))
+            if not isinstance(current_query_id, str):
+                raise ValueError("OSM review YAML query ID is invalid")
+            in_options = False
+        elif line == "    選択肢:":
+            if current_query_id is None:
+                raise ValueError("OSM review YAML choice has no query ID")
+            choices.append({"queryId": current_query_id, "options": []})
+            in_options = True
+        elif line.startswith("    ") and not line.startswith("      "):
+            in_options = False
+        elif in_options and line.startswith("      "):
+            key, separator, value = line[6:].rpartition(": ")
+            if separator != ": " or value not in {"true", "false"}:
+                raise ValueError("OSM review YAML option is invalid")
+            label = json.loads(key)
+            if not isinstance(label, str):
+                raise ValueError("OSM review YAML option label is invalid")
+            choices[-1]["options"].append((label, value == "true"))
+    if not choices:
+        raise ValueError("OSM review YAML choices are missing")
+    selections = []
+    for choice in choices:
+        selected = [label for label, marked in choice["options"] if marked]
+        if len(selected) != 1:
+            raise ValueError(f"exactly one YAML option is required for query {choice['queryId']}")
+        label = selected[0]
+        if label == "候補なし（どの候補とも一致しない）":
+            decision, candidate_id = "reject", "none"
+        elif label.startswith("候補 ") and ": " in label:
+            decision, candidate_id = "link", label.removeprefix("候補 ").split(": ", 1)[0]
+        else:
+            raise ValueError(f"OSM review YAML option is unsupported for query {choice['queryId']}")
+        selections.append({"queryId": choice["queryId"], "decision": decision, "candidateId": candidate_id})
+    return {"reportSha256": report_sha256, "choices": selections}
 
 
 def build_issue_document(
@@ -134,17 +178,16 @@ def build_issue_document(
     if review_branch:
         metadata["reviewBranch"] = review_branch
         edit_url = f"{repository_url}/edit/{review_branch}/reports/osm-review-needed.yaml"
-        candidates_url = f"{repository_url}/blob/{review_branch}/reports/osm-candidates.json"
         body = "\n".join(
             [
                 f"<!-- osm-review-metadata:{_encode_metadata(metadata)} -->",
                 "## OSM候補の人間確認",
                 "",
-                "Issue本文は容量制限を避けるため、候補と選択をレビュー用ブランチへ分離しました。",
+                "候補の詳細と選択肢は、Issue本文の容量制限を避けてレビューYAMLへ掲載しています。",
                 "",
-                f"1. [レビューYAMLをGitHubで編集]({edit_url})し、各項目の`decision`と`candidateId`を一組ずつ入力してコミットします。",
-                f"2. 必要なら[候補の完全なJSON]({candidates_url})を参照します。",
-                "3. このIssueの適用チェックを入れると、Actionsがコミット済みのYAMLと元の成果物を照合してPull Requestを作成します。",
+                f"1. [レビューYAMLをGitHubで編集]({edit_url})します。",
+                "2. 各「選択肢」で一つだけ`true`に変更してコミットします。",
+                "3. このIssueの適用チェックを入れると、ActionsがYAMLと元artifactを照合してPull Requestを作成します。",
                 "",
                 "- [ ] <!-- osm-apply --> **コミット済みの選択を適用してPull Requestを作成する**",
                 "",
