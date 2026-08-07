@@ -28,6 +28,30 @@ def _merge_bounds(bounds: Iterable[tuple[float, float, float, float]]) -> tuple[
     return (min(x[0] for x in items), min(x[1] for x in items), max(x[2] for x in items), max(x[3] for x in items))
 
 
+def coordinate_matcher(coordinates: list[list[float]]):
+    """Index 50m queries in geohash-8 cells, then retain exact distance checks."""
+    precision_cells = 1 << 20
+    cells: dict[tuple[int, int], list[tuple[float, float]]] = {}
+
+    def cell(longitude: float, latitude: float) -> tuple[int, int]:
+        lon_cell = min(precision_cells - 1, max(0, int((longitude + 180) / 360 * precision_cells)))
+        lat_cell = min(precision_cells - 1, max(0, int((latitude + 90) / 180 * precision_cells)))
+        return lon_cell, lat_cell
+
+    for longitude, latitude in coordinates:
+        lon_cell, lat_cell = cell(float(longitude), float(latitude))
+        for lon_offset in range(-3, 4):
+            for lat_offset in range(-3, 4):
+                candidate = (lon_cell + lon_offset, lat_cell + lat_offset)
+                if 0 <= candidate[0] < precision_cells and 0 <= candidate[1] < precision_cells:
+                    cells.setdefault(candidate, []).append((float(longitude), float(latitude)))
+
+    def matches(longitude: float, latitude: float) -> bool:
+        return any(_distance_metres(point, (longitude, latitude)) <= 50 for point in cells.get(cell(longitude, latitude), []))
+
+    return matches
+
+
 def relation_out_center(relation_id: str, members: Iterable[Mapping[str, object]], node_coordinates: Mapping[int, tuple[float, float]], way_bounds: Mapping[int, tuple[float, float, float, float]], warn: Callable[[str], None]) -> dict[str, float] | None:
     """Return an Overpass-compatible center from available direct members."""
     bounds = []
@@ -63,7 +87,7 @@ def extract_elements(pbf_path: Path, typed_ids: set[str], qids: set[str], coordi
         raise RuntimeError("local OSM mirror extraction requires osmium") from error
 
     selected_ids = {(item.split("/", 1)[0], int(item.split("/", 1)[1])) for item in typed_ids}
-    target_points = [(float(point[0]), float(point[1])) for point in coordinates]
+    coordinate_matches = coordinate_matcher(coordinates)
     south, west, north, east = chiyoda_bbox
     required_nodes: set[int] = set()
     required_ways: set[int] = set()
@@ -84,7 +108,7 @@ def extract_elements(pbf_path: Path, typed_ids: set[str], qids: set[str], coordi
             return True
         if tags.get("wikidata") in qids and south <= center["lat"] <= north and west <= center["lon"] <= east:
             return True
-        return any(_distance_metres(point, (center["lon"], center["lat"])) <= 50 for point in target_points)
+        return coordinate_matches(center["lon"], center["lat"])
 
     class Geometry(osmium.SimpleHandler):
         def node(self, node):

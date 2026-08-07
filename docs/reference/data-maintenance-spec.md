@@ -154,7 +154,7 @@ python3 -m src.facility_data validate .
 
 取得台帳は、manifest URL、PBF URL、PBFのversion、取得時刻、サイズ、SHA-256、抽出器、抽出条件、抽出済みrawのSHA-256を記録する。
 
-抽出条件は、既知ID、固定の千代田区包含bboxに限定したQID、各座標検索入力から50m以内の要素である。カテゴリでは絞り込まない。施設ごとのN+1問い合わせは行わない。
+抽出条件は、既知ID、固定の千代田区包含bboxに限定したQID、各座標検索入力から50m以内の要素である。座標検索はgeohash 8近傍で候補を絞り、最後に50mの距離判定を行う。カテゴリでは絞り込まない。施設ごとのN+1問い合わせは行わない。
 
 nodeは自身の座標を使う。wayは構成nodeの外接bbox中心を使う。relationは直接memberのnodeとwayの外接bbox中心を使う。member relationは中心計算へ含めない。
 
