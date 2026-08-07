@@ -250,6 +250,60 @@ class ReidentifySourcesTests(unittest.TestCase):
         self.assertEqual([query_id], [record["queryId"] for record in normalized["records"]])
         self.assertEqual([changed_query["id"]], [query["queryId"] for query in report["queries"]])
 
+    def test_preserves_current_osm_record_when_legacy_audit_cannot_be_reidentified(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            query_id = self.make_repository(root)
+            document_path = root / "inputs/osm-search/manual/facilities.json"
+            document = json.loads(document_path.read_text())
+            document["queries"][0].pop("coordinates")
+            document["queries"][0]["qid"] = "Q12345"
+            document_path.write_bytes(json_bytes(document))
+            record = {
+                "queryId": query_id,
+                "matchBasis": "language_model",
+                "type": "node",
+                "id": "10",
+                "name": "別名の候補",
+                "coordinates": [139.7501, 35.6901],
+                "tags": {"name": "別名の候補"},
+            }
+            (root / "data/registry.json").write_bytes(
+                json_bytes(
+                    {
+                        "schemaVersion": 1,
+                        "places": [
+                            {
+                                "id": query_id,
+                                "name": "修正後の施設名",
+                                "geometry": {
+                                    "type": "Point",
+                                    "coordinates": [139.75, 35.69],
+                                },
+                                "externalRefs": [
+                                    {
+                                        "sourceId": "openstreetmap",
+                                        "recordId": "node/10",
+                                        "status": "current",
+                                    }
+                                ],
+                                "audit": [],
+                            }
+                        ],
+                    }
+                )
+            )
+            (root / "imports/openstreetmap/normalized.json").write_bytes(
+                json_bytes({"version": "retained", "records": [record]})
+            )
+
+            prepare_retained_reidentification(root)
+
+            normalized = json.loads((root / "imports/openstreetmap/normalized.json").read_text())
+            report = json.loads((root / "reports/osm-candidates.json").read_text())
+        self.assertEqual([record], normalized["records"])
+        self.assertEqual("none", report["queries"][0]["status"])
+
     def test_rejects_tampered_raw_before_replacing_existing_outputs(self):
         with tempfile.TemporaryDirectory() as directory:
             root = Path(directory)

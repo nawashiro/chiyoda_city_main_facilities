@@ -53,7 +53,7 @@
 
 確認事項:
 
-- [ ] Overpassを単一batch queryで呼び出している
+- [ ] Overpassを単一batch queryで呼び出し、QID・既知ID・各座標検索入力の50m周辺bboxを含めている
 - [ ] `remark`／`error`付き部分応答を拒否している
 - [ ] current ID照合に名称・QID競合や50m超の移動がない
 - [ ] QID照合は検索入力QIDと一致する一意候補だけ
