@@ -1846,6 +1846,33 @@ class SourceUpdateTests(unittest.TestCase):
             )
         )
 
+    def test_allows_language_model_match_without_osm_qid_for_qid_query(self):
+        query = {
+            "id": "019c0000-0000-7000-8000-000000000057",
+            "name": "確認対象",
+            "coordinates": [139.75, 35.69],
+            "qid": "Q12345",
+        }
+        place = make_place(query, ["community"], [], "2026-07-01T00:00:00Z")
+        record = {
+            "queryId": query["id"],
+            "type": "node",
+            "id": "57",
+            "name": "候補の名称",
+            "coordinates": [139.7501, 35.6901],
+            "matchBasis": "language_model",
+        }
+
+        updated = apply_source_updates(
+            {"schemaVersion": 1, "places": [place]},
+            {query["id"]: query},
+            [],
+            [record],
+            "2026-07-29T00:00:00Z",
+        )
+
+        self.assertEqual("node/57", updated["places"][0]["geometrySource"]["recordId"])
+
     def test_applies_github_issue_choice_as_human_inference(self):
         query = {
             "id": "019c0000-0000-7000-8000-000000000056",

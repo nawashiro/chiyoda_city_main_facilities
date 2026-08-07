@@ -815,7 +815,11 @@ def _validate_osm_record_match(
             query["coordinates"], record["coordinates"]
         ) > 50:
             raise ValueError(f"OSM {basis} match exceeds 50 metres")
-        if "qid" in query and record.get("qid") != query["qid"]:
+        if (
+            "qid" in query
+            and record.get("qid") is not None
+            and record["qid"] != query["qid"]
+        ):
             raise ValueError(f"OSM {basis} match has a conflicting QID")
         return
     if basis == "qid":

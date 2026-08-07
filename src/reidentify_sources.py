@@ -147,6 +147,46 @@ def _preserved_osm_records(root: Path, query_ids: set[str]) -> list[dict[str, An
     ]
 
 
+def _preserved_current_osm_records(
+    root: Path,
+    registry: dict[str, Any],
+    raw: dict[str, Any],
+    query_ids: set[str],
+) -> list[dict[str, Any]]:
+    """Keep retained current records when the new search cannot replace them."""
+    path = root / "imports/openstreetmap/normalized.json"
+    if not path.exists():
+        return []
+    available = {
+        f"{element['type']}/{element['id']}"
+        for element in raw.get("elements", [])
+        if element.get("type") in {"node", "way", "relation"}
+        and isinstance(element.get("id"), int)
+    }
+    current_by_query_id = {
+        str(place.get("id")): [
+            ref
+            for ref in place.get("externalRefs", [])
+            if ref.get("sourceId") == "openstreetmap" and ref.get("status") == "current"
+        ]
+        for place in registry.get("places", [])
+    }
+    normalized = json.loads(path.read_text(encoding="utf-8"))
+    preserved = []
+    for record in normalized.get("records", []):
+        query_id = str(record.get("queryId"))
+        current = current_by_query_id.get(query_id, [])
+        record_id = f"{record.get('type')}/{record.get('id')}"
+        if (
+            query_id in query_ids
+            and len(current) == 1
+            and current[0].get("recordId") == record_id
+            and record_id in available
+        ):
+            preserved.append(record)
+    return preserved
+
+
 def prepare_retained_reidentification(root: str | Path) -> dict[str, str]:
     """Re-identify current search inputs against retained WAM and OSM raw snapshots."""
     root = Path(root)
@@ -200,8 +240,17 @@ def prepare_retained_reidentification(root: str | Path) -> dict[str, str]:
         osm_raw,
     )
     osm_report["rawSha256"] = osm_retrieval["rawSha256"]
+    refreshed_osm_query_ids = {
+        str(record["queryId"]) for record in osm_normalized.get("records", [])
+    }
     osm_normalized["records"] = sorted(
         _preserved_osm_records(root, stable_osm_query_ids)
+        + _preserved_current_osm_records(
+            root,
+            registry,
+            osm_raw,
+            affected_osm_query_ids - refreshed_osm_query_ids,
+        )
         + list(osm_normalized.get("records", [])),
         key=lambda record: str(record["queryId"]),
     )
