@@ -49,10 +49,13 @@ repository直下で`./fac`を実行してください。
 ./fac in set <UUID> --name "修正後の施設名"
 ./fac in set <UUID> --lon 139.75 --lat 35.69
 ./fac in set <UUID> --qid Q12345
+./fac in rm <UUID>
 ```
 
 `in add`はUUIDv7を出力します。
 `in set`は座標とQIDを排他的に保存します。
+`in rm`は検索入力を削除します。
+`in rm`は対応するPlaceを`closed`かつ`private`へ変更します。
 
 ## 別checkoutを指定する
 

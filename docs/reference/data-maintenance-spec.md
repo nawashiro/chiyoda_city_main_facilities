@@ -85,7 +85,7 @@ OSMとWAMの参照は`externalRefs`へ保持する。OSM IDが変わった場合
 ### 正本
 
 - Place IDの重複
-- 対応する検索入力の存在
+- 対応する検索入力の存在。ただし`closed`かつ`private`のPlaceは除く
 - 検索入力との`name`一致
 - Point geometryと座標範囲
 - current OSM参照が最大1件

@@ -53,3 +53,5 @@ python3 -m src.facility_data build .
 座標とQIDを切り替えると、以前の検索キーを削除します。
 
 検索入力をcommitした後、対象branchで再同定workflowを実行してください。
+検索入力とcurrent OSM IDが不変なら、workflowはOSM再同定を省略します。
+current OSM IDは保持済みraw内に一意に存在する必要があります。

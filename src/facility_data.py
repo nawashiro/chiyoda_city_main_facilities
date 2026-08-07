@@ -215,9 +215,13 @@ def validate_registry(
             issues.append(f"duplicate place id: {place_id}")
         seen.add(place_id)
         query = search_by_id.get(place_id)
-        if query is None:
+        is_disabled = (
+            place.get("lifecycle", {}).get("status") == "closed"
+            and place.get("visibility", {}).get("status") == "private"
+        )
+        if query is None and not is_disabled:
             issues.append(f"place {place_id}: search input not found")
-        elif place.get("name") != query.get("name"):
+        elif query is not None and place.get("name") != query.get("name"):
             issues.append(f"place {place_id}: name differs from search input")
         geometry = place.get("geometry", {})
         if geometry.get("type") != "Point":
@@ -407,7 +411,13 @@ def validate_repository(root: str | Path) -> list[str]:
                 issues.append(f"{prefix}: record must be an object")
                 continue
             query_id = record.get("queryId")
-            if not _is_uuid7(query_id) or query_id not in search_by_id:
+            disabled_place = place_by_id.get(str(query_id))
+            is_disabled = (
+                isinstance(disabled_place, dict)
+                and disabled_place.get("lifecycle", {}).get("status") == "closed"
+                and disabled_place.get("visibility", {}).get("status") == "private"
+            )
+            if not _is_uuid7(query_id) or (query_id not in search_by_id and not is_disabled):
                 issues.append(f"{prefix}: unknown or invalid queryId")
             elif query_id in seen_snapshot_ids:
                 issues.append(f"{prefix}: duplicate queryId")

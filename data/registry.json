@@ -58,7 +58,8 @@
           "at": "2026-07-29T06:32:29+00:00",
           "method": "calculation_model",
           "action": "linked_osm",
-          "target": "node/1420770185"
+          "target": "node/1420770185",
+          "searchInputSha256": "adeac68c64c63abede6c3efa3ec2d79235c1577f988d64a05462535fc6ed8fe0"
         },
         {
           "at": "2026-07-29T06:32:29+00:00",
@@ -123,7 +124,8 @@
           "at": "2026-07-29T06:32:29+00:00",
           "method": "calculation_model",
           "action": "linked_osm",
-          "target": "node/3777876586"
+          "target": "node/3777876586",
+          "searchInputSha256": "bbc20bad58735eb31e71d8b6f7b105a7bebb4ff4bb5d0913a16740b071bb44b3"
         },
         {
           "at": "2026-07-29T06:32:29+00:00",
@@ -188,7 +190,8 @@
           "at": "2026-07-29T06:32:29+00:00",
           "method": "calculation_model",
           "action": "linked_osm",
-          "target": "way/144351353"
+          "target": "way/144351353",
+          "searchInputSha256": "4dda579db64b52f524f1282c6609d62da5c91039132eb244917c46582b661836"
         },
         {
           "at": "2026-07-29T06:32:29+00:00",
@@ -253,7 +256,8 @@
           "at": "2026-07-29T06:32:29+00:00",
           "method": "calculation_model",
           "action": "linked_osm",
-          "target": "way/187756642"
+          "target": "way/187756642",
+          "searchInputSha256": "94f758e24b63b501071a59395217194e6cb83a179581873a5fa00b071b09c77a"
         },
         {
           "at": "2026-07-29T06:32:29+00:00",
@@ -318,7 +322,8 @@
           "at": "2026-07-29T06:32:29+00:00",
           "method": "calculation_model",
           "action": "linked_osm",
-          "target": "way/191732177"
+          "target": "way/191732177",
+          "searchInputSha256": "80dda757477c1b2fe88570bdb51169de4ab817caffa2fbac506a7526350437c4"
         },
         {
           "at": "2026-07-29T06:32:29+00:00",
@@ -383,7 +388,8 @@
           "at": "2026-07-29T06:32:29+00:00",
           "method": "calculation_model",
           "action": "linked_osm",
-          "target": "node/1636575850"
+          "target": "node/1636575850",
+          "searchInputSha256": "12b1dd3f05f3ff6aa9fac9788f369511ebce5dd2e1ebb8c1ecb2643f705f30a6"
         },
         {
           "at": "2026-07-29T06:32:29+00:00",
@@ -489,7 +495,8 @@
           "at": "2026-07-30T02:02:45+00:00",
           "method": "language_model",
           "action": "linked_osm",
-          "target": "node/13465461815"
+          "target": "node/13465461815",
+          "searchInputSha256": "bb6ad09b39b50ef38e78e8d3931832538f5f92823c9eae5a77e428888999d1c1"
         }
       ]
     },
@@ -562,7 +569,8 @@
           "at": "2026-07-30T02:02:45+00:00",
           "method": "language_model",
           "action": "linked_osm",
-          "target": "node/13465379795"
+          "target": "node/13465379795",
+          "searchInputSha256": "b73e0f25221400b0155191a678d2943cb3d4125879a8159b0e9e3c4fd1db7503"
         }
       ]
     },
@@ -616,7 +624,8 @@
           "at": "2026-07-29T06:32:29+00:00",
           "method": "calculation_model",
           "action": "linked_osm",
-          "target": "way/23974981"
+          "target": "way/23974981",
+          "searchInputSha256": "e1fa8fb62a6193afb86804357f206234b4897ce5b46f57b399eff9bf81acf91a"
         },
         {
           "at": "2026-07-29T06:32:29+00:00",
@@ -676,7 +685,8 @@
           "at": "2026-07-29T06:32:29+00:00",
           "method": "calculation_model",
           "action": "linked_osm",
-          "target": "way/193000544"
+          "target": "way/193000544",
+          "searchInputSha256": "1fa6cd7d12a42704923dbcf78a4328135259551cb17d5254158e3950bab82118"
         },
         {
           "at": "2026-07-29T06:32:29+00:00",
@@ -736,7 +746,8 @@
           "at": "2026-07-29T06:32:29+00:00",
           "method": "calculation_model",
           "action": "linked_osm",
-          "target": "way/210372594"
+          "target": "way/210372594",
+          "searchInputSha256": "17413f896a99540524b87a32a25a6a2b9752f93d9751cd18bb883d6070edd021"
         },
         {
           "at": "2026-07-29T06:32:29+00:00",
@@ -796,7 +807,8 @@
           "at": "2026-07-29T06:32:29+00:00",
           "method": "calculation_model",
           "action": "linked_osm",
-          "target": "node/1420763756"
+          "target": "node/1420763756",
+          "searchInputSha256": "7f82e4ff9a80770c7f973055921693bbaf28d0e36fde772c97bfd0a08b972003"
         },
         {
           "at": "2026-07-29T06:32:29+00:00",
@@ -861,7 +873,8 @@
           "at": "2026-07-29T06:32:29+00:00",
           "method": "calculation_model",
           "action": "linked_osm",
-          "target": "node/1420770187"
+          "target": "node/1420770187",
+          "searchInputSha256": "528267ad77ba6708ddf6106c29b8261e876061b4219257a58bc4122bd24fe291"
         },
         {
           "at": "2026-07-29T06:32:29+00:00",
@@ -926,7 +939,8 @@
           "at": "2026-07-29T06:32:29+00:00",
           "method": "calculation_model",
           "action": "linked_osm",
-          "target": "node/1420770188"
+          "target": "node/1420770188",
+          "searchInputSha256": "6ca0120bef66661bcebc59909d7900d9705d216660c533af54ea2eb237f99102"
         },
         {
           "at": "2026-07-29T06:32:29+00:00",
@@ -986,7 +1000,8 @@
           "at": "2026-07-29T06:32:29+00:00",
           "method": "calculation_model",
           "action": "linked_osm",
-          "target": "node/1420781684"
+          "target": "node/1420781684",
+          "searchInputSha256": "1ac16012757f82ffef0b41c3c0d7a052ec884a3d260a41e4e9d4c2c7195f6ce4"
         },
         {
           "at": "2026-07-29T06:32:29+00:00",
@@ -1046,7 +1061,8 @@
           "at": "2026-07-29T06:32:29+00:00",
           "method": "calculation_model",
           "action": "linked_osm",
-          "target": "node/1420785508"
+          "target": "node/1420785508",
+          "searchInputSha256": "c94ae18694a02bf1c50d54a8234097486ddbd50e5c1ffbe4f79a91ec5f50c3d1"
         },
         {
           "at": "2026-07-29T06:32:29+00:00",
@@ -1123,7 +1139,8 @@
           "at": "2026-07-30T02:02:45+00:00",
           "method": "language_model",
           "action": "linked_osm",
-          "target": "node/2059303798"
+          "target": "node/2059303798",
+          "searchInputSha256": "b2ed971cab6e4bac58c086afdc82a097797e8cb66adf4363e567e75276dbf781"
         }
       ]
     },
@@ -1177,7 +1194,8 @@
           "at": "2026-07-29T06:32:29+00:00",
           "method": "calculation_model",
           "action": "linked_osm",
-          "target": "node/3606732125"
+          "target": "node/3606732125",
+          "searchInputSha256": "f3bb4302409a7e697248c9661e45e6ad3f4b9552026b08aa897baa7ec5da4471"
         },
         {
           "at": "2026-07-29T06:32:29+00:00",
@@ -1242,7 +1260,8 @@
           "at": "2026-07-29T06:32:29+00:00",
           "method": "calculation_model",
           "action": "linked_osm",
-          "target": "node/1420770192"
+          "target": "node/1420770192",
+          "searchInputSha256": "b66af176d577dce17d40fc59557b981a85cbdbadc4759d658572ed42b80fd919"
         },
         {
           "at": "2026-07-29T06:32:29+00:00",
@@ -1319,7 +1338,8 @@
           "at": "2026-07-30T02:02:45+00:00",
           "method": "language_model",
           "action": "linked_osm",
-          "target": "node/13468335880"
+          "target": "node/13468335880",
+          "searchInputSha256": "a09ef54ede6733664882a11c3942f2936093939388ac303981df7be07eaf9be4"
         }
       ]
     },
@@ -1437,7 +1457,8 @@
           "at": "2026-07-30T02:02:45+00:00",
           "method": "language_model",
           "action": "linked_osm",
-          "target": "node/2263796343"
+          "target": "node/2263796343",
+          "searchInputSha256": "95f0fd40f8e8b1fe88405fff87fb0503d225603e39516c78fae88d2548cc33fe"
         }
       ]
     },
@@ -1505,7 +1526,8 @@
           "at": "2026-07-30T02:02:45+00:00",
           "method": "language_model",
           "action": "linked_osm",
-          "target": "node/1655905663"
+          "target": "node/1655905663",
+          "searchInputSha256": "1d0709472a31fd65063c05198be5de02eec00dd9c545330f2b691477e767b40c"
         }
       ]
     },
@@ -1618,7 +1640,8 @@
           "at": "2026-07-30T02:02:45+00:00",
           "method": "language_model",
           "action": "linked_osm",
-          "target": "node/1655927382"
+          "target": "node/1655927382",
+          "searchInputSha256": "572121ad7b7d64faebbe0b58dbd7b13c2dea0af4c632761c9c61c4ced377321c"
         }
       ]
     },
@@ -1720,7 +1743,8 @@
           "at": "2026-07-29T06:32:29+00:00",
           "method": "calculation_model",
           "action": "linked_osm",
-          "target": "node/1420765449"
+          "target": "node/1420765449",
+          "searchInputSha256": "5183ae4c8b5d1d9bc57f3993c9bf37a440f3480f7fddbd3b61465fba1d9ee73f"
         },
         {
           "at": "2026-07-29T06:32:29+00:00",
@@ -1877,7 +1901,8 @@
           "at": "2026-07-30T02:02:45+00:00",
           "method": "language_model",
           "action": "linked_osm",
-          "target": "node/1420785407"
+          "target": "node/1420785407",
+          "searchInputSha256": "f9abc0585214cd01fca72d865a59153bfb5f654569abbe39ed57b3d1905d486a"
         }
       ]
     },
@@ -1974,7 +1999,8 @@
           "at": "2026-07-29T06:32:29+00:00",
           "method": "calculation_model",
           "action": "linked_osm",
-          "target": "way/184577229"
+          "target": "way/184577229",
+          "searchInputSha256": "a25108b656eeed852d0732ded7d91bc214924dbc8c57bf3e6839e76a31ede04e"
         },
         {
           "at": "2026-07-29T06:32:29+00:00",
@@ -2039,7 +2065,8 @@
           "at": "2026-07-29T06:32:29+00:00",
           "method": "calculation_model",
           "action": "linked_osm",
-          "target": "way/515133705"
+          "target": "way/515133705",
+          "searchInputSha256": "b815451b62c4544642215eb2143eb375d1f625bb94d9728a2fa399cd36874ade"
         },
         {
           "at": "2026-07-29T06:32:29+00:00",
@@ -2104,7 +2131,8 @@
           "at": "2026-07-29T06:32:29+00:00",
           "method": "calculation_model",
           "action": "linked_osm",
-          "target": "relation/17416865"
+          "target": "relation/17416865",
+          "searchInputSha256": "6652155ed4b208f3879851027c6aedf0894ea89261934702d00082fae8068717"
         },
         {
           "at": "2026-07-29T06:32:29+00:00",
@@ -2169,7 +2197,8 @@
           "at": "2026-07-29T06:32:29+00:00",
           "method": "calculation_model",
           "action": "linked_osm",
-          "target": "way/624081603"
+          "target": "way/624081603",
+          "searchInputSha256": "83d4edd68244bbf037ecce491cbfc24edd53a6c8d02e034ad6c595d020a5b7e5"
         },
         {
           "at": "2026-07-29T06:32:29+00:00",
@@ -2234,7 +2263,8 @@
           "at": "2026-07-29T06:32:29+00:00",
           "method": "calculation_model",
           "action": "linked_osm",
-          "target": "way/132794875"
+          "target": "way/132794875",
+          "searchInputSha256": "ced9a541c496fab712caf52ee63fd0d19662bf89b1e1b8e7560195c43f12e8e3"
         },
         {
           "at": "2026-07-29T06:32:29+00:00",
@@ -2337,7 +2367,8 @@
           "at": "2026-07-29T06:32:29+00:00",
           "method": "calculation_model",
           "action": "linked_osm",
-          "target": "relation/5415394"
+          "target": "relation/5415394",
+          "searchInputSha256": "afbe39088aa0759feef230aa01319fcc31e01ed364094fb5a486457aa8f2ae53"
         },
         {
           "at": "2026-07-29T06:32:29+00:00",
@@ -2402,7 +2433,8 @@
           "at": "2026-07-29T06:32:29+00:00",
           "method": "calculation_model",
           "action": "linked_osm",
-          "target": "way/43941104"
+          "target": "way/43941104",
+          "searchInputSha256": "547ba270bf362b4acc335b67fd91cdc211222eba904e77bef80c5763cef8766f"
         },
         {
           "at": "2026-07-29T06:32:29+00:00",
@@ -2462,7 +2494,8 @@
           "at": "2026-07-29T06:32:29+00:00",
           "method": "calculation_model",
           "action": "linked_osm",
-          "target": "way/666471139"
+          "target": "way/666471139",
+          "searchInputSha256": "f2ec1117f75325e2f40a46d110d88281d34cf31553251c48f913a0ef5218d52c"
         },
         {
           "at": "2026-07-29T06:32:29+00:00",
@@ -2560,7 +2593,8 @@
           "at": "2026-07-29T06:32:29+00:00",
           "method": "calculation_model",
           "action": "linked_osm",
-          "target": "way/145408909"
+          "target": "way/145408909",
+          "searchInputSha256": "fe626e061680fe2b9ac7d50c13562c2315894021867a5eb9ba11a751e050f81f"
         },
         {
           "at": "2026-07-29T06:32:29+00:00",
@@ -2620,7 +2654,8 @@
           "at": "2026-07-29T06:32:29+00:00",
           "method": "calculation_model",
           "action": "linked_osm",
-          "target": "node/1916524834"
+          "target": "node/1916524834",
+          "searchInputSha256": "3a292f69981239aef3af5d595f793f0cce3b0522f21adbced32d20eb6cf4d22d"
         },
         {
           "at": "2026-07-29T06:32:29+00:00",
@@ -2680,7 +2715,8 @@
           "at": "2026-07-29T06:32:29+00:00",
           "method": "calculation_model",
           "action": "linked_osm",
-          "target": "node/1928727937"
+          "target": "node/1928727937",
+          "searchInputSha256": "ed9eec88656bd2b313cddcde8c4baf1f9d13c0889cc85955b560a65ccf9e4149"
         },
         {
           "at": "2026-07-29T06:32:29+00:00",
@@ -2740,7 +2776,8 @@
           "at": "2026-07-29T06:32:29+00:00",
           "method": "calculation_model",
           "action": "linked_osm",
-          "target": "node/6768292062"
+          "target": "node/6768292062",
+          "searchInputSha256": "4d20ee04d326484010adc8fe0338612e1306a36e0c65d548462f873e4907a501"
         },
         {
           "at": "2026-07-29T06:32:29+00:00",
@@ -2882,7 +2919,8 @@
           "at": "2026-07-29T06:32:29+00:00",
           "method": "calculation_model",
           "action": "linked_osm",
-          "target": "way/344414571"
+          "target": "way/344414571",
+          "searchInputSha256": "8dae503eaaaf078d90bd1c36b77c150a35f6f4cf300b04ac35c2d6e93d49a1cc"
         },
         {
           "at": "2026-07-29T06:32:29+00:00",
@@ -2942,7 +2980,8 @@
           "at": "2026-07-29T06:32:29+00:00",
           "method": "calculation_model",
           "action": "linked_osm",
-          "target": "way/377728267"
+          "target": "way/377728267",
+          "searchInputSha256": "49f17d656c5c7c575bd4c5c044b63f30e50c7b2e21bc59a81ff3e016195ad719"
         },
         {
           "at": "2026-07-29T06:32:29+00:00",
@@ -3002,7 +3041,8 @@
           "at": "2026-07-29T06:32:29+00:00",
           "method": "calculation_model",
           "action": "linked_osm",
-          "target": "relation/4080936"
+          "target": "relation/4080936",
+          "searchInputSha256": "bad3d1f54a063edeac31fc59fb6a4a06e23c7e4a7c65a198a78cd39378e309eb"
         },
         {
           "at": "2026-07-29T06:32:29+00:00",
@@ -3062,7 +3102,8 @@
           "at": "2026-07-29T06:32:29+00:00",
           "method": "calculation_model",
           "action": "linked_osm",
-          "target": "node/988763665"
+          "target": "node/988763665",
+          "searchInputSha256": "1334a320c7b938e056dc76d017b93330f6e9005a6b1debe19905a76cb9a7ebb0"
         },
         {
           "at": "2026-07-29T06:32:29+00:00",
@@ -3122,7 +3163,8 @@
           "at": "2026-07-29T06:32:29+00:00",
           "method": "calculation_model",
           "action": "linked_osm",
-          "target": "node/1376774653"
+          "target": "node/1376774653",
+          "searchInputSha256": "f0931c3ae3e241394d65abf20cf78a713a40879bfa0436a1bab5e46dd0d32853"
         },
         {
           "at": "2026-07-29T06:32:29+00:00",
@@ -3182,7 +3224,8 @@
           "at": "2026-07-29T06:32:29+00:00",
           "method": "calculation_model",
           "action": "linked_osm",
-          "target": "node/1916530506"
+          "target": "node/1916530506",
+          "searchInputSha256": "d29e52c0ffb8c18fe4879c6707a373f3343be6d971bedb92031429089f59354e"
         },
         {
           "at": "2026-07-29T06:32:29+00:00",
@@ -3247,7 +3290,8 @@
           "at": "2026-07-29T06:32:29+00:00",
           "method": "calculation_model",
           "action": "linked_osm",
-          "target": "node/3781782008"
+          "target": "node/3781782008",
+          "searchInputSha256": "09b02b06507302f7ff552726212fef2b231f8b070ead4b9ab7dd8df17ab94e48"
         },
         {
           "at": "2026-07-29T06:32:29+00:00",
@@ -3307,7 +3351,8 @@
           "at": "2026-07-29T06:32:29+00:00",
           "method": "calculation_model",
           "action": "linked_osm",
-          "target": "node/810027509"
+          "target": "node/810027509",
+          "searchInputSha256": "254d1212cfceaff08ff7ecaac6456dc86510310def84632ba397f4fd322bf4ef"
         },
         {
           "at": "2026-07-29T06:32:29+00:00",
@@ -3367,7 +3412,8 @@
           "at": "2026-07-29T06:32:29+00:00",
           "method": "calculation_model",
           "action": "linked_osm",
-          "target": "node/3762241704"
+          "target": "node/3762241704",
+          "searchInputSha256": "a1cb5228bf0a16fcfc69e3493874568892de5783ac6421e5cb25c15460acf253"
         },
         {
           "at": "2026-07-29T06:32:29+00:00",
@@ -3427,7 +3473,8 @@
           "at": "2026-07-29T06:32:29+00:00",
           "method": "calculation_model",
           "action": "linked_osm",
-          "target": "node/6575768686"
+          "target": "node/6575768686",
+          "searchInputSha256": "dad8ae1a0c0cd85c4688f153d57106039baaa7877681be70204b5c2c206445b7"
         },
         {
           "at": "2026-07-29T06:32:29+00:00",
@@ -3499,7 +3546,8 @@
           "at": "2026-07-30T02:02:45+00:00",
           "method": "language_model",
           "action": "linked_osm",
-          "target": "node/6900192224"
+          "target": "node/6900192224",
+          "searchInputSha256": "afeccb1bf9e4b933fe6fe69ef3a4b4ab7d8fe54cd52cfab4ee811dcc9c67479b"
         }
       ]
     },
@@ -3565,7 +3613,8 @@
           "at": "2026-07-30T02:02:45+00:00",
           "method": "language_model",
           "action": "linked_osm",
-          "target": "node/6900192225"
+          "target": "node/6900192225",
+          "searchInputSha256": "8592fcbade442fd671fd5979b65641cc385393d246efd3e4a14531ec1b6958df"
         },
         {
           "at": "2026-08-07T02:09:21+00:00",
@@ -3625,7 +3674,8 @@
           "at": "2026-07-29T06:32:29+00:00",
           "method": "calculation_model",
           "action": "linked_osm",
-          "target": "node/6900192226"
+          "target": "node/6900192226",
+          "searchInputSha256": "59faa5a92776e08c43e1eef794bb786e452d6c74631bb64c905daa3f90973393"
         },
         {
           "at": "2026-07-29T06:32:29+00:00",
@@ -3685,7 +3735,8 @@
           "at": "2026-07-29T06:32:29+00:00",
           "method": "calculation_model",
           "action": "linked_osm",
-          "target": "node/1744076702"
+          "target": "node/1744076702",
+          "searchInputSha256": "d7bf8ea6b982ec6dee3d9e1181d254dd8a88ee6657d3b66850a27af0d829450e"
         },
         {
           "at": "2026-07-29T06:32:29+00:00",
@@ -3745,7 +3796,8 @@
           "at": "2026-07-29T06:32:29+00:00",
           "method": "calculation_model",
           "action": "linked_osm",
-          "target": "node/6463426485"
+          "target": "node/6463426485",
+          "searchInputSha256": "bcb9fc39fd450302c93727e8edd605870a385767376935f6621663233149a402"
         },
         {
           "at": "2026-07-29T06:32:29+00:00",
@@ -3805,7 +3857,8 @@
           "at": "2026-07-29T06:32:29+00:00",
           "method": "calculation_model",
           "action": "linked_osm",
-          "target": "node/6463426486"
+          "target": "node/6463426486",
+          "searchInputSha256": "b0dc31cd82923c24331d1572347f17f8c4769ce81655f10cc5bed91cb908ff53"
         },
         {
           "at": "2026-07-29T06:32:29+00:00",
@@ -3865,7 +3918,8 @@
           "at": "2026-07-29T06:32:29+00:00",
           "method": "calculation_model",
           "action": "linked_osm",
-          "target": "node/6463473885"
+          "target": "node/6463473885",
+          "searchInputSha256": "12c958d863fe14ef1e5ba0e89939dae60c6f4f4473729c053f47e4947c918f0b"
         },
         {
           "at": "2026-07-29T06:32:29+00:00",
@@ -3925,7 +3979,8 @@
           "at": "2026-07-29T06:32:29+00:00",
           "method": "calculation_model",
           "action": "linked_osm",
-          "target": "node/6709554588"
+          "target": "node/6709554588",
+          "searchInputSha256": "0d1fd26fd2c93a69fd7e08e9fbcee149532e8837fdaeeb126bc59084c502d0bb"
         },
         {
           "at": "2026-07-29T06:32:29+00:00",
@@ -3985,7 +4040,8 @@
           "at": "2026-07-29T06:32:29+00:00",
           "method": "calculation_model",
           "action": "linked_osm",
-          "target": "node/10595395388"
+          "target": "node/10595395388",
+          "searchInputSha256": "293e6cf9c3414b26165cc4b9945ce6848fc5d6a52f47e731253ab28513aff61a"
         },
         {
           "at": "2026-07-29T06:32:29+00:00",
@@ -4126,7 +4182,8 @@
           "at": "2026-07-29T06:32:29+00:00",
           "method": "calculation_model",
           "action": "linked_osm",
-          "target": "node/5445799065"
+          "target": "node/5445799065",
+          "searchInputSha256": "3a54b4e4fce13bb32c601413088bfbe1bac3aa417fa61e5804246a9acc0bacf3"
         },
         {
           "at": "2026-07-29T06:32:29+00:00",
@@ -4186,7 +4243,8 @@
           "at": "2026-07-29T06:32:29+00:00",
           "method": "calculation_model",
           "action": "linked_osm",
-          "target": "way/43934324"
+          "target": "way/43934324",
+          "searchInputSha256": "8c1359847768756c160f35d491f40a51742de2de5b2b73b4e8f2df8d16281bde"
         },
         {
           "at": "2026-07-29T06:32:29+00:00",
@@ -4246,7 +4304,8 @@
           "at": "2026-07-29T06:32:29+00:00",
           "method": "calculation_model",
           "action": "linked_osm",
-          "target": "way/306116935"
+          "target": "way/306116935",
+          "searchInputSha256": "0b83c42030fc268413ba70f5cf2f1e7c81c7cac28d208461ca7fe26fc2bd2002"
         },
         {
           "at": "2026-07-29T06:32:29+00:00",
@@ -4306,7 +4365,8 @@
           "at": "2026-07-29T06:32:29+00:00",
           "method": "calculation_model",
           "action": "linked_osm",
-          "target": "way/145501856"
+          "target": "way/145501856",
+          "searchInputSha256": "4881f1c1a3fd276d59a223936481ebed3d1a7f3917c53b0c686ca14611c8ef38"
         },
         {
           "at": "2026-07-29T06:32:29+00:00",
@@ -4366,7 +4426,8 @@
           "at": "2026-07-29T06:32:29+00:00",
           "method": "calculation_model",
           "action": "linked_osm",
-          "target": "node/1420774624"
+          "target": "node/1420774624",
+          "searchInputSha256": "1a00bc1646e21f80bbd457d8829c9613af728cf0a32e57debdf087e01d200a2a"
         },
         {
           "at": "2026-07-29T06:32:29+00:00",
@@ -4426,7 +4487,8 @@
           "at": "2026-07-29T06:32:29+00:00",
           "method": "calculation_model",
           "action": "linked_osm",
-          "target": "node/3164340661"
+          "target": "node/3164340661",
+          "searchInputSha256": "ca31eb31784abd3ab82622f8fcbc371c6b4f1583a0b58e8848751dc30d15d98d"
         },
         {
           "at": "2026-07-29T06:32:29+00:00",
@@ -4486,7 +4548,8 @@
           "at": "2026-07-29T06:32:29+00:00",
           "method": "calculation_model",
           "action": "linked_osm",
-          "target": "node/3666894176"
+          "target": "node/3666894176",
+          "searchInputSha256": "767da8643c3ce77fb4782e26e4d097dba2f9166f5870cf4ebc33409d1f3308d0"
         },
         {
           "at": "2026-07-29T06:32:29+00:00",
@@ -4584,7 +4647,8 @@
           "at": "2026-07-29T06:32:29+00:00",
           "method": "calculation_model",
           "action": "linked_osm",
-          "target": "node/11334772769"
+          "target": "node/11334772769",
+          "searchInputSha256": "c312f8e5d28a2445af390e5e1889f3a7eff3c5fc42464c2515d0289c596c797c"
         },
         {
           "at": "2026-07-29T06:32:29+00:00",
@@ -4682,7 +4746,8 @@
           "at": "2026-07-29T06:32:29+00:00",
           "method": "calculation_model",
           "action": "linked_osm",
-          "target": "way/43898324"
+          "target": "way/43898324",
+          "searchInputSha256": "95ecd48807bae018da78748df888b1a28c33a798ca8e2fc823a7a6333ac0d85e"
         },
         {
           "at": "2026-07-29T06:32:29+00:00",
@@ -4742,7 +4807,8 @@
           "at": "2026-07-29T06:32:29+00:00",
           "method": "calculation_model",
           "action": "linked_osm",
-          "target": "way/43934323"
+          "target": "way/43934323",
+          "searchInputSha256": "9b8591326b93ec7f21f654f61a2ed68745854ff5b6c6113bf0f2aa8865c8525c"
         },
         {
           "at": "2026-07-29T06:32:29+00:00",
@@ -4802,7 +4868,8 @@
           "at": "2026-07-29T06:32:29+00:00",
           "method": "calculation_model",
           "action": "linked_osm",
-          "target": "way/91234941"
+          "target": "way/91234941",
+          "searchInputSha256": "e931b561de9e596ed363f01f06cef81c747204209cfc1e126f3318a0716acc73"
         },
         {
           "at": "2026-07-29T06:32:29+00:00",
@@ -4862,7 +4929,8 @@
           "at": "2026-07-29T06:32:29+00:00",
           "method": "calculation_model",
           "action": "linked_osm",
-          "target": "way/140099041"
+          "target": "way/140099041",
+          "searchInputSha256": "72888a71a41ebfa7c7c13276c171a030f8b2ca8f72a06d6b1d047fe85d5af984"
         },
         {
           "at": "2026-07-29T06:32:29+00:00",
@@ -4922,7 +4990,8 @@
           "at": "2026-07-29T06:32:29+00:00",
           "method": "calculation_model",
           "action": "linked_osm",
-          "target": "way/144379628"
+          "target": "way/144379628",
+          "searchInputSha256": "61747c9d26eb61d6f28883db45152cdae91294abe680b16d1a319f120262a26e"
         },
         {
           "at": "2026-07-29T06:32:29+00:00",
@@ -4987,7 +5056,8 @@
           "at": "2026-07-29T06:32:29+00:00",
           "method": "calculation_model",
           "action": "linked_osm",
-          "target": "node/988763541"
+          "target": "node/988763541",
+          "searchInputSha256": "decb5e9011e98df4d30a4a0dc82f2f200747c73c98a1546fba0cf8bd6f8e5669"
         },
         {
           "at": "2026-07-29T06:32:29+00:00",
@@ -5024,12 +5094,12 @@
       ],
       "externalRefs": [],
       "lifecycle": {
-        "status": "active",
-        "changedAt": "2026-07-28T11:33:32Z"
+        "status": "closed",
+        "changedAt": "2026-08-07T07:08:19+00:00"
       },
       "visibility": {
-        "status": "public",
-        "changedAt": "2026-07-28T11:33:32Z"
+        "status": "private",
+        "changedAt": "2026-08-07T07:08:19+00:00"
       },
       "audit": [
         {
@@ -5037,6 +5107,24 @@
           "method": "human_inference",
           "action": "created",
           "target": "place"
+        },
+        {
+          "at": "2026-08-07T07:08:19+00:00",
+          "method": "human_inference",
+          "action": "removed_search_input",
+          "target": "019fa880-5cd6-7332-a1b5-cf97d281ba93"
+        },
+        {
+          "at": "2026-08-07T07:08:19+00:00",
+          "method": "human_inference",
+          "action": "updated_lifecycle",
+          "target": "019fa880-5cd6-7332-a1b5-cf97d281ba93"
+        },
+        {
+          "at": "2026-08-07T07:08:19+00:00",
+          "method": "human_inference",
+          "action": "updated_visibility",
+          "target": "019fa880-5cd6-7332-a1b5-cf97d281ba93"
         }
       ]
     },
@@ -5090,7 +5178,8 @@
           "at": "2026-07-29T06:32:29+00:00",
           "method": "calculation_model",
           "action": "linked_osm",
-          "target": "node/1420770260"
+          "target": "node/1420770260",
+          "searchInputSha256": "12c94322b63a2f1645274ef996c7b37fc1dc6b0ec82c4242b55ade427d8e0295"
         },
         {
           "at": "2026-07-29T06:32:29+00:00",
@@ -5150,7 +5239,8 @@
           "at": "2026-07-29T06:32:29+00:00",
           "method": "calculation_model",
           "action": "linked_osm",
-          "target": "node/1420780980"
+          "target": "node/1420780980",
+          "searchInputSha256": "758d7e2cc88ce257dc0f551309e126f434c7f41d3c9b934da8923b1d497f1d9a"
         },
         {
           "at": "2026-07-29T06:32:29+00:00",
@@ -5210,7 +5300,8 @@
           "at": "2026-07-29T06:32:29+00:00",
           "method": "calculation_model",
           "action": "linked_osm",
-          "target": "node/1420781347"
+          "target": "node/1420781347",
+          "searchInputSha256": "746d79c712ef92dc1b333b71d3ac0a87013924561de5b2d4b76740b3c707fae7"
         },
         {
           "at": "2026-07-29T06:32:29+00:00",
@@ -5308,7 +5399,8 @@
           "at": "2026-07-29T06:32:29+00:00",
           "method": "calculation_model",
           "action": "linked_osm",
-          "target": "node/4272532291"
+          "target": "node/4272532291",
+          "searchInputSha256": "06b47b3454cdc59292b0106936e3a30a87f9475ad34ad4a5d67b9fe7f862c4de"
         },
         {
           "at": "2026-07-29T06:32:29+00:00",
@@ -5812,7 +5904,8 @@
           "at": "2026-07-30T02:02:45+00:00",
           "method": "language_model",
           "action": "linked_osm",
-          "target": "node/5285952021"
+          "target": "node/5285952021",
+          "searchInputSha256": "b91364892f73c54cc17d2d3cb7ade152a043bb73a5d03fc86e4fea82fc9a6c61"
         }
       ]
     },
