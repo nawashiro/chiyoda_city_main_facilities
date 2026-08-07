@@ -72,7 +72,7 @@
 - [ ] raw SHA・版を検証した
 - [ ] 検索入力とcurrent OSM IDの差分から影響項目だけを選んだ
 - [ ] 検索入力が不変でcurrent OSM IDも一意に残る項目を再同定しなかった
-- [ ] current OSM参照がない項目は、検索入力と候補reportのraw hashが不変なら再同定しなかった
+- [ ] current OSM参照がない項目は、検索入力と候補reportへ記録したOSM rawのSHA-256が不変なら再同定しなかった
 - [ ] 影響項目だけOSM normalizedとOSM候補を再生成した
 - [ ] WAM normalizedを保持済みWAM rawと現在の検索入力から再生成した
 - [ ] 影響項目だけ正本名を同期した
