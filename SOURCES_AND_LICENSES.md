@@ -2,14 +2,14 @@
 
 このrepositoryは由来と条件の異なるデータを組み合わせる。機械可読な台帳は [`config/sources.json`](config/sources.json)、公開物に実際に寄与したソースは`dist/public/places.geojson`の`sourceAttributions`を参照する。
 
-## プロジェクトのデータベース
+## プロジェクトのライセンス
 
-データベースはOpen Data Commons Open Database License 1.0で提供する。全文は[`LICENSE`](LICENSE)を参照する。
+このプロジェクトの独自著作物はCreative Commons Attribution-ShareAlike 4.0 Internationalで提供する。全文は[`LICENSE`](LICENSE)を参照する。
 
-- License: Open Data Commons Open Database License 1.0
-- URL: https://opendatacommons.org/licenses/odbl/1-0/
+- License: Creative Commons Attribution-ShareAlike 4.0 International
+- URL: https://creativecommons.org/licenses/by-sa/4.0/
 
-外部由来のデータには以下の各条件も適用される。個別ソースの条件をプロジェクトの包括ライセンスだけで置き換えない。
+外部由来のデータには以下の各条件を適用する。個別ソースの条件をプロジェクトのライセンスで置き換えない。
 
 ## OSM (OpenStreetMap)
 
