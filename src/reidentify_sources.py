@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import argparse
+import copy
 import hashlib
 import json
 from pathlib import Path
@@ -234,8 +235,18 @@ def prepare_retained_reidentification(root: str | Path) -> dict[str, str]:
         if str(record.get("queryId")) in current_query_ids
     ]
 
+    registry_for_reidentification = copy.deepcopy(registry)
+    for place in registry_for_reidentification.get("places", []):
+        if str(place.get("id")) not in affected_osm_query_ids:
+            continue
+        place["externalRefs"] = [
+            ref
+            for ref in place.get("externalRefs", [])
+            if not (ref.get("sourceId") == "openstreetmap" and ref.get("status") == "current")
+        ]
+
     osm_normalized, osm_report = prepare_osm_snapshot(
-        registry,
+        registry_for_reidentification,
         _filtered_documents(search_documents, affected_osm_query_ids),
         osm_raw,
     )

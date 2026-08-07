@@ -69,15 +69,28 @@ def _review_candidates(query: dict[str, Any]) -> list[dict[str, Any]]:
     ]
 
 
+def _review_reason_text(query: dict[str, Any]) -> str | None:
+    reason = query.get("reviewReason")
+    if not isinstance(reason, dict) or reason.get("code") != "candidate_already_linked":
+        return None
+    name = reason.get("conflictingQueryName")
+    query_id = reason.get("conflictingQueryId")
+    if isinstance(name, str) and name:
+        return f"候補は別の施設に紐付け済みです: {name}"
+    if isinstance(query_id, str) and query_id:
+        return f"候補は別の施設に紐付け済みです（検索ID: {query_id}）"
+    return "候補は別の施設に紐付け済みです"
+
+
 def build_review_yaml(report: dict[str, Any], *, report_sha256: str) -> str:
-    """Render candidates and one-true Japanese options for GitHub editing."""
+    """Render a compact, editable one-choice-per-query review sheet."""
     queries = [query for query in report.get("queries", []) if query.get("status") == "needs_review"]
     lines = [
         "# OSM候補の人間確認",
         "# 操作手順",
         "# 1. 各「選択肢」で採用する候補を一つだけtrueに変更します。",
         "# 2. 採用しない場合は「候補なし（どの候補とも一致しない）」をtrueに変更します。",
-        "# 3. それ以外のtrue/false、ID、候補詳細、reportSha256は変更しません。",
+        "# 3. それ以外のtrue/false、ID、施設名、reportSha256は変更しません。",
         "# 4. GitHubでコミットした後、Issueの適用チェックを入れます。",
         "schemaVersion: 2",
         f"reportSha256: {report_sha256}",
@@ -89,23 +102,11 @@ def build_review_yaml(report: dict[str, Any], *, report_sha256: str) -> str:
             [
                 f"  - 検索ID: {_yaml_scalar(query_id)}",
                 f"    施設名: {_yaml_scalar(query['name'])}",
-                f"    検索入力: {_yaml_scalar(query.get('target', {}))}",
-                "    LLMの判断:",
             ]
         )
-        for vote in query.get("llmVotes", []):
-            lines.append(f"      - {_yaml_scalar(vote)}")
-        lines.append("    候補の詳細:")
-        for candidate in _review_candidates(query):
-            lines.extend(
-                [
-                    f"      - ID: {_yaml_scalar(candidate['recordId'])}",
-                    f"        名称: {_yaml_scalar(candidate.get('name') or candidate.get('tags', {}).get('name') or '名称なし')}",
-                    f"        座標: {_yaml_scalar(candidate.get('coordinates'))}",
-                    f"        距離メートル: {_yaml_scalar(candidate.get('distanceMeters'))}",
-                    f"        タグ: {_yaml_scalar(candidate.get('tags', {}))}",
-                ]
-            )
+        reason = _review_reason_text(query)
+        if reason is not None:
+            lines.append(f"    自動取り込みしない理由: {_yaml_scalar(reason)}")
         lines.append("    選択肢:")
         for candidate in _review_candidates(query):
             name = candidate.get("name") or candidate.get("tags", {}).get("name") or "名称なし"
@@ -444,6 +445,7 @@ def main(argv: list[str] | None = None) -> int:
     build_parser.add_argument("--prepare", action="store_true")
     build_parser.add_argument("--review-branch")
     build_parser.add_argument("--repository-url")
+    build_parser.add_argument("--report")
     metadata_parser = subparsers.add_parser("metadata")
     metadata_parser.add_argument("--event", required=True)
     apply_parser = subparsers.add_parser("apply")
@@ -457,7 +459,7 @@ def main(argv: list[str] | None = None) -> int:
     try:
         if args.command == "build":
             root = Path(args.root)
-            report_path = root / "reports/osm-candidates.json"
+            report_path = Path(args.report) if args.report else root / "reports/osm-candidates.json"
             payload = report_path.read_bytes()
             report = json.loads(payload)
             report_sha256 = hashlib.sha256(payload).hexdigest()

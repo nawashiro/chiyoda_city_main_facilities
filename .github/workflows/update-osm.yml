@@ -54,6 +54,7 @@ jobs:
             --artifact-name "osm-update-${{ github.run_id }}" \
             --prepare \
             --output /tmp/osm-review-issue.json
+          cp reports/osm-candidates.json /tmp/osm-candidates.json
           python3 - <<'PY' >> "$GITHUB_OUTPUT"
           import json
           document = json.load(open('/tmp/osm-review-issue.json', encoding='utf-8'))
@@ -94,6 +95,7 @@ jobs:
             --artifact-name "osm-update-${{ github.run_id }}" \
             --review-branch "${{ steps.review-branch.outputs.pull-request-branch }}" \
             --repository-url "${{ github.server_url }}/${{ github.repository }}" \
+            --report /tmp/osm-candidates.json \
             --output /tmp/osm-review-issue.json
       - name: Create one compact Issue for unresolved candidates
         if: steps.review.outputs.review_needed == 'true'

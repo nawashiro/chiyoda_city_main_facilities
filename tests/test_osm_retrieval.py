@@ -214,6 +214,45 @@ class OsmRetrievalTests(unittest.TestCase):
         self.assertEqual([], normalized["records"])
         self.assertEqual("none", report["queries"][0]["status"])
 
+    def test_keeps_current_id_when_only_its_name_differs_from_search_input(self):
+        query_id = "019c0000-0000-7000-8000-000000000105"
+        query = {
+            "id": query_id,
+            "name": "えみふる（障害者福祉センター）",
+            "coordinates": [139.75, 35.69],
+        }
+        registry = {
+            "schemaVersion": 1,
+            "places": [
+                {
+                    "id": query_id,
+                    "name": query["name"],
+                    "geometry": {"type": "Point", "coordinates": [139.75, 35.69]},
+                    "externalRefs": [
+                        {"sourceId": "openstreetmap", "recordId": "node/10", "status": "current"}
+                    ],
+                }
+            ],
+        }
+        raw = {
+            "version": "2026-07-29T00:00:00Z",
+            "elements": [
+                {
+                    "type": "node",
+                    "id": 10,
+                    "lat": 35.6901,
+                    "lon": 139.7501,
+                    "tags": {"name": "千代田区立障害者福祉センター　えみふる"},
+                }
+            ],
+        }
+
+        normalized, report = prepare_osm_snapshot(registry, [{"queries": [query]}], raw)
+
+        self.assertEqual("source_record", normalized["records"][0]["matchBasis"])
+        self.assertEqual("node/10", f"{normalized['records'][0]['type']}/{normalized['records'][0]['id']}")
+        self.assertEqual("linked", report["queries"][0]["status"])
+
     def test_run_osm_retrieval_posts_once_and_writes_review_artifacts(self):
         query_id = "019c0000-0000-7000-8000-000000000103"
         calls = []

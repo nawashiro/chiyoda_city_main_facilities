@@ -53,6 +53,12 @@ class GithubWorkflowTests(unittest.TestCase):
         self.assertNotIn("src.retrieve_osm", workflow)
         self.assertNotIn("curl ", workflow)
 
+    def test_update_osm_builds_issue_from_the_reviewed_report_after_branch_creation(self):
+        workflow = self.workflow("update-osm.yml")
+
+        self.assertIn("cp reports/osm-candidates.json /tmp/osm-candidates.json", workflow)
+        self.assertIn("--report /tmp/osm-candidates.json", workflow)
+
 
 if __name__ == "__main__":
     unittest.main()

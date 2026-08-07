@@ -207,6 +207,11 @@ class GithubOsmReviewTests(unittest.TestCase):
         report = self.review_report()
         report["queries"][0]["candidates"][0]["tags"]["oversized"] = "x" * 70000
 
+        report["queries"][0]["reviewReason"] = {
+            "code": "candidate_already_linked",
+            "conflictingQueryId": "019c0000-0000-7000-8000-000000000302",
+            "conflictingQueryName": "施設B",
+        }
         review_yaml = build_review_yaml(report, report_sha256="0" * 64)
         issue = build_issue_document(
             report,
@@ -219,7 +224,12 @@ class GithubOsmReviewTests(unittest.TestCase):
         self.assertIn("# 操作手順", review_yaml)
         self.assertIn('"候補 node/1: 候補A": false', review_yaml)
         self.assertIn('"候補なし（どの候補とも一致しない）": false', review_yaml)
-        self.assertIn("contact:phone", review_yaml)
+        self.assertIn("候補は別の施設に紐付け済み", review_yaml)
+        self.assertIn("施設B", review_yaml)
+        self.assertNotIn("contact:phone", review_yaml)
+        self.assertNotIn("oversized", review_yaml)
+        self.assertNotIn("検索入力:", review_yaml)
+        self.assertNotIn("候補の詳細:", review_yaml)
         self.assertLess(len(issue["body"]), 65_536)
         self.assertIn('/edit/automation/osm-review-12345/reports/osm-review-needed.yaml', issue["body"])
         self.assertNotIn("osm-candidates.json", issue["body"])
@@ -246,6 +256,30 @@ class GithubOsmReviewTests(unittest.TestCase):
 
         self.assertEqual(0, result)
         self.assertTrue(document["reviewNeeded"])
+
+    def test_build_uses_explicit_report_after_the_worktree_changes_branch(self):
+        reviewed_report = self.review_report()
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            (root / "reports").mkdir()
+            (root / "reports/osm-candidates.json").write_text(
+                json.dumps({"queries": []}), encoding="utf-8"
+            )
+            reviewed_path = root / "reviewed-osm-candidates.json"
+            reviewed_path.write_text(json.dumps(reviewed_report), encoding="utf-8")
+            output = root / "issue.json"
+
+            result = main(
+                [
+                    "build", root.as_posix(), "--run-id", "12345", "--artifact-name",
+                    "osm-update-12345", "--review-branch", "automation/osm-review-12345",
+                    "--report", reviewed_path.as_posix(), "--output", output.as_posix(),
+                ]
+            )
+            document = json.loads(output.read_text(encoding="utf-8"))
+
+        self.assertEqual(0, result)
+        self.assertEqual(1, len(document["issues"]))
 
     def test_applies_choices_from_review_yaml_after_artifact_hash_validation(self):
         report = self.review_report()

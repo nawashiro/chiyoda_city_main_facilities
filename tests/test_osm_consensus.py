@@ -244,6 +244,16 @@ class OsmConsensusTests(unittest.TestCase):
             ],
             [item["queryId"] for item in review["queries"]],
         )
+        collision = next(
+            item
+            for item in review["queries"]
+            if item["queryId"] == "019c0000-0000-7000-8000-000000000205"
+        )
+        self.assertEqual("candidate_already_linked", collision["reviewReason"]["code"])
+        self.assertEqual(
+            "019c0000-0000-7000-8000-000000000201",
+            collision["reviewReason"]["conflictingQueryId"],
+        )
 
 
 if __name__ == "__main__":

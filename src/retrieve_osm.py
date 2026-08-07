@@ -172,13 +172,6 @@ def prepare_osm_snapshot(
             )
             <= 50
             and (
-                record.get("name") is None
-                or (
-                    isinstance(record.get("name"), str)
-                    and _osm_names_match(record["name"], query["name"])
-                )
-            )
-            and (
                 "qid" not in query
                 or record.get("qid") is None
                 or record.get("qid") == query["qid"]
