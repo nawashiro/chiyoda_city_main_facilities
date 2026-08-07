@@ -4,6 +4,8 @@
 
 公開物は代表点、画像、OSM (OpenStreetMap)属性、WAM属性を含むGeoJSONです。
 
+作業言語は日本語です。
+
 ## はじめに
 
 Python 3.13だけで実行できます。外部パッケージは使いません。
@@ -57,4 +59,4 @@ https://cdn.jsdelivr.net/gh/nawashiro/chiyoda_city_main_facilities@<version>/dis
 
 ## 出典とライセンス
 
-出典と利用条件は[SOURCES_AND_LICENSES.md](SOURCES_AND_LICENSES.md)と`config/sources.json`に記録します。
+このプロジェクトの独自著作物はCreative Commons Attribution-ShareAlike 4.0 Internationalで提供します。外部データの出典と利用条件は[SOURCES_AND_LICENSES.md](SOURCES_AND_LICENSES.md)と`config/sources.json`に記録します。
