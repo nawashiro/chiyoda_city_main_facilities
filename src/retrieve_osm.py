@@ -66,13 +66,8 @@ def build_discovery_query(
         ):
             raise ValueError("invalid coordinates in OSM discovery query")
         longitude, latitude = coordinates_pair
-        latitude_delta = 50 / 111_320
-        longitude_delta = 50 / (111_320 * math.cos(math.radians(latitude)))
         coordinate_selectors.append(
-            "nwr("
-            f"{latitude - latitude_delta:.7f},{longitude - longitude_delta:.7f},"
-            f"{latitude + latitude_delta:.7f},{longitude + longitude_delta:.7f}"
-            ");"
+            f"nwr(around:50,{latitude:.7f},{longitude:.7f});"
         )
     selectors.extend(coordinate_selectors)
     return (

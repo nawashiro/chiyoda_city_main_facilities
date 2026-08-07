@@ -259,7 +259,7 @@ class OsmRetrievalTests(unittest.TestCase):
         self.assertEqual(OVERPASS_ENDPOINT, calls[0][0])
         self.assertRegex(
             calls[0][1],
-            r"nwr\(35\.689[0-9]+,139\.749[0-9]+,35\.690[0-9]+,139\.750[0-9]+\);",
+            r"nwr\(around:50,35\.6900000,139\.7500000\);",
         )
         self.assertEqual(query_id, normalized["records"][0]["queryId"])
         self.assertEqual("linked", report["queries"][0]["status"])
