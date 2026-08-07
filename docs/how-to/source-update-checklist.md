@@ -4,7 +4,7 @@
 
 主要施設DBを、一人でも継続して扱える小さな単位で更新する。網羅性より、誤案内を避けることと、変更根拠を後から確認できることを優先する。
 
-現行仕様は [`data_maintenance_spec.md`](data_maintenance_spec.md) を正とする。本書は作業チェックリストである。
+現行仕様は[保守仕様](../reference/data-maintenance-spec.md)を正とする。本書は作業チェックリストである。
 
 ## 現在のデータ構成
 
@@ -21,7 +21,7 @@
 
 ## 更新前チェック
 
-- [ ] READMEの「初めて作業する人へ」を読んだ
+- [ ] [最初の施設変更](../tutorials/first-data-change.md)を読んだ
 - [ ] `main`とremoteの差分を確認した
 - [ ] 作業branchを作った
 - [ ] `python3 --version`がPython 3.13である
@@ -83,7 +83,7 @@
 - [ ] 全公開Pointの町名が意図どおりか確認した
 - [ ] 町名ポリゴンを公開GeoJSONへ含めていない
 
-GitHub Actionsのartifactを取得する場合は、READMEのartifact取込手順を使う。`update-wam.yml`と`update-towns.yml`はartifactを作成するが、Pull Requestを作成しない。
+GitHub Actionsのartifactを取得する場合は、[ソースを更新する](update-source-data.md)のartifact取込手順を使う。`update-wam.yml`と`update-towns.yml`はartifactを作成するが、Pull Requestを作成しない。
 
 ## 共通品質ゲート
 

@@ -745,20 +745,63 @@ class PhaseZeroFilesTests(unittest.TestCase):
     def test_readme_and_ci_use_only_the_new_pipeline(self):
         root = Path(__file__).resolve().parents[1]
         readme = (root / "README.md").read_text(encoding="utf-8")
+        source_how_to = (root / "docs/how-to/update-source-data.md").read_text(
+            encoding="utf-8"
+        )
         workflow = (root / ".github/workflows/validate.yml").read_text(encoding="utf-8")
 
         self.assertIn("dist/public/places.geojson", readme)
         self.assertIn("python3 -m src.facility_data validate .", readme)
         self.assertIn("python3 -m src.facility_data build .", readme)
-        self.assertIn("python3 -m src.retrieve_wam", readme)
-        self.assertIn("python3 -m src.retrieve_osm", readme)
-        self.assertIn("python3 -m src.retrieve_towns", readme)
+        self.assertIn("python3 -m src.retrieve_wam", source_how_to)
+        self.assertIn("python3 -m src.retrieve_osm", source_how_to)
+        self.assertIn("python3 -m src.retrieve_towns", source_how_to)
         self.assertNotIn("/path/to/wam.json", readme)
         self.assertNotIn("/path/to/osm.json", readme)
         self.assertNotIn("json_min", readme)
         self.assertNotIn("pandas", readme)
         self.assertIn("python3 -m src.facility_data validate .", workflow)
         self.assertNotIn("src.validate_data", workflow)
+
+    def test_documentation_uses_the_diataxis_directory_structure(self):
+        root = Path(__file__).resolve().parents[1]
+        readme = (root / "README.md").read_text(encoding="utf-8")
+        required = {
+            "docs/tutorials/first-data-change.md",
+            "docs/how-to/maintain-a-place.md",
+            "docs/how-to/update-source-data.md",
+            "docs/reference/cli.md",
+            "docs/reference/attributes.md",
+            "docs/reference/writing-style.md",
+            "docs/explanation/data-model.md",
+            "docs/explanation/documentation.md",
+        }
+
+        self.assertLess(len(readme.splitlines()), 120)
+        self.assertFalse((root / "doc").exists())
+        self.assertEqual(
+            set(), {path for path in required if not (root / path).is_file()}
+        )
+        self.assertIn("docs/tutorials/", readme)
+        self.assertIn("docs/how-to/", readme)
+        self.assertIn("docs/reference/", readme)
+        self.assertIn("docs/explanation/", readme)
+        style = (root / "docs/reference/writing-style.md").read_text(encoding="utf-8")
+        self.assertIn("日本語", style)
+        self.assertIn("能動態", style)
+        self.assertIn("Diátaxis", style)
+        self.assertNotIn("CJK文字とLatin文字", style)
+        tutorial = (root / "docs/tutorials/first-data-change.md").read_text(
+            encoding="utf-8"
+        )
+        self.assertIn(
+            "git clone https://github.com/nawashiro/chiyoda_city_main_facilities.git",
+            tutorial,
+        )
+        source_how_to = (root / "docs/how-to/update-source-data.md").read_text(
+            encoding="utf-8"
+        )
+        self.assertIn("## GitHub Actionsで更新する", source_how_to)
 
 
 class LegacyMigrationTests(unittest.TestCase):
