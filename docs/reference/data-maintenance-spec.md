@@ -181,15 +181,21 @@ OSM snapshotの更新では、全検索入力を再同定しない。各検索�
 - 検索入力の`name`と検索キー（`coordinates`または`qid`）が前回同定時から不変である。
 - current OSM IDが新しいOSM snapshotに一意に存在する。
 
+current OSM参照がない項目は、次の条件をすべて満たす場合も再同定しない。
+
+- 検索入力の`name`と検索キーが候補reportの`target`から不変である。
+- 候補reportへ記録したOSM rawの`rawSha256`が保持済みOSM rawのSHA-256と一致する。
+
 次の項目だけ候補を再生成する。
 
 - 検索入力が変更された項目。
 - current OSM IDが消えた項目。
 - current OSM IDが複数化または衝突した項目。
 - current OSM recordと検索入力が矛盾する項目。
-- current OSM参照を持たない項目。
+- current OSM参照がなく、候補reportへ記録したOSM rawのSHA-256が変更された項目。
+- current OSM参照がなく、候補reportにOSM rawの`rawSha256`または検索入力がない項目。
 
-再同定対象がない場合、normalized snapshot、候補report、正本、公開GeoJSONを変更しない。最後に採用した`linked_osm` auditの`searchInputSha256`と現在の検索入力hashを比較する。検索入力hashは`name`と`coordinates`または`qid`だけをcanonical JSON化し、UTF-8 bytesから計算する。OSM rawのSHA-256は保持済みbytesの完全性を検証する。raw SHA-256の一致だけを、全項目の再同定理由にしない。
+再同定対象がない場合、normalized snapshot、候補report、正本、公開GeoJSONを変更しない。最後に採用した`linked_osm` auditの`searchInputSha256`と現在の検索入力hashを比較する。current OSM参照がない項目では、候補reportの`target`から検索入力hashを計算する。検索入力hashは`name`と`coordinates`または`qid`だけをcanonical JSON化し、UTF-8 bytesから計算する。OSM rawのSHA-256は保持済みbytesの完全性を検証する。候補reportへ記録したOSM rawの`rawSha256`は、current OSM参照がない項目の変更検知に使う。
 
 LLM照合は再同定対象の未解決候補だけを扱う。既存の項目ごとのコンテクスト分離を保てる場合、1回のAPI requestに対象項目と各項目の全候補をまとめる。コンテクスト分離を保てない場合、実行前にAPI request数を報告して確認を受ける。
 

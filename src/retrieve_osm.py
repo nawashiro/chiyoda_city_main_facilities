@@ -303,6 +303,7 @@ def run_osm_retrieval(
         "etag": headers.get("ETag"),
         "lastModified": headers.get("Last-Modified"),
     }
+    report["rawSha256"] = retrieval["rawSha256"]
     normalized_path = root / "imports/openstreetmap/normalized.json"
     report_path = root / "reports/osm-candidates.json"
     imports_path = root / "imports/openstreetmap"
