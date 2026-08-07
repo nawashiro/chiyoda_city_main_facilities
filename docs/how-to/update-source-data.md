@@ -45,6 +45,21 @@ python3 -m src.facility_data validate .
 町名は正本へ書き込みません。
 公開buildがPointと町名Polygonから導出します。
 
+## GitHub Actionsで更新する
+
+GitHubの`Actions`タブから対象workflowを実行してください。
+workflowは更新結果をartifactへ保存します。
+
+- `Update WAM data`は`release`へWAM公開月（`YYYYMM`）を指定します。
+- `Update town polygons`は`commit`へ町名GeoJSONの完全なcommit SHAを指定します。
+- `Update OpenStreetMap data`は`LLM_API_KEY`、`LLM_MODEL`、`LLM_BASE_URL`をrepository設定から読みます。
+
+WAMと町名workflowはPull Requestを作成しません。
+artifactを確認して、保守者がPull Requestを作成してください。
+
+OSM workflowは未解決候補がある場合、確認用Issueを1件作成します。
+候補がすべて解決済みの場合、OSM workflowはPull Requestを作成します。
+
 ## GitHub Actionsのartifactを取り込む
 
 ```bash

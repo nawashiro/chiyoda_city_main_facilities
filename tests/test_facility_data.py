@@ -790,6 +790,18 @@ class PhaseZeroFilesTests(unittest.TestCase):
         self.assertIn("日本語", style)
         self.assertIn("能動態", style)
         self.assertIn("Diátaxis", style)
+        self.assertNotIn("CJK文字とLatin文字", style)
+        tutorial = (root / "docs/tutorials/first-data-change.md").read_text(
+            encoding="utf-8"
+        )
+        self.assertIn(
+            "git clone https://github.com/nawashiro/chiyoda_city_main_facilities.git",
+            tutorial,
+        )
+        source_how_to = (root / "docs/how-to/update-source-data.md").read_text(
+            encoding="utf-8"
+        )
+        self.assertIn("## GitHub Actionsで更新する", source_how_to)
 
 
 class LegacyMigrationTests(unittest.TestCase):

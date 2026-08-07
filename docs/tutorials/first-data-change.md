@@ -5,7 +5,7 @@
 ## 1. 作業branchを作る
 
 ```bash
-git clone git@github.com:nawashiro/chiyoda_city_main_facilities.git
+git clone https://github.com/nawashiro/chiyoda_city_main_facilities.git
 cd chiyoda_city_main_facilities
 git switch -c data/first-change
 ```
