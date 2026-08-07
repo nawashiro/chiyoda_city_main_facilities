@@ -11,9 +11,31 @@ from src.retrieve_osm import (
     prepare_osm_snapshot,
     run_osm_retrieval,
 )
+from src.osm_mirror import relation_out_center
 
 
 class OsmRetrievalTests(unittest.TestCase):
+    def test_relation_center_keeps_available_members_and_warns_about_missing_member(self):
+        warnings = []
+
+        center = relation_out_center(
+            "relation/9",
+            [
+                {"type": "n", "ref": 1},
+                {"type": "w", "ref": 2},
+                {"type": "w", "ref": 3},
+                {"type": "r", "ref": 4},
+            ],
+            {1: (139.70, 35.68)},
+            {2: (139.72, 35.69, 139.74, 35.71)},
+            warnings.append,
+        )
+
+        self.assertEqual({"lon": 139.72, "lat": 35.695}, center)
+        self.assertEqual(
+            ["OSM regional mirror relation/9 lacks member way/3; center may be inaccurate"],
+            warnings,
+        )
     def test_candidate_report_retains_every_osm_tag_and_complete_search_target(self):
         query_id = "019c0000-0000-7000-8000-000000000105"
         query = {
@@ -116,18 +138,8 @@ class OsmRetrievalTests(unittest.TestCase):
         self.assertEqual("ambiguous", report["queries"][0]["status"])
 
     def test_rejects_partial_overpass_response_with_remark(self):
-        def post(endpoint, query):
-            return (
-                json.dumps(
-                    {
-                        "version": 0.6,
-                        "osm3s": {"timestamp_osm_base": "2026-07-29T00:00:00Z"},
-                        "remark": "runtime error: Query timed out; partial data follows",
-                        "elements": [],
-                    }
-                ).encode(),
-                {},
-            )
+        def fetch(url):
+            return json.dumps({"type": "FeatureCollection", "features": []}).encode(), {}
 
         with tempfile.TemporaryDirectory() as directory:
             root = Path(directory)
@@ -144,8 +156,8 @@ class OsmRetrievalTests(unittest.TestCase):
             (root / "imports/openstreetmap/retrieval.json").write_text(
                 json.dumps({"retrievedAt": None, "minimumIntervalDays": 30}), encoding="utf-8"
             )
-            with self.assertRaisesRegex(ValueError, "partial or errored"):
-                run_osm_retrieval(root, "2026-07-29T01:00:00Z", post)
+            with self.assertRaisesRegex(ValueError, "lacks one Tokyo"):
+                run_osm_retrieval(root, "2026-07-29T01:00:00Z", fetch)
 
     def test_does_not_trust_current_id_after_conflicting_distant_move(self):
         query_id = "019c0000-0000-7000-8000-000000000104"
@@ -181,27 +193,16 @@ class OsmRetrievalTests(unittest.TestCase):
         query_id = "019c0000-0000-7000-8000-000000000103"
         calls = []
 
-        def post(endpoint, query):
-            calls.append((endpoint, query))
-            return (
-                json.dumps(
-                    {
-                        "version": 0.6,
-                        "generator": "Overpass API",
-                        "osm3s": {"timestamp_osm_base": "2026-07-29T00:00:00Z"},
-                        "elements": [
-                            {
-                                "type": "node",
-                                "id": 10,
-                                "lat": 35.69,
-                                "lon": 139.75,
-                                "tags": {"name": "施設C", "amenity": "library"},
-                            }
-                        ],
-                    }
-                ).encode(),
-                {"ETag": '"overpass-fixture"'},
-            )
+        manifest = {"features": [{"properties": {"prefix": "JP-13-", "timestamp": 202607290000, "bytes": 3}}]}
+        def fetch(url):
+            calls.append(url)
+            if url.endswith("Admin-latest.geojson"):
+                return json.dumps(manifest).encode(), {"ETag": '"manifest-fixture"'}
+            return b"pbf", {"ETag": '"pbf-fixture"'}
+        def extractor(path, typed_ids, qids, coordinates, bbox):
+            self.assertEqual(b"pbf", path.read_bytes())
+            return [{"type": "node", "id": 10, "lat": 35.69, "lon": 139.75, "tags": {"name": "施設C", "amenity": "library"}}]
+
 
         with tempfile.TemporaryDirectory() as directory:
             root = Path(directory)
@@ -237,7 +238,7 @@ class OsmRetrievalTests(unittest.TestCase):
                 encoding="utf-8",
             )
 
-            run_osm_retrieval(root, "2026-07-29T01:00:00Z", post)
+            run_osm_retrieval(root, "2026-07-29T01:00:00Z", fetch, extractor)
 
             normalized = json.loads(
                 (root / "imports/openstreetmap/normalized.json").read_text(encoding="utf-8")
@@ -255,27 +256,19 @@ class OsmRetrievalTests(unittest.TestCase):
             raw_response_bytes = (root / "imports/openstreetmap/raw-response.json").read_bytes()
             query_bytes = (root / "imports/openstreetmap/query.overpassql").read_bytes()
 
-        self.assertEqual(1, len(calls))
-        self.assertEqual(OVERPASS_ENDPOINT, calls[0][0])
-        self.assertRegex(
-            calls[0][1],
-            r"nwr\(35\.689[0-9]+,139\.749[0-9]+,35\.690[0-9]+,139\.750[0-9]+\);",
-        )
+        self.assertEqual(2, len(calls))
+        self.assertTrue(calls[0].endswith("Admin-latest.geojson"))
+        self.assertTrue(calls[1].endswith("JP-13-202607290000.osm.pbf"))
         self.assertEqual(query_id, normalized["records"][0]["queryId"])
         self.assertEqual("linked", report["queries"][0]["status"])
         self.assertEqual(metadata["rawSha256"], report["rawSha256"])
-        self.assertEqual("2026-07-29T00:00:00Z", raw["version"])
-        self.assertEqual("2026-07-29T00:00:00Z", metadata["rawVersion"])
-        self.assertEqual(64, len(metadata["querySha256"]))
-        self.assertEqual(64, len(metadata["responseSha256"]))
-        self.assertIs(metadata["queryRetained"], True)
-        self.assertIs(metadata["responseRetained"], True)
-        self.assertEqual(
-            metadata["responseSha256"], hashlib.sha256(raw_response_bytes).hexdigest()
-        )
-        self.assertEqual(
-            metadata["querySha256"], hashlib.sha256(query_bytes).hexdigest()
-        )
+        self.assertEqual("202607290000", raw["version"])
+        self.assertEqual("202607290000", metadata["rawVersion"])
+        self.assertEqual(64, len(metadata["manifestSha256"]))
+        self.assertEqual(64, len(metadata["pbfSha256"]))
+        self.assertEqual(64, len(metadata["selectionSha256"]))
+        self.assertEqual(metadata["manifestSha256"], hashlib.sha256(raw_response_bytes).hexdigest())
+        self.assertEqual(metadata["selectionSha256"], hashlib.sha256(query_bytes).hexdigest())
         self.assertEqual(metadata["rawSha256"], hashlib.sha256(raw_bytes).hexdigest())
 
     def test_builds_one_chiyoda_bbox_query_for_refresh_and_discovery(self):
