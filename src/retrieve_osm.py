@@ -75,14 +75,6 @@ def build_discovery_query(
             ");"
         )
     selectors.extend(coordinate_selectors)
-    selectors.extend(
-        [
-            f'nwr({CHIYODA_BBOX})["amenity"~"^(cinema|community_centre|hospital|library|place_of_worship|public_bath|social_facility|townhall)$"];',
-            f'nwr({CHIYODA_BBOX})["tourism"~"^(gallery|museum)$"];',
-            f'nwr({CHIYODA_BBOX})["leisure"="park"];',
-            f'nwr({CHIYODA_BBOX})["office"="government"];',
-        ]
-    )
     return (
         f"[out:json][timeout:180];({''.join(selectors)});"
         "out center;"
