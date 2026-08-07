@@ -245,10 +245,13 @@ review diff生成前に`git add -N .`を行い、新規ファイルもbinary dif
 1. `reports/*-update.diff`を確認する。
 2. 正本Placeの削除・UUID変更がなく、名称変更は意図した検索入力修正だけであることを確認する。
 3. WAMの施設数・元レコード数が前回から大きく変わっていないか確認する。202603版の8施設・13元レコードは現在の目安であり、固定要件ではない。
-4. OSMの合議不成立時は自動作成されたIssueで検索入力ごとに一候補または「どれとも一致しない」を選ぶ。
-5. `sourceAttributions`と取得台帳の版・SHAを確認する。
-6. tests、validate、決定的buildを再実行する。
-7. clean cloneでも同じ検証を行う。
+4. OSMの合議不成立時は自動作成されたIssueを開く。
+5. Issueのリンクから`reports/osm-review-needed.yaml`を編集する。
+6. 各`queryId`へ`decision`と`candidateId`を一組ずつ入力してコミットする。
+7. Issueの適用チェックを入れる。Actionsはコミット済みYAMLと保存済みartifactのSHA-256を照合してPull Requestを作成する。
+8. `sourceAttributions`と取得台帳の版・SHAを確認する。
+9. tests、validate、決定的buildを再実行する。
+10. clean cloneでも同じ検証を行う。
 
 ## 9. 現在未実装の将来候補
 

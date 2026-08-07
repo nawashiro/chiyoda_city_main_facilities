@@ -44,7 +44,7 @@ jobs:
           python3 -m src.facility_data build .
           cmp /tmp/places.geojson dist/public/places.geojson
           cmp /tmp/manifest.json dist/public/manifest.json
-      - name: Produce review diff and GitHub review issue body
+      - name: Produce review diff and editable YAML
         id: review
         run: |
           git add -N .
@@ -52,11 +52,12 @@ jobs:
           python3 -m src.github_osm_review build . \
             --run-id "${{ github.run_id }}" \
             --artifact-name "osm-update-${{ github.run_id }}" \
+            --prepare \
             --output /tmp/osm-review-issue.json
           python3 - <<'PY' >> "$GITHUB_OUTPUT"
           import json
           document = json.load(open('/tmp/osm-review-issue.json', encoding='utf-8'))
-          print(f"review_needed={'true' if document.get('issues') else 'false'}")
+          print(f"review_needed={'true' if document['reviewNeeded'] else 'false'}")
           PY
       - name: Save generated update for review
         uses: actions/upload-artifact@v4
@@ -70,8 +71,31 @@ jobs:
             reports/latest-update.json
             reports/osm-candidates.json
             reports/osm-review-needed.json
+            reports/osm-review-needed.yaml
             reports/osm-update.diff
-      - name: Create one clickable Issue for unresolved candidates
+      - name: Create editable review branch
+        id: review-branch
+        if: steps.review.outputs.review_needed == 'true'
+        uses: peter-evans/create-pull-request@v7
+        with:
+          branch: automation/osm-review-${{ github.run_id }}
+          delete-branch: true
+          draft: true
+          commit-message: "data: prepare OSM human review"
+          title: "data: prepare OSM human review"
+          body: |
+            この下書きPull RequestはOSM候補の人間確認用です。
+            `reports/osm-review-needed.yaml`を編集・コミットし、対応するIssueの適用チェックを入れてください。
+      - name: Build compact Issue body for the editable branch
+        if: steps.review.outputs.review_needed == 'true'
+        run: |
+          python3 -m src.github_osm_review build . \
+            --run-id "${{ github.run_id }}" \
+            --artifact-name "osm-update-${{ github.run_id }}" \
+            --review-branch "${{ steps.review-branch.outputs.pull-request-branch }}" \
+            --repository-url "${{ github.server_url }}/${{ github.repository }}" \
+            --output /tmp/osm-review-issue.json
+      - name: Create one compact Issue for unresolved candidates
         if: steps.review.outputs.review_needed == 'true'
         uses: actions/github-script@v7
         with:
