@@ -1320,7 +1320,16 @@ def apply_source_updates(
             )
     for original in originals:
         place_id = str(original["id"])
-        query = search_by_id[place_id]
+        query = search_by_id.get(place_id)
+        if query is None:
+            is_disabled = (
+                original.get("lifecycle", {}).get("status") == "closed"
+                and original.get("visibility", {}).get("status") == "private"
+            )
+            if is_disabled:
+                places.append(original)
+                continue
+            raise ValueError(f"missing search input for place: {place_id}")
         wam_record = wam_by_id.get(place_id)
         osm_record = osm_by_id.get(place_id)
         if (
