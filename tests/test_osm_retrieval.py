@@ -226,7 +226,10 @@ class OsmRetrievalTests(unittest.TestCase):
             return b"pbf", {"ETag": '"pbf-fixture"'}
         def extractor(path, typed_ids, qids, coordinates, bbox):
             self.assertEqual(b"pbf", path.read_bytes())
-            return [{"type": "node", "id": 10, "lat": 35.69, "lon": 139.75, "tags": {"name": "施設C", "amenity": "library"}}]
+            return [
+                {"type": "node", "id": 10, "lat": 35.69, "lon": 139.75, "tags": {"name": "施設C", "amenity": "library"}},
+                {"type": "node", "id": 11, "lat": 35.6901, "lon": 139.7501, "tags": {}},
+            ]
 
 
         with tempfile.TemporaryDirectory() as directory:
@@ -288,6 +291,7 @@ class OsmRetrievalTests(unittest.TestCase):
         self.assertEqual("linked", report["queries"][0]["status"])
         self.assertEqual(metadata["rawSha256"], report["rawSha256"])
         self.assertEqual("202607290000", raw["version"])
+        self.assertEqual([10], [element["id"] for element in raw["elements"]])
         self.assertEqual("202607290000", metadata["rawVersion"])
         self.assertEqual(64, len(metadata["manifestSha256"]))
         self.assertEqual(64, len(metadata["pbfSha256"]))

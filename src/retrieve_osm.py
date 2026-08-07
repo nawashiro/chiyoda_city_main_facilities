@@ -279,6 +279,17 @@ def _select_tokyo_mirror(manifest: dict[str, Any]) -> tuple[str, dict[str, Any]]
     return f"https://osm.download.movisda.io/admin/{MOVISDA_ADMIN_PREFIX}{timestamp}.osm.pbf", properties
 
 
+def _named_osm_elements(elements: list[dict[str, Any]]) -> list[dict[str, Any]]:
+    """Discard OSM elements without a usable name before writing raw artifacts."""
+    return [
+        element
+        for element in elements
+        if isinstance(element.get("tags"), dict)
+        and isinstance(element["tags"].get("name"), str)
+        and element["tags"]["name"].strip()
+    ]
+
+
 def run_osm_retrieval(root: str | Path, at: str, fetch, extractor=extract_elements) -> tuple[Path, Path]:
     """Download the Tokyo mirror once and prepare reviewable local artifacts."""
     root = Path(root)
@@ -300,8 +311,9 @@ def run_osm_retrieval(root: str | Path, at: str, fetch, extractor=extract_elemen
     with tempfile.TemporaryDirectory() as directory:
         pbf_path = Path(directory) / "tokyo.osm.pbf"
         pbf_path.write_bytes(pbf_payload)
-        elements = extractor(pbf_path, set(collect_osm_ids(registry)), set(qids), coordinates, tuple(map(float, CHIYODA_BBOX.split(","))))
-    print(f"OSM mirror: extracted {len(elements)} elements", file=sys.stderr)
+        extracted_elements = extractor(pbf_path, set(collect_osm_ids(registry)), set(qids), coordinates, tuple(map(float, CHIYODA_BBOX.split(","))))
+    elements = _named_osm_elements(extracted_elements)
+    print(f"OSM mirror: retained {len(elements)} named elements", file=sys.stderr)
     raw = {"version": str(mirror["timestamp"]), "elements": elements}
     raw_payload = (json.dumps(raw, ensure_ascii=False, indent=2) + "\n").encode("utf-8")
     selection = {"typedIds": sorted(collect_osm_ids(registry)), "qids": qids, "coordinates": coordinates, "bbox": CHIYODA_BBOX}
