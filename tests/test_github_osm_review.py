@@ -276,6 +276,10 @@ class GithubOsmReviewTests(unittest.TestCase):
         self.assertEqual("node/1", f"{normalized['records'][0]['type']}/{normalized['records'][0]['id']}")
         self.assertEqual(hashlib.sha256(payload).hexdigest(), result["reportSha256"])
 
+        self.assertEqual("human_review", normalized["records"][0]["matchBasis"])
+        self.assertEqual("node/1", f"{normalized['records'][0]['type']}/{normalized['records'][0]['id']}")
+        self.assertEqual(hashlib.sha256(payload).hexdigest(), result["reportSha256"])
+
 
 if __name__ == "__main__":
     unittest.main()
