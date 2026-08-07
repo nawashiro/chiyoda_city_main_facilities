@@ -23,6 +23,7 @@ _QID = re.compile(r"Q[1-9][0-9]*")
 _TYPED_ID = re.compile(r"(node|way|relation)/([1-9][0-9]*)")
 OVERPASS_ENDPOINT = "https://overpass-api.de/api/interpreter"
 MAX_OVERPASS_BYTES = 32 * 1024 * 1024
+CHIYODA_BBOX = "35.6680,139.7290,35.7060,139.7840"
 
 
 def _distance_metres(first: list[float], second: list[float]) -> float:
@@ -54,7 +55,9 @@ def build_discovery_query(
         for record_type in ("node", "way", "relation")
         if grouped[record_type]
     ]
-    selectors.extend(f'nwr["wikidata"="{qid}"];' for qid in qids)
+    selectors.extend(
+        f'nwr({CHIYODA_BBOX})["wikidata"="{qid}"];' for qid in qids
+    )
     coordinate_selectors = []
     for coordinates_pair in sorted({tuple(pair) for pair in coordinates or []}):
         if len(coordinates_pair) != 2 or not all(
@@ -74,16 +77,14 @@ def build_discovery_query(
     selectors.extend(coordinate_selectors)
     selectors.extend(
         [
-            'nwr(area.searchArea)["amenity"~"^(cinema|community_centre|hospital|library|place_of_worship|public_bath|social_facility|townhall)$"];',
-            'nwr(area.searchArea)["tourism"~"^(gallery|museum)$"];',
-            'nwr(area.searchArea)["leisure"="park"];',
-            'nwr(area.searchArea)["office"="government"];',
+            f'nwr({CHIYODA_BBOX})["amenity"~"^(cinema|community_centre|hospital|library|place_of_worship|public_bath|social_facility|townhall)$"];',
+            f'nwr({CHIYODA_BBOX})["tourism"~"^(gallery|museum)$"];',
+            f'nwr({CHIYODA_BBOX})["leisure"="park"];',
+            f'nwr({CHIYODA_BBOX})["office"="government"];',
         ]
     )
     return (
-        '[out:json][timeout:180];'
-        'area["boundary"="administrative"]["admin_level"="7"]["name"="千代田区"]->.searchArea;'
-        f"({''.join(selectors)});"
+        f"[out:json][timeout:180];({''.join(selectors)});"
         "out center;"
     )
 

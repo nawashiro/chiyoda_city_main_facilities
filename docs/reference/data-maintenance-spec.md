@@ -150,7 +150,7 @@ python3 -m src.facility_data update . --source openstreetmap --at "$RETRIEVED_AT
 python3 -m src.facility_data validate .
 ```
 
-既知ID、QID、各座標検索入力の50m周辺bbox、千代田区内の対象カテゴリを単一Overpass queryで取得する。座標bboxはカテゴリで絞り込まず、候補となるOSM要素を取りこぼさない。施設ごとのN+1問い合わせは行わない。
+既知ID、固定の千代田区包含bboxに限定したQID・対象カテゴリ、各座標検索入力の50m周辺bboxを単一Overpass queryで取得する。行政境界areaの解決はgateway timeoutを招くため行わない。座標bboxはカテゴリで絞り込まず、候補となるOSM要素を取りこぼさない。施設ごとのN+1問い合わせは行わない。
 
 自動適用経路は次の3つである。
 
