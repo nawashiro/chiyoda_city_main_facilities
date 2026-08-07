@@ -5,10 +5,23 @@ import tempfile
 import unittest
 from pathlib import Path
 
-from src.github_osm_review import apply_issue_selections, build_issue_document
+from src.github_osm_review import apply_issue_selections, build_issue_document, build_issue_documents
 
 
 class GithubOsmReviewTests(unittest.TestCase):
+    def test_splits_review_queries_into_separate_issue_documents(self):
+        report = self.review_report()
+        second = copy.deepcopy(report["queries"][0])
+        second["queryId"] = "019c0000-0000-7000-8000-000000000302"
+        report["queries"].append(second)
+
+        issues = build_issue_documents(
+            report, run_id="12345", artifact_name="osm-update-12345", report_sha256="0" * 64
+        )
+
+        self.assertEqual(2, len(issues))
+        self.assertIn(second["queryId"], issues[1]["body"])
+
     def review_report(self):
         return {
             "version": "2026-07-29T00:00:00Z",
