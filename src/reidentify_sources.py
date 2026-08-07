@@ -85,6 +85,40 @@ def _stable_osm_query_ids(
     return stable
 
 
+def _stable_unlinked_osm_query_ids(
+    registry: dict[str, Any],
+    queries: list[dict[str, Any]],
+    report: dict[str, Any],
+    raw_sha256: str,
+) -> set[str]:
+    """Keep previously unlinked queries when the reviewed raw snapshot is unchanged."""
+    if report.get("rawSha256") != raw_sha256:
+        return set()
+    current_by_query_id = {
+        str(place.get("id")): [
+            ref
+            for ref in place.get("externalRefs", [])
+            if ref.get("sourceId") == "openstreetmap" and ref.get("status") == "current"
+        ]
+        for place in registry.get("places", [])
+    }
+    stable: set[str] = set()
+    for previous in report.get("queries", []):
+        if not isinstance(previous, dict) or not isinstance(previous.get("target"), dict):
+            continue
+        query_id = str(previous.get("queryId"))
+        query = next((item for item in queries if str(item.get("id")) == query_id), None)
+        if query is None or current_by_query_id.get(query_id, []):
+            continue
+        try:
+            unchanged = search_input_sha256(previous["target"]) == search_input_sha256(query)
+        except (KeyError, TypeError):
+            unchanged = False
+        if unchanged:
+            stable.add(query_id)
+    return stable
+
+
 def _filtered_documents(
     documents: list[dict[str, Any]], query_ids: set[str]
 ) -> list[dict[str, Any]]:
@@ -133,6 +167,14 @@ def prepare_retained_reidentification(root: str | Path) -> dict[str, str]:
     current_query_ids = set(query_ids)
     registry = json.loads((root / "data/registry.json").read_text(encoding="utf-8"))
     stable_osm_query_ids = _stable_osm_query_ids(registry, queries, osm_raw)
+    report_path = root / "reports/osm-candidates.json"
+    if report_path.exists():
+        stable_osm_query_ids |= _stable_unlinked_osm_query_ids(
+            registry,
+            queries,
+            json.loads(report_path.read_text(encoding="utf-8")),
+            str(osm_retrieval["rawSha256"]),
+        )
     affected_osm_query_ids = current_query_ids - stable_osm_query_ids
     if not affected_osm_query_ids:
         return {
@@ -157,6 +199,7 @@ def prepare_retained_reidentification(root: str | Path) -> dict[str, str]:
         _filtered_documents(search_documents, affected_osm_query_ids),
         osm_raw,
     )
+    osm_report["rawSha256"] = osm_retrieval["rawSha256"]
     osm_normalized["records"] = sorted(
         _preserved_osm_records(root, stable_osm_query_ids)
         + list(osm_normalized.get("records", [])),

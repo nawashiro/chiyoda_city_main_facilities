@@ -162,6 +162,41 @@ class ReidentifySourcesTests(unittest.TestCase):
             self.assertEqual(normalized, (root / "imports/openstreetmap/normalized.json").read_bytes())
             self.assertEqual(report, (root / "reports/osm-candidates.json").read_bytes())
 
+    def test_keeps_unlinked_query_when_search_input_and_raw_osm_hash_are_unchanged(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            query_id = self.make_repository(root)
+            query = json.loads(
+                (root / "inputs/osm-search/manual/facilities.json").read_text()
+            )["queries"][0]
+            raw_sha256 = json.loads(
+                (root / "imports/openstreetmap/retrieval.json").read_text()
+            )["rawSha256"]
+            normalized = json_bytes(
+                {"version": "retained", "records": [{"queryId": query_id, "id": "10"}]}
+            )
+            report = json_bytes(
+                {
+                    "version": "retained",
+                    "rawSha256": raw_sha256,
+                    "queries": [
+                        {
+                            "queryId": query_id,
+                            "target": query,
+                            "status": "none",
+                            "candidates": [],
+                        }
+                    ],
+                }
+            )
+            (root / "imports/openstreetmap/normalized.json").write_bytes(normalized)
+            (root / "reports/osm-candidates.json").write_bytes(report)
+
+            prepare_retained_reidentification(root)
+
+            self.assertEqual(normalized, (root / "imports/openstreetmap/normalized.json").read_bytes())
+            self.assertEqual(report, (root / "reports/osm-candidates.json").read_bytes())
+
     def test_reidentifies_only_query_with_changed_search_input(self):
         with tempfile.TemporaryDirectory() as directory:
             root = Path(directory)

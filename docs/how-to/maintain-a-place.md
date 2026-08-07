@@ -55,3 +55,4 @@ python3 -m src.facility_data build .
 検索入力をcommitした後、対象branchで再同定workflowを実行してください。
 検索入力とcurrent OSM IDが不変なら、workflowはOSM再同定を省略します。
 current OSM IDは保持済みraw内に一意に存在する必要があります。
+current OSM参照がない場合、検索入力と候補reportのraw hashが不変なら、workflowはOSM再同定を省略します。

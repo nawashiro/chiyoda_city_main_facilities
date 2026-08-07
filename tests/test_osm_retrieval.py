@@ -253,6 +253,7 @@ class OsmRetrievalTests(unittest.TestCase):
         self.assertEqual(OVERPASS_ENDPOINT, calls[0][0])
         self.assertEqual(query_id, normalized["records"][0]["queryId"])
         self.assertEqual("linked", report["queries"][0]["status"])
+        self.assertEqual(metadata["rawSha256"], report["rawSha256"])
         self.assertEqual("2026-07-29T00:00:00Z", raw["version"])
         self.assertEqual("2026-07-29T00:00:00Z", metadata["rawVersion"])
         self.assertEqual(64, len(metadata["querySha256"]))
