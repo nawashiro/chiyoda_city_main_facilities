@@ -34,7 +34,11 @@ def _distance_metres(first: list[float], second: list[float]) -> float:
     return 6_371_000 * 2 * math.atan2(math.sqrt(a), math.sqrt(1 - a))
 
 
-def build_discovery_query(typed_ids: list[str], qids: list[str]) -> str:
+def build_discovery_query(
+    typed_ids: list[str],
+    qids: list[str],
+    coordinates: list[list[float]] | None = None,
+) -> str:
     """Build one bounded Overpass query for refresh and Chiyoda discovery."""
     grouped: dict[str, list[str]] = {"node": [], "way": [], "relation": []}
     for typed_id in sorted(set(typed_ids)):
@@ -51,6 +55,23 @@ def build_discovery_query(typed_ids: list[str], qids: list[str]) -> str:
         if grouped[record_type]
     ]
     selectors.extend(f'nwr["wikidata"="{qid}"];' for qid in qids)
+    coordinate_selectors = []
+    for coordinates_pair in sorted({tuple(pair) for pair in coordinates or []}):
+        if len(coordinates_pair) != 2 or not all(
+            isinstance(value, (int, float)) and not isinstance(value, bool)
+            for value in coordinates_pair
+        ):
+            raise ValueError("invalid coordinates in OSM discovery query")
+        longitude, latitude = coordinates_pair
+        latitude_delta = 50 / 111_320
+        longitude_delta = 50 / (111_320 * math.cos(math.radians(latitude)))
+        coordinate_selectors.append(
+            "nwr("
+            f"{latitude - latitude_delta:.7f},{longitude - longitude_delta:.7f},"
+            f"{latitude + latitude_delta:.7f},{longitude + longitude_delta:.7f}"
+            ");"
+        )
+    selectors.extend(coordinate_selectors)
     selectors.extend(
         [
             'nwr(area.searchArea)["amenity"~"^(cinema|community_centre|hospital|library|place_of_worship|public_bath|social_facility|townhall)$"];',
@@ -265,7 +286,13 @@ def run_osm_retrieval(
             if "qid" in query
         }
     )
-    query = build_discovery_query(collect_osm_ids(registry), qids)
+    coordinates = [
+        query["coordinates"]
+        for document in search_documents
+        for query in document.get("queries", [])
+        if "coordinates" in query
+    ]
+    query = build_discovery_query(collect_osm_ids(registry), qids, coordinates)
     payload, headers = post(OVERPASS_ENDPOINT, query)
     if not isinstance(payload, bytes) or not payload:
         raise ValueError("empty Overpass response")
