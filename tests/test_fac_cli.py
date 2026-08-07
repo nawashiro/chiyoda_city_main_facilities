@@ -558,6 +558,55 @@ class SearchInputCliTests(unittest.TestCase):
         self.assertEqual([139.75, 35.69], query["coordinates"])
         self.assertEqual(f"id={query['id']}\n", output.getvalue())
 
+    def test_in_rm_removes_search_input_and_makes_place_closed_private(self):
+        at = "2026-08-07T10:00:00+00:00"
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            query = {"id": PLACE_ID, "name": "重複施設", "qid": "Q12345"}
+            path = root / "inputs/osm-search/human/202607.json"
+            write_json(
+                path,
+                {
+                    "source": {"kind": "human", "sourceId": None, "retrievedAt": None},
+                    "queries": [query],
+                },
+            )
+            write_json(
+                root / "data/registry.json",
+                {
+                    "schemaVersion": 1,
+                    "places": [
+                        {
+                            "id": PLACE_ID,
+                            "name": "重複施設",
+                            "categoryIds": ["museum"],
+                            "tags": [],
+                            "geometry": {"type": "Point", "coordinates": [139.75, 35.69]},
+                            "geometrySource": {},
+                            "images": [],
+                            "externalRefs": [],
+                            "lifecycle": {"status": "active", "changedAt": at},
+                            "visibility": {"status": "public", "changedAt": at},
+                            "audit": [],
+                        }
+                    ],
+                },
+            )
+
+            result = main(["in", "rm", str(root), PLACE_ID, "--at", at])
+            document = json.loads(path.read_text(encoding="utf-8"))
+            registry = json.loads((root / "data/registry.json").read_text(encoding="utf-8"))
+
+        self.assertEqual(0, result)
+        self.assertEqual([], document["queries"])
+        place = registry["places"][0]
+        self.assertEqual({"status": "closed", "changedAt": at}, place["lifecycle"])
+        self.assertEqual({"status": "private", "changedAt": at}, place["visibility"])
+        self.assertEqual(
+            ["removed_search_input", "updated_lifecycle", "updated_visibility"],
+            [audit["action"] for audit in place["audit"]],
+        )
+
     def test_in_set_switches_coordinates_to_qid(self):
         with tempfile.TemporaryDirectory() as directory:
             root = Path(directory)

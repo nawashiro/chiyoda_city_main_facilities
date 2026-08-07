@@ -178,6 +178,60 @@ class RegistryValidationTests(unittest.TestCase):
         self.assertIn(f"place {query['id']}: name differs from search input", issues)
         self.assertIn(f"place {query['id']}: geometry must be Point", issues)
 
+    def test_allows_closed_private_place_without_search_input(self):
+        query = {
+            "id": "019c0000-0000-7000-8000-000000000062",
+            "name": "無効化施設",
+            "coordinates": [139.70, 35.60],
+        }
+        place = make_place(query, ["park"], [], "2026-07-28T00:00:00Z")
+        place["lifecycle"] = {"status": "closed", "changedAt": "2026-08-07T10:00:00Z"}
+        place["visibility"] = {"status": "private", "changedAt": "2026-08-07T10:00:00Z"}
+
+        issues = validate_registry({"schemaVersion": 1, "places": [place]}, {})
+
+        self.assertEqual([], issues)
+
+    def test_allows_normalized_record_for_closed_private_place_without_search_input(self):
+        query = {
+            "id": "019c0000-0000-7000-8000-000000000061",
+            "name": "無効化施設",
+            "coordinates": [139.70, 35.60],
+        }
+        place = make_place(query, ["park"], [], "2026-07-28T00:00:00Z")
+        place["lifecycle"] = {"status": "closed", "changedAt": "2026-08-07T10:00:00Z"}
+        place["visibility"] = {"status": "private", "changedAt": "2026-08-07T10:00:00Z"}
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            (root / "data").mkdir()
+            (root / "config").mkdir()
+            (root / "imports/openstreetmap").mkdir(parents=True)
+            (root / "data/registry.json").write_text(
+                json.dumps({"schemaVersion": 1, "places": [place]}), encoding="utf-8"
+            )
+            (root / "config/sources.json").write_text(json.dumps({"sources": []}), encoding="utf-8")
+            (root / "imports/openstreetmap/normalized.json").write_text(
+                json.dumps(
+                    {
+                        "records": [
+                            {
+                                "queryId": query["id"],
+                                "type": "node",
+                                "id": "1",
+                                "coordinates": query["coordinates"],
+                                "qid": "Q12345",
+                                "matchBasis": "qid",
+                            }
+                        ]
+                    }
+                ),
+                encoding="utf-8",
+            )
+
+            issues = validate_repository(root)
+
+        self.assertEqual([], issues)
+
     def test_rejects_invalid_point_coordinates(self):
         query = {
             "id": "019c0000-0000-7000-8000-000000000063",

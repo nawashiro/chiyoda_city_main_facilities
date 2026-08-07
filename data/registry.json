@@ -5094,12 +5094,12 @@
       ],
       "externalRefs": [],
       "lifecycle": {
-        "status": "active",
-        "changedAt": "2026-07-28T11:33:32Z"
+        "status": "closed",
+        "changedAt": "2026-08-07T07:08:19+00:00"
       },
       "visibility": {
-        "status": "public",
-        "changedAt": "2026-07-28T11:33:32Z"
+        "status": "private",
+        "changedAt": "2026-08-07T07:08:19+00:00"
       },
       "audit": [
         {
@@ -5107,6 +5107,24 @@
           "method": "human_inference",
           "action": "created",
           "target": "place"
+        },
+        {
+          "at": "2026-08-07T07:08:19+00:00",
+          "method": "human_inference",
+          "action": "removed_search_input",
+          "target": "019fa880-5cd6-7332-a1b5-cf97d281ba93"
+        },
+        {
+          "at": "2026-08-07T07:08:19+00:00",
+          "method": "human_inference",
+          "action": "updated_lifecycle",
+          "target": "019fa880-5cd6-7332-a1b5-cf97d281ba93"
+        },
+        {
+          "at": "2026-08-07T07:08:19+00:00",
+          "method": "human_inference",
+          "action": "updated_visibility",
+          "target": "019fa880-5cd6-7332-a1b5-cf97d281ba93"
         }
       ]
     },

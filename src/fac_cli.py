@@ -504,6 +504,47 @@ def _set_search_input(
     _write_search_document(path, document)
 
 
+def _remove_search_input(root: Path, query_id: str, at: str) -> None:
+    source_refresh_due(None, at)
+    selected: tuple[Path, dict[str, Any], int] | None = None
+    for path in sorted((root / "inputs/osm-search").rglob("*.json")):
+        document = _read_json(path)
+        for index, query in enumerate(document.get("queries", [])):
+            if str(query.get("id")) == query_id:
+                if selected is not None:
+                    raise ValueError(f"duplicate search input: {query_id}")
+                selected = (path, document, index)
+    if selected is None:
+        raise ValueError(f"search input not found: {query_id}")
+    original_registry = _read_json(root / "data/registry.json")
+    registry = copy.deepcopy(original_registry)
+    place = next(
+        (item for item in registry.get("places", []) if str(item.get("id")) == query_id),
+        None,
+    )
+    if place is None:
+        raise ValueError(f"place not found: {query_id}")
+    place.setdefault("audit", []).append(
+        compact_audit(at, "human_inference", "removed_search_input", query_id)
+    )
+    place["lifecycle"] = {"status": "closed", "changedAt": at}
+    place.setdefault("audit", []).append(
+        compact_audit(at, "human_inference", "updated_lifecycle", query_id)
+    )
+    place["visibility"] = {"status": "private", "changedAt": at}
+    place.setdefault("audit", []).append(
+        compact_audit(at, "human_inference", "updated_visibility", query_id)
+    )
+    _write_registry(root, registry)
+    path, document, index = selected
+    document["queries"].pop(index)
+    try:
+        _write_search_document(path, document)
+    except OSError:
+        _write_registry(root, original_registry)
+        raise
+
+
 def _main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(prog="fac", description="Maintain Chiyoda Place data")
     subparsers = parser.add_subparsers(dest="command", required=True)
@@ -558,6 +599,10 @@ def _main(argv: list[str] | None = None) -> int:
     input_set_parser.add_argument("--lon", dest="longitude", type=float)
     input_set_parser.add_argument("--lat", dest="latitude", type=float)
     input_set_parser.add_argument("--qid")
+    input_remove_parser = input_subparsers.add_parser("rm", help="remove a search input")
+    input_remove_parser.add_argument("root", nargs="?", default=".")
+    input_remove_parser.add_argument("query_id")
+    input_remove_parser.add_argument("--at")
     args = parser.parse_args(argv)
     if args.command == "ls":
         _print_places(
@@ -617,6 +662,10 @@ def _main(argv: list[str] | None = None) -> int:
             latitude=args.latitude,
             qid=args.qid,
         )
+        return 0
+    if args.command == "in" and args.input_command == "rm":
+        at = args.at or datetime.now(timezone.utc).isoformat(timespec="seconds")
+        _remove_search_input(Path(args.root), args.query_id, at)
         return 0
     return 1
 
