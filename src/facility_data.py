@@ -1027,7 +1027,7 @@ def compact_audit(
 
 
 def source_refresh_due(last_retrieved_at: str | None, now: str) -> bool:
-    """Enforce the shared at-most-monthly retrieval boundary."""
+    """Return whether a scheduled source refresh is due after 30 days."""
     try:
         current = datetime.fromisoformat(now.replace("Z", "+00:00"))
     except (AttributeError, ValueError) as error:
