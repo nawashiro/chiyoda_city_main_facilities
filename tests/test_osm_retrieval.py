@@ -85,6 +85,7 @@ class OsmRetrievalTests(unittest.TestCase):
             "elements": [
                 {"type": "node", "id": 1, "lat": 35.69, "lon": 139.75, "tags": {}},
                 {"type": "node", "id": 2, "lat": 35.6901, "lon": 139.7501, "tags": {"amenity": "library"}},
+                {"type": "node", "id": 3, "lat": 35.6902, "lon": 139.7502, "tags": {"name": "候補施設", "amenity": "library"}},
             ],
         }
 
@@ -93,7 +94,7 @@ class OsmRetrievalTests(unittest.TestCase):
         )
 
         self.assertEqual([], normalized["records"])
-        self.assertEqual(["node/2"], [candidate["recordId"] for candidate in report["queries"][0]["candidates"]])
+        self.assertEqual(["node/3"], [candidate["recordId"] for candidate in report["queries"][0]["candidates"]])
 
     def test_name_edit_distance_has_boundary_and_rejects_short_false_positives(self):
         self.assertTrue(_osm_names_match("abcdefghij", "abcdefxxij"))

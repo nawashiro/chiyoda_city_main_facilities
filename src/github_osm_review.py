@@ -61,6 +61,14 @@ def _yaml_scalar(value: Any) -> str:
     return json.dumps(value, ensure_ascii=False)
 
 
+def _review_candidates(query: dict[str, Any]) -> list[dict[str, Any]]:
+    return [
+        candidate
+        for candidate in query.get("candidates", [])
+        if isinstance(candidate.get("name"), str) and candidate["name"].strip()
+    ]
+
+
 def build_review_yaml(report: dict[str, Any], *, report_sha256: str) -> str:
     """Render candidates and one-true Japanese options for GitHub editing."""
     queries = [query for query in report.get("queries", []) if query.get("status") == "needs_review"]
@@ -88,7 +96,7 @@ def build_review_yaml(report: dict[str, Any], *, report_sha256: str) -> str:
         for vote in query.get("llmVotes", []):
             lines.append(f"      - {_yaml_scalar(vote)}")
         lines.append("    候補の詳細:")
-        for candidate in query.get("candidates", []):
+        for candidate in _review_candidates(query):
             lines.extend(
                 [
                     f"      - ID: {_yaml_scalar(candidate['recordId'])}",
@@ -99,7 +107,7 @@ def build_review_yaml(report: dict[str, Any], *, report_sha256: str) -> str:
                 ]
             )
         lines.append("    選択肢:")
-        for candidate in query.get("candidates", []):
+        for candidate in _review_candidates(query):
             name = candidate.get("name") or candidate.get("tags", {}).get("name") or "名称なし"
             label = f"候補 {candidate['recordId']}: {name}"
             lines.append(f"      {_yaml_scalar(label)}: false")
@@ -238,7 +246,7 @@ def build_issue_document(
             candidate_id = vote.get("candidateId") or "該当なし／判断保留"
             lines.append(f"- **{perspective}**: `{vote.get('decision')}` — `{candidate_id}`")
         lines.extend(["", "### 選択", ""])
-        for candidate in query.get("candidates", []):
+        for candidate in _review_candidates(query):
             record_id = str(candidate["recordId"])
             display_name = candidate.get("name") or candidate.get("tags", {}).get("name") or "名称なし"
             record_type, record_number = record_id.split("/", 1)
@@ -341,7 +349,7 @@ def apply_issue_selections(
     for query_id, query in review_queries.items():
         decision, candidate_id = checked[query_id][0]
         candidates = {
-            str(candidate["recordId"]): candidate for candidate in query.get("candidates", [])
+            str(candidate["recordId"]): candidate for candidate in _review_candidates(query)
         }
         if decision == "link":
             candidate = candidates.get(candidate_id)

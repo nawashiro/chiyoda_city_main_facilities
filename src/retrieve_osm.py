@@ -126,7 +126,7 @@ def prepare_osm_snapshot(
 
     candidates_by_record_id: dict[str, dict[str, Any]] = {}
     for record in normalize_osm_elements(raw["elements"]):
-        if not record.get("tags"):
+        if not isinstance(record.get("name"), str) or not record["name"].strip():
             continue
         record_id = f"{record['type']}/{record['id']}"
         if record_id in candidates_by_record_id:

@@ -247,7 +247,7 @@ review diff生成前に`git add -N .`を行い、新規ファイルもbinary dif
 3. WAMの施設数・元レコード数が前回から大きく変わっていないか確認する。202603版の8施設・13元レコードは現在の目安であり、固定要件ではない。
 4. OSMの合議不成立時は自動作成されたIssueを開く。
 5. Issueのリンクから`reports/osm-review-needed.yaml`を開く。
-6. YAML内の候補詳細を確認する。
+6. YAML内の名称付き候補詳細を確認する。
 7. 各「選択肢」で一つだけ`true`に変更してコミットする。
 8. Issueの適用チェックを入れる。Actionsはコミット済みYAMLと保存済みartifactのSHA-256を照合してPull Requestを作成する。
 9. `sourceAttributions`と取得台帳の版・SHAを確認する。
