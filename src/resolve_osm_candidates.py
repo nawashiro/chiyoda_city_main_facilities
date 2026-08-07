@@ -108,6 +108,11 @@ def resolve_osm_candidates(root: str | Path, voter: Voter) -> tuple[Path, Path]:
         f"{record['type']}/{record['id']}": str(record["queryId"])
         for record in records
     }
+    query_names = {
+        str(query["queryId"]): str(query["name"])
+        for query in report.get("queries", [])
+        if query.get("queryId") is not None and query.get("name") is not None
+    }
     review_queries = []
 
     for query in report.get("queries", []):
@@ -137,6 +142,12 @@ def resolve_osm_candidates(root: str | Path, voter: Voter) -> tuple[Path, Path]:
             )
             candidate_id = str(candidate["recordId"])
             if candidate_id in record_owners:
+                conflicting_query_id = record_owners[candidate_id]
+                query["reviewReason"] = {
+                    "code": "candidate_already_linked",
+                    "conflictingQueryId": conflicting_query_id,
+                    "conflictingQueryName": query_names.get(conflicting_query_id),
+                }
                 query["status"] = "needs_review"
                 review_queries.append(query)
                 continue

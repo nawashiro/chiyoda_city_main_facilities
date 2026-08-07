@@ -199,9 +199,10 @@ current OSM参照がない項目は、次の条件をすべて満たす場合も
 - 検索入力が変更された項目。
 - current OSM IDが消えた項目。
 - current OSM IDが複数化または衝突した項目。
-- current OSM recordと検索入力が矛盾する項目。
 - current OSM参照がなく、候補reportへ記録したOSM rawのSHA-256が変更された項目。
 - current OSM参照がなく、候補reportにOSM rawの`rawSha256`または検索入力がない項目。
+
+current OSM IDが一意に存在する項目は、OSM recordの名称と検索入力の名称が異なっても再同定しない。OSMボランティアとデータ保守者は同じ地物を異なる名称・粒度で記録しうるため、名称比較を再同定の入口や候補照合へ使わない。名称表記ゆれの照合改善は別途扱う。
 
 再同定対象がない場合、normalized snapshot、候補report、正本、公開GeoJSONを変更しない。最後に採用した`linked_osm` auditの`searchInputSha256`と現在の検索入力hashを比較する。current OSM参照がない項目では、候補reportの`target`から検索入力hashを計算する。検索入力hashは`name`と`coordinates`または`qid`だけをcanonical JSON化し、UTF-8 bytesから計算する。OSM rawのSHA-256は保持済みbytesの完全性を検証する。候補reportへ記録したOSM rawの`rawSha256`は、current OSM参照がない項目の変更検知に使う。
 
@@ -228,11 +229,11 @@ python3 -m src.facility_data validate .
 - `Update town polygons`
 - `Re-identify retained source snapshots`
 
-GitHub Actionsの更新workflowは、対象branchを選び、必要な版またはcommitを入力して実行する。WAMと町名の更新結果はartifactで確認し、必要な修正をbranchへ反映してPull Requestを作成する。OSMの確認Issueでは、検索入力ごとに候補を一つまたは「どれとも一致しない」を選び、最後に適用チェックを入れる。
+GitHub Actionsの更新workflowは、対象branchを選び、必要な版またはcommitを入力して実行する。WAMと町名の更新結果はartifactで確認し、必要な修正をbranchへ反映してPull Requestを作成する。OSMの確認Issueでは、GitHub上でレビューYAMLを編集し、検索入力ごとに候補を一つまたは「どれとも一致しない」を選び、最後に適用チェックを入れる。
 
-通常の更新workflowは取得、正規化、適用またはbuild、validate、unit testsを実行する。OSMで合議不成立がなければ生成差分のPull Requestを作る。合議不成立があれば更新run固有のartifactを30日保持し、全候補を選べるGitHub Issueを一つ作る。
+通常の更新workflowは取得、正規化、適用またはbuild、validate、unit testsを実行する。OSMで合議不成立がなければ生成差分のPull Requestを作る。合議不成立があれば更新run固有のartifactを30日保持し、レビューYAMLへのリンクだけを含むコンパクトなGitHub Issueを一つ作る。
 
-Issue本文のチェックボックスは検索入力ごとに一つだけ選択し、最後の適用チェックを押す。`Apply OSM human review` workflowはIssueに埋め込まれたrun IDとartifact名から元artifactを取得し、候補レポートSHA、候補集合、選択数を再検証する。`matchBasis: human_review`として反映し、監査方法を`human_inference`として正本・公開物を再生成し、testsとvalidate後にPull Requestを作る。人がJSONを編集・uploadする経路は設けない。
+レビューYAMLでは検索入力、候補詳細、OSMタグ、LLMログを出力しない。施設名と選択肢だけを人が編集する。候補が既に別施設へ紐付くため自動取り込みできない場合は、その理由と紐付け先の施設名をYAMLへ表示する。`Apply OSM human review` workflowはIssueに埋め込まれたrun IDとartifact名から元artifactを取得し、候補レポートSHA、候補集合、選択数を再検証する。`matchBasis: human_review`として反映し、監査方法を`human_inference`として正本・公開物を再生成し、testsとvalidate後にPull Requestを作る。人がJSONを編集・uploadする経路は設けない。
 
 `Re-identify retained source snapshots`は検索入力修正後のbranchで手動実行する。外部取得コマンドを呼ばず、保存済みWAM・OSM rawと取得台帳のSHA・版を検証する。workflowは検索入力とcurrent OSM IDの差分からOSMの影響項目を選び、その項目だけOSM normalizedとOSM候補を再生成する。WAM normalizedは保持済みWAM rawと現在の検索入力から再生成する。処理時刻とsource取得時刻を分離し、影響項目だけ正本名を同期した後、WAM→OSMの順で適用する。未解決候補だけをLLM照合し、項目ごとのコンテクスト分離を保てる場合は一括requestを使う。分離を保てない場合は実行前にrequest数を報告して確認を受ける。合議不成立時は同じIssue経路へ進む。
 
@@ -247,7 +248,7 @@ review diff生成前に`git add -N .`を行い、新規ファイルもbinary dif
 3. WAMの施設数・元レコード数が前回から大きく変わっていないか確認する。202603版の8施設・13元レコードは現在の目安であり、固定要件ではない。
 4. OSMの合議不成立時は自動作成されたIssueを開く。
 5. Issueのリンクから`reports/osm-review-needed.yaml`を開く。
-6. YAML内の名称付き候補詳細を確認する。
+6. YAMLに「候補は別の施設に紐付け済み」と表示される場合は、自動取り込みを止めた理由として確認する。
 7. 各「選択肢」で一つだけ`true`に変更してコミットする。
 8. Issueの適用チェックを入れる。Actionsはコミット済みYAMLと保存済みartifactのSHA-256を照合してPull Requestを作成する。
 9. `sourceAttributions`と取得台帳の版・SHAを確認する。
