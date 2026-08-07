@@ -2814,8 +2814,8 @@
         "changedAt": "2026-07-28T11:33:32Z"
       },
       "visibility": {
-        "status": "public",
-        "changedAt": "2026-07-28T11:33:32Z"
+        "status": "private",
+        "changedAt": "2026-08-07T05:10:25+00:00"
       },
       "audit": [
         {
@@ -2823,6 +2823,12 @@
           "method": "human_inference",
           "action": "created",
           "target": "place"
+        },
+        {
+          "at": "2026-08-07T05:10:25+00:00",
+          "method": "human_inference",
+          "action": "updated_visibility",
+          "target": "019fa880-5cd5-781a-bcd1-ee19d7c897f9"
         }
       ]
     },
