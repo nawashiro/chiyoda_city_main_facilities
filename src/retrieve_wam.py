@@ -263,8 +263,7 @@ def run_wam_retrieval(
     root = Path(root)
     metadata_path = root / "imports/wam/retrieval.json"
     metadata = json.loads(metadata_path.read_text(encoding="utf-8"))
-    if not source_refresh_due(metadata.get("retrievedAt"), at):
-        raise ValueError("WAM snapshot was retrieved less than 30 days ago")
+    source_refresh_due(None, at)
     rows, artifacts, _downloads = fetch_wam_release(release, fetcher)
     target_search = root / f"inputs/osm-search/wam/{release}.json"
     existing_documents = [

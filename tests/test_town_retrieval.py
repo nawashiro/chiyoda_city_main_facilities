@@ -58,6 +58,10 @@ class TownRetrievalTests(unittest.TestCase):
 
         with tempfile.TemporaryDirectory() as directory:
             root = Path(directory)
+            (root / "data/pinned").mkdir(parents=True)
+            (root / "data/pinned/towns.retrieval.json").write_text(
+                json.dumps({"retrievedAt": "2026-07-28T00:00:00Z"}), encoding="utf-8"
+            )
             run_town_retrieval(root, commit, "2026-07-29T00:00:00Z", fetch)
             pinned = json.loads((root / "data/pinned/towns.geojson").read_text(encoding="utf-8"))
             metadata = json.loads(

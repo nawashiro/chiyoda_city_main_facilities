@@ -227,7 +227,13 @@ class OsmRetrievalTests(unittest.TestCase):
                 encoding="utf-8",
             )
             (root / "imports/openstreetmap/retrieval.json").write_text(
-                json.dumps({"retrievedAt": None, "rawVersion": None, "minimumIntervalDays": 30}),
+                json.dumps(
+                    {
+                        "retrievedAt": "2026-07-28T00:00:00Z",
+                        "rawVersion": None,
+                        "minimumIntervalDays": 30,
+                    }
+                ),
                 encoding="utf-8",
             )
 

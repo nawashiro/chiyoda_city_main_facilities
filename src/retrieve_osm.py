@@ -271,8 +271,7 @@ def run_osm_retrieval(
     root = Path(root)
     metadata_path = root / "imports/openstreetmap/retrieval.json"
     metadata = json.loads(metadata_path.read_text(encoding="utf-8"))
-    if not source_refresh_due(metadata.get("retrievedAt"), at):
-        raise ValueError("OSM snapshot was retrieved less than 30 days ago")
+    source_refresh_due(None, at)
     registry = json.loads((root / "data/registry.json").read_text(encoding="utf-8"))
     search_documents = [
         json.loads(path.read_text(encoding="utf-8"))

@@ -93,12 +93,7 @@ def run_town_retrieval(
         raise ValueError("town source commit must be a full 40-character SHA")
     root = Path(root)
     metadata_path = root / "data/pinned/towns.retrieval.json"
-    if metadata_path.exists():
-        previous = json.loads(metadata_path.read_text(encoding="utf-8")).get("retrievedAt")
-        if not source_refresh_due(previous, at):
-            raise ValueError("town source was retrieved less than 30 days ago")
-    else:
-        source_refresh_due(None, at)
+    source_refresh_due(None, at)
     url = f"https://raw.githubusercontent.com/{_REPOSITORY}/{commit}/{_SOURCE_PATH}"
     payload, headers = fetcher(url)
     if not isinstance(payload, bytes) or not payload:

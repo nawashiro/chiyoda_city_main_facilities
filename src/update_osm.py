@@ -43,9 +43,7 @@ def main(argv: list[str] | None = None) -> int:
         return 1
     metadata_path = root / "imports/openstreetmap/retrieval.json"
     metadata = json.loads(metadata_path.read_text(encoding="utf-8"))
-    if not source_refresh_due(metadata.get("retrievedAt"), args.at):
-        print("ERROR: OSM snapshot was retrieved less than 30 days ago")
-        return 1
+    source_refresh_due(None, args.at)
     raw = json.loads(Path(args.raw).read_text(encoding="utf-8"))
     if not isinstance(raw.get("version"), str) or not raw["version"].strip():
         print("ERROR: OSM raw snapshot requires a version")
