@@ -5,7 +5,13 @@ import tempfile
 import unittest
 from pathlib import Path
 
-from src.github_osm_review import apply_issue_selections, build_issue_document, build_issue_documents
+from src.github_osm_review import (
+    apply_issue_selections,
+    apply_yaml_selections,
+    build_issue_document,
+    build_issue_documents,
+    build_review_yaml,
+)
 
 
 class GithubOsmReviewTests(unittest.TestCase):
@@ -196,17 +202,56 @@ class GithubOsmReviewTests(unittest.TestCase):
             with self.assertRaisesRegex(ValueError, "duplicate current OSM recordId"):
                 apply_issue_selections(root, body, issue_url="https://example/7")
 
-    def test_rejects_review_body_over_github_issue_limit(self):
+    def test_builds_compact_issue_and_editable_yaml_for_an_oversized_review(self):
         report = self.review_report()
         report["queries"][0]["candidates"][0]["tags"]["oversized"] = "x" * 70000
 
-        with self.assertRaisesRegex(ValueError, "GitHub Issue body limit"):
-            build_issue_document(
-                report,
-                run_id="12345",
-                artifact_name="osm-update-12345",
-                report_sha256="0" * 64,
+        review_yaml = build_review_yaml(report, report_sha256="0" * 64)
+        issue = build_issue_document(
+            report,
+            run_id="12345",
+            artifact_name="osm-update-12345",
+            report_sha256="0" * 64,
+            review_branch="automation/osm-review-12345",
+        )
+
+        self.assertIn('decision: null', review_yaml)
+        self.assertIn('candidateId: null', review_yaml)
+        self.assertLess(len(issue["body"]), 65_536)
+        self.assertIn('/edit/automation/osm-review-12345/reports/osm-review-needed.yaml', issue["body"])
+        self.assertIn('/blob/automation/osm-review-12345/reports/osm-candidates.json', issue["body"])
+        self.assertNotIn("oversized", issue["body"])
+
+    def test_applies_choices_from_review_yaml_after_artifact_hash_validation(self):
+        report = self.review_report()
+        payload = (json.dumps(report, ensure_ascii=False, indent=2) + "\n").encode()
+        review_yaml = build_review_yaml(
+            report, report_sha256=hashlib.sha256(payload).hexdigest()
+        ).replace("decision: null", "decision: link").replace(
+            "candidateId: null", "candidateId: node/1"
+        )
+
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            (root / "reports").mkdir()
+            (root / "imports/openstreetmap").mkdir(parents=True)
+            (root / "reports/osm-candidates.json").write_bytes(payload)
+            (root / "imports/openstreetmap/normalized.json").write_text(
+                json.dumps({"records": []}), encoding="utf-8"
             )
+
+            result = apply_yaml_selections(
+                root,
+                review_yaml,
+                issue_url="https://github.com/example/repo/issues/7",
+            )
+            normalized = json.loads(
+                (root / "imports/openstreetmap/normalized.json").read_text()
+            )
+
+        self.assertEqual("human_review", normalized["records"][0]["matchBasis"])
+        self.assertEqual("node/1", f"{normalized['records'][0]['type']}/{normalized['records'][0]['id']}")
+        self.assertEqual(hashlib.sha256(payload).hexdigest(), result["reportSha256"])
 
 
 if __name__ == "__main__":

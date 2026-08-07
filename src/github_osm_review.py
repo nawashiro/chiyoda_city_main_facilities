@@ -40,7 +40,11 @@ def parse_issue_metadata(body: str) -> dict[str, Any]:
     except (ValueError, json.JSONDecodeError) as error:
         raise ValueError("OSM review metadata is invalid") from error
     required = {"schemaVersion", "runId", "artifactName", "reportSha256", "queryIds"}
-    if set(metadata) != required or metadata["schemaVersion"] != 2:
+    if metadata.get("schemaVersion") == 3:
+        required.add("reviewBranch")
+        if not isinstance(metadata.get("reviewBranch"), str) or not metadata["reviewBranch"]:
+            raise ValueError("OSM review branch is invalid")
+    if set(metadata) != required or metadata.get("schemaVersion") not in {2, 3}:
         raise ValueError("OSM review metadata has an unsupported shape")
     if not isinstance(metadata["queryIds"], list) or not metadata["queryIds"] or not all(isinstance(item, str) for item in metadata["queryIds"]):
         raise ValueError("OSM review query IDs are invalid")
@@ -53,12 +57,67 @@ def parse_issue_metadata(body: str) -> dict[str, Any]:
     return metadata
 
 
+def build_review_yaml(report: dict[str, Any], *, report_sha256: str) -> str:
+    """Render a deliberately small, GitHub-editable YAML decision sheet."""
+    queries = [query for query in report.get("queries", []) if query.get("status") == "needs_review"]
+    lines = ["schemaVersion: 1", f"reportSha256: {report_sha256}", "choices:"]
+    for query in queries:
+        lines.extend(
+            [
+                f'  - queryId: {json.dumps(str(query["queryId"]))}',
+                "    decision: null",
+                "    candidateId: null",
+            ]
+        )
+    return "\n".join(lines) + "\n"
+
+
+def _parse_yaml_value(value: str) -> str | None:
+    value = value.strip()
+    if value == "null":
+        return None
+    if value.startswith('"'):
+        parsed = json.loads(value)
+        if not isinstance(parsed, str):
+            raise ValueError("OSM review YAML value is invalid")
+        return parsed
+    if not value or any(character.isspace() for character in value):
+        raise ValueError("OSM review YAML value is invalid")
+    return value
+
+
+def _parse_review_yaml(text: str) -> dict[str, Any]:
+    lines = text.splitlines()
+    if len(lines) < 3 or lines[:3] != ["schemaVersion: 1", f"reportSha256: {lines[1][14:]}", "choices:"]:
+        raise ValueError("OSM review YAML has an unsupported shape")
+    report_sha256 = lines[1].removeprefix("reportSha256: ")
+    if not re.fullmatch(r"[0-9a-f]{64}", report_sha256):
+        raise ValueError("OSM review YAML report hash is invalid")
+    choices = []
+    for index in range(3, len(lines), 3):
+        group = lines[index : index + 3]
+        if len(group) != 3 or not group[0].startswith("  - queryId: ") or not group[1].startswith("    decision: ") or not group[2].startswith("    candidateId: "):
+            raise ValueError("OSM review YAML choice is invalid")
+        choices.append(
+            {
+                "queryId": _parse_yaml_value(group[0].removeprefix("  - queryId: ")),
+                "decision": _parse_yaml_value(group[1].removeprefix("    decision: ")),
+                "candidateId": _parse_yaml_value(group[2].removeprefix("    candidateId: ")),
+            }
+        )
+    if not choices or not all(isinstance(choice["queryId"], str) for choice in choices):
+        raise ValueError("OSM review YAML choices are invalid")
+    return {"reportSha256": report_sha256, "choices": choices}
+
+
 def build_issue_document(
     report: dict[str, Any],
     *,
     run_id: str,
     artifact_name: str,
     report_sha256: str,
+    review_branch: str | None = None,
+    repository_url: str = "https://github.com/nawashiro/chiyoda_city_main_facilities",
 ) -> dict[str, Any] | None:
     queries = [
         query for query in report.get("queries", []) if query.get("status") == "needs_review"
@@ -66,12 +125,34 @@ def build_issue_document(
     if not queries:
         return None
     metadata = {
-        "schemaVersion": 2,
+        "schemaVersion": 3 if review_branch else 2,
         "runId": str(run_id),
         "artifactName": artifact_name,
         "reportSha256": report_sha256,
         "queryIds": [str(query["queryId"]) for query in queries],
     }
+    if review_branch:
+        metadata["reviewBranch"] = review_branch
+        edit_url = f"{repository_url}/edit/{review_branch}/reports/osm-review-needed.yaml"
+        candidates_url = f"{repository_url}/blob/{review_branch}/reports/osm-candidates.json"
+        body = "\n".join(
+            [
+                f"<!-- osm-review-metadata:{_encode_metadata(metadata)} -->",
+                "## OSM候補の人間確認",
+                "",
+                "Issue本文は容量制限を避けるため、候補と選択をレビュー用ブランチへ分離しました。",
+                "",
+                f"1. [レビューYAMLをGitHubで編集]({edit_url})し、各項目の`decision`と`candidateId`を一組ずつ入力してコミットします。",
+                f"2. 必要なら[候補の完全なJSON]({candidates_url})を参照します。",
+                "3. このIssueの適用チェックを入れると、Actionsがコミット済みのYAMLと元の成果物を照合してPull Requestを作成します。",
+                "",
+                "- [ ] <!-- osm-apply --> **コミット済みの選択を適用してPull Requestを作成する**",
+                "",
+                f"元のActions run: `{run_id}` / artifact: `{artifact_name}`",
+                "",
+            ]
+        )
+        return {"title": f"OSM候補の人間確認（Actions run {run_id}）", "body": body, "labels": ["osm-human-review"]}
     lines = [
         f"<!-- osm-review-metadata:{_encode_metadata(metadata)} -->",
         "## OSM候補の人間確認",
@@ -257,6 +338,50 @@ def apply_issue_selections(
     return metadata
 
 
+def apply_yaml_selections(
+    root: str | Path, yaml_text: str, *, issue_url: str
+) -> dict[str, Any]:
+    """Validate committed YAML selections, then reuse the artifact-bound applier."""
+    selection = _parse_review_yaml(yaml_text)
+    root = Path(root)
+    report_payload = (root / "reports/osm-candidates.json").read_bytes()
+    if hashlib.sha256(report_payload).hexdigest() != selection["reportSha256"]:
+        raise ValueError("OSM review YAML does not match the reviewed artifact")
+    report = json.loads(report_payload)
+    query_ids = [
+        str(query["queryId"])
+        for query in report.get("queries", [])
+        if query.get("status") == "needs_review"
+    ]
+    choices = selection["choices"]
+    if {choice["queryId"] for choice in choices} != set(query_ids) or len(choices) != len(query_ids):
+        raise ValueError("OSM review YAML query IDs do not match the artifact")
+    lines = [
+        "<!-- osm-review-metadata:"
+        + _encode_metadata(
+            {
+                "schemaVersion": 2,
+                "runId": "0",
+                "artifactName": "yaml-review",
+                "reportSha256": selection["reportSha256"],
+                "queryIds": query_ids,
+            }
+        )
+        + " -->"
+    ]
+    for choice in choices:
+        decision = choice["decision"]
+        candidate_id = choice["candidateId"]
+        if decision not in {"link", "reject"} or not isinstance(candidate_id, str):
+            raise ValueError(f"OSM review YAML choice is incomplete for query {choice['queryId']}")
+        lines.append(
+            f"- [x] <!-- osm-choice:{choice['queryId']}:{decision}:{candidate_id} -->"
+        )
+    lines.append("- [x] <!-- osm-apply -->")
+    apply_issue_selections(root, "\n".join(lines) + "\n", issue_url=issue_url)
+    return selection
+
+
 def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(description="Build and apply GitHub OSM review issues")
     subparsers = parser.add_subparsers(dest="command", required=True)
@@ -265,29 +390,59 @@ def main(argv: list[str] | None = None) -> int:
     build_parser.add_argument("--run-id", required=True)
     build_parser.add_argument("--artifact-name", required=True)
     build_parser.add_argument("--output", required=True)
+    build_parser.add_argument("--review-branch")
+    build_parser.add_argument("--repository-url")
     metadata_parser = subparsers.add_parser("metadata")
     metadata_parser.add_argument("--event", required=True)
     apply_parser = subparsers.add_parser("apply")
     apply_parser.add_argument("root", nargs="?", default=".")
     apply_parser.add_argument("--event", required=True)
+    apply_yaml_parser = subparsers.add_parser("apply-yaml")
+    apply_yaml_parser.add_argument("root", nargs="?", default=".")
+    apply_yaml_parser.add_argument("--event", required=True)
+    apply_yaml_parser.add_argument("--yaml", required=True)
     args = parser.parse_args(argv)
     try:
         if args.command == "build":
             root = Path(args.root)
             report_path = root / "reports/osm-candidates.json"
             payload = report_path.read_bytes()
-            issues = build_issue_documents(
-                json.loads(payload),
-                run_id=args.run_id,
-                artifact_name=args.artifact_name,
-                report_sha256=hashlib.sha256(payload).hexdigest(),
-            )
+            report = json.loads(payload)
+            report_sha256 = hashlib.sha256(payload).hexdigest()
+            if any(query.get("status") == "needs_review" for query in report.get("queries", [])):
+                (root / "reports/osm-review-needed.yaml").write_text(
+                    build_review_yaml(report, report_sha256=report_sha256), encoding="utf-8"
+                )
+            if args.review_branch:
+                document = build_issue_document(
+                    report,
+                    run_id=args.run_id,
+                    artifact_name=args.artifact_name,
+                    report_sha256=report_sha256,
+                    review_branch=args.review_branch,
+                    repository_url=args.repository_url or "https://github.com/nawashiro/chiyoda_city_main_facilities",
+                )
+                issues = [] if document is None else [document]
+            else:
+                issues = build_issue_documents(
+                    report,
+                    run_id=args.run_id,
+                    artifact_name=args.artifact_name,
+                    report_sha256=report_sha256,
+                )
             _write_json(Path(args.output), {"issues": issues})
         else:
             event = json.loads(Path(args.event).read_text(encoding="utf-8"))
             body = event["issue"]["body"]
             if args.command == "metadata":
                 print(json.dumps(parse_issue_metadata(body), separators=(",", ":")))
+            elif args.command == "apply-yaml":
+                result = apply_yaml_selections(
+                    args.root,
+                    Path(args.yaml).read_text(encoding="utf-8"),
+                    issue_url=event["issue"]["html_url"],
+                )
+                print(json.dumps(result, separators=(",", ":")))
             else:
                 result = apply_issue_selections(
                     args.root, body, issue_url=event["issue"]["html_url"]
