@@ -278,18 +278,19 @@ class OsmRetrievalTests(unittest.TestCase):
         )
         self.assertEqual(metadata["rawSha256"], hashlib.sha256(raw_bytes).hexdigest())
 
-    def test_builds_one_chiyoda_area_query_for_refresh_and_discovery(self):
+    def test_builds_one_chiyoda_bbox_query_for_refresh_and_discovery(self):
         query = build_discovery_query(["node/2", "way/3"], ["Q123"])
 
+        chiyoda_bbox = "35.6680,139.7290,35.7060,139.7840"
         self.assertEqual(1, query.count("[out:json]"))
-        self.assertEqual(1, query.count("->.searchArea"))
+        self.assertNotIn("searchArea", query)
         self.assertIn("node(id:2)", query)
         self.assertIn("way(id:3)", query)
-        self.assertIn('nwr["wikidata"="Q123"]', query)
-        self.assertIn('nwr(area.searchArea)["amenity"~', query)
-        self.assertIn('nwr(area.searchArea)["tourism"~', query)
-        self.assertIn('nwr(area.searchArea)["leisure"="park"]', query)
-        self.assertIn('nwr(area.searchArea)["office"="government"]', query)
+        self.assertIn(f'nwr({chiyoda_bbox})["wikidata"="Q123"]', query)
+        self.assertIn(f'nwr({chiyoda_bbox})["amenity"~', query)
+        self.assertIn(f'nwr({chiyoda_bbox})["tourism"~', query)
+        self.assertIn(f'nwr({chiyoda_bbox})["leisure"="park"]', query)
+        self.assertIn(f'nwr({chiyoda_bbox})["office"="government"]', query)
         self.assertNotIn("around:", query)
         self.assertIn(");out center;", query)
         self.assertTrue(query.endswith("out center;"))
