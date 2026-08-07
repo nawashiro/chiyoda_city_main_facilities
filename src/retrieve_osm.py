@@ -5,10 +5,12 @@ import hashlib
 import json
 import math
 import re
+import tempfile
 from pathlib import Path
 from typing import Any
-from urllib.parse import urlencode
 from urllib.request import Request, urlopen
+
+from src.osm_mirror import extract_elements
 
 from src.facility_data import (
     _osm_names_match,
@@ -255,102 +257,64 @@ def _write_json(path: Path, document: dict[str, Any]) -> None:
     )
 
 
-def run_osm_retrieval(
-    root: str | Path,
-    at: str,
-    post,
-) -> tuple[Path, Path]:
-    """Retrieve one Overpass batch and prepare reviewable local artifacts."""
+MOVISDA_MANIFEST_URL = "https://osm.download.movisda.io/admin/Admin-latest.geojson"
+MOVISDA_ADMIN_PREFIX = "JP-13-"
+
+
+def _select_tokyo_mirror(manifest: dict[str, Any]) -> tuple[str, dict[str, Any]]:
+    matches = [
+        feature.get("properties", {})
+        for feature in manifest.get("features", [])
+        if feature.get("properties", {}).get("prefix") == MOVISDA_ADMIN_PREFIX
+    ]
+    if len(matches) != 1:
+        raise ValueError("Movisda manifest lacks one Tokyo administrative extract")
+    properties = matches[0]
+    timestamp = properties.get("timestamp")
+    if not isinstance(timestamp, int) or not isinstance(properties.get("bytes"), int):
+        raise ValueError("Movisda Tokyo extract metadata is invalid")
+    return f"https://osm.download.movisda.io/admin/{MOVISDA_ADMIN_PREFIX}{timestamp}.osm.pbf", properties
+
+
+def run_osm_retrieval(root: str | Path, at: str, fetch, extractor=extract_elements) -> tuple[Path, Path]:
+    """Download the Tokyo mirror once and prepare reviewable local artifacts."""
     root = Path(root)
     metadata_path = root / "imports/openstreetmap/retrieval.json"
     metadata = json.loads(metadata_path.read_text(encoding="utf-8"))
     source_refresh_due(None, at)
     registry = json.loads((root / "data/registry.json").read_text(encoding="utf-8"))
-    search_documents = [
-        json.loads(path.read_text(encoding="utf-8"))
-        for path in sorted((root / "inputs/osm-search").rglob("*.json"))
-    ]
-    qids = sorted(
-        {
-            query["qid"]
-            for document in search_documents
-            for query in document.get("queries", [])
-            if "qid" in query
-        }
-    )
-    coordinates = [
-        query["coordinates"]
-        for document in search_documents
-        for query in document.get("queries", [])
-        if "coordinates" in query
-    ]
-    query = build_discovery_query(collect_osm_ids(registry), qids, coordinates)
-    payload, headers = post(OVERPASS_ENDPOINT, query)
-    if not isinstance(payload, bytes) or not payload:
-        raise ValueError("empty Overpass response")
-    if len(payload) > MAX_OVERPASS_BYTES:
-        raise ValueError("Overpass response is too large")
-    response = json.loads(payload)
-    if response.get("remark") is not None or response.get("error") is not None:
-        raise ValueError("Overpass returned a partial or errored response")
-    timestamp = response.get("osm3s", {}).get("timestamp_osm_base")
-    if not isinstance(timestamp, str) or not timestamp.strip():
-        raise ValueError("Overpass response lacks timestamp_osm_base")
-    if not isinstance(response.get("elements"), list):
-        raise ValueError("Overpass response lacks elements array")
-    raw = {
-        "version": timestamp,
-        "overpassApiVersion": response.get("version"),
-        "generator": response.get("generator"),
-        "osm3s": response.get("osm3s"),
-        "elements": response["elements"],
-    }
+    search_documents = [json.loads(path.read_text(encoding="utf-8")) for path in sorted((root / "inputs/osm-search").rglob("*.json"))]
+    qids = sorted({query["qid"] for document in search_documents for query in document.get("queries", []) if "qid" in query})
+    coordinates = [query["coordinates"] for document in search_documents for query in document.get("queries", []) if "coordinates" in query]
+    manifest_payload, manifest_headers = fetch(MOVISDA_MANIFEST_URL)
+    mirror_url, mirror = _select_tokyo_mirror(json.loads(manifest_payload))
+    pbf_payload, pbf_headers = fetch(mirror_url)
+    if len(pbf_payload) != mirror["bytes"]:
+        raise ValueError("Movisda Tokyo extract has an unexpected size")
+    with tempfile.TemporaryDirectory() as directory:
+        pbf_path = Path(directory) / "tokyo.osm.pbf"
+        pbf_path.write_bytes(pbf_payload)
+        elements = extractor(pbf_path, set(collect_osm_ids(registry)), set(qids), coordinates, tuple(map(float, CHIYODA_BBOX.split(","))))
+    raw = {"version": str(mirror["timestamp"]), "elements": elements}
     raw_payload = (json.dumps(raw, ensure_ascii=False, indent=2) + "\n").encode("utf-8")
-    query_payload = query.encode("utf-8")
+    selection = {"typedIds": sorted(collect_osm_ids(registry)), "qids": qids, "coordinates": coordinates, "bbox": CHIYODA_BBOX}
+    selection_payload = (json.dumps(selection, ensure_ascii=False, indent=2) + "\n").encode("utf-8")
     normalized, report = prepare_osm_snapshot(registry, search_documents, raw)
-    retrieval = {
-        **metadata,
-        "sourceId": "openstreetmap",
-        "retrievedAt": at,
-        "rawVersion": timestamp,
-        "endpoint": OVERPASS_ENDPOINT,
-        "querySha256": hashlib.sha256(query_payload).hexdigest(),
-        "responseSha256": hashlib.sha256(payload).hexdigest(),
-        "rawSha256": hashlib.sha256(raw_payload).hexdigest(),
-        "queryRetained": True,
-        "responseRetained": True,
-        "etag": headers.get("ETag"),
-        "lastModified": headers.get("Last-Modified"),
-    }
+    retrieval = {**metadata, "sourceId": "openstreetmap", "retrievedAt": at, "rawVersion": raw["version"], "manifestUrl": MOVISDA_MANIFEST_URL, "pbfUrl": mirror_url, "pbfSha256": hashlib.sha256(pbf_payload).hexdigest(), "pbfBytes": len(pbf_payload), "manifestSha256": hashlib.sha256(manifest_payload).hexdigest(), "extractor": "pyosmium", "selectionSha256": hashlib.sha256(selection_payload).hexdigest(), "rawSha256": hashlib.sha256(raw_payload).hexdigest(), "etag": pbf_headers.get("ETag"), "lastModified": pbf_headers.get("Last-Modified")}
     report["rawSha256"] = retrieval["rawSha256"]
-    normalized_path = root / "imports/openstreetmap/normalized.json"
-    report_path = root / "reports/osm-candidates.json"
-    imports_path = root / "imports/openstreetmap"
-    imports_path.mkdir(parents=True, exist_ok=True)
-    (imports_path / "raw-response.json").write_bytes(payload)
-    (imports_path / "query.overpassql").write_bytes(query_payload)
+    imports_path = root / "imports/openstreetmap"; imports_path.mkdir(parents=True, exist_ok=True)
+    (imports_path / "raw-response.json").write_bytes(manifest_payload)
+    (imports_path / "query.overpassql").write_bytes(selection_payload)
     (imports_path / "raw.json").write_bytes(raw_payload)
-    _write_json(normalized_path, normalized)
-    _write_json(report_path, report)
-    _write_json(metadata_path, retrieval)
+    normalized_path, report_path = imports_path / "normalized.json", root / "reports/osm-candidates.json"
+    _write_json(normalized_path, normalized); _write_json(report_path, report); _write_json(metadata_path, retrieval)
     return normalized_path, report_path
 
 
-def _http_post(endpoint: str, query: str) -> tuple[bytes, dict[str, str | None]]:
-    request = Request(
-        endpoint,
-        data=urlencode({"data": query}).encode(),
-        headers={
-            "Content-Type": "application/x-www-form-urlencoded",
-            "User-Agent": "chiyoda-city-main-facilities/1",
-        },
-        method="POST",
-    )
+def _http_get(url: str) -> tuple[bytes, dict[str, str | None]]:
+    request = Request(url, headers={"User-Agent": "chiyoda-city-main-facilities/1"})
     with urlopen(request, timeout=240) as response:
-        return read_limited_response(response, MAX_OVERPASS_BYTES, "Overpass"), {
-            "ETag": response.headers.get("ETag"),
-            "Last-Modified": response.headers.get("Last-Modified"),
-        }
+        return read_limited_response(response, 1024 * 1024 * 1024, "OSM mirror"), {"ETag": response.headers.get("ETag"), "Last-Modified": response.headers.get("Last-Modified")}
 
 
 def main(argv: list[str] | None = None) -> int:
@@ -359,7 +323,7 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument("--at", required=True)
     args = parser.parse_args(argv)
     try:
-        normalized_path, report_path = run_osm_retrieval(args.root, args.at, _http_post)
+        normalized_path, report_path = run_osm_retrieval(args.root, args.at, _http_get)
     except (OSError, ValueError, json.JSONDecodeError) as error:
         print(f"ERROR: {error}")
         return 1

@@ -150,7 +150,15 @@ python3 -m src.facility_data update . --source openstreetmap --at "$RETRIEVED_AT
 python3 -m src.facility_data validate .
 ```
 
-既知ID、固定の千代田区包含bboxに限定したQID、各座標検索入力の50m周辺bboxを単一Overpass queryで取得する。カテゴリでは絞り込まない。行政境界areaの解決はgateway timeoutを招くため行わない。施設ごとのN+1問い合わせは行わない。
+東京都を含む地域ミラーのPBFを取得し、ローカルで候補を抽出する。地域PBFはGitへ追加しない。抽出済みの`raw.json`だけをGitへ追加する。
+
+取得台帳は、manifest URL、PBF URL、PBFのversion、取得時刻、サイズ、SHA-256、抽出器、抽出条件、抽出済みrawのSHA-256を記録する。
+
+抽出条件は、既知ID、固定の千代田区包含bboxに限定したQID、各座標検索入力から50m以内の要素である。カテゴリでは絞り込まない。施設ごとのN+1問い合わせは行わない。
+
+nodeは自身の座標を使う。wayは構成nodeの外接bbox中心を使う。relationは直接memberのnodeとwayの外接bbox中心を使う。member relationは中心計算へ含めない。
+
+地域ミラーの境界にまたがるrelationは、欠落memberにより不正確な中心座標を持つ場合がある。抽出器は警告を出し、取得できたmemberから中心を計算してrelationを残す。
 
 自動適用経路は次の3つである。
 
