@@ -8,7 +8,7 @@
 
 WAM NETから取り込むのは相談支援4サービスだけである。
 
-初参加者は、まずREADMEの「初めて作業する人へ」を読み、作業branchを作成する。通常のデータ修正では、検索入力または正本だけを変更し、公開生成物を直接編集しない。
+初参加者は、まず[最初の施設変更](../tutorials/first-data-change.md)を読み、作業branchを作成する。通常のデータ修正では、検索入力または正本だけを変更し、公開生成物を直接編集しない。
 
 - 計画相談支援: `52`
 - 地域相談支援（地域移行）: `53`
@@ -30,7 +30,7 @@ WAM NETから取り込むのは相談支援4サービスだけである。
 
 QIDと座標の併記は禁止する。同じUUIDが正本にあれば作成済み、なければ未作成と判断する。
 
-人が作るファイルの例は`inputs/osm-search/human/202607.json`で、`source`は`{"kind": "human", "sourceId": null, "retrievedAt": null}`とする。座標順は`[経度, 緯度]`である。UUIDv7は`python3 -c 'from src.facility_data import new_uuid7; print(new_uuid7())'`で生成できる。完成したJSON例はREADMEを参照する。
+人が作るファイルの例は`inputs/osm-search/human/202607.json`で、`source`は`{"kind": "human", "sourceId": null, "retrievedAt": null}`とする。座標順は`[経度, 緯度]`である。UUIDv7は`python3 -c 'from src.facility_data import new_uuid7; print(new_uuid7())'`で生成できる。入力の追加・修正は[施設を保守する](../how-to/maintain-a-place.md)を参照する。
 
 ### 2.2 正本
 

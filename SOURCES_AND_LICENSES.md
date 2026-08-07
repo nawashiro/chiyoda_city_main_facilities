@@ -19,7 +19,7 @@
 - License URL: https://opendatacommons.org/licenses/odbl/1-0/
 - 加工: 千代田区内の対象候補を抽出し、同定済み施設の代表Point座標として利用
 
-取得・照合手順は[`doc/data_maintenance_spec.md`](doc/data_maintenance_spec.md)に記載する。
+取得・照合手順は[保守仕様](docs/reference/data-maintenance-spec.md)に記載する。
 
 ## Wikidata
 
