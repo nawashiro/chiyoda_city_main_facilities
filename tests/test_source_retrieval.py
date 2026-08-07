@@ -107,7 +107,10 @@ class WamRetrievalTests(unittest.TestCase):
             (root / "inputs/osm-search").mkdir(parents=True)
             (root / "imports/wam").mkdir(parents=True)
             (root / "imports/wam/retrieval.json").write_text(
-                json.dumps({"retrievedAt": None, "rawVersion": None}), encoding="utf-8"
+                json.dumps(
+                    {"retrievedAt": "2026-04-15T00:00:00Z", "rawVersion": None}
+                ),
+                encoding="utf-8",
             )
 
             run_wam_retrieval(
