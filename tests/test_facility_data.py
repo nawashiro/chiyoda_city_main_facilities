@@ -1190,6 +1190,27 @@ class CandidateMatchingTests(unittest.TestCase):
 
 
 class SourceUpdateTests(unittest.TestCase):
+    def test_keeps_closed_private_place_without_search_input_during_source_update(self):
+        query = {
+            "id": "019c0000-0000-7000-8000-000000000060",
+            "name": "重複施設",
+            "coordinates": [139.70, 35.60],
+        }
+        place = make_place(query, ["museum"], [], "2026-07-28T00:00:00Z")
+        place["lifecycle"] = {"status": "closed", "changedAt": "2026-08-07T00:00:00Z"}
+        place["visibility"] = {"status": "private", "changedAt": "2026-08-07T00:00:00Z"}
+
+        updated = apply_source_updates(
+            {"schemaVersion": 1, "places": [place]},
+            {},
+            [],
+            [],
+            "2026-07-28T00:00:00Z",
+            wam_raw_rows=[],
+        )
+
+        self.assertEqual([place], updated["places"])
+
     def test_empty_wam_normalized_snapshot_still_validates_raw_attribute_contract(self):
         repository = Path(__file__).resolve().parents[1]
         with tempfile.TemporaryDirectory() as temp_dir:
