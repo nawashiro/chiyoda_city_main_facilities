@@ -55,8 +55,8 @@ jobs:
             --output /tmp/osm-review-issue.json
           python3 - <<'PY' >> "$GITHUB_OUTPUT"
           import json
-          issue = json.load(open('/tmp/osm-review-issue.json', encoding='utf-8'))
-          print(f"review_needed={'false' if issue.get('skip') else 'true'}")
+          document = json.load(open('/tmp/osm-review-issue.json', encoding='utf-8'))
+          print(f"review_needed={'true' if document.get('issues') else 'false'}")
           PY
       - name: Save generated update for review
         uses: actions/upload-artifact@v4
@@ -77,7 +77,7 @@ jobs:
         with:
           script: |
             const fs = require('fs');
-            const issue = JSON.parse(fs.readFileSync('/tmp/osm-review-issue.json', 'utf8'));
+            const document = JSON.parse(fs.readFileSync('/tmp/osm-review-issue.json', 'utf8'));
             try {
               await github.rest.issues.getLabel({owner: context.repo.owner, repo: context.repo.repo, name: 'osm-human-review'});
             } catch (error) {
@@ -90,13 +90,15 @@ jobs:
                 description: 'OSM候補をGitHub上で人間確認する'
               });
             }
-            await github.rest.issues.create({
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              title: issue.title,
-              body: issue.body,
-              labels: issue.labels
-            });
+            for (const issue of document.issues) {
+              await github.rest.issues.create({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                title: issue.title,
+                body: issue.body,
+                labels: issue.labels
+              });
+            }
       - name: Create Pull Request when all candidates were resolved automatically
         if: steps.review.outputs.review_needed == 'false'
         uses: peter-evans/create-pull-request@v7

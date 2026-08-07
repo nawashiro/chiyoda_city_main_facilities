@@ -39,9 +39,11 @@ def parse_issue_metadata(body: str) -> dict[str, Any]:
         metadata = json.loads(base64.urlsafe_b64decode(encoded))
     except (ValueError, json.JSONDecodeError) as error:
         raise ValueError("OSM review metadata is invalid") from error
-    required = {"schemaVersion", "runId", "artifactName", "reportSha256"}
-    if set(metadata) != required or metadata["schemaVersion"] != 1:
+    required = {"schemaVersion", "runId", "artifactName", "reportSha256", "queryIds"}
+    if set(metadata) != required or metadata["schemaVersion"] != 2:
         raise ValueError("OSM review metadata has an unsupported shape")
+    if not isinstance(metadata["queryIds"], list) or not metadata["queryIds"] or not all(isinstance(item, str) for item in metadata["queryIds"]):
+        raise ValueError("OSM review query IDs are invalid")
     if not re.fullmatch(r"[0-9]+", str(metadata["runId"])):
         raise ValueError("OSM review run ID is invalid")
     if not isinstance(metadata["artifactName"], str) or not metadata["artifactName"]:
@@ -64,10 +66,11 @@ def build_issue_document(
     if not queries:
         return None
     metadata = {
-        "schemaVersion": 1,
+        "schemaVersion": 2,
         "runId": str(run_id),
         "artifactName": artifact_name,
         "reportSha256": report_sha256,
+        "queryIds": [str(query["queryId"]) for query in queries],
     }
     lines = [
         f"<!-- osm-review-metadata:{_encode_metadata(metadata)} -->",
@@ -157,6 +160,18 @@ def build_issue_document(
     }
 
 
+def build_issue_documents(report: dict[str, Any], *, run_id: str, artifact_name: str, report_sha256: str) -> list[dict[str, Any]]:
+    """Create one bounded GitHub Issue document per unresolved query."""
+    documents = []
+    for query in report.get("queries", []):
+        if query.get("status") != "needs_review":
+            continue
+        document = build_issue_document({"queries": [query]}, run_id=run_id, artifact_name=artifact_name, report_sha256=report_sha256)
+        if document is not None:
+            documents.append(document)
+    return documents
+
+
 def apply_issue_selections(
     root: str | Path, body: str, *, issue_url: str
 ) -> dict[str, Any]:
@@ -172,8 +187,10 @@ def apply_issue_selections(
     review_queries = {
         str(query["queryId"]): query
         for query in report.get("queries", [])
-        if query.get("status") == "needs_review"
+        if query.get("status") == "needs_review" and str(query["queryId"]) in metadata["queryIds"]
     }
+    if set(review_queries) != set(metadata["queryIds"]):
+        raise ValueError("OSM review query IDs do not match the artifact")
     checked: dict[str, list[tuple[str, str]]] = {query_id: [] for query_id in review_queries}
     for mark, query_id, decision, candidate_id in _CHOICE.findall(body):
         if mark.lower() != "x" or query_id not in checked:
@@ -259,13 +276,13 @@ def main(argv: list[str] | None = None) -> int:
             root = Path(args.root)
             report_path = root / "reports/osm-candidates.json"
             payload = report_path.read_bytes()
-            issue = build_issue_document(
+            issues = build_issue_documents(
                 json.loads(payload),
                 run_id=args.run_id,
                 artifact_name=args.artifact_name,
                 report_sha256=hashlib.sha256(payload).hexdigest(),
             )
-            _write_json(Path(args.output), issue or {"skip": True})
+            _write_json(Path(args.output), {"issues": issues})
         else:
             event = json.loads(Path(args.event).read_text(encoding="utf-8"))
             body = event["issue"]["body"]
