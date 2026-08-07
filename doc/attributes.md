@@ -97,7 +97,7 @@
 
 | 属性 | 型 | 説明 |
 |------|----|------|
-| `status` | 文字列 | 現在は`"public"`（公開）。制限付き公開は未実装 |
+| `status` | 文字列 | `"public"`（公開）または`"private"`（非公開） |
 | `changedAt` | 日時 | この状態になった時刻 |
 
 #### 監査記録
@@ -167,7 +167,7 @@
 - `geometrySource` — 座標の採用元記録
 - `externalRefs` — 外部参照の履歴と同定根拠
 - `lifecycle.changedAt` / `visibility.changedAt` — 状態変更の時刻
-- `visibility` — 公開範囲（全件 `public` なため省略）
+- `visibility` — 公開範囲。`public`以外のPlaceは公開GeoJSONから除外
 - `audit` — 監査証跡
 
 ---

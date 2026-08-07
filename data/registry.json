@@ -3527,8 +3527,8 @@
         "changedAt": "2026-07-28T11:33:32Z"
       },
       "visibility": {
-        "status": "public",
-        "changedAt": "2026-07-28T11:33:32Z"
+        "status": "private",
+        "changedAt": "2026-08-07T02:09:21+00:00"
       },
       "audit": [
         {
@@ -3554,6 +3554,12 @@
           "method": "language_model",
           "action": "linked_osm",
           "target": "node/6900192225"
+        },
+        {
+          "at": "2026-08-07T02:09:21+00:00",
+          "method": "human_inference",
+          "action": "updated_visibility",
+          "target": "019fa880-5cd5-7d9d-9713-970aa8443759"
         }
       ]
     },

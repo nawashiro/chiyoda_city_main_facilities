@@ -3025,61 +3025,6 @@
       "geometry": {
         "type": "Point",
         "coordinates": [
-          139.7594149,
-          35.6730666
-        ]
-      },
-      "properties": {
-        "id": "019fa880-5cd5-7d9d-9713-970aa8443759",
-        "name": "TOHO CINEMAS HIBIYA",
-        "categoryIds": [
-          "cinema"
-        ],
-        "tags": [],
-        "images": [],
-        "town": "有楽町",
-        "lifecycleStatus": "active",
-        "sources": {
-          "openstreetmap": {
-            "retrievedAt": "2026-07-29T06:32:29+00:00",
-            "record": {
-              "type": "node",
-              "id": "6900192225",
-              "coordinates": [
-                139.7594149,
-                35.6730666
-              ],
-              "tags": {
-                "amenity": "cinema",
-                "brand": "TOHOシネマズ",
-                "brand:en": "TOHO CINEMAS",
-                "brand:ja": "TOHOシネマズ",
-                "brand:short": "TOHO",
-                "brand:wikidata": "Q11235261",
-                "name": "TOHO CINEMAS HIBIYA",
-                "name:en": "Toho Cinemas",
-                "name:fr": "Cinémas Tōhō",
-                "name:ja": "TOHOシネマズ",
-                "name:ja-Hira": "とうほうシネマズみゆきざ",
-                "name:ja-Latn": "Tōhō shinemazu Miyuki-za",
-                "operator": "東宝",
-                "operator:wikidata": "Q875920",
-                "short_name": "TOHO",
-                "source": "survey",
-                "wheelchair": "yes",
-                "wikidata": "Q11249598",
-                "wikipedia": "ja:TOHOシネマズみゆき座"
-              }
-            }
-          }
-        }
-      }
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
           139.7702913,
           35.7019158
         ]

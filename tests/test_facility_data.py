@@ -587,7 +587,12 @@ class PhaseZeroFilesTests(unittest.TestCase):
         public = json.loads(
             (root / "dist/public/places.geojson").read_text(encoding="utf-8")
         )
-        self.assertEqual(len(registry["places"]), len(public["features"]))
+        public_places = [
+            place
+            for place in registry["places"]
+            if place["visibility"]["status"] == "public"
+        ]
+        self.assertEqual(len(public_places), len(public["features"]))
         self.assertTrue(
             all(feature["properties"]["town"] for feature in public["features"])
         )
@@ -656,6 +661,34 @@ class PhaseZeroFilesTests(unittest.TestCase):
             "187756642",
             kanda["sources"]["openstreetmap"]["record"]["id"],
         )
+
+    def test_current_public_data_hides_the_secondary_toho_cinemas_hibiya_site(self):
+        root = Path(__file__).resolve().parents[1]
+        registry = json.loads((root / "data/registry.json").read_text(encoding="utf-8"))
+        public = json.loads(
+            (root / "dist/public/places.geojson").read_text(encoding="utf-8")
+        )
+        toho_places = [
+            place
+            for place in registry["places"]
+            if place["name"] == "TOHO CINEMAS HIBIYA"
+        ]
+        public_toho_ids = {
+            feature["properties"]["id"]
+            for feature in public["features"]
+            if feature["properties"]["name"] == "TOHO CINEMAS HIBIYA"
+        }
+
+        self.assertEqual(2, len(toho_places))
+        self.assertEqual(
+            {"019fa880-5cd5-7b37-bb94-a2151c0cdef0"}, public_toho_ids
+        )
+        secondary = next(
+            place
+            for place in toho_places
+            if place["id"] == "019fa880-5cd5-7d9d-9713-970aa8443759"
+        )
+        self.assertEqual("private", secondary["visibility"]["status"])
 
     def test_repository_cli_validates_and_builds_public_geojson(self):
         repository = Path(__file__).resolve().parents[1]
