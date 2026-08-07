@@ -11,6 +11,7 @@ from src.github_osm_review import (
     build_issue_document,
     build_issue_documents,
     build_review_yaml,
+    main,
 )
 
 
@@ -215,21 +216,43 @@ class GithubOsmReviewTests(unittest.TestCase):
             review_branch="automation/osm-review-12345",
         )
 
-        self.assertIn('decision: null', review_yaml)
-        self.assertIn('candidateId: null', review_yaml)
+        self.assertIn("# 操作手順", review_yaml)
+        self.assertIn('"候補 node/1: 候補A": false', review_yaml)
+        self.assertIn('"候補なし（どの候補とも一致しない）": false', review_yaml)
+        self.assertIn("contact:phone", review_yaml)
         self.assertLess(len(issue["body"]), 65_536)
         self.assertIn('/edit/automation/osm-review-12345/reports/osm-review-needed.yaml', issue["body"])
-        self.assertIn('/blob/automation/osm-review-12345/reports/osm-candidates.json', issue["body"])
+        self.assertNotIn("osm-candidates.json", issue["body"])
         self.assertNotIn("oversized", issue["body"])
+
+    def test_prepare_build_writes_yaml_without_rendering_an_oversized_issue(self):
+        report = self.review_report()
+        report["queries"][0]["candidates"][0]["tags"]["oversized"] = "x" * 70000
+        payload = json.dumps(report, ensure_ascii=False, indent=2) + "\n"
+
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            (root / "reports").mkdir()
+            (root / "reports/osm-candidates.json").write_text(payload, encoding="utf-8")
+            output = root / "review.json"
+
+            result = main(
+                [
+                    "build", root.as_posix(), "--run-id", "12345", "--artifact-name",
+                    "osm-update-12345", "--prepare", "--output", output.as_posix(),
+                ]
+            )
+            document = json.loads(output.read_text(encoding="utf-8"))
+
+        self.assertEqual(0, result)
+        self.assertTrue(document["reviewNeeded"])
 
     def test_applies_choices_from_review_yaml_after_artifact_hash_validation(self):
         report = self.review_report()
         payload = (json.dumps(report, ensure_ascii=False, indent=2) + "\n").encode()
         review_yaml = build_review_yaml(
             report, report_sha256=hashlib.sha256(payload).hexdigest()
-        ).replace("decision: null", "decision: link").replace(
-            "candidateId: null", "candidateId: node/1"
-        )
+        ).replace('"候補 node/1: 候補A": false', '"候補 node/1: 候補A": true')
 
         with tempfile.TemporaryDirectory() as directory:
             root = Path(directory)
@@ -248,6 +271,10 @@ class GithubOsmReviewTests(unittest.TestCase):
             normalized = json.loads(
                 (root / "imports/openstreetmap/normalized.json").read_text()
             )
+
+        self.assertEqual("human_review", normalized["records"][0]["matchBasis"])
+        self.assertEqual("node/1", f"{normalized['records'][0]['type']}/{normalized['records'][0]['id']}")
+        self.assertEqual(hashlib.sha256(payload).hexdigest(), result["reportSha256"])
 
         self.assertEqual("human_review", normalized["records"][0]["matchBasis"])
         self.assertEqual("node/1", f"{normalized['records'][0]['type']}/{normalized['records'][0]['id']}")

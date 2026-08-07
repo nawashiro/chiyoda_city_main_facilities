@@ -52,11 +52,12 @@ jobs:
           python3 -m src.github_osm_review build . \
             --run-id "${{ github.run_id }}" \
             --artifact-name "osm-update-${{ github.run_id }}" \
+            --prepare \
             --output /tmp/osm-review-issue.json
           python3 - <<'PY' >> "$GITHUB_OUTPUT"
           import json
           document = json.load(open('/tmp/osm-review-issue.json', encoding='utf-8'))
-          print(f"review_needed={'true' if document.get('issues') else 'false'}")
+          print(f"review_needed={'true' if document['reviewNeeded'] else 'false'}")
           PY
       - name: Save generated update for review
         uses: actions/upload-artifact@v4

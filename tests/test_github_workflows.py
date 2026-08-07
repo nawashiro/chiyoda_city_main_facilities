@@ -15,6 +15,7 @@ class GithubWorkflowTests(unittest.TestCase):
         self.assertIn("issues: write", workflow)
         self.assertIn("osm-update-${{ github.run_id }}", workflow)
         self.assertIn("src.github_osm_review build", workflow)
+        self.assertIn("--prepare", workflow)
         self.assertIn("reports/osm-review-needed.yaml", workflow)
         self.assertIn("automation/osm-review-${{ github.run_id }}", workflow)
         self.assertIn("pull-request-branch", workflow)

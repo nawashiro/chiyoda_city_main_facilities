@@ -77,6 +77,25 @@ class OsmRetrievalTests(unittest.TestCase):
         self.assertEqual(query, report["queries"][0]["target"])
         self.assertEqual(tags, report["queries"][0]["candidates"][0]["tags"])
 
+    def test_discards_untagged_osm_elements_before_every_matching_stage(self):
+        query_id = "019c0000-0000-7000-8000-000000000106"
+        query = {"id": query_id, "name": "施設E", "coordinates": [139.75, 35.69]}
+        raw = {
+            "version": "2026-07-29T00:00:00Z",
+            "elements": [
+                {"type": "node", "id": 1, "lat": 35.69, "lon": 139.75, "tags": {}},
+                {"type": "node", "id": 2, "lat": 35.6901, "lon": 139.7501, "tags": {"amenity": "library"}},
+                {"type": "node", "id": 3, "lat": 35.6902, "lon": 139.7502, "tags": {"name": "候補施設", "amenity": "library"}},
+            ],
+        }
+
+        normalized, report = prepare_osm_snapshot(
+            {"schemaVersion": 1, "places": []}, [{"queries": [query]}], raw
+        )
+
+        self.assertEqual([], normalized["records"])
+        self.assertEqual(["node/3"], [candidate["recordId"] for candidate in report["queries"][0]["candidates"]])
+
     def test_name_edit_distance_has_boundary_and_rejects_short_false_positives(self):
         self.assertTrue(_osm_names_match("abcdefghij", "abcdefxxij"))
         self.assertFalse(_osm_names_match("abcdefghij", "abcdexxxij"))
