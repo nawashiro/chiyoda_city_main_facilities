@@ -11,7 +11,7 @@ permissions:
 jobs:
   process:
     runs-on: ubuntu-latest
-    timeout-minutes: 30
+    timeout-minutes: 60
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
@@ -25,11 +25,16 @@ jobs:
           LLM_MODEL: ${{ vars.LLM_MODEL }}
           LLM_BASE_URL: ${{ vars.LLM_BASE_URL }}
         run: |
+          set -o pipefail
           RETRIEVED_AT=$(date --iso-8601=seconds)
+          echo "[OSM update] $(date --iso-8601=seconds) retrieve mirror"
           python3 -m src.retrieve_osm . --at "$RETRIEVED_AT"
+          echo "[OSM update] $(date --iso-8601=seconds) resolve candidates"
           python3 -m src.resolve_osm_candidates .
           DECISION_AT=$(date --iso-8601=seconds)
+          echo "[OSM update] $(date --iso-8601=seconds) apply snapshot"
           python3 -m src.facility_data update . --source openstreetmap --at "$RETRIEVED_AT" --decision-at "$DECISION_AT"
+          echo "[OSM update] $(date --iso-8601=seconds) update complete"
       - run: python3 -m src.facility_data validate .
       - run: python3 -m unittest discover -s tests -v
       - name: Verify generated public data

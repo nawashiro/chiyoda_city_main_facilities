@@ -5,6 +5,7 @@ import hashlib
 import json
 import math
 import re
+import sys
 import tempfile
 from pathlib import Path
 from typing import Any
@@ -286,15 +287,19 @@ def run_osm_retrieval(root: str | Path, at: str, fetch, extractor=extract_elemen
     search_documents = [json.loads(path.read_text(encoding="utf-8")) for path in sorted((root / "inputs/osm-search").rglob("*.json"))]
     qids = sorted({query["qid"] for document in search_documents for query in document.get("queries", []) if "qid" in query})
     coordinates = [query["coordinates"] for document in search_documents for query in document.get("queries", []) if "coordinates" in query]
+    print(f"OSM mirror: download manifest {MOVISDA_MANIFEST_URL}", file=sys.stderr)
     manifest_payload, manifest_headers = fetch(MOVISDA_MANIFEST_URL)
     mirror_url, mirror = _select_tokyo_mirror(json.loads(manifest_payload))
+    print(f"OSM mirror: download Tokyo PBF {mirror_url} ({mirror['bytes']} bytes)", file=sys.stderr)
     pbf_payload, pbf_headers = fetch(mirror_url)
     if len(pbf_payload) != mirror["bytes"]:
         raise ValueError("Movisda Tokyo extract has an unexpected size")
+    print(f"OSM mirror: extract {len(collect_osm_ids(registry))} IDs, {len(qids)} QIDs, {len(coordinates)} coordinate queries", file=sys.stderr)
     with tempfile.TemporaryDirectory() as directory:
         pbf_path = Path(directory) / "tokyo.osm.pbf"
         pbf_path.write_bytes(pbf_payload)
         elements = extractor(pbf_path, set(collect_osm_ids(registry)), set(qids), coordinates, tuple(map(float, CHIYODA_BBOX.split(","))))
+    print(f"OSM mirror: extracted {len(elements)} elements", file=sys.stderr)
     raw = {"version": str(mirror["timestamp"]), "elements": elements}
     raw_payload = (json.dumps(raw, ensure_ascii=False, indent=2) + "\n").encode("utf-8")
     selection = {"typedIds": sorted(collect_osm_ids(registry)), "qids": qids, "coordinates": coordinates, "bbox": CHIYODA_BBOX}

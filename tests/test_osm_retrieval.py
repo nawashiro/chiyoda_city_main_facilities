@@ -11,10 +11,16 @@ from src.retrieve_osm import (
     prepare_osm_snapshot,
     run_osm_retrieval,
 )
-from src.osm_mirror import relation_out_center
+from src.osm_mirror import coordinate_matcher, relation_out_center
 
 
 class OsmRetrievalTests(unittest.TestCase):
+    def test_geohash_neighbour_matcher_keeps_exact_fifty_metre_boundary(self):
+        matches = coordinate_matcher([[139.7500000, 35.6900000]])
+
+        self.assertTrue(matches(139.7500000, 35.6904490))
+        self.assertFalse(matches(139.7500000, 35.6910000))
+
     def test_relation_center_keeps_available_members_and_warns_about_missing_member(self):
         warnings = []
 
