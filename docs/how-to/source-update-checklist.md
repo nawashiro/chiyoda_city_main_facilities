@@ -69,9 +69,16 @@
 
 - [ ] 修正をcommitしたbranchで`Re-identify retained source snapshots`を実行した
 - [ ] WAM・OSMのrawと取得台帳が実行前後で同一だった
-- [ ] raw SHA・版を検証してからnormalizedと候補を再生成した
-- [ ] 正本名が修正後の検索名へ同期された
-- [ ] WAM→OSMの順で適用された
+- [ ] raw SHA・版を検証した
+- [ ] 検索入力とcurrent OSM IDの差分から影響項目だけを選んだ
+- [ ] 検索入力が不変でcurrent OSM IDも一意に残る項目を再同定しなかった
+- [ ] 影響項目だけOSM normalizedとOSM候補を再生成した
+- [ ] WAM normalizedを保持済みWAM rawと現在の検索入力から再生成した
+- [ ] 影響項目だけ正本名を同期した
+- [ ] WAM→OSMの順で影響項目を適用した
+- [ ] 未解決候補だけをLLM照合した
+- [ ] 項目ごとのコンテクスト分離を保てる場合は一括requestを使った
+- [ ] 一括requestが不可能な場合は、実行前にrequest数を報告して確認を受けた
 - [ ] 合議不成立はGitHub確認Issue、全解決時はPull Requestへ進んだ
 
 ## 町名更新

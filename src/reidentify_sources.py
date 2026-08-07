@@ -6,6 +6,7 @@ import json
 from pathlib import Path
 from typing import Any
 
+from src.facility_data import search_input_sha256
 from src.retrieve_osm import prepare_osm_snapshot
 from src.retrieve_wam import prepare_wam_release
 
@@ -46,6 +47,72 @@ def _replace_documents(root: Path, documents: dict[str, dict[str, Any]]) -> None
             temporary.unlink(missing_ok=True)
 
 
+def _stable_osm_query_ids(
+    registry: dict[str, Any], queries: list[dict[str, Any]], raw: dict[str, Any]
+) -> set[str]:
+    available: dict[str, int] = {}
+    for element in raw.get("elements", []):
+        if element.get("type") not in {"node", "way", "relation"} or not isinstance(
+            element.get("id"), int
+        ):
+            continue
+        record_id = f"{element['type']}/{element['id']}"
+        available[record_id] = available.get(record_id, 0) + 1
+    stable: set[str] = set()
+    for place in registry.get("places", []):
+        query_id = str(place.get("id"))
+        query = next((item for item in queries if str(item.get("id")) == query_id), None)
+        if query is None:
+            continue
+        current = [
+            ref
+            for ref in place.get("externalRefs", [])
+            if ref.get("sourceId") == "openstreetmap" and ref.get("status") == "current"
+        ]
+        audits = [
+            audit
+            for audit in place.get("audit", [])
+            if audit.get("action") == "linked_osm"
+            and isinstance(audit.get("searchInputSha256"), str)
+        ]
+        if (
+            len(current) == 1
+            and available.get(str(current[0].get("recordId"))) == 1
+            and audits
+            and audits[-1]["searchInputSha256"] == search_input_sha256(query)
+        ):
+            stable.add(query_id)
+    return stable
+
+
+def _filtered_documents(
+    documents: list[dict[str, Any]], query_ids: set[str]
+) -> list[dict[str, Any]]:
+    return [
+        {
+            **document,
+            "queries": [
+                query
+                for query in document.get("queries", [])
+                if str(query.get("id")) in query_ids
+            ],
+        }
+        for document in documents
+    ]
+
+
+def _preserved_osm_records(root: Path, query_ids: set[str]) -> list[dict[str, Any]]:
+    path = root / "imports/openstreetmap/normalized.json"
+    if not path.exists():
+        return []
+    normalized = json.loads(path.read_text(encoding="utf-8"))
+    return [
+        record
+        for record in normalized.get("records", [])
+        if str(record.get("queryId")) in query_ids
+    ]
+
+
 def prepare_retained_reidentification(root: str | Path) -> dict[str, str]:
     """Re-identify current search inputs against retained WAM and OSM raw snapshots."""
     root = Path(root)
@@ -64,6 +131,14 @@ def prepare_retained_reidentification(root: str | Path) -> dict[str, str]:
     if len(query_ids) != len(set(query_ids)):
         raise ValueError("duplicate search query ID")
     current_query_ids = set(query_ids)
+    registry = json.loads((root / "data/registry.json").read_text(encoding="utf-8"))
+    stable_osm_query_ids = _stable_osm_query_ids(registry, queries, osm_raw)
+    affected_osm_query_ids = current_query_ids - stable_osm_query_ids
+    if not affected_osm_query_ids:
+        return {
+            "wamRetrievedAt": str(wam_retrieval["retrievedAt"]),
+            "osmRetrievedAt": str(osm_retrieval["retrievedAt"]),
+        }
 
     _unused_search, wam_normalized = prepare_wam_release(
         wam_raw.get("rows", []),
@@ -77,9 +152,15 @@ def prepare_retained_reidentification(root: str | Path) -> dict[str, str]:
         if str(record.get("queryId")) in current_query_ids
     ]
 
-    registry = json.loads((root / "data/registry.json").read_text(encoding="utf-8"))
     osm_normalized, osm_report = prepare_osm_snapshot(
-        registry, search_documents, osm_raw
+        registry,
+        _filtered_documents(search_documents, affected_osm_query_ids),
+        osm_raw,
+    )
+    osm_normalized["records"] = sorted(
+        _preserved_osm_records(root, stable_osm_query_ids)
+        + list(osm_normalized.get("records", [])),
+        key=lambda record: str(record["queryId"]),
     )
 
     wam_record_by_query = {

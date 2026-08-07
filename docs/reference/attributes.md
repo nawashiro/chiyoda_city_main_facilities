@@ -114,6 +114,9 @@
 | `method` | 文字列 | 操作の主体：`"human_inference"`（人手）/ `"calculation_model"`（自動計算）/ `"language_model"`（大規模言語モデルによる判断） |
 | `action` | 文字列 | 操作の種類：`"created"`（Place作成）/ `"linked_osm"`（OSM参照追加）/ `"linked_wam"`（WAM参照追加）/ `"updated_geometry"`（座標更新） |
 | `target` | 文字列 | 操作対象。Place作成時は `"place"`、OSM/WAMの参照操作時は `"node/123"` 等のレコードID、座標更新時はPlaceのUUID |
+| `searchInputSha256` | 64文字の16進数文字列 | `linked_osm`で再同定を採用した場合だけ記録する。前回同定時の検索入力（`name`と`coordinates`または`qid`）をcanonical JSON化し、UTF-8 bytesから計算するSHA-256 |
+
+`searchInputSha256`がない監査エントリは4キーを持つ。`searchInputSha256`を持つ監査エントリは、OSM再同定の検索入力由来を示す。
 
 ---
 
