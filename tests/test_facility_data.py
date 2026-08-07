@@ -690,6 +690,22 @@ class PhaseZeroFilesTests(unittest.TestCase):
         )
         self.assertEqual("private", secondary["visibility"]["status"])
 
+    def test_current_public_data_hides_issue_9_yonbancho_childrens_hall(self):
+        root = Path(__file__).resolve().parents[1]
+        registry = json.loads((root / "data/registry.json").read_text(encoding="utf-8"))
+        public = json.loads(
+            (root / "dist/public/places.geojson").read_text(encoding="utf-8")
+        )
+        place = next(
+            item
+            for item in registry["places"]
+            if item["id"] == "019fa880-5cd5-7e0d-8300-8ab683bd0c1d"
+        )
+        public_ids = {feature["properties"]["id"] for feature in public["features"]}
+
+        self.assertEqual("private", place["visibility"]["status"])
+        self.assertNotIn(place["id"], public_ids)
+
     def test_repository_cli_validates_and_builds_public_geojson(self):
         repository = Path(__file__).resolve().parents[1]
         with tempfile.TemporaryDirectory() as directory:

@@ -3069,30 +3069,6 @@
       "geometry": {
         "type": "Point",
         "coordinates": [
-          139.736548,
-          35.688289
-        ]
-      },
-      "properties": {
-        "id": "019fa880-5cd5-7e0d-8300-8ab683bd0c1d",
-        "name": "四番町児童館",
-        "categoryIds": [
-          "social-welfare"
-        ],
-        "tags": [
-          "kazaguruma.home-shortcut"
-        ],
-        "images": [],
-        "town": "四番町",
-        "lifecycleStatus": "active",
-        "sources": {}
-      }
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
           139.7393327,
           35.6864514
         ]
