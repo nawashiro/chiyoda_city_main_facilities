@@ -1,4 +1,3029 @@
 {
-  "version": "2026-07-29T06:30:36Z",
-  "queries": []
+  "version": "202608060200",
+  "queries": [
+    {
+      "queryId": "019fa880-5cd5-7b6f-882e-4d07aad02219",
+      "name": "子育てひろば「あい・ぽーと」麹町",
+      "target": {
+        "id": "019fa880-5cd5-7b6f-882e-4d07aad02219",
+        "name": "子育てひろば「あい・ぽーと」麹町",
+        "coordinates": [
+          139.742245,
+          35.690322
+        ]
+      },
+      "status": "needs_review",
+      "candidates": [
+        {
+          "type": "way",
+          "id": "144669927",
+          "name": null,
+          "coordinates": [
+            139.74226385,
+            35.6902364
+          ],
+          "tags": {
+            "building": "yes"
+          },
+          "recordId": "way/144669927",
+          "distanceMeters": 9.669321247812213
+        },
+        {
+          "type": "node",
+          "id": "1581943926",
+          "name": null,
+          "coordinates": [
+            139.7421361,
+            35.6903438
+          ],
+          "tags": {},
+          "recordId": "node/1581943926",
+          "distanceMeters": 10.129146202618811
+        },
+        {
+          "type": "node",
+          "id": "1581943928",
+          "name": null,
+          "coordinates": [
+            139.7423601,
+            35.6903637
+          ],
+          "tags": {},
+          "recordId": "node/1581943928",
+          "distanceMeters": 11.38203742771035
+        },
+        {
+          "type": "node",
+          "id": "1581943959",
+          "name": null,
+          "coordinates": [
+            139.7423726,
+            35.6903593
+          ],
+          "tags": {},
+          "recordId": "node/1581943959",
+          "distanceMeters": 12.247292527802065
+        },
+        {
+          "type": "node",
+          "id": "1581943931",
+          "name": null,
+          "coordinates": [
+            139.7423829,
+            35.6902745
+          ],
+          "tags": {},
+          "recordId": "node/1581943931",
+          "distanceMeters": 13.527555040693365
+        },
+        {
+          "type": "node",
+          "id": "1581943938",
+          "name": null,
+          "coordinates": [
+            139.7420945,
+            35.6902962
+          ],
+          "tags": {},
+          "recordId": "node/1581943938",
+          "distanceMeters": 13.89120161871725
+        },
+        {
+          "type": "node",
+          "id": "1580618527",
+          "name": null,
+          "coordinates": [
+            139.7422701,
+            35.6904769
+          ],
+          "tags": {},
+          "recordId": "node/1580618527",
+          "distanceMeters": 17.37261537469848
+        },
+        {
+          "type": "node",
+          "id": "1581943933",
+          "name": null,
+          "coordinates": [
+            139.7424373,
+            35.6902789
+          ],
+          "tags": {},
+          "recordId": "node/1581943933",
+          "distanceMeters": 18.015854128530254
+        },
+        {
+          "type": "node",
+          "id": "1143651245",
+          "name": null,
+          "coordinates": [
+            139.7424207,
+            35.6904288
+          ],
+          "tags": {},
+          "recordId": "node/1143651245",
+          "distanceMeters": 19.819420221391066
+        },
+        {
+          "type": "node",
+          "id": "1580618532",
+          "name": null,
+          "coordinates": [
+            139.7421395,
+            35.6904811
+          ],
+          "tags": {},
+          "recordId": "node/1580618532",
+          "distanceMeters": 20.09361874698086
+        },
+        {
+          "type": "node",
+          "id": "1580618524",
+          "name": null,
+          "coordinates": [
+            139.7421531,
+            35.6904896
+          ],
+          "tags": {},
+          "recordId": "node/1580618524",
+          "distanceMeters": 20.400802082267784
+        },
+        {
+          "type": "node",
+          "id": "1580618536",
+          "name": null,
+          "coordinates": [
+            139.7422441,
+            35.6905096
+          ],
+          "tags": {},
+          "recordId": "node/1580618536",
+          "distanceMeters": 20.860326586202994
+        },
+        {
+          "type": "node",
+          "id": "1581943935",
+          "name": null,
+          "coordinates": [
+            139.7420115,
+            35.6902843
+          ],
+          "tags": {},
+          "recordId": "node/1581943935",
+          "distanceMeters": 21.500150700942008
+        },
+        {
+          "type": "node",
+          "id": "1580618533",
+          "name": null,
+          "coordinates": [
+            139.7423771,
+            35.6904853
+          ],
+          "tags": {},
+          "recordId": "node/1580618533",
+          "distanceMeters": 21.72654692441336
+        },
+        {
+          "type": "node",
+          "id": "1420800550",
+          "name": "麹町社会保険事務所",
+          "coordinates": [
+            139.7424816,
+            35.6904006
+          ],
+          "tags": {
+            "admin_level": "2",
+            "building": "public",
+            "government": "pension_fund",
+            "name": "麹町社会保険事務所",
+            "note": "National-Land Numerical Information (Public Facility) 2006, MLIT Japan",
+            "note:ja": "国土数値情報（公共施設データ）平成19年　国土交通省",
+            "office": "government",
+            "operator": "日本年金機構",
+            "operator:wikidata": "Q11508070",
+            "source": "KSJ2",
+            "source_ref": "http://nlftp.mlit.go.jp/ksj/jpgis/datalist/KsjTmplt-P02-v2_0.html"
+          },
+          "recordId": "node/1420800550",
+          "distanceMeters": 23.08580902210123
+        },
+        {
+          "type": "node",
+          "id": "1420784761",
+          "name": "東京社会保険事務局麹町事務所",
+          "coordinates": [
+            139.74249,
+            35.690402
+          ],
+          "tags": {
+            "building": "public",
+            "name": "東京社会保険事務局麹町事務所",
+            "note": "National-Land Numerical Information (Public Facility) 2006, MLIT Japan",
+            "note:ja": "国土数値情報（公共施設データ）平成19年　国土交通省",
+            "source": "KSJ2",
+            "source_ref": "http://nlftp.mlit.go.jp/ksj/jpgis/datalist/KsjTmplt-P02-v2_0.html"
+          },
+          "recordId": "node/1420784761",
+          "distanceMeters": 23.847316043064854
+        },
+        {
+          "type": "node",
+          "id": "1580618522",
+          "name": null,
+          "coordinates": [
+            139.7420388,
+            35.6904596
+          ],
+          "tags": {},
+          "recordId": "node/1580618522",
+          "distanceMeters": 24.10150077450227
+        },
+        {
+          "type": "node",
+          "id": "1900685317",
+          "name": null,
+          "coordinates": [
+            139.7424284,
+            35.6904862
+          ],
+          "tags": {},
+          "recordId": "node/1900685317",
+          "distanceMeters": 24.651427780864783
+        },
+        {
+          "type": "node",
+          "id": "1581943910",
+          "name": null,
+          "coordinates": [
+            139.7421676,
+            35.6901091
+          ],
+          "tags": {},
+          "recordId": "node/1581943910",
+          "distanceMeters": 24.683812082865654
+        },
+        {
+          "type": "way",
+          "id": "144669929",
+          "name": null,
+          "coordinates": [
+            139.74208635,
+            35.69013615
+          ],
+          "tags": {
+            "building": "yes",
+            "source": "Bing,2007-04"
+          },
+          "recordId": "way/144669929",
+          "distanceMeters": 25.146598368962685
+        },
+        {
+          "type": "node",
+          "id": "1581943911",
+          "name": null,
+          "coordinates": [
+            139.7423916,
+            35.6901289
+          ],
+          "tags": {},
+          "recordId": "node/1581943911",
+          "distanceMeters": 25.225404535434016
+        },
+        {
+          "type": "node",
+          "id": "1580618543",
+          "name": null,
+          "coordinates": [
+            139.74243,
+            35.6905007
+          ],
+          "tags": {},
+          "recordId": "node/1580618543",
+          "distanceMeters": 25.961053033532085
+        },
+        {
+          "type": "way",
+          "id": "144669936",
+          "name": null,
+          "coordinates": [
+            139.74253275,
+            35.690264850000005
+          ],
+          "tags": {
+            "building": "yes",
+            "source": "Bing,2007-04"
+          },
+          "recordId": "way/144669936",
+          "distanceMeters": 26.752578023767626
+        },
+        {
+          "type": "node",
+          "id": "1581943907",
+          "name": null,
+          "coordinates": [
+            139.7424561,
+            35.6901456
+          ],
+          "tags": {},
+          "recordId": "node/1581943907",
+          "distanceMeters": 27.353203657440247
+        },
+        {
+          "type": "node",
+          "id": "1581943945",
+          "name": null,
+          "coordinates": [
+            139.7419421,
+            35.6903223
+          ],
+          "tags": {},
+          "recordId": "node/1581943945",
+          "distanceMeters": 27.35507895912624
+        },
+        {
+          "type": "way",
+          "id": "144503980",
+          "name": null,
+          "coordinates": [
+            139.7423136,
+            35.69056405
+          ],
+          "tags": {
+            "building": "yes",
+            "source": "Bing,2007-04"
+          },
+          "recordId": "way/144503980",
+          "distanceMeters": 27.61855265417612
+        },
+        {
+          "type": "way",
+          "id": "144503947",
+          "name": null,
+          "coordinates": [
+            139.74206985,
+            35.690529999999995
+          ],
+          "tags": {
+            "building": "yes",
+            "source": "Bing,2007-04"
+          },
+          "recordId": "way/144503947",
+          "distanceMeters": 28.02025225431751
+        },
+        {
+          "type": "node",
+          "id": "1580618520",
+          "name": null,
+          "coordinates": [
+            139.7420034,
+            35.6904808
+          ],
+          "tags": {},
+          "recordId": "node/1580618520",
+          "distanceMeters": 28.068935164753274
+        },
+        {
+          "type": "way",
+          "id": "144503794",
+          "name": null,
+          "coordinates": [
+            139.7421737,
+            35.69057415
+          ],
+          "tags": {
+            "building": "yes"
+          },
+          "recordId": "way/144503794",
+          "distanceMeters": 28.767701881089064
+        },
+        {
+          "type": "node",
+          "id": "1580618504",
+          "name": null,
+          "coordinates": [
+            139.7419093,
+            35.6903822
+          ],
+          "tags": {},
+          "recordId": "node/1580618504",
+          "distanceMeters": 31.04743705941125
+        },
+        {
+          "type": "node",
+          "id": "1581943896",
+          "name": null,
+          "coordinates": [
+            139.7420389,
+            35.6900919
+          ],
+          "tags": {},
+          "recordId": "node/1581943896",
+          "distanceMeters": 31.639938790511007
+        },
+        {
+          "type": "way",
+          "id": "144669931",
+          "name": null,
+          "coordinates": [
+            139.7419084,
+            35.690197850000004
+          ],
+          "tags": {
+            "building": "yes"
+          },
+          "recordId": "way/144669931",
+          "distanceMeters": 33.38630786318331
+        },
+        {
+          "type": "node",
+          "id": "1580618583",
+          "name": null,
+          "coordinates": [
+            139.7421009,
+            35.6906004
+          ],
+          "tags": {},
+          "recordId": "node/1580618583",
+          "distanceMeters": 33.580832128035894
+        },
+        {
+          "type": "node",
+          "id": "1581943895",
+          "name": null,
+          "coordinates": [
+            139.7419993,
+            35.690094
+          ],
+          "tags": {},
+          "recordId": "node/1581943895",
+          "distanceMeters": 33.69143314565287
+        },
+        {
+          "type": "node",
+          "id": "1581943937",
+          "name": null,
+          "coordinates": [
+            139.7426239,
+            35.6902938
+          ],
+          "tags": {},
+          "recordId": "node/1581943937",
+          "distanceMeters": 34.36203740611716
+        },
+        {
+          "type": "node",
+          "id": "1580618610",
+          "name": null,
+          "coordinates": [
+            139.7422501,
+            35.6906427
+          ],
+          "tags": {},
+          "recordId": "node/1580618610",
+          "distanceMeters": 35.66318726464852
+        },
+        {
+          "type": "node",
+          "id": "1580618551",
+          "name": null,
+          "coordinates": [
+            139.7425644,
+            35.6905116
+          ],
+          "tags": {},
+          "recordId": "node/1580618551",
+          "distanceMeters": 35.72837560932042
+        },
+        {
+          "type": "node",
+          "id": "1580618574",
+          "name": null,
+          "coordinates": [
+            139.7420002,
+            35.6905789
+          ],
+          "tags": {},
+          "recordId": "node/1580618574",
+          "distanceMeters": 36.12170906383359
+        },
+        {
+          "type": "node",
+          "id": "1581943885",
+          "name": null,
+          "coordinates": [
+            139.7422286,
+            35.6899959
+          ],
+          "tags": {},
+          "recordId": "node/1581943885",
+          "distanceMeters": 36.29090123742983
+        },
+        {
+          "type": "node",
+          "id": "1580618614",
+          "name": null,
+          "coordinates": [
+            139.7422299,
+            35.6906539
+          ],
+          "tags": {},
+          "recordId": "node/1580618614",
+          "distanceMeters": 36.930782109962884
+        },
+        {
+          "type": "node",
+          "id": "346600127",
+          "name": null,
+          "coordinates": [
+            139.7418378,
+            35.6903704
+          ],
+          "tags": {},
+          "recordId": "node/346600127",
+          "distanceMeters": 37.166157293242755
+        },
+        {
+          "type": "node",
+          "id": "1580618590",
+          "name": null,
+          "coordinates": [
+            139.7421033,
+            35.6906386
+          ],
+          "tags": {},
+          "recordId": "node/1580618590",
+          "distanceMeters": 37.45806069245232
+        },
+        {
+          "type": "node",
+          "id": "1580618588",
+          "name": null,
+          "coordinates": [
+            139.7420872,
+            35.6906341
+          ],
+          "tags": {},
+          "recordId": "node/1580618588",
+          "distanceMeters": 37.51604264864129
+        },
+        {
+          "type": "node",
+          "id": "1580618603",
+          "name": null,
+          "coordinates": [
+            139.7421943,
+            35.6906587
+          ],
+          "tags": {},
+          "recordId": "node/1580618603",
+          "distanceMeters": 37.71827635655474
+        },
+        {
+          "type": "node",
+          "id": "1580618552",
+          "name": null,
+          "coordinates": [
+            139.7425915,
+            35.6905139
+          ],
+          "tags": {},
+          "recordId": "node/1580618552",
+          "distanceMeters": 37.8754225466795
+        },
+        {
+          "type": "node",
+          "id": "1581943884",
+          "name": null,
+          "coordinates": [
+            139.7421612,
+            35.689988
+          ],
+          "tags": {},
+          "recordId": "node/1581943884",
+          "distanceMeters": 37.902352918874506
+        },
+        {
+          "type": "node",
+          "id": "1580618613",
+          "name": null,
+          "coordinates": [
+            139.7423571,
+            35.6906512
+          ],
+          "tags": {},
+          "recordId": "node/1580618613",
+          "distanceMeters": 37.97952355809172
+        },
+        {
+          "type": "node",
+          "id": "1581943936",
+          "name": null,
+          "coordinates": [
+            139.7418175,
+            35.6903017
+          ],
+          "tags": {},
+          "recordId": "node/1581943936",
+          "distanceMeters": 38.67368583150409
+        },
+        {
+          "type": "node",
+          "id": "1580618621",
+          "name": null,
+          "coordinates": [
+            139.7421418,
+            35.6906656
+          ],
+          "tags": {},
+          "recordId": "node/1580618621",
+          "distanceMeters": 39.326904291209416
+        },
+        {
+          "type": "node",
+          "id": "1580618636",
+          "name": null,
+          "coordinates": [
+            139.7421459,
+            35.6906682
+          ],
+          "tags": {},
+          "recordId": "node/1580618636",
+          "distanceMeters": 39.52234493967915
+        },
+        {
+          "type": "node",
+          "id": "1580618618",
+          "name": null,
+          "coordinates": [
+            139.7420939,
+            35.6906564
+          ],
+          "tags": {},
+          "recordId": "node/1580618618",
+          "distanceMeters": 39.60844921783301
+        },
+        {
+          "type": "way",
+          "id": "144503962",
+          "name": null,
+          "coordinates": [
+            139.74248310000002,
+            35.69062145
+          ],
+          "tags": {
+            "building": "yes",
+            "source": "Bing,2007-04"
+          },
+          "recordId": "way/144503962",
+          "distanceMeters": 39.63692866825886
+        },
+        {
+          "type": "node",
+          "id": "1580618643",
+          "name": null,
+          "coordinates": [
+            139.7421938,
+            35.6906774
+          ],
+          "tags": {},
+          "recordId": "node/1580618643",
+          "distanceMeters": 39.78826677345201
+        },
+        {
+          "type": "node",
+          "id": "1580618624",
+          "name": null,
+          "coordinates": [
+            139.7423386,
+            35.6906734
+          ],
+          "tags": {},
+          "recordId": "node/1580618624",
+          "distanceMeters": 39.977786870052505
+        },
+        {
+          "type": "node",
+          "id": "1580618575",
+          "name": null,
+          "coordinates": [
+            139.7419882,
+            35.6906151
+          ],
+          "tags": {},
+          "recordId": "node/1580618575",
+          "distanceMeters": 40.00054315352277
+        },
+        {
+          "type": "node",
+          "id": "1581943919",
+          "name": null,
+          "coordinates": [
+            139.7426424,
+            35.690163
+          ],
+          "tags": {},
+          "recordId": "node/1581943919",
+          "distanceMeters": 40.00792439450215
+        },
+        {
+          "type": "node",
+          "id": "1581943883",
+          "name": null,
+          "coordinates": [
+            139.7420638,
+            35.6899926
+          ],
+          "tags": {},
+          "recordId": "node/1581943883",
+          "distanceMeters": 40.11698002556297
+        },
+        {
+          "type": "node",
+          "id": "1581943962",
+          "name": null,
+          "coordinates": [
+            139.7426826,
+            35.6903841
+          ],
+          "tags": {},
+          "recordId": "node/1581943962",
+          "distanceMeters": 40.118600201912045
+        },
+        {
+          "type": "node",
+          "id": "1581943941",
+          "name": null,
+          "coordinates": [
+            139.7426929,
+            35.6902993
+          ],
+          "tags": {},
+          "recordId": "node/1581943941",
+          "distanceMeters": 40.52876826193608
+        },
+        {
+          "type": "way",
+          "id": "144669926",
+          "name": null,
+          "coordinates": [
+            139.74197055000002,
+            35.6900289
+          ],
+          "tags": {
+            "building": "yes"
+          },
+          "recordId": "way/144669926",
+          "distanceMeters": 40.94536418864824
+        },
+        {
+          "type": "node",
+          "id": "1581943882",
+          "name": null,
+          "coordinates": [
+            139.7420783,
+            35.6899761
+          ],
+          "tags": {},
+          "recordId": "node/1581943882",
+          "distanceMeters": 41.30372116867796
+        },
+        {
+          "type": "node",
+          "id": "1580618499",
+          "name": null,
+          "coordinates": [
+            139.7417895,
+            35.6903615
+          ],
+          "tags": {},
+          "recordId": "node/1580618499",
+          "distanceMeters": 41.37025133667841
+        },
+        {
+          "type": "node",
+          "id": "1581943902",
+          "name": null,
+          "coordinates": [
+            139.74262,
+            35.6901076
+          ],
+          "tags": {},
+          "recordId": "node/1581943902",
+          "distanceMeters": 41.41610953067974
+        },
+        {
+          "type": "way",
+          "id": "144503887",
+          "name": null,
+          "coordinates": [
+            139.7422749,
+            35.69069805
+          ],
+          "tags": {
+            "building": "yes",
+            "source": "Bing,2007-04"
+          },
+          "recordId": "way/144503887",
+          "distanceMeters": 41.901949417813256
+        },
+        {
+          "type": "node",
+          "id": "1581943946",
+          "name": null,
+          "coordinates": [
+            139.7427166,
+            35.690315
+          ],
+          "tags": {},
+          "recordId": "node/1581943946",
+          "distanceMeters": 42.597558398684654
+        },
+        {
+          "type": "node",
+          "id": "1581943966",
+          "name": null,
+          "coordinates": [
+            139.7427079,
+            35.6903978
+          ],
+          "tags": {},
+          "recordId": "node/1581943966",
+          "distanceMeters": 42.645934876850276
+        },
+        {
+          "type": "node",
+          "id": "1581943891",
+          "name": null,
+          "coordinates": [
+            139.7418746,
+            35.6900734
+          ],
+          "tags": {},
+          "recordId": "node/1581943891",
+          "distanceMeters": 43.39484847673076
+        },
+        {
+          "type": "node",
+          "id": "1581943890",
+          "name": null,
+          "coordinates": [
+            139.7418773,
+            35.6900652
+          ],
+          "tags": {},
+          "recordId": "node/1581943890",
+          "distanceMeters": 43.79612170558152
+        },
+        {
+          "type": "node",
+          "id": "12803610245",
+          "name": null,
+          "coordinates": [
+            139.7417851,
+            35.6901933
+          ],
+          "tags": {},
+          "recordId": "node/12803610245",
+          "distanceMeters": 43.930159364301055
+        },
+        {
+          "type": "node",
+          "id": "1580618577",
+          "name": null,
+          "coordinates": [
+            139.7419621,
+            35.6906473
+          ],
+          "tags": {},
+          "recordId": "node/1580618577",
+          "distanceMeters": 44.28468760955797
+        },
+        {
+          "type": "way",
+          "id": "144503752",
+          "name": null,
+          "coordinates": [
+            139.74183119999998,
+            35.69053925
+          ],
+          "tags": {
+            "building": "yes"
+          },
+          "recordId": "way/144503752",
+          "distanceMeters": 44.49848932413728
+        },
+        {
+          "type": "node",
+          "id": "12803610248",
+          "name": null,
+          "coordinates": [
+            139.74179,
+            35.6901649
+          ],
+          "tags": {},
+          "recordId": "node/12803610248",
+          "distanceMeters": 44.65034948739441
+        },
+        {
+          "type": "node",
+          "id": "1580618644",
+          "name": null,
+          "coordinates": [
+            139.7422112,
+            35.6907227
+          ],
+          "tags": {},
+          "recordId": "node/1580618644",
+          "distanceMeters": 44.660246649845284
+        },
+        {
+          "type": "node",
+          "id": "12803610247",
+          "name": null,
+          "coordinates": [
+            139.7417654,
+            35.6902209
+          ],
+          "tags": {},
+          "recordId": "node/12803610247",
+          "distanceMeters": 44.748077133411655
+        },
+        {
+          "type": "node",
+          "id": "12803610246",
+          "name": null,
+          "coordinates": [
+            139.7417736,
+            35.6901879
+          ],
+          "tags": {},
+          "recordId": "node/12803610246",
+          "distanceMeters": 45.10826827374391
+        },
+        {
+          "type": "way",
+          "id": "144503833",
+          "name": null,
+          "coordinates": [
+            139.74201885,
+            35.690689649999996
+          ],
+          "tags": {
+            "building": "yes"
+          },
+          "recordId": "way/144503833",
+          "distanceMeters": 45.69866153861643
+        },
+        {
+          "type": "way",
+          "id": "144503907",
+          "name": null,
+          "coordinates": [
+            139.7421016,
+            35.6907171
+          ],
+          "tags": {
+            "building": "yes"
+          },
+          "recordId": "way/144503907",
+          "distanceMeters": 45.80211812791119
+        },
+        {
+          "type": "way",
+          "id": "144503777",
+          "name": null,
+          "coordinates": [
+            139.7421536,
+            35.69072885
+          ],
+          "tags": {
+            "building": "yes"
+          },
+          "recordId": "way/144503777",
+          "distanceMeters": 45.986530028683184
+        },
+        {
+          "type": "node",
+          "id": "1580618562",
+          "name": null,
+          "coordinates": [
+            139.7421871,
+            35.6907332
+          ],
+          "tags": {},
+          "recordId": "node/1580618562",
+          "distanceMeters": 46.02137733600455
+        },
+        {
+          "type": "node",
+          "id": "13478785952",
+          "name": null,
+          "coordinates": [
+            139.7427448,
+            35.6902398
+          ],
+          "tags": {},
+          "recordId": "node/13478785952",
+          "distanceMeters": 46.05336829728533
+        },
+        {
+          "type": "node",
+          "id": "13478785950",
+          "name": null,
+          "coordinates": [
+            139.7427524,
+            35.6902624
+          ],
+          "tags": {},
+          "recordId": "node/13478785950",
+          "distanceMeters": 46.30032794896169
+        },
+        {
+          "type": "way",
+          "id": "144669930",
+          "name": null,
+          "coordinates": [
+            139.74275705,
+            35.6903595
+          ],
+          "tags": {
+            "building": "yes",
+            "source": "Bing,2007-04"
+          },
+          "recordId": "way/144669930",
+          "distanceMeters": 46.43111135383243
+        },
+        {
+          "type": "node",
+          "id": "1463963633",
+          "name": null,
+          "coordinates": [
+            139.7421107,
+            35.6899166
+          ],
+          "tags": {},
+          "recordId": "node/1463963633",
+          "distanceMeters": 46.68158573961537
+        },
+        {
+          "type": "node",
+          "id": "13478785954",
+          "name": null,
+          "coordinates": [
+            139.7427507,
+            35.6902198
+          ],
+          "tags": {},
+          "recordId": "node/13478785954",
+          "distanceMeters": 47.062701754205044
+        },
+        {
+          "type": "node",
+          "id": "1580618625",
+          "name": null,
+          "coordinates": [
+            139.7419551,
+            35.6906746
+          ],
+          "tags": {},
+          "recordId": "node/1580618625",
+          "distanceMeters": 47.14507066586704
+        },
+        {
+          "type": "node",
+          "id": "13478785953",
+          "name": null,
+          "coordinates": [
+            139.7427565,
+            35.6902371
+          ],
+          "tags": {},
+          "recordId": "node/13478785953",
+          "distanceMeters": 47.148644855482154
+        },
+        {
+          "type": "node",
+          "id": "1580618653",
+          "name": null,
+          "coordinates": [
+            139.7423199,
+            35.6907422
+          ],
+          "tags": {},
+          "recordId": "node/1580618653",
+          "distanceMeters": 47.2111982126647
+        },
+        {
+          "type": "node",
+          "id": "1580618648",
+          "name": null,
+          "coordinates": [
+            139.7424018,
+            35.6907313
+          ],
+          "tags": {},
+          "recordId": "node/1580618648",
+          "distanceMeters": 47.66417809219942
+        },
+        {
+          "type": "node",
+          "id": "13478785951",
+          "name": null,
+          "coordinates": [
+            139.742769,
+            35.6902587
+          ],
+          "tags": {},
+          "recordId": "node/13478785951",
+          "distanceMeters": 47.84332434910435
+        },
+        {
+          "type": "node",
+          "id": "12803610249",
+          "name": null,
+          "coordinates": [
+            139.7417573,
+            35.6901496
+          ],
+          "tags": {},
+          "recordId": "node/12803610249",
+          "distanceMeters": 48.035469740528654
+        },
+        {
+          "type": "node",
+          "id": "1581943878",
+          "name": null,
+          "coordinates": [
+            139.7421905,
+            35.6898875
+          ],
+          "tags": {},
+          "recordId": "node/1581943878",
+          "distanceMeters": 48.56425603520017
+        },
+        {
+          "type": "node",
+          "id": "1581943934",
+          "name": null,
+          "coordinates": [
+            139.7427822,
+            35.690298
+          ],
+          "tags": {},
+          "recordId": "node/1581943934",
+          "distanceMeters": 48.58816567280669
+        },
+        {
+          "type": "node",
+          "id": "1581943888",
+          "name": null,
+          "coordinates": [
+            139.741842,
+            35.6900306
+          ],
+          "tags": {},
+          "recordId": "node/1581943888",
+          "distanceMeters": 48.72898421257054
+        },
+        {
+          "type": "node",
+          "id": "1581943922",
+          "name": null,
+          "coordinates": [
+            139.7417213,
+            35.6902002
+          ],
+          "tags": {},
+          "recordId": "node/1581943922",
+          "distanceMeters": 49.19661480679583
+        },
+        {
+          "type": "node",
+          "id": "1580618545",
+          "name": null,
+          "coordinates": [
+            139.742342,
+            35.6907596
+          ],
+          "tags": {},
+          "recordId": "node/1580618545",
+          "distanceMeters": 49.44115533305394
+        },
+        {
+          "type": "node",
+          "id": "1581943925",
+          "name": null,
+          "coordinates": [
+            139.742776,
+            35.6901976
+          ],
+          "tags": {},
+          "recordId": "node/1581943925",
+          "distanceMeters": 49.91009144180565
+        },
+        {
+          "type": "node",
+          "id": "13478785955",
+          "name": null,
+          "coordinates": [
+            139.7427812,
+            35.6902131
+          ],
+          "tags": {},
+          "recordId": "node/13478785955",
+          "distanceMeters": 49.91559697527107
+        },
+        {
+          "type": "node",
+          "id": "1581943876",
+          "name": null,
+          "coordinates": [
+            139.7422551,
+            35.6898725
+          ],
+          "tags": {},
+          "recordId": "node/1581943876",
+          "distanceMeters": 49.99044178413479
+        }
+      ],
+      "llmVotes": [
+        {
+          "decision": "review",
+          "candidateId": null,
+          "perspective": "visitor"
+        },
+        {
+          "decision": "reject",
+          "candidateId": null,
+          "perspective": "user"
+        },
+        {
+          "decision": "link",
+          "candidateId": "way/144669927",
+          "perspective": "staff"
+        }
+      ]
+    },
+    {
+      "queryId": "019fa880-5cd5-7d23-9c07-684d56afd77e",
+      "name": "ちよだパークサイドプラザ",
+      "target": {
+        "id": "019fa880-5cd5-7d23-9c07-684d56afd77e",
+        "name": "ちよだパークサイドプラザ",
+        "coordinates": [
+          139.778795,
+          35.699229
+        ]
+      },
+      "status": "needs_review",
+      "candidates": [
+        {
+          "type": "node",
+          "id": "5746689931",
+          "name": null,
+          "coordinates": [
+            139.7788273,
+            35.6992218
+          ],
+          "tags": {
+            "entrance": "main"
+          },
+          "recordId": "node/5746689931",
+          "distanceMeters": 3.0245876409120407
+        },
+        {
+          "type": "node",
+          "id": "10583854959",
+          "name": null,
+          "coordinates": [
+            139.7788378,
+            35.6992404
+          ],
+          "tags": {
+            "amenity": "library_dropoff",
+            "source": "survey"
+          },
+          "recordId": "node/10583854959",
+          "distanceMeters": 4.067431381889121
+        },
+        {
+          "type": "node",
+          "id": "13468335880",
+          "name": "ちよだパークサイドプラザ区民図書室",
+          "coordinates": [
+            139.7788067,
+            35.6992879
+          ],
+          "tags": {
+            "addr:block_number": "1",
+            "addr:city": "千代田区",
+            "addr:neighbourhood": "神田和泉町",
+            "addr:province": "東京都",
+            "amenity": "library",
+            "level": "4",
+            "name": "ちよだパークサイドプラザ区民図書室",
+            "opening_hours": "Mo-Fr 09:00-19:00; Su 09:00-17:00; PH 09:00-17:00; Su[3] off",
+            "operator": "千代田区",
+            "operator:type": "public",
+            "phone": "+81-3-3864-8931",
+            "ref:isil": "none"
+          },
+          "recordId": "node/13468335880",
+          "distanceMeters": 6.634049841531057
+        },
+        {
+          "type": "node",
+          "id": "5746362097",
+          "name": null,
+          "coordinates": [
+            139.7788422,
+            35.6992814
+          ],
+          "tags": {
+            "amenity": "vending_machine",
+            "vending": "drinks"
+          },
+          "recordId": "node/5746362097",
+          "distanceMeters": 7.219113935962784
+        },
+        {
+          "type": "node",
+          "id": "5608307932",
+          "name": null,
+          "coordinates": [
+            139.7788329,
+            35.6993103
+          ],
+          "tags": {},
+          "recordId": "node/5608307932",
+          "distanceMeters": 9.666280899797211
+        },
+        {
+          "type": "node",
+          "id": "7265765749",
+          "name": null,
+          "coordinates": [
+            139.7788852,
+            35.6991771
+          ],
+          "tags": {},
+          "recordId": "node/7265765749",
+          "distanceMeters": 9.98235081277259
+        },
+        {
+          "type": "node",
+          "id": "5746689936",
+          "name": null,
+          "coordinates": [
+            139.7788504,
+            35.6993192
+          ],
+          "tags": {},
+          "recordId": "node/5746689936",
+          "distanceMeters": 11.208164784581236
+        },
+        {
+          "type": "node",
+          "id": "5746689927",
+          "name": null,
+          "coordinates": [
+            139.7789113,
+            35.6991795
+          ],
+          "tags": {},
+          "recordId": "node/5746689927",
+          "distanceMeters": 11.856917596603841
+        },
+        {
+          "type": "node",
+          "id": "2266519423",
+          "name": null,
+          "coordinates": [
+            139.7788588,
+            35.6993383
+          ],
+          "tags": {},
+          "recordId": "node/2266519423",
+          "distanceMeters": 13.449949414815343
+        },
+        {
+          "type": "node",
+          "id": "5746689930",
+          "name": null,
+          "coordinates": [
+            139.7789181,
+            35.699302
+          ],
+          "tags": {},
+          "recordId": "node/5746689930",
+          "distanceMeters": 13.764243953118287
+        },
+        {
+          "type": "node",
+          "id": "7265765747",
+          "name": null,
+          "coordinates": [
+            139.7788933,
+            35.6993291
+          ],
+          "tags": {},
+          "recordId": "node/7265765747",
+          "distanceMeters": 14.236687570900317
+        },
+        {
+          "type": "node",
+          "id": "7265765748",
+          "name": null,
+          "coordinates": [
+            139.7788826,
+            35.6993373
+          ],
+          "tags": {},
+          "recordId": "node/7265765748",
+          "distanceMeters": 14.408077884764511
+        },
+        {
+          "type": "node",
+          "id": "7265765756",
+          "name": null,
+          "coordinates": [
+            139.7789088,
+            35.69932
+          ],
+          "tags": {},
+          "recordId": "node/7265765756",
+          "distanceMeters": 14.421817858340628
+        },
+        {
+          "type": "node",
+          "id": "1724847720",
+          "name": null,
+          "coordinates": [
+            139.7787874,
+            35.6993615
+          ],
+          "tags": {},
+          "recordId": "node/1724847720",
+          "distanceMeters": 14.749302747242043
+        },
+        {
+          "type": "node",
+          "id": "5608307927",
+          "name": null,
+          "coordinates": [
+            139.7786711,
+            35.6991339
+          ],
+          "tags": {},
+          "recordId": "node/5608307927",
+          "distanceMeters": 15.394787417369166
+        },
+        {
+          "type": "node",
+          "id": "5649639291",
+          "name": null,
+          "coordinates": [
+            139.7788833,
+            35.6993483
+          ],
+          "tags": {},
+          "recordId": "node/5649639291",
+          "distanceMeters": 15.477467876650365
+        },
+        {
+          "type": "node",
+          "id": "5746362102",
+          "name": null,
+          "coordinates": [
+            139.7788316,
+            35.6990883
+          ],
+          "tags": {
+            "amenity": "bicycle_parking"
+          },
+          "recordId": "node/5746362102",
+          "distanceMeters": 15.99040312235748
+        },
+        {
+          "type": "node",
+          "id": "5746362221",
+          "name": null,
+          "coordinates": [
+            139.7788692,
+            35.6990959
+          ],
+          "tags": {},
+          "recordId": "node/5746362221",
+          "distanceMeters": 16.246086361273402
+        },
+        {
+          "type": "node",
+          "id": "5746689925",
+          "name": null,
+          "coordinates": [
+            139.7789646,
+            35.6991776
+          ],
+          "tags": {},
+          "recordId": "node/5746689925",
+          "distanceMeters": 16.346681934174335
+        },
+        {
+          "type": "node",
+          "id": "5746362223",
+          "name": null,
+          "coordinates": [
+            139.7789774,
+            35.6992547
+          ],
+          "tags": {
+            "amenity": "fountain"
+          },
+          "recordId": "node/5746362223",
+          "distanceMeters": 16.716868305311642
+        },
+        {
+          "type": "node",
+          "id": "7265765753",
+          "name": null,
+          "coordinates": [
+            139.7788962,
+            35.6990948
+          ],
+          "tags": {},
+          "recordId": "node/7265765753",
+          "distanceMeters": 17.498210854678057
+        },
+        {
+          "type": "node",
+          "id": "5746689932",
+          "name": null,
+          "coordinates": [
+            139.778981,
+            35.6991801
+          ],
+          "tags": {},
+          "recordId": "node/5746689932",
+          "distanceMeters": 17.654107000347764
+        },
+        {
+          "type": "node",
+          "id": "2266519422",
+          "name": null,
+          "coordinates": [
+            139.7786393,
+            35.6993268
+          ],
+          "tags": {},
+          "recordId": "node/2266519422",
+          "distanceMeters": 17.774695449100307
+        },
+        {
+          "type": "node",
+          "id": "5608307931",
+          "name": null,
+          "coordinates": [
+            139.7786295,
+            35.6993188
+          ],
+          "tags": {},
+          "recordId": "node/5608307931",
+          "distanceMeters": 17.973613980009336
+        },
+        {
+          "type": "node",
+          "id": "7723322861",
+          "name": null,
+          "coordinates": [
+            139.7789847,
+            35.6991533
+          ],
+          "tags": {
+            "man_made": "water_well"
+          },
+          "recordId": "node/7723322861",
+          "distanceMeters": 19.08639641529793
+        },
+        {
+          "type": "way",
+          "id": "606028620",
+          "name": null,
+          "coordinates": [
+            139.77900795,
+            35.6992398
+          ],
+          "tags": {
+            "playground": "splash_pad"
+          },
+          "recordId": "way/606028620",
+          "distanceMeters": 19.266940214744437
+        },
+        {
+          "type": "node",
+          "id": "7723322858",
+          "name": null,
+          "coordinates": [
+            139.7789965,
+            35.6991598
+          ],
+          "tags": {
+            "man_made": "street_cabinet",
+            "utility": "water"
+          },
+          "recordId": "node/7723322858",
+          "distanceMeters": 19.75566151582443
+        },
+        {
+          "type": "way",
+          "id": "605989851",
+          "name": null,
+          "coordinates": [
+            139.77901375,
+            35.69920125
+          ],
+          "tags": {
+            "highway": "footway"
+          },
+          "recordId": "way/605989851",
+          "distanceMeters": 19.992778442874716
+        },
+        {
+          "type": "node",
+          "id": "5746689935",
+          "name": null,
+          "coordinates": [
+            139.7790049,
+            35.6991595
+          ],
+          "tags": {},
+          "recordId": "node/5746689935",
+          "distanceMeters": 20.46898923323288
+        },
+        {
+          "type": "node",
+          "id": "5746689928",
+          "name": null,
+          "coordinates": [
+            139.7790235,
+            35.6992324
+          ],
+          "tags": {},
+          "recordId": "node/5746689928",
+          "distanceMeters": 20.637113668264455
+        },
+        {
+          "type": "node",
+          "id": "5746362115",
+          "name": null,
+          "coordinates": [
+            139.7789516,
+            35.6990924
+          ],
+          "tags": {},
+          "recordId": "node/5746362115",
+          "distanceMeters": 20.752884832103888
+        },
+        {
+          "type": "node",
+          "id": "5608307928",
+          "name": null,
+          "coordinates": [
+            139.7788158,
+            35.6990414
+          ],
+          "tags": {},
+          "recordId": "node/5608307928",
+          "distanceMeters": 20.944556506452106
+        },
+        {
+          "type": "node",
+          "id": "7723322860",
+          "name": null,
+          "coordinates": [
+            139.7790193,
+            35.6991795
+          ],
+          "tags": {
+            "amenity": "bench"
+          },
+          "recordId": "node/7723322860",
+          "distanceMeters": 20.988953830334523
+        },
+        {
+          "type": "way",
+          "id": "606028621",
+          "name": null,
+          "coordinates": [
+            139.77903705,
+            35.69920355
+          ],
+          "tags": {
+            "amenity": "shelter",
+            "building": "yes"
+          },
+          "recordId": "way/606028621",
+          "distanceMeters": 22.039661840421534
+        },
+        {
+          "type": "node",
+          "id": "5746362117",
+          "name": null,
+          "coordinates": [
+            139.779041,
+            35.699196
+          ],
+          "tags": {
+            "amenity": "bench"
+          },
+          "recordId": "node/5746362117",
+          "distanceMeters": 22.51494334145148
+        },
+        {
+          "type": "node",
+          "id": "5608307934",
+          "name": null,
+          "coordinates": [
+            139.7786342,
+            35.6993927
+          ],
+          "tags": {},
+          "recordId": "node/5608307934",
+          "distanceMeters": 23.284629910051557
+        },
+        {
+          "type": "node",
+          "id": "5608307929",
+          "name": null,
+          "coordinates": [
+            139.7786657,
+            35.6990477
+          ],
+          "tags": {},
+          "recordId": "node/5608307929",
+          "distanceMeters": 23.296712379328692
+        },
+        {
+          "type": "node",
+          "id": "5746689937",
+          "name": null,
+          "coordinates": [
+            139.7786434,
+            35.6994027
+          ],
+          "tags": {},
+          "recordId": "node/5746689937",
+          "distanceMeters": 23.67394065828023
+        },
+        {
+          "type": "node",
+          "id": "7723322859",
+          "name": null,
+          "coordinates": [
+            139.7790656,
+            35.6992131
+          ],
+          "tags": {
+            "amenity": "bench"
+          },
+          "recordId": "node/7723322859",
+          "distanceMeters": 24.49917955249003
+        },
+        {
+          "type": "node",
+          "id": "5746689015",
+          "name": null,
+          "coordinates": [
+            139.7789544,
+            35.6990504
+          ],
+          "tags": {},
+          "recordId": "node/5746689015",
+          "distanceMeters": 24.527145449670904
+        },
+        {
+          "type": "node",
+          "id": "5746689933",
+          "name": null,
+          "coordinates": [
+            139.7790693,
+            35.6992476
+          ],
+          "tags": {},
+          "recordId": "node/5746689933",
+          "distanceMeters": 24.855605775625435
+        },
+        {
+          "type": "node",
+          "id": "5746689934",
+          "name": null,
+          "coordinates": [
+            139.7790931,
+            35.699227
+          ],
+          "tags": {},
+          "recordId": "node/5746689934",
+          "distanceMeters": 26.919480532431056
+        },
+        {
+          "type": "way",
+          "id": "587065913",
+          "name": null,
+          "coordinates": [
+            139.7784962,
+            35.69922675
+          ],
+          "tags": {
+            "building": "yes"
+          },
+          "recordId": "way/587065913",
+          "distanceMeters": 26.982932165360985
+        },
+        {
+          "type": "way",
+          "id": "591832716",
+          "name": null,
+          "coordinates": [
+            139.77900584999998,
+            35.6990553
+          ],
+          "tags": {
+            "highway": "footway",
+            "source": "survey",
+            "surface": "paving_stones"
+          },
+          "recordId": "way/591832716",
+          "distanceMeters": 27.121371346155662
+        },
+        {
+          "type": "node",
+          "id": "5746689926",
+          "name": null,
+          "coordinates": [
+            139.7791034,
+            35.6992746
+          ],
+          "tags": {},
+          "recordId": "node/5746689926",
+          "distanceMeters": 28.3064843941912
+        },
+        {
+          "type": "node",
+          "id": "5746689929",
+          "name": null,
+          "coordinates": [
+            139.7791046,
+            35.6992952
+          ],
+          "tags": {},
+          "recordId": "node/5746689929",
+          "distanceMeters": 28.90985964629996
+        },
+        {
+          "type": "node",
+          "id": "7579950630",
+          "name": null,
+          "coordinates": [
+            139.7788756,
+            35.6989676
+          ],
+          "tags": {},
+          "recordId": "node/7579950630",
+          "distanceMeters": 29.963736753584293
+        },
+        {
+          "type": "node",
+          "id": "7579950632",
+          "name": null,
+          "coordinates": [
+            139.7789018,
+            35.6989669
+          ],
+          "tags": {},
+          "recordId": "node/7579950632",
+          "distanceMeters": 30.698412810890176
+        },
+        {
+          "type": "way",
+          "id": "217378912",
+          "name": "千代田区立 和泉小学校",
+          "coordinates": [
+            139.77848645,
+            35.69910685000001
+          ],
+          "tags": {
+            "amenity": "school",
+            "education": "school",
+            "name": "千代田区立 和泉小学校",
+            "name:en": "Izumi Elementary School",
+            "name:es": "Escuela de primaria Izumi",
+            "note": "National-Land Numerical Information (Public Facility) 2006, MLIT Japan",
+            "note:ja": "国土数値情報（公共施設データ）平成19年　国土交通省",
+            "source": "KSJ2",
+            "source_ref": "http://nlftp.mlit.go.jp/ksj/jpgis/datalist/KsjTmplt-P02-v2_0.html",
+            "wikidata": "Q81916370"
+          },
+          "qid": "Q81916370",
+          "recordId": "way/217378912",
+          "distanceMeters": 30.996559019160504
+        },
+        {
+          "type": "node",
+          "id": "5746362104",
+          "name": null,
+          "coordinates": [
+            139.7791563,
+            35.6992488
+          ],
+          "tags": {},
+          "recordId": "node/5746362104",
+          "distanceMeters": 32.69974797992218
+        },
+        {
+          "type": "node",
+          "id": "5608307930",
+          "name": null,
+          "coordinates": [
+            139.7784309,
+            35.6992151
+          ],
+          "tags": {},
+          "recordId": "node/5608307930",
+          "distanceMeters": 32.91470297188584
+        },
+        {
+          "type": "node",
+          "id": "5692199886",
+          "name": null,
+          "coordinates": [
+            139.778778,
+            35.6995285
+          ],
+          "tags": {
+            "highway": "street_lamp",
+            "power": "pole"
+          },
+          "recordId": "node/5692199886",
+          "distanceMeters": 33.33824227156497
+        },
+        {
+          "type": "node",
+          "id": "5746362094",
+          "name": null,
+          "coordinates": [
+            139.7791583,
+            35.6993101
+          ],
+          "tags": {},
+          "recordId": "node/5746362094",
+          "distanceMeters": 34.023008099317934
+        },
+        {
+          "type": "node",
+          "id": "7265765757",
+          "name": null,
+          "coordinates": [
+            139.779161,
+            35.6993189
+          ],
+          "tags": {
+            "barrier": "gate"
+          },
+          "recordId": "node/7265765757",
+          "distanceMeters": 34.5286434222622
+        },
+        {
+          "type": "node",
+          "id": "5608307933",
+          "name": null,
+          "coordinates": [
+            139.7784264,
+            35.6991441
+          ],
+          "tags": {},
+          "recordId": "node/5608307933",
+          "distanceMeters": 34.59764959099265
+        },
+        {
+          "type": "node",
+          "id": "5746689014",
+          "name": null,
+          "coordinates": [
+            139.7791789,
+            35.6992226
+          ],
+          "tags": {},
+          "recordId": "node/5746689014",
+          "distanceMeters": 34.67364457853008
+        },
+        {
+          "type": "node",
+          "id": "7265765754",
+          "name": null,
+          "coordinates": [
+            139.7791582,
+            35.6993403
+          ],
+          "tags": {},
+          "recordId": "node/7265765754",
+          "distanceMeters": 35.054455620416284
+        },
+        {
+          "type": "node",
+          "id": "5746713532",
+          "name": null,
+          "coordinates": [
+            139.7791614,
+            35.6993504
+          ],
+          "tags": {
+            "entrance": "service"
+          },
+          "recordId": "node/5746713532",
+          "distanceMeters": 35.73390361387877
+        },
+        {
+          "type": "node",
+          "id": "1724847703",
+          "name": null,
+          "coordinates": [
+            139.778657,
+            35.6995318
+          ],
+          "tags": {},
+          "recordId": "node/1724847703",
+          "distanceMeters": 35.90187254275809
+        },
+        {
+          "type": "way",
+          "id": "810714633",
+          "name": null,
+          "coordinates": [
+            139.77888595000002,
+            35.698899350000005
+          ],
+          "tags": {
+            "landuse": "flowerbed"
+          },
+          "recordId": "way/810714633",
+          "distanceMeters": 37.56420742736585
+        },
+        {
+          "type": "way",
+          "id": "778495320",
+          "name": null,
+          "coordinates": [
+            139.77921425,
+            35.6992531
+          ],
+          "tags": {
+            "barrier": "fence"
+          },
+          "recordId": "way/778495320",
+          "distanceMeters": 37.95318008724568
+        },
+        {
+          "type": "way",
+          "id": "606028618",
+          "name": null,
+          "coordinates": [
+            139.7791894,
+            35.699042750000004
+          ],
+          "tags": {
+            "landuse": "grass"
+          },
+          "recordId": "way/606028618",
+          "distanceMeters": 41.198319527956905
+        },
+        {
+          "type": "way",
+          "id": "605989850",
+          "name": null,
+          "coordinates": [
+            139.77918284999998,
+            35.69903285
+          ],
+          "tags": {
+            "highway": "footway"
+          },
+          "recordId": "way/605989850",
+          "distanceMeters": 41.259302928800906
+        },
+        {
+          "type": "way",
+          "id": "217378904",
+          "name": "和泉公園",
+          "coordinates": [
+            139.7791959,
+            35.69904685
+          ],
+          "tags": {
+            "leisure": "park",
+            "name": "和泉公園",
+            "name:en": "Izumi Park",
+            "name:es": "Parque Izumi",
+            "name:ja": "和泉公園",
+            "name:ja_rm": "Izumi　Kōen",
+            "source": "estimated"
+          },
+          "recordId": "way/217378904",
+          "distanceMeters": 41.482268314929854
+        },
+        {
+          "type": "node",
+          "id": "5746689010",
+          "name": null,
+          "coordinates": [
+            139.7789508,
+            35.6988673
+          ],
+          "tags": {},
+          "recordId": "node/5746689010",
+          "distanceMeters": 42.608880834448854
+        },
+        {
+          "type": "node",
+          "id": "5746362119",
+          "name": null,
+          "coordinates": [
+            139.7792692,
+            35.6992577
+          ],
+          "tags": {},
+          "recordId": "node/5746362119",
+          "distanceMeters": 42.939216220127385
+        },
+        {
+          "type": "node",
+          "id": "7579950629",
+          "name": null,
+          "coordinates": [
+            139.7788701,
+            35.6988318
+          ],
+          "tags": {},
+          "recordId": "node/7579950629",
+          "distanceMeters": 44.684231890095845
+        },
+        {
+          "type": "node",
+          "id": "7579950618",
+          "name": null,
+          "coordinates": [
+            139.7788963,
+            35.6988311
+          ],
+          "tags": {},
+          "recordId": "node/7579950618",
+          "distanceMeters": 45.180176362290496
+        },
+        {
+          "type": "node",
+          "id": "2264347203",
+          "name": null,
+          "coordinates": [
+            139.7789877,
+            35.6988498
+          ],
+          "tags": {},
+          "recordId": "node/2264347203",
+          "distanceMeters": 45.61457673972054
+        },
+        {
+          "type": "node",
+          "id": "5665860805",
+          "name": "千代田区立いずみこども園",
+          "coordinates": [
+            139.7782981,
+            35.6993449
+          ],
+          "tags": {
+            "amenity": "childcare",
+            "name": "千代田区立いずみこども園"
+          },
+          "recordId": "node/5665860805",
+          "distanceMeters": 46.68433769235359
+        },
+        {
+          "type": "node",
+          "id": "5746713534",
+          "name": null,
+          "coordinates": [
+            139.7790808,
+            35.6995846
+          ],
+          "tags": {},
+          "recordId": "node/5746713534",
+          "distanceMeters": 47.21786754602183
+        },
+        {
+          "type": "node",
+          "id": "5746689924",
+          "name": "和泉公園（西側入口）",
+          "coordinates": [
+            139.7789316,
+            35.6988162
+          ],
+          "tags": {
+            "amenity": "bicycle_rental",
+            "authentication:app": "yes",
+            "brand": "ドコモ・バイクシェア",
+            "brand:en": "Docomo Bike Share",
+            "brand:ja": "ドコモ・バイクシェア",
+            "brand:website": "https://docomo-cycle.jp/",
+            "brand:wikidata": "Q55533296",
+            "capacity": "7",
+            "fee": "yes",
+            "gbfs:name": "A3-05.和泉公園（西側入口）",
+            "gbfs:station_id": "10017",
+            "gbfs:system_id": "docomo-cycle",
+            "name": "和泉公園（西側入口）",
+            "name:en": "Izumi Park(Western Entrance)",
+            "name:ja": "和泉公園（西側入口）",
+            "operator": "ドコモ・バイクシェア",
+            "operator:en": "Docomo Bike Share",
+            "operator:ja": "ドコモ・バイクシェア",
+            "operator:type": "private",
+            "operator:wikidata": "Q55533296",
+            "ref": "A3-05"
+          },
+          "recordId": "node/5746689924",
+          "distanceMeters": 47.529782254714554
+        },
+        {
+          "type": "node",
+          "id": "1724847706",
+          "name": null,
+          "coordinates": [
+            139.7784376,
+            35.6995429
+          ],
+          "tags": {},
+          "recordId": "node/1724847706",
+          "distanceMeters": 47.53800724142836
+        },
+        {
+          "type": "node",
+          "id": "5746713535",
+          "name": null,
+          "coordinates": [
+            139.7788008,
+            35.6996604
+          ],
+          "tags": {},
+          "recordId": "node/5746713535",
+          "distanceMeters": 47.97235042772776
+        },
+        {
+          "type": "node",
+          "id": "5649639298",
+          "name": null,
+          "coordinates": [
+            139.7789867,
+            35.6988247
+          ],
+          "tags": {},
+          "recordId": "node/5649639298",
+          "distanceMeters": 48.173747282311545
+        },
+        {
+          "type": "way",
+          "id": "591832718",
+          "name": null,
+          "coordinates": [
+            139.77902245,
+            35.69883635
+          ],
+          "tags": {
+            "access": "yes",
+            "amenity": "toilets",
+            "building": "yes",
+            "changing_table": "yes",
+            "fee": "no",
+            "source": "survey",
+            "toilets:disposal": "flush",
+            "unisex": "yes",
+            "wheelchair": "yes"
+          },
+          "recordId": "way/591832718",
+          "distanceMeters": 48.250404229256326
+        },
+        {
+          "type": "node",
+          "id": "1420768491",
+          "name": null,
+          "coordinates": [
+            139.7788217,
+            35.6987931
+          ],
+          "tags": {},
+          "recordId": "node/1420768491",
+          "distanceMeters": 48.52979716234208
+        },
+        {
+          "type": "node",
+          "id": "5649639300",
+          "name": null,
+          "coordinates": [
+            139.7790582,
+            35.6988481
+          ],
+          "tags": {},
+          "recordId": "node/5649639300",
+          "distanceMeters": 48.56696843730881
+        },
+        {
+          "type": "node",
+          "id": "5746713537",
+          "name": null,
+          "coordinates": [
+            139.779127,
+            35.6995832
+          ],
+          "tags": {},
+          "recordId": "node/5746713537",
+          "distanceMeters": 49.49725827491664
+        },
+        {
+          "type": "node",
+          "id": "2266519416",
+          "name": null,
+          "coordinates": [
+            139.7788296,
+            35.6987839
+          ],
+          "tags": {},
+          "recordId": "node/2266519416",
+          "distanceMeters": 49.59138306566585
+        },
+        {
+          "type": "node",
+          "id": "5649639289",
+          "name": null,
+          "coordinates": [
+            139.7788518,
+            35.698783
+          ],
+          "tags": {
+            "barrier": "cycle_barrier"
+          },
+          "recordId": "node/5649639289",
+          "distanceMeters": 49.85746568100308
+        }
+      ],
+      "llmVotes": [
+        {
+          "decision": "link",
+          "candidateId": "node/13468335880",
+          "perspective": "visitor"
+        },
+        {
+          "decision": "link",
+          "candidateId": "node/5746689931",
+          "perspective": "user"
+        },
+        {
+          "decision": "link",
+          "candidateId": "node/13468335880",
+          "perspective": "staff"
+        }
+      ]
+    },
+    {
+      "queryId": "019fa880-5cd5-7e0d-8300-8ab683bd0c1d",
+      "name": "四番町児童館",
+      "target": {
+        "id": "019fa880-5cd5-7e0d-8300-8ab683bd0c1d",
+        "name": "四番町児童館",
+        "coordinates": [
+          139.736548,
+          35.688289
+        ]
+      },
+      "status": "needs_review",
+      "candidates": [
+        {
+          "type": "way",
+          "id": "144852509",
+          "name": null,
+          "coordinates": [
+            139.73660685,
+            35.68822635
+          ],
+          "tags": {
+            "building": "yes",
+            "source": "Bing,2007-04"
+          },
+          "recordId": "way/144852509",
+          "distanceMeters": 8.762333703097404
+        },
+        {
+          "type": "node",
+          "id": "3372820394",
+          "name": null,
+          "coordinates": [
+            139.7364098,
+            35.6882679
+          ],
+          "tags": {},
+          "recordId": "node/3372820394",
+          "distanceMeters": 12.699839859505454
+        },
+        {
+          "type": "node",
+          "id": "1583504402",
+          "name": null,
+          "coordinates": [
+            139.7364008,
+            35.6883339
+          ],
+          "tags": {},
+          "recordId": "node/1583504402",
+          "distanceMeters": 14.20064082235087
+        },
+        {
+          "type": "node",
+          "id": "1583504419",
+          "name": null,
+          "coordinates": [
+            139.7366189,
+            35.6884251
+          ],
+          "tags": {},
+          "recordId": "node/1583504419",
+          "distanceMeters": 16.432509881247192
+        },
+        {
+          "type": "node",
+          "id": "1583504384",
+          "name": null,
+          "coordinates": [
+            139.7367491,
+            35.6882909
+          ],
+          "tags": {},
+          "recordId": "node/1583504384",
+          "distanceMeters": 18.163138444956676
+        },
+        {
+          "type": "node",
+          "id": "1583504422",
+          "name": null,
+          "coordinates": [
+            139.7366423,
+            35.6884752
+          ],
+          "tags": {},
+          "recordId": "node/1583504422",
+          "distanceMeters": 22.387646734531707
+        },
+        {
+          "type": "way",
+          "id": "144852523",
+          "name": null,
+          "coordinates": [
+            139.7368103,
+            35.68842685
+          ],
+          "tags": {
+            "building": "yes",
+            "source": "Bing,2007-04"
+          },
+          "recordId": "way/144852523",
+          "distanceMeters": 28.2156819139698
+        },
+        {
+          "type": "node",
+          "id": "1583504364",
+          "name": null,
+          "coordinates": [
+            139.7365947,
+            35.6880276
+          ],
+          "tags": {},
+          "recordId": "node/1583504364",
+          "distanceMeters": 29.370754324124757
+        },
+        {
+          "type": "node",
+          "id": "3372820393",
+          "name": null,
+          "coordinates": [
+            139.7365739,
+            35.6880228
+          ],
+          "tags": {},
+          "recordId": "node/3372820393",
+          "distanceMeters": 29.69236794976207
+        },
+        {
+          "type": "node",
+          "id": "1583504374",
+          "name": null,
+          "coordinates": [
+            139.7368129,
+            35.6881187
+          ],
+          "tags": {},
+          "recordId": "node/1583504374",
+          "distanceMeters": 30.511368058404955
+        },
+        {
+          "type": "node",
+          "id": "12068147317",
+          "name": null,
+          "coordinates": [
+            139.7362245,
+            35.6882054
+          ],
+          "tags": {},
+          "recordId": "node/12068147317",
+          "distanceMeters": 30.659434526600172
+        },
+        {
+          "type": "node",
+          "id": "1583504341",
+          "name": null,
+          "coordinates": [
+            139.7367563,
+            35.6880654
+          ],
+          "tags": {},
+          "recordId": "node/1583504341",
+          "distanceMeters": 31.1781404011117
+        },
+        {
+          "type": "node",
+          "id": "1583504333",
+          "name": null,
+          "coordinates": [
+            139.7365723,
+            35.688004
+          ],
+          "tags": {},
+          "recordId": "node/1583504333",
+          "distanceMeters": 31.76645263082006
+        },
+        {
+          "type": "node",
+          "id": "1583504339",
+          "name": null,
+          "coordinates": [
+            139.7367513,
+            35.6880432
+          ],
+          "tags": {},
+          "recordId": "node/1583504339",
+          "distanceMeters": 32.92620742885098
+        },
+        {
+          "type": "node",
+          "id": "12068147318",
+          "name": null,
+          "coordinates": [
+            139.7361602,
+            35.688305
+          ],
+          "tags": {},
+          "recordId": "node/12068147318",
+          "distanceMeters": 35.06847037348547
+        },
+        {
+          "type": "node",
+          "id": "1583504323",
+          "name": null,
+          "coordinates": [
+            139.7366178,
+            35.6879772
+          ],
+          "tags": {},
+          "recordId": "node/1583504323",
+          "distanceMeters": 35.2390051574442
+        },
+        {
+          "type": "way",
+          "id": "330321732",
+          "name": null,
+          "coordinates": [
+            139.7362797,
+            35.68805235
+          ],
+          "tags": {
+            "amenity": "parking"
+          },
+          "recordId": "way/330321732",
+          "distanceMeters": 35.77123294989593
+        },
+        {
+          "type": "node",
+          "id": "1583421277",
+          "name": null,
+          "coordinates": [
+            139.7363605,
+            35.6885804
+          ],
+          "tags": {},
+          "recordId": "node/1583421277",
+          "distanceMeters": 36.56022850660685
+        },
+        {
+          "type": "node",
+          "id": "1899612228",
+          "name": null,
+          "coordinates": [
+            139.736537,
+            35.688625
+          ],
+          "tags": {},
+          "recordId": "node/1899612228",
+          "distanceMeters": 37.37470074959187
+        },
+        {
+          "type": "node",
+          "id": "1583421283",
+          "name": null,
+          "coordinates": [
+            139.7364664,
+            35.6886202
+          ],
+          "tags": {},
+          "recordId": "node/1583421283",
+          "distanceMeters": 37.55786981720652
+        },
+        {
+          "type": "node",
+          "id": "1899612207",
+          "name": null,
+          "coordinates": [
+            139.7365142,
+            35.6886302
+          ],
+          "tags": {},
+          "recordId": "node/1899612207",
+          "distanceMeters": 38.062313154386295
+        },
+        {
+          "type": "node",
+          "id": "1583504405",
+          "name": null,
+          "coordinates": [
+            139.7369783,
+            35.6883785
+          ],
+          "tags": {},
+          "recordId": "node/1583504405",
+          "distanceMeters": 40.115636433474535
+        },
+        {
+          "type": "node",
+          "id": "1583504353",
+          "name": null,
+          "coordinates": [
+            139.7369669,
+            35.6881454
+          ],
+          "tags": {},
+          "recordId": "node/1583504353",
+          "distanceMeters": 41.06373227882875
+        },
+        {
+          "type": "way",
+          "id": "1303083281",
+          "name": null,
+          "coordinates": [
+            139.73609714999998,
+            35.688214599999995
+          ],
+          "tags": {
+            "building": "yes"
+          },
+          "recordId": "way/1303083281",
+          "distanceMeters": 41.54949382996613
+        },
+        {
+          "type": "node",
+          "id": "1583504446",
+          "name": null,
+          "coordinates": [
+            139.7368714,
+            35.6885628
+          ],
+          "tags": {},
+          "recordId": "node/1583504446",
+          "distanceMeters": 42.18962215050633
+        },
+        {
+          "type": "node",
+          "id": "1583421282",
+          "name": null,
+          "coordinates": [
+            139.7363026,
+            35.6886193
+          ],
+          "tags": {},
+          "recordId": "node/1583421282",
+          "distanceMeters": 42.896492313940655
+        },
+        {
+          "type": "node",
+          "id": "12068147307",
+          "name": null,
+          "coordinates": [
+            139.7369159,
+            35.6880387
+          ],
+          "tags": {},
+          "recordId": "node/12068147307",
+          "distanceMeters": 43.3428396109515
+        },
+        {
+          "type": "node",
+          "id": "1583504357",
+          "name": null,
+          "coordinates": [
+            139.7369872,
+            35.6881263
+          ],
+          "tags": {},
+          "recordId": "node/1583504357",
+          "distanceMeters": 43.59639901121459
+        },
+        {
+          "type": "way",
+          "id": "144852506",
+          "name": "日テレ四番町ビル 3号館",
+          "coordinates": [
+            139.73649484999999,
+            35.6878973
+          ],
+          "tags": {
+            "building": "yes",
+            "name": "日テレ四番町ビル 3号館",
+            "source": "Bing,2007-04"
+          },
+          "recordId": "way/144852506",
+          "distanceMeters": 43.81876256124187
+        },
+        {
+          "type": "node",
+          "id": "7780246985",
+          "name": "No.4",
+          "coordinates": [
+            139.7360715,
+            35.6881915
+          ],
+          "tags": {
+            "addr:block_number": "5",
+            "addr:city": "千代田区",
+            "addr:housenumber": "9",
+            "addr:neighbourhood": "四番町",
+            "addr:postcode": "102-0081",
+            "addr:province": "東京都",
+            "amenity": "cafe",
+            "name": "No.4",
+            "opening_hours": "Mo-Su 08:00-21:00",
+            "phone": "+81-3-3234-4440",
+            "website": "http://tysons.jp/no4"
+          },
+          "recordId": "node/7780246985",
+          "distanceMeters": 44.37872324705004
+        },
+        {
+          "type": "way",
+          "id": "144844477",
+          "name": null,
+          "coordinates": [
+            139.73637580000002,
+            35.68866655
+          ],
+          "tags": {
+            "building": "yes",
+            "source": "Bing,2007-04"
+          },
+          "recordId": "way/144844477",
+          "distanceMeters": 44.769609875169294
+        },
+        {
+          "type": "node",
+          "id": "13325098701",
+          "name": "No4",
+          "coordinates": [
+            139.7360651,
+            35.6881905
+          ],
+          "tags": {
+            "name": "No4",
+            "shop": "bakery"
+          },
+          "recordId": "node/13325098701",
+          "distanceMeters": 44.966389800831784
+        },
+        {
+          "type": "node",
+          "id": "1583504300",
+          "name": null,
+          "coordinates": [
+            139.7366465,
+            35.6878844
+          ],
+          "tags": {},
+          "recordId": "node/1583504300",
+          "distanceMeters": 45.86052847000532
+        },
+        {
+          "type": "node",
+          "id": "1583421288",
+          "name": null,
+          "coordinates": [
+            139.7366678,
+            35.6886901
+          ],
+          "tags": {},
+          "recordId": "node/1583421288",
+          "distanceMeters": 45.893854935210356
+        },
+        {
+          "type": "node",
+          "id": "1583504305",
+          "name": null,
+          "coordinates": [
+            139.7363432,
+            35.6879102
+          ],
+          "tags": {},
+          "recordId": "node/1583504305",
+          "distanceMeters": 46.002764000483886
+        },
+        {
+          "type": "node",
+          "id": "1583421249",
+          "name": null,
+          "coordinates": [
+            139.736092,
+            35.6884768
+          ],
+          "tags": {},
+          "recordId": "node/1583421249",
+          "distanceMeters": 46.17446910662227
+        },
+        {
+          "type": "node",
+          "id": "1420770195",
+          "name": "千代田四番町郵便局",
+          "coordinates": [
+            139.7362186,
+            35.6886239
+          ],
+          "tags": {
+            "addr:block_number": "4",
+            "addr:city": "千代田区",
+            "addr:housenumber": "8",
+            "addr:postcode": "102-0081",
+            "addr:province": "東京都",
+            "addr:quarter": "四番町",
+            "amenity": "post_office",
+            "name": "千代田四番町郵便局",
+            "note": "National-Land Numerical Information (Public Facility) 2006, MLIT Japan",
+            "note:ja": "国土数値情報（公共施設データ）平成19年　国土交通省",
+            "source": "KSJ2",
+            "source_ref": "http://nlftp.mlit.go.jp/ksj/jpgis/datalist/KsjTmplt-P02-v2_0.html"
+          },
+          "recordId": "node/1420770195",
+          "distanceMeters": 47.66296895147559
+        },
+        {
+          "type": "way",
+          "id": "144852516",
+          "name": "日テレ四番町ビル 4号館",
+          "coordinates": [
+            139.7367686,
+            35.6878981
+          ],
+          "tags": {
+            "building": "yes",
+            "name": "日テレ四番町ビル 4号館",
+            "source": "Bing,2007-04"
+          },
+          "recordId": "way/144852516",
+          "distanceMeters": 47.81453594784675
+        },
+        {
+          "type": "node",
+          "id": "1583421305",
+          "name": null,
+          "coordinates": [
+            139.736475,
+            35.6887167
+          ],
+          "tags": {},
+          "recordId": "node/1583421305",
+          "distanceMeters": 48.01286592503257
+        },
+        {
+          "type": "node",
+          "id": "1583504283",
+          "name": null,
+          "coordinates": [
+            139.7366464,
+            35.6878627
+          ],
+          "tags": {},
+          "recordId": "node/1583504283",
+          "distanceMeters": 48.22823432235493
+        },
+        {
+          "type": "node",
+          "id": "1583421297",
+          "name": null,
+          "coordinates": [
+            139.7366481,
+            35.6887247
+          ],
+          "tags": {},
+          "recordId": "node/1583421297",
+          "distanceMeters": 49.28386796889889
+        },
+        {
+          "type": "node",
+          "id": "1583504454",
+          "name": null,
+          "coordinates": [
+            139.7369503,
+            35.6885899
+          ],
+          "tags": {},
+          "recordId": "node/1583504454",
+          "distanceMeters": 49.39175927603765
+        },
+        {
+          "type": "node",
+          "id": "1583421271",
+          "name": null,
+          "coordinates": [
+            139.7360996,
+            35.688547
+          ],
+          "tags": {},
+          "recordId": "node/1583421271",
+          "distanceMeters": 49.62822609226418
+        },
+        {
+          "type": "way",
+          "id": "144844479",
+          "name": null,
+          "coordinates": [
+            139.7366916,
+            35.68872005
+          ],
+          "tags": {
+            "building": "yes"
+          },
+          "recordId": "way/144844479",
+          "distanceMeters": 49.65412244243923
+        },
+        {
+          "type": "node",
+          "id": "1583421295",
+          "name": null,
+          "coordinates": [
+            139.7362715,
+            35.6886769
+          ],
+          "tags": {},
+          "recordId": "node/1583421295",
+          "distanceMeters": 49.8396050843521
+        },
+        {
+          "type": "node",
+          "id": "12068147316",
+          "name": null,
+          "coordinates": [
+            139.7360341,
+            35.6881242
+          ],
+          "tags": {},
+          "recordId": "node/12068147316",
+          "distanceMeters": 49.89848704516331
+        }
+      ],
+      "llmVotes": [
+        {
+          "decision": "reject",
+          "candidateId": null,
+          "perspective": "visitor"
+        },
+        {
+          "decision": "review",
+          "candidateId": null,
+          "perspective": "user"
+        },
+        {
+          "decision": "link",
+          "candidateId": "way/144852509",
+          "perspective": "staff"
+        }
+      ]
+    }
+  ]
 }

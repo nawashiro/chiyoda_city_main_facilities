@@ -1,0 +1,12 @@
+schemaVersion: 1
+reportSha256: 3496d2893b0cfccdb743bea54e079856ed6157bba1dbe55cdfb8a1cf9130a5ac
+choices:
+  - queryId: "019fa880-5cd5-7b6f-882e-4d07aad02219"
+    decision: null
+    candidateId: null
+  - queryId: "019fa880-5cd5-7d23-9c07-684d56afd77e"
+    decision: null
+    candidateId: null
+  - queryId: "019fa880-5cd5-7e0d-8300-8ab683bd0c1d"
+    decision: null
+    candidateId: null
