@@ -17,9 +17,9 @@
       "url": "https://www.openstreetmap.org/copyright",
       "license": "Open Database License (ODbL) 1.0",
       "licenseUrl": "https://opendatacommons.org/licenses/odbl/1-0/",
-      "version": "2026-07-29T06:30:36Z",
-      "retrievedAt": "2026-07-29T06:32:29+00:00",
-      "sha256": "095fae838bef414e68af7cdd9ab7c35869ccf8c8fcf1d5da9840b622090830f1",
+      "version": "202608060200",
+      "retrievedAt": "2026-08-07T15:15:17+00:00",
+      "sha256": "5521d0210c083c43c8a6857c961cdae44e0bb6c79efa4b1d2e6fc8fd526a8131",
       "attribution": "© OpenStreetMap contributors",
       "transformation": "千代田区内の対象候補を抽出し、同定済み施設のPoint座標へ変換"
     },
@@ -280,6 +280,23 @@
         "town": "神田錦町",
         "lifecycleStatus": "active",
         "sources": {
+          "openstreetmap": {
+            "retrievedAt": "2026-08-07T15:15:17+00:00",
+            "record": {
+              "type": "way",
+              "id": "231540636",
+              "coordinates": [
+                139.7640083,
+                35.6936171
+              ],
+              "tags": {
+                "building": "yes",
+                "name": "アーク錦町ビル",
+                "source": "GSI/KIBAN 25000; NARO",
+                "source_ref": "http://wiki.osm.org/wiki/GSI_KIBAN"
+              }
+            }
+          },
           "wam": {
             "retrievedAt": "2026-07-29T20:37:18+00:00",
             "records": [
@@ -462,6 +479,22 @@
         "town": "飯田橋",
         "lifecycleStatus": "active",
         "sources": {
+          "openstreetmap": {
+            "retrievedAt": "2026-08-07T15:15:17+00:00",
+            "record": {
+              "type": "way",
+              "id": "144430416",
+              "coordinates": [
+                139.746943,
+                35.70036595
+              ],
+              "tags": {
+                "building": "apartments",
+                "name": "ダイアパレス飯田橋",
+                "source": "Bing,2007-04"
+              }
+            }
+          },
           "wam": {
             "retrievedAt": "2026-07-29T20:37:18+00:00",
             "records": [
@@ -575,7 +608,7 @@
         "lifecycleStatus": "active",
         "sources": {
           "openstreetmap": {
-            "retrievedAt": "2026-07-29T06:32:29+00:00",
+            "retrievedAt": "2026-08-07T15:15:17+00:00",
             "record": {
               "type": "node",
               "id": "5285952021",
@@ -701,6 +734,29 @@
         "town": "神田神保町",
         "lifecycleStatus": "active",
         "sources": {
+          "openstreetmap": {
+            "retrievedAt": "2026-08-07T15:15:17+00:00",
+            "record": {
+              "type": "way",
+              "id": "112307863",
+              "coordinates": [
+                139.7573793,
+                35.69566465
+              ],
+              "tags": {
+                "addr:block_number": "3",
+                "addr:city": "千代田区",
+                "addr:housename": "神田古書センタービル",
+                "addr:neighbourhood": "神田神保町二丁目",
+                "addr:postcode": "101-0051",
+                "addr:province": "東京都",
+                "building": "retail",
+                "name": "神田古書センタービル",
+                "name:en": "Kanda Kosho Center Building",
+                "source": "Bing,2007-04"
+              }
+            }
+          },
           "wam": {
             "retrievedAt": "2026-07-29T20:37:18+00:00",
             "records": [
@@ -777,7 +833,7 @@
         "lifecycleStatus": "active",
         "sources": {
           "openstreetmap": {
-            "retrievedAt": "2026-07-29T06:32:29+00:00",
+            "retrievedAt": "2026-08-07T15:15:17+00:00",
             "record": {
               "type": "node",
               "id": "3777876586",
@@ -822,12 +878,12 @@
         "lifecycleStatus": "active",
         "sources": {
           "openstreetmap": {
-            "retrievedAt": "2026-07-29T06:32:29+00:00",
+            "retrievedAt": "2026-08-07T15:15:17+00:00",
             "record": {
               "type": "way",
               "id": "23974981",
               "coordinates": [
-                139.7426631,
+                139.74266305,
                 35.6811899
               ],
               "tags": {
@@ -868,7 +924,7 @@
         "lifecycleStatus": "active",
         "sources": {
           "openstreetmap": {
-            "retrievedAt": "2026-07-29T06:32:29+00:00",
+            "retrievedAt": "2026-08-07T15:15:17+00:00",
             "record": {
               "type": "way",
               "id": "144351353",
@@ -920,40 +976,6 @@
         "town": "神田駿河台",
         "lifecycleStatus": "active",
         "sources": {
-          "openstreetmap": {
-            "retrievedAt": "2026-07-29T06:32:29+00:00",
-            "record": {
-              "type": "node",
-              "id": "13465461815",
-              "coordinates": [
-                139.7608154,
-                35.7004236
-              ],
-              "tags": {
-                "addr:block_number": "5",
-                "addr:city": "千代田区",
-                "addr:neighbourhood": "神田駿河台二丁目",
-                "addr:postcode": "101-0062",
-                "addr:province": "東京都",
-                "addr:quarter": "神田駿河台",
-                "amenity": "social_facility",
-                "contact:facebook": "https://www.facebook.com/chiyoda.emifuru/",
-                "description": "障害のある方が利用できる施設です。講習会・リハビリテーションや、グループホーム・ショートステイの機能があります。",
-                "fax": "+81-3-3291-0608",
-                "image": "https://commons.wikimedia.org/wiki/File:障害者福祉センターえみふる・お茶の水キリストの教会.jpg",
-                "internet_access": "wlan",
-                "name": "千代田区立障害者福祉センター　えみふる",
-                "opening_hours": "Mo-Fr 09:00-21:00; Sa-Su 09:00-17:00; PH 09:00-17:00; Su[2] off",
-                "operator": "社会福祉法人武蔵野会",
-                "operator:type": "public",
-                "phone": "+81-3-3291-0600",
-                "social_facility": "outreach",
-                "social_facility:for": "disabled",
-                "website": "https://emifuru.com/",
-                "wheelchair": "yes"
-              }
-            }
-          },
           "wam": {
             "retrievedAt": "2026-07-29T20:37:18+00:00",
             "records": [
@@ -1030,7 +1052,7 @@
         "lifecycleStatus": "active",
         "sources": {
           "openstreetmap": {
-            "retrievedAt": "2026-07-29T06:32:29+00:00",
+            "retrievedAt": "2026-08-07T15:15:17+00:00",
             "record": {
               "type": "node",
               "id": "1636575850",
@@ -1082,7 +1104,7 @@
         "lifecycleStatus": "active",
         "sources": {
           "openstreetmap": {
-            "retrievedAt": "2026-07-29T06:32:29+00:00",
+            "retrievedAt": "2026-08-07T15:15:17+00:00",
             "record": {
               "type": "node",
               "id": "1420770185",
@@ -1136,7 +1158,7 @@
         "lifecycleStatus": "active",
         "sources": {
           "openstreetmap": {
-            "retrievedAt": "2026-07-29T06:32:29+00:00",
+            "retrievedAt": "2026-08-07T15:15:17+00:00",
             "record": {
               "type": "way",
               "id": "193000544",
@@ -1190,13 +1212,13 @@
         "lifecycleStatus": "active",
         "sources": {
           "openstreetmap": {
-            "retrievedAt": "2026-07-29T06:32:29+00:00",
+            "retrievedAt": "2026-08-07T15:15:17+00:00",
             "record": {
               "type": "way",
               "id": "187756642",
               "coordinates": [
-                139.7681384,
-                35.6927468
+                139.76813835000002,
+                35.69274685
               ],
               "tags": {
                 "amenity": "community_centre",
@@ -1243,13 +1265,13 @@
         "lifecycleStatus": "active",
         "sources": {
           "openstreetmap": {
-            "retrievedAt": "2026-07-29T06:32:29+00:00",
+            "retrievedAt": "2026-08-07T15:15:17+00:00",
             "record": {
               "type": "way",
               "id": "191732177",
               "coordinates": [
                 139.7706485,
-                35.6976015
+                35.69760145
               ],
               "tags": {
                 "amenity": "townhall",
@@ -1298,7 +1320,7 @@
         "lifecycleStatus": "active",
         "sources": {
           "openstreetmap": {
-            "retrievedAt": "2026-07-29T06:32:29+00:00",
+            "retrievedAt": "2026-08-07T15:15:17+00:00",
             "record": {
               "type": "node",
               "id": "13465379795",
@@ -1340,8 +1362,8 @@
       "geometry": {
         "type": "Point",
         "coordinates": [
-          139.749567,
-          35.70038
+          139.7498669,
+          35.7001594
         ]
       },
       "properties": {
@@ -1361,21 +1383,22 @@
         "lifecycleStatus": "active",
         "sources": {
           "openstreetmap": {
-            "retrievedAt": "2026-07-29T06:32:29+00:00",
+            "retrievedAt": "2026-08-07T15:15:17+00:00",
             "record": {
               "type": "node",
-              "id": "1420785407",
+              "id": "13735063550",
               "coordinates": [
-                139.749567,
-                35.70038
+                139.7498669,
+                35.7001594
               ],
               "tags": {
-                "name": "東京都産業労働局労働相談情報センター",
-                "note": "National-Land Numerical Information (Public Facility) 2006, MLIT Japan",
-                "note:ja": "国土数値情報（公共施設データ）平成19年 国土交通省",
-                "office": "government",
-                "source": "KSJ2",
-                "source_ref": "http://nlftp.mlit.go.jp/ksj/jpgis/datalist/KsjTmplt-P02-v2_0.html"
+                "name": "東京しごとセンター",
+                "office": "employment_agency",
+                "opening_hours": "Mo-Fr 09:00-20:00; Sa 09:00-17:00; Su,PH off; Dec 29-Jan 03 off",
+                "phone": "+81-3-5211-1571",
+                "website": "https://www.tokyoshigoto.jp/",
+                "wikidata": "Q11524020",
+                "wikipedia": "ja:東京しごとセンター"
               }
             }
           }
@@ -1387,7 +1410,7 @@
       "geometry": {
         "type": "Point",
         "coordinates": [
-          139.7445864,
+          139.74458635000002,
           35.6950676
         ]
       },
@@ -1401,7 +1424,34 @@
         "images": [],
         "town": "九段北",
         "lifecycleStatus": "active",
-        "sources": {}
+        "sources": {
+          "openstreetmap": {
+            "retrievedAt": "2026-08-07T15:15:17+00:00",
+            "record": {
+              "type": "way",
+              "id": "30680236",
+              "coordinates": [
+                139.74458635000002,
+                35.6950676
+              ],
+              "tags": {
+                "addr:block_number": "4",
+                "addr:city": "千代田区",
+                "addr:housenumber": "1",
+                "addr:neighbourhood": "2丁目",
+                "addr:province": "東京都",
+                "addr:quarter": "九段北",
+                "amenity": "monastery",
+                "denomination": "catholic",
+                "name": "シャルトル聖パウロ修道女会",
+                "name:en": "Sisters of Saint Paul of Chartres",
+                "name:zh": "沙爾德聖保祿修女會",
+                "religion": "christian",
+                "website": "http://www.spc-japan.org/kudan.php"
+              }
+            }
+          }
+        }
       }
     },
     {
@@ -1430,7 +1480,7 @@
         "lifecycleStatus": "active",
         "sources": {
           "openstreetmap": {
-            "retrievedAt": "2026-07-29T06:32:29+00:00",
+            "retrievedAt": "2026-08-07T15:15:17+00:00",
             "record": {
               "type": "node",
               "id": "13468335880",
@@ -1478,12 +1528,12 @@
         "lifecycleStatus": "active",
         "sources": {
           "openstreetmap": {
-            "retrievedAt": "2026-07-29T06:32:29+00:00",
+            "retrievedAt": "2026-08-07T15:15:17+00:00",
             "record": {
               "type": "way",
               "id": "210372594",
               "coordinates": [
-                139.75973,
+                139.75972995,
                 35.6990086
               ],
               "tags": {
@@ -1505,7 +1555,7 @@
       "geometry": {
         "type": "Point",
         "coordinates": [
-          139.7469234,
+          139.74692340000001,
           35.6900817
         ]
       },
@@ -1519,7 +1569,41 @@
         "images": [],
         "town": "三番町",
         "lifecycleStatus": "active",
-        "sources": {}
+        "sources": {
+          "openstreetmap": {
+            "retrievedAt": "2026-08-07T15:15:17+00:00",
+            "record": {
+              "type": "way",
+              "id": "870979561",
+              "coordinates": [
+                139.74692340000001,
+                35.6900817
+              ],
+              "tags": {
+                "alt_name:fr": "Cimetière national de Chidorigafuchi",
+                "architect": "谷口吉郎",
+                "architect:ja-Latn": "Yoshiro Taniguchi",
+                "architect:wikidata": "Q10856322",
+                "contact:tripadvisor": "2235492",
+                "contact:website": "https://www.env.go.jp/garden/chidorigafuchi/",
+                "landuse": "cemetery",
+                "name": "千鳥ヶ淵戦没者墓苑",
+                "name:en": "Chidorigafuchi National Cemetery",
+                "name:fr": "Cimetière national de la douve de Chidori",
+                "name:ja-Hira": "ちどりがふち せんぼつしゃ はか えん",
+                "name:ja-Latn": "Chidori-ga-fuchi senbotsushahakaen",
+                "name:zh": "千鳥淵戰歿者墓苑",
+                "operator": "自然環境局",
+                "operator:wikidata": "Q11612868",
+                "source": "survey",
+                "start_date": "1959-03-28",
+                "wikidata": "Q2972676",
+                "wikimedia_commons": "Category:Chidorigafuchi National Cemetery",
+                "wikipedia": "ja:千鳥ケ淵戦没者墓苑"
+              }
+            }
+          }
+        }
       }
     },
     {
@@ -1527,8 +1611,8 @@
       "geometry": {
         "type": "Point",
         "coordinates": [
-          139.7696731,
-          35.7011916
+          139.7698588,
+          35.70120285
         ]
       },
       "properties": {
@@ -1550,21 +1634,24 @@
         "lifecycleStatus": "active",
         "sources": {
           "openstreetmap": {
-            "retrievedAt": "2026-07-29T06:32:29+00:00",
+            "retrievedAt": "2026-08-07T15:15:17+00:00",
             "record": {
-              "type": "node",
-              "id": "2263796343",
+              "type": "way",
+              "id": "173230196",
               "coordinates": [
-                139.7696731,
-                35.7011916
+                139.7698588,
+                35.70120285
               ],
               "tags": {
-                "amenity": "community_centre",
-                "level": "4",
-                "name": "神田児童館",
-                "name:en": "Kanda Children's Hall",
-                "source": "survey",
-                "wheelchair": "yes"
+                "addr:block_number": "4",
+                "addr:housenumber": "7",
+                "addr:neighbourhood": "3丁目",
+                "building": "school",
+                "building:levels": "6",
+                "name": "昌平童夢館",
+                "name:en": "Shohei Domukan Children's Hall",
+                "name:ja_rm": "Shōhei Dōmu-kan",
+                "source": "Bing"
               }
             }
           }
@@ -1592,13 +1679,13 @@
         "lifecycleStatus": "active",
         "sources": {
           "openstreetmap": {
-            "retrievedAt": "2026-07-29T06:32:29+00:00",
+            "retrievedAt": "2026-08-07T15:15:17+00:00",
             "record": {
               "type": "way",
               "id": "377728267",
               "coordinates": [
-                139.7312545,
-                35.6851483
+                139.73125449999998,
+                35.68514825
               ],
               "tags": {
                 "addr:block_number": "5",
@@ -1652,13 +1739,13 @@
         "lifecycleStatus": "active",
         "sources": {
           "openstreetmap": {
-            "retrievedAt": "2026-07-29T06:32:29+00:00",
+            "retrievedAt": "2026-08-07T15:15:17+00:00",
             "record": {
               "type": "way",
               "id": "145408909",
               "coordinates": [
                 139.7561768,
-                35.6737111
+                35.67371115
               ],
               "tags": {
                 "leisure": "park",
@@ -1702,7 +1789,7 @@
         "lifecycleStatus": "active",
         "sources": {
           "openstreetmap": {
-            "retrievedAt": "2026-07-29T06:32:29+00:00",
+            "retrievedAt": "2026-08-07T15:15:17+00:00",
             "record": {
               "type": "node",
               "id": "6900192226",
@@ -1756,7 +1843,7 @@
         "lifecycleStatus": "active",
         "sources": {
           "openstreetmap": {
-            "retrievedAt": "2026-07-29T06:32:29+00:00",
+            "retrievedAt": "2026-08-07T15:15:17+00:00",
             "record": {
               "type": "node",
               "id": "1420770187",
@@ -1820,7 +1907,7 @@
         "lifecycleStatus": "active",
         "sources": {
           "openstreetmap": {
-            "retrievedAt": "2026-07-29T06:32:29+00:00",
+            "retrievedAt": "2026-08-07T15:15:17+00:00",
             "record": {
               "type": "node",
               "id": "988763665",
@@ -1865,7 +1952,7 @@
         "lifecycleStatus": "active",
         "sources": {
           "openstreetmap": {
-            "retrievedAt": "2026-07-29T06:32:29+00:00",
+            "retrievedAt": "2026-08-07T15:15:17+00:00",
             "record": {
               "type": "relation",
               "id": "17416865",
@@ -1923,7 +2010,7 @@
         "lifecycleStatus": "active",
         "sources": {
           "openstreetmap": {
-            "retrievedAt": "2026-07-29T06:32:29+00:00",
+            "retrievedAt": "2026-08-07T15:15:17+00:00",
             "record": {
               "type": "node",
               "id": "2059303798",
@@ -1975,13 +2062,13 @@
         "lifecycleStatus": "active",
         "sources": {
           "openstreetmap": {
-            "retrievedAt": "2026-07-29T06:32:29+00:00",
+            "retrievedAt": "2026-08-07T15:15:17+00:00",
             "record": {
               "type": "relation",
               "id": "5415394",
               "coordinates": [
                 139.7571878,
-                35.686472
+                35.686472050000006
               ],
               "tags": {
                 "contact:tripadvisor": "320625",
@@ -2034,7 +2121,7 @@
         "lifecycleStatus": "active",
         "sources": {
           "openstreetmap": {
-            "retrievedAt": "2026-07-29T06:32:29+00:00",
+            "retrievedAt": "2026-08-07T15:15:17+00:00",
             "record": {
               "type": "node",
               "id": "3606732125",
@@ -2080,7 +2167,26 @@
         ],
         "town": "九段北",
         "lifecycleStatus": "active",
-        "sources": {}
+        "sources": {
+          "openstreetmap": {
+            "retrievedAt": "2026-08-07T15:15:17+00:00",
+            "record": {
+              "type": "node",
+              "id": "3774437979",
+              "coordinates": [
+                139.7521747,
+                35.6960477
+              ],
+              "tags": {
+                "amenity": "clinic",
+                "healthcare": "clinic",
+                "name": "千代田保健所",
+                "name:en": "Chiyoda Public Health Center",
+                "name:ja": "千代田保健所"
+              }
+            }
+          }
+        }
       }
     },
     {
@@ -2104,7 +2210,7 @@
         "lifecycleStatus": "active",
         "sources": {
           "openstreetmap": {
-            "retrievedAt": "2026-07-29T06:32:29+00:00",
+            "retrievedAt": "2026-08-07T15:15:17+00:00",
             "record": {
               "type": "node",
               "id": "6575768686",
@@ -2142,7 +2248,31 @@
         "images": [],
         "town": "永田町",
         "lifecycleStatus": "active",
-        "sources": {}
+        "sources": {
+          "openstreetmap": {
+            "retrievedAt": "2026-08-07T15:15:17+00:00",
+            "record": {
+              "type": "way",
+              "id": "140107417",
+              "coordinates": [
+                139.7481601,
+                35.6753971
+              ],
+              "tags": {
+                "leisure": "garden",
+                "name": "国会前庭",
+                "name:en": "Diet Front Garden",
+                "name:es": "Patio frontal de la Dieta",
+                "name:zh": "国会前庭",
+                "opening_hours": "09:00-17:30",
+                "source": "Bing,2007-04",
+                "wikidata": "Q17221580",
+                "wikimedia_commons": "Category:Diet Front Park",
+                "wikipedia": "ja:国会前庭"
+              }
+            }
+          }
+        }
       }
     },
     {
@@ -2166,7 +2296,7 @@
         "lifecycleStatus": "active",
         "sources": {
           "openstreetmap": {
-            "retrievedAt": "2026-07-29T06:32:29+00:00",
+            "retrievedAt": "2026-08-07T15:15:17+00:00",
             "record": {
               "type": "node",
               "id": "1420785508",
@@ -2179,6 +2309,7 @@
                 "name": "千代田区立日比谷図書文化館",
                 "name:en": "Hibiya Book Culture Hall",
                 "name:ja": "千代田区立日比谷図書文化館",
+                "name:zh": "日比谷圖書文化館",
                 "note": "National-Land Numerical Information (Public Facility) 2006, MLIT Japan",
                 "note:ja": "国土数値情報（公共施設データ）平成19年 国土交通省",
                 "source": "KSJ2",
@@ -2190,28 +2321,6 @@
             }
           }
         }
-      }
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          139.7650572,
-          35.6981854
-        ]
-      },
-      "properties": {
-        "id": "019fa880-5cd5-781a-bcd1-ee19d7c897f9",
-        "name": "日本ハリストス正教会修道院",
-        "categoryIds": [
-          "christian-church"
-        ],
-        "tags": [],
-        "images": [],
-        "town": "神田駿河台",
-        "lifecycleStatus": "active",
-        "sources": {}
       }
     },
     {
@@ -2235,7 +2344,7 @@
         "lifecycleStatus": "active",
         "sources": {
           "openstreetmap": {
-            "retrievedAt": "2026-07-29T06:32:29+00:00",
+            "retrievedAt": "2026-08-07T15:15:17+00:00",
             "record": {
               "type": "node",
               "id": "3762241704",
@@ -2278,7 +2387,7 @@
         "lifecycleStatus": "active",
         "sources": {
           "openstreetmap": {
-            "retrievedAt": "2026-07-29T06:32:29+00:00",
+            "retrievedAt": "2026-08-07T15:15:17+00:00",
             "record": {
               "type": "node",
               "id": "1916524834",
@@ -2308,7 +2417,7 @@
       "geometry": {
         "type": "Point",
         "coordinates": [
-          139.7463035,
+          139.74630355,
           35.6972222
         ]
       },
@@ -2324,7 +2433,32 @@
         "images": [],
         "town": "富士見",
         "lifecycleStatus": "active",
-        "sources": {}
+        "sources": {
+          "openstreetmap": {
+            "retrievedAt": "2026-08-07T15:15:17+00:00",
+            "record": {
+              "type": "way",
+              "id": "179575985",
+              "coordinates": [
+                139.74630355,
+                35.6972222
+              ],
+              "tags": {
+                "amenity": "school",
+                "education": "school",
+                "name": "千代田区立 富士見小学校",
+                "name:en": "Fujimi Elementary School",
+                "name:es": "Escuela primaria Fujimi",
+                "note": "National-Land Numerical Information (Public Facility) 2006, MLIT Japan",
+                "note:ja": "国土数値情報（公共施設データ）平成19年　国土交通省",
+                "source": "KSJ2;Bing 2010",
+                "source_ref": "http://nlftp.mlit.go.jp/ksj/jpgis/datalist/KsjTmplt-P02-v2_0.html",
+                "wikidata": "Q81916362",
+                "wikipedia": "ja:千代田区立富士見小学校"
+              }
+            }
+          }
+        }
       }
     },
     {
@@ -2353,7 +2487,7 @@
         "lifecycleStatus": "active",
         "sources": {
           "openstreetmap": {
-            "retrievedAt": "2026-07-29T06:32:29+00:00",
+            "retrievedAt": "2026-08-07T15:15:17+00:00",
             "record": {
               "type": "node",
               "id": "1420770192",
@@ -2402,7 +2536,7 @@
         "lifecycleStatus": "active",
         "sources": {
           "openstreetmap": {
-            "retrievedAt": "2026-07-29T06:32:29+00:00",
+            "retrievedAt": "2026-08-07T15:15:17+00:00",
             "record": {
               "type": "way",
               "id": "43941104",
@@ -2455,13 +2589,13 @@
         "lifecycleStatus": "active",
         "sources": {
           "openstreetmap": {
-            "retrievedAt": "2026-07-29T06:32:29+00:00",
+            "retrievedAt": "2026-08-07T15:15:17+00:00",
             "record": {
               "type": "way",
               "id": "344414571",
               "coordinates": [
                 139.7443601,
-                35.6993714
+                35.699371400000004
               ],
               "tags": {
                 "amenity": "place_of_worship",
@@ -2503,13 +2637,13 @@
         "lifecycleStatus": "active",
         "sources": {
           "openstreetmap": {
-            "retrievedAt": "2026-07-29T06:32:29+00:00",
+            "retrievedAt": "2026-08-07T15:15:17+00:00",
             "record": {
               "type": "way",
               "id": "515133705",
               "coordinates": [
-                139.7679359,
-                35.6929407
+                139.76793585000001,
+                35.692940750000005
               ],
               "tags": {
                 "leisure": "park",
@@ -2526,8 +2660,8 @@
       "geometry": {
         "type": "Point",
         "coordinates": [
-          139.754706,
-          35.698887
+          139.7550503,
+          35.6986747
         ]
       },
       "properties": {
@@ -2549,24 +2683,19 @@
         "lifecycleStatus": "active",
         "sources": {
           "openstreetmap": {
-            "retrievedAt": "2026-07-29T06:32:29+00:00",
+            "retrievedAt": "2026-08-07T15:15:17+00:00",
             "record": {
               "type": "node",
-              "id": "1655927382",
+              "id": "3794695440",
               "coordinates": [
-                139.754706,
-                35.698887
+                139.7550503,
+                35.6986747
               ],
               "tags": {
-                "addr:full": "東京都千代田区西神田2-6-2",
-                "amenity": "social_facility",
-                "name": "西神田児童・家庭支援センター",
-                "note": "National-Land Numerical Information (Public Facility) 2006, MLIT Japan",
-                "note:ja": "国土数値情報（公共施設データ）平成19年 国土交通省",
-                "operator": "東京都千代田区",
-                "social_facility": "assisted_living",
-                "source": "KSJ2",
-                "source_ref": "http://nlftp.mlit.go.jp/ksj/jpgis/datalist/KsjTmplt-P02-v2_0.html"
+                "bus": "yes",
+                "name": "西神田コスモス館",
+                "network": "風ぐるま",
+                "public_transport": "stop_position"
               }
             }
           }
@@ -2594,7 +2723,7 @@
         "lifecycleStatus": "active",
         "sources": {
           "openstreetmap": {
-            "retrievedAt": "2026-07-29T06:32:29+00:00",
+            "retrievedAt": "2026-08-07T15:15:17+00:00",
             "record": {
               "type": "node",
               "id": "6900192224",
@@ -2666,7 +2795,7 @@
         "lifecycleStatus": "active",
         "sources": {
           "openstreetmap": {
-            "retrievedAt": "2026-07-29T06:32:29+00:00",
+            "retrievedAt": "2026-08-07T15:15:17+00:00",
             "record": {
               "type": "node",
               "id": "810027509",
@@ -2708,7 +2837,7 @@
         "lifecycleStatus": "active",
         "sources": {
           "openstreetmap": {
-            "retrievedAt": "2026-07-29T06:32:29+00:00",
+            "retrievedAt": "2026-08-07T15:15:17+00:00",
             "record": {
               "type": "node",
               "id": "1928727937",
@@ -2753,7 +2882,7 @@
         "lifecycleStatus": "active",
         "sources": {
           "openstreetmap": {
-            "retrievedAt": "2026-07-29T06:32:29+00:00",
+            "retrievedAt": "2026-08-07T15:15:17+00:00",
             "record": {
               "type": "node",
               "id": "1420763756",
@@ -2781,8 +2910,8 @@
       "geometry": {
         "type": "Point",
         "coordinates": [
-          139.739284,
-          35.68699
+          139.7394739,
+          35.687162
         ]
       },
       "properties": {
@@ -2799,25 +2928,21 @@
         "lifecycleStatus": "active",
         "sources": {
           "openstreetmap": {
-            "retrievedAt": "2026-07-29T06:32:29+00:00",
+            "retrievedAt": "2026-08-07T15:15:17+00:00",
             "record": {
               "type": "node",
-              "id": "1655905663",
+              "id": "5024233119",
               "coordinates": [
-                139.739284,
-                35.68699
+                139.7394739,
+                35.687162
               ],
               "tags": {
-                "addr:full": "東京都千代田区一番町12",
-                "amenity": "social_facility",
-                "name": "千代田区立一番町高齢者在宅介護支援センター",
-                "note": "National-Land Numerical Information (Public Facility) 2006, MLIT Japan",
-                "note:ja": "国土数値情報（公共施設データ）平成19年 国土交通省",
-                "operator": "東京都千代田区",
-                "social_facility": "outreach",
-                "social_facility:for": "senior",
-                "source": "KSJ2",
-                "source_ref": "http://nlftp.mlit.go.jp/ksj/jpgis/datalist/KsjTmplt-P02-v2_0.html"
+                "bus": "yes",
+                "highway": "bus_stop",
+                "name": "いきいきプラザ一番町",
+                "network": "千代田区地域福祉交通",
+                "operator": "千代田区",
+                "public_transport": "platform"
               }
             }
           }
@@ -2845,7 +2970,7 @@
         "lifecycleStatus": "active",
         "sources": {
           "openstreetmap": {
-            "retrievedAt": "2026-07-29T06:32:29+00:00",
+            "retrievedAt": "2026-08-07T15:15:17+00:00",
             "record": {
               "type": "node",
               "id": "1376774653",
@@ -2921,7 +3046,7 @@
         "lifecycleStatus": "active",
         "sources": {
           "openstreetmap": {
-            "retrievedAt": "2026-07-29T06:32:29+00:00",
+            "retrievedAt": "2026-08-07T15:15:17+00:00",
             "record": {
               "type": "node",
               "id": "1420781684",
@@ -2956,8 +3081,8 @@
       "geometry": {
         "type": "Point",
         "coordinates": [
-          139.777835,
-          35.694232
+          139.7777528,
+          35.6942078
         ]
       },
       "properties": {
@@ -2972,7 +3097,29 @@
         "images": [],
         "town": "岩本町",
         "lifecycleStatus": "active",
-        "sources": {}
+        "sources": {
+          "openstreetmap": {
+            "retrievedAt": "2026-08-07T15:15:17+00:00",
+            "record": {
+              "type": "node",
+              "id": "5021209549",
+              "coordinates": [
+                139.7777528,
+                35.6942078
+              ],
+              "tags": {
+                "bench": "yes",
+                "bus": "yes",
+                "highway": "bus_stop",
+                "name": "岩本町ほほえみプラザ",
+                "network": "千代田区地域福祉交通",
+                "operator": "千代田区",
+                "public_transport": "platform",
+                "shelter": "no"
+              }
+            }
+          }
+        }
       }
     },
     {
@@ -2996,13 +3143,13 @@
         "lifecycleStatus": "active",
         "sources": {
           "openstreetmap": {
-            "retrievedAt": "2026-07-29T06:32:29+00:00",
+            "retrievedAt": "2026-08-07T15:15:17+00:00",
             "record": {
               "type": "way",
               "id": "184577229",
               "coordinates": [
-                139.7605387,
-                35.6977313
+                139.76053875,
+                35.697731250000004
               ],
               "tags": {
                 "leisure": "park",
@@ -3041,7 +3188,7 @@
         "lifecycleStatus": "active",
         "sources": {
           "openstreetmap": {
-            "retrievedAt": "2026-07-29T06:32:29+00:00",
+            "retrievedAt": "2026-08-07T15:15:17+00:00",
             "record": {
               "type": "node",
               "id": "1916530506",
@@ -3087,7 +3234,7 @@
         "lifecycleStatus": "active",
         "sources": {
           "openstreetmap": {
-            "retrievedAt": "2026-07-29T06:32:29+00:00",
+            "retrievedAt": "2026-08-07T15:15:17+00:00",
             "record": {
               "type": "node",
               "id": "1420765449",
@@ -3129,13 +3276,13 @@
         "lifecycleStatus": "active",
         "sources": {
           "openstreetmap": {
-            "retrievedAt": "2026-07-29T06:32:29+00:00",
+            "retrievedAt": "2026-08-07T15:15:17+00:00",
             "record": {
               "type": "relation",
               "id": "4080936",
               "coordinates": [
-                139.7654865,
-                35.698016
+                139.76548655,
+                35.69801605
               ],
               "tags": {
                 "addr:block_number": "1",
@@ -3191,7 +3338,7 @@
         "lifecycleStatus": "active",
         "sources": {
           "openstreetmap": {
-            "retrievedAt": "2026-07-29T06:32:29+00:00",
+            "retrievedAt": "2026-08-07T15:15:17+00:00",
             "record": {
               "type": "node",
               "id": "6768292062",
@@ -3235,13 +3382,13 @@
         "lifecycleStatus": "active",
         "sources": {
           "openstreetmap": {
-            "retrievedAt": "2026-07-29T06:32:29+00:00",
+            "retrievedAt": "2026-08-07T15:15:17+00:00",
             "record": {
               "type": "way",
               "id": "132794875",
               "coordinates": [
-                139.7400815,
-                35.6903895
+                139.74008149999997,
+                35.69038955
               ],
               "tags": {
                 "designation": "東郷公園 Parque Togo",
@@ -3286,7 +3433,7 @@
         "lifecycleStatus": "active",
         "sources": {
           "openstreetmap": {
-            "retrievedAt": "2026-07-29T06:32:29+00:00",
+            "retrievedAt": "2026-08-07T15:15:17+00:00",
             "record": {
               "type": "node",
               "id": "1420770188",
@@ -3346,13 +3493,13 @@
         "lifecycleStatus": "active",
         "sources": {
           "openstreetmap": {
-            "retrievedAt": "2026-07-29T06:32:29+00:00",
+            "retrievedAt": "2026-08-07T15:15:17+00:00",
             "record": {
               "type": "way",
               "id": "666471139",
               "coordinates": [
-                139.7358866,
-                35.6816756
+                139.73588660000001,
+                35.681675549999994
               ],
               "tags": {
                 "leisure": "park",
@@ -3394,13 +3541,13 @@
         "lifecycleStatus": "active",
         "sources": {
           "openstreetmap": {
-            "retrievedAt": "2026-07-29T06:32:29+00:00",
+            "retrievedAt": "2026-08-07T15:15:17+00:00",
             "record": {
               "type": "way",
               "id": "624081603",
               "coordinates": [
                 139.7509767,
-                35.6921178
+                35.692117800000005
               ],
               "tags": {
                 "leisure": "park",
@@ -3448,7 +3595,7 @@
         "lifecycleStatus": "active",
         "sources": {
           "openstreetmap": {
-            "retrievedAt": "2026-07-29T06:32:29+00:00",
+            "retrievedAt": "2026-08-07T15:15:17+00:00",
             "record": {
               "type": "node",
               "id": "3781782008",
@@ -3490,13 +3637,13 @@
         "lifecycleStatus": "active",
         "sources": {
           "openstreetmap": {
-            "retrievedAt": "2026-07-29T06:32:29+00:00",
+            "retrievedAt": "2026-08-07T15:15:17+00:00",
             "record": {
               "type": "way",
               "id": "144379628",
               "coordinates": [
-                139.7433692,
-                35.6953152
+                139.74336920000002,
+                35.695315199999996
               ],
               "tags": {
                 "addr:postcode": "102-8246",
@@ -3551,7 +3698,7 @@
         "lifecycleStatus": "active",
         "sources": {
           "openstreetmap": {
-            "retrievedAt": "2026-07-29T06:32:29+00:00",
+            "retrievedAt": "2026-08-07T15:15:17+00:00",
             "record": {
               "type": "node",
               "id": "4272532291",
@@ -3597,7 +3744,7 @@
         "lifecycleStatus": "active",
         "sources": {
           "openstreetmap": {
-            "retrievedAt": "2026-07-29T06:32:29+00:00",
+            "retrievedAt": "2026-08-07T15:15:17+00:00",
             "record": {
               "type": "node",
               "id": "1420781347",
@@ -3666,33 +3813,6 @@
       "geometry": {
         "type": "Point",
         "coordinates": [
-          139.739749,
-          35.689474
-        ]
-      },
-      "properties": {
-        "id": "019fa880-5cd6-7332-a1b5-cf97d281ba93",
-        "name": "千代田区立四番町図書館",
-        "categoryIds": [
-          "museum"
-        ],
-        "tags": [],
-        "images": [
-          {
-            "url": "https://media.githubusercontent.com/media/nawashiro/chiyoda_city_main_facilities/refs/heads/main/img/yonbancho-library.webp",
-            "rights": "© Nawashiro"
-          }
-        ],
-        "town": "四番町",
-        "lifecycleStatus": "active",
-        "sources": {}
-      }
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
           139.7380742,
           35.683313
         ]
@@ -3709,7 +3829,7 @@
         "lifecycleStatus": "active",
         "sources": {
           "openstreetmap": {
-            "retrievedAt": "2026-07-29T06:32:29+00:00",
+            "retrievedAt": "2026-08-07T15:15:17+00:00",
             "record": {
               "type": "node",
               "id": "10595395388",
@@ -3749,7 +3869,7 @@
         "lifecycleStatus": "active",
         "sources": {
           "openstreetmap": {
-            "retrievedAt": "2026-07-29T06:32:29+00:00",
+            "retrievedAt": "2026-08-07T15:15:17+00:00",
             "record": {
               "type": "node",
               "id": "3666894176",
@@ -3817,7 +3937,7 @@
         "lifecycleStatus": "active",
         "sources": {
           "openstreetmap": {
-            "retrievedAt": "2026-07-29T06:32:29+00:00",
+            "retrievedAt": "2026-08-07T15:15:17+00:00",
             "record": {
               "type": "node",
               "id": "1420780980",
@@ -3873,7 +3993,7 @@
         "lifecycleStatus": "active",
         "sources": {
           "openstreetmap": {
-            "retrievedAt": "2026-07-29T06:32:29+00:00",
+            "retrievedAt": "2026-08-07T15:15:17+00:00",
             "record": {
               "type": "node",
               "id": "11334772769",
@@ -3922,7 +4042,7 @@
         "lifecycleStatus": "active",
         "sources": {
           "openstreetmap": {
-            "retrievedAt": "2026-07-29T06:32:29+00:00",
+            "retrievedAt": "2026-08-07T15:15:17+00:00",
             "record": {
               "type": "node",
               "id": "988763541",
@@ -3958,8 +4078,8 @@
       "geometry": {
         "type": "Point",
         "coordinates": [
-          139.764043,
-          35.694546
+          139.7640417,
+          35.6945448
         ]
       },
       "properties": {
@@ -3972,7 +4092,24 @@
         "images": [],
         "town": "神田小川町",
         "lifecycleStatus": "active",
-        "sources": {}
+        "sources": {
+          "openstreetmap": {
+            "retrievedAt": "2026-08-07T15:15:17+00:00",
+            "record": {
+              "type": "node",
+              "id": "13741796001",
+              "coordinates": [
+                139.7640417,
+                35.6945448
+              ],
+              "tags": {
+                "amenity": "cafe",
+                "name": "優美堂",
+                "opening_hours": "Su-Tu, Th 11:30-18:00; Fr-Sa 11:30-21:00"
+              }
+            }
+          }
+        }
       }
     },
     {
@@ -3996,7 +4133,7 @@
         "lifecycleStatus": "active",
         "sources": {
           "openstreetmap": {
-            "retrievedAt": "2026-07-29T06:32:29+00:00",
+            "retrievedAt": "2026-08-07T15:15:17+00:00",
             "record": {
               "type": "node",
               "id": "3164340661",
@@ -4044,7 +4181,7 @@
         "lifecycleStatus": "active",
         "sources": {
           "openstreetmap": {
-            "retrievedAt": "2026-07-29T06:32:29+00:00",
+            "retrievedAt": "2026-08-07T15:15:17+00:00",
             "record": {
               "type": "way",
               "id": "43934323",
@@ -4100,7 +4237,7 @@
         "lifecycleStatus": "active",
         "sources": {
           "openstreetmap": {
-            "retrievedAt": "2026-07-29T06:32:29+00:00",
+            "retrievedAt": "2026-08-07T15:15:17+00:00",
             "record": {
               "type": "node",
               "id": "1744076702",
@@ -4142,13 +4279,13 @@
         "lifecycleStatus": "active",
         "sources": {
           "openstreetmap": {
-            "retrievedAt": "2026-07-29T06:32:29+00:00",
+            "retrievedAt": "2026-08-07T15:15:17+00:00",
             "record": {
               "type": "way",
               "id": "140099041",
               "coordinates": [
-                139.7470123,
-                35.678347
+                139.74701225,
+                35.67834705
               ],
               "tags": {
                 "building": "yes",
@@ -4193,7 +4330,33 @@
         "images": [],
         "town": "丸の内",
         "lifecycleStatus": "active",
-        "sources": {}
+        "sources": {
+          "openstreetmap": {
+            "retrievedAt": "2026-08-07T15:15:17+00:00",
+            "record": {
+              "type": "node",
+              "id": "5403425184",
+              "coordinates": [
+                139.7609079,
+                35.6763721
+              ],
+              "tags": {
+                "description": "temporarily closed until the building is reconstructed",
+                "disused:amenity": "museum",
+                "name": "出光美術館",
+                "name:en": "Idemitsu Museum of Arts",
+                "name:es": "Museo de las artes Idemitsu",
+                "opening_hours": "Tu-Su 10:00-17:00; Fr 10:00-19:00",
+                "phone": "+81 35777 8600",
+                "website": "https://idemitsu-museum.or.jp/",
+                "wheelchair": "yes",
+                "wikidata": "Q3076590",
+                "wikimedia_commons": "Category:Idemitsu Museum of Arts",
+                "wikipedia": "en:Idemitsu Museum of Arts"
+              }
+            }
+          }
+        }
       }
     },
     {
@@ -4217,7 +4380,7 @@
         "lifecycleStatus": "active",
         "sources": {
           "openstreetmap": {
-            "retrievedAt": "2026-07-29T06:32:29+00:00",
+            "retrievedAt": "2026-08-07T15:15:17+00:00",
             "record": {
               "type": "node",
               "id": "1420770260",
@@ -4251,8 +4414,8 @@
       "geometry": {
         "type": "Point",
         "coordinates": [
-          139.7522219,
-          35.694969
+          139.7510805,
+          35.6970758
         ]
       },
       "properties": {
@@ -4263,9 +4426,37 @@
         ],
         "tags": [],
         "images": [],
-        "town": "九段南",
+        "town": "九段北",
         "lifecycleStatus": "active",
-        "sources": {}
+        "sources": {
+          "openstreetmap": {
+            "retrievedAt": "2026-08-07T15:15:17+00:00",
+            "record": {
+              "type": "node",
+              "id": "12085101795",
+              "coordinates": [
+                139.7510805,
+                35.6970758
+              ],
+              "tags": {
+                "addr:postcode": "102-0073",
+                "contact:facebook": "https://www.facebook.com/shokeikan.kudan",
+                "fax": "+81-3-3234-7826",
+                "fee": "no",
+                "museum": "history;medical",
+                "name": "しょうけい館",
+                "name:en": "War Wounded and Sick Historical Museum",
+                "opening_hours": "Tu-Su,PH 10:00-17:30",
+                "phone": "+81-3-3234-7821",
+                "toilets": "yes",
+                "tourism": "museum",
+                "website": "https://www.shokeikan.go.jp/",
+                "wikidata": "Q11269143",
+                "wikipedia": "ja:しょうけい館"
+              }
+            }
+          }
+        }
       }
     },
     {
@@ -4289,7 +4480,7 @@
         "lifecycleStatus": "active",
         "sources": {
           "openstreetmap": {
-            "retrievedAt": "2026-07-29T06:32:29+00:00",
+            "retrievedAt": "2026-08-07T15:15:17+00:00",
             "record": {
               "type": "node",
               "id": "1420774624",
@@ -4340,7 +4531,7 @@
         "lifecycleStatus": "active",
         "sources": {
           "openstreetmap": {
-            "retrievedAt": "2026-07-29T06:32:29+00:00",
+            "retrievedAt": "2026-08-07T15:15:17+00:00",
             "record": {
               "type": "node",
               "id": "6463426486",
@@ -4380,7 +4571,7 @@
         "lifecycleStatus": "active",
         "sources": {
           "openstreetmap": {
-            "retrievedAt": "2026-07-29T06:32:29+00:00",
+            "retrievedAt": "2026-08-07T15:15:17+00:00",
             "record": {
               "type": "way",
               "id": "43898324",
@@ -4453,13 +4644,13 @@
         "lifecycleStatus": "active",
         "sources": {
           "openstreetmap": {
-            "retrievedAt": "2026-07-29T06:32:29+00:00",
+            "retrievedAt": "2026-08-07T15:15:17+00:00",
             "record": {
               "type": "way",
               "id": "91234941",
               "coordinates": [
-                139.7678448,
-                35.7022569
+                139.76784485,
+                35.702256950000006
               ],
               "tags": {
                 "alt_name:en": "The Kanda Myoujin Shrine Museum",
@@ -4498,13 +4689,13 @@
         "lifecycleStatus": "active",
         "sources": {
           "openstreetmap": {
-            "retrievedAt": "2026-07-29T06:32:29+00:00",
+            "retrievedAt": "2026-08-07T15:15:17+00:00",
             "record": {
               "type": "way",
               "id": "145501856",
               "coordinates": [
                 139.7589461,
-                35.6865373
+                35.68653725
               ],
               "tags": {
                 "building": "public",
@@ -4558,7 +4749,7 @@
         "lifecycleStatus": "active",
         "sources": {
           "openstreetmap": {
-            "retrievedAt": "2026-07-29T06:32:29+00:00",
+            "retrievedAt": "2026-08-07T15:15:17+00:00",
             "record": {
               "type": "node",
               "id": "6709554588",
@@ -4598,13 +4789,13 @@
         "lifecycleStatus": "active",
         "sources": {
           "openstreetmap": {
-            "retrievedAt": "2026-07-29T06:32:29+00:00",
+            "retrievedAt": "2026-08-07T15:15:17+00:00",
             "record": {
               "type": "way",
               "id": "43934324",
               "coordinates": [
                 139.7546203,
-                35.6904946
+                35.690494650000005
               ],
               "tags": {
                 "addr:city": "千代田区",
@@ -4665,7 +4856,7 @@
         "lifecycleStatus": "active",
         "sources": {
           "openstreetmap": {
-            "retrievedAt": "2026-07-29T06:32:29+00:00",
+            "retrievedAt": "2026-08-07T15:15:17+00:00",
             "record": {
               "type": "node",
               "id": "5445799065",
@@ -4703,7 +4894,7 @@
         "lifecycleStatus": "active",
         "sources": {
           "openstreetmap": {
-            "retrievedAt": "2026-07-29T06:32:29+00:00",
+            "retrievedAt": "2026-08-07T15:15:17+00:00",
             "record": {
               "type": "node",
               "id": "6463473885",
@@ -4733,8 +4924,8 @@
       "geometry": {
         "type": "Point",
         "coordinates": [
-          139.7596592,
-          35.6906801
+          139.75965915,
+          35.690680150000006
         ]
       },
       "properties": {
@@ -4747,7 +4938,32 @@
         "images": [],
         "town": "大手町",
         "lifecycleStatus": "active",
-        "sources": {}
+        "sources": {
+          "openstreetmap": {
+            "retrievedAt": "2026-08-07T15:15:17+00:00",
+            "record": {
+              "type": "way",
+              "id": "884071202",
+              "coordinates": [
+                139.75965915,
+                35.690680150000006
+              ],
+              "tags": {
+                "addr:block_number": "4",
+                "addr:city": "千代田区",
+                "addr:housenumber": "2",
+                "addr:neighbourhood": "1丁目",
+                "addr:province": "東京都",
+                "addr:quarter": "大手町",
+                "building": "yes",
+                "building:levels": "22",
+                "height": "111.9",
+                "name": "丸紅ビル",
+                "start_date": "2020-10"
+              }
+            }
+          }
+        }
       }
     },
     {
@@ -4771,7 +4987,7 @@
         "lifecycleStatus": "active",
         "sources": {
           "openstreetmap": {
-            "retrievedAt": "2026-07-29T06:32:29+00:00",
+            "retrievedAt": "2026-08-07T15:15:17+00:00",
             "record": {
               "type": "node",
               "id": "6463426485",
@@ -4813,13 +5029,13 @@
         "lifecycleStatus": "active",
         "sources": {
           "openstreetmap": {
-            "retrievedAt": "2026-07-29T06:32:29+00:00",
+            "retrievedAt": "2026-08-07T15:15:17+00:00",
             "record": {
               "type": "way",
               "id": "306116935",
               "coordinates": [
-                139.7631636,
-                35.6784664
+                139.76316359999998,
+                35.678466349999994
               ],
               "tags": {
                 "alt_name:fr": "Musée d'art Mitsubishi Ichigokan",

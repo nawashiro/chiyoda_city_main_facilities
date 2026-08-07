@@ -1,13 +1,20 @@
 {
   "sourceId": "openstreetmap",
-  "retrievedAt": "2026-07-29T06:32:29+00:00",
-  "rawVersion": "2026-07-29T06:30:36Z",
+  "retrievedAt": "2026-08-07T15:15:17+00:00",
+  "rawVersion": "202608060200",
   "minimumIntervalDays": 30,
   "cadence": "quarterly-or-manual",
   "endpoint": "https://overpass-api.de/api/interpreter",
-  "etag": null,
-  "lastModified": null,
+  "etag": "\"2063488039\"",
+  "lastModified": "Thu, 06 Aug 2026 02:00:00 GMT",
   "queryRetained": false,
   "responseRetained": false,
-  "rawSha256": "095fae838bef414e68af7cdd9ab7c35869ccf8c8fcf1d5da9840b622090830f1"
+  "rawSha256": "5521d0210c083c43c8a6857c961cdae44e0bb6c79efa4b1d2e6fc8fd526a8131",
+  "manifestUrl": "https://osm.download.movisda.io/admin/Admin-latest.geojson",
+  "pbfUrl": "https://osm.download.movisda.io/admin/JP-13-202608060200.osm.pbf",
+  "pbfSha256": "13b1266f56b22186aef2cb6eb037da20a44635104e763a7fda2c3d2f3a5e7da2",
+  "pbfBytes": 105374038,
+  "manifestSha256": "f25795051eee23454583d5cf2bf505c6beef2177f3b5932e466e71ec0ea03275",
+  "extractor": "pyosmium",
+  "selectionSha256": "685812c68231032c2c84ff88100a6ff460b30dd998a72680592057804f9c4247"
 }

@@ -1,4 +1,763 @@
 {
-  "version": "2026-07-29T06:30:36Z",
-  "queries": []
+  "version": "202608060200",
+  "queries": [
+    {
+      "queryId": "019fa880-5cd4-729d-8095-deb5f1a4597f",
+      "name": "えみふる（障害者福祉センター）",
+      "target": {
+        "id": "019fa880-5cd4-729d-8095-deb5f1a4597f",
+        "name": "えみふる（障害者福祉センター）",
+        "coordinates": [
+          139.760849,
+          35.700506
+        ],
+        "wam": {
+          "normalized": {
+            "queryId": "019fa880-5cd4-729d-8095-deb5f1a4597f",
+            "id": "A0000110598",
+            "sourceRecordIds": [
+              "A0000110598"
+            ],
+            "officeIds": [
+              "1330100304"
+            ],
+            "serviceCodes": [
+              "52"
+            ],
+            "serviceTypes": [
+              "計画相談支援"
+            ],
+            "name": "千代田区立障害者福祉センター",
+            "coordinates": [
+              139.76083553,
+              35.70039345
+            ]
+          },
+          "rows": [
+            {
+              "sourceRecordId": "A0000110598",
+              "officeId": "1330100304",
+              "serviceCode": "52",
+              "serviceType": "計画相談支援",
+              "name": "千代田区立障害者福祉センター",
+              "coordinates": [
+                139.76083553,
+                35.70039345
+              ],
+              "attributes": {
+                "都道府県コード又は市区町村コード": "13000",
+                "NO（※システム内の固有の番号、連番）": "A0000110598",
+                "指定機関名": "東京都",
+                "法人の名称": "社会福祉法人武蔵野会",
+                "法人の名称_かな": "しゃかいふくしほうじんむさしのかい",
+                "法人番号": "2010105000297",
+                "法人住所（市区町村）": "東京都八王子市",
+                "法人住所（番地以降）": "旭町12-4日本生命八王子ビル2階201",
+                "法人電話番号": "042-631-6341",
+                "法人FAX番号": "042-631-6342",
+                "法人URL": "http://www.musashinokai.jp/",
+                "サービス種別": "計画相談支援",
+                "事業所の名称": "千代田区立障害者福祉センター",
+                "事業所の名称_かな": "ちよだくりつしょうがいしゃふくしせんたー",
+                "事業所番号": "1330100304",
+                "事業所住所（市区町村）": "東京都千代田区",
+                "事業所住所（番地以降）": "神田駿河台２−５",
+                "事業所電話番号": "03-3291-0600",
+                "事業所FAX番号": "",
+                "事業所URL": "https://emifuru.com/",
+                "事業所緯度": "35.70039345",
+                "事業所経度": "139.76083553",
+                "利用可能な時間帯（平日）": "09:00-17:00",
+                "利用可能な時間帯（土曜）": "09:00-17:00",
+                "利用可能な時間帯（日曜）": "",
+                "利用可能な時間帯（祝日）": "",
+                "定休日": "第2土曜日、年末年始（12月29日〜1月3日）",
+                "利用可能曜日特記事項（留意事項）": "",
+                "定員": ""
+              }
+            }
+          ]
+        }
+      },
+      "status": "needs_review",
+      "candidates": [
+        {
+          "type": "node",
+          "id": "3781782008",
+          "name": "お茶の水キリストの教会",
+          "coordinates": [
+            139.7608409,
+            35.700482
+          ],
+          "tags": {
+            "amenity": "place_of_worship",
+            "name": "お茶の水キリストの教会",
+            "name:en": "Ochanomizu Church of Christ",
+            "name:es": "Iglesia de Cristo Ochanomizu",
+            "name:ja": "お茶の水キリストの教会",
+            "religion": "christian"
+          },
+          "recordId": "node/3781782008",
+          "distanceMeters": 2.7670962472845515
+        },
+        {
+          "type": "node",
+          "id": "13465461815",
+          "name": "千代田区立障害者福祉センター　えみふる",
+          "coordinates": [
+            139.7608154,
+            35.7004236
+          ],
+          "tags": {
+            "addr:block_number": "5",
+            "addr:city": "千代田区",
+            "addr:neighbourhood": "神田駿河台二丁目",
+            "addr:postcode": "101-0062",
+            "addr:province": "東京都",
+            "addr:quarter": "神田駿河台",
+            "amenity": "social_facility",
+            "contact:facebook": "https://www.facebook.com/chiyoda.emifuru/",
+            "description": "障害のある方が利用できる施設です。講習会・リハビリテーションや、グループホーム・ショートステイの機能があります。",
+            "fax": "+81-3-3291-0608",
+            "image": "https://commons.wikimedia.org/wiki/File:障害者福祉センターえみふる・お茶の水キリストの教会.jpg",
+            "internet_access": "wlan",
+            "name": "千代田区立障害者福祉センター　えみふる",
+            "opening_hours": "Mo-Fr 09:00-21:00; Sa-Su 09:00-17:00; PH 09:00-17:00; Su[2] off",
+            "operator": "社会福祉法人武蔵野会",
+            "operator:type": "public",
+            "phone": "+81-3-3291-0600",
+            "social_facility": "outreach",
+            "social_facility:for": "disabled",
+            "website": "https://emifuru.com/",
+            "wheelchair": "yes"
+          },
+          "recordId": "node/13465461815",
+          "distanceMeters": 9.65174363312521
+        },
+        {
+          "type": "node",
+          "id": "3796678082",
+          "name": "障害者福祉センター「えみふる」",
+          "coordinates": [
+            139.7607804,
+            35.7006167
+          ],
+          "tags": {
+            "bench": "no",
+            "bus": "yes",
+            "highway": "bus_stop",
+            "name": "障害者福祉センター「えみふる」",
+            "network": "千代田区地域福祉交通",
+            "operator": "千代田区",
+            "public_transport": "platform",
+            "shelter": "no"
+          },
+          "recordId": "node/3796678082",
+          "distanceMeters": 13.78006706630597
+        },
+        {
+          "type": "node",
+          "id": "5124348222",
+          "name": "神田駿河台二丁目",
+          "coordinates": [
+            139.7607311,
+            35.7006945
+          ],
+          "tags": {
+            "bench": "no",
+            "bus": "yes",
+            "highway": "bus_stop",
+            "name": "神田駿河台二丁目",
+            "public_transport": "platform",
+            "shelter": "no"
+          },
+          "recordId": "node/5124348222",
+          "distanceMeters": 23.509024192971196
+        },
+        {
+          "type": "node",
+          "id": "12215295145",
+          "name": "生体材料工学研究所",
+          "coordinates": [
+            139.7609474,
+            35.7007933
+          ],
+          "tags": {
+            "amenity": "research_institute",
+            "name": "生体材料工学研究所",
+            "operator": "東京科学大学",
+            "website": "https://www.tmd.ac.jp/ibb/"
+          },
+          "recordId": "node/12215295145",
+          "distanceMeters": 33.15896051911045
+        },
+        {
+          "type": "way",
+          "id": "171480303",
+          "name": "21号館",
+          "coordinates": [
+            139.7609392,
+            35.7008286
+          ],
+          "tags": {
+            "building": "university",
+            "name": "21号館",
+            "ref": "21",
+            "source": "Bing"
+          },
+          "recordId": "way/171480303",
+          "distanceMeters": 36.784556192247116
+        },
+        {
+          "type": "way",
+          "id": "746751544",
+          "name": "中央緩行線",
+          "coordinates": [
+            139.76091535,
+            35.700870800000004
+          ],
+          "tags": {
+            "colour": "#ffd700",
+            "destination": "水道橋",
+            "electrified": "contact_line",
+            "frequency": "0",
+            "gauge": "1067",
+            "maxspeed": "95",
+            "name": "中央緩行線",
+            "name:de": "Chūō-Linie (Lokalbahn)",
+            "name:en": "Chūō Line (Local)",
+            "name:es": "Línea Chūō (Local)",
+            "name:fr": "Ligne Chūō (Omnibus)",
+            "name:it": "Linea Chūō (Locale)",
+            "name:ja": "中央緩行線",
+            "name:ja-Hira": "ちゅうおうかんこうせん",
+            "name:ja-Latn": "Chūō-kankō-sen",
+            "name:ko": "주오 완행선",
+            "name:zh": "中央缓行线",
+            "name:zh-Hans": "中央缓行线",
+            "name:zh-Hant": "中央緩行線",
+            "operator": "東日本旅客鉄道",
+            "operator:en": "East Japan Railway Company",
+            "operator:ja": "東日本旅客鉄道",
+            "operator:ja-Latn": "Higashi-Nihon Ryokaku Tetsudō",
+            "railway": "rail",
+            "railway:traffic_mode": "passenger",
+            "usage": "main",
+            "voltage": "1500"
+          },
+          "recordId": "way/746751544",
+          "distanceMeters": 41.00398399730589
+        },
+        {
+          "type": "way",
+          "id": "171480298",
+          "name": "駿台予備学校 お茶の水校 3号館",
+          "coordinates": [
+            139.7604455,
+            35.70030215
+          ],
+          "tags": {
+            "building": "retail",
+            "name": "駿台予備学校 お茶の水校 3号館",
+            "source": "Bing"
+          },
+          "recordId": "way/171480298",
+          "distanceMeters": 42.91102849046039
+        },
+        {
+          "type": "way",
+          "id": "1320000145",
+          "name": "東京科学大学 駿河台キャンパス",
+          "coordinates": [
+            139.76110735,
+            35.7008661
+          ],
+          "tags": {
+            "amenity": "university",
+            "name": "東京科学大学 駿河台キャンパス",
+            "name:en": "Institute of Science Tokyo - Surugadai Campus",
+            "name:ja": "東京科学大学 駿河台キャンパス",
+            "old_name": "東京医科歯科大学 駿河台キャンパス",
+            "old_name:en": "Tokyo Medical and Dental University - Surugadai Campus",
+            "old_name:ja": "東京医科歯科大学 駿河台キャンパス",
+            "operator": "東京科学大学",
+            "operator:type": "university"
+          },
+          "recordId": "way/1320000145",
+          "distanceMeters": 46.341483100037955
+        }
+      ],
+      "llmVotes": [
+        {
+          "decision": "link",
+          "candidateId": "node/13465461815",
+          "perspective": "visitor"
+        },
+        {
+          "decision": "link",
+          "candidateId": "node/13465461815",
+          "perspective": "user"
+        },
+        null
+      ]
+    },
+    {
+      "queryId": "019fa880-5cd5-7d23-9c07-684d56afd77e",
+      "name": "ちよだパークサイドプラザ",
+      "target": {
+        "id": "019fa880-5cd5-7d23-9c07-684d56afd77e",
+        "name": "ちよだパークサイドプラザ",
+        "coordinates": [
+          139.778795,
+          35.699229
+        ]
+      },
+      "status": "needs_review",
+      "candidates": [
+        {
+          "type": "node",
+          "id": "13468335880",
+          "name": "ちよだパークサイドプラザ区民図書室",
+          "coordinates": [
+            139.7788067,
+            35.6992879
+          ],
+          "tags": {
+            "addr:block_number": "1",
+            "addr:city": "千代田区",
+            "addr:neighbourhood": "神田和泉町",
+            "addr:province": "東京都",
+            "amenity": "library",
+            "level": "4",
+            "name": "ちよだパークサイドプラザ区民図書室",
+            "opening_hours": "Mo-Fr 09:00-19:00; Su 09:00-17:00; PH 09:00-17:00; Su[3] off",
+            "operator": "千代田区",
+            "operator:type": "public",
+            "phone": "+81-3-3864-8931",
+            "ref:isil": "none"
+          },
+          "recordId": "node/13468335880",
+          "distanceMeters": 6.634049841531057
+        },
+        {
+          "type": "way",
+          "id": "217378912",
+          "name": "千代田区立 和泉小学校",
+          "coordinates": [
+            139.77848645,
+            35.69910685000001
+          ],
+          "tags": {
+            "amenity": "school",
+            "education": "school",
+            "name": "千代田区立 和泉小学校",
+            "name:en": "Izumi Elementary School",
+            "name:es": "Escuela de primaria Izumi",
+            "note": "National-Land Numerical Information (Public Facility) 2006, MLIT Japan",
+            "note:ja": "国土数値情報（公共施設データ）平成19年　国土交通省",
+            "source": "KSJ2",
+            "source_ref": "http://nlftp.mlit.go.jp/ksj/jpgis/datalist/KsjTmplt-P02-v2_0.html",
+            "wikidata": "Q81916370"
+          },
+          "qid": "Q81916370",
+          "recordId": "way/217378912",
+          "distanceMeters": 30.996559019160504
+        },
+        {
+          "type": "way",
+          "id": "217378904",
+          "name": "和泉公園",
+          "coordinates": [
+            139.7791959,
+            35.69904685
+          ],
+          "tags": {
+            "leisure": "park",
+            "name": "和泉公園",
+            "name:en": "Izumi Park",
+            "name:es": "Parque Izumi",
+            "name:ja": "和泉公園",
+            "name:ja_rm": "Izumi　Kōen",
+            "source": "estimated"
+          },
+          "recordId": "way/217378904",
+          "distanceMeters": 41.482268314929854
+        },
+        {
+          "type": "node",
+          "id": "5665860805",
+          "name": "千代田区立いずみこども園",
+          "coordinates": [
+            139.7782981,
+            35.6993449
+          ],
+          "tags": {
+            "amenity": "childcare",
+            "name": "千代田区立いずみこども園"
+          },
+          "recordId": "node/5665860805",
+          "distanceMeters": 46.68433769235359
+        },
+        {
+          "type": "node",
+          "id": "5746689924",
+          "name": "和泉公園（西側入口）",
+          "coordinates": [
+            139.7789316,
+            35.6988162
+          ],
+          "tags": {
+            "amenity": "bicycle_rental",
+            "authentication:app": "yes",
+            "brand": "ドコモ・バイクシェア",
+            "brand:en": "Docomo Bike Share",
+            "brand:ja": "ドコモ・バイクシェア",
+            "brand:website": "https://docomo-cycle.jp/",
+            "brand:wikidata": "Q55533296",
+            "capacity": "7",
+            "fee": "yes",
+            "gbfs:name": "A3-05.和泉公園（西側入口）",
+            "gbfs:station_id": "10017",
+            "gbfs:system_id": "docomo-cycle",
+            "name": "和泉公園（西側入口）",
+            "name:en": "Izumi Park(Western Entrance)",
+            "name:ja": "和泉公園（西側入口）",
+            "operator": "ドコモ・バイクシェア",
+            "operator:en": "Docomo Bike Share",
+            "operator:ja": "ドコモ・バイクシェア",
+            "operator:type": "private",
+            "operator:wikidata": "Q55533296",
+            "ref": "A3-05"
+          },
+          "recordId": "node/5746689924",
+          "distanceMeters": 47.529782254714554
+        }
+      ],
+      "llmVotes": [
+        {
+          "decision": "link",
+          "candidateId": "node/13468335880",
+          "perspective": "visitor"
+        },
+        {
+          "decision": "link",
+          "candidateId": "node/13468335880",
+          "perspective": "user"
+        },
+        {
+          "decision": "link",
+          "candidateId": "node/13468335880",
+          "perspective": "staff"
+        }
+      ]
+    },
+    {
+      "queryId": "019fa880-5cd6-7324-b3fe-943c71e289b7",
+      "name": "JAPAN ART BRIDGE",
+      "target": {
+        "id": "019fa880-5cd6-7324-b3fe-943c71e289b7",
+        "name": "JAPAN ART BRIDGE",
+        "coordinates": [
+          139.7698128,
+          35.6974925
+        ]
+      },
+      "status": "needs_review",
+      "candidates": [
+        {
+          "type": "way",
+          "id": "675832452",
+          "name": "マーチ エキュート 神田万世橋",
+          "coordinates": [
+            139.7698128,
+            35.69749255
+          ],
+          "tags": {
+            "alt_name": "mAAch ecute",
+            "building": "retail",
+            "name": "マーチ エキュート 神田万世橋",
+            "name:en": "Maach ecute Kanda Manseibashi",
+            "was:railway": "station",
+            "wikidata": "Q6751576",
+            "wikimedia_commons": "Category:Manseibashi Station",
+            "wikipedia": "ja:万世橋駅"
+          },
+          "qid": "Q6751576",
+          "recordId": "way/675832452",
+          "distanceMeters": 0.005559746212746575
+        },
+        {
+          "type": "way",
+          "id": "137964516",
+          "name": "中央本線",
+          "coordinates": [
+            139.7697517,
+            35.697506399999995
+          ],
+          "tags": {
+            "bridge": "viaduct",
+            "electrified": "contact_line",
+            "frequency": "0",
+            "gauge": "1067",
+            "layer": "1",
+            "maxspeed": "95",
+            "name": "中央本線",
+            "name:de": "Chuō-Hauptlinie",
+            "name:en": "Chuō Main Line",
+            "name:es": "Línea Chuō",
+            "name:fr": "Ligne principale Chuō",
+            "name:it": "Linea principale Chuō",
+            "name:ja": "中央本線",
+            "name:ja-Hira": "ちゅうおうほんせん",
+            "name:ja-Latn": "Chuō-honsen",
+            "name:ko": "츄오 본선",
+            "name:zh": "中央本线",
+            "name:zh-Hans": "中央本线",
+            "name:zh-Hant": "中央本線",
+            "official_name": "中央本線",
+            "oneway": "yes",
+            "operator": "東日本旅客鉄道",
+            "operator:en": "East Japan Railway Company",
+            "operator:ja": "東日本旅客鉄道",
+            "operator:ja-Latn": "Higashi-Nihon Ryokaku Tetsudō",
+            "railway": "rail",
+            "railway:traffic_mode": "passenger",
+            "ref": "JC",
+            "source": "GSImaps/std",
+            "usage": "main",
+            "voltage": "1500"
+          },
+          "recordId": "way/137964516",
+          "distanceMeters": 5.7298740928623
+        },
+        {
+          "type": "way",
+          "id": "28728110",
+          "name": "中央本線",
+          "coordinates": [
+            139.76970575,
+            35.6974658
+          ],
+          "tags": {
+            "bridge": "viaduct",
+            "electrified": "contact_line",
+            "frequency": "0",
+            "gauge": "1067",
+            "layer": "1",
+            "maxspeed": "95",
+            "name": "中央本線",
+            "name:de": "Chuō-Hauptlinie",
+            "name:en": "Chuō Main Line",
+            "name:es": "Línea Chuō",
+            "name:fr": "Ligne principale Chuō",
+            "name:it": "Linea principale Chuō",
+            "name:ja": "中央本線",
+            "name:ja-Hira": "ちゅうおうほんせん",
+            "name:ja-Latn": "Chuō-honsen",
+            "name:ko": "츄오 본선",
+            "name:zh": "中央本线",
+            "name:zh-Hans": "中央本线",
+            "name:zh-Hant": "中央本線",
+            "official_name": "中央本線",
+            "oneway": "yes",
+            "operator": "東日本旅客鉄道",
+            "operator:en": "East Japan Railway Company",
+            "operator:ja": "東日本旅客鉄道",
+            "operator:ja-Latn": "Higashi-Nihon Ryokaku Tetsudō",
+            "railway": "rail",
+            "railway:traffic_mode": "passenger",
+            "ref": "JC",
+            "source": "GSImaps/std",
+            "usage": "main",
+            "voltage": "1500"
+          },
+          "recordId": "way/28728110",
+          "distanceMeters": 10.112509795832363
+        },
+        {
+          "type": "way",
+          "id": "171225126",
+          "name": "旧万世橋駅",
+          "coordinates": [
+            139.7698546,
+            35.69736245
+          ],
+          "tags": {
+            "area": "yes",
+            "disused:public_transport": "platform",
+            "disused:railway": "platform",
+            "layer": "1",
+            "name": "旧万世橋駅"
+          },
+          "recordId": "way/171225126",
+          "distanceMeters": 14.945419704640766
+        },
+        {
+          "type": "node",
+          "id": "8995417645",
+          "name": "万世橋駅 跡地",
+          "coordinates": [
+            139.7695765,
+            35.6975133
+          ],
+          "tags": {
+            "name": "万世橋駅 跡地",
+            "tourism": "attraction",
+            "wheelchair": "yes"
+          },
+          "recordId": "node/8995417645",
+          "distanceMeters": 21.463434215537227
+        },
+        {
+          "type": "node",
+          "id": "11374755863",
+          "name": "御成道（筋違門跡）",
+          "coordinates": [
+            139.7694632,
+            35.6974531
+          ],
+          "tags": {
+            "information": "board",
+            "name": "御成道（筋違門跡）",
+            "tourism": "information"
+          },
+          "recordId": "node/11374755863",
+          "distanceMeters": 31.872271468942756
+        },
+        {
+          "type": "way",
+          "id": "743276344",
+          "name": "RESTAURANT PLATINUM FISH マーチエキュート神田万世橋店",
+          "coordinates": [
+            139.77001315,
+            35.6972406
+          ],
+          "tags": {
+            "addr:block_number": "25",
+            "addr:city": "千代田区",
+            "addr:floor": "2F",
+            "addr:housename": "マーチエキュート神田万世橋",
+            "addr:housenumber": "4",
+            "addr:neighbourhood": "神田須田町一丁目",
+            "addr:postcode": "101-0041",
+            "addr:province": "東京都",
+            "amenity": "restaurant",
+            "building:part": "commercial",
+            "indoor_seating": "yes",
+            "layer": "2",
+            "level": "1",
+            "name": "RESTAURANT PLATINUM FISH マーチエキュート神田万世橋店",
+            "name:en": "Platinum Fish",
+            "outdoor_seating": "no",
+            "phone": "+81 3-6206-8455",
+            "website": "https://platinumfish.jp/shoplist/manseibashi/"
+          },
+          "recordId": "way/743276344",
+          "distanceMeters": 33.34493775723293
+        },
+        {
+          "type": "node",
+          "id": "7132279496",
+          "name": "マーチエキュート神田万世橋",
+          "coordinates": [
+            139.7698975,
+            35.6971931
+          ],
+          "tags": {
+            "amenity": "bicycle_rental",
+            "name": "マーチエキュート神田万世橋",
+            "name:en": "mAAch ecute Kanda-Manseibashi",
+            "ref": "A3-34"
+          },
+          "recordId": "node/7132279496",
+          "distanceMeters": 34.159081777908824
+        },
+        {
+          "type": "node",
+          "id": "11374755862",
+          "name": "万世橋と神田祭り",
+          "coordinates": [
+            139.7696502,
+            35.697201
+          ],
+          "tags": {
+            "information": "board",
+            "name": "万世橋と神田祭り",
+            "tourism": "information"
+          },
+          "recordId": "node/11374755862",
+          "distanceMeters": 35.58398094194729
+        },
+        {
+          "type": "node",
+          "id": "2509991339",
+          "name": "フクモリ",
+          "coordinates": [
+            139.769443,
+            35.697606
+          ],
+          "tags": {
+            "name": "フクモリ",
+            "shop": "furniture",
+            "source": "survey",
+            "wheelchair": "no"
+          },
+          "recordId": "node/2509991339",
+          "distanceMeters": 35.699110314725374
+        },
+        {
+          "type": "node",
+          "id": "2286588160",
+          "name": "NewDays",
+          "coordinates": [
+            139.769882,
+            35.6970576
+          ],
+          "tags": {
+            "alt_name": "ニューデイズ",
+            "branch": "神田万世橋店",
+            "brand": "NewDays",
+            "brand:wikidata": "Q11234763",
+            "name": "NewDays",
+            "shop": "convenience"
+          },
+          "recordId": "node/2286588160",
+          "distanceMeters": 48.76074865083121
+        },
+        {
+          "type": "node",
+          "id": "2509984547",
+          "name": "La Petit Kanda",
+          "coordinates": [
+            139.769342,
+            35.697711
+          ],
+          "tags": {
+            "amenity": "restaurant",
+            "cuisine": "french",
+            "name": "La Petit Kanda",
+            "outdoor_seating": "no",
+            "smoking": "no",
+            "source": "survey",
+            "wheelchair": "limited"
+          },
+          "recordId": "node/2509984547",
+          "distanceMeters": 48.96699982091928
+        }
+      ],
+      "llmVotes": [
+        {
+          "decision": "link",
+          "candidateId": "way/675832452",
+          "perspective": "visitor"
+        },
+        {
+          "decision": "link",
+          "candidateId": "way/675832452",
+          "perspective": "user"
+        },
+        null
+      ]
+    }
+  ]
 }
