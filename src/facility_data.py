@@ -20,6 +20,7 @@ from src.wam_contract import WAM_PUBLIC_ATTRIBUTE_HEADERS, WAM_PUBLIC_ATTRIBUTE_
 
 
 _QID = re.compile(r"^Q[1-9][0-9]*$")
+_SHA256 = re.compile(r"^[0-9a-f]{64}$")
 _WAM_VISITING_SERVICE_TYPES = {
     "11",
     "12",
@@ -238,8 +239,15 @@ def validate_registry(
             else:
                 current_osm_owners[record_id] = place_id
         for audit in place.get("audit", []):
-            if set(audit) != {"at", "method", "action", "target"}:
+            required_audit_keys = {"at", "method", "action", "target"}
+            audit_keys = set(audit)
+            has_search_hash = "searchInputSha256" in audit
+            if audit_keys != required_audit_keys and audit_keys != required_audit_keys | {"searchInputSha256"}:
                 issues.append(f"place {place_id}: audit must have exactly four keys")
+            if has_search_hash and audit.get("action") != "linked_osm":
+                issues.append(f"place {place_id}: searchInputSha256 requires linked_osm")
+            if has_search_hash and not _SHA256.fullmatch(str(audit.get("searchInputSha256"))):
+                issues.append(f"place {place_id}: invalid searchInputSha256")
             if audit.get("method") not in {
                 "language_model",
                 "calculation_model",
@@ -977,9 +985,31 @@ def decide_consensus(votes: list[dict[str, Any]]) -> str | None:
     return winners[0] if len(winners) == 1 else None
 
 
-def compact_audit(at: str, method: str, action: str, target: str) -> dict[str, str]:
+def search_input_sha256(query: dict[str, Any]) -> str:
+    """Hash the stable search-input fields used for OSM re-identification."""
+    payload: dict[str, Any] = {"name": query["name"]}
+    if "qid" in query:
+        payload["qid"] = query["qid"]
+    else:
+        payload["coordinates"] = query["coordinates"]
+    encoded = json.dumps(
+        payload, ensure_ascii=False, separators=(",", ":"), sort_keys=True
+    ).encode("utf-8")
+    return hashlib.sha256(encoded).hexdigest()
+
+
+def compact_audit(
+    at: str,
+    method: str,
+    action: str,
+    target: str,
+    search_input_hash: str | None = None,
+) -> dict[str, str]:
     """Create the entire persisted audit record—no traces or explanations."""
-    return {"at": at, "method": method, "action": action, "target": target}
+    audit = {"at": at, "method": method, "action": action, "target": target}
+    if search_input_hash is not None:
+        audit["searchInputSha256"] = search_input_hash
+    return audit
 
 
 def source_refresh_due(last_retrieved_at: str | None, now: str) -> bool:
@@ -1113,6 +1143,7 @@ def update_osm_reference(
     basis: str,
     method: str,
     audit_at: str | None = None,
+    search_input_hash: str | None = None,
 ) -> dict[str, Any]:
     """Keep typed current/superseded OSM IDs and append one compact audit item."""
     updated = copy.deepcopy(place)
@@ -1133,7 +1164,13 @@ def update_osm_reference(
         if method in {"language_model", "human_inference"}:
             current["basis"] = basis
             updated.setdefault("audit", []).append(
-                compact_audit(audit_at or at, method, "linked_osm", record_id)
+                compact_audit(
+                    audit_at or at,
+                    method,
+                    "linked_osm",
+                    record_id,
+                    search_input_hash,
+                )
             )
     else:
         for ref in refs:
@@ -1152,7 +1189,13 @@ def update_osm_reference(
             }
         )
         updated.setdefault("audit", []).append(
-            compact_audit(audit_at or at, method, "linked_osm", record_id)
+            compact_audit(
+                audit_at or at,
+                method,
+                "linked_osm",
+                record_id,
+                search_input_hash,
+            )
         )
     return updated
 
@@ -1302,6 +1345,7 @@ def apply_source_updates(
                 osm_record["matchBasis"],
                 osm_method,
                 audit_at=decision_at,
+                search_input_hash=search_input_sha256(query),
             )
         if wam_record is not None or osm_record is not None:
             preserve_wam_geometry = (

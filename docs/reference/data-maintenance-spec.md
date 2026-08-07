@@ -89,7 +89,8 @@ OSMとWAMの参照は`externalRefs`へ保持する。OSM IDが変わった場合
 - 検索入力との`name`一致
 - Point geometryと座標範囲
 - current OSM参照が最大1件
-- auditが4キーであること
+- auditが4キー、または`searchInputSha256`を含む5キーであること
+- `searchInputSha256`がある場合、`linked_osm`の64文字SHA-256であること
 - audit methodが許可値であること
 
 ### WAM snapshot
@@ -171,6 +172,27 @@ LLMには検索入力の全項目、対応するWAM record・raw rowsがあれ�
 
 成功した新規取得ではquery bytes、HTTP response bytes、canonical rawを別々に保存し、それぞれのSHA-256を記録する。過去snapshotでexact query/responseが残っていない場合はretention flagを`false`とし、存在しないbytesを保持済みと主張しない。
 
+### 項目単位の再同定
+
+OSM snapshotの更新では、全検索入力を再同定しない。各検索入力について、前回同定時の検索キーとcurrent OSM IDを比較する。
+
+次の条件をすべて満たす項目は再同定しない。
+
+- 検索入力の`name`と検索キー（`coordinates`または`qid`）が前回同定時から不変である。
+- current OSM IDが新しいOSM snapshotに一意に存在する。
+
+次の項目だけ候補を再生成する。
+
+- 検索入力が変更された項目。
+- current OSM IDが消えた項目。
+- current OSM IDが複数化または衝突した項目。
+- current OSM recordと検索入力が矛盾する項目。
+- current OSM参照を持たない項目。
+
+再同定対象がない場合、normalized snapshot、候補report、正本、公開GeoJSONを変更しない。最後に採用した`linked_osm` auditの`searchInputSha256`と現在の検索入力hashを比較する。検索入力hashは`name`と`coordinates`または`qid`だけをcanonical JSON化し、UTF-8 bytesから計算する。OSM rawのSHA-256は保持済みbytesの完全性を検証する。raw SHA-256の一致だけを、全項目の再同定理由にしない。
+
+LLM照合は再同定対象の未解決候補だけを扱う。既存の項目ごとのコンテクスト分離を保てる場合、1回のAPI requestに対象項目と各項目の全候補をまとめる。コンテクスト分離を保てない場合、実行前にAPI request数を報告して確認を受ける。
+
 ## 6. 町名更新
 
 町名GeoJSONは`nawashiro/chiyoda_city_town_geojson`の40文字commit SHAを指定して取得する。
@@ -198,7 +220,7 @@ GitHub Actionsの更新workflowは、対象branchを選び、必要な版また�
 
 Issue本文のチェックボックスは検索入力ごとに一つだけ選択し、最後の適用チェックを押す。`Apply OSM human review` workflowはIssueに埋め込まれたrun IDとartifact名から元artifactを取得し、候補レポートSHA、候補集合、選択数を再検証する。`matchBasis: human_review`として反映し、監査方法を`human_inference`として正本・公開物を再生成し、testsとvalidate後にPull Requestを作る。人がJSONを編集・uploadする経路は設けない。
 
-`Re-identify retained source snapshots`は検索入力修正後のbranchで手動実行する。外部取得コマンドを呼ばず、保存済みWAM・OSM rawと取得台帳のSHA・版を検証し、現在の検索入力に対してWAM normalizedとOSM候補を再生成する。処理時刻とsource取得時刻を分離し、正本名を修正後の検索名へ同期した後、WAM→OSMの順で適用する。合議不成立時は同じIssue経路へ進む。
+`Re-identify retained source snapshots`は検索入力修正後のbranchで手動実行する。外部取得コマンドを呼ばず、保存済みWAM・OSM rawと取得台帳のSHA・版を検証する。workflowは検索入力とcurrent OSM IDの差分からOSMの影響項目を選び、その項目だけOSM normalizedとOSM候補を再生成する。WAM normalizedは保持済みWAM rawと現在の検索入力から再生成する。処理時刻とsource取得時刻を分離し、影響項目だけ正本名を同期した後、WAM→OSMの順で適用する。未解決候補だけをLLM照合し、項目ごとのコンテクスト分離を保てる場合は一括requestを使う。分離を保てない場合は実行前にrequest数を報告して確認を受ける。合議不成立時は同じIssue経路へ進む。
 
 review diff生成前に`git add -N .`を行い、新規ファイルもbinary diffへ含める。
 

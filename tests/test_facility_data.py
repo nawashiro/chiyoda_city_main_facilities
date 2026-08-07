@@ -21,6 +21,7 @@ from src.facility_data import (
     new_uuid7,
     normalize_osm_elements,
     normalize_wam_rows,
+    search_input_sha256,
     update_osm_reference,
     update_repository,
     validate_repository,
@@ -220,6 +221,51 @@ class RegistryValidationTests(unittest.TestCase):
         self.assertIn(f"place {query['id']}: audit must have exactly four keys", issues)
         self.assertIn(f"place {query['id']}: invalid audit method: unknown", issues)
         self.assertIn(f"place {query['id']}: multiple current OSM refs", issues)
+
+    def test_accepts_search_input_hash_only_for_linked_osm_audit(self):
+        query = {
+            "id": "019c0000-0000-7000-8000-000000000045",
+            "name": "施設K",
+            "coordinates": [139.70, 35.60],
+        }
+        place = make_place(query, ["park"], [], "2026-07-28T00:00:00Z")
+        place["audit"] = [
+            {
+                "at": "2026-07-28T00:00:00Z",
+                "method": "calculation_model",
+                "action": "linked_osm",
+                "target": "node/1",
+                "searchInputSha256": search_input_sha256(query),
+            }
+        ]
+
+        issues = validate_registry(
+            {"schemaVersion": 1, "places": [place]}, {query["id"]: query}
+        )
+
+        self.assertEqual([], issues)
+        place["audit"][0]["action"] = "updated_name"
+        self.assertIn(
+            f"place {query['id']}: searchInputSha256 requires linked_osm",
+            validate_registry({"schemaVersion": 1, "places": [place]}, {query["id"]: query}),
+        )
+
+    def test_rejects_invalid_search_input_hash(self):
+        query = {
+            "id": "019c0000-0000-7000-8000-000000000046",
+            "name": "施設L",
+            "coordinates": [139.70, 35.60],
+        }
+        place = make_place(query, ["park"], [], "2026-07-28T00:00:00Z")
+        place["audit"][0].update(
+            {"action": "linked_osm", "target": "node/1", "searchInputSha256": "ABC"}
+        )
+
+        issues = validate_registry(
+            {"schemaVersion": 1, "places": [place]}, {query["id"]: query}
+        )
+
+        self.assertIn(f"place {query['id']}: invalid searchInputSha256", issues)
 
     def test_rejects_current_osm_ref_shared_by_multiple_places(self):
         queries = [
