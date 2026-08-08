@@ -846,11 +846,6 @@ def _validate_osm_record_match(
         for ref in place.get("externalRefs", [])
     ):
         raise ValueError("OSM source_record is not the current reference")
-    if record.get("name") is not None and (
-        not isinstance(record["name"], str)
-        or not _osm_names_match(record["name"], query["name"])
-    ):
-        raise ValueError("OSM current record has a conflicting name")
     if (
         "qid" in query
         and record.get("qid") is not None

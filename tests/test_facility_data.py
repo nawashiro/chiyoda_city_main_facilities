@@ -2198,7 +2198,7 @@ class SourceUpdateTests(unittest.TestCase):
 
             self.assertEqual(before, registry_path.read_bytes())
 
-    def test_skips_unchanged_source_record_osm_match(self):
+    def test_skips_current_source_record_when_only_its_name_differs_from_search_input(self):
         query = {
             "id": "019c0000-0000-7000-8000-000000000053",
             "name": "施設SR",
@@ -2247,7 +2247,7 @@ class SourceUpdateTests(unittest.TestCase):
             "queryId": query["id"],
             "type": "node",
             "id": "53",
-            "name": "施設SR",
+            "name": "千代田区立施設SR（別表記）",
             "coordinates": [139.7001, 35.6001],
             "matchBasis": "source_record",
         }
