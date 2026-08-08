@@ -52,6 +52,7 @@ jobs:
         run: |
           gh api "repos/${GITHUB_REPOSITORY}/contents/reports/osm-review-needed.yaml?ref=${REVIEW_BRANCH}" --jq .content \
             | base64 --decode > /tmp/osm-review-needed.yaml
+          cp /tmp/osm-review-needed.yaml reports/osm-review-needed.yaml
       - name: Apply checked choices and rebuild canonical data
         env:
           EVENT_PATH: ${{ github.event_path }}

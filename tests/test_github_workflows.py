@@ -32,6 +32,7 @@ class GithubWorkflowTests(unittest.TestCase):
         self.assertIn("src.github_osm_review metadata", workflow)
         self.assertIn("gh run download", workflow)
         self.assertIn("src.github_osm_review apply", workflow)
+        self.assertIn("cp /tmp/osm-review-needed.yaml reports/osm-review-needed.yaml", workflow)
         self.assertIn("src.facility_data update", workflow)
         self.assertIn("peter-evans/create-pull-request@v7", workflow)
         self.assertIn("cmp /tmp/places.geojson dist/public/places.geojson", workflow)
