@@ -16,7 +16,7 @@ reportSha256: 315dbfbd1644e8df7e70d3ab810175842ea93204e714c2f4e38aaa0664a6e01e
       "候補 way/217378904: 和泉公園": false
       "候補 node/5665860805: 千代田区立いずみこども園": false
       "候補 node/5746689924: 和泉公園（西側入口）": false
-      "候補なし（どの候補とも一致しない）": false
+      "候補なし（どの候補とも一致しない）": true
   - 検索ID: "019fa880-5cd6-7324-b3fe-943c71e289b7"
     施設名: "JAPAN ART BRIDGE"
     選択肢:
@@ -32,4 +32,4 @@ reportSha256: 315dbfbd1644e8df7e70d3ab810175842ea93204e714c2f4e38aaa0664a6e01e
       "候補 node/2509991339: フクモリ": false
       "候補 node/2286588160: NewDays": false
       "候補 node/2509984547: La Petit Kanda": false
-      "候補なし（どの候補とも一致しない）": false
+      "候補なし（どの候補とも一致しない）": true
