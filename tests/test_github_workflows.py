@@ -28,6 +28,11 @@ class GithubWorkflowTests(unittest.TestCase):
         workflow = self.workflow("apply-osm-review.yml")
         self.assertIn("issues:", workflow)
         self.assertIn("types: [edited]", workflow)
+        self.assertIn("github.event.issue.state == 'open'", workflow)
+        self.assertIn("github.event.issue.labels.*.name", workflow)
+        self.assertIn("osm-human-review", workflow)
+        self.assertIn("group: osm-review-${{ github.event.issue.number }}", workflow)
+        self.assertIn("cancel-in-progress: true", workflow)
         self.assertIn("osm-apply", workflow)
         self.assertIn("src.github_osm_review metadata", workflow)
         self.assertIn("gh run download", workflow)
@@ -70,11 +75,10 @@ class GithubWorkflowTests(unittest.TestCase):
         self.assertIn("pull_request:", cleanup_workflow)
         self.assertIn("types: [closed]", cleanup_workflow)
         self.assertIn("github.event.pull_request.merged == true", cleanup_workflow)
+        self.assertIn("- uses: actions/checkout@v4", cleanup_workflow)
         self.assertIn("reviewPullRequestNumber", apply_workflow)
-        self.assertIn("pulls.get", cleanup_workflow)
-        self.assertNotIn("pulls.list", cleanup_workflow)
-        self.assertIn("pull.draft", cleanup_workflow)
-        self.assertIn("pulls.update", cleanup_workflow)
+        self.assertIn("closeRecordedDraftReview", cleanup_workflow)
+        self.assertIn("scripts/close_osm_review_draft.js", cleanup_workflow)
 
 
 if __name__ == "__main__":

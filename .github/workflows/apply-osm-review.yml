@@ -10,11 +10,17 @@ permissions:
   issues: write
   pull-requests: write
 
+concurrency:
+  group: osm-review-${{ github.event.issue.number }}
+  cancel-in-progress: true
+
 jobs:
   apply:
     if: >-
       contains(github.event.issue.body, '<!-- osm-review-metadata:') &&
-      contains(github.event.issue.body, '- [x] <!-- osm-apply -->')
+      contains(github.event.issue.body, '- [x] <!-- osm-apply -->') &&
+      github.event.issue.state == 'open' &&
+      contains(github.event.issue.labels.*.name, 'osm-human-review')
     runs-on: ubuntu-latest
     timeout-minutes: 20
     steps:

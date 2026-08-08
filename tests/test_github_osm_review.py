@@ -1,3 +1,4 @@
+import base64
 import copy
 import hashlib
 import json
@@ -142,7 +143,7 @@ class GithubOsmReviewTests(unittest.TestCase):
             updated_report["queries"][0]["humanReview"]["issueUrl"],
         )
 
-    def test_rejects_tampered_or_incomplete_issue_selection(self):
+    def test_rejects_an_incomplete_issue_selection(self):
         report = self.review_report()
         payload = (json.dumps(report, ensure_ascii=False, indent=2) + "\n").encode()
         issue = build_issue_document(
@@ -162,10 +163,35 @@ class GithubOsmReviewTests(unittest.TestCase):
             with self.assertRaisesRegex(ValueError, "apply checkbox"):
                 apply_issue_selections(root, issue["body"], issue_url="https://example/7")
 
-            tampered = issue["body"].replace(report["queries"][0]["name"], "改ざん", 1)
-            tampered = tampered.replace("- [ ] <!-- osm-apply -->", "- [x] <!-- osm-apply -->")
+            incomplete = issue["body"].replace("- [ ] <!-- osm-apply -->", "- [x] <!-- osm-apply -->")
             with self.assertRaisesRegex(ValueError, "exactly one choice"):
-                apply_issue_selections(root, tampered, issue_url="https://example/7")
+                apply_issue_selections(root, incomplete, issue_url="https://example/7")
+
+    def test_rejects_an_artifact_with_a_different_hash_before_reading_choices(self):
+        report = self.review_report()
+        payload = (json.dumps(report, ensure_ascii=False, indent=2) + "\n").encode()
+        issue = build_issue_document(
+            report,
+            run_id="12345",
+            artifact_name="osm-update-12345",
+            report_sha256=hashlib.sha256(payload).hexdigest(),
+        )
+        body = issue["body"].replace(
+            "- [ ] <!-- osm-choice:019c0000-0000-7000-8000-000000000301:link:node/1 -->",
+            "- [x] <!-- osm-choice:019c0000-0000-7000-8000-000000000301:link:node/1 -->",
+        ).replace("- [ ] <!-- osm-apply -->", "- [x] <!-- osm-apply -->")
+
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            (root / "reports").mkdir()
+            (root / "imports/openstreetmap").mkdir(parents=True)
+            (root / "reports/osm-candidates.json").write_bytes(payload + b" ")
+            (root / "imports/openstreetmap/normalized.json").write_text(
+                json.dumps({"records": []}), encoding="utf-8"
+            )
+
+            with self.assertRaisesRegex(ValueError, "does not match the reviewed artifact"):
+                apply_issue_selections(root, body, issue_url="https://example/7")
 
     def test_rejects_same_osm_candidate_selected_for_multiple_queries(self):
         report = self.review_report()
@@ -242,6 +268,33 @@ class GithubOsmReviewTests(unittest.TestCase):
         self.assertEqual(42, metadata["reviewPullRequestNumber"])
         self.assertEqual("automation/osm-review-12345", metadata["reviewBranch"])
 
+    def test_rejects_invalid_issue_metadata_shapes(self):
+        valid = {
+            "schemaVersion": 4,
+            "runId": "12345",
+            "artifactName": "osm-update-12345",
+            "reportSha256": "0" * 64,
+            "queryIds": ["019c0000-0000-7000-8000-000000000301"],
+            "reviewBranch": "automation/osm-review-12345",
+            "reviewPullRequestNumber": 42,
+        }
+        invalid_documents = [
+            {**valid, "schemaVersion": 9},
+            {**valid, "runId": "not-a-run"},
+            {**valid, "artifactName": ""},
+            {**valid, "reportSha256": "0" * 63},
+            {**valid, "reviewBranch": ""},
+            {**valid, "reviewPullRequestNumber": 0},
+            {**valid, "unexpected": True},
+        ]
+
+        for document in invalid_documents:
+            with self.subTest(document=document):
+                encoded = json.dumps(document, separators=(",", ":")).encode()
+                marker = base64.urlsafe_b64encode(encoded).decode().rstrip("=")
+                with self.assertRaisesRegex(ValueError, "OSM review"):
+                    parse_issue_metadata(f"<!-- osm-review-metadata:{marker} -->")
+
     def test_prepare_build_writes_yaml_without_rendering_an_oversized_issue(self):
         report = self.review_report()
         report["queries"][0]["candidates"][0]["tags"]["oversized"] = "x" * 70000
@@ -312,10 +365,6 @@ class GithubOsmReviewTests(unittest.TestCase):
             normalized = json.loads(
                 (root / "imports/openstreetmap/normalized.json").read_text()
             )
-
-        self.assertEqual("human_review", normalized["records"][0]["matchBasis"])
-        self.assertEqual("node/1", f"{normalized['records'][0]['type']}/{normalized['records'][0]['id']}")
-        self.assertEqual(hashlib.sha256(payload).hexdigest(), result["reportSha256"])
 
         self.assertEqual("human_review", normalized["records"][0]["matchBasis"])
         self.assertEqual("node/1", f"{normalized['records'][0]['type']}/{normalized['records'][0]['id']}")
