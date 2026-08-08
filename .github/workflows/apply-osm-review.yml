@@ -34,6 +34,7 @@ jobs:
           print(f"run_id={metadata['runId']}")
           print(f"artifact_name={metadata['artifactName']}")
           print(f"review_branch={metadata.get('reviewBranch', '')}")
+          print(f"review_pr_number={metadata.get('reviewPullRequestNumber', '')}")
           PY
       - name: Download the exact reviewed Actions artifact
         env:
@@ -86,6 +87,8 @@ jobs:
             Applies the checked OSM candidate decisions from #${{ github.event.issue.number }}.
 
             The workflow re-downloaded the originating Actions artifact, verified its candidate-report SHA, rebuilt the canonical registry and public GeoJSON, and ran validation and unit tests.
+
+            <!-- osm-review-source:{"schemaVersion":1,"issueNumber":${{ github.event.issue.number }},"reviewPullRequestNumber":${{ steps.metadata.outputs.review_pr_number }},"reviewBranch":"${{ steps.metadata.outputs.review_branch }}"} -->
       - name: Link the Pull Request and close the completed issue
         if: steps.pull-request.outputs.pull-request-url != ''
         uses: actions/github-script@v7

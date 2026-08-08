@@ -59,6 +59,22 @@ class GithubWorkflowTests(unittest.TestCase):
         self.assertIn("cp reports/osm-candidates.json /tmp/osm-candidates.json", workflow)
         self.assertIn("--report /tmp/osm-candidates.json", workflow)
 
+    def test_merged_osm_review_production_pr_closes_its_draft_review_pr(self):
+        apply_workflow = self.workflow("apply-osm-review.yml")
+        cleanup_path = self.root / ".github/workflows" / "close-osm-review-draft.yml"
+
+        self.assertIn("<!-- osm-review-source:", apply_workflow)
+        self.assertTrue(cleanup_path.is_file())
+        cleanup_workflow = cleanup_path.read_text(encoding="utf-8")
+        self.assertIn("pull_request:", cleanup_workflow)
+        self.assertIn("types: [closed]", cleanup_workflow)
+        self.assertIn("github.event.pull_request.merged == true", cleanup_workflow)
+        self.assertIn("reviewPullRequestNumber", apply_workflow)
+        self.assertIn("pulls.get", cleanup_workflow)
+        self.assertNotIn("pulls.list", cleanup_workflow)
+        self.assertIn("pull.draft", cleanup_workflow)
+        self.assertIn("pulls.update", cleanup_workflow)
+
 
 if __name__ == "__main__":
     unittest.main()

@@ -40,11 +40,15 @@ def parse_issue_metadata(body: str) -> dict[str, Any]:
     except (ValueError, json.JSONDecodeError) as error:
         raise ValueError("OSM review metadata is invalid") from error
     required = {"schemaVersion", "runId", "artifactName", "reportSha256", "queryIds"}
-    if metadata.get("schemaVersion") == 3:
+    if metadata.get("schemaVersion") in {3, 4}:
         required.add("reviewBranch")
         if not isinstance(metadata.get("reviewBranch"), str) or not metadata["reviewBranch"]:
             raise ValueError("OSM review branch is invalid")
-    if set(metadata) != required or metadata.get("schemaVersion") not in {2, 3}:
+    if metadata.get("schemaVersion") == 4:
+        required.add("reviewPullRequestNumber")
+        if not isinstance(metadata.get("reviewPullRequestNumber"), int) or metadata["reviewPullRequestNumber"] < 1:
+            raise ValueError("OSM review pull request number is invalid")
+    if set(metadata) != required or metadata.get("schemaVersion") not in {2, 3, 4}:
         raise ValueError("OSM review metadata has an unsupported shape")
     if not isinstance(metadata["queryIds"], list) or not metadata["queryIds"] or not all(isinstance(item, str) for item in metadata["queryIds"]):
         raise ValueError("OSM review query IDs are invalid")
@@ -170,6 +174,7 @@ def build_issue_document(
     artifact_name: str,
     report_sha256: str,
     review_branch: str | None = None,
+    review_pull_request_number: int | None = None,
     repository_url: str = "https://github.com/nawashiro/chiyoda_city_main_facilities",
 ) -> dict[str, Any] | None:
     queries = [
@@ -177,8 +182,10 @@ def build_issue_document(
     ]
     if not queries:
         return None
+    if (review_branch is None) != (review_pull_request_number is None):
+        raise ValueError("OSM review branch and pull request number must be supplied together")
     metadata = {
-        "schemaVersion": 3 if review_branch else 2,
+        "schemaVersion": 4 if review_branch else 2,
         "runId": str(run_id),
         "artifactName": artifact_name,
         "reportSha256": report_sha256,
@@ -186,6 +193,7 @@ def build_issue_document(
     }
     if review_branch:
         metadata["reviewBranch"] = review_branch
+        metadata["reviewPullRequestNumber"] = review_pull_request_number
         edit_url = f"{repository_url}/edit/{review_branch}/reports/osm-review-needed.yaml"
         body = "\n".join(
             [
@@ -444,6 +452,7 @@ def main(argv: list[str] | None = None) -> int:
     build_parser.add_argument("--output", required=True)
     build_parser.add_argument("--prepare", action="store_true")
     build_parser.add_argument("--review-branch")
+    build_parser.add_argument("--review-pull-request-number", type=int)
     build_parser.add_argument("--repository-url")
     build_parser.add_argument("--report")
     metadata_parser = subparsers.add_parser("metadata")
@@ -485,6 +494,7 @@ def main(argv: list[str] | None = None) -> int:
                         artifact_name=args.artifact_name,
                         report_sha256=report_sha256,
                         review_branch=args.review_branch,
+                        review_pull_request_number=args.review_pull_request_number,
                         repository_url=args.repository_url or "https://github.com/nawashiro/chiyoda_city_main_facilities",
                     )
                     issues = [] if document is None else [document]

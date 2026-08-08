@@ -251,9 +251,10 @@ review diff生成前に`git add -N .`を行い、新規ファイルもbinary dif
 6. YAMLに「候補は別の施設に紐付け済み」と表示される場合は、自動取り込みを止めた理由として確認する。
 7. 各「選択肢」で一つだけ`true`に変更してコミットする。
 8. Issueの適用チェックを入れる。Actionsはコミット済みYAMLと保存済みartifactのSHA-256を照合してPull Requestを作成する。
-9. `sourceAttributions`と取得台帳の版・SHAを確認する。
-10. tests、validate、決定的buildを再実行する。
-11. clean cloneでも同じ検証を行う。
+9. 本番Pull Requestがmergeした後、Actionsは対応する下書きreview Pull Requestをcloseする。
+10. `sourceAttributions`と取得台帳の版・SHAを確認する。
+11. tests、validate、決定的buildを再実行する。
+12. clean cloneでも同じ検証を行う。
 
 ## 9. 現在未実装の将来候補
 
