@@ -136,8 +136,10 @@ def _filtered_documents(
     ]
 
 
-def _preserved_osm_records(root: Path, query_ids: set[str]) -> list[dict[str, Any]]:
-    path = root / "imports/openstreetmap/normalized.json"
+def _preserved_normalized_records(
+    root: Path, source: str, query_ids: set[str]
+) -> list[dict[str, Any]]:
+    path = root / f"imports/{source}/normalized.json"
     if not path.exists():
         return []
     normalized = json.loads(path.read_text(encoding="utf-8"))
@@ -207,6 +209,16 @@ def prepare_retained_reidentification(root: str | Path) -> dict[str, str]:
         raise ValueError("duplicate search query ID")
     current_query_ids = set(query_ids)
     registry = json.loads((root / "data/registry.json").read_text(encoding="utf-8"))
+    inactive_query_ids = {
+        str(place.get("id"))
+        for place in registry.get("places", [])
+        if str(place.get("id")) in current_query_ids
+        and (
+            place.get("lifecycle", {}).get("status") == "closed"
+            or place.get("visibility", {}).get("status") == "private"
+        )
+    }
+    eligible_query_ids = current_query_ids - inactive_query_ids
     stable_osm_query_ids = _stable_osm_query_ids(registry, queries, osm_raw)
     report_path = root / "reports/osm-candidates.json"
     if report_path.exists():
@@ -216,7 +228,7 @@ def prepare_retained_reidentification(root: str | Path) -> dict[str, str]:
             json.loads(report_path.read_text(encoding="utf-8")),
             str(osm_retrieval["rawSha256"]),
         )
-    affected_osm_query_ids = current_query_ids - stable_osm_query_ids
+    affected_osm_query_ids = eligible_query_ids - stable_osm_query_ids
     if not affected_osm_query_ids:
         return {
             "wamRetrievedAt": str(wam_retrieval["retrievedAt"]),
@@ -225,14 +237,14 @@ def prepare_retained_reidentification(root: str | Path) -> dict[str, str]:
 
     _unused_search, wam_normalized = prepare_wam_release(
         wam_raw.get("rows", []),
-        search_documents,
+        _filtered_documents(search_documents, eligible_query_ids),
         str(wam_raw["version"]),
         str(wam_retrieval["retrievedAt"]),
     )
     wam_normalized["records"] = [
         record
         for record in wam_normalized.get("records", [])
-        if str(record.get("queryId")) in current_query_ids
+        if str(record.get("queryId")) in eligible_query_ids
     ]
 
     registry_for_reidentification = copy.deepcopy(registry)
@@ -255,7 +267,9 @@ def prepare_retained_reidentification(root: str | Path) -> dict[str, str]:
         str(record["queryId"]) for record in osm_normalized.get("records", [])
     }
     osm_normalized["records"] = sorted(
-        _preserved_osm_records(root, stable_osm_query_ids)
+        _preserved_normalized_records(
+            root, "openstreetmap", stable_osm_query_ids | inactive_query_ids
+        )
         + _preserved_current_osm_records(
             root,
             registry,
@@ -263,6 +277,11 @@ def prepare_retained_reidentification(root: str | Path) -> dict[str, str]:
             affected_osm_query_ids - refreshed_osm_query_ids,
         )
         + list(osm_normalized.get("records", [])),
+        key=lambda record: str(record["queryId"]),
+    )
+    wam_normalized["records"] = sorted(
+        _preserved_normalized_records(root, "wam", inactive_query_ids)
+        + list(wam_normalized.get("records", [])),
         key=lambda record: str(record["queryId"]),
     )
 

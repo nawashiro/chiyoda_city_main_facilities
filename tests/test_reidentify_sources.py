@@ -117,6 +117,32 @@ class ReidentifySourcesTests(unittest.TestCase):
         self.assertEqual("2026-04-16T00:00:00Z", result["wamRetrievedAt"])
         self.assertEqual("2026-07-29T01:00:00Z", result["osmRetrievedAt"])
 
+    def test_skips_closed_or_private_place_from_retained_reidentification(self):
+        for lifecycle_status, visibility_status in (("closed", "public"), ("active", "private")):
+            with self.subTest(lifecycle=lifecycle_status, visibility=visibility_status), tempfile.TemporaryDirectory() as directory:
+                root = Path(directory)
+                query_id = self.make_repository(root)
+                (root / "data/registry.json").write_bytes(
+                    json_bytes(
+                        {
+                            "schemaVersion": 1,
+                            "places": [
+                                {
+                                    "id": query_id,
+                                    "lifecycle": {"status": lifecycle_status},
+                                    "visibility": {"status": visibility_status},
+                                }
+                            ],
+                        }
+                    )
+                )
+
+                prepare_retained_reidentification(root)
+
+                self.assertFalse((root / "imports/wam/normalized.json").exists())
+                self.assertFalse((root / "imports/openstreetmap/normalized.json").exists())
+                self.assertFalse((root / "reports/osm-candidates.json").exists())
+
     def test_keeps_osm_outputs_when_search_input_and_current_osm_id_are_unchanged(self):
         with tempfile.TemporaryDirectory() as directory:
             root = Path(directory)

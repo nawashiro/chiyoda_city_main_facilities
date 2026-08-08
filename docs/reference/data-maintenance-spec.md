@@ -184,6 +184,8 @@ LLMには検索入力の全項目、対応するWAM record・raw rowsがあれ�
 
 OSM snapshotの更新では、全検索入力を再同定しない。各検索入力について、前回同定時の検索キーとcurrent OSM IDを比較する。
 
+lifecycleが`closed`、またはvisibilityが`private`のPlaceは再同定しない。保持済みnormalized snapshotも維持する。
+
 次の条件をすべて満たす項目は再同定しない。
 
 - 検索入力の`name`と検索キー（`coordinates`または`qid`）が前回同定時から不変である。
