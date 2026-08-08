@@ -12,6 +12,7 @@ from src.github_osm_review import (
     build_issue_documents,
     build_review_yaml,
     main,
+    parse_issue_metadata,
 )
 
 
@@ -219,7 +220,10 @@ class GithubOsmReviewTests(unittest.TestCase):
             artifact_name="osm-update-12345",
             report_sha256="0" * 64,
             review_branch="automation/osm-review-12345",
+            review_pull_request_number=42,
         )
+
+        metadata = parse_issue_metadata(issue["body"])
 
         self.assertIn("# 操作手順", review_yaml)
         self.assertIn('"候補 node/1: 候補A": false', review_yaml)
@@ -234,6 +238,9 @@ class GithubOsmReviewTests(unittest.TestCase):
         self.assertIn('/edit/automation/osm-review-12345/reports/osm-review-needed.yaml', issue["body"])
         self.assertNotIn("osm-candidates.json", issue["body"])
         self.assertNotIn("oversized", issue["body"])
+        self.assertEqual(4, metadata["schemaVersion"])
+        self.assertEqual(42, metadata["reviewPullRequestNumber"])
+        self.assertEqual("automation/osm-review-12345", metadata["reviewBranch"])
 
     def test_prepare_build_writes_yaml_without_rendering_an_oversized_issue(self):
         report = self.review_report()
@@ -273,7 +280,7 @@ class GithubOsmReviewTests(unittest.TestCase):
                 [
                     "build", root.as_posix(), "--run-id", "12345", "--artifact-name",
                     "osm-update-12345", "--review-branch", "automation/osm-review-12345",
-                    "--report", reviewed_path.as_posix(), "--output", output.as_posix(),
+                    "--review-pull-request-number", "42", "--report", reviewed_path.as_posix(), "--output", output.as_posix(),
                 ]
             )
             document = json.loads(output.read_text(encoding="utf-8"))

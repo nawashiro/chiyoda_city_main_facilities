@@ -94,6 +94,7 @@ jobs:
             --run-id "${{ github.run_id }}" \
             --artifact-name "osm-update-${{ github.run_id }}" \
             --review-branch "${{ steps.review-branch.outputs.pull-request-branch }}" \
+            --review-pull-request-number "${{ steps.review-branch.outputs.pull-request-number }}" \
             --repository-url "${{ github.server_url }}/${{ github.repository }}" \
             --report /tmp/osm-candidates.json \
             --output /tmp/osm-review-issue.json
