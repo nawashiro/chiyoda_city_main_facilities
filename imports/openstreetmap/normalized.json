@@ -1,8 +1,41 @@
 {
   "records": [
     {
-      "queryId": "019ca6b1-dc00-7de7-8c55-4303aa3676d1",
+      "queryId": "019ca6b1-dc00-74d7-b1ea-409942f9799c",
       "matchBasis": "language_model",
+      "type": "way",
+      "id": "231540636",
+      "name": "アーク錦町ビル",
+      "coordinates": [
+        139.7640083,
+        35.6936171
+      ],
+      "tags": {
+        "building": "yes",
+        "name": "アーク錦町ビル",
+        "source": "GSI/KIBAN 25000; NARO",
+        "source_ref": "http://wiki.osm.org/wiki/GSI_KIBAN"
+      }
+    },
+    {
+      "queryId": "019ca6b1-dc00-7774-920a-bdcf4344c0c0",
+      "matchBasis": "language_model",
+      "type": "way",
+      "id": "144430416",
+      "name": "ダイアパレス飯田橋",
+      "coordinates": [
+        139.746943,
+        35.70036595
+      ],
+      "tags": {
+        "building": "apartments",
+        "name": "ダイアパレス飯田橋",
+        "source": "Bing,2007-04"
+      }
+    },
+    {
+      "queryId": "019ca6b1-dc00-7de7-8c55-4303aa3676d1",
+      "matchBasis": "source_record",
       "type": "node",
       "id": "5285952021",
       "name": "教育研究所 児童・家庭支援センター さくらキッズ",
@@ -44,7 +77,7 @@
       "id": "23974981",
       "name": "伝統芸能情報センター",
       "coordinates": [
-        139.7426631,
+        139.74266305,
         35.6811899
       ],
       "tags": {
@@ -80,7 +113,7 @@
     },
     {
       "queryId": "019fa880-5cd4-729d-8095-deb5f1a4597f",
-      "matchBasis": "language_model",
+      "matchBasis": "source_record",
       "type": "node",
       "id": "13465461815",
       "name": "千代田区立障害者福祉センター　えみふる",
@@ -200,8 +233,8 @@
       "id": "187756642",
       "name": "千代田区神田公園 出張所・区民館",
       "coordinates": [
-        139.7681384,
-        35.6927468
+        139.76813835000002,
+        35.69274685
       ],
       "tags": {
         "amenity": "community_centre",
@@ -226,7 +259,7 @@
       "name": "千代田区役所 万世橋出張所",
       "coordinates": [
         139.7706485,
-        35.6976015
+        35.69760145
       ],
       "tags": {
         "amenity": "townhall",
@@ -245,7 +278,7 @@
     },
     {
       "queryId": "019fa880-5cd4-7d3c-a9e1-f01c12ebf008",
-      "matchBasis": "language_model",
+      "matchBasis": "source_record",
       "type": "node",
       "id": "13465379795",
       "name": "千代田区障害者よろず相談 Light",
@@ -280,7 +313,7 @@
     },
     {
       "queryId": "019fa880-5cd5-701b-90d2-e3073a1c337b",
-      "matchBasis": "language_model",
+      "matchBasis": "source_record",
       "type": "node",
       "id": "1420785407",
       "name": "東京都産業労働局労働相談情報センター",
@@ -298,8 +331,34 @@
       }
     },
     {
+      "queryId": "019fa880-5cd5-7031-bc8e-250d0074827b",
+      "matchBasis": "name_coordinates",
+      "type": "way",
+      "id": "30680236",
+      "name": "シャルトル聖パウロ修道女会",
+      "coordinates": [
+        139.74458635000002,
+        35.6950676
+      ],
+      "tags": {
+        "addr:block_number": "4",
+        "addr:city": "千代田区",
+        "addr:housenumber": "1",
+        "addr:neighbourhood": "2丁目",
+        "addr:province": "東京都",
+        "addr:quarter": "九段北",
+        "amenity": "monastery",
+        "denomination": "catholic",
+        "name": "シャルトル聖パウロ修道女会",
+        "name:en": "Sisters of Saint Paul of Chartres",
+        "name:zh": "沙爾德聖保祿修女會",
+        "religion": "christian",
+        "website": "http://www.spc-japan.org/kudan.php"
+      }
+    },
+    {
       "queryId": "019fa880-5cd5-713a-8135-779f14050ab2",
-      "matchBasis": "language_model",
+      "matchBasis": "source_record",
       "type": "node",
       "id": "13468335880",
       "name": "ちよだパークサイドプラザ区民図書室",
@@ -329,7 +388,7 @@
       "id": "210372594",
       "name": "明治大学米沢嘉博記念図書館",
       "coordinates": [
-        139.75973,
+        139.75972995,
         35.6990086
       ],
       "tags": {
@@ -344,8 +403,42 @@
       "qid": "Q113160405"
     },
     {
+      "queryId": "019fa880-5cd5-71c8-ba28-7d86e104de84",
+      "matchBasis": "qid",
+      "type": "way",
+      "id": "870979561",
+      "name": "千鳥ヶ淵戦没者墓苑",
+      "coordinates": [
+        139.74692340000001,
+        35.6900817
+      ],
+      "tags": {
+        "alt_name:fr": "Cimetière national de Chidorigafuchi",
+        "architect": "谷口吉郎",
+        "architect:ja-Latn": "Yoshiro Taniguchi",
+        "architect:wikidata": "Q10856322",
+        "contact:tripadvisor": "2235492",
+        "contact:website": "https://www.env.go.jp/garden/chidorigafuchi/",
+        "landuse": "cemetery",
+        "name": "千鳥ヶ淵戦没者墓苑",
+        "name:en": "Chidorigafuchi National Cemetery",
+        "name:fr": "Cimetière national de la douve de Chidori",
+        "name:ja-Hira": "ちどりがふち せんぼつしゃ はか えん",
+        "name:ja-Latn": "Chidori-ga-fuchi senbotsushahakaen",
+        "name:zh": "千鳥淵戰歿者墓苑",
+        "operator": "自然環境局",
+        "operator:wikidata": "Q11612868",
+        "source": "survey",
+        "start_date": "1959-03-28",
+        "wikidata": "Q2972676",
+        "wikimedia_commons": "Category:Chidorigafuchi National Cemetery",
+        "wikipedia": "ja:千鳥ケ淵戦没者墓苑"
+      },
+      "qid": "Q2972676"
+    },
+    {
       "queryId": "019fa880-5cd5-7241-a976-801eef6324a9",
-      "matchBasis": "language_model",
+      "matchBasis": "source_record",
       "type": "node",
       "id": "2263796343",
       "name": "神田児童館",
@@ -369,8 +462,8 @@
       "id": "377728267",
       "name": "聖イグナチオ教会",
       "coordinates": [
-        139.7312545,
-        35.6851483
+        139.73125449999998,
+        35.68514825
       ],
       "tags": {
         "addr:block_number": "5",
@@ -408,7 +501,7 @@
       "name": "日比谷公園",
       "coordinates": [
         139.7561768,
-        35.6737111
+        35.67371115
       ],
       "tags": {
         "leisure": "park",
@@ -547,7 +640,7 @@
     },
     {
       "queryId": "019fa880-5cd5-7537-802b-2421832099f4",
-      "matchBasis": "language_model",
+      "matchBasis": "source_record",
       "type": "node",
       "id": "2059303798",
       "name": "昌平まちかど図書館",
@@ -578,7 +671,7 @@
       "name": "皇居東御苑",
       "coordinates": [
         139.7571878,
-        35.686472
+        35.686472050000006
       ],
       "tags": {
         "contact:tripadvisor": "320625",
@@ -628,6 +721,24 @@
       }
     },
     {
+      "queryId": "019fa880-5cd5-7740-a44a-9a4e3e81563b",
+      "matchBasis": "language_model",
+      "type": "node",
+      "id": "3774437979",
+      "name": "千代田保健所",
+      "coordinates": [
+        139.7521747,
+        35.6960477
+      ],
+      "tags": {
+        "amenity": "clinic",
+        "healthcare": "clinic",
+        "name": "千代田保健所",
+        "name:en": "Chiyoda Public Health Center",
+        "name:ja": "千代田保健所"
+      }
+    },
+    {
       "queryId": "019fa880-5cd5-7743-8b45-3ba7622c5083",
       "matchBasis": "source_record",
       "type": "node",
@@ -645,6 +756,30 @@
       }
     },
     {
+      "queryId": "019fa880-5cd5-775a-bbd0-62db8a21fec0",
+      "matchBasis": "language_model",
+      "type": "way",
+      "id": "140107417",
+      "name": "国会前庭",
+      "coordinates": [
+        139.7481601,
+        35.6753971
+      ],
+      "tags": {
+        "leisure": "garden",
+        "name": "国会前庭",
+        "name:en": "Diet Front Garden",
+        "name:es": "Patio frontal de la Dieta",
+        "name:zh": "国会前庭",
+        "opening_hours": "09:00-17:30",
+        "source": "Bing,2007-04",
+        "wikidata": "Q17221580",
+        "wikimedia_commons": "Category:Diet Front Park",
+        "wikipedia": "ja:国会前庭"
+      },
+      "qid": "Q17221580"
+    },
+    {
       "queryId": "019fa880-5cd5-77f0-ae81-1e52ac5633fa",
       "matchBasis": "source_record",
       "type": "node",
@@ -659,6 +794,7 @@
         "name": "千代田区立日比谷図書文化館",
         "name:en": "Hibiya Book Culture Hall",
         "name:ja": "千代田区立日比谷図書文化館",
+        "name:zh": "日比谷圖書文化館",
         "note": "National-Land Numerical Information (Public Facility) 2006, MLIT Japan",
         "note:ja": "国土数値情報（公共施設データ）平成19年 国土交通省",
         "source": "KSJ2",
@@ -668,6 +804,28 @@
         "wikipedia": "ja:日比谷図書文化館"
       },
       "qid": "Q11509583"
+    },
+    {
+      "queryId": "019fa880-5cd5-781a-bcd1-ee19d7c897f9",
+      "matchBasis": "name_coordinates",
+      "type": "way",
+      "id": "67027576",
+      "name": "日本ハリストス正教会修道院",
+      "coordinates": [
+        139.76505715000002,
+        35.69818535
+      ],
+      "tags": {
+        "amenity": "monastery",
+        "denomination": "japanese_orthodox",
+        "landuse": "religious",
+        "name": "日本ハリストス正教会修道院",
+        "name:en": "Tokyo Nicholas Monastery",
+        "name:es": "Monasterio de Tokio Nikolsky",
+        "name:ja": "日本ハリストス正教会修道院",
+        "name:ru": "Токийский Никольский монастырь",
+        "religion": "christian"
+      }
     },
     {
       "queryId": "019fa880-5cd5-7832-ae65-182a148bfa2f",
@@ -713,6 +871,31 @@
         "wikipedia": "ja:神田寺"
       },
       "qid": "Q106020484"
+    },
+    {
+      "queryId": "019fa880-5cd5-788b-86e8-0ac1e6c4811a",
+      "matchBasis": "language_model",
+      "type": "way",
+      "id": "179575985",
+      "name": "千代田区立 富士見小学校",
+      "coordinates": [
+        139.74630355,
+        35.6972222
+      ],
+      "tags": {
+        "amenity": "school",
+        "education": "school",
+        "name": "千代田区立 富士見小学校",
+        "name:en": "Fujimi Elementary School",
+        "name:es": "Escuela primaria Fujimi",
+        "note": "National-Land Numerical Information (Public Facility) 2006, MLIT Japan",
+        "note:ja": "国土数値情報（公共施設データ）平成19年　国土交通省",
+        "source": "KSJ2;Bing 2010",
+        "source_ref": "http://nlftp.mlit.go.jp/ksj/jpgis/datalist/KsjTmplt-P02-v2_0.html",
+        "wikidata": "Q81916362",
+        "wikipedia": "ja:千代田区立富士見小学校"
+      },
+      "qid": "Q81916362"
     },
     {
       "queryId": "019fa880-5cd5-78a9-9ebf-098c6c4cc4ed",
@@ -775,7 +958,7 @@
       "name": "日本キリスト教団富士見町教会",
       "coordinates": [
         139.7443601,
-        35.6993714
+        35.699371400000004
       ],
       "tags": {
         "amenity": "place_of_worship",
@@ -794,8 +977,8 @@
       "id": "515133705",
       "name": "神田児童公園",
       "coordinates": [
-        139.7679359,
-        35.6929407
+        139.76793585000001,
+        35.692940750000005
       ],
       "tags": {
         "leisure": "park",
@@ -806,7 +989,7 @@
     },
     {
       "queryId": "019fa880-5cd5-7b01-9dd8-2e4787f423aa",
-      "matchBasis": "language_model",
+      "matchBasis": "source_record",
       "type": "node",
       "id": "1655927382",
       "name": "西神田児童・家庭支援センター",
@@ -828,7 +1011,7 @@
     },
     {
       "queryId": "019fa880-5cd5-7b37-bb94-a2151c0cdef0",
-      "matchBasis": "language_model",
+      "matchBasis": "source_record",
       "type": "node",
       "id": "6900192224",
       "name": "TOHO CINEMAS HIBIYA",
@@ -916,7 +1099,7 @@
     },
     {
       "queryId": "019fa880-5cd5-7d11-8560-3ac4e0486633",
-      "matchBasis": "language_model",
+      "matchBasis": "source_record",
       "type": "node",
       "id": "1655905663",
       "name": "千代田区立一番町高齢者在宅介護支援センター",
@@ -992,14 +1175,35 @@
       "qid": "Q11515702"
     },
     {
+      "queryId": "019fa880-5cd5-7d31-9979-79d32157427a",
+      "matchBasis": "language_model",
+      "type": "node",
+      "id": "5021209549",
+      "name": "岩本町ほほえみプラザ",
+      "coordinates": [
+        139.7777528,
+        35.6942078
+      ],
+      "tags": {
+        "bench": "yes",
+        "bus": "yes",
+        "highway": "bus_stop",
+        "name": "岩本町ほほえみプラザ",
+        "network": "千代田区地域福祉交通",
+        "operator": "千代田区",
+        "public_transport": "platform",
+        "shelter": "no"
+      }
+    },
+    {
       "queryId": "019fa880-5cd5-7d9b-ae8f-d7d00901be5d",
       "matchBasis": "source_record",
       "type": "way",
       "id": "184577229",
       "name": "錦華公園",
       "coordinates": [
-        139.7605387,
-        35.6977313
+        139.76053875,
+        35.697731250000004
       ],
       "tags": {
         "leisure": "park",
@@ -1016,7 +1220,7 @@
     },
     {
       "queryId": "019fa880-5cd5-7d9d-9713-970aa8443759",
-      "matchBasis": "language_model",
+      "matchBasis": "source_record",
       "type": "node",
       "id": "6900192225",
       "name": "TOHO CINEMAS HIBIYA",
@@ -1094,8 +1298,8 @@
       "id": "4080936",
       "name": "ニコライ堂",
       "coordinates": [
-        139.7654865,
-        35.698016
+        139.76548655,
+        35.69801605
       ],
       "tags": {
         "addr:block_number": "1",
@@ -1150,8 +1354,8 @@
       "id": "132794875",
       "name": "東郷公園",
       "coordinates": [
-        139.7400815,
-        35.6903895
+        139.74008149999997,
+        35.69038955
       ],
       "tags": {
         "designation": "東郷公園 Parque Togo",
@@ -1212,8 +1416,8 @@
       "id": "666471139",
       "name": "清水谷公園",
       "coordinates": [
-        139.7358866,
-        35.6816756
+        139.73588660000001,
+        35.681675549999994
       ],
       "tags": {
         "leisure": "park",
@@ -1234,7 +1438,7 @@
       "name": "北の丸公園",
       "coordinates": [
         139.7509767,
-        35.6921178
+        35.692117800000005
       ],
       "tags": {
         "leisure": "park",
@@ -1279,8 +1483,8 @@
       "id": "144379628",
       "name": "遊就館",
       "coordinates": [
-        139.7433692,
-        35.6953152
+        139.74336920000002,
+        35.695315199999996
       ],
       "tags": {
         "addr:postcode": "102-8246",
@@ -1519,6 +1723,22 @@
       "qid": "Q3788883"
     },
     {
+      "queryId": "019fa880-5cd6-74a8-9544-d37f0c4946c7",
+      "matchBasis": "language_model",
+      "type": "node",
+      "id": "13741796001",
+      "name": "優美堂",
+      "coordinates": [
+        139.7640417,
+        35.6945448
+      ],
+      "tags": {
+        "amenity": "cafe",
+        "name": "優美堂",
+        "opening_hours": "Su-Tu, Th 11:30-18:00; Fr-Sa 11:30-21:00"
+      }
+    },
+    {
       "queryId": "019fa880-5cd6-75c3-b465-be5c4466401e",
       "matchBasis": "source_record",
       "type": "node",
@@ -1604,8 +1824,8 @@
       "id": "140099041",
       "name": "憲政記念館",
       "coordinates": [
-        139.7470123,
-        35.678347
+        139.74701225,
+        35.67834705
       ],
       "tags": {
         "building": "yes",
@@ -1627,6 +1847,32 @@
         "wikimedia_commons": "Category:Kensei Kinenkan"
       },
       "qid": "Q11495238"
+    },
+    {
+      "queryId": "019fa880-5cd6-77ce-be2f-ed10dd5a6a9f",
+      "matchBasis": "qid",
+      "type": "node",
+      "id": "5403425184",
+      "name": "出光美術館",
+      "coordinates": [
+        139.7609079,
+        35.6763721
+      ],
+      "tags": {
+        "description": "temporarily closed until the building is reconstructed",
+        "disused:amenity": "museum",
+        "name": "出光美術館",
+        "name:en": "Idemitsu Museum of Arts",
+        "name:es": "Museo de las artes Idemitsu",
+        "opening_hours": "Tu-Su 10:00-17:00; Fr 10:00-19:00",
+        "phone": "+81 35777 8600",
+        "website": "https://idemitsu-museum.or.jp/",
+        "wheelchair": "yes",
+        "wikidata": "Q3076590",
+        "wikimedia_commons": "Category:Idemitsu Museum of Arts",
+        "wikipedia": "en:Idemitsu Museum of Arts"
+      },
+      "qid": "Q3076590"
     },
     {
       "queryId": "019fa880-5cd6-77e2-8d4b-1066f9ba07a8",
@@ -1655,6 +1901,34 @@
         "wikipedia": "ja:千秋文庫"
       },
       "qid": "Q11405795"
+    },
+    {
+      "queryId": "019fa880-5cd6-784f-b302-95fddf90b44f",
+      "matchBasis": "qid",
+      "type": "node",
+      "id": "12085101795",
+      "name": "しょうけい館",
+      "coordinates": [
+        139.7510805,
+        35.6970758
+      ],
+      "tags": {
+        "addr:postcode": "102-0073",
+        "contact:facebook": "https://www.facebook.com/shokeikan.kudan",
+        "fax": "+81-3-3234-7826",
+        "fee": "no",
+        "museum": "history;medical",
+        "name": "しょうけい館",
+        "name:en": "War Wounded and Sick Historical Museum",
+        "opening_hours": "Tu-Su,PH 10:00-17:30",
+        "phone": "+81-3-3234-7821",
+        "toilets": "yes",
+        "tourism": "museum",
+        "website": "https://www.shokeikan.go.jp/",
+        "wikidata": "Q11269143",
+        "wikipedia": "ja:しょうけい館"
+      },
+      "qid": "Q11269143"
     },
     {
       "queryId": "019fa880-5cd6-78af-b9de-08beeb78d708",
@@ -1759,8 +2033,8 @@
       "id": "91234941",
       "name": "神田明神資料館",
       "coordinates": [
-        139.7678448,
-        35.7022569
+        139.76784485,
+        35.702256950000006
       ],
       "tags": {
         "alt_name:en": "The Kanda Myoujin Shrine Museum",
@@ -1782,7 +2056,7 @@
       "name": "宮内庁 三の丸尚蔵館",
       "coordinates": [
         139.7589461,
-        35.6865373
+        35.68653725
       ],
       "tags": {
         "building": "public",
@@ -1837,7 +2111,7 @@
       "name": "東京国立近代美術館",
       "coordinates": [
         139.7546203,
-        35.6904946
+        35.690494650000005
       ],
       "tags": {
         "addr:city": "千代田区",
@@ -1913,6 +2187,30 @@
       }
     },
     {
+      "queryId": "019fa880-5cd6-7d71-bbb5-e795c2abccc6",
+      "matchBasis": "language_model",
+      "type": "way",
+      "id": "884071202",
+      "name": "丸紅ビル",
+      "coordinates": [
+        139.75965915,
+        35.690680150000006
+      ],
+      "tags": {
+        "addr:block_number": "4",
+        "addr:city": "千代田区",
+        "addr:housenumber": "2",
+        "addr:neighbourhood": "1丁目",
+        "addr:province": "東京都",
+        "addr:quarter": "大手町",
+        "building": "yes",
+        "building:levels": "22",
+        "height": "111.9",
+        "name": "丸紅ビル",
+        "start_date": "2020-10"
+      }
+    },
+    {
       "queryId": "019fa880-5cd6-7d72-ac6c-89e27c90a921",
       "matchBasis": "source_record",
       "type": "node",
@@ -1938,8 +2236,8 @@
       "id": "306116935",
       "name": "三菱一号館",
       "coordinates": [
-        139.7631636,
-        35.6784664
+        139.76316359999998,
+        35.678466349999994
       ],
       "tags": {
         "alt_name:fr": "Musée d'art Mitsubishi Ichigokan",
