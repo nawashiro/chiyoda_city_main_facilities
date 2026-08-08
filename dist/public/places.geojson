@@ -3097,52 +3097,6 @@
       "geometry": {
         "type": "Point",
         "coordinates": [
-          139.7777528,
-          35.6942078
-        ]
-      },
-      "properties": {
-        "id": "019fa880-5cd5-7d31-9979-79d32157427a",
-        "name": "岩本町ほほえみプラザ",
-        "categoryIds": [
-          "social-welfare"
-        ],
-        "tags": [
-          "kazaguruma.home-shortcut"
-        ],
-        "images": [],
-        "town": "岩本町",
-        "lifecycleStatus": "active",
-        "sources": {
-          "openstreetmap": {
-            "retrievedAt": "2026-08-08T00:16:02+00:00",
-            "record": {
-              "type": "node",
-              "id": "5021209549",
-              "coordinates": [
-                139.7777528,
-                35.6942078
-              ],
-              "tags": {
-                "bench": "yes",
-                "bus": "yes",
-                "highway": "bus_stop",
-                "name": "岩本町ほほえみプラザ",
-                "network": "千代田区地域福祉交通",
-                "operator": "千代田区",
-                "public_transport": "platform",
-                "shelter": "no"
-              }
-            }
-          }
-        }
-      }
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
           139.7605387,
           35.6977313
         ]
@@ -3820,7 +3774,7 @@
           }
         ],
         "town": "神田須田町",
-        "lifecycleStatus": "active",
+        "lifecycleStatus": "closed",
         "sources": {}
       }
     },

@@ -1557,10 +1557,10 @@
         {
           "sourceId": "openstreetmap",
           "recordId": "node/5021209549",
-          "status": "current",
+          "status": "superseded",
           "firstConfirmedAt": "2026-08-08T00:16:02+00:00",
           "lastConfirmedAt": "2026-08-08T00:16:02+00:00",
-          "supersededAt": null,
+          "supersededAt": "2026-08-08T02:37:46+00:00",
           "basis": "language_model"
         }
       ],
@@ -1569,8 +1569,8 @@
         "changedAt": "2026-07-28T11:33:32Z"
       },
       "visibility": {
-        "status": "public",
-        "changedAt": "2026-07-28T11:33:32Z"
+        "status": "private",
+        "changedAt": "2026-08-08T02:37:46+00:00"
       },
       "audit": [
         {
@@ -1598,6 +1598,18 @@
           "action": "linked_osm",
           "target": "node/5021209549",
           "searchInputSha256": "a0f569eb37092c846b145affdbbd01a18e2aa57ef9daf470f00d8a7ec4cd1411"
+        },
+        {
+          "at": "2026-08-08T02:37:46+00:00",
+          "method": "human_inference",
+          "action": "updated_visibility",
+          "target": "019fa880-5cd5-7d31-9979-79d32157427a"
+        },
+        {
+          "at": "2026-08-08T02:37:46+00:00",
+          "method": "human_inference",
+          "action": "unlinked_osm",
+          "target": "openstreetmap"
         }
       ]
     },
@@ -4335,8 +4347,8 @@
       ],
       "externalRefs": [],
       "lifecycle": {
-        "status": "active",
-        "changedAt": "2026-07-28T11:33:32Z"
+        "status": "closed",
+        "changedAt": "2026-08-08T02:37:46+00:00"
       },
       "visibility": {
         "status": "public",
@@ -4348,6 +4360,12 @@
           "method": "human_inference",
           "action": "created",
           "target": "place"
+        },
+        {
+          "at": "2026-08-08T02:37:46+00:00",
+          "method": "human_inference",
+          "action": "updated_lifecycle",
+          "target": "019fa880-5cd6-7324-b3fe-943c71e289b7"
         }
       ]
     },
