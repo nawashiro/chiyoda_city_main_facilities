@@ -315,7 +315,6 @@ def run_osm_retrieval(root: str | Path, at: str, fetch, extractor=extract_elemen
     retrieval = {**metadata, "sourceId": "openstreetmap", "retrievedAt": at, "rawVersion": raw["version"], "manifestUrl": MOVISDA_MANIFEST_URL, "pbfUrl": mirror_url, "pbfSha256": hashlib.sha256(pbf_payload).hexdigest(), "pbfBytes": len(pbf_payload), "manifestSha256": hashlib.sha256(manifest_payload).hexdigest(), "extractor": "pyosmium", "selectionSha256": hashlib.sha256(selection_payload).hexdigest(), "rawSha256": hashlib.sha256(raw_payload).hexdigest(), "etag": pbf_headers.get("ETag"), "lastModified": pbf_headers.get("Last-Modified")}
     report["rawSha256"] = retrieval["rawSha256"]
     imports_path = root / "imports/openstreetmap"; imports_path.mkdir(parents=True, exist_ok=True)
-    (imports_path / "raw-response.json").write_bytes(manifest_payload)
     (imports_path / "query.overpassql").write_bytes(selection_payload)
     (imports_path / "raw.json").write_bytes(raw_payload)
     normalized_path, report_path = imports_path / "normalized.json", root / "reports/osm-candidates.json"

@@ -258,10 +258,11 @@ class OsmRetrievalTests(unittest.TestCase):
         calls = []
 
         manifest = {"features": [{"properties": {"prefix": "JP-13-", "timestamp": 202607290000, "bytes": 3}}]}
+        manifest_payload = json.dumps(manifest).encode()
         def fetch(url):
             calls.append(url)
             if url.endswith("Admin-latest.geojson"):
-                return json.dumps(manifest).encode(), {"ETag": '"manifest-fixture"'}
+                return manifest_payload, {"ETag": '"manifest-fixture"'}
             return b"pbf", {"ETag": '"pbf-fixture"'}
         def extractor(path, typed_ids, qids, coordinates, bbox):
             self.assertEqual(b"pbf", path.read_bytes())
@@ -320,7 +321,7 @@ class OsmRetrievalTests(unittest.TestCase):
                 (root / "imports/openstreetmap/raw.json").read_text(encoding="utf-8")
             )
             raw_bytes = (root / "imports/openstreetmap/raw.json").read_bytes()
-            raw_response_bytes = (root / "imports/openstreetmap/raw-response.json").read_bytes()
+            raw_response_exists = (root / "imports/openstreetmap/raw-response.json").exists()
             query_bytes = (root / "imports/openstreetmap/query.overpassql").read_bytes()
 
         self.assertEqual(2, len(calls))
@@ -335,7 +336,8 @@ class OsmRetrievalTests(unittest.TestCase):
         self.assertEqual(64, len(metadata["manifestSha256"]))
         self.assertEqual(64, len(metadata["pbfSha256"]))
         self.assertEqual(64, len(metadata["selectionSha256"]))
-        self.assertEqual(metadata["manifestSha256"], hashlib.sha256(raw_response_bytes).hexdigest())
+        self.assertFalse(raw_response_exists)
+        self.assertEqual(metadata["manifestSha256"], hashlib.sha256(manifest_payload).hexdigest())
         self.assertEqual(metadata["selectionSha256"], hashlib.sha256(query_bytes).hexdigest())
         self.assertEqual(metadata["rawSha256"], hashlib.sha256(raw_bytes).hexdigest())
 
