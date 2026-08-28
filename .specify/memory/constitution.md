@@ -1,9 +1,9 @@
 <!--
 Sync Impact Report
-- Version change: 0.0.0 → 1.0.0
-- Modified principles: none; initial project constitution
-- Added sections: Data and publication constraints; Development workflow
-- Removed sections: template placeholders
+- Version change: 1.0.0 → 2.0.0
+- Modified principles: I. 正本と生成物を分離するを維持
+- Added sections: Development workflowのDev、禁止、検証スコープ方針
+- Removed sections: II. 出典と判断履歴を保持する、III. 誤同定を避ける、IV. 検証を変更の完了条件にする、V. 公開範囲とライセンスを守る、Data and publication constraints
 - Deferred items: none
 -->
 
@@ -13,57 +13,45 @@ Sync Impact Report
 
 ### I. 正本と生成物を分離する
 
-`data/registry.json`をPlaceの唯一の正本として扱う。検索入力と保持済み外部snapshotを正本の入力として扱う。公開GeoJSONとmanifestを正本から決定的に生成する。生成物を直接編集してはならない。
+`data/registry.json`をPlaceの唯一の正本として扱う。検索入力と保持済み外部snapshotを正本の入力として扱う。公開GeoJSONとmanifestを正本から決定的に生成し、生成物を直接編集してはならない。
 
 この原則は、手動変更の場所を限定し、再生成による再現性を守る。
 
-### II. 出典と判断履歴を保持する
-
-外部参照の現在値と過去値を`externalRefs`へ保持する。外部参照を差し替えるとき、旧参照を削除せず`superseded`として残す。正本の変更には、短い監査記録と変更時刻を残す。取得時刻と判断時刻を同一視してはならない。LLMの長い推論本文を保存してはならない。
-
-この原則は、公開データの再検証と、保守判断の追跡可能性を守る。
-
-### III. 誤同定を避ける
-
-WAM、OpenStreetMap (OSM)、検索入力座標の順で代表点を採用する。OSMの自動同定には型付きID、QID、名称、距離、既存current参照の独立した制約を適用する。曖昧な候補を自動採用してはならず、人手確認へ送る。外部ソースから消えたことだけを理由にPlaceを削除してはならない。閉鎖または非公開のPlaceを再同定対象へ含めてはならない。
-
-この原則は、誤案内と意図しない削除を最小化する。
-
-### IV. 検証を変更の完了条件にする
-
-変更前に対象範囲と既存状態を確認する。実装変更には、再現可能なテストまたは検証ケースを伴わせる。変更後に全tests、`python3 -m src.facility_data validate .`、必要な決定的build、`git diff --check`を実行する。失敗した検証を成功として報告してはならない。
-
-この原則は、データ・コード・生成物の不整合を早期に検出する。
-
-### V. 公開範囲とライセンスを守る
-
-公開GeoJSONには、公開対象Placeの利用に必要な画像、OSM属性、WAM属性、出典帰属だけを含める。監査記録、外部参照履歴、内部判断情報、非公開Placeを公開物へ含めてはならない。取得データの版、取得時刻、SHA-256、ライセンス、帰属、加工内容を記録する。認証情報と不要な個人情報をrepositoryへ保存してはならない。
-
-この原則は、利用者への説明責任と、意図しない情報公開の防止を両立する。
-
-## Data and publication constraints
-
-- `data/registry.json`だけをPlace正本として編集する。
-- `dist/public/places.geojson`は`visibility.status == "public"`のPlaceだけから生成する。
-- WAMの取込対象は保守仕様で定義した相談支援サービスに限定する。
-- OSM取得は地域範囲と50メートル距離条件を守り、施設ごとのN+1問い合わせを行わない。
-- 空のsnapshotを削除指示として扱わない。
-- `responseRetained=false`の外部応答本文または生成diffを追跡しない。
-
 ## Development workflow
 
-1. `main`を最新化し、作業branchを作成する。
-2. 既存の仕様、実装、workflow、生成物、testsを確認する。
-3. 仕様を`specs/`へ作成し、必要ならclarify、plan、tasksの順に進める。
-4. 小さなTDD単位で実装し、担当者と独立したレビューを行う。
-5. 全tests、repository validator、決定的build、`git diff --check`を実行する。
-6. 差分と生成物を確認してcommitし、feature branchへpushする。
-7. push後にremote SHAと対象CI workflowを確認する。
+### Dev
+
+- TDD（Test-Driven Development）で実装する。
+- 実装をサブエージェントへ委任する。
+- 各テスト実装タスク群の最後に、テスト実装をレビューするタスクを必ず設ける。
+- テスト実装レビューを、テスト実装担当とは別のサブエージェントへ委任する。
+- 親エージェントは、taskの進行管理と受け入れ基準の管理を担当する。
+- 親エージェントは、サブエージェントの報告だけでtaskを完了扱いにせず、現在の差分と検証結果を確認する。
+- 実装変更では、RED、期待した失敗、最小のGREEN、回帰検証の順で進める。
+
+### 禁止
+
+- 後方互換性を目的とした実装を追加してはならない。KISS原則を優先し、旧実装を温存する新しいフォールバックを作ってはならない。
+- 本プロジェクトは個人の私財で保守する小規模な非公式DBである。権威ある行政システムとしての完全な互換性保証を範囲に含めてはならない。
+- 既存設計を置き換えるとき、仕様と現行実装を確認したうえで、不要な旧経路を破壊的に削除する。複雑性を増やす保険的な二重実装を残してはならない。
+
+### 検証スコープ方針
+
+静的契約テストは、現行production codeの使用実態に基づく有限の文法を対象とする。テスト、fixture、コメント、履歴資料を除くproduction codeに、非典型またはarbitraryな記述方式が一件も存在しない場合、その記法を当該テストのスコープ外とする。仮想的な使用例だけを理由に違反を追加してはならない。
+
+ただし、次の条件を満たさなければならない。
+
+- 除外する記法ごとに、production codeを事前に一括検索し、使用件数0を記録する。
+- 除外した記法と検索範囲を、`spec.md`、`plan.md`、`tasks.md`またはレビュー記録へ明記する。
+- 解析不能な記法を、現行production codeに実際の使用箇所がある状態で黙って通過させてはならない。その場合はfail-closedの違反、または明示的な契約追加として扱う。
+- 後続変更で使用箇所が追加された場合、既存テストのスコープ外判断を再利用してはならない。使用箇所を含む新しいRED、レビュー、実装の作業単位で再評価する。
+
+この方針は、実在しない使用例に対する過剰な検査拡張を防ぎつつ、実際のproduction usageに対する検出漏れを許可しない。
 
 ## Governance
 
-この憲章は、仕様、実装、workflow、tests、レビューの判断基準を定める。変更者は、憲章へ反する複雑さ、公開範囲の拡大、検証ゲートの省略を導入してはならない。例外が必要な場合、理由、影響範囲、移行方法、検証方法を同じ変更で記録する。
+この憲章は、仕様、実装、workflow、tests、レビューの判断基準を定める。作業者は、憲章へ反する複雑さ、旧経路の温存、TDDまたはレビューの省略を導入してはならない。例外が必要な場合、理由、影響範囲、移行方法、検証方法を同じ変更で記録する。
 
-憲章を変更するとき、変更理由とSync Impact Reportを本文冒頭へ記録する。原則の追加または意味の拡張はMINOR、原則の削除または互換性を壊す再定義はMAJOR、文言の明確化はPATCHとしてsemantic versioningに従いversionを更新する。作業者は変更後に関連するspec、tests、workflow、文書を確認する。
+憲章を変更するとき、変更理由とSync Impact Reportを本文冒頭へ記録する。原則の追加、削除、または意味の互換性を壊す再定義はMAJOR、原則や運用規則の追加または意味の拡張はMINOR、文言の明確化はPATCHとしてsemantic versioningに従いversionを更新する。作業者は変更後に関連するspec、tests、workflow、文書を確認する。
 
-**Version**: 1.0.0 | **Ratified**: 2026-08-28 | **Last Amended**: 2026-08-28
+**Version**: 2.0.0 | **Ratified**: 2026-08-28 | **Last Amended**: 2026-08-28
