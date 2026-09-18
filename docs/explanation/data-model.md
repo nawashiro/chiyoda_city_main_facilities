@@ -1,59 +1,92 @@
+edit only `data/places.jsonld`; do not edit `site/places.jsonld`, imports, snapshots, or generated distribution files.
+
 # データモデル
 
-このrepositoryは、施設データを次の層に分けます。
+`data/places.jsonld`は、公開Placeを記録するJSON-LD 1.1の正本です。編集対象はこのファイルだけです。
+属性の完全な一覧と値の形式は、[属性リファレンス](../reference/attributes.md)を参照してください。
 
-- 検索入力: [`inputs/osm-search/human/202608.json`](../../inputs/osm-search/human/202608.json) などが、OSM候補を探すための名称、識別子、座標を保持します。
-- 取得スナップショット: [`imports/openstreetmap/normalized.json`](../../imports/openstreetmap/normalized.json) と [`imports/wam/normalized.json`](../../imports/wam/normalized.json) が、外部データの正規化結果を保持します。取得スナップショットは、取得元のrawデータと取得メタデータも保持します。
-- canonical JSON-LD: [`data/places.jsonld`](../../data/places.jsonld) が公開Placeの正本です。保守者はこのファイルを直接編集します。
-- Pagesのcurrent JSON-LD: [`site/places.jsonld`](../../site/places.jsonld) が、GitHub Pagesで配布する現在版です。これはcanonical JSON-LDと同じバイト列です。
-- Release snapshot: [`release-jsonld.yml`](../../.github/workflows/release-jsonld.yml) が、canonical JSON-LDを版付きのJSON-LDファイルとしてGitHub Releaseへ添付します。準備処理は [`prepare_release_jsonld.py`](../../scripts/prepare_release_jsonld.py) が担当します。
+## 安全な編集入口
 
-入力と取得スナップショットは判断の材料です。canonical JSON-LDだけが公開Placeの編集対象です。PagesとReleaseはcanonical JSON-LDから作る配布物です。
+次の4段階で1件を編集します。
 
-## canonical JSON-LDの構造
+1. **既存の`@id`を特定します。** 対象のUUIDを完全一致で検索します。
 
-`data/places.jsonld`は、JSON-LD 1.1の`@context`と`@graph`を持ちます。`@context`は、次の標準語彙を宣言します。
+   ```bash
+   grep -n -F '"@id": "urn:uuid:<既存のUUID>"' data/places.jsonld
+   ```
+
+   検索結果が0件または複数件なら停止します。
+2. **意図した値だけを変更します。** 対象recordの既存の`@id`を保持し、他のrecordと構造を変更しません。
+3. **差分を確認します。** 次のコマンドで、変更対象と内容を確認します。
+
+   ```bash
+   git diff --name-only
+   git diff -- data/places.jsonld
+   git diff --check
+   ```
+
+   `data/places.jsonld`以外のファイル、対象外のrecord、または意図しない差分があれば停止します。
+4. **検証を実行します。** 次のコマンドが失敗したら、公開せずに原因を直して再実行します。
+
+   ```bash
+   python3 -m src.fac_cli jsonld-validate data/places.jsonld
+   python3 -m src.facility_data validate .
+   ```
+
+## JSON-LDの詳細
+
+### 標準名前空間
+
+`@context`はJSON-LD 1.1を指定し、次の標準名前空間を使います。通常は`schema`と`geo`を宣言し、`rdfs:seeAlso`を収録する場合だけ`rdfs`を追加します。
+
+| 接頭辞 | 名前空間 | 用途 |
+|---|---|---|
+| `schema` | `https://schema.org/` | Placeと識別子 |
+| `geo` | `http://www.opengis.net/ont/geosparql#` | 地理フィーチャーとPoint |
+| `rdfs` | `http://www.w3.org/2000/01/rdf-schema#` | 明示された関連URI |
+
+各recordの`@type`は、`schema:Place`と`geo:Feature`を含みます。`@id`は既存の`urn:uuid:<UUID>`を保持し、生成、短縮、置換しません。
+
+### Place、位置、外部識別子
+
+最小構造は次のとおりです。
 
 ```json
 {
-  "@version": 1.1,
-  "schema": "https://schema.org/",
-  "geo": "http://www.opengis.net/ont/geosparql#",
-  "rdfs": "http://www.w3.org/2000/01/rdf-schema#"
+  "@id": "urn:uuid:<既存のUUID>",
+  "@type": ["schema:Place", "geo:Feature"],
+  "geo:hasGeometry": {
+    "geo:asGeoJSON": {
+      "@type": "geo:geoJSONLiteral",
+      "@value": "{\"type\":\"Point\",\"coordinates\":[139.75,35.69]}"
+    }
+  },
+  "schema:identifier": [
+    {
+      "@type": "schema:PropertyValue",
+      "schema:propertyID": "openstreetmap",
+      "schema:value": "node/123456"
+    }
+  ]
 }
 ```
 
-`@graph`の各recordは、次の構造を持ちます。
+`coordinates`は必ず`[経度, 緯度]`の順で、2つの数値を持ちます。`schema:identifier`は`schema:PropertyValue`の配列です。`schema:propertyID`にソース名を、`schema:value`にソース側のrecord IDをそのまま設定します。IDからURIや別の識別子を推測しません。
 
-- `@id`は、既存のUUIDを`urn:uuid:<uuid>`として表します。ドメイン名やリダイレクトに依存しない安定した施設識別子です。
-- `@type`は、`schema:Place`と`geo:Feature`を同時に持ちます。前者は施設を表し、後者は地理空間の対象であることを表します。
-- `geo:hasGeometry`の下に、GeoSPARQLの`geo:asGeoJSON`と`geo:geoJSONLiteral`を置きます。リテラルは経度、緯度の順のPoint座標を持ちます。
-- `schema:identifier`は、外部recordの識別子を配列で表します。各要素は`schema:PropertyValue`です。
+### `rdfs:seeAlso`
 
-`schema:PropertyValue`は、`schema:propertyID`にソース識別子を、`schema:value`にソース側のrecord IDを設定します。たとえば、OSMの`node/…`やWAMのrecord IDを、施設の内部IDと混同せずに保持します。
+`rdfs:seeAlso`は、入力に明示された解決可能なURIがある場合だけ収録します。record ID、ソース名、関連情報からURIを推測または生成しません。明示されたURIがなければ、この属性を省略します。
 
-## 関連リンクの扱い
+### 収録しない情報
 
-`rdfs:seeAlso`は、ソース入力に明示された解決可能なURIがある場合だけ使う任意の関連リンクです。record IDからURIを推測または生成しません。明示的なURIがない外部recordは、`schema:PropertyValue`だけで表します。
+公開recordには、識別子、型、Point、外部識別子、明示された関連URIだけを収録します。次の情報を追加しません。
 
-この方針は、自動照合の結果を施設と外部recordの同一性として断定しないために採用します。現在の公開recordに関連リンクがない場合も、空のリンクを追加しません。
+- `audit`、`history`、`timestamps`、`votes`、`voteLog`などの運用情報
+- `phone`、`images`、`rights`などの個人情報または補助情報
+- `categoryIds`などのプロジェクト固有の分類
 
-## 公開recordから除く情報
+## 検証と公開を分ける
 
-公開Placeは、識別子、型、Point、外部識別子、必要に応じた関連リンクだけを保持します。次の情報は公開recordへ入れません。
+`jsonld-validate`は、JSON-LDの構文、識別子、型、Point、外部識別子を検証します。検証コマンドはファイルを確認するだけで、PagesやReleaseを公開・更新しません。検証処理の実装は[`src/facility_data.py`](../../src/facility_data.py)で確認できます。
 
-- `audit`、`history`、変更・参照の履歴、投票ログ（`voteLog`）などの運用情報
-- `town`（町名）、`phone`（電話番号）、`images`（画像）
-- 独自の`categoryIds`
-
-Gitのcommit、Pull Request、Release snapshotが変更の履歴を保持します。公開JSON-LDへ監査用の履歴を複製せず、Gitを履歴の正本として扱います。
-
-## 配布と検証
-
-GitHub PagesのDataset landing pageは、[current JSON-LD](https://nawashiro.github.io/chiyoda_city_main_facilities/places.jsonld)への取得先を案内します。landing page本体は [`site/index.html`](../../site/index.html) です。Release snapshotは、特定の版を引用するための不変な取得単位です。
-
-canonical JSON-LDの構文、識別子、Point、外部識別子は [`src/facility_data.py`](../../src/facility_data.py) の検証処理で確認します。編集後は、次のコマンドでcanonical JSON-LDを検証してからPagesとReleaseへ配布します。
-
-```bash
-python3 -m src.fac_cli jsonld-validate data/places.jsonld
-```
+レビューとmergeが完了した後、GitHub Pagesは[current JSON-LD](https://nawashiro.github.io/chiyoda_city_main_facilities/places.jsonld)を配布します。`site/places.jsonld`は配布用出力です。[Release workflow](../../.github/workflows/release-jsonld.yml)は、別の公開段階で版固定ファイルを作成し、[GitHub Releases](https://github.com/nawashiro/chiyoda_city_main_facilities/releases)へ添付します。

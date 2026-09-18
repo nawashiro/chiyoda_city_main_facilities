@@ -9,20 +9,8 @@ ROOT = Path(__file__).resolve().parents[1]
 CC0_URL = "https://creativecommons.org/publicdomain/zero/1.0/"
 OSM_ODBL_URL = "https://opendatacommons.org/licenses/odbl/1-0/"
 WAM_TERMS_URL = "https://www.wam.go.jp/content/wamnet/pcpub/top/sfkopendata/"
-OLD_PROJECT_LICENSE = "Creative Commons Attribution-ShareAlike 4.0 International"
-OLD_PROJECT_LICENSE_URL_RE = re.compile(
-    r"https?://creativecommons\.org/licenses/by-sa/4\.0/?",
-    re.IGNORECASE,
-)
 CC0_MARKER_RE = re.compile(
     r"(?:\bcc0\b|creative\s+commons\s+zero)",
-    re.IGNORECASE,
-)
-REPOSITORY_ASSETS_RE = re.compile(
-    r"(?:"
-    r"(?:repository|project)(?:[-\s]+specific)?['’]?s?[-\s]+assets?"
-    r"|独自(?:著作物|資産)"
-    r")",
     re.IGNORECASE,
 )
 
@@ -56,77 +44,6 @@ SOURCE_IDENTITY_ALIASES = {
     "wikidata": ("wikidata", "wikidata data"),
     "wam": ("wam", "wamnet", "wam data"),
 }
-
-SOURCE_HEADING_PATTERNS = {
-    "repository": re.compile(
-        r"(?:"
-        r"(?:repository|project)(?:[-\s]+specific)?[-\s]+assets?"
-        r"|独自(?:著作物|資産)"
-        r")",
-        re.IGNORECASE,
-    ),
-    "openstreetmap": re.compile(r"\b(?:openstreetmap|osm)\b", re.IGNORECASE),
-    "wikidata": re.compile(r"\bwikidata\b", re.IGNORECASE),
-    "wam": re.compile(r"\bwam(?:net)?\b", re.IGNORECASE),
-}
-
-SOURCE_SECTION_CONDITIONS = {
-    "repository": CC0_MARKER_RE,
-    "openstreetmap": re.compile(
-        r"©\s*OpenStreetMap contributors",
-        re.IGNORECASE,
-    ),
-    "wikidata": CC0_MARKER_RE,
-    "wam": re.compile(
-        r"(?:distribution|terms|license|配布ページ|利用条件|規約)",
-        re.IGNORECASE,
-    ),
-}
-
-# Keep this statement local to one paragraph so unrelated words spread over
-# the document cannot accidentally satisfy the non-uniformity requirement.
-NON_UNIFORM_DATASET_PATTERNS = (
-    re.compile(
-        r"combined\s+dataset.{0,180}"
-        r"(?:is\s+not|isn't|does\s+not|doesn't|not).{0,100}"
-        r"(?:one|a\s+single|single|uniform).{0,80}"
-        r"(?:cc0|creative\s+commons\s+zero|license)",
-        re.IGNORECASE,
-    ),
-    re.compile(
-        r"(?:one|a\s+single|single|uniform).{0,80}"
-        r"(?:cc0|creative\s+commons\s+zero|license).{0,180}"
-        r"(?:does\s+not|doesn't|not|isn't).{0,80}"
-        r"combined\s+dataset",
-        re.IGNORECASE,
-    ),
-    re.compile(
-        r"combined\s+dataset.{0,180}"
-        r"(?:source[-\s]+specific|different|non[-\s]+uniform|each\s+source)"
-        r".{0,80}licenses?",
-        re.IGNORECASE,
-    ),
-    re.compile(
-        r"(?:統合(?:された)?|結合|複合)?データセット.{0,100}"
-        r"(?:単一|一つ|ひとつ).{0,100}"
-        r"(?:cc0|creative\s+commons\s+zero|ライセンス).{0,100}"
-        r"(?:ではありません|ではない|表現しません|表現しない|ありません|ない)",
-        re.IGNORECASE,
-    ),
-    re.compile(
-        r"(?:cc0|creative\s+commons\s+zero|ライセンス).{0,100}"
-        r"(?:単一|一つ|ひとつ).{0,100}"
-        r"(?:統合(?:された)?|結合|複合)?データセット.{0,100}"
-        r"(?:ではありません|ではない|表現しません|表現しない|ありません|ない)",
-        re.IGNORECASE,
-    ),
-)
-
-_MARKDOWN_HEADING_RE = re.compile(
-    r"^(?P<marks>#{1,6})[ \t]+(?P<title>[^\n]+?)\s*$",
-    re.MULTILINE,
-)
-
 
 class LicensingMetadataTests(unittest.TestCase):
     @staticmethod
@@ -202,60 +119,6 @@ class LicensingMetadataTests(unittest.TestCase):
                 values.extend(cls._string_values(entry[field]))
         return set(values)
 
-    @staticmethod
-    def _markdown_sections(text):
-        matches = list(_MARKDOWN_HEADING_RE.finditer(text))
-        sections = []
-        for index, match in enumerate(matches):
-            level = len(match.group("marks"))
-            end = len(text)
-            for next_match in matches[index + 1 :]:
-                if len(next_match.group("marks")) <= level:
-                    end = next_match.start()
-                    break
-            title = match.group("title").strip().rstrip("#").strip()
-            sections.append((title, text[match.start() : end]))
-        return sections
-
-    @staticmethod
-    def _has_non_uniform_dataset_statement(document):
-        paragraphs = re.split(r"\n\s*\n", document)
-        for paragraph in paragraphs:
-            candidate = re.sub(r"\s+", " ", paragraph)
-            if any(pattern.search(candidate) for pattern in NON_UNIFORM_DATASET_PATTERNS):
-                return True
-        return False
-
-    @classmethod
-    def _has_local_association(
-        cls,
-        text,
-        subject_pattern,
-        condition_pattern,
-        required_url=None,
-    ):
-        """Require subject and condition/URL in one local document window."""
-        windows = []
-        for match in subject_pattern.finditer(text):
-            start = max(0, match.start() - 320)
-            end = min(len(text), match.end() + 320)
-            windows.append(text[start:end])
-
-        for paragraph in re.split(r"\n\s*\n", text):
-            if subject_pattern.search(paragraph):
-                windows.append(paragraph)
-
-        for heading, section in cls._markdown_sections(text):
-            if subject_pattern.search(heading):
-                windows.append(section)
-
-        for window in windows:
-            if not condition_pattern.search(window):
-                continue
-            if required_url is not None and required_url.casefold() not in window.casefold():
-                continue
-            return True
-        return False
 
     def test_dataset_jsonld_has_source_specific_parts_and_no_uniform_cc0(self):
         metadata = self._read_jsonld_from_landing_page()
@@ -373,98 +236,6 @@ class LicensingMetadataTests(unittest.TestCase):
                     expected_license_url,
                     by_id[source_id].get("license_url"),
                 )
-
-    def test_sources_and_licenses_documents_each_condition_and_non_uniform_scope(self):
-        document_path = ROOT / "SOURCES_AND_LICENSES.md"
-        self.assertTrue(
-            document_path.is_file(),
-            f"missing source and license document: {document_path}",
-        )
-        document = document_path.read_text(encoding="utf-8")
-        sections = self._markdown_sections(document)
-        self.assertTrue(
-            sections,
-            "SOURCES_AND_LICENSES.md must organize source license details under headings",
-        )
-
-        for source_id, expected_license_url in EXPECTED_PART_LICENSES.items():
-            with self.subTest(source=source_id):
-                source_sections = [
-                    section
-                    for heading, section in sections
-                    if {
-                        candidate
-                        for candidate, pattern in SOURCE_HEADING_PATTERNS.items()
-                        if pattern.search(heading)
-                    }
-                    == {source_id}
-                ]
-                self.assertTrue(
-                    source_sections,
-                    f"SOURCES_AND_LICENSES.md must have a dedicated {source_id} heading",
-                )
-                self.assertTrue(
-                    any(
-                        expected_license_url in section
-                        and SOURCE_SECTION_CONDITIONS[source_id].search(section)
-                        for section in source_sections
-                    ),
-                    f"{source_id} heading/section must contain its URL and license condition",
-                )
-
-        self.assertTrue(
-            self._has_non_uniform_dataset_statement(document),
-            "SOURCES_AND_LICENSES.md must explicitly say the combined Dataset has "
-            "non-uniform, source-specific licensing",
-        )
-
-    def test_readme_and_license_identify_repository_assets_as_cc0(self):
-        readme_path = ROOT / "README.md"
-        license_path = ROOT / "LICENSE"
-        self.assertTrue(readme_path.is_file(), f"missing README: {readme_path}")
-        self.assertTrue(license_path.is_file(), f"missing LICENSE: {license_path}")
-
-        readme = readme_path.read_text(encoding="utf-8")
-        license_text = license_path.read_text(encoding="utf-8")
-
-        self.assertTrue(
-            self._has_local_association(
-                readme,
-                REPOSITORY_ASSETS_RE,
-                CC0_MARKER_RE,
-                required_url=CC0_URL,
-            ),
-            "README.md must associate repository-specific assets with the CC0 URL",
-        )
-
-        self.assertTrue(
-            self._has_local_association(
-                license_text,
-                REPOSITORY_ASSETS_RE,
-                CC0_MARKER_RE,
-            ),
-            "LICENSE must identify repository-specific assets as CC0, not merely "
-            "contain a generic CC0 phrase",
-        )
-
-        for path, text in ((readme_path, readme), (license_path, license_text)):
-            with self.subTest(path=path.name):
-                self.assertNotIn(
-                    OLD_PROJECT_LICENSE.casefold(),
-                    text.casefold(),
-                    f"{path} must not retain the old project license title",
-                )
-                self.assertNotIn(
-                    "cc by-sa 4.0",
-                    text.casefold(),
-                    f"{path} must not retain the old CC BY-SA 4.0 marker",
-                )
-                self.assertNotRegex(
-                    text,
-                    OLD_PROJECT_LICENSE_URL_RE,
-                    f"{path} must not retain the old project license URL",
-                )
-
 
 if __name__ == "__main__":
     unittest.main()

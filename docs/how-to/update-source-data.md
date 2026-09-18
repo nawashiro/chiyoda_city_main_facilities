@@ -1,97 +1,90 @@
-# ソース更新とJSON-LD公開を保守する
+# 外部sourceを更新してJSON-LDを公開する
 
-このhow-toは、外部ソースの取得、保持済みスナップショットの再同定、公開JSON-LDの変更を安全に進める手順です。更新前後の確認には、[更新チェックリスト](source-update-checklist.md)を使います。
+このhow-toは、WAMまたはOpenStreetMap（OSM）の外部sourceを更新し、公開JSON-LDのPull Request（PR）を作る手順です。保持済みsnapshotの再同定と、確認済み事実の直接訂正も扱います。公開データの正本は[`data/places.jsonld`](../../data/places.jsonld)です。
 
-## 更新の原則
+## 範囲と前提
 
-`data/places.jsonld`は公開データの唯一のcanonical JSON-LDです。ソース更新workflowは取得スナップショットと同定結果を更新します。ソース更新workflowは、公開事実を推測してcanonical JSON-LDへ直接書き込みません。
+リポジトリのルートで、一人が一つのrouteだけを実行します。次の条件を一つでも満たさない場合は、作業を開始せずに停止します。
 
-次のファイルを同じ更新結果として扱います。
-
-- `imports/wam/raw.json`または`imports/openstreetmap/raw.json`: 取得したraw bytes
-- `imports/wam/retrieval.json`または`imports/openstreetmap/retrieval.json`: 取得日時と取得版
-- `imports/*/normalized.json`: 検証済みの正規化結果
-- `reports/`: 同定候補と更新結果
-
-新規取得では、rawと`retrieval.json`を同じartifactから取り込みます。`rawSha256`、`rawVersion`、`retrievedAt`を手で書き換えません。raw bytesを変更した場合は、同じ取得を再実行してhash metadataを作り直します。
-
-再同定では、保持済みraw bytesと`retrieval.json`を変更しません。workflowが`rawSha256`と`rawVersion`を検証してから、現在の検索入力に対する正規化結果だけを再計算します。
-
-## GitHub Actionsで更新する
-
-GitHubの`Actions`タブで、対象branchからworkflowを実行します。各workflowは更新後にcanonical JSON-LDを検証し、unit testを実行します。artifactを取り込む前に、候補、件数、UUID、raw metadataの差分を確認します。
-
-### WAMの新しい公開版を取得する
-
-[update-wam.yml](../../.github/workflows/update-wam.yml)は、指定したWAM公開版を取得します。
-
-1. `release`へ`YYYYMM`形式の公開版を入力します。
-2. workflowが公式archiveを取得し、raw、取得metadata、正規化結果を同じartifactへ保存します。
-3. workflowが`python3 -m src.facility_data validate .`、unit test、canonical JSON-LDのbyte比較を実行します。
-4. artifact名`wam-update-<YYYYMM>`を取得します。
-5. 差分を確認して、保守branchへcommitし、Pull Requestを作成します。
-
-WAM artifactの保存期間は14日です。workflowは自動でPull Requestを作成しません。保存期間内にartifactを確認し、必要な差分だけをcommitします。
-
-### OpenStreetMapを取得する
-
-[update-osm.yml](../../.github/workflows/update-osm.yml)は、保持対象IDと検索入力を使ってOpenStreetMapスナップショットを取得します。
-
-1. repository secretへ`LLM_API_KEY`を設定します。
-2. repository variableへ`LLM_MODEL`を設定します。
-3. OpenAI互換endpointを使う場合だけ`LLM_BASE_URL`を設定します。
-4. workflowを実行し、raw、`retrieval.json`、hash metadata、候補reportを確認します。
-5. 未解決候補がなければ、workflowが更新用Pull Requestを作成します。
-6. 未解決候補があれば、次の人手確認手順を完了します。
-
-OSM artifactの保存期間は30日です。候補reportの`reportSha256`は、確認したartifactとの対応を示します。hashが一致しないartifactやreportを適用しません。
-
-### OSM候補を人手で確認する
-
-未解決候補の人手判断は、コミット済みYAMLとPull Requestに残します。Issue本文の候補を直接編集して、公開データへ反映しません。
-
-1. workflowが作成したレビュー用Pull Requestを開きます。
-2. `reports/osm-review-needed.yaml`を編集します。
-3. 各検索IDで採用候補を一つだけ`true`にします。
-4. 候補がない検索IDでは、候補なしを一つだけ`true`にします。
-5. `reportSha256`、検索ID、候補ID、施設名を変更せずにYAMLをcommitします。
-6. YAMLをcommitしたレビュー用Pull Requestを確認します。
-7. 対応するIssueで適用チェックを入れます。
-
-[apply-osm-review.yml](../../.github/workflows/apply-osm-review.yml)は、commit済みYAMLと元のartifactを照合します。照合に成功すると、workflowが選択結果を適用したデータPull Requestを作成します。保守者はそのPull Requestで、raw、取得metadata、hash metadata、canonical JSON-LD、test結果を確認してmergeします。
-
-### 保持済みスナップショットを再同定する
-
-検索入力をcommitした後、[reidentify-sources.yml](../../.github/workflows/reidentify-sources.yml)を同じbranchで実行します。このworkflowは外部ソースを再取得しません。
-
-1. workflowがWAMとOpenStreetMapのraw bytesを`retrieval.json`と照合します。
-2. workflowが`rawSha256`と`rawVersion`を検証します。
-3. workflowが変更された検索入力だけを再同定します。
-4. workflowが保持済みraw、取得日時、取得版、hash metadataを保持します。
-5. OSMの未解決候補があれば、コミット済み`reports/osm-review-needed.yaml`とPull Requestで確認します。
-6. artifactとPull Requestの差分を確認してmergeします。
-
-再同定artifactの保存期間は30日です。新しい外部データが必要な場合は、再同定ではなく`update-wam.yml`または`update-osm.yml`を実行します。
-
-## artifactを安全に取り込む
-
-Actions runから、workflowが生成したartifactをそのまま取得します。
+1. `git status --short --untracked-files=all`が空で、作業ツリーがcleanです。
+2. 対象branchへpushし、GitHub Actionsを実行し、PRを作る権限があります。
+3. `python3 --version`がPython 3.13です。
+4. WAM、OSM、reidentify、factual correctionから一つだけ選びます。
+5. OSMでは、管理者が設定した`LLM_API_KEY` secretと`LLM_MODEL` variableを使えます。
 
 ```bash
-gh run download <RUN_ID> --name <ARTIFACT_NAME> --dir /tmp/chiyoda-source-update
-cp -a /tmp/chiyoda-source-update/. .
-git diff -- imports inputs reports data/places.jsonld
+git rev-parse --show-toplevel
+git status --short --untracked-files=all
+python3 --version
 ```
 
-新規取得では、raw、`retrieval.json`、正規化結果、reportを一組で取り込みます。再同定では、rawと`retrieval.json`の差分を許可しません。hash不一致、取得版不一致、意図しないUUID変更、意図しないPlace削除を検出したら、commitせずにworkflow結果を破棄します。
+secret、token、Authorization header、個人情報をログ、artifact、YAML、PR本文へ書きません。secretの値が不明または未設定なら、値を推測せずに管理者へ連絡します。
 
-## 公開事実を変更する
+## 一本道の手順
 
-公開事実を変更するときだけ、[data/places.jsonld](../../data/places.jsonld)を直接編集します。ソース更新workflowで公開事実の変更を代用しません。既存Placeの`@id`を保持し、`@context`、`@graph`、型、geometry、外部識別子の構造を壊しません。
+### 1. routeを一つ選ぶ
 
-直接編集では、raw、`retrieval.json`、normalized結果、候補reportを変更しません。公開recordへ運用履歴、投票記録、取得metadataを追加しません。公開事実の変更理由は、commit messageとPull Request本文へ記録します。
+| route | 選ぶ条件 | 次に使うもの | 許可された変更 |
+|---|---|---|---|
+| WAM | 新しいWAM公開版を取得する | [Update WAM data workflow](../../.github/workflows/update-wam.yml) | source snapshotと対応するreport・input artifact |
+| OSM | 新しいOSM snapshotを取得する | [Update OpenStreetMap data workflow](../../.github/workflows/update-osm.yml) | source snapshotと対応するreport・input artifact。人手reviewは`reports/osm-review-needed.yaml`をcommitし、review PRで確認 |
+| reidentify | 検索入力だけを変更し、外部dataを再取得しない | [Re-identify retained source snapshots workflow](../../.github/workflows/reidentify-sources.yml) | 検索入力とreport。raw bytesと`retrieval.json`は変更しない |
+| factual correction | 出典を確認した公開事実だけを訂正する | [Placeを直接保守する](maintain-a-place.md) | 通常のdata PRでcanonical JSON-LD（`data/places.jsonld`）だけを変更 |
 
-変更後は、次の順番で検証します。
+詳細な確認は[更新チェックリスト](source-update-checklist.md)を使います。
+
+新しい外部dataが必要なら、reidentifyを選びません。検索入力を変更した場合は、変更をcommitしてからreidentifyを実行します。一つのPRで複数routeを混ぜません。
+
+### 2. routeを実行する
+
+- **WAM**: Actionsでworkflowを開き、`Run workflow`を選び、`release`へ対象公開版を`YYYYMM`で入力します。
+- **OSM**: Actionsからworkflowを実行します。secretの値を入力欄やログへ貼りません。
+- **reidentify**: 検索入力をcommitしたbranchでworkflowを実行します。workflowは外部sourceを再取得しません。
+- **factual correction**: workflowを実行せず、[Placeを直接保守する](maintain-a-place.md)に従って`data/places.jsonld`だけを編集します。
+
+### 3. 対象run、artifact、commitを照合する
+
+Actionsの対象workflowから対象runを開き、branch、結論、run URL、`Summary`の`Artifacts`欄を確認します。run IDはrun URLの`/actions/runs/`の後ろの数値です。artifact名は`Summary`に表示された名前をそのまま使います。
+
+artifact名の規則は次のとおりです。別runの名前を使わず、表示名と一致させます。
+
+- WAM: `wam-update-` + 入力した`release`
+- OSM: `osm-update-` + run ID
+- reidentify: `reidentify-update-` + run ID
+
+WAM、OSM、reidentifyでは、確認した実値を次の変数へ設定してからartifactを取得します。
+
+```bash
+export RUN_ID='Actionsで確認した対象runの数値'
+export ARTIFACT_NAME='対象runのSummaryで確認したartifact名'
+rm -rf /tmp/chiyoda-source-update
+mkdir -p /tmp/chiyoda-source-update
+gh run download "$RUN_ID" --name "$ARTIFACT_NAME" --dir /tmp/chiyoda-source-update
+cp -a /tmp/chiyoda-source-update/. .
+git status --short --untracked-files=all
+git diff -- imports inputs reports data/places.jsonld
+git diff --stat
+```
+
+artifact取得後に予期しないファイルが表示されたら、artifactを破棄して停止します。
+
+workflowが作ったdata PR、review PR、YAML commitも、同じrunとartifactに対応するものだけを確認します。Issue番号や識別子を推測しません。factual correctionではartifactを取得せず、対象commitの`data/places.jsonld`差分を確認します。
+
+### 4. 許可されたreview経路だけを適用する
+
+raw bytes、`retrieval.json`、`rawSha256`、`rawVersion`を手で変更しません。raw bytesを更新する場合は、対応するworkflowを再実行します。reidentifyではraw bytesと`retrieval.json`を実行前後で同一に保ちます。
+
+- **WAM**: 同じartifactのraw、metadata、normalized結果、report、canonical JSON-LDを一組として確認し、意図した生成差分だけをcommitします。
+- **OSMで未解決候補がない場合**: workflowが作ったdata PRだけを確認します。候補を手で追加しません。
+- **OSMで未解決候補がある場合**: workflowが作ったreview PRで`reports/osm-review-needed.yaml`だけを編集します。各検索IDで候補または候補なしを一つだけ`true`にします。`reportSha256`、検索ID、候補ID、施設名、他の値を変更せずにYAMLをcommitします。review PRを確認してから対応するIssueの適用チェックを入れます。[Apply OSM human review workflow](../../.github/workflows/apply-osm-review.yml)が元artifactを照合してdata PRを作ります。
+- **reidentifyでOSM候補が未解決の場合**: OSMと同じYAML commitとreview PRの経路を使います。推測で適用しません。
+- **factual correction**: [Placeを直接保守する](maintain-a-place.md)に従い、確認済みの事実だけを`data/places.jsonld`へ変更します。既存の`urn:uuid:`とgeometryを保持し、source snapshotを変更しません。
+
+未解決の外部識別子を推測、生成、別候補への置換で解決しません。OSMの人手判断は、commit済みYAMLとreview PRに残します。Issue本文の候補を直接編集して公開dataへ反映しません。
+
+### 5. 検証する
+
+PRを作る前に、リポジトリのルートで次のコマンドを順番に実行します。
 
 ```bash
 python3 -m src.fac_cli jsonld-validate data/places.jsonld
@@ -101,13 +94,44 @@ git diff --check
 git diff --stat
 ```
 
-[validate.yml](../../.github/workflows/validate.yml)と同じ検証が成功したことを確認してから、Pull Requestを作成します。
+canonical JSON-LDのbyte再現性を確認します。
 
-## 現在の公開データを取得する
+```bash
+cp data/places.jsonld /tmp/places.jsonld
+python3 -m src.facility_data build .
+python3 -m src.fac_cli jsonld-validate data/places.jsonld
+cmp /tmp/places.jsonld data/places.jsonld
+```
 
-### GitHub Pagesのcurrent JSON-LD
+`cmp`が失敗した場合は、意図しない再生成を確認します。field、hash、source条件の詳細は[更新チェックリスト](source-update-checklist.md)、コマンドの詳細は[CLIリファレンス](../reference/cli.md)と[属性リファレンス](../reference/attributes.md)を参照します。[Validate data workflow](../../.github/workflows/validate.yml)も対象commitで成功させます。
 
-[GitHub PagesのDatasetページ](https://nawashiro.github.io/chiyoda_city_main_facilities/)は、現在の配布物と形式を示します。current JSON-LDは[Pagesのplaces.jsonld](https://nawashiro.github.io/chiyoda_city_main_facilities/places.jsonld)から取得します。repository内の[Pages用places.jsonld](../../site/places.jsonld)は、canonical JSON-LDとbyte-identicalです。
+### 6. commitしてPRを作る
+
+PRを作る前に、次のコマンドを再実行します。
+
+```bash
+git status --short --untracked-files=all
+```
+
+選んだrouteで予期しないファイルが表示されたら、commitせずに停止します。
+
+`git diff --name-only`で差分が選んだrouteの許可対象だけであることを確認します。PR本文へ、route、source releaseまたは検索入力、対象Actions run URL、正確なartifact名、review PRまたはIssueのリンク、検証結果を記録します。secret、token、個人情報、推測したIssue番号を記録しません。
+
+OSM人手reviewでは、YAMLをcommitしたreview PRと、workflowが作ったdata PRの両方を確認します。すべての検証とPR checksが成功した後だけ、保守者がmergeします。
+
+## 停止条件と公開先
+
+次のいずれかに該当したら、結果を破棄して停止します。
+
+- 作業ツリーがcleanでない、権限がない、またはrouteを一つに決められない。
+- 対象runが失敗、未完了、branch違い、またはartifact名が一致しない。
+- artifact、review PR、YAML、data PRの対応関係を確認できない。
+- raw bytes、`retrieval.json`、hash、versionに意図しない差分がある。
+- 未解決識別子を出典なしで確定する必要がある。
+- secretがログ、artifact、YAML、PR本文へ出た。
+- `jsonld-validate`、`validate`、unit test、byte比較、`git diff --check`、PR checksのいずれかが失敗した。
+
+merge後のcurrent配布物は[GitHub PagesのDatasetページ](https://nawashiro.github.io/chiyoda_city_main_facilities/)と[current JSON-LD](https://nawashiro.github.io/chiyoda_city_main_facilities/places.jsonld)で確認します。
 
 ```bash
 curl -fL 'https://nawashiro.github.io/chiyoda_city_main_facilities/places.jsonld' \
@@ -115,24 +139,12 @@ curl -fL 'https://nawashiro.github.io/chiyoda_city_main_facilities/places.jsonld
 python3 -m src.fac_cli jsonld-validate /tmp/places.jsonld
 ```
 
-### GitHub Releaseの版固定snapshot
-
-[release-jsonld.yml](../../.github/workflows/release-jsonld.yml)は、公開されたRelease tagでcanonical JSON-LDを検証します。workflowはcanonical bytesを`places-<TAG>.jsonld`として保存し、GitHub Releaseへ添付します。手動実行はdry-runとしてartifactだけを作成し、Releaseへ添付しません。
-
-版固定snapshotは[GitHub Releases](https://github.com/nawashiro/chiyoda_city_main_facilities/releases)から対象tagを選んで取得します。
+版固定の配布物は[GitHub Releases](https://github.com/nawashiro/chiyoda_city_main_facilities/releases)からtagを選びます。[release-jsonld.yml](../../.github/workflows/release-jsonld.yml)の詳細と、次の取得コマンドを参照します。
 
 ```bash
-TAG=<release-tag>
+TAG='GitHub Releasesで選んだ対象tag'
 gh release download "$TAG" \
   --repo nawashiro/chiyoda_city_main_facilities \
   --pattern "places-${TAG}.jsonld"
 python3 -m src.fac_cli jsonld-validate "places-${TAG}.jsonld"
 ```
-
-current配布物にはPages URLを使います。再現可能な引用や検証には、GitHub Releaseの版固定snapshotを使います。
-
-## JSON-LDだけへの破壊的変更
-
-公開配布形式はJSON-LDだけです。以前の公開形式、URL、ファイル名、属性を前提にする利用者は、Pagesの`places.jsonld`またはRelease assetへ移行します。以前の形式との並行配布や自動変換を行いません。
-
-利用者は`application/ld+json`として取得し、`@graph`内の`schema:Place`と`geo:Feature`を処理します。既存のPlaceを追跡する利用者は、`urn:uuid:`の`@id`を保存します。破壊的変更を含む更新では、利用者向けの移行案内をPull RequestとRelease notesへ記録します。

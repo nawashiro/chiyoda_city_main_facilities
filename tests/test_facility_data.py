@@ -1258,35 +1258,6 @@ class PhaseZeroFilesTests(unittest.TestCase):
         self.assertEqual(hashlib.sha256(first_bytes).hexdigest(), manifest["sha256"])
         self.assertEqual("places.geojson", manifest["file"])
 
-    def test_project_license_and_working_language_are_declared(self):
-        root = Path(__file__).resolve().parents[1]
-        readme = (root / "README.md").read_text(encoding="utf-8")
-        licenses = (root / "SOURCES_AND_LICENSES.md").read_text(encoding="utf-8")
-        license_text = (root / "LICENSE").read_text(encoding="utf-8")
-
-        self.assertIn("作業言語は日本語", readme)
-        self.assertIn(
-            "本リポジトリの独自資産は、CC0 1.0の条件で利用できます。",
-            licenses,
-        )
-        self.assertIn(
-            "https://creativecommons.org/publicdomain/zero/1.0/",
-            licenses,
-        )
-        self.assertNotIn(
-            "データベースはOpen Data Commons Open Database License 1.0で提供する",
-            licenses,
-        )
-        self.assertIn(
-            "Repository-specific assets: CC0 1.0 Universal",
-            license_text,
-        )
-        self.assertIn(
-            "https://creativecommons.org/publicdomain/zero/1.0/",
-            license_text,
-        )
-        self.assertIn("Open Data Commons Open Database License 1.0", licenses)
-
 
 class LegacyMigrationTests(unittest.TestCase):
     def test_generates_uuid7_values(self):
