@@ -354,6 +354,19 @@ def build_jsonld_candidate(registry: dict[str, Any]) -> dict[str, Any]:
             {
                 "@id": f"urn:uuid:{place['id']}",
                 "@type": ["schema:Place", "geo:Feature"],
+                "geo:hasGeometry": {
+                    "geo:asGeoJSON": {
+                        "@value": json.dumps(
+                            {
+                                "type": "Point",
+                                "coordinates": place["geometry"]["coordinates"],
+                            },
+                            ensure_ascii=False,
+                            separators=(",", ":"),
+                        ),
+                        "@type": "geo:geoJSONLiteral",
+                    }
+                },
             }
             for place in registry.get("places", [])
         ],

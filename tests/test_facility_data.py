@@ -682,6 +682,33 @@ class JsonLdCandidateMigrationTests(unittest.TestCase):
                 self.assertIn("schema:Place", types)
                 self.assertIn("geo:Feature", types)
 
+    def test_jsonld_candidate_emits_geosparql_point_geometry_for_each_current_place(self):
+        root = Path(__file__).resolve().parents[1]
+        registry = json.loads(
+            (root / "tests/fixtures/registry.json").read_text(encoding="utf-8")
+        )
+
+        candidate = facility_data.build_jsonld_candidate(registry)
+        records_by_id = {record["@id"]: record for record in candidate["@graph"]}
+
+        for place in registry["places"]:
+            with self.subTest(place=place["id"]):
+                record = records_by_id[f"urn:uuid:{place['id']}"]
+                self.assertIn("geo:hasGeometry", record)
+                geometry = record["geo:hasGeometry"]
+                self.assertIsInstance(geometry, dict)
+                literal = geometry.get("geo:asGeoJSON")
+                self.assertIsInstance(literal, dict)
+                self.assertEqual("geo:geoJSONLiteral", literal.get("@type"))
+                self.assertIsInstance(literal.get("@value"), str)
+                self.assertEqual(
+                    {
+                        "type": "Point",
+                        "coordinates": place["geometry"]["coordinates"],
+                    },
+                    json.loads(literal["@value"]),
+                )
+
 
 class PhaseZeroFilesTests(unittest.TestCase):
     def test_schema_and_fixture_files_define_the_new_contract(self):
