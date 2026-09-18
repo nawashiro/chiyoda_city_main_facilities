@@ -77,6 +77,28 @@ GitHub Releaseは版固定snapshotを提供します。
 Zenodoは外部引用が必要になった時まで保留します。
 W3IDと独自ドメインは、URIのWeb解決が実際に必要になった時まで保留します。
 
+### Human review uses committed YAML and pull requests
+
+人手reviewはcommit済みYAMLだけを編集面にします。
+YAMLはcandidate reportのSHA-256を持ち、選択をreport内candidateへ制限します。
+PRはreviewの履歴と承認境界を提供します。
+
+Issue本文のcheckboxと候補payloadは採用しません。
+本文編集は入力形式を安定させず、旧parserの保守を増やすためです。
+
+### GeoJSON ends at migration cutover
+
+GeoJSONの公開、互換生成、manifest entryは移行時に終了します。
+current distributionとRelease snapshotはJSON-LDだけを提供します。
+
+一時的な並行配布は採用しません。
+二つの公開形式を保守すると、正本の移行目的に反するためです。
+
+### OpenSpec change replaces legacy maintenance policy
+
+`docs/reference/data-maintenance-spec.md`を削除します。
+このchangeのproposal、design、specs、tasksを移行の判断と実装順序の正本にします。
+
 ### Voters must be independent
 
 三者の設定を分けます。
@@ -91,6 +113,7 @@ API keyは公開データ、ログ、Release artifactへ書きません。
 - [非公開指定を見落とす] → `publish: false`を必須の明示指定とし、公開生成テストで検証します。
 - [WAMの住所が揺れる] → 住所を照合補助とし、無条件の正本値にしません。
 - [外部モデルが利用不能] → 照合を失敗として扱い、既存の公開関連リンクを推測で変更しません。
+- [GeoJSON利用者が即時移行できない] → breaking changeをREADME、landing page、Release notesで明示します。
 
 ## Migration Plan
 

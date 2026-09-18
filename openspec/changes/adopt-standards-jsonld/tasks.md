@@ -15,12 +15,14 @@
 - [ ] 2.3 WAMの複数サービスrecordを施設recordへ複製せず、関連情報として保持するテストを通す
 - [ ] 2.4 三者LLM設定を分離し、重複する正規化済み`(base_url, model)`を拒否するテストを通す
 - [ ] 2.5 公開JSON-LDにLLM投票ログを保存しないことを検証するテストを通す
+- [ ] 2.6 candidate reportのSHA-256 bindingと重複OSM割当拒否を維持したreview YAML/PR経路へ一本化し、Issue本文選択経路を削除するテストを通す
 
 ## 3. 更新経路の簡素化
 
 - [ ] 3.1 registry、audit、current/superseded参照履歴に依存する更新処理をJSON-LD中心へ置換し、更新統合テストを通す
 - [ ] 3.2 CLIと検証処理を新しい公開正本へ移し、旧独自スキーマへの書込みがないことを確認する
 - [ ] 3.3 旧registry、旧公開GeoJSON、不要な生成ロジックを削除し、repository validationを通す
+- [ ] 3.4 GeoJSON専用manifest entry、互換生成、workflow artifact、reproducibility比較を削除し、JSON-LDだけを比較するCIを検証する
 
 ## 4. 配布
 
@@ -28,6 +30,7 @@
 - [ ] 4.2 current JSON-LDを`DataDownload`として公開し、content URLとencoding formatを検証する
 - [ ] 4.3 GitHub Releaseへ版固定JSON-LD snapshotを添付するworkflowを追加し、dry-runまたはfixtureでartifactを検証する
 - [ ] 4.4 READMEとDiátaxis文書を移行後の正本、取得方法、互換性変更へ更新し、文書リンクを検証する
+- [ ] 4.5 旧保守規約を削除し、このOpenSpec changeを移行の正本として案内する文書を検証する
 
 ## 5. 統合検証と移行
 

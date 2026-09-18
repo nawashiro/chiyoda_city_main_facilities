@@ -34,7 +34,6 @@ git diff --check
 | ハウツー | [更新チェックリスト](docs/how-to/source-update-checklist.md) | 更新前後を確認する |
 | リファレンス | [CLI](docs/reference/cli.md) | `fac`の引数を確認する |
 | リファレンス | [属性](docs/reference/attributes.md) | 正本と公開GeoJSONの属性を確認する |
-| リファレンス | [保守仕様](docs/reference/data-maintenance-spec.md) | 実装済みのデータ契約を確認する |
 | リファレンス | [執筆規範](docs/reference/writing-style.md) | 文書を執筆・レビューする |
 | ハウツー | [Spec Kitを使って仕様を保守する](docs/how-to/use-specify.md) | 仕様駆動で変更を進める |
 | 説明 | [データモデル](docs/explanation/data-model.md) | 入力、正本、公開物の関係を理解する |

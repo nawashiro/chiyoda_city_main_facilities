@@ -28,3 +28,10 @@ distribution MUST `contentUrl`と`encodingFormat`を含みます。
 #### Scenario: User cites a release
 - **WHEN** 利用者が特定の公開版を取得します
 - **THEN** 利用者はその版に対応する固定JSON-LDを取得できます
+
+### Requirement: JSON-LD-only public distribution
+システム MUST GeoJSONを公開distribution、release snapshot、manifestから除外します。
+
+#### Scenario: Current public distribution is generated
+- **WHEN** システムがcurrent distributionを生成します
+- **THEN** 出力はJSON-LDだけを公開形式として含みます

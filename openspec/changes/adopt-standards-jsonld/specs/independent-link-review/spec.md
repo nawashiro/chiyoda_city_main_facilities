@@ -20,3 +20,11 @@
 #### Scenario: A link decision is published
 - **WHEN** 照合結果を公開データへ反映します
 - **THEN** JSON-LDには投票ログを含めません
+
+### Requirement: Committed review artifact
+システム SHALL 人手OSM reviewをcommit済みreview YAMLとPRで実施します。
+システム MUST Issue本文を候補選択の編集面として使いません。
+
+#### Scenario: Candidate requires human review
+- **WHEN** 自動照合がreviewを要求します
+- **THEN** システムはartifact-bound review YAMLをPRで提供します

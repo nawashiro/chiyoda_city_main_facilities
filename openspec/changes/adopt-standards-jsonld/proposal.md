@@ -24,6 +24,10 @@ Gitを変更履歴とし、関連先には同一性を断定しないリンク�
 - 投票ログを公開Placeデータへ保存しません。
 - GitHub PagesにDataset landing pageを置き、`schema:Dataset`と`DataDownload`で最新配布物を公開します。
 - GitHub Releaseに版固定JSON-LD snapshotを公開します。
+- 人手OSM reviewはcommit済みreview YAMLとPRだけで実施します。
+- Issue本文の候補checkboxと互換parserを廃止します。
+- GeoJSONの公開、互換生成、manifest entryを即時終了します。
+- 旧保守規約を削除し、このOpenSpec changeの成果物を移行の正本にします。
 - Zenodo DOI、W3ID、独自ドメインは今回の実装対象から除外します。
 
 ## Capabilities
