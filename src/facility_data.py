@@ -613,16 +613,41 @@ def _repository_documents(
         _read_json(path)
         for path in sorted((root / "inputs/osm-search").glob("**/*.json"))
     ]
+    canonical_path = root / "data/places.jsonld"
+    data_path = canonical_path if canonical_path.is_file() else root / "data/registry.json"
     return (
         search_documents,
-        _read_json(root / "data/registry.json"),
+        _read_json(data_path),
         _read_json(root / "config/sources.json"),
     )
 
 
+def _jsonld_place_index(document: dict[str, Any]) -> dict[str, dict[str, Any]]:
+    """Derive the small place shape needed by source-record validation."""
+    place_by_id: dict[str, dict[str, Any]] = {}
+    for record in document["@graph"]:
+        place_id = record["@id"].removeprefix("urn:uuid:")
+        point = json.loads(record["geo:hasGeometry"]["geo:asGeoJSON"]["@value"])
+        place_by_id[place_id] = {
+            "id": place_id,
+            "geometry": point,
+            "externalRefs": [
+                {
+                    "sourceId": identifier["schema:propertyID"],
+                    "recordId": identifier["schema:value"],
+                    "status": "current",
+                }
+                for identifier in record.get("schema:identifier", [])
+            ],
+        }
+    return place_by_id
+
+
 def validate_repository(root: str | Path) -> list[str]:
     """Validate all current source-of-truth repository documents."""
-    search_documents, registry, _ = _repository_documents(Path(root))
+    root = Path(root)
+    canonical_mode = (root / "data/places.jsonld").is_file()
+    search_documents, data_document, _ = _repository_documents(root)
     issues = []
     search_by_id: dict[str, dict[str, Any]] = {}
     for document in search_documents:
@@ -632,8 +657,19 @@ def validate_repository(root: str | Path) -> list[str]:
             if query_id in search_by_id:
                 issues.append(f"duplicate search id across files: {query_id}")
             search_by_id[query_id] = query
-    issues.extend(validate_registry(registry, search_by_id))
-    place_by_id = {str(place["id"]): place for place in registry.get("places", [])}
+    if canonical_mode:
+        try:
+            validate_jsonld_document(data_document)
+        except (TypeError, ValueError) as error:
+            issues.append(f"data/places.jsonld: {error}")
+            place_by_id: dict[str, dict[str, Any]] = {}
+        else:
+            place_by_id = _jsonld_place_index(data_document)
+    else:
+        issues.extend(validate_registry(data_document, search_by_id))
+        place_by_id = {
+            str(place["id"]): place for place in data_document.get("places", [])
+        }
     for source in ("wam", "openstreetmap"):
         relative = f"imports/{source}/normalized.json"
         path = Path(root) / relative
@@ -677,7 +713,10 @@ def validate_repository(root: str | Path) -> list[str]:
                 and disabled_place.get("lifecycle", {}).get("status") == "closed"
                 and disabled_place.get("visibility", {}).get("status") == "private"
             )
-            if not _is_uuid7(query_id) or (query_id not in search_by_id and not is_disabled):
+            if not _is_uuid7(query_id) or (
+                query_id not in search_by_id
+                and (not is_disabled or canonical_mode)
+            ):
                 issues.append(f"{prefix}: unknown or invalid queryId")
             elif query_id in seen_snapshot_ids:
                 issues.append(f"{prefix}: duplicate queryId")
@@ -730,11 +769,17 @@ def validate_repository(root: str | Path) -> list[str]:
                     issues.append(f"{prefix}: qid matchBasis requires qid")
                 if query_id in search_by_id:
                     try:
-                        _validate_osm_record_match(
-                            record,
-                            search_by_id[query_id],
-                            place_by_id.get(query_id),
-                        )
+                        place = place_by_id.get(query_id)
+                        if not (
+                            canonical_mode
+                            and record.get("matchBasis") == "source_record"
+                            and place is None
+                        ):
+                            _validate_osm_record_match(
+                                record,
+                                search_by_id[query_id],
+                                place,
+                            )
                     except (KeyError, TypeError, ValueError) as error:
                         issues.append(f"{prefix}: {error}")
     return issues
@@ -893,9 +938,15 @@ def _build_public_document(root: Path, registry: dict[str, Any]) -> dict[str, An
 
 
 def build_repository(root: str | Path) -> Path:
-    """Build the public GeoJSON from the canonical registry."""
+    """Build the public artifact, or validate the canonical JSON-LD in place."""
     root = Path(root)
+    canonical_path = root / "data/places.jsonld"
     _, registry, _ = _repository_documents(root)
+    if canonical_path.is_file():
+        issues = validate_repository(root)
+        if issues:
+            raise ValueError("; ".join(issues))
+        return canonical_path
     public = _build_public_document(root, registry)
     output = root / "dist/public/places.geojson"
     output.parent.mkdir(parents=True, exist_ok=True)
