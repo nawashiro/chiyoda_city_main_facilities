@@ -709,6 +709,110 @@ class JsonLdCandidateMigrationTests(unittest.TestCase):
                     json.loads(literal["@value"]),
                 )
 
+    def test_jsonld_candidate_excludes_internal_history_timestamps_and_vote_logs(self):
+        root = Path(__file__).resolve().parents[1]
+        registry = json.loads(
+            (root / "tests/fixtures/registry.json").read_text(encoding="utf-8")
+        )
+        place = registry["places"][0]
+        place["audit"] = [
+            {
+                "at": "2026-08-02T00:00:00Z",
+                "method": "human_inference",
+                "action": "created",
+                "target": "place/task-1.4-audit-marker",
+            }
+        ]
+        place["externalRefs"] = [
+            {
+                "sourceId": "openstreetmap",
+                "recordId": "node/internal-current",
+                "status": "current",
+                "firstConfirmedAt": "2026-07-29T00:00:00Z",
+                "lastConfirmedAt": "2026-07-30T00:00:00Z",
+                "supersededAt": None,
+                "basis": "language_model",
+            },
+            {
+                "sourceId": "openstreetmap",
+                "recordId": "way/internal-superseded",
+                "status": "superseded",
+                "firstConfirmedAt": "2026-07-27T00:00:00Z",
+                "lastConfirmedAt": "2026-07-28T00:00:00Z",
+                "supersededAt": "2026-07-31T00:00:00Z",
+                "basis": "human_review",
+            },
+        ]
+        place["llmVotes"] = [
+            {
+                "candidateId": "node/internal-vote",
+                "decision": "link",
+                "perspective": "visitor",
+                "record": {
+                    "recordId": "node/internal-vote",
+                    "updatedAt": "2026-08-01T00:00:00Z",
+                },
+            }
+        ]
+
+        candidate = facility_data.build_jsonld_candidate(registry)
+        internal_keys = {
+            "audit",
+            "externalRefs",
+            "geometrySource",
+            "confirmedAt",
+            "changedAt",
+            "firstConfirmedAt",
+            "lastConfirmedAt",
+            "supersededAt",
+            "updatedAt",
+            "at",
+            "method",
+            "action",
+            "target",
+            "llmVotes",
+            "voteLog",
+            "votes",
+            "candidateId",
+            "decision",
+            "perspective",
+            "record",
+        }
+
+        def nested_keys(value):
+            if isinstance(value, dict):
+                return set(value).union(*(nested_keys(item) for item in value.values()))
+            if isinstance(value, list):
+                return set().union(*(nested_keys(item) for item in value))
+            return set()
+
+        rendered_records = []
+        for record in candidate["@graph"]:
+            with self.subTest(record=record.get("@id")):
+                self.assertEqual(set(), internal_keys & nested_keys(record))
+                rendered_records.append(json.dumps(record, ensure_ascii=False))
+
+        rendered = " ".join(rendered_records)
+        for marker in (
+            "node/internal-current",
+            "way/internal-superseded",
+            "node/internal-vote",
+            "current",
+            "superseded",
+            "2026-07-29T00:00:00Z",
+            "2026-07-30T00:00:00Z",
+            "2026-07-31T00:00:00Z",
+            "2026-08-01T00:00:00Z",
+            "2026-07-28T00:00:00Z",
+            "2026-08-02T00:00:00Z",
+            "place/task-1.4-audit-marker",
+            "human_inference",
+            "created",
+            "language_model",
+            "human_review",
+        ):
+            self.assertNotIn(marker, rendered)
+
 
 class PhaseZeroFilesTests(unittest.TestCase):
     def test_schema_and_fixture_files_define_the_new_contract(self):
