@@ -19,6 +19,7 @@ from src.facility_data import (
     new_uuid7,
     source_refresh_due,
     validate_registry,
+    validate_jsonld_document,
     validate_search_document,
 )
 
@@ -548,6 +549,10 @@ def _remove_search_input(root: Path, query_id: str, at: str) -> None:
 def _main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(prog="fac", description="Maintain Chiyoda Place data")
     subparsers = parser.add_subparsers(dest="command", required=True)
+    jsonld_validate_parser = subparsers.add_parser(
+        "jsonld-validate", help="validate a direct JSON-LD document"
+    )
+    jsonld_validate_parser.add_argument("path")
     list_parser = subparsers.add_parser("ls", help="list canonical places")
     list_parser.add_argument("root", nargs="?", default=".")
     list_parser.add_argument("--town")
@@ -604,6 +609,9 @@ def _main(argv: list[str] | None = None) -> int:
     input_remove_parser.add_argument("query_id")
     input_remove_parser.add_argument("--at")
     args = parser.parse_args(argv)
+    if args.command == "jsonld-validate":
+        validate_jsonld_document(_read_json(Path(args.path)))
+        return 0
     if args.command == "ls":
         _print_places(
             Path(args.root),

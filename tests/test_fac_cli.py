@@ -714,5 +714,70 @@ class SearchInputCliTests(unittest.TestCase):
         self.assertTrue(error.getvalue().startswith("ERROR: "))
 
 
+class JsonLdValidationCliTests(unittest.TestCase):
+    @staticmethod
+    def _valid_document():
+        return {
+            "@context": {
+                "@version": 1.1,
+                "schema": "https://schema.org/",
+                "geo": "http://www.opengis.net/ont/geosparql#",
+            },
+            "@graph": [
+                {
+                    "@id": f"urn:uuid:{PLACE_ID}",
+                    "@type": ["schema:Place", "geo:Feature"],
+                    "geo:hasGeometry": {
+                        "geo:asGeoJSON": {
+                            "@value": '{"type":"Point","coordinates":[139.75,35.69]}',
+                            "@type": "geo:geoJSONLiteral",
+                        }
+                    },
+                }
+            ],
+        }
+
+    def test_jsonld_validate_accepts_direct_file_without_mutating_bytes(self):
+        with tempfile.TemporaryDirectory() as directory:
+            path = Path(directory) / "current.jsonld"
+            write_json(path, self._valid_document())
+            original = path.read_bytes()
+            output = StringIO()
+            error = StringIO()
+            with redirect_stdout(output), redirect_stderr(error):
+                result = main(["jsonld-validate", str(path)])
+            after = path.read_bytes()
+
+        self.assertEqual(0, result)
+        self.assertEqual(original, after)
+        self.assertEqual("", error.getvalue())
+
+    def test_jsonld_validate_rejects_legacy_audit_without_mutating_bytes(self):
+        document = self._valid_document()
+        document["@graph"][0]["audit"] = [
+            {
+                "at": "2026-08-02T00:00:00Z",
+                "method": "human_inference",
+                "action": "created",
+                "target": "place/legacy-audit",
+            }
+        ]
+        with tempfile.TemporaryDirectory() as directory:
+            path = Path(directory) / "invalid.jsonld"
+            write_json(path, document)
+            original = path.read_bytes()
+            output = StringIO()
+            error = StringIO()
+            with redirect_stdout(output), redirect_stderr(error):
+                result = main(["jsonld-validate", str(path)])
+            after = path.read_bytes()
+
+        self.assertEqual(1, result)
+        self.assertEqual(original, after)
+        self.assertEqual("", output.getvalue())
+        self.assertIn("JSON-LD", error.getvalue())
+        self.assertIn("audit", error.getvalue())
+
+
 if __name__ == "__main__":
     unittest.main()
