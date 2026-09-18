@@ -16,8 +16,8 @@
 
 ### Requirement: WAM service distinction
 システム MUST WAMのサービスrecordをPlaceの同一実体として扱いません。
-WAM由来の住所とサービス種別を公開する場合、施設とサービスの区別を維持します。
+システム MUST WAM由来の住所、サービス種別、電話番号を公開Placeへ出力しません。
 
 #### Scenario: Multiple WAM services relate to one facility
 - **WHEN** 一施設に複数のWAMサービスrecordがあります
-- **THEN** 出力は施設recordを複製せず関連情報として扱います
+- **THEN** 出力は施設recordを複製せず`rdfs:seeAlso`だけで関連情報を扱います

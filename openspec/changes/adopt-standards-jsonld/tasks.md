@@ -8,12 +8,13 @@
 - [ ] 1.4 公開Placeからaudit、参照履歴、更新時刻、投票ログを除き、非公開を検証するテストを通す
 - [ ] 1.5 検索入力の`publish: false`を公開除外として実装し、対象PlaceがJSON-LD distributionにないテストを通す
 - [ ] 1.6 公開Placeから町名、電話番号、OSMタグを除外し、town polygonの導出がないことを検証するテストを通す
+- [ ] 1.7 独自`categoryIds`をcanonical JSON-LDと公開distributionから削除し、出力に残らないテストを通す
 
 ## 2. 関連データと照合
 
 - [ ] 2.1 OSM、Wikidata、WAMの自動関連先を`rdfs:seeAlso`へ移し、強い同一性語彙を含まないテストを通す
-- [ ] 2.2 WAMの住所とサービス種別の標準語彙を、施設とサービスを混同しない条件で選定し、対応表とテストを追加する
-- [ ] 2.3 WAMの複数サービスrecordを施設recordへ複製せず、関連情報として保持するテストを通す
+- [ ] 2.2 WAMの公開Placeへの反映を`rdfs:seeAlso`だけに限定し、住所、サービス種別、電話番号が出力にないテストを通す
+- [ ] 2.3 WAMの複数サービスrecordを施設recordへ複製せず、関連リンクだけとして保持するテストを通す
 - [ ] 2.4 三者LLM設定を分離し、重複する正規化済み`(base_url, model)`を拒否するテストを通す
 - [ ] 2.5 公開JSON-LDにLLM投票ログを保存しないことを検証するテストを通す
 - [ ] 2.6 candidate reportのSHA-256 bindingと重複OSM割当拒否を維持したreview YAML/PR経路へ一本化し、Issue本文選択経路を削除するテストを通す
@@ -21,7 +22,7 @@
 ## 3. 更新経路の簡素化
 
 - [ ] 3.1 registry、audit、current/superseded参照履歴に依存する更新処理をJSON-LD中心へ置換し、更新統合テストを通す
-- [ ] 3.2 CLIと検証処理を新しい公開正本へ移し、旧独自スキーマへの書込みがないことを確認する
+- [ ] 3.2 canonical JSON-LDの直接編集を検証する最小CLIへ置換し、属性、参照、履歴を自動変更しないことを確認する
 - [ ] 3.3 旧registry、旧公開GeoJSON、不要な生成ロジックを削除し、repository validationを通す
 - [ ] 3.4 GeoJSON専用manifest entry、互換生成、workflow artifact、reproducibility比較を削除し、JSON-LDだけを比較するCIを検証する
 - [ ] 3.5 `src.retrieve_towns`、pinned town data、town update workflow、town由来のCLIとtestを削除し、町名導出経路がないことを検証する

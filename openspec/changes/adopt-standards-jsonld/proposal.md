@@ -18,7 +18,8 @@ Gitを変更履歴とし、関連先には同一性を断定しないリンク�
 - Point geometryをGeoSPARQLの`geo:hasGeometry`と`geo:asGeoJSON`で表現します。
 - OSM、Wikidata、WAMの自動関連先を`rdfs:seeAlso`で表現します。
 - `schema:sameAs`、SKOSのmatch関係、Place単位の`prov:wasDerivedFrom`を自動では出力しません。
-- WAM由来の住所とサービス種別を、施設とサービスを混同しない範囲で扱います。
+- 独自`categoryIds`を公開正本から削除します。
+- WAMの公開Placeへの反映は`rdfs:seeAlso`だけに限定します。
 - 営業時間の変換と公開は今回の対象から除外します。
 - 町名、電話番号、OSMタグの公開と導出は今回の対象から除外します。
 - 三者LLM照合では、正規化済み`(base_url, model)`が全員で重複しないことを必須にします。
@@ -29,6 +30,7 @@ Gitを変更履歴とし、関連先には同一性を断定しないリンク�
 - Issue本文の候補checkboxと互換parserを廃止します。
 - GeoJSONの公開、互換生成、manifest entryを即時終了します。
 - town polygonの取得、pinned data、町名の導出経路を削除します。
+- canonical JSON-LDを直接編集し、最小のvalidate CLIだけを残します。
 - 旧保守規約を削除し、このOpenSpec changeの成果物を移行の正本にします。
 - Zenodo DOI、W3ID、独自ドメインは今回の実装対象から除外します。
 

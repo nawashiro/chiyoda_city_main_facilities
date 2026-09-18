@@ -23,6 +23,7 @@ proposal.mdの背景と範囲を前提にします。
 - 独自オントロジー、独自URIドメイン、W3ID、DOIを導入しません。
 - 営業時間を変換または公開しません。
 - 町名、電話番号、OSMタグを公開または導出しません。
+- 独自`categoryIds`を公開または移行しません。
 - OSM RDFやWikidata RDFを取り込みません。
 - WAMを施設の同一性や正本として扱いません。
 
@@ -54,6 +55,9 @@ GeoSPARQLはgeometryの明確な標準表現を提供します。
 SKOS match関係は概念間の対応が必要な場合まで保留します。
 `prov:wasDerivedFrom`はPlaceではなくDataset全体の入力来歴だけに使います。
 
+WAMの公開Placeへの反映も`rdfs:seeAlso`だけにします。
+WAMの住所、サービス種別、電話番号を公開Placeへ移しません。
+
 ### History belongs to Git
 
 公開正本から`audit`、参照のcurrent/superseded履歴、changedAt、LLM投票ログを除きます。
@@ -69,6 +73,13 @@ SKOS match関係は概念間の対応が必要な場合まで保留します。
 
 JSONCのコメントは採用しません。
 JSON-LDと通常のJSON処理系はコメントを許容せず、専用parserが必要になるためです。
+
+### Canonical JSON-LD is directly editable
+
+maintainerはcanonical JSON-LDを直接編集します。
+CLIは構文、識別子、公開除外の検証だけを提供します。
+
+`fac`による属性、参照、履歴の自動変更は採用しません。
 
 ### Dataset distribution uses GitHub Pages and Releases
 
@@ -121,6 +132,7 @@ API keyは公開データ、ログ、Release artifactへ書きません。
 - [GeoJSON利用者が移行を要する] → 移行期間、変換物、明確なbreaking-change文書を用意します。
 - [非公開指定を見落とす] → `publish: false`を必須の明示指定とし、公開生成テストで検証します。
 - [WAMの住所が揺れる] → 住所を照合補助とし、無条件の正本値にしません。
+- [独自categoryを失う] → 必要な場合はGit履歴から復元します。
 - [外部モデルが利用不能] → 照合を失敗として扱い、既存の公開関連リンクを推測で変更しません。
 - [GeoJSON利用者が即時移行できない] → breaking changeをREADME、landing page、Release notesで明示します。
 - [町名を利用する利用者が移行できない] → town fieldの終了をbreaking changeとして明示します。

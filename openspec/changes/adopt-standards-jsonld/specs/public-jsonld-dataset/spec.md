@@ -31,12 +31,12 @@ geometry MUST `geo:hasGeometry`、`geo:asGeoJSON`、`geo:geoJSONLiteral`を使�
 - **THEN** 運用履歴と投票ログを取得できません
 
 ### Requirement: Public record excludes derived and upstream-detail fields
-公開Place record MUST 町名、電話番号、OSMタグを含みません。
+公開Place record MUST 町名、電話番号、OSMタグ、独自`categoryIds`を含みません。
 システム MUST town polygonから町名を導出しません。
 
 #### Scenario: Public record is generated
 - **WHEN** システムが公開Place recordを生成します
-- **THEN** recordは町名、電話番号、OSMタグを含みません
+- **THEN** recordは町名、電話番号、OSMタグ、独自`categoryIds`を含みません
 
 ### Requirement: Explicit publication exclusion
 システム SHALL 検索入力の`publish: false`を公開除外指定として扱います。
