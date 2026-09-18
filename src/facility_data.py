@@ -345,10 +345,18 @@ def build_public_geojson(
 def build_jsonld_candidate(registry: dict[str, Any]) -> dict[str, Any]:
     """Create the phase-one JSON-LD candidate with stable Place identifiers."""
     return {
+        "@context": {
+            "@version": 1.1,
+            "schema": "https://schema.org/",
+            "geo": "http://www.opengis.net/ont/geosparql#",
+        },
         "@graph": [
-            {"@id": f"urn:uuid:{place['id']}"}
+            {
+                "@id": f"urn:uuid:{place['id']}",
+                "@type": ["schema:Place", "geo:Feature"],
+            }
             for place in registry.get("places", [])
-        ]
+        ],
     }
 
 

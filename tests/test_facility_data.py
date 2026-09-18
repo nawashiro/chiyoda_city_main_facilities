@@ -649,6 +649,39 @@ class JsonLdCandidateMigrationTests(unittest.TestCase):
             candidate_ids,
         )
 
+    def test_jsonld_candidate_has_valid_jsonld_11_context(self):
+        root = Path(__file__).resolve().parents[1]
+        registry = json.loads(
+            (root / "tests/fixtures/registry.json").read_text(encoding="utf-8")
+        )
+
+        candidate = facility_data.build_jsonld_candidate(registry)
+        context = candidate.get("@context")
+
+        self.assertIsInstance(context, dict)
+        if not isinstance(context, dict):
+            return
+        self.assertEqual(1.1, context.get("@version"))
+        self.assertEqual("https://schema.org/", context.get("schema"))
+        self.assertEqual(
+            "http://www.opengis.net/ont/geosparql#", context.get("geo")
+        )
+
+    def test_jsonld_candidate_types_each_record_as_place_and_feature(self):
+        root = Path(__file__).resolve().parents[1]
+        registry = json.loads(
+            (root / "tests/fixtures/registry.json").read_text(encoding="utf-8")
+        )
+
+        candidate = facility_data.build_jsonld_candidate(registry)
+
+        for record in candidate["@graph"]:
+            with self.subTest(record=record.get("@id")):
+                types = record.get("@type")
+                self.assertIsInstance(types, list)
+                self.assertIn("schema:Place", types)
+                self.assertIn("geo:Feature", types)
+
 
 class PhaseZeroFilesTests(unittest.TestCase):
     def test_schema_and_fixture_files_define_the_new_contract(self):
