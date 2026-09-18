@@ -29,3 +29,10 @@ geometry MUST `geo:hasGeometry`、`geo:asGeoJSON`、`geo:geoJSONLiteral`を使�
 #### Scenario: Public record is inspected
 - **WHEN** 利用者がJSON-LD Place recordを取得します
 - **THEN** 運用履歴と投票ログを取得できません
+
+### Requirement: Non-public Place protection
+システム MUST 非公開Placeを公開JSON-LD distributionへ出力しません。
+
+#### Scenario: Non-public facility is processed
+- **WHEN** 非公開状態の施設を公開distributionへ生成します
+- **THEN** distributionはその施設のPlace recordを含みません
