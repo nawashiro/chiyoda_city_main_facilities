@@ -7,6 +7,7 @@
 - [ ] 1.3 Place geometryをGeoSPARQLへ出力し、Point geometryの検証テストを通す
 - [ ] 1.4 公開Placeからaudit、参照履歴、更新時刻、投票ログを除き、非公開を検証するテストを通す
 - [ ] 1.5 検索入力の`publish: false`を公開除外として実装し、対象PlaceがJSON-LD distributionにないテストを通す
+- [ ] 1.6 公開Placeから町名、電話番号、OSMタグを除外し、town polygonの導出がないことを検証するテストを通す
 
 ## 2. 関連データと照合
 
@@ -23,6 +24,7 @@
 - [ ] 3.2 CLIと検証処理を新しい公開正本へ移し、旧独自スキーマへの書込みがないことを確認する
 - [ ] 3.3 旧registry、旧公開GeoJSON、不要な生成ロジックを削除し、repository validationを通す
 - [ ] 3.4 GeoJSON専用manifest entry、互換生成、workflow artifact、reproducibility比較を削除し、JSON-LDだけを比較するCIを検証する
+- [ ] 3.5 `src.retrieve_towns`、pinned town data、town update workflow、town由来のCLIとtestを削除し、町名導出経路がないことを検証する
 
 ## 4. 配布
 

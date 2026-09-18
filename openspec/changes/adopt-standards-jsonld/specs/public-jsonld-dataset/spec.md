@@ -30,6 +30,14 @@ geometry MUST `geo:hasGeometry`、`geo:asGeoJSON`、`geo:geoJSONLiteral`を使�
 - **WHEN** 利用者がJSON-LD Place recordを取得します
 - **THEN** 運用履歴と投票ログを取得できません
 
+### Requirement: Public record excludes derived and upstream-detail fields
+公開Place record MUST 町名、電話番号、OSMタグを含みません。
+システム MUST town polygonから町名を導出しません。
+
+#### Scenario: Public record is generated
+- **WHEN** システムが公開Place recordを生成します
+- **THEN** recordは町名、電話番号、OSMタグを含みません
+
 ### Requirement: Explicit publication exclusion
 システム SHALL 検索入力の`publish: false`を公開除外指定として扱います。
 システム MUST この指定を持つ施設候補のPlace recordを公開JSON-LD distributionへ出力しません。

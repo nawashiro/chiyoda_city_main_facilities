@@ -20,6 +20,7 @@ Gitを変更履歴とし、関連先には同一性を断定しないリンク�
 - `schema:sameAs`、SKOSのmatch関係、Place単位の`prov:wasDerivedFrom`を自動では出力しません。
 - WAM由来の住所とサービス種別を、施設とサービスを混同しない範囲で扱います。
 - 営業時間の変換と公開は今回の対象から除外します。
+- 町名、電話番号、OSMタグの公開と導出は今回の対象から除外します。
 - 三者LLM照合では、正規化済み`(base_url, model)`が全員で重複しないことを必須にします。
 - 投票ログを公開Placeデータへ保存しません。
 - GitHub PagesにDataset landing pageを置き、`schema:Dataset`と`DataDownload`で最新配布物を公開します。
@@ -27,6 +28,7 @@ Gitを変更履歴とし、関連先には同一性を断定しないリンク�
 - 人手OSM reviewはcommit済みreview YAMLとPRだけで実施します。
 - Issue本文の候補checkboxと互換parserを廃止します。
 - GeoJSONの公開、互換生成、manifest entryを即時終了します。
+- town polygonの取得、pinned data、町名の導出経路を削除します。
 - 旧保守規約を削除し、このOpenSpec changeの成果物を移行の正本にします。
 - Zenodo DOI、W3ID、独自ドメインは今回の実装対象から除外します。
 

@@ -22,6 +22,7 @@ proposal.mdの背景と範囲を前提にします。
 
 - 独自オントロジー、独自URIドメイン、W3ID、DOIを導入しません。
 - 営業時間を変換または公開しません。
+- 町名、電話番号、OSMタグを公開または導出しません。
 - OSM RDFやWikidata RDFを取り込みません。
 - WAMを施設の同一性や正本として扱いません。
 
@@ -94,6 +95,14 @@ current distributionとRelease snapshotはJSON-LDだけを提供します。
 一時的な並行配布は採用しません。
 二つの公開形式を保守すると、正本の移行目的に反するためです。
 
+### Town derivation ends at migration cutover
+
+town polygonからの町名導出は終了します。
+`src.retrieve_towns`、pinned town data、town update workflow、関連testを削除します。
+
+町名は派生値であり、公開Place正本の責務にしません。
+電話番号とOSMタグも、上流raw snapshotに留めて公開Placeへ出しません。
+
 ### OpenSpec change replaces legacy maintenance policy
 
 `docs/reference/data-maintenance-spec.md`を削除します。
@@ -114,6 +123,7 @@ API keyは公開データ、ログ、Release artifactへ書きません。
 - [WAMの住所が揺れる] → 住所を照合補助とし、無条件の正本値にしません。
 - [外部モデルが利用不能] → 照合を失敗として扱い、既存の公開関連リンクを推測で変更しません。
 - [GeoJSON利用者が即時移行できない] → breaking changeをREADME、landing page、Release notesで明示します。
+- [町名を利用する利用者が移行できない] → town fieldの終了をbreaking changeとして明示します。
 
 ## Migration Plan
 
