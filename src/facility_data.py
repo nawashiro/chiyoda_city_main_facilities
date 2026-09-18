@@ -21,6 +21,40 @@ from src.wam_contract import WAM_PUBLIC_ATTRIBUTE_HEADERS, WAM_PUBLIC_ATTRIBUTE_
 
 _QID = re.compile(r"^Q[1-9][0-9]*$")
 _SHA256 = re.compile(r"^[0-9a-f]{64}$")
+_URN_UUID = re.compile(
+    r"^urn:uuid:[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-"
+    r"[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$"
+)
+_JSONLD_LEGACY_FIELDS = frozenset(
+    {
+        "audit",
+        "auditTrail",
+        "externalRefs",
+        "history",
+        "referenceHistory",
+        "refHistory",
+        "changeHistory",
+        "changedAt",
+        "updatedAt",
+        "confirmedAt",
+        "firstConfirmedAt",
+        "lastConfirmedAt",
+        "supersededAt",
+        "current",
+        "superseded",
+        "llmVote",
+        "llmVotes",
+        "llmVoteLog",
+        "llm_vote_log",
+        "voteLog",
+        "voteLogs",
+        "vote-log",
+        "vote_log",
+        "voteHistory",
+        "decisionLog",
+        "votes",
+    }
+)
 _WAM_VISITING_SERVICE_TYPES = {
     "11",
     "12",
@@ -436,6 +470,136 @@ def build_jsonld_candidate(
         },
         "@graph": graph,
     }
+
+
+def validate_jsonld_document(document: Any) -> None:
+    """Validate a public JSON-LD document without changing or resolving it."""
+    if not isinstance(document, dict):
+        raise ValueError("JSON-LD document must be an object")
+
+    context = document.get("@context")
+    if not isinstance(context, dict):
+        raise ValueError("JSON-LD document @context must be an object")
+    if context.get("@version") != 1.1:
+        raise ValueError("JSON-LD @context must declare @version 1.1")
+    if context.get("schema") != "https://schema.org/":
+        raise ValueError("JSON-LD @context.schema must be https://schema.org/")
+    if context.get("geo") != "http://www.opengis.net/ont/geosparql#":
+        raise ValueError(
+            "JSON-LD @context.geo must be "
+            "http://www.opengis.net/ont/geosparql#"
+        )
+
+    graph = document.get("@graph")
+    if not isinstance(graph, list):
+        raise ValueError("JSON-LD document @graph must be a list")
+
+    def reject_legacy_fields(value: Any, path: str) -> None:
+        if isinstance(value, dict):
+            for key, nested in value.items():
+                if key in _JSONLD_LEGACY_FIELDS:
+                    if key == "externalRefs":
+                        raise ValueError(
+                            f"JSON-LD {path} contains legacy externalRefs history "
+                            "(current/superseded references are not allowed)"
+                        )
+                    raise ValueError(
+                        f"JSON-LD {path} contains legacy operational field: {key}"
+                    )
+                if (
+                    key == "status"
+                    and isinstance(nested, str)
+                    and nested in {"current", "superseded"}
+                ):
+                    raise ValueError(
+                        f"JSON-LD {path} contains legacy reference status: {nested}"
+                    )
+                reject_legacy_fields(nested, f"{path}.{key}")
+        elif isinstance(value, list):
+            for index, nested in enumerate(value):
+                reject_legacy_fields(nested, f"{path}[{index}]")
+
+    reject_legacy_fields(document, "document")
+
+    seen_ids: dict[str, int] = {}
+    for index, record in enumerate(graph):
+        path = f"@graph[{index}]"
+        if not isinstance(record, dict):
+            raise ValueError(f"JSON-LD {path} must be an object")
+
+        record_id = record.get("@id")
+        if not isinstance(record_id, str) or _URN_UUID.fullmatch(record_id) is None:
+            raise ValueError(f"JSON-LD {path} @id must be a urn:uuid UUID")
+        previous_index = seen_ids.get(record_id)
+        if previous_index is not None:
+            raise ValueError(
+                f"JSON-LD {path} @id duplicates @graph[{previous_index}]: {record_id}"
+            )
+        seen_ids[record_id] = index
+
+        types = record.get("@type")
+        if (
+            not isinstance(types, list)
+            or "schema:Place" not in types
+            or "geo:Feature" not in types
+        ):
+            raise ValueError(
+                f"JSON-LD {path} @type must contain schema:Place and geo:Feature"
+            )
+
+        geometry = record.get("geo:hasGeometry")
+        if not isinstance(geometry, dict):
+            raise ValueError(f"JSON-LD {path} geo:hasGeometry must be an object")
+        literal = geometry.get("geo:asGeoJSON")
+        if not isinstance(literal, dict):
+            raise ValueError(
+                f"JSON-LD {path} geo:hasGeometry.geo:asGeoJSON must be an object"
+            )
+        if literal.get("@type") != "geo:geoJSONLiteral":
+            raise ValueError(
+                f"JSON-LD {path} geometry must use geo:geoJSONLiteral"
+            )
+        geojson_value = literal.get("@value")
+        if not isinstance(geojson_value, str):
+            raise ValueError(
+                f"JSON-LD {path} geo:geoJSONLiteral @value must be a string"
+            )
+        try:
+            point = json.loads(geojson_value)
+        except (TypeError, ValueError, json.JSONDecodeError) as error:
+            raise ValueError(
+                f"JSON-LD {path} geo:geoJSONLiteral @value must be valid GeoJSON"
+            ) from error
+        if (
+            not isinstance(point, dict)
+            or point.get("type") != "Point"
+            or not _valid_coordinates(point.get("coordinates"))
+        ):
+            raise ValueError(
+                f"JSON-LD {path} geometry literal must be a Point with valid coordinates"
+            )
+
+        if "schema:identifier" not in record:
+            continue
+        identifiers = record["schema:identifier"]
+        if not isinstance(identifiers, list):
+            raise ValueError(
+                f"JSON-LD {path} schema:identifier must be a list of PropertyValue objects"
+            )
+        for identifier_index, identifier in enumerate(identifiers):
+            identifier_path = f"{path}.schema:identifier[{identifier_index}]"
+            if (
+                not isinstance(identifier, dict)
+                or identifier.get("@type") != "schema:PropertyValue"
+                or not isinstance(identifier.get("schema:propertyID"), str)
+                or not identifier["schema:propertyID"]
+                or not isinstance(identifier.get("schema:value"), str)
+                or not identifier["schema:value"]
+            ):
+                raise ValueError(
+                    f"JSON-LD {identifier_path} must be a schema:PropertyValue "
+                    "with schema:propertyID and schema:value"
+                )
 
 
 def _read_json(path: Path) -> dict[str, Any]:

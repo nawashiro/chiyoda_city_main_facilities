@@ -22,7 +22,7 @@
 
 ## 3. 更新経路の簡素化
 
-- [ ] 3.1 registry、audit、current/superseded参照履歴に依存する更新処理をJSON-LD中心へ置換し、更新統合テストを通す
+- [x] 3.1 registry、audit、current/superseded参照履歴に依存する更新処理をJSON-LD中心へ置換し、更新統合テストを通す
 - [ ] 3.2 canonical JSON-LDの直接編集を検証する最小CLIへ置換し、属性、参照、履歴を自動変更しないことを確認する
 - [ ] 3.3 旧registry、旧公開GeoJSON、不要な生成ロジックを削除し、repository validationを通す
 - [ ] 3.4 GeoJSON専用manifest entry、互換生成、workflow artifact、reproducibility比較を削除し、JSON-LDだけを比較するCIを検証する

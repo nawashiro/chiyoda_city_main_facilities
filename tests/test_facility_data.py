@@ -1260,6 +1260,55 @@ class JsonLdCandidateMigrationTests(unittest.TestCase):
         self.assertIn(f"urn:uuid:{control_query['id']}", candidate_ids)
 
 
+class JsonLdDocumentValidationTests(unittest.TestCase):
+    def _direct_jsonld_document(self):
+        root = Path(__file__).resolve().parents[1]
+        fixture_registry = json.loads(
+            (root / "tests/fixtures/registry.json").read_text(encoding="utf-8")
+        )
+        return deepcopy(facility_data.build_jsonld_candidate(fixture_registry))
+
+    def test_accepts_direct_document_without_registry_and_does_not_mutate_it(self):
+        document = self._direct_jsonld_document()
+        original = deepcopy(document)
+
+        facility_data.validate_jsonld_document(document)
+
+        self.assertEqual(original, document)
+
+    def test_rejects_legacy_audit_and_current_superseded_reference_history(self):
+        document = self._direct_jsonld_document()
+        document["@graph"][0].update(
+            {
+                "audit": [
+                    {
+                        "at": "2026-08-02T00:00:00Z",
+                        "method": "human_inference",
+                        "action": "created",
+                        "target": "place/legacy-audit",
+                    }
+                ],
+                "externalRefs": [
+                    {
+                        "sourceId": "openstreetmap",
+                        "recordId": "node/legacy-current",
+                        "status": "current",
+                    },
+                    {
+                        "sourceId": "openstreetmap",
+                        "recordId": "way/legacy-superseded",
+                        "status": "superseded",
+                    },
+                ],
+            }
+        )
+
+        with self.assertRaisesRegex(
+            ValueError, r"(?i)(audit|externalRefs|current|superseded)"
+        ):
+            facility_data.validate_jsonld_document(document)
+
+
 class PhaseZeroFilesTests(unittest.TestCase):
     def test_schema_and_fixture_files_define_the_new_contract(self):
         root = Path(__file__).resolve().parents[1]
