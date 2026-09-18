@@ -31,6 +31,7 @@
 - [ ] 4.3 GitHub Releaseへ版固定JSON-LD snapshotを添付するworkflowを追加し、dry-runまたはfixtureでartifactを検証する
 - [ ] 4.4 READMEとDiátaxis文書を移行後の正本、取得方法、互換性変更へ更新し、文書リンクを検証する
 - [ ] 4.5 旧保守規約を削除し、このOpenSpec changeを移行の正本として案内する文書を検証する
+- [ ] 4.6 `test_documentation_uses_the_diataxis_directory_structure`を削除し、データ処理テストからMarkdownの配置、行数、見出し、文言への拘束を除く
 
 ## 5. 統合検証と移行
 
