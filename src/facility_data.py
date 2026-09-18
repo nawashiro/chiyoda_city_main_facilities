@@ -342,8 +342,15 @@ def build_public_geojson(
     }
 
 
-def build_jsonld_candidate(registry: dict[str, Any]) -> dict[str, Any]:
+def build_jsonld_candidate(
+    registry: dict[str, Any], search_input: dict[str, Any] | None = None
+) -> dict[str, Any]:
     """Create the phase-one JSON-LD candidate with stable Place identifiers."""
+    excluded_place_ids = {
+        query["id"]
+        for query in (search_input or {}).get("queries", [])
+        if isinstance(query, dict) and query.get("publish") is False
+    }
     return {
         "@context": {
             "@version": 1.1,
@@ -369,6 +376,7 @@ def build_jsonld_candidate(registry: dict[str, Any]) -> dict[str, Any]:
                 },
             }
             for place in registry.get("places", [])
+            if place["id"] not in excluded_place_ids
         ],
     }
 

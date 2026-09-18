@@ -813,6 +813,50 @@ class JsonLdCandidateMigrationTests(unittest.TestCase):
         ):
             self.assertNotIn(marker, rendered)
 
+    def test_jsonld_candidate_excludes_search_input_publish_false_place(self):
+        root = Path(__file__).resolve().parents[1]
+        registry = json.loads(
+            (root / "tests/fixtures/registry.json").read_text(encoding="utf-8")
+        )
+        excluded_place = registry["places"][0]
+        control_query = {
+            "id": "019c0000-0000-7000-8000-000000000011",
+            "name": "公開対照施設",
+            "coordinates": [139.751, 35.692],
+        }
+        registry["places"].append(
+            make_place(
+                control_query,
+                ["park"],
+                [],
+                "2026-07-28T00:00:00Z",
+            )
+        )
+
+        search_input = json.loads(
+            (root / "inputs/osm-search/human/202608.json").read_text(
+                encoding="utf-8"
+            )
+        )
+        excluded_query = search_input["queries"][0]
+        excluded_query.update(
+            {
+                "id": excluded_place["id"],
+                "name": excluded_place["name"],
+                "qid": "Q1075966",
+                "publish": False,
+            }
+        )
+        search_input["queries"].append(control_query)
+
+        candidate = facility_data.build_jsonld_candidate(
+            registry, search_input=search_input
+        )
+        candidate_ids = {place["@id"] for place in candidate["@graph"]}
+
+        self.assertNotIn(f"urn:uuid:{excluded_place['id']}", candidate_ids)
+        self.assertIn(f"urn:uuid:{control_query['id']}", candidate_ids)
+
 
 class PhaseZeroFilesTests(unittest.TestCase):
     def test_schema_and_fixture_files_define_the_new_contract(self):
