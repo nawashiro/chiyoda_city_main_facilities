@@ -6,7 +6,7 @@
 - [ ] 1.2 JSON-LDの`@context`、URN UUID、schema.org、GeoSPARQLを定義し、JSON-LD展開検証を通す
 - [ ] 1.3 Place geometryをGeoSPARQLへ出力し、Point geometryの検証テストを通す
 - [ ] 1.4 公開Placeからaudit、参照履歴、更新時刻、投票ログを除き、非公開を検証するテストを通す
-- [ ] 1.5 非公開Placeを公開JSON-LD distributionから除外し、漏えいを防ぐテストを通す
+- [ ] 1.5 検索入力の`publish: false`を公開除外として実装し、対象PlaceがJSON-LD distributionにないテストを通す
 
 ## 2. 関連データと照合
 

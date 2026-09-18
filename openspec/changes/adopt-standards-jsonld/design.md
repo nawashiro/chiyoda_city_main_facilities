@@ -61,6 +61,14 @@ SKOS match関係は概念間の対応が必要な場合まで保留します。
 別の監査ストアは採用しません。
 小規模データに新たな永続系を追加するためです。
 
+### Publication exclusion belongs to search input
+
+公開しない施設候補は、検索入力に`publish: false`を明示します。
+この指定を持つ候補からPlace recordを公開生成しません。
+
+JSONCのコメントは採用しません。
+JSON-LDと通常のJSON処理系はコメントを許容せず、専用parserが必要になるためです。
+
 ### Dataset distribution uses GitHub Pages and Releases
 
 GitHub PagesはDataset landing pageとcurrent JSON-LDを提供します。
@@ -80,6 +88,7 @@ API keyは公開データ、ログ、Release artifactへ書きません。
 - [URN UUIDはブラウザで解決できない] → landing pageとdownload URLをDataset単位で提供します。
 - [rdfs:seeAlsoは関係の意味を細かく示さない] → 同一性を誤って主張するより安全な初期値にします。
 - [GeoJSON利用者が移行を要する] → 移行期間、変換物、明確なbreaking-change文書を用意します。
+- [非公開指定を見落とす] → `publish: false`を必須の明示指定とし、公開生成テストで検証します。
 - [WAMの住所が揺れる] → 住所を照合補助とし、無条件の正本値にしません。
 - [外部モデルが利用不能] → 照合を失敗として扱い、既存の公開関連リンクを推測で変更しません。
 

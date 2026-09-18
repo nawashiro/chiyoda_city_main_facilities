@@ -30,9 +30,10 @@ geometry MUST `geo:hasGeometry`、`geo:asGeoJSON`、`geo:geoJSONLiteral`を使�
 - **WHEN** 利用者がJSON-LD Place recordを取得します
 - **THEN** 運用履歴と投票ログを取得できません
 
-### Requirement: Non-public Place protection
-システム MUST 非公開Placeを公開JSON-LD distributionへ出力しません。
+### Requirement: Explicit publication exclusion
+システム SHALL 検索入力の`publish: false`を公開除外指定として扱います。
+システム MUST この指定を持つ施設候補のPlace recordを公開JSON-LD distributionへ出力しません。
 
-#### Scenario: Non-public facility is processed
-- **WHEN** 非公開状態の施設を公開distributionへ生成します
+#### Scenario: Excluded facility is processed
+- **WHEN** `publish: false`の検索入力から公開distributionを生成します
 - **THEN** distributionはその施設のPlace recordを含みません

@@ -13,7 +13,7 @@ Gitを変更履歴とし、関連先には同一性を断定しないリンク�
 - **BREAKING** 公開Placeの正本を独自`registry.json`からJSON-LDへ移します。
 - **BREAKING** Placeに保存する監査配列、外部参照のcurrent/superseded履歴、更新時刻を廃止します。
 - 既存UUIDを`urn:uuid:`のPlace IDとして維持します。
-- 非公開Placeを公開配布物へ出力しません。
+- 検索入力で`publish: false`を明示した施設候補を公開配布物へ出力しません。
 - Placeを`schema:Place`と`geo:Feature`で表現します。
 - Point geometryをGeoSPARQLの`geo:hasGeometry`と`geo:asGeoJSON`で表現します。
 - OSM、Wikidata、WAMの自動関連先を`rdfs:seeAlso`で表現します。
