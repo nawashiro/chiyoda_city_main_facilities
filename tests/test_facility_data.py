@@ -1007,6 +1007,84 @@ class JsonLdCandidateMigrationTests(unittest.TestCase):
         ):
             self.assertNotIn(marker, rendered)
 
+    def test_jsonld_candidate_keeps_multiple_wam_services_on_one_place(self):
+        root = Path(__file__).resolve().parents[1]
+        registry = json.loads(
+            (root / "tests/fixtures/registry.json").read_text(encoding="utf-8")
+        )
+        place = registry["places"][0]
+        service_records = [
+            {
+                "queryId": place["id"],
+                "id": "wam-task-2.3-source-record-a",
+                "sourceRecordIds": ["wam-task-2.3-source-record-a"],
+                "officeIds": ["wam-task-2.3-office-a"],
+                "serviceCodes": ["wam-task-2.3-service-code-a"],
+                "serviceTypes": ["task-2.3-service-type-marker-a"],
+                "name": "task-2.3-service-name-marker-a",
+                "coordinates": place["geometry"]["coordinates"],
+                "address": "task-2.3-address-marker-a",
+                "telephone": "task-2.3-telephone-marker-a",
+            },
+            {
+                "queryId": place["id"],
+                "id": "wam-task-2.3-source-record-b",
+                "sourceRecordIds": ["wam-task-2.3-source-record-b"],
+                "officeIds": ["wam-task-2.3-office-b"],
+                "serviceCodes": ["wam-task-2.3-service-code-b"],
+                "serviceTypes": ["task-2.3-service-type-marker-b"],
+                "name": "task-2.3-service-name-marker-b",
+                "coordinates": place["geometry"]["coordinates"],
+                "address": "task-2.3-address-marker-b",
+                "telephone": "task-2.3-telephone-marker-b",
+            },
+        ]
+
+        candidate = facility_data.build_jsonld_candidate(
+            registry, wam_records=service_records
+        )
+        graph = candidate["@graph"]
+        place_records = [
+            record for record in graph if record["@id"] == f"urn:uuid:{place['id']}"
+        ]
+
+        self.assertEqual(len(registry["places"]), len(graph))
+        self.assertEqual(1, len(place_records))
+        self.assertEqual(
+            {f"urn:uuid:{place['id']}"}, {record["@id"] for record in graph}
+        )
+
+        place_record = place_records[0]
+        self.assertCountEqual(
+            [
+                {
+                    "@type": "schema:PropertyValue",
+                    "schema:propertyID": "wam",
+                    "schema:value": "wam-task-2.3-source-record-a",
+                },
+                {
+                    "@type": "schema:PropertyValue",
+                    "schema:propertyID": "wam",
+                    "schema:value": "wam-task-2.3-source-record-b",
+                },
+            ],
+            place_record["schema:identifier"],
+        )
+
+        rendered = json.dumps(place_record, ensure_ascii=False)
+        for marker in (
+            "task-2.3-service-name-marker-a",
+            "task-2.3-service-name-marker-b",
+            "task-2.3-address-marker-a",
+            "task-2.3-address-marker-b",
+            "task-2.3-service-type-marker-a",
+            "task-2.3-service-type-marker-b",
+            "task-2.3-telephone-marker-a",
+            "task-2.3-telephone-marker-b",
+        ):
+            self.assertNotIn(marker, rendered)
+        self.assertNotIn("rdfs:seeAlso", rendered)
+
     def test_jsonld_candidate_uses_source_qualified_external_identifiers_without_strong_predicates(self):
         root = Path(__file__).resolve().parents[1]
         fixture_registry = json.loads(
