@@ -49,14 +49,21 @@ GeoSPARQLはgeometryの明確な標準表現を提供します。
 
 ### Automated associations use rdfs:seeAlso
 
-自動照合したOSM、Wikidata、WAMのURLまたは公開recordを`rdfs:seeAlso`へ出します。
+外部識別子（WAMを含む）は、`schema:identifier`の`schema:PropertyValue`で表します。
+`propertyID`へ`sourceId`を、`value`へ`recordId`を設定します。
+WAMの`recordId`からIRIを合成しません。
+
+`rdfs:seeAlso`は、ソース入力に明示された`dereferenceable URI`だけを設定します。
+外部recordの識別子やWAMの関連リンクだけでは、`rdfs:seeAlso`を生成しません。
+入力に明示されたURIの解決可能性だけを根拠に、参照先を公開します。
 
 `schema:sameAs`は採用しません。
 これは同一性を曖昧なく示すため、自動照合の一般出力には強すぎます。
 SKOS match関係は概念間の対応が必要な場合まで保留します。
 `prov:wasDerivedFrom`はPlaceではなくDataset全体の入力来歴だけに使います。
 
-WAMの公開Placeへの反映も`rdfs:seeAlso`だけにします。
+WAMの公開Placeには、`sourceId`と`recordId`を持つ`schema:PropertyValue`を設定します。
+ソース入力に明示的な`dereferenceable URI`がある場合だけ、`rdfs:seeAlso`も追加します。
 WAMの住所、サービス種別、電話番号を公開Placeへ移しません。
 
 ### History belongs to Git

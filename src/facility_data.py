@@ -361,6 +361,15 @@ def build_jsonld_candidate(
             {
                 "@id": f"urn:uuid:{place['id']}",
                 "@type": ["schema:Place", "geo:Feature"],
+                "schema:identifier": [
+                    {
+                        "@type": "schema:PropertyValue",
+                        "schema:propertyID": ref["sourceId"],
+                        "schema:value": ref["recordId"],
+                    }
+                    for ref in place.get("externalRefs", [])
+                    if ref.get("status") == "current"
+                ],
                 "geo:hasGeometry": {
                     "geo:asGeoJSON": {
                         "@value": json.dumps(

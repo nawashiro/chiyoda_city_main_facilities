@@ -757,6 +757,21 @@ class JsonLdCandidateMigrationTests(unittest.TestCase):
         ]
 
         candidate = facility_data.build_jsonld_candidate(registry)
+        place_record = next(
+            record
+            for record in candidate["@graph"]
+            if record["@id"] == f"urn:uuid:{place['id']}"
+        )
+        self.assertEqual(
+            [
+                {
+                    "@type": "schema:PropertyValue",
+                    "schema:propertyID": "openstreetmap",
+                    "schema:value": "node/internal-current",
+                }
+            ],
+            place_record["schema:identifier"],
+        )
         internal_keys = {
             "audit",
             "externalRefs",
@@ -795,10 +810,8 @@ class JsonLdCandidateMigrationTests(unittest.TestCase):
 
         rendered = " ".join(rendered_records)
         for marker in (
-            "node/internal-current",
             "way/internal-superseded",
             "node/internal-vote",
-            "current",
             "superseded",
             "2026-07-29T00:00:00Z",
             "2026-07-30T00:00:00Z",
@@ -933,6 +946,97 @@ class JsonLdCandidateMigrationTests(unittest.TestCase):
         rendered = json.dumps(candidate, ensure_ascii=False)
         for marker in markers.values():
             self.assertNotIn(marker, rendered)
+
+    def test_jsonld_candidate_uses_source_qualified_external_identifiers_without_strong_predicates(self):
+        root = Path(__file__).resolve().parents[1]
+        fixture_registry = json.loads(
+            (root / "tests/fixtures/registry.json").read_text(encoding="utf-8")
+        )
+        registry = deepcopy(fixture_registry)
+        place = registry["places"][0]
+        current_refs = [
+            ("openstreetmap", "node/123456789"),
+            ("wikidata", "Q1234567"),
+            ("wam", "wam-service-001"),
+        ]
+        superseded_ref = ("openstreetmap", "way/987654321")
+
+        def external_ref(source_id, record_id, status, superseded_at=None):
+            return {
+                "sourceId": source_id,
+                "recordId": record_id,
+                "status": status,
+                "firstConfirmedAt": "2026-07-28T00:00:00Z",
+                "lastConfirmedAt": "2026-07-28T00:00:00Z",
+                "supersededAt": superseded_at,
+                "basis": "human_review",
+            }
+
+        place["externalRefs"] = [
+            *(external_ref(source_id, record_id, "current") for source_id, record_id in current_refs),
+            external_ref(
+                *superseded_ref,
+                "superseded",
+                superseded_at="2026-07-29T00:00:00Z",
+            ),
+        ]
+
+        candidate = facility_data.build_jsonld_candidate(registry)
+        record = next(
+            item
+            for item in candidate["@graph"]
+            if item["@id"] == f"urn:uuid:{place['id']}"
+        )
+
+        self.assertCountEqual(
+            [
+                {
+                    "@type": "schema:PropertyValue",
+                    "schema:propertyID": source_id,
+                    "schema:value": record_id,
+                }
+                for source_id, record_id in current_refs
+            ],
+            record["schema:identifier"],
+        )
+        self.assertNotIn(
+            {
+                "@type": "schema:PropertyValue",
+                "schema:propertyID": superseded_ref[0],
+                "schema:value": superseded_ref[1],
+            },
+            record["schema:identifier"],
+        )
+        self.assertNotIn("rdfs:seeAlso", record)
+
+        def nested_keys(value):
+            if isinstance(value, dict):
+                return set(value).union(*(nested_keys(item) for item in value.values()))
+            if isinstance(value, list):
+                return set().union(*(nested_keys(item) for item in value))
+            return set()
+
+        emitted_keys = nested_keys(record)
+        self.assertNotIn("rdfs:seeAlso", emitted_keys)
+        self.assertNotIn("schema:sameAs", emitted_keys)
+        self.assertNotIn("prov:wasDerivedFrom", emitted_keys)
+        skos_match_keys = {
+            key
+            for key in emitted_keys
+            if isinstance(key, str)
+            and (
+                (key.startswith("skos:") and key.endswith("Match"))
+                or (
+                    key.startswith("http://www.w3.org/2004/02/skos/core#")
+                    and key.endswith("Match")
+                )
+                or (
+                    key.startswith("https://www.w3.org/2004/02/skos/core#")
+                    and key.endswith("Match")
+                )
+            )
+        }
+        self.assertEqual(set(), skos_match_keys)
 
     def test_jsonld_candidate_excludes_search_input_publish_false_place(self):
         root = Path(__file__).resolve().parents[1]
