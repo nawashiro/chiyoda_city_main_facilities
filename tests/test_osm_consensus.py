@@ -3,6 +3,7 @@ import tempfile
 import unittest
 from pathlib import Path
 
+import src.resolve_osm_candidates as osm_resolver
 from src.resolve_osm_candidates import REVIEW_PERSPECTIVES, resolve_osm_candidates
 
 
@@ -254,6 +255,54 @@ class OsmConsensusTests(unittest.TestCase):
             "019c0000-0000-7000-8000-000000000201",
             collision["reviewReason"]["conflictingQueryId"],
         )
+
+
+class LlmConfigValidationTests(unittest.TestCase):
+    def test_rejects_duplicate_normalized_base_url_and_model_pair(self):
+        configs = [
+            {
+                "api_key": "[REDACTED]",
+                "base_url": "https://provider-a.example/v1",
+                "model": "model-a",
+            },
+            {
+                "api_key": "[REDACTED]",
+                "base_url": "https://provider-a.example/v1/",
+                "model": "model-a",
+            },
+            {
+                "api_key": "[REDACTED]",
+                "base_url": "https://provider-b.example/v1",
+                "model": "model-b",
+            },
+        ]
+
+        with self.assertRaisesRegex(
+            ValueError,
+            r"(?i)((duplicate|unique).*(base[_ ]?url|model)|(base[_ ]?url|model).*(duplicate|unique))",
+        ):
+            osm_resolver.validate_llm_configs(configs)
+
+    def test_accepts_three_distinct_normalized_base_url_and_model_pairs(self):
+        configs = [
+            {
+                "api_key": "[REDACTED]",
+                "base_url": "https://provider-a.example/v1/",
+                "model": "model-a",
+            },
+            {
+                "api_key": "[REDACTED]",
+                "base_url": "https://provider-a.example/v1",
+                "model": "model-b",
+            },
+            {
+                "api_key": "[REDACTED]",
+                "base_url": "https://provider-b.example/v1/",
+                "model": "model-c",
+            },
+        ]
+
+        osm_resolver.validate_llm_configs(configs)
 
 
 if __name__ == "__main__":

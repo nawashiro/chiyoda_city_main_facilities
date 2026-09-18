@@ -5,6 +5,7 @@ import copy
 import json
 import os
 from collections import Counter
+from collections.abc import Mapping
 from pathlib import Path
 from typing import Any, Callable
 from urllib.request import Request, urlopen
@@ -29,6 +30,66 @@ _PERSPECTIVE_PROMPTS = {
         "office, or organizational unit as the target."
     ),
 }
+
+
+def validate_llm_configs(configs: Any) -> list[dict[str, Any]]:
+    """Validate and normalize the three independent LLM configurations."""
+    if isinstance(configs, (str, bytes, Mapping)):
+        raise ValueError("exactly three LLM configs are required")
+    try:
+        config_items = list(configs)
+    except TypeError as error:
+        raise ValueError("exactly three LLM configs are required") from error
+    if len(config_items) != 3:
+        raise ValueError("exactly three LLM configs are required")
+
+    normalized_configs: list[dict[str, Any]] = []
+    normalized_pairs: set[tuple[str, str]] = set()
+    for index, config in enumerate(config_items, start=1):
+        if not isinstance(config, Mapping):
+            raise ValueError(f"LLM config {index} must be a mapping")
+
+        api_key = config.get("api_key")
+        base_url = config.get("base_url")
+        model = config.get("model")
+        validated_values: dict[str, str] = {}
+        for field, value in (
+            ("api_key", api_key),
+            ("base_url", base_url),
+            ("model", model),
+        ):
+            if not isinstance(value, str) or not value.strip():
+                raise ValueError(
+                    f"LLM config {index} field {field} must be a non-empty string"
+                )
+            validated_values[field] = value
+
+        api_key = validated_values["api_key"]
+        base_url = validated_values["base_url"]
+        model = validated_values["model"]
+        normalized_base_url = base_url.strip().rstrip("/")
+        normalized_model = model.strip()
+        if not normalized_base_url:
+            raise ValueError(
+                f"LLM config {index} field base_url must be non-empty after normalization"
+            )
+
+        normalized_pair = (normalized_base_url, normalized_model)
+        if normalized_pair in normalized_pairs:
+            raise ValueError("duplicate normalized (base_url, model) pair in LLM configs")
+        normalized_pairs.add(normalized_pair)
+
+        normalized_config = dict(config)
+        normalized_config.update(
+            {
+                "api_key": api_key,
+                "base_url": normalized_base_url,
+                "model": normalized_model,
+            }
+        )
+        normalized_configs.append(normalized_config)
+
+    return normalized_configs
 
 
 def _write_json(path: Path, document: dict[str, Any]) -> None:

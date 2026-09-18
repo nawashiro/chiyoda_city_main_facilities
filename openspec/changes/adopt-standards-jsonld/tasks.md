@@ -16,7 +16,7 @@
 - [x] 2.1 OSM、Wikidata、WAMの外部識別子を`schema:PropertyValue`へ移し、明示URI以外の`rdfs:seeAlso`と強い同一性語彙を含まないテストを通す
 - [x] 2.2 WAMの公開Placeへの反映を外部識別子に限定し、明示URIがある場合だけ`rdfs:seeAlso`を追加し、住所、サービス種別、電話番号が出力にないテストを通す
 - [x] 2.3 WAMの複数サービスrecordを施設recordへ複製せず、各外部識別子として保持し、WAM IRIを合成しないテストを通す
-- [ ] 2.4 三者LLM設定を分離し、重複する正規化済み`(base_url, model)`を拒否するテストを通す
+- [x] 2.4 三者LLM設定を分離し、重複する正規化済み`(base_url, model)`を拒否するテストを通す
 - [ ] 2.5 公開JSON-LDにLLM投票ログを保存しないことを検証するテストを通す
 - [ ] 2.6 candidate reportのSHA-256 bindingと重複OSM割当拒否を維持したreview YAML/PR経路へ一本化し、Issue本文選択経路を削除するテストを通す
 
