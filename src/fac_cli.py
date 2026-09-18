@@ -182,21 +182,9 @@ def _geo_uri(place: dict[str, Any]) -> str:
     return _coordinates_geo_uri(place["name"], place["geometry"]["coordinates"])
 
 
-def _towns_by_id(root: Path) -> dict[str, str | None]:
-    public_path = root / "dist/public/places.geojson"
-    if not public_path.exists():
-        return {}
-    public = _read_json(public_path)
-    return {
-        str(feature.get("properties", {}).get("id")): feature.get("properties", {}).get("town")
-        for feature in public.get("features", [])
-    }
-
-
 def _print_places(
     root: Path,
     *,
-    town: str | None = None,
     category: str | None = None,
     name: str | None = None,
     osm: str | None = None,
@@ -205,13 +193,11 @@ def _print_places(
     hyperlink_mode: str = "auto",
 ) -> None:
     registry = _validated_registry(root)
-    towns_by_id = _towns_by_id(root) if town is not None else {}
     places = registry.get("places", [])
     places = [
         place
         for place in places
-        if (town is None or towns_by_id.get(str(place["id"])) == town)
-        and (category is None or category in place.get("categoryIds", []))
+        if (category is None or category in place.get("categoryIds", []))
         and (name is None or name.casefold() in str(place.get("name", "")).casefold())
         and (osm is None or _source_status(place, _SOURCE_ALIASES["osm"]) == osm)
         and (life is None or place.get("lifecycle", {}).get("status") == life)
@@ -555,7 +541,6 @@ def _main(argv: list[str] | None = None) -> int:
     jsonld_validate_parser.add_argument("path")
     list_parser = subparsers.add_parser("ls", help="list canonical places")
     list_parser.add_argument("root", nargs="?", default=".")
-    list_parser.add_argument("--town")
     list_parser.add_argument("--cat", dest="category")
     list_parser.add_argument("--name")
     list_parser.add_argument("--osm", choices=("current", "superseded", "false"))
@@ -615,7 +600,6 @@ def _main(argv: list[str] | None = None) -> int:
     if args.command == "ls":
         _print_places(
             Path(args.root),
-            town=args.town,
             category=args.category,
             name=args.name,
             osm=args.osm,

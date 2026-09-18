@@ -298,52 +298,9 @@ def validate_registry(
     return issues
 
 
-def _inside_ring(point: list[float], ring: list[list[float]]) -> bool:
-    x, y = point
-    inside = False
-    previous = ring[-1]
-    for current in ring:
-        x1, y1 = previous
-        x2, y2 = current
-        if (y1 > y) != (y2 > y):
-            crossing_x = (x2 - x1) * (y - y1) / (y2 - y1) + x1
-            if x < crossing_x:
-                inside = not inside
-        previous = current
-    return inside
-
-
-def _town_for_point(point: list[float], towns: dict[str, Any] | None) -> str | None:
-    if not towns:
-        return None
-    matches = []
-    for feature in towns.get("features", []):
-        geometry = feature.get("geometry", {})
-        coordinates = geometry.get("coordinates")
-        if geometry.get("type") == "Polygon":
-            polygons = [coordinates]
-        elif geometry.get("type") == "MultiPolygon":
-            polygons = coordinates
-        else:
-            continue
-        if not polygons:
-            continue
-        if any(
-            rings
-            and _inside_ring(point, rings[0])
-            and not any(_inside_ring(point, hole) for hole in rings[1:])
-            for rings in polygons
-        ):
-            name = feature.get("properties", {}).get("name")
-            if isinstance(name, str) and name:
-                matches.append(name.removeprefix("東京都千代田区"))
-    return matches[0] if len(matches) == 1 else None
-
-
 def build_public_geojson(
     registry: dict[str, Any],
     source_attributions: list[dict[str, Any]],
-    towns: dict[str, Any] | None = None,
     source_records: dict[str, dict[str, Any]] | None = None,
 ) -> dict[str, Any]:
     """Build the deterministic public GeoJSON shadow."""
@@ -363,7 +320,6 @@ def build_public_geojson(
                     "categoryIds": place["categoryIds"],
                     "tags": place["tags"],
                     "images": place.get("images", []),
-                    "town": _town_for_point(point, towns),
                     "lifecycleStatus": place.get("lifecycle", {}).get("status"),
                     "sources": source_records.get(place["id"], {}),
                 },
@@ -875,8 +831,6 @@ def _public_source_records(root: Path) -> dict[str, dict[str, Any]]:
 
 def _build_public_document(root: Path, registry: dict[str, Any]) -> dict[str, Any]:
     source_document = _read_json(root / "config/sources.json")
-    towns_path = root / "data/pinned/towns.geojson"
-    towns = _read_json(towns_path) if towns_path.is_file() else None
     source_records = _public_source_records(root)
     public_places = [
         place
@@ -896,12 +850,9 @@ def _build_public_document(root: Path, registry: dict[str, Any]) -> dict[str, An
         for place in public_places
         for source_id in source_records.get(place["id"], {})
     }
-    if towns is not None:
-        used_source_ids.add("chiyoda-city-town-geojson")
     metadata_paths = {
         "openstreetmap": root / "imports/openstreetmap/retrieval.json",
         "wam": root / "imports/wam/retrieval.json",
-        "chiyoda-city-town-geojson": root / "data/pinned/towns.retrieval.json",
     }
     sources_by_id = {
         source["id"]: source for source in source_document.get("sources", [])
@@ -910,12 +861,8 @@ def _build_public_document(root: Path, registry: dict[str, Any]) -> dict[str, An
     for source_id in sorted(used_source_ids):
         source = sources_by_id[source_id]
         metadata = _read_json(metadata_paths[source_id])
-        if source_id == "chiyoda-city-town-geojson":
-            version = metadata["commit"]
-            sha256 = metadata["sha256"]
-        else:
-            version = metadata["rawVersion"]
-            sha256 = metadata["rawSha256"]
+        version = metadata["rawVersion"]
+        sha256 = metadata["rawSha256"]
         attributions.append(
             {
                 "sourceId": source_id,
@@ -932,7 +879,6 @@ def _build_public_document(root: Path, registry: dict[str, Any]) -> dict[str, An
     return build_public_geojson(
         registry,
         attributions,
-        towns,
         source_records=source_records,
     )
 
