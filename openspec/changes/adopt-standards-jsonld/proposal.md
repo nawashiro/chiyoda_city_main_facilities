@@ -1,0 +1,46 @@
+# Proposal
+
+## Why
+
+現在の独自レジストリは、施設属性、監査履歴、外部参照の履歴、更新処理を密結合します。
+この構成は小規模な公開データの保守負担を増やし、ウェブ上での再利用を妨げます。
+
+施設データを標準語彙のJSON-LDへ移します。
+Gitを変更履歴とし、関連先には同一性を断定しないリンクを使います。
+
+## What Changes
+
+- **BREAKING** 公開Placeの正本を独自`registry.json`からJSON-LDへ移します。
+- **BREAKING** Placeに保存する監査配列、外部参照のcurrent/superseded履歴、更新時刻を廃止します。
+- 既存UUIDを`urn:uuid:`のPlace IDとして維持します。
+- Placeを`schema:Place`と`geo:Feature`で表現します。
+- Point geometryをGeoSPARQLの`geo:hasGeometry`と`geo:asGeoJSON`で表現します。
+- OSM、Wikidata、WAMの自動関連先を`rdfs:seeAlso`で表現します。
+- `schema:sameAs`、SKOSのmatch関係、Place単位の`prov:wasDerivedFrom`を自動では出力しません。
+- WAM由来の住所とサービス種別を、施設とサービスを混同しない範囲で扱います。
+- 営業時間の変換と公開は今回の対象から除外します。
+- 三者LLM照合では、正規化済み`(base_url, model)`が全員で重複しないことを必須にします。
+- 投票ログを公開Placeデータへ保存しません。
+- GitHub PagesにDataset landing pageを置き、`schema:Dataset`と`DataDownload`で最新配布物を公開します。
+- GitHub Releaseに版固定JSON-LD snapshotを公開します。
+- Zenodo DOI、W3ID、独自ドメインは今回の実装対象から除外します。
+
+## Capabilities
+
+### New Capabilities
+
+- `public-jsonld-dataset`: 標準語彙で施設とDatasetを公開し、安定した配布物を提供します。
+- `related-record-links`: 自動照合した外部レコードを、同一性を断定せずにPlaceへ関連付けます。
+- `independent-link-review`: 異なるLLM接続先とモデルによる照合判断を検証します。
+- `dataset-publication`: GitHub PagesとGitHub Releaseでデータセットを発見・取得可能にします。
+
+### Modified Capabilities
+
+- なし。既存OpenSpec capabilityはありません。
+
+## Impact
+
+- `data/registry.json`、公開GeoJSON、入力スナップショット、生成処理を移行します。
+- `src/facility_data.py`、`src/fac_cli.py`、OSM/WAM更新処理、照合処理を簡素化します。
+- GitHub Actions、テスト、公開成果物、利用者向け文書を更新します。
+- 既存の利用者は、独自GeoJSON属性と内部履歴に依存しないよう移行が必要です。
