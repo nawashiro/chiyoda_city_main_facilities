@@ -37,13 +37,12 @@ jobs:
           echo "[OSM update] $(date --iso-8601=seconds) update complete"
       - run: python3 -m src.facility_data validate .
       - run: python3 -m unittest discover -s tests -v
-      - name: Verify generated public data
+      - name: Verify canonical JSON-LD data
         run: |
-          cp dist/public/places.geojson /tmp/places.geojson
-          cp dist/public/manifest.json /tmp/manifest.json
+          cp data/places.jsonld /tmp/places.jsonld
           python3 -m src.facility_data build .
-          cmp /tmp/places.geojson dist/public/places.geojson
-          cmp /tmp/manifest.json dist/public/manifest.json
+          python3 -m src.fac_cli jsonld-validate data/places.jsonld
+          cmp /tmp/places.jsonld data/places.jsonld
       - name: Produce review diff and editable YAML
         id: review
         run: |
@@ -67,8 +66,7 @@ jobs:
           retention-days: 30
           path: |
             imports/openstreetmap/
-            data/registry.json
-            dist/public/
+            data/places.jsonld
             reports/latest-update.json
             reports/osm-candidates.json
             reports/osm-review-needed.json

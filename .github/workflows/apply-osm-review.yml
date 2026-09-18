@@ -75,13 +75,12 @@ jobs:
           python3 -m src.facility_data update . --source openstreetmap --at "$OSM_RETRIEVED_AT" --decision-at "$DECISION_AT"
       - run: python3 -m src.facility_data validate .
       - run: python3 -m unittest discover -s tests -v
-      - name: Verify generated public data
+      - name: Verify canonical JSON-LD data
         run: |
-          cp dist/public/places.geojson /tmp/places.geojson
-          cp dist/public/manifest.json /tmp/manifest.json
+          cp data/places.jsonld /tmp/places.jsonld
           python3 -m src.facility_data build .
-          cmp /tmp/places.geojson dist/public/places.geojson
-          cmp /tmp/manifest.json dist/public/manifest.json
+          python3 -m src.fac_cli jsonld-validate data/places.jsonld
+          cmp /tmp/places.jsonld data/places.jsonld
       - name: Create reviewable Pull Request
         id: pull-request
         uses: peter-evans/create-pull-request@v7
@@ -93,7 +92,7 @@ jobs:
           body: |
             Applies the checked OSM candidate decisions from #${{ github.event.issue.number }}.
 
-            The workflow re-downloaded the originating Actions artifact, verified its candidate-report SHA, rebuilt the canonical registry and public GeoJSON, and ran validation and unit tests.
+            The workflow re-downloaded the originating Actions artifact, verified its candidate-report SHA, validated the canonical JSON-LD, and ran validation and unit tests.
 
             <!-- osm-review-source:{"schemaVersion":1,"issueNumber":${{ github.event.issue.number }},"reviewPullRequestNumber":${{ steps.metadata.outputs.review_pr_number }},"reviewBranch":"${{ steps.metadata.outputs.review_branch }}"} -->
       - name: Link the Pull Request and close the completed issue

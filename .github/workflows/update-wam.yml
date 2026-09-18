@@ -29,6 +29,12 @@ jobs:
           python3 -m src.facility_data update . --source wam --at "$RETRIEVED_AT"
       - run: python3 -m src.facility_data validate .
       - run: python3 -m unittest discover -s tests -v
+      - name: Verify canonical JSON-LD data
+        run: |
+          cp data/places.jsonld /tmp/places.jsonld
+          python3 -m src.facility_data build .
+          python3 -m src.fac_cli jsonld-validate data/places.jsonld
+          cmp /tmp/places.jsonld data/places.jsonld
       - name: Produce review diff
         run: |
           git add -N .
@@ -41,7 +47,6 @@ jobs:
           path: |
             inputs/osm-search/wam/
             imports/wam/
-            data/registry.json
-            dist/public/
+            data/places.jsonld
             reports/latest-update.json
             reports/wam-update.diff
