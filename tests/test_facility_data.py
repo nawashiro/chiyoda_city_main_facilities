@@ -860,6 +860,36 @@ class JsonLdCandidateMigrationTests(unittest.TestCase):
         for marker in markers.values():
             self.assertNotIn(marker, rendered)
 
+    def test_jsonld_candidate_excludes_custom_category_ids(self):
+        root = Path(__file__).resolve().parents[1]
+        fixture_registry = json.loads(
+            (root / "tests/fixtures/registry.json").read_text(encoding="utf-8")
+        )
+        registry = deepcopy(fixture_registry)
+        custom_category_marker = "task-1.7-custom-category-marker"
+        registry["places"][0]["categoryIds"] = [custom_category_marker]
+
+        candidate = facility_data.build_jsonld_candidate(registry)
+
+        def nested_keys(value):
+            if isinstance(value, dict):
+                return set(value).union(*(nested_keys(item) for item in value.values()))
+            if isinstance(value, list):
+                return set().union(*(nested_keys(item) for item in value))
+            return set()
+
+        for record in candidate["@graph"]:
+            with self.subTest(record=record.get("@id")):
+                self.assertNotIn("categoryIds", nested_keys(record))
+
+        self.assertNotIn("categoryIds", nested_keys(candidate))
+        rendered_records = " ".join(
+            json.dumps(record, ensure_ascii=False) for record in candidate["@graph"]
+        )
+        rendered = json.dumps(candidate, ensure_ascii=False)
+        self.assertNotIn(custom_category_marker, rendered_records)
+        self.assertNotIn(custom_category_marker, rendered)
+
     def test_jsonld_candidate_excludes_search_input_publish_false_place(self):
         root = Path(__file__).resolve().parents[1]
         registry = json.loads(
