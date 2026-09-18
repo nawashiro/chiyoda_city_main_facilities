@@ -2,7 +2,7 @@
 
 ## 1. 移行基盤
 
-- [ ] 1.1 現行registryからJSON-LD候補を生成し、Place件数と既存UUIDの一致を検証するテストを追加する
+- [x] 1.1 現行registryからJSON-LD候補を生成し、Place件数と既存UUIDの一致を検証するテストを追加する
 - [ ] 1.2 JSON-LDの`@context`、URN UUID、schema.org、GeoSPARQLを定義し、JSON-LD展開検証を通す
 - [ ] 1.3 Place geometryをGeoSPARQLへ出力し、Point geometryの検証テストを通す
 - [ ] 1.4 公開Placeからaudit、参照履歴、更新時刻、投票ログを除き、非公開を検証するテストを通す

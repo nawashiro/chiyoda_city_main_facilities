@@ -4,6 +4,7 @@ import tempfile
 import unittest
 from pathlib import Path
 
+import src.facility_data as facility_data
 from src.facility_data import (
     _public_source_records,
     apply_source_updates,
@@ -619,6 +620,34 @@ class PublicSourceRecordTests(unittest.TestCase):
             write_wam_row({**raw_row, "attributes": unexpected_attributes})
             with self.assertRaisesRegex(ValueError, "official 29-column contract"):
                 _public_source_records(root)
+
+
+class JsonLdCandidateMigrationTests(unittest.TestCase):
+    def test_jsonld_candidate_represents_each_current_fixture_place_exactly_once(self):
+        root = Path(__file__).resolve().parents[1]
+        registry = json.loads(
+            (root / "tests/fixtures/registry.json").read_text(encoding="utf-8")
+        )
+
+        candidate = facility_data.build_jsonld_candidate(registry)
+        candidate_ids = [place["@id"] for place in candidate["@graph"]]
+
+        self.assertEqual(len(registry["places"]), len(candidate_ids))
+        self.assertEqual(len(candidate_ids), len(set(candidate_ids)))
+
+    def test_jsonld_candidate_maps_existing_fixture_uuids_to_urns(self):
+        root = Path(__file__).resolve().parents[1]
+        registry = json.loads(
+            (root / "tests/fixtures/registry.json").read_text(encoding="utf-8")
+        )
+
+        candidate = facility_data.build_jsonld_candidate(registry)
+        candidate_ids = {place["@id"] for place in candidate["@graph"]}
+
+        self.assertEqual(
+            {f"urn:uuid:{place['id']}" for place in registry["places"]},
+            candidate_ids,
+        )
 
 
 class PhaseZeroFilesTests(unittest.TestCase):

@@ -342,6 +342,16 @@ def build_public_geojson(
     }
 
 
+def build_jsonld_candidate(registry: dict[str, Any]) -> dict[str, Any]:
+    """Create the phase-one JSON-LD candidate with stable Place identifiers."""
+    return {
+        "@graph": [
+            {"@id": f"urn:uuid:{place['id']}"}
+            for place in registry.get("places", [])
+        ]
+    }
+
+
 def _read_json(path: Path) -> dict[str, Any]:
     return json.loads(path.read_text(encoding="utf-8"))
 
