@@ -947,6 +947,66 @@ class JsonLdCandidateMigrationTests(unittest.TestCase):
         for marker in markers.values():
             self.assertNotIn(marker, rendered)
 
+    def test_jsonld_candidate_maps_wam_to_identifier_only(self):
+        root = Path(__file__).resolve().parents[1]
+        registry = json.loads(
+            (root / "tests/fixtures/registry.json").read_text(encoding="utf-8")
+        )
+        place = registry["places"][0]
+        wam_source_record_id = "wam-task-2.2-source-record"
+        wam_records = [
+            {
+                "queryId": place["id"],
+                "id": wam_source_record_id,
+                "sourceRecordIds": [wam_source_record_id],
+                "officeIds": ["wam-task-2.2-office"],
+                "serviceCodes": ["wam-task-2.2-service-code"],
+                "serviceTypes": ["task-2.2-service-type-marker"],
+                "name": place["name"],
+                "coordinates": place["geometry"]["coordinates"],
+                "address": "task-2.2-address-marker",
+                "telephone": "task-2.2-telephone-marker",
+            }
+        ]
+
+        # RED-phase API assumption: accept normalized WAM records optionally.
+        candidate = facility_data.build_jsonld_candidate(
+            registry, wam_records=wam_records
+        )
+
+        self.assertEqual(1, len(candidate["@graph"]))
+        place_record = candidate["@graph"][0]
+        self.assertEqual(
+            [
+                {
+                    "@type": "schema:PropertyValue",
+                    "schema:propertyID": "wam",
+                    "schema:value": wam_source_record_id,
+                }
+            ],
+            place_record["schema:identifier"],
+        )
+        self.assertNotIn("rdfs:seeAlso", place_record)
+
+        def nested_keys(value):
+            if isinstance(value, dict):
+                return set(value).union(*(nested_keys(item) for item in value.values()))
+            if isinstance(value, list):
+                return set().union(*(nested_keys(item) for item in value))
+            return set()
+
+        self.assertEqual(
+            set(),
+            {"address", "serviceTypes", "telephone"} & nested_keys(place_record),
+        )
+        rendered = json.dumps(place_record, ensure_ascii=False)
+        for marker in (
+            "task-2.2-address-marker",
+            "task-2.2-service-type-marker",
+            "task-2.2-telephone-marker",
+        ):
+            self.assertNotIn(marker, rendered)
+
     def test_jsonld_candidate_uses_source_qualified_external_identifiers_without_strong_predicates(self):
         root = Path(__file__).resolve().parents[1]
         fixture_registry = json.loads(

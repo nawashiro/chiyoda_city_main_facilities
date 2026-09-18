@@ -343,7 +343,9 @@ def build_public_geojson(
 
 
 def build_jsonld_candidate(
-    registry: dict[str, Any], search_input: dict[str, Any] | None = None
+    registry: dict[str, Any],
+    search_input: dict[str, Any] | None = None,
+    wam_records: list[dict[str, Any]] | None = None,
 ) -> dict[str, Any]:
     """Create the phase-one JSON-LD candidate with stable Place identifiers."""
     excluded_place_ids = {
@@ -351,25 +353,66 @@ def build_jsonld_candidate(
         for query in (search_input or {}).get("queries", [])
         if isinstance(query, dict) and query.get("publish") is False
     }
-    return {
-        "@context": {
-            "@version": 1.1,
-            "schema": "https://schema.org/",
-            "geo": "http://www.opengis.net/ont/geosparql#",
-        },
-        "@graph": [
+    place_ids = {str(place["id"]) for place in registry.get("places", [])}
+    wam_identifiers_by_place: dict[str, list[dict[str, str]]] = {}
+
+    def wam_sort_key(record: dict[str, Any]) -> tuple[str, tuple[str, ...]]:
+        source_record_ids = record.get("sourceRecordIds")
+        if not isinstance(source_record_ids, list):
+            source_record_ids = []
+        return (str(record.get("queryId", "")), tuple(map(str, source_record_ids)))
+
+    for record in sorted(
+        (item for item in (wam_records or []) if isinstance(item, dict)),
+        key=wam_sort_key,
+    ):
+        query_id = record.get("queryId")
+        source_record_ids = record.get("sourceRecordIds")
+        if (
+            not isinstance(query_id, str)
+            or query_id not in place_ids
+            or not isinstance(source_record_ids, list)
+        ):
+            continue
+        identifiers = wam_identifiers_by_place.setdefault(query_id, [])
+        for source_record_id in sorted(
+            {item for item in source_record_ids if isinstance(item, str) and item}
+        ):
+            identifiers.append(
+                {
+                    "@type": "schema:PropertyValue",
+                    "schema:propertyID": "wam",
+                    "schema:value": source_record_id,
+                }
+            )
+
+    graph = []
+    for place in registry.get("places", []):
+        if place["id"] in excluded_place_ids:
+            continue
+        identifiers = []
+        identifier_pairs = set()
+        for ref in place.get("externalRefs", []):
+            if ref.get("status") != "current":
+                continue
+            identifier = {
+                "@type": "schema:PropertyValue",
+                "schema:propertyID": ref["sourceId"],
+                "schema:value": ref["recordId"],
+            }
+            identifiers.append(identifier)
+            identifier_pairs.add((ref["sourceId"], ref["recordId"]))
+        for identifier in wam_identifiers_by_place.get(str(place["id"]), []):
+            pair = (identifier["schema:propertyID"], identifier["schema:value"])
+            if pair in identifier_pairs:
+                continue
+            identifiers.append(identifier)
+            identifier_pairs.add(pair)
+        graph.append(
             {
                 "@id": f"urn:uuid:{place['id']}",
                 "@type": ["schema:Place", "geo:Feature"],
-                "schema:identifier": [
-                    {
-                        "@type": "schema:PropertyValue",
-                        "schema:propertyID": ref["sourceId"],
-                        "schema:value": ref["recordId"],
-                    }
-                    for ref in place.get("externalRefs", [])
-                    if ref.get("status") == "current"
-                ],
+                "schema:identifier": identifiers,
                 "geo:hasGeometry": {
                     "geo:asGeoJSON": {
                         "@value": json.dumps(
@@ -384,9 +427,14 @@ def build_jsonld_candidate(
                     }
                 },
             }
-            for place in registry.get("places", [])
-            if place["id"] not in excluded_place_ids
-        ],
+        )
+    return {
+        "@context": {
+            "@version": 1.1,
+            "schema": "https://schema.org/",
+            "geo": "http://www.opengis.net/ont/geosparql#",
+        },
+        "@graph": graph,
     }
 
 
