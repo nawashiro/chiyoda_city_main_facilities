@@ -22,6 +22,7 @@ Gitを変更履歴とし、関連先には同一性を断定しないリンク�
 - WAMの公開Placeへの反映は`rdfs:seeAlso`だけに限定します。
 - 営業時間の変換と公開は今回の対象から除外します。
 - 町名、電話番号、OSMタグの公開と導出は今回の対象から除外します。
+- 画像とrights文字列を公開Placeから除外します。
 - 三者LLM照合では、正規化済み`(base_url, model)`が全員で重複しないことを必須にします。
 - 投票ログを公開Placeデータへ保存しません。
 - GitHub PagesにDataset landing pageを置き、`schema:Dataset`と`DataDownload`で最新配布物を公開します。
@@ -31,6 +32,7 @@ Gitを変更履歴とし、関連先には同一性を断定しないリンク�
 - GeoJSONの公開、互換生成、manifest entryを即時終了します。
 - town polygonの取得、pinned data、町名の導出経路を削除します。
 - canonical JSON-LDを直接編集し、最小のvalidate CLIだけを残します。
+- リポジトリ固有の資産をCC0で公開し、OSM、Wikidata、WAMの由来と利用条件を別々に明示します。
 - 旧保守規約を削除し、このOpenSpec changeの成果物を移行の正本にします。
 - Zenodo DOI、W3ID、独自ドメインは今回の実装対象から除外します。
 

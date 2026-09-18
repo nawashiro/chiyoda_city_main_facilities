@@ -35,3 +35,12 @@ distribution MUST `contentUrl`と`encodingFormat`を含みます。
 #### Scenario: Current public distribution is generated
 - **WHEN** システムがcurrent distributionを生成します
 - **THEN** 出力はJSON-LDだけを公開形式として含みます
+
+### Requirement: Separate source and project licensing
+システム SHALL リポジトリ固有の資産をCC0として明示します。
+システム MUST OSMのODbL、WikidataのCC0、WAM配布ページの利用条件URLを個別に明示します。
+システム MUST 複数sourceを含む公開Dataset全体をCC0と表示しません。
+
+#### Scenario: Dataset metadata is published
+- **WHEN** 利用者がDataset landing pageまたはrelease metadataを取得します
+- **THEN** 利用者はproject asset licenseと各sourceの利用条件を区別できます

@@ -9,6 +9,7 @@
 - [ ] 1.5 検索入力の`publish: false`を公開除外として実装し、対象PlaceがJSON-LD distributionにないテストを通す
 - [ ] 1.6 公開Placeから町名、電話番号、OSMタグを除外し、town polygonの導出がないことを検証するテストを通す
 - [ ] 1.7 独自`categoryIds`をcanonical JSON-LDと公開distributionから削除し、出力に残らないテストを通す
+- [ ] 1.8 公開Placeから画像とrights文字列を除外し、出力に残らないテストを通す
 
 ## 2. 関連データと照合
 
@@ -35,6 +36,7 @@
 - [ ] 4.4 READMEとDiátaxis文書を移行後の正本、取得方法、互換性変更へ更新し、文書リンクを検証する
 - [ ] 4.5 旧保守規約を削除し、このOpenSpec changeを移行の正本として案内する文書を検証する
 - [ ] 4.6 `test_documentation_uses_the_diataxis_directory_structure`を削除し、データ処理テストからMarkdownの配置、行数、見出し、文言への拘束を除く
+- [ ] 4.7 repository固有資産のCC0と、OSM ODbL、Wikidata CC0、WAM配布ページURLをDataset metadataへ個別に表示し、全DatasetをCC0と表示しないテストを通す
 
 ## 5. 統合検証と移行
 

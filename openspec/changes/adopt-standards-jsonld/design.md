@@ -23,6 +23,7 @@ proposal.mdの背景と範囲を前提にします。
 - 独自オントロジー、独自URIドメイン、W3ID、DOIを導入しません。
 - 営業時間を変換または公開しません。
 - 町名、電話番号、OSMタグを公開または導出しません。
+- 画像とrights文字列を公開しません。
 - 独自`categoryIds`を公開または移行しません。
 - OSM RDFやWikidata RDFを取り込みません。
 - WAMを施設の同一性や正本として扱いません。
@@ -114,6 +115,16 @@ town polygonからの町名導出は終了します。
 町名は派生値であり、公開Place正本の責務にしません。
 電話番号とOSMタグも、上流raw snapshotに留めて公開Placeへ出しません。
 
+画像は公開可否と利用許諾を検証できないため、公開Placeへ出しません。
+
+### Licensing separates project assets from sources
+
+リポジトリ固有の資産はCC0で公開します。
+OSMはODbL、WikidataはCC0、WAMは配布ページの利用条件URLを個別に表示します。
+
+公開Dataset全体をCC0と主張しません。
+sourceごとの条件が異なるためです。
+
 ### OpenSpec change replaces legacy maintenance policy
 
 `docs/reference/data-maintenance-spec.md`を削除します。
@@ -136,6 +147,7 @@ API keyは公開データ、ログ、Release artifactへ書きません。
 - [外部モデルが利用不能] → 照合を失敗として扱い、既存の公開関連リンクを推測で変更しません。
 - [GeoJSON利用者が即時移行できない] → breaking changeをREADME、landing page、Release notesで明示します。
 - [町名を利用する利用者が移行できない] → town fieldの終了をbreaking changeとして明示します。
+- [画像利用者が移行できない] → images fieldの終了をbreaking changeとして明示します。
 
 ## Migration Plan
 
