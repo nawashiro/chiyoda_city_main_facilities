@@ -827,6 +827,45 @@ class JsonLdCandidateMigrationTests(unittest.TestCase):
         ):
             self.assertNotIn(marker, rendered)
 
+    def test_jsonld_candidate_never_emits_llm_vote_logs(self):
+        root = Path(__file__).resolve().parents[1]
+        fixture_registry = json.loads(
+            (root / "tests/fixtures/registry.json").read_text(encoding="utf-8")
+        )
+        registry = deepcopy(fixture_registry)
+        vote_log_marker = "task-2.5-llm-vote-log-marker"
+        registry["places"][0]["llmVotes"] = [
+            {
+                "candidateId": "node/task-2.5-vote",
+                "decision": "link",
+                "perspective": "visitor",
+                "record": {
+                    "recordId": "node/task-2.5-vote",
+                    "voteLog": {
+                        "marker": vote_log_marker,
+                        "updatedAt": "2026-08-01T00:00:00Z",
+                    },
+                },
+            }
+        ]
+
+        candidate = facility_data.build_jsonld_candidate(registry)
+
+        def nested_keys(value):
+            if isinstance(value, dict):
+                return set(value).union(*(nested_keys(item) for item in value.values()))
+            if isinstance(value, list):
+                return set().union(*(nested_keys(item) for item in value))
+            return set()
+
+        vote_log_keys = {"llmVotes", "voteLog", "votes"}
+        for record in candidate["@graph"]:
+            with self.subTest(record=record.get("@id")):
+                self.assertEqual(set(), vote_log_keys & nested_keys(record))
+                self.assertNotIn(
+                    vote_log_marker, json.dumps(record, ensure_ascii=False)
+                )
+
     def test_jsonld_candidate_excludes_town_phone_and_osm_tags(self):
         root = Path(__file__).resolve().parents[1]
         fixture_registry = json.loads(
