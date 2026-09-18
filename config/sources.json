@@ -24,15 +24,6 @@
       "license_url": "https://www.wam.go.jp/content/wamnet/pcpub/top/sfkopendata/",
       "attribution": "WAM NET",
       "transformation": "相談支援4サービスから東京都千代田区の施設を抽出し、同一施設を集約"
-    },
-    {
-      "id": "chiyoda-city-town-geojson",
-      "title": "千代田区町名GeoJSON",
-      "url": "https://github.com/nawashiro/chiyoda_city_town_geojson",
-      "license": "Creative Commons Attribution-ShareAlike 4.0 International",
-      "license_url": "https://creativecommons.org/licenses/by-sa/4.0/",
-      "attribution": "© Linked Open Addresses Japan",
-      "transformation": "丁目以降を削除して統合した町名ポリゴンとの点包含判定により各施設へ町名を付与"
     }
   ]
 }

@@ -1265,12 +1265,26 @@ class PhaseZeroFilesTests(unittest.TestCase):
         license_text = (root / "LICENSE").read_text(encoding="utf-8")
 
         self.assertIn("作業言語は日本語", readme)
-        self.assertIn("Creative Commons Attribution-ShareAlike 4.0 International", licenses)
+        self.assertIn(
+            "本リポジトリの独自資産は、CC0 1.0の条件で利用できます。",
+            licenses,
+        )
+        self.assertIn(
+            "https://creativecommons.org/publicdomain/zero/1.0/",
+            licenses,
+        )
         self.assertNotIn(
             "データベースはOpen Data Commons Open Database License 1.0で提供する",
             licenses,
         )
-        self.assertIn("Creative Commons Attribution-ShareAlike 4.0 International", license_text)
+        self.assertIn(
+            "Repository-specific assets: CC0 1.0 Universal",
+            license_text,
+        )
+        self.assertIn(
+            "https://creativecommons.org/publicdomain/zero/1.0/",
+            license_text,
+        )
         self.assertIn("Open Data Commons Open Database License 1.0", licenses)
 
 

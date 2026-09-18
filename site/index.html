@@ -10,6 +10,37 @@
     "@type": "Dataset",
     "name": "千代田区主要施設データ",
     "description": "東京都千代田区の主要施設をまとめたデータセットです。正規のデータは、このページに埋め込んだJSON-LDです。",
+    "hasPart": [
+      {
+        "@type": "Dataset",
+        "identifier": "repository",
+        "name": "Repository-specific assets",
+        "description": "Assets created for this repository and included in the combined dataset. These assets are dedicated to the public domain under CC0 1.0.",
+        "license": "https://creativecommons.org/publicdomain/zero/1.0/"
+      },
+      {
+        "@type": "Dataset",
+        "identifier": "openstreetmap",
+        "name": "OpenStreetMap data",
+        "description": "OpenStreetMap data used for facility mapping and location context. The data is available under the Open Data Commons Open Database License 1.0.",
+        "creditText": "© OpenStreetMap contributors",
+        "license": "https://opendatacommons.org/licenses/odbl/1-0/"
+      },
+      {
+        "@type": "Dataset",
+        "identifier": "wikidata",
+        "name": "Wikidata data",
+        "description": "Wikidata statements used to enrich facility metadata. The data is dedicated to the public domain under CC0 1.0.",
+        "license": "https://creativecommons.org/publicdomain/zero/1.0/"
+      },
+      {
+        "@type": "Dataset",
+        "identifier": "wam",
+        "name": "WAM source data",
+        "description": "Source data distributed by WAM under the terms published on its open-data distribution page.",
+        "license": "https://www.wam.go.jp/content/wamnet/pcpub/top/sfkopendata/"
+      }
+    ],
     "distribution": {
       "@type": "DataDownload",
       "contentUrl": "https://nawashiro.github.io/chiyoda_city_main_facilities/places.jsonld",

@@ -66,5 +66,6 @@ git diff --check
 
 ## 出典とライセンス
 
-このプロジェクトの独自著作物はCreative Commons Attribution-ShareAlike 4.0 Internationalで提供します。
+このリポジトリ固有資産（repository-specific assets）は[CC0 1.0 Universal](https://creativecommons.org/publicdomain/zero/1.0/)で提供します。
+外部ソースのライセンスは個別に適用されます。統合データセット（combined Dataset）は、単一の一様なCC0ライセンスではありません。
 外部データの出典と利用条件は[SOURCES_AND_LICENSES.md](SOURCES_AND_LICENSES.md)と`config/sources.json`に記録します。
