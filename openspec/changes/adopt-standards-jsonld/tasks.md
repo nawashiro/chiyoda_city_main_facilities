@@ -9,7 +9,7 @@
 - [x] 1.5 検索入力の`publish: false`を公開除外として実装し、対象PlaceがJSON-LD distributionにないテストを通す
 - [x] 1.6 公開Placeから町名、電話番号、OSMタグを除外し、town polygonの導出がないことを検証するテストを通す
 - [x] 1.7 独自`categoryIds`をcanonical JSON-LDと公開distributionから削除し、出力に残らないテストを通す
-- [ ] 1.8 公開Placeから画像とrights文字列を除外し、出力に残らないテストを通す
+- [x] 1.8 公開Placeから画像とrights文字列を除外し、出力に残らないテストを通す
 
 ## 2. 関連データと照合
 

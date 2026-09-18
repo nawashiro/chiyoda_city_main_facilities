@@ -890,6 +890,50 @@ class JsonLdCandidateMigrationTests(unittest.TestCase):
         self.assertNotIn(custom_category_marker, rendered_records)
         self.assertNotIn(custom_category_marker, rendered)
 
+    def test_jsonld_candidate_excludes_images_and_rights_metadata(self):
+        root = Path(__file__).resolve().parents[1]
+        fixture_registry = json.loads(
+            (root / "tests/fixtures/registry.json").read_text(encoding="utf-8")
+        )
+        registry = deepcopy(fixture_registry)
+        markers = {
+            "image_url": "https://example.invalid/task-1.8-image-marker.webp",
+            "image_metadata": "task-1.8-image-metadata-marker",
+            "rights": "task-1.8-rights-marker",
+            "license": "task-1.8-license-marker",
+        }
+        registry["places"][0]["images"] = [
+            {
+                "url": f"{markers['image_url']}?metadata={markers['image_metadata']}",
+                "rights": f"{markers['rights']} ({markers['license']})",
+            }
+        ]
+
+        candidate = facility_data.build_jsonld_candidate(registry)
+
+        def nested_keys(value):
+            if isinstance(value, dict):
+                return set(value).union(*(nested_keys(item) for item in value.values()))
+            if isinstance(value, list):
+                return set().union(*(nested_keys(item) for item in value))
+            return set()
+
+        forbidden_keys = {
+            "image",
+            "images",
+            "imageUri",
+            "imageCopyright",
+            "rights",
+            "license",
+            "licenseUrl",
+        }
+        emitted_keys = nested_keys(candidate)
+        self.assertEqual(set(), forbidden_keys & emitted_keys)
+
+        rendered = json.dumps(candidate, ensure_ascii=False)
+        for marker in markers.values():
+            self.assertNotIn(marker, rendered)
+
     def test_jsonld_candidate_excludes_search_input_publish_false_place(self):
         root = Path(__file__).resolve().parents[1]
         registry = json.loads(
