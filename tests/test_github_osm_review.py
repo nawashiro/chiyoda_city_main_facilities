@@ -7,10 +7,8 @@ import unittest
 from pathlib import Path
 
 from src.github_osm_review import (
-    apply_issue_selections,
     apply_yaml_selections,
     build_issue_document,
-    build_issue_documents,
     build_review_yaml,
     main,
     parse_issue_metadata,
@@ -18,19 +16,6 @@ from src.github_osm_review import (
 
 
 class GithubOsmReviewTests(unittest.TestCase):
-    def test_splits_review_queries_into_separate_issue_documents(self):
-        report = self.review_report()
-        second = copy.deepcopy(report["queries"][0])
-        second["queryId"] = "019c0000-0000-7000-8000-000000000302"
-        report["queries"].append(second)
-
-        issues = build_issue_documents(
-            report, run_id="12345", artifact_name="osm-update-12345", report_sha256="0" * 64
-        )
-
-        self.assertEqual(2, len(issues))
-        self.assertIn(second["queryId"], issues[1]["body"])
-
     def review_report(self):
         return {
             "version": "2026-07-29T00:00:00Z",
@@ -77,7 +62,21 @@ class GithubOsmReviewTests(unittest.TestCase):
             ],
         }
 
-    def test_builds_one_clickable_issue_with_all_candidate_attributes(self):
+    def test_rejects_legacy_issue_body_candidate_selection(self):
+        report = self.review_report()
+        payload = (json.dumps(report, ensure_ascii=False, indent=2) + "\n").encode()
+
+        # API assumption for the cutover: legacy calls fail explicitly rather than
+        # returning an Issue body that exposes candidate-selection controls.
+        with self.assertRaisesRegex(ValueError, "candidate selection.*disabled"):
+            build_issue_document(
+                report,
+                run_id="12345",
+                artifact_name="osm-update-12345",
+                report_sha256=hashlib.sha256(payload).hexdigest(),
+            )
+
+    def test_keeps_branch_pr_issue_body_yaml_only(self):
         report = self.review_report()
         payload = (json.dumps(report, ensure_ascii=False, indent=2) + "\n").encode()
 
@@ -86,31 +85,44 @@ class GithubOsmReviewTests(unittest.TestCase):
             run_id="12345",
             artifact_name="osm-update-12345",
             report_sha256=hashlib.sha256(payload).hexdigest(),
+            review_branch="automation/osm-review-12345",
+            review_pull_request_number=42,
         )
 
-        self.assertEqual("OSM候補の人間確認（Actions run 12345）", issue["title"])
-        self.assertIn("osm-human-review", issue["labels"])
-        self.assertIn("operator", issue["body"])
-        self.assertIn("contact:phone", issue["body"])
-        self.assertIn("https://www.openstreetmap.org/node/1", issue["body"])
-        self.assertIn("<!-- osm-choice:019c0000-0000-7000-8000-000000000301:link:node/1 -->", issue["body"])
-        self.assertIn("<!-- osm-choice:019c0000-0000-7000-8000-000000000301:reject:none -->", issue["body"])
-        self.assertIn("<!-- osm-apply -->", issue["body"])
+        if issue is None:
+            self.fail("branch+PR review should produce an Issue document")
+        body = issue["body"]
+        edit_url = (
+            "https://github.com/nawashiro/chiyoda_city_main_facilities"
+            "/edit/automation/osm-review-12345/reports/osm-review-needed.yaml"
+        )
+        self.assertEqual(1, body.count(edit_url))
+        self.assertEqual(1, body.count("/edit/"))
+        self.assertEqual(1, body.count("]("))
+        self.assertEqual(1, body.count("<!-- osm-apply -->"))
+        self.assertIn("- [ ] <!-- osm-apply -->", body)
+        checkbox_lines = [line for line in body.splitlines() if line.startswith("- [")]
+        self.assertEqual(1, len(checkbox_lines))
+        self.assertNotIn("osm-candidates.json", body)
+        self.assertNotIn("osm-candidates", body)
+        self.assertNotIn(".json", body)
+        self.assertNotIn("candidateId", body)
+        self.assertNotIn("recordId", body)
+        self.assertNotIn("osm-choice:", body)
+        self.assertNotIn("候補の全属性", body)
+        self.assertNotIn("候補なし（どの候補とも一致しない）", body)
+        for candidate in report["queries"][0]["candidates"]:
+            self.assertNotIn(candidate["name"], body)
+            self.assertNotIn(candidate["recordId"], body)
+        self.assertNotIn("contact:phone", body)
 
-    def test_applies_exactly_one_checked_choice_after_artifact_hash_validation(self):
+    def test_applies_exactly_one_yaml_choice_after_artifact_hash_validation(self):
         report = self.review_report()
         payload = (json.dumps(report, ensure_ascii=False, indent=2) + "\n").encode()
         report_sha = hashlib.sha256(payload).hexdigest()
-        issue = build_issue_document(
-            report,
-            run_id="12345",
-            artifact_name="osm-update-12345",
-            report_sha256=report_sha,
+        review_yaml = build_review_yaml(report, report_sha256=report_sha).replace(
+            '"候補 node/1: 候補A": false', '"候補 node/1: 候補A": true'
         )
-        body = issue["body"].replace(
-            "- [ ] <!-- osm-choice:019c0000-0000-7000-8000-000000000301:link:node/1 -->",
-            "- [x] <!-- osm-choice:019c0000-0000-7000-8000-000000000301:link:node/1 -->",
-        ).replace("- [ ] <!-- osm-apply -->", "- [x] <!-- osm-apply -->")
 
         with tempfile.TemporaryDirectory() as directory:
             root = Path(directory)
@@ -121,9 +133,9 @@ class GithubOsmReviewTests(unittest.TestCase):
                 json.dumps({"records": []}), encoding="utf-8"
             )
 
-            result = apply_issue_selections(
+            result = apply_yaml_selections(
                 root,
-                body,
+                review_yaml,
                 issue_url="https://github.com/example/repo/issues/7",
             )
             normalized = json.loads(
@@ -133,8 +145,17 @@ class GithubOsmReviewTests(unittest.TestCase):
                 (root / "reports/osm-candidates.json").read_text()
             )
 
-        self.assertEqual("12345", result["runId"])
-        self.assertEqual("osm-update-12345", result["artifactName"])
+        self.assertEqual(report_sha, result["reportSha256"])
+        self.assertEqual(
+            [
+                {
+                    "queryId": "019c0000-0000-7000-8000-000000000301",
+                    "decision": "link",
+                    "candidateId": "node/1",
+                }
+            ],
+            result["choices"],
+        )
         self.assertEqual("human_review", normalized["records"][0]["matchBasis"])
         self.assertEqual("node/1", f"{normalized['records'][0]['type']}/{normalized['records'][0]['id']}")
         self.assertEqual("linked_human", updated_report["queries"][0]["status"])
@@ -143,14 +164,11 @@ class GithubOsmReviewTests(unittest.TestCase):
             updated_report["queries"][0]["humanReview"]["issueUrl"],
         )
 
-    def test_rejects_an_incomplete_issue_selection(self):
+    def test_rejects_an_incomplete_yaml_selection(self):
         report = self.review_report()
         payload = (json.dumps(report, ensure_ascii=False, indent=2) + "\n").encode()
-        issue = build_issue_document(
-            report,
-            run_id="12345",
-            artifact_name="osm-update-12345",
-            report_sha256=hashlib.sha256(payload).hexdigest(),
+        review_yaml = build_review_yaml(
+            report, report_sha256=hashlib.sha256(payload).hexdigest()
         )
         with tempfile.TemporaryDirectory() as directory:
             root = Path(directory)
@@ -160,26 +178,15 @@ class GithubOsmReviewTests(unittest.TestCase):
             (root / "imports/openstreetmap/normalized.json").write_text(
                 json.dumps({"records": []}), encoding="utf-8"
             )
-            with self.assertRaisesRegex(ValueError, "apply checkbox"):
-                apply_issue_selections(root, issue["body"], issue_url="https://example/7")
+            with self.assertRaisesRegex(ValueError, "exactly one YAML option"):
+                apply_yaml_selections(root, review_yaml, issue_url="https://example/7")
 
-            incomplete = issue["body"].replace("- [ ] <!-- osm-apply -->", "- [x] <!-- osm-apply -->")
-            with self.assertRaisesRegex(ValueError, "exactly one choice"):
-                apply_issue_selections(root, incomplete, issue_url="https://example/7")
-
-    def test_rejects_an_artifact_with_a_different_hash_before_reading_choices(self):
+    def test_rejects_an_artifact_with_a_different_hash(self):
         report = self.review_report()
         payload = (json.dumps(report, ensure_ascii=False, indent=2) + "\n").encode()
-        issue = build_issue_document(
-            report,
-            run_id="12345",
-            artifact_name="osm-update-12345",
-            report_sha256=hashlib.sha256(payload).hexdigest(),
-        )
-        body = issue["body"].replace(
-            "- [ ] <!-- osm-choice:019c0000-0000-7000-8000-000000000301:link:node/1 -->",
-            "- [x] <!-- osm-choice:019c0000-0000-7000-8000-000000000301:link:node/1 -->",
-        ).replace("- [ ] <!-- osm-apply -->", "- [x] <!-- osm-apply -->")
+        review_yaml = build_review_yaml(
+            report, report_sha256=hashlib.sha256(payload).hexdigest()
+        ).replace('"候補 node/1: 候補A": false', '"候補 node/1: 候補A": true')
 
         with tempfile.TemporaryDirectory() as directory:
             root = Path(directory)
@@ -191,7 +198,7 @@ class GithubOsmReviewTests(unittest.TestCase):
             )
 
             with self.assertRaisesRegex(ValueError, "does not match the reviewed artifact"):
-                apply_issue_selections(root, body, issue_url="https://example/7")
+                apply_yaml_selections(root, review_yaml, issue_url="https://example/7")
 
     def test_rejects_same_osm_candidate_selected_for_multiple_queries(self):
         report = self.review_report()
@@ -205,19 +212,10 @@ class GithubOsmReviewTests(unittest.TestCase):
         }
         report["queries"].append(second)
         payload = (json.dumps(report, ensure_ascii=False, indent=2) + "\n").encode()
-        issue = build_issue_document(
-            report,
-            run_id="12345",
-            artifact_name="osm-update-12345",
-            report_sha256=hashlib.sha256(payload).hexdigest(),
-        )
-        body = issue["body"]
-        for query_id in (report["queries"][0]["queryId"], second["queryId"]):
-            body = body.replace(
-                f"- [ ] <!-- osm-choice:{query_id}:link:node/1 -->",
-                f"- [x] <!-- osm-choice:{query_id}:link:node/1 -->",
-            )
-        body = body.replace("- [ ] <!-- osm-apply -->", "- [x] <!-- osm-apply -->")
+        review_yaml = build_review_yaml(
+            report, report_sha256=hashlib.sha256(payload).hexdigest()
+        ).replace('"候補 node/1: 候補A": false', '"候補 node/1: 候補A": true')
+        self.assertEqual(2, review_yaml.count('"候補 node/1: 候補A": true'))
 
         with tempfile.TemporaryDirectory() as directory:
             root = Path(directory)
@@ -228,7 +226,7 @@ class GithubOsmReviewTests(unittest.TestCase):
                 json.dumps({"records": []}), encoding="utf-8"
             )
             with self.assertRaisesRegex(ValueError, "duplicate current OSM recordId"):
-                apply_issue_selections(root, body, issue_url="https://example/7")
+                apply_yaml_selections(root, review_yaml, issue_url="https://example/7")
 
     def test_builds_compact_issue_and_editable_yaml_for_an_oversized_review(self):
         report = self.review_report()

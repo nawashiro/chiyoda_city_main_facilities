@@ -184,6 +184,8 @@ def build_issue_document(
         return None
     if (review_branch is None) != (review_pull_request_number is None):
         raise ValueError("OSM review branch and pull request number must be supplied together")
+    if review_branch is None:
+        raise ValueError("legacy candidate selection is disabled; review YAML/PR is required")
     metadata = {
         "schemaVersion": 4 if review_branch else 2,
         "runId": str(run_id),

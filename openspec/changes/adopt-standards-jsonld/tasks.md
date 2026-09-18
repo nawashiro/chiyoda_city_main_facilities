@@ -18,7 +18,7 @@
 - [x] 2.3 WAMの複数サービスrecordを施設recordへ複製せず、各外部識別子として保持し、WAM IRIを合成しないテストを通す
 - [x] 2.4 三者LLM設定を分離し、重複する正規化済み`(base_url, model)`を拒否するテストを通す
 - [x] 2.5 公開JSON-LDにLLM投票ログを保存しないことを検証するテストを通す
-- [ ] 2.6 candidate reportのSHA-256 bindingと重複OSM割当拒否を維持したreview YAML/PR経路へ一本化し、Issue本文選択経路を削除するテストを通す
+- [x] 2.6 candidate reportのSHA-256 bindingと重複OSM割当拒否を維持したreview YAML/PR経路へ一本化し、Issue本文選択経路を削除するテストを通す
 
 ## 3. 更新経路の簡素化
 
