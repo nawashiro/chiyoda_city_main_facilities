@@ -33,7 +33,7 @@
 - [x] 4.1 GitHub Pages用Dataset landing pageを作り、`schema:Dataset`のname、description、URLを検証する
 - [x] 4.2 current JSON-LDを`DataDownload`として公開し、content URLとencoding formatを検証する
 - [x] 4.3 GitHub Releaseへ版固定JSON-LD snapshotを添付するworkflowを追加し、dry-runまたはfixtureでartifactを検証する
-- [ ] 4.4 READMEとDiátaxis文書を移行後の正本、取得方法、互換性変更へ更新し、文書リンクを検証する
+- [x] 4.4 READMEとDiátaxis文書を移行後の正本、取得方法、互換性変更へ更新し、文書リンクを検証する
 - [ ] 4.5 旧保守規約を削除し、このOpenSpec changeを移行の正本として案内する文書を検証する
 - [ ] 4.6 `test_documentation_uses_the_diataxis_directory_structure`を削除し、データ処理テストからMarkdownの配置、行数、見出し、文言への拘束を除く
 - [ ] 4.7 repository固有資産のCC0と、OSM ODbL、Wikidata CC0、WAM配布ページURLをDataset metadataへ個別に表示し、全DatasetをCC0と表示しないテストを通す

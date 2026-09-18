@@ -1,194 +1,125 @@
-# 属性リファレンス
+# `data/places.jsonld` 属性リファレンス
 
-このデータベースが保持する2つの主要ファイル — 正本（`data/registry.json`）と公開用GeoJSON（`dist/public/places.geojson`）の各属性と取りうる値を説明します。
+この文書は、公開正本 `data/places.jsonld` だけを説明します。
+このファイルは、JSON-LD 1.1 で施設の識別子、位置、外部識別子を表します。
 
-## データの関係
+## 公開URL
 
-`data/registry.json` が唯一の正本（canonical source of truth）です。`dist/public/places.geojson` は正本から機械的に生成される公開用の派生物であり、公開に適さない内部情報（監査記録、外部参照の履歴、座標の採用元など）を含みません。
+| 配布物 | URL | 内容 |
+|---|---|---|
+| GitHub Pages | `https://nawashiro.github.io/chiyoda_city_main_facilities/` | Dataset の案内ページ |
+| current JSON-LD | `https://nawashiro.github.io/chiyoda_city_main_facilities/places.jsonld` | 現在の `data/places.jsonld` |
+| GitHub Releases | `https://github.com/nawashiro/chiyoda_city_main_facilities/releases` | 版固定スナップショットの一覧 |
+| Release snapshot | `https://github.com/nawashiro/chiyoda_city_main_facilities/releases/download/<tag>/places-<tag>.jsonld` | 指定したタグの JSON-LD |
 
----
+GitHub Pages は現在のデータを配布します。
+GitHub Release は `places-<tag>.jsonld` として版固定データを添付します。
 
-## `data/registry.json` — 正本（Placeレジストリ）
+## 文書の構造
 
-施設（Place）の完全な情報を保持します。1施設 = 1つのPlaceオブジェクトです。
-
-### トップレベル
-
-| 属性 | 型 | 説明 |
-|------|----|------|
-| `schemaVersion` | 整数 | スキーマの版。現在は `1` のみ |
-| `places` | 配列 | Placeオブジェクトの配列 |
-
-### Placeオブジェクト
-
-#### 基本属性
-
-| 属性 | 型 | 必須 | 説明 |
-|------|----|:--:|------|
-| `id` | 文字列 | ✓ | 施設の永続識別子。UUIDv7形式（生成時刻でソート可能なUUID。例：`019fa880-5cd4-78e1-aa8b-c4ce83a065bc`） |
-| `name` | 文字列 | ✓ | 施設の表示名。日本語表記で、検索入力時に人が与えた名称 |
-| `categoryIds` | 文字列の配列 | ✓ | 施設の分類。1件以上のカテゴリIDを持つ（[カテゴリ一覧](#カテゴリ一覧)参照） |
-| `tags` | 文字列の配列 | ✓ | 任意の文字列ラベル。空配列も可。施設をアプリケーション側で絞り込むための付加情報として使われる（例：`kazaguruma.home-shortcut` は特定アプリのホーム画面ショートカット対象） |
-
-#### 位置情報
-
-| 属性 | 型 | 必須 | 説明 |
-|------|----|:--:|------|
-| `geometry` | オブジェクト | ✓ | 施設の位置。GeoJSON Point形式（地理空間データの標準形式、RFC 7946）。`{"type": "Point", "coordinates": [経度, 緯度]}` |
-| `geometrySource` | オブジェクト | ✓ | 現在の座標がどの外部ソースから採用されたかの記録 |
-
-`geometrySource` の内訳：
+ファイルのトップレベルは、次の2属性を持ちます。
 
 | 属性 | 型 | 説明 |
-|------|----|------|
-| `sourceId` | 文字列 | 採用元：`"openstreetmap"`（OpenStreetMap）/ `"wam"`（WAM NET福祉施設オープンデータ）/ `"search-input"`（人手入力の座標） |
-| `recordId` | 文字列 | 採用元でのレコードID（OSMなら `node/123` や `way/456`、WAMなら `A0000110598` や `E0000085562` 等） |
-| `confirmedAt` | 日時 | この座標の採用を確定した時刻（ISO 8601） |
+|---|---|---|
+| `@context` | オブジェクト | JSON-LD 1.1 の語彙と処理規則を宣言します。 |
+| `@graph` | 配列 | `schema:Place` のレコードを並べます。 |
 
-#### 画像
+### `@context`
 
-| 属性 | 型 | 必須 | 説明 |
-|------|----|:--:|------|
-| `images` | オブジェクトの配列 | ✓ | 施設の画像。空配列も可 |
+現行の `@context` は次の内容です。
 
-各画像オブジェクト：
+```json
+{
+  "@version": 1.1,
+  "geo": "http://www.opengis.net/ont/geosparql#",
+  "schema": "https://schema.org/"
+}
+```
 
-| 属性 | 型 | 説明 |
-|------|----|------|
-| `url` | 文字列 | 画像のURL |
-| `rights` | 文字列 | 権利表記（例：`"© Nawashiro"`） |
+| 項目 | 値 | 説明 |
+|---|---|---|
+| `@version` | `1.1` | JSON-LD 1.1 を指定します。仕様は [JSON-LD 1.1](https://www.w3.org/TR/json-ld11/) です。 |
+| `schema` | `https://schema.org/` | Schema.org 語彙を指定します。 |
+| `geo` | `http://www.opengis.net/ont/geosparql#` | OGC GeoSPARQL 語彙を指定します。 |
 
-#### 外部参照
+`rdfs:seeAlso` を収録するレコードは、`rdfs` に `http://www.w3.org/2000/01/rdf-schema#` を割り当てます。
+RDF Schema の `seeAlso` は、[rdfs:seeAlso](http://www.w3.org/2000/01/rdf-schema#seeAlso) で定義されます。
 
-| 属性 | 型 | 必須 | 説明 |
-|------|----|:--:|------|
-| `externalRefs` | オブジェクトの配列 | ✓ | 外部データソース（OSM (OpenStreetMap)、WAM）の参照記録 |
+## Place レコード
 
-各参照の内訳：
+`@graph` の各レコードは、次の属性を持ちます。
 
-| 属性 | 型 | 説明 |
-|------|----|------|
-| `sourceId` | 文字列 | 参照元：`"openstreetmap"` / `"wam"` |
-| `recordId` | 文字列 | 参照元でのレコードID |
-| `status` | 文字列 | 参照の状態。`"current"`（有効な参照）または`"superseded"`（差し替え済み） |
-| `firstConfirmedAt` | 日時 | この参照が最初に確定した時刻 |
-| `lastConfirmedAt` | 日時 | この参照が最後に（再）確定された時刻 |
-| `supersededAt` | 日時またはnull | 差し替えられた時刻。`"current"`の間は`null` |
-| `basis` | 文字列 | 同定の根拠：`"name_coordinates"`（名称＋座標の一致）/ `"source_record"`（WAMの直接レコード）/ `"language_model"`（大規模言語モデルによる合議判断）/ `"human_review"`（人手による確認） |
+| 属性 | 型 | 値または形式 | 説明 |
+|---|---|---|---|
+| `@id` | 文字列 | `urn:uuid:<UUID>` | 施設の永続識別子です。 |
+| `@type` | 配列 | `schema:Place`、`geo:Feature` | 施設と地理フィーチャーの標準型を指定します。 |
+| `geo:hasGeometry` | オブジェクト | `geo:asGeoJSON` を含む | 施設の位置を指定します。 |
+| `schema:identifier` | 配列 | `schema:PropertyValue` の配列 | 外部データの識別子を指定します。該当する識別子がない場合は空配列です。 |
+| `rdfs:seeAlso` | URI文字列 | 明示された解決可能URI | 入力が明示的に与えた関連URIがある場合だけ指定します。 |
 
-#### ライフサイクルと公開範囲
+`@type` は、Schema.org の [Place](https://schema.org/Place) と GeoSPARQL の [Feature](http://www.opengis.net/ont/geosparql#Feature) を必ず含みます。
 
-| 属性 | 型 | 必須 | 説明 |
-|------|----|:--:|------|
-| `lifecycle` | オブジェクト | ✓ | 施設の運用状態 |
+`@id` は、ドメイン名に依存しない `urn:uuid` 識別子です。
+この識別子を、Webで解決できるURLとして扱いません。
 
-`lifecycle` の内訳：
+### 位置情報
 
-| 属性 | 型 | 説明 |
-|------|----|------|
-| `status` | 文字列 | 現在は`"active"`（運用中）。閉鎖などの状態は未実装 |
-| `changedAt` | 日時 | この状態になった時刻 |
+`geo:hasGeometry` の値はオブジェクトです。
+このオブジェクトは `geo:asGeoJSON` を持ちます。
 
-| 属性 | 型 | 必須 | 説明 |
-|------|----|:--:|------|
-| `visibility` | オブジェクト | ✓ | 公開範囲 |
+`geo:asGeoJSON` は、次の2属性を持ちます。
 
-`visibility` の内訳：
+| 属性 | 値 | 説明 |
+|---|---|---|
+| `@type` | `geo:geoJSONLiteral` | GeoJSON リテラル型を指定します。語彙は [geoJSONLiteral](http://www.opengis.net/ont/geosparql#geoJSONLiteral) です。 |
+| `@value` | JSON文字列 | GeoJSON の `Point` を文字列で指定します。 |
 
-| 属性 | 型 | 説明 |
-|------|----|------|
-| `status` | 文字列 | `"public"`（公開）または`"private"`（非公開） |
-| `changedAt` | 日時 | この状態になった時刻 |
+`@value` の文字列は、次の形式です。
 
-#### 監査記録
+```json
+{"type":"Point","coordinates":[経度,緯度]}
+```
 
-| 属性 | 型 | 必須 | 説明 |
-|------|----|:--:|------|
-| `audit` | オブジェクトの配列 | ✓ | このPlaceに対して行われた操作の監査証跡 |
+`coordinates` は、経度、緯度の順に2つの数値を持ちます。
+`Point` 以外のジオメトリ型を収録しません。
 
-各監査エントリの内訳：
+### 外部識別子
 
-| 属性 | 型 | 説明 |
-|------|----|------|
-| `at` | 日時 | 操作が行われた時刻 |
-| `method` | 文字列 | 操作の主体：`"human_inference"`（人手）/ `"calculation_model"`（自動計算）/ `"language_model"`（大規模言語モデルによる判断） |
-| `action` | 文字列 | 操作の種類：`"created"`（Place作成）/ `"linked_osm"`（OSM参照追加）/ `"linked_wam"`（WAM参照追加）/ `"updated_geometry"`（座標更新） |
-| `target` | 文字列 | 操作対象。Place作成時は `"place"`、OSM/WAMの参照操作時は `"node/123"` 等のレコードID、座標更新時はPlaceのUUID |
-| `searchInputSha256` | 64文字の16進数文字列 | `linked_osm`で再同定を採用した場合だけ記録する。前回同定時の検索入力（`name`と`coordinates`または`qid`）をcanonical JSON化し、UTF-8 bytesから計算するSHA-256 |
+`schema:identifier` の各要素は、次の [PropertyValue](https://schema.org/PropertyValue) オブジェクトです。
 
-`searchInputSha256`がない監査エントリは4キーを持つ。`searchInputSha256`を持つ監査エントリは、OSM再同定の検索入力由来を示す。
+| 属性 | 値または形式 | 説明 |
+|---|---|---|
+| `@type` | `schema:PropertyValue` | 識別子の値を構造化する標準型です。 |
+| `schema:propertyID` | 文字列 | 識別子を発行したソースの識別子です。Schema.org の [propertyID](https://schema.org/propertyID) に対応します。 |
+| `schema:value` | 文字列 | ソース内のレコード識別子です。Schema.org の [value](https://schema.org/value) に対応します。 |
 
----
+`schema:propertyID` に `openstreetmap` や `wam` を設定します。
+`schema:value` に、ソースが示すレコード識別子をそのまま設定します。
+識別子から新しいURIを推測または合成しません。
 
-## `dist/public/places.geojson` — 公開用GeoJSON
+### `rdfs:seeAlso`
 
-正本から自動生成される、配布・利用者向けのファイルです。RFC 7946（GeoJSON）準拠。
+`rdfs:seeAlso` は任意属性です。
+入力に解決可能なURIが明示されている場合だけ、そのURIを設定します。
 
-### トップレベル
+外部レコードのID、ソース名、関連リンクだけから `rdfs:seeAlso` を生成しません。
+明示されたURIがないレコードは、この属性を省略します。
+現行の `data/places.jsonld` は `rdfs:seeAlso` を収録しません。
 
-| 属性 | 型 | 説明 |
-|------|----|------|
-| `type` | 文字列 | 固定値 `"FeatureCollection"` |
-| `sourceAttributions` | 配列 | 使用した外部データソースの帰属情報。施設データのソース（OSM (OpenStreetMap)、WAM）に加え、町名判定に使用した町名ポリゴンデータ（`chiyoda-city-town-geojson`）も含む |
-| `features` | 配列 | Featureオブジェクトの配列（施設数と同数） |
+## 意図的に収録しない属性
 
-### `sourceAttributions` の各要素
+次の属性は、`data/places.jsonld` の仕様に含めません。
 
-| 属性 | 型 | 説明 |
-|------|----|------|
-| `sourceId` | 文字列 | ソース識別子（`"chiyoda-city-town-geojson"` / `"openstreetmap"` / `"wam"`） |
-| `url` | 文字列 | ソースの公式URL |
-| `license` | 文字列 | ライセンス名 |
-| `licenseUrl` | 文字列 | ライセンス文書のURL |
-| `version` | 文字列 | 取得時の版（コミットハッシュ、リリース版等） |
-| `retrievedAt` | 日時 | 取得日時 |
-| `sha256` | 文字列 | 取得データのSHA-256ハッシュ |
-| `attribution` | 文字列 | 表示用の帰属表記 |
-| `transformation` | 文字列 | このDBで適用した加工の概要 |
+| 属性 | 除外理由 |
+|---|---|
+| `audit` | 操作の監査記録を公開しません。 |
+| `history` | 参照や更新の履歴をPlaceへ含めません。 |
+| `timestamps` | 取得、確認、変更の時刻をPlaceへ含めません。 |
+| `votes` | 自動照合や人手評価の投票を公開しません。 |
+| `town` | 位置から導出する町名を公開しません。 |
+| `phone` | 電話番号を公開しません。 |
+| `images` | 画像を公開しません。 |
+| `rights` | 画像に関する権利表記を公開しません。 |
+| `categoryIds` | プロジェクト固有の分類IDを公開しません。 |
 
-### Featureの`properties`
-
-各施設はGeoJSON Featureとして表現され、`geometry`はPoint（`[経度, 緯度]`）です。
-
-| 属性 | 型 | 説明 |
-|------|----|------|
-| `id` | 文字列 | 正本と同じUUIDv7 |
-| `name` | 文字列 | 正本と同じ施設名 |
-| `categoryIds` | 文字列の配列 | 正本と同じカテゴリID（[カテゴリ一覧](#カテゴリ一覧)参照） |
-| `tags` | 文字列の配列 | 正本と同じタグ |
-| `images` | オブジェクトの配列 | 正本と同じ画像情報（`url` と `rights`） |
-| `town` | 文字列またはnull | 町名ポリゴンとの点包含判定で得た町名。データの粒度を「町」レベルに統一するため丁目以降を削除している。該当施設がどの町ポリゴンにも含まれない場合は`null` |
-| `lifecycleStatus` | 文字列 | 正本の `lifecycle.status` と同じ。現在は `"active"` のみ |
-| `sources` | オブジェクト | 外部ソースから取得した参照データ。以下のキーを持ちうる：<br>`openstreetmap` — 存在する場合、`retrievedAt`（取得日時）と `record`（OSMノード/ウェイ/リレーションのスナップショット）を含む<br>`wam` — 存在する場合、`retrievedAt`（取得日時）と `records`（WAMレコードの配列）を含む |
-
-> **注**: `sources`に含まれる`openstreetmap`および`wam`の詳細な属性は、それぞれOpenStreetMapとWAM NETが提供する外部データです。このデータベースの責務範囲外のため、本ドキュメントでは説明しません。各ソースの公式ドキュメントを参照してください。
-
-### 正本にのみ存在する属性（公開GeoJSONに含まれないもの）
-
-公開GeoJSONには以下の属性は**含まれません**。
-
-- `geometrySource` — 座標の採用元記録
-- `externalRefs` — 外部参照の履歴と同定根拠
-- `lifecycle.changedAt` / `visibility.changedAt` — 状態変更の時刻
-- `visibility` — 公開範囲。`public`以外のPlaceは公開GeoJSONから除外
-- `audit` — 監査証跡
-
----
-
-## カテゴリ一覧
-
-`categoryIds` で使用されるカテゴリIDとその意味です。
-
-| 値 | 意味 |
-|----|------|
-| `art-museum` | 美術館 |
-| `buddhist-temple` | 寺院 |
-| `christian-church` | 教会 |
-| `cinema` | 映画館 |
-| `disability-support` | 障害者相談支援事業所 |
-| `library` | 図書館 |
-| `museum` | 博物館 |
-| `park` | 公園 |
-| `public-bath` | 公衆浴場・銭湯 |
-| `public-office` | 区役所・出張所等の公的窓口 |
-| `social-welfare` | 社会福祉施設 |
+除外属性を、別名の独自属性へ置き換えません。

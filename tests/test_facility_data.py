@@ -1258,27 +1258,6 @@ class PhaseZeroFilesTests(unittest.TestCase):
         self.assertEqual(hashlib.sha256(first_bytes).hexdigest(), manifest["sha256"])
         self.assertEqual("places.geojson", manifest["file"])
 
-    def test_readme_and_ci_use_only_the_new_pipeline(self):
-        root = Path(__file__).resolve().parents[1]
-        readme = (root / "README.md").read_text(encoding="utf-8")
-        source_how_to = (root / "docs/how-to/update-source-data.md").read_text(
-            encoding="utf-8"
-        )
-        workflow = (root / ".github/workflows/validate.yml").read_text(encoding="utf-8")
-
-        self.assertIn("dist/public/places.geojson", readme)
-        self.assertIn("python3 -m src.facility_data validate .", readme)
-        self.assertIn("python3 -m src.facility_data build .", readme)
-        self.assertIn("python3 -m src.retrieve_wam", source_how_to)
-        self.assertIn("python3 -m src.retrieve_osm", source_how_to)
-        self.assertIn("python3 -m src.retrieve_towns", source_how_to)
-        self.assertNotIn("/path/to/wam.json", readme)
-        self.assertNotIn("/path/to/osm.json", readme)
-        self.assertNotIn("json_min", readme)
-        self.assertNotIn("pandas", readme)
-        self.assertIn("python3 -m src.facility_data validate .", workflow)
-        self.assertNotIn("src.validate_data", workflow)
-
     def test_documentation_uses_the_diataxis_directory_structure(self):
         root = Path(__file__).resolve().parents[1]
         readme = (root / "README.md").read_text(encoding="utf-8")

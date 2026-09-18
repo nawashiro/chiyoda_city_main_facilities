@@ -1,127 +1,184 @@
-# 千代田区主要施設データベース 保守計画
+# OSM・WAMソース更新チェックリスト
 
 ## 目的
 
-主要施設DBを、一人でも継続して扱える小さな単位で更新する。網羅性より、誤案内を避けることと、変更根拠を後から確認できることを優先する。
+このチェックリストは、OpenStreetMap（OSM）とWAMのsnapshotを更新するときに使う。取得元、取得時刻、ハッシュ、レビュー結果をPull Request（PR）で確認する。
 
-現行仕様は[保守仕様](../reference/data-maintenance-spec.md)を正とする。本書は作業チェックリストである。
+canonical JSON-LD（正本）は`data/places.jsonld`である。保守者はこのファイルを直接レビューし、JSON-LDの検証結果とbyte単位の再現性を確認する。
 
-## 現在のデータ構成
+手順の詳細は[ソースを更新する](update-source-data.md)を参照する。
+
+## 参照するファイル
 
 - 検索入力: `inputs/osm-search/`
-- 唯一の正本: `data/registry.json`
-- WAM snapshot: `imports/wam/`
-- OSM (OpenStreetMap) snapshot: `imports/openstreetmap/`
-- 固定町名ポリゴン: `data/pinned/`
-- レビューレポート: `reports/`
-- 公開生成物: `dist/public/`
-- ソース・利用条件台帳: `config/sources.json`
+- OSM snapshot: `imports/openstreetmap/raw.json`、`normalized.json`、`retrieval.json`、`query.overpassql`
+- WAM snapshot: `imports/wam/raw.json`、`normalized.json`、`retrieval.json`
+- ソース条件: `config/sources.json`
+- canonical JSON-LD: `data/places.jsonld`
+- 更新結果とレビュー: `reports/`
+- OSM人手レビュー: `reports/osm-candidates.json`、`reports/osm-review-needed.json`、`reports/osm-review-needed.yaml`
 
-公開GeoJSONは`visibility.status == "public"`のPlaceだけをPointとして出力する。propertiesには`id`、`name`、`categoryIds`、`tags`、`images`、`town`、`lifecycleStatus`、`sources`を含める。
+## 更新前
 
-## 更新前チェック
-
-- [ ] [最初の施設変更](../tutorials/first-data-change.md)を読んだ
-- [ ] `main`とremoteの差分を確認した
-- [ ] 作業branchを作った
+- [ ] [Update WAM data workflow](../../.github/workflows/update-wam.yml)または[Update OpenStreetMap data workflow](../../.github/workflows/update-osm.yml)の入力値を確認する
+- [ ] 作業branchを作成し、作業開始時の`git status --short`を記録する
 - [ ] `python3 --version`がPython 3.13である
-- [ ] 定期cronでは同一ソースの前回取得から30日以上経過している（手動の保守・修復取得には適用しない）
-- [ ] WAMなら公式配布版`YYYYMM`を確認した
-- [ ] 町名なら上流の40文字commit SHAを確認した
-- [ ] 変更前のtestsとvalidateが成功する
-
-## WAM更新
-
-対象は相談支援4サービスだけである。
-
-- [ ] `52` 計画相談支援
-- [ ] `53` 地域相談支援（地域移行）
-- [ ] `54` 地域相談支援（地域定着）
-- [ ] `70` 障害児相談支援
-
-確認事項:
-
-- [ ] 千代田区以外のrowがraw snapshotへ入っていない
-- [ ] 利用可能時間の空欄を理由に除外していない
-- [ ] normalized施設数が前回から大きく変わっていない（202603版の8施設は目安であり固定ではない）
-- [ ] 元レコードの全IDが正本参照へ保持される（202603版は13件）
-- [ ] raw snapshotのSHA-256が取得台帳と一致する
-- [ ] normalized recordがraw rowから再計算した値と一致する
-- [ ] 公式ZIPそのものをrepositoryやartifactへ恒久保存していない
-
-## OSM更新
-
-確認事項:
-
-- [ ] Overpassを単一batch queryで呼び出し、QID・既知ID・各座標検索入力の50m周辺bboxを含めている
-- [ ] `remark`／`error`付き部分応答を拒否している
-- [ ] current ID照合に名称・QID競合や50m超の移動がない
-- [ ] QID照合は検索入力QIDと一致する一意候補だけ
-- [ ] 名称＋座標照合は正規化後6文字以上、編集距離15%以内、50m以内の一意候補だけ
-- [ ] 全候補が一度に提示され、OSM rawの全タグが候補属性へ含まれた
-- [ ] 訪問者・利用者・現地スタッフの3視点で判定された
-- [ ] 3票のうち2票以上一致した候補またはrejectが自動処理された
-- [ ] 合議不成立だけがGitHub確認Issueへ出た
-- [ ] IssueではJSONを編集せず、検索入力ごとにチェックボックスを一つ選べる
-- [ ] 成功した新規取得ではquery／response／canonical rawのhashとretention flagが一致する
-
-## 検索入力修正後の再同定
-
-- [ ] 修正をcommitしたbranchで`Re-identify retained source snapshots`を実行した
-- [ ] WAM・OSMのrawと取得台帳が実行前後で同一だった
-- [ ] raw SHA・版を検証した
-- [ ] 検索入力とcurrent OSM IDの差分から影響項目だけを選んだ
-- [ ] 検索入力が不変でcurrent OSM IDも一意に残る項目を再同定しなかった
-- [ ] current OSM参照がない項目は、検索入力と候補reportへ記録したOSM rawのSHA-256が不変なら再同定しなかった
-- [ ] 影響項目だけOSM normalizedとOSM候補を再生成した
-- [ ] WAM normalizedを保持済みWAM rawと現在の検索入力から再生成した
-- [ ] 影響項目だけ正本名を同期した
-- [ ] WAM→OSMの順で影響項目を適用した
-- [ ] 未解決候補だけをLLM照合した
-- [ ] 項目ごとのコンテクスト分離を保てる場合は一括requestを使った
-- [ ] 一括requestが不可能な場合は、実行前にrequest数を報告して確認を受けた
-- [ ] 合議不成立はGitHub確認Issue、全解決時はPull Requestへ進んだ
-
-## 町名更新
-
-確認事項:
-
-- [ ] 上流commitを40文字SHAで固定した
-- [ ] Polygon／MultiPolygon、閉ring、3つ以上の異なる頂点、非ゼロ面積を検証した
-- [ ] 全公開Pointの町名が意図どおりか確認した
-- [ ] 町名ポリゴンを公開GeoJSONへ含めていない
-
-GitHub Actionsのartifactを取得する場合は、[ソースを更新する](update-source-data.md)のartifact取込手順を使う。`update-wam.yml`と`update-towns.yml`はartifactを作成するが、Pull Requestを作成しない。
-
-## 共通品質ゲート
+- [ ] 定期取得では、各`retrieval.json`の`retrievedAt`から最低取得間隔を確認する
+- [ ] `config/sources.json`のsource ID、公式URL、ライセンス、帰属表示、加工説明を確認する
+- [ ] OSMとWAMの取得時刻、版、取得元URLを更新対象のsnapshotと照合する
+- [ ] 変更前の検証を実行し、失敗がないことを確認する
 
 ```bash
 python3 -m unittest discover -s tests -v
 python3 -m src.facility_data validate .
-python3 -m src.facility_data build .
+python3 -m src.fac_cli jsonld-validate data/places.jsonld
 ```
 
+## 共通snapshot検証
+
+各ソースのraw snapshotと取得メタデータを同じ更新単位で扱う。
+
+- [ ] `imports/openstreetmap/retrieval.json`の`sourceId`が`openstreetmap`である
+- [ ] `imports/wam/retrieval.json`の`sourceId`が`wam`である
+- [ ] 各`retrieval.json`の`retrievedAt`がtimezone付きISO 8601である
+- [ ] 各`retrieval.json`の`rawVersion`がraw snapshotの版と一致する
+- [ ] 各`retrieval.json`の`rawSha256`が対応する`raw.json`のSHA-256と一致する
+- [ ] 取得メタデータに実際の取得元URL、取得時刻、版、ハッシュを記録する
+- [ ] `config/sources.json`にないsource IDをsnapshot、canonical JSON-LD、reportへ追加しない
+- [ ] raw snapshot、normalized snapshot、reportのsource IDとquery IDを一致させる
+
+raw snapshotのハッシュを検証する。
+
+```bash
+python3 - <<'PY'
+import hashlib
+import json
+from pathlib import Path
+
+for source in ("openstreetmap", "wam"):
+    directory = Path("imports") / source
+    raw_path = directory / "raw.json"
+    metadata_path = directory / "retrieval.json"
+    raw_bytes = raw_path.read_bytes()
+    metadata = json.loads(metadata_path.read_text(encoding="utf-8"))
+    actual_hash = hashlib.sha256(raw_bytes).hexdigest()
+    assert metadata["sourceId"] == source
+    assert metadata["rawVersion"]
+    assert metadata["retrievedAt"]
+    assert metadata["rawSha256"] == actual_hash, source
+    print(f"{source}: {actual_hash}")
+PY
+```
+
+- [ ] API key、token、Authorization header、個人情報をraw、normalized、report、YAML、PR本文、artifactへ書かない
+- [ ] `LLM_API_KEY`をGitHub Actionsのsecretまたはローカル環境変数だけで扱う
+- [ ] `LLM_MODEL`と`LLM_BASE_URL`をPR、artifact、ログへ秘密値として埋め込まない
+- [ ] 三者のLLM設定で正規化後の`(base_url, model)`が重複しない
+
+## WAM snapshot更新
+
+WAMはサービスコード`52`、`53`、`54`、`70`を取得対象にする。
+
+- [ ] WAM公開版を`YYYYMM`で指定する
+- [ ] [Update WAM data workflow](../../.github/workflows/update-wam.yml)の`release`入力が対象公開版と一致する
+- [ ] `imports/wam/retrieval.json`の`rawVersion`が対象公開版と一致する
+- [ ] `retrieval.json`の各`artifacts[]`にサービスコード、URL、SHA-256、取得時刻に対応するHTTPメタデータ、byte数がある
+- [ ] `imports/wam/raw.json`の行が対象範囲だけを含む
+- [ ] `raw.json`の各行が安定ID、事業所番号、名称、サービス、座標を持つ
+- [ ] `normalized.json`の各recordが検索入力のquery IDへ一意に対応する
+- [ ] `normalized.json`の`sourceRecordIds`がrawの全対象行IDを保持する
+- [ ] normalizedの名称、座標、サービス情報をrawの対応行から再計算できる
+- [ ] 同じWAM source recordを複数のnormalized recordへ割り当てない
+- [ ] `reports/latest-update.json`のsource、取得時刻、施設数、record数を確認する
+
+## OSM snapshot更新
+
+### 取得と検索入力
+
+- [ ] `inputs/osm-search/`の全JSONを確認する
+- [ ] 各検索入力が`coordinates`または`qid`の一方だけを持つ
+- [ ] 検索入力IDが全ファイルで重複しない
+- [ ] QIDが複数の検索入力で重複しない
+- [ ] 1施設につき検索入力を1件だけ割り当てる
+- [ ] 取得選択を1回のbatchにまとめ、`imports/openstreetmap/query.overpassql`へ保存する
+- [ ] `retrieval.json`の`selectionSha256`が保存した取得選択のSHA-256と一致する
+- [ ] `retrieval.json`のmanifest、PBF、rawのURL、版、byte数、SHA-256を確認する
+- [ ] OSM rawの各named elementが`normalized.json`またはcandidate reportへ追跡できる
+- [ ] candidate reportが検索入力ごとに全候補と全OSM tagを保持する
+- [ ] `remark`または`error`を含む不完全な取得結果を採用しない
+
+### OSM ownership
+
+- [ ] `imports/openstreetmap/normalized.json`で同じ`type/id`を複数のqueryへ割り当てない
+- [ ] `data/places.jsonld`で同じOSM `type/id`を複数のPlaceへ割り当てない
+- [ ] 既に別のPlaceへ割り当てた候補を自動で再利用しない
+- [ ] duplicate ownershipを検出したqueryを`needs_review`として残す
+- [ ] OSMのQID照合が一意である
+- [ ] 名称と座標による照合が、許容距離内の一意候補だけを採用する
+- [ ] 既存OSM参照の名称、QID、座標の競合をPRで確認する
+
+### YAMLとPRによる人手レビュー
+
+- [ ] `reports/osm-review-needed.json`のquery IDがcandidate reportの`needs_review`対象と一致する
+- [ ] `reports/osm-review-needed.yaml`の`reportSha256`がcandidate reportのSHA-256と一致する
+- [ ] 各queryで候補または「候補なし」の`true`を1つだけ指定する
+- [ ] 1つのqueryに2つ以上の人手選択を指定しない
+- [ ] query ID、施設名、候補ID、`reportSha256`、未選択候補を変更しない
+- [ ] YAMLをcommitし、[OSM人手レビュー適用workflow](../../.github/workflows/apply-osm-review.yml)が参照するPRでレビューする
+- [ ] PRレビューで候補の全属性、検索入力、OSM画面、別Placeのownerを確認する
+- [ ] 人手レビューの選択が元artifactのcandidate reportへ限定される
+- [ ] unresolved queryを推測でcanonical JSON-LDへ追加しない
+
+[Update OpenStreetMap data workflow](../../.github/workflows/update-osm.yml)は、候補report、レビューYAML、snapshot、canonical JSON-LDを同じartifactに保存する。PRでは、これらのSHA-256と差分を同時に確認する。
+
+## canonical JSON-LDの直接検証
+
+- [ ] `data/places.jsonld`だけをcanonical JSON-LDとしてPR差分で確認する
+- [ ] 各`@id`が既存UUIDの`urn:uuid:`である
+- [ ] 各recordが`schema:Place`と`geo:Feature`を持つ
+- [ ] 各geometryが有効なPointである
+- [ ] `schema:identifier`のOSM・WAM IDが対応するnormalized snapshotと一致する
+- [ ] `config/sources.json`のsource条件とcanonical JSON-LDの外部IDが一致する
+- [ ] operational history、LLM投票、取得秘密値をcanonical JSON-LDへ追加しない
+- [ ] canonical JSON-LDの直接編集後にJSON構文とschemaを検証する
+
+canonical JSON-LDのbyte単位の再現性を確認する。
+
+```bash
+cp data/places.jsonld /tmp/places.jsonld
+python3 -m src.facility_data build .
+python3 -m src.fac_cli jsonld-validate data/places.jsonld
+cmp /tmp/places.jsonld data/places.jsonld
+```
+
+`cmp`が成功しない場合は、PRを提出せず、canonical JSON-LDの変更理由と編集箇所を確認する。
+
+## 最終品質ゲート
+
+```bash
+python3 -m unittest discover -s tests -v
+python3 -m src.facility_data validate .
+python3 -m src.fac_cli jsonld-validate data/places.jsonld
+git diff --check
+```
+
+- [ ] testsがすべて成功する
+- [ ] `python3 -m src.facility_data validate .`が成功する
+- [ ] `python3 -m src.fac_cli jsonld-validate data/places.jsonld`が成功する
 - [ ] `git diff --check`が成功する
-- [ ] buildを2回実行して同一hashになる
-- [ ] Place削除がない
-- [ ] 既存PlaceのUUID変更がなく、`name`変更は意図した検索入力修正だけである
-- [ ] current OSM IDが重複していない
-- [ ] 公開Feature数と正本のpublic Place数が一致する
-- [ ] `sourceAttributions`が実際の寄与ソースだけを含む
-- [ ] clean cloneでtests、validate、buildが成功する
-- [ ] exact commit SHAのGitHub Actionsが成功する
+- [ ] byte再現性の`cmp`が成功する
+- [ ] `reports/latest-update.json`、candidate report、レビューYAMLの差分を確認する
+- [ ] 入力、snapshot、canonical JSON-LD、report以外の意図しないファイルを変更しない
+- [ ] PRの[Validate data workflow](../../.github/workflows/validate.yml)が対象commitで成功する
+- [ ] workflowが未実行の場合、成功として扱わず原因を解消する
+- [ ] PR本文、レビューYAML、artifact、ログに秘密値がない
 
-Pull Requestでは、`Validate data`の実行結果を対象commitで確認する。workflowが実行されていない場合は、成功とは扱わず原因を確認する。
+## 取得済みsnapshotの再同定
 
-## 自動化頻度の目安
+検索入力だけを修正し、raw snapshotを再取得しない場合は、[Re-identify retained source snapshots workflow](../../.github/workflows/reidentify-sources.yml)を使う。
 
-| 対象 | 目安 |
-|---|---|
-| WAM相談支援 | 年2回の公式公開後 |
-| OSM | 四半期または必要時 |
-| 町名GeoJSON | 四半期または必要時 |
-| 依存関係 | 月1回以下 |
-
-## 将来候補
-
-OSM候補の3票合議は実装済みである。`review_hold`自動移行と画像権利の自動検証は現在の実行経路にない。追加する場合は、実行経路・tests・失敗時の扱い・文書を同じ変更で整える。
+- [ ] OSMとWAMのraw bytesが実行前後で同一である
+- [ ] OSMとWAMの`retrieval.json`が実行前後で同一である
+- [ ] 変更したqueryだけをcandidate reportとPRで確認する
+- [ ] 変更していないqueryのcanonical JSON-LD IDと外部IDを変更しない
+- [ ] 再同定後もraw hash、ownership、YAMLの一query一選択を再検証する
