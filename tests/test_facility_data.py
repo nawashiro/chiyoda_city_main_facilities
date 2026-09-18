@@ -1,3 +1,4 @@
+from copy import deepcopy
 import hashlib
 import json
 import tempfile
@@ -811,6 +812,52 @@ class JsonLdCandidateMigrationTests(unittest.TestCase):
             "language_model",
             "human_review",
         ):
+            self.assertNotIn(marker, rendered)
+
+    def test_jsonld_candidate_excludes_town_phone_and_osm_tags(self):
+        root = Path(__file__).resolve().parents[1]
+        fixture_registry = json.loads(
+            (root / "tests/fixtures/registry.json").read_text(encoding="utf-8")
+        )
+        registry = deepcopy(fixture_registry)
+        place = registry["places"][0]
+        markers = {
+            "town": "task-1.6-town-marker",
+            "telephone": "task-1.6-telephone-marker",
+            "phone": "task-1.6-phone-marker",
+            "osm_name": "task-1.6-osm-name-marker",
+            "osm_operator": "task-1.6-osm-operator-marker",
+            "registry_tag": "task-1.6-registry-tag-marker",
+        }
+        place.update(
+            {
+                "town": markers["town"],
+                "telephone": markers["telephone"],
+                "phone": markers["phone"],
+                "osmTags": {
+                    "name": markers["osm_name"],
+                    "operator": markers["osm_operator"],
+                },
+                "tags": [markers["registry_tag"]],
+            }
+        )
+
+        candidate = facility_data.build_jsonld_candidate(registry)
+
+        def nested_keys(value):
+            if isinstance(value, dict):
+                return set(value).union(*(nested_keys(item) for item in value.values()))
+            if isinstance(value, list):
+                return set().union(*(nested_keys(item) for item in value))
+            return set()
+
+        emitted_keys = nested_keys(candidate)
+        forbidden_keys = {"town", "telephone", "phone", "osmTags", "tags"}
+        self.assertNotIn("town", emitted_keys)
+        self.assertEqual(set(), forbidden_keys & emitted_keys)
+
+        rendered = json.dumps(candidate, ensure_ascii=False)
+        for marker in markers.values():
             self.assertNotIn(marker, rendered)
 
     def test_jsonld_candidate_excludes_search_input_publish_false_place(self):
