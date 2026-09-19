@@ -1,0 +1,31 @@
+{
+  "@context": {
+    "@version": 1.1,
+    "schema": "https://schema.org/",
+    "rdfs": "http://www.w3.org/2000/01/rdf-schema#"
+  },
+  "@graph": [
+    {
+      "@id": "urn:uuid:019c0000-0000-7000-8000-000000000010",
+      "@type": [
+        "schema:Place"
+      ],
+      "schema:geo": {
+        "@type": "schema:GeoCoordinates",
+        "schema:latitude": 35.691527,
+        "schema:longitude": 139.7507425
+      },
+      "schema:identifier": [
+        {
+          "@type": "schema:PropertyValue",
+          "schema:propertyID": "wam",
+          "schema:value": "A0000110598"
+        }
+      ],
+      "rdfs:seeAlso": [
+        "https://www.openstreetmap.org/node/1420770185",
+        "https://www.wikidata.org/entity/Q11405293"
+      ]
+    }
+  ]
+}

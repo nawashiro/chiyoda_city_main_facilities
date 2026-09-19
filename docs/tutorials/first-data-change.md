@@ -17,9 +17,11 @@ git status --short
 
 作業者は、出典や再利用条件を変える場合、[出典とライセンス](../reference/licenses.md)を確認します。
 
+このデータ移行は breaking change です。作業者は `registry.json`、GeoJSON、manifest を編集または生成しません。
+
 ## 3. 正本を変更する
 
-作業者は `data/places.jsonld` を正本として編集します。
+作業者は `data/places.jsonld` だけを正本として編集します。
 
 作業者は、公開対象でない施設を公開データへ追加しません。
 
@@ -45,4 +47,6 @@ git diff --check
 git diff -- data/places.jsonld site/places.jsonld
 ```
 
-作業者は、意図したデータと生成物だけが変わったことを確認します。作業者は、検証結果と差分を Pull Request に記録します。
+作業者は、意図した JSON-LD だけが変わったことを確認します。作業者は、検証結果と差分を Pull Request に記録します。
+
+公開済み版へ戻す場合、作業者は[JSON-LD をリリースする](../how-to/publish-release-jsonld.md)の rollback 手順を実行します。

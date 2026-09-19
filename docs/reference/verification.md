@@ -7,10 +7,12 @@
 ```sh
 python3 -m unittest discover -s tests -v
 python3 -m src.facility_data validate .
-python3 -m src.fac_cli jsonld-validate data/places.jsonld
+./fac jsonld-validate data/places.jsonld
 cmp data/places.jsonld site/places.jsonld
 git diff --check
 ```
+
+`validate` は canonical JSON-LD と公開コピーを検証します。作業者は GeoJSON、`registry.json`、manifest を作成して検証しません。
 
 ## 正本の不変性
 
@@ -19,7 +21,7 @@ git diff --check
 ```sh
 cp data/places.jsonld /tmp/places.jsonld.before
 python3 -m src.facility_data build .
-python3 -m src.fac_cli jsonld-validate data/places.jsonld
+./fac jsonld-validate data/places.jsonld
 cmp /tmp/places.jsonld.before data/places.jsonld
 ```
 
@@ -30,3 +32,5 @@ cmp /tmp/places.jsonld.before data/places.jsonld
 ```sh
 python3 -m unittest tests/test_dataset_publication.py
 ```
+
+Release の rollback 後、作業者は全体検証を完了してから compensating Release を公開します。

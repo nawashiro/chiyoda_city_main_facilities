@@ -85,7 +85,7 @@ def build_discovery_query(
 
 
 def prepare_osm_snapshot(
-    registry: dict[str, Any],
+    canonical: dict[str, Any],
     search_documents: list[dict[str, Any]],
     raw: dict[str, Any],
 ) -> tuple[dict[str, Any], dict[str, Any]]:
@@ -110,19 +110,19 @@ def prepare_osm_snapshot(
             qid_to_query_id[query["qid"]] = query["id"]
 
     current_by_record_id: dict[str, str] = {}
-    place_by_id = {str(place["id"]): place for place in registry.get("places", [])}
-    superseded_record_ids: set[str] = set()
-    for place in registry.get("places", []):
-        for ref in place.get("externalRefs", []):
-            if ref.get("sourceId") != "openstreetmap":
+    place_by_id = {
+        record["@id"].removeprefix("urn:uuid:"): record
+        for record in canonical.get("@graph", [])
+        if isinstance(record, dict) and isinstance(record.get("@id"), str)
+    }
+    for place_id, place in place_by_id.items():
+        for uri in place.get("rdfs:seeAlso", []):
+            if not isinstance(uri, str) or not uri.startswith("https://www.openstreetmap.org/"):
                 continue
-            record_id = str(ref.get("recordId"))
-            if ref.get("status") == "current":
-                if record_id in current_by_record_id:
-                    raise ValueError(f"OSM record is current for multiple places: {record_id}")
-                current_by_record_id[record_id] = place["id"]
-            elif ref.get("status") == "superseded":
-                superseded_record_ids.add(record_id)
+            record_id = uri.removeprefix("https://www.openstreetmap.org/")
+            if record_id in current_by_record_id:
+                raise ValueError(f"OSM record is linked for multiple places: {record_id}")
+            current_by_record_id[record_id] = place_id
 
     candidates_by_record_id: dict[str, dict[str, Any]] = {}
     for record in normalize_osm_elements(raw["elements"]):
@@ -139,8 +139,7 @@ def prepare_osm_snapshot(
         report_candidates = []
         exact_candidates = []
         for record_id, record in candidates_by_record_id.items():
-            if record_id in superseded_record_ids and record_id not in current_by_record_id:
-                continue
+
             if "qid" in query:
                 if record.get("qid") != query["qid"]:
                     continue
@@ -167,7 +166,10 @@ def prepare_osm_snapshot(
             for record_id, record in candidates_by_record_id.items()
             if current_by_record_id.get(record_id) == query["id"]
             and _distance_metres(
-                place_by_id[query["id"]]["geometry"]["coordinates"],
+                [
+                    place_by_id[query["id"]]["schema:geo"]["schema:longitude"],
+                    place_by_id[query["id"]]["schema:geo"]["schema:latitude"],
+                ],
                 record["coordinates"],
             )
             <= 50
@@ -182,7 +184,7 @@ def prepare_osm_snapshot(
             for record in candidates_by_record_id.values()
             if "qid" in query
             and record.get("qid") == query["qid"]
-            and f"{record['type']}/{record['id']}" not in superseded_record_ids
+
         ]
         chosen = None
         basis = None
@@ -289,7 +291,7 @@ def run_osm_retrieval(root: str | Path, at: str, fetch, extractor=extract_elemen
     metadata_path = root / "imports/openstreetmap/retrieval.json"
     metadata = json.loads(metadata_path.read_text(encoding="utf-8"))
     source_refresh_due(None, at)
-    registry = json.loads((root / "data/registry.json").read_text(encoding="utf-8"))
+    canonical = json.loads((root / "data/places.jsonld").read_text(encoding="utf-8"))
     search_documents = [json.loads(path.read_text(encoding="utf-8")) for path in sorted((root / "inputs/osm-search").rglob("*.json"))]
     qids = sorted({query["qid"] for document in search_documents for query in document.get("queries", []) if "qid" in query})
     coordinates = [query["coordinates"] for document in search_documents for query in document.get("queries", []) if "coordinates" in query]
@@ -300,18 +302,18 @@ def run_osm_retrieval(root: str | Path, at: str, fetch, extractor=extract_elemen
     pbf_payload, pbf_headers = fetch(mirror_url)
     if len(pbf_payload) != mirror["bytes"]:
         raise ValueError("Movisda Tokyo extract has an unexpected size")
-    print(f"OSM mirror: extract {len(collect_osm_ids(registry))} IDs, {len(qids)} QIDs, {len(coordinates)} coordinate queries", file=sys.stderr)
+    print(f"OSM mirror: extract {len(collect_osm_ids(canonical))} IDs, {len(qids)} QIDs, {len(coordinates)} coordinate queries", file=sys.stderr)
     with tempfile.TemporaryDirectory() as directory:
         pbf_path = Path(directory) / "tokyo.osm.pbf"
         pbf_path.write_bytes(pbf_payload)
-        extracted_elements = extractor(pbf_path, set(collect_osm_ids(registry)), set(qids), coordinates, tuple(map(float, CHIYODA_BBOX.split(","))))
+        extracted_elements = extractor(pbf_path, set(collect_osm_ids(canonical)), set(qids), coordinates, tuple(map(float, CHIYODA_BBOX.split(","))))
     elements = _named_osm_elements(extracted_elements)
     print(f"OSM mirror: retained {len(elements)} named elements", file=sys.stderr)
     raw = {"version": str(mirror["timestamp"]), "elements": elements}
     raw_payload = (json.dumps(raw, ensure_ascii=False, indent=2) + "\n").encode("utf-8")
-    selection = {"typedIds": sorted(collect_osm_ids(registry)), "qids": qids, "coordinates": coordinates, "bbox": CHIYODA_BBOX}
+    selection = {"typedIds": sorted(collect_osm_ids(canonical)), "qids": qids, "coordinates": coordinates, "bbox": CHIYODA_BBOX}
     selection_payload = (json.dumps(selection, ensure_ascii=False, indent=2) + "\n").encode("utf-8")
-    normalized, report = prepare_osm_snapshot(registry, search_documents, raw)
+    normalized, report = prepare_osm_snapshot(canonical, search_documents, raw)
     retrieval = {**metadata, "sourceId": "openstreetmap", "retrievedAt": at, "rawVersion": raw["version"], "manifestUrl": MOVISDA_MANIFEST_URL, "pbfUrl": mirror_url, "pbfSha256": hashlib.sha256(pbf_payload).hexdigest(), "pbfBytes": len(pbf_payload), "manifestSha256": hashlib.sha256(manifest_payload).hexdigest(), "extractor": "pyosmium", "selectionSha256": hashlib.sha256(selection_payload).hexdigest(), "rawSha256": hashlib.sha256(raw_payload).hexdigest(), "etag": pbf_headers.get("ETag"), "lastModified": pbf_headers.get("Last-Modified")}
     report["rawSha256"] = retrieval["rawSha256"]
     imports_path = root / "imports/openstreetmap"; imports_path.mkdir(parents=True, exist_ok=True)

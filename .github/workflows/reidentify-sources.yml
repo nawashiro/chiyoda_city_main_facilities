@@ -5,7 +5,6 @@ on:
 
 permissions:
   contents: write
-  issues: write
   pull-requests: write
 
 jobs:
@@ -38,18 +37,16 @@ jobs:
           python3 -m src.facility_data build .
           python3 -m src.fac_cli jsonld-validate data/places.jsonld
           cmp /tmp/places.jsonld data/places.jsonld
-      - name: Produce review diff and GitHub review issue body
+      - name: Produce review diff and editable YAML
         run: |
           git add -N .
           git diff --binary > reports/reidentify-update.diff
           python3 -m src.github_osm_review build . \
-            --run-id "${{ github.run_id }}" \
-            --artifact-name "reidentify-update-${{ github.run_id }}" \
             --output /tmp/osm-review-issue.json
           python3 - <<'PY' >> "$GITHUB_OUTPUT"
           import json
-          issue = json.load(open('/tmp/osm-review-issue.json', encoding='utf-8'))
-          print(f"review_needed={'false' if issue.get('skip') else 'true'}")
+          document = json.load(open('/tmp/osm-review-issue.json', encoding='utf-8'))
+          print(f"review_needed={'true' if document['reviewNeeded'] else 'false'}")
           PY
         id: review
       - name: Save generated update for review
@@ -65,33 +62,23 @@ jobs:
             reports/latest-update.json
             reports/osm-candidates.json
             reports/osm-review-needed.json
+            reports/osm-review-needed.yaml
             reports/reidentify-update.diff
-      - name: Create one clickable Issue for unresolved candidates
+      - name: Create editable review branch
+        id: review-branch
         if: steps.review.outputs.review_needed == 'true'
-        uses: actions/github-script@v7
+        uses: peter-evans/create-pull-request@v7
         with:
-          script: |
-            const fs = require('fs');
-            const issue = JSON.parse(fs.readFileSync('/tmp/osm-review-issue.json', 'utf8'));
-            try {
-              await github.rest.issues.getLabel({owner: context.repo.owner, repo: context.repo.repo, name: 'osm-human-review'});
-            } catch (error) {
-              if (error.status !== 404) throw error;
-              await github.rest.issues.createLabel({
-                owner: context.repo.owner,
-                repo: context.repo.repo,
-                name: 'osm-human-review',
-                color: '1d76db',
-                description: 'OSM候補をGitHub上で人間確認する'
-              });
-            }
-            await github.rest.issues.create({
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              title: issue.title,
-              body: issue.body,
-              labels: issue.labels
-            });
+          branch: automation/osm-review-reidentify-update-${{ github.run_id }}
+          delete-branch: true
+          draft: true
+          commit-message: "data: prepare OSM human review"
+          title: "data: prepare OSM human review"
+          add-paths: reports/osm-review-needed.yaml
+          body: |
+            この下書きPull RequestはOSM候補の人間確認用です。
+            `reports/osm-review-needed.yaml`を編集・コミットして、このPull Requestをmergeしてください。
+            merge後に、commit済みYAMLと元artifactを照合するworkflowが適用用Pull Requestを作成します。
       - name: Create Pull Request when all candidates were resolved automatically
         if: steps.review.outputs.review_needed == 'false'
         uses: peter-evans/create-pull-request@v7

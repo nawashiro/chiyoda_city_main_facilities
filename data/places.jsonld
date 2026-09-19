@@ -1,1709 +1,1330 @@
 {
   "@context": {
     "@version": 1.1,
-    "geo": "http://www.opengis.net/ont/geosparql#",
-    "schema": "https://schema.org/"
+    "schema": "https://schema.org/",
+    "rdfs": "http://www.w3.org/2000/01/rdf-schema#"
   },
   "@graph": [
     {
       "@id": "urn:uuid:019fa880-5cd4-78e1-aa8b-c4ce83a065bc",
       "@type": [
-        "schema:Place",
-        "geo:Feature"
+        "schema:Place"
       ],
-      "geo:hasGeometry": {
-        "geo:asGeoJSON": {
-          "@type": "geo:geoJSONLiteral",
-          "@value": "{\"type\":\"Point\",\"coordinates\":[139.7535624,35.6941626]}"
-        }
+      "schema:identifier": [],
+      "schema:geo": {
+        "@type": "schema:GeoCoordinates",
+        "schema:latitude": 35.6941626,
+        "schema:longitude": 139.7535624
       },
-      "schema:identifier": [
-        {
-          "@type": "schema:PropertyValue",
-          "schema:propertyID": "openstreetmap",
-          "schema:value": "node/1420770185"
-        }
+      "rdfs:seeAlso": [
+        "https://www.openstreetmap.org/node/1420770185",
+        "https://www.wikidata.org/entity/Q11405293"
       ]
     },
     {
       "@id": "urn:uuid:019fa880-5cd4-7122-bc68-e8a327846042",
       "@type": [
-        "schema:Place",
-        "geo:Feature"
+        "schema:Place"
       ],
-      "geo:hasGeometry": {
-        "geo:asGeoJSON": {
-          "@type": "geo:geoJSONLiteral",
-          "@value": "{\"type\":\"Point\",\"coordinates\":[139.7553048,35.6977902]}"
-        }
+      "schema:identifier": [],
+      "schema:geo": {
+        "@type": "schema:GeoCoordinates",
+        "schema:latitude": 35.6977902,
+        "schema:longitude": 139.7553048
       },
-      "schema:identifier": [
-        {
-          "@type": "schema:PropertyValue",
-          "schema:propertyID": "openstreetmap",
-          "schema:value": "node/3777876586"
-        }
+      "rdfs:seeAlso": [
+        "https://www.openstreetmap.org/node/3777876586"
       ]
     },
     {
       "@id": "urn:uuid:019fa880-5cd4-71bb-bab2-80c97e636918",
       "@type": [
-        "schema:Place",
-        "geo:Feature"
+        "schema:Place"
       ],
-      "geo:hasGeometry": {
-        "geo:asGeoJSON": {
-          "@type": "geo:geoJSONLiteral",
-          "@value": "{\"type\":\"Point\",\"coordinates\":[139.7463841,35.6991024]}"
-        }
+      "schema:identifier": [],
+      "schema:geo": {
+        "@type": "schema:GeoCoordinates",
+        "schema:latitude": 35.6991024,
+        "schema:longitude": 139.7463841
       },
-      "schema:identifier": [
-        {
-          "@type": "schema:PropertyValue",
-          "schema:propertyID": "openstreetmap",
-          "schema:value": "way/144351353"
-        }
+      "rdfs:seeAlso": [
+        "https://www.openstreetmap.org/way/144351353"
       ]
     },
     {
       "@id": "urn:uuid:019fa880-5cd4-7b4b-86c4-92d4d1fbe213",
       "@type": [
-        "schema:Place",
-        "geo:Feature"
+        "schema:Place"
       ],
-      "geo:hasGeometry": {
-        "geo:asGeoJSON": {
-          "@type": "geo:geoJSONLiteral",
-          "@value": "{\"type\":\"Point\",\"coordinates\":[139.7681384,35.6927468]}"
-        }
+      "schema:identifier": [],
+      "schema:geo": {
+        "@type": "schema:GeoCoordinates",
+        "schema:latitude": 35.6927468,
+        "schema:longitude": 139.7681384
       },
-      "schema:identifier": [
-        {
-          "@type": "schema:PropertyValue",
-          "schema:propertyID": "openstreetmap",
-          "schema:value": "way/187756642"
-        }
+      "rdfs:seeAlso": [
+        "https://www.openstreetmap.org/way/187756642"
       ]
     },
     {
       "@id": "urn:uuid:019fa880-5cd4-7ba6-a5af-481b9cb95516",
       "@type": [
-        "schema:Place",
-        "geo:Feature"
+        "schema:Place"
       ],
-      "geo:hasGeometry": {
-        "geo:asGeoJSON": {
-          "@type": "geo:geoJSONLiteral",
-          "@value": "{\"type\":\"Point\",\"coordinates\":[139.7706485,35.6976015]}"
-        }
+      "schema:identifier": [],
+      "schema:geo": {
+        "@type": "schema:GeoCoordinates",
+        "schema:latitude": 35.6976015,
+        "schema:longitude": 139.7706485
       },
-      "schema:identifier": [
-        {
-          "@type": "schema:PropertyValue",
-          "schema:propertyID": "openstreetmap",
-          "schema:value": "way/191732177"
-        }
+      "rdfs:seeAlso": [
+        "https://www.openstreetmap.org/way/191732177"
       ]
     },
     {
       "@id": "urn:uuid:019fa880-5cd4-75da-ae8b-ec6d104eb49b",
       "@type": [
-        "schema:Place",
-        "geo:Feature"
+        "schema:Place"
       ],
-      "geo:hasGeometry": {
-        "geo:asGeoJSON": {
-          "@type": "geo:geoJSONLiteral",
-          "@value": "{\"type\":\"Point\",\"coordinates\":[139.774931,35.6972781]}"
-        }
+      "schema:identifier": [],
+      "schema:geo": {
+        "@type": "schema:GeoCoordinates",
+        "schema:latitude": 35.6972781,
+        "schema:longitude": 139.774931
       },
-      "schema:identifier": [
-        {
-          "@type": "schema:PropertyValue",
-          "schema:propertyID": "openstreetmap",
-          "schema:value": "node/1636575850"
-        }
+      "rdfs:seeAlso": [
+        "https://www.openstreetmap.org/node/1636575850"
       ]
     },
     {
       "@id": "urn:uuid:019fa880-5cd4-729d-8095-deb5f1a4597f",
       "@type": [
-        "schema:Place",
-        "geo:Feature"
+        "schema:Place"
       ],
-      "geo:hasGeometry": {
-        "geo:asGeoJSON": {
-          "@type": "geo:geoJSONLiteral",
-          "@value": "{\"type\":\"Point\",\"coordinates\":[139.76083553,35.70039345]}"
-        }
-      },
       "schema:identifier": [
         {
           "@type": "schema:PropertyValue",
           "schema:propertyID": "wam",
           "schema:value": "A0000110598"
-        },
-        {
-          "@type": "schema:PropertyValue",
-          "schema:propertyID": "openstreetmap",
-          "schema:value": "node/13465461815"
         }
+      ],
+      "schema:geo": {
+        "@type": "schema:GeoCoordinates",
+        "schema:latitude": 35.70039345,
+        "schema:longitude": 139.76083553
+      },
+      "rdfs:seeAlso": [
+        "https://www.openstreetmap.org/node/13465461815"
       ]
     },
     {
       "@id": "urn:uuid:019fa880-5cd4-7d3c-a9e1-f01c12ebf008",
       "@type": [
-        "schema:Place",
-        "geo:Feature"
+        "schema:Place"
       ],
-      "geo:hasGeometry": {
-        "geo:asGeoJSON": {
-          "@type": "geo:geoJSONLiteral",
-          "@value": "{\"type\":\"Point\",\"coordinates\":[139.7572963,35.6909272]}"
-        }
+      "schema:identifier": [],
+      "schema:geo": {
+        "@type": "schema:GeoCoordinates",
+        "schema:latitude": 35.6909272,
+        "schema:longitude": 139.7572963
       },
-      "schema:identifier": [
-        {
-          "@type": "schema:PropertyValue",
-          "schema:propertyID": "openstreetmap",
-          "schema:value": "node/13465379795"
-        }
+      "rdfs:seeAlso": [
+        "https://www.openstreetmap.org/node/13465379795"
       ]
     },
     {
       "@id": "urn:uuid:019fa880-5cd4-7178-bfbc-d7b174721469",
       "@type": [
-        "schema:Place",
-        "geo:Feature"
+        "schema:Place"
       ],
-      "geo:hasGeometry": {
-        "geo:asGeoJSON": {
-          "@type": "geo:geoJSONLiteral",
-          "@value": "{\"type\":\"Point\",\"coordinates\":[139.7426631,35.6811899]}"
-        }
+      "schema:identifier": [],
+      "schema:geo": {
+        "@type": "schema:GeoCoordinates",
+        "schema:latitude": 35.6811899,
+        "schema:longitude": 139.7426631
       },
-      "schema:identifier": [
-        {
-          "@type": "schema:PropertyValue",
-          "schema:propertyID": "openstreetmap",
-          "schema:value": "way/23974981"
-        }
+      "rdfs:seeAlso": [
+        "https://www.openstreetmap.org/way/23974981"
       ]
     },
     {
       "@id": "urn:uuid:019fa880-5cd4-7984-988b-923b526a8d9a",
       "@type": [
-        "schema:Place",
-        "geo:Feature"
+        "schema:Place"
       ],
-      "geo:hasGeometry": {
-        "geo:asGeoJSON": {
-          "@type": "geo:geoJSONLiteral",
-          "@value": "{\"type\":\"Point\",\"coordinates\":[139.7443356,35.6786257]}"
-        }
+      "schema:identifier": [],
+      "schema:geo": {
+        "@type": "schema:GeoCoordinates",
+        "schema:latitude": 35.6786257,
+        "schema:longitude": 139.7443356
       },
-      "schema:identifier": [
-        {
-          "@type": "schema:PropertyValue",
-          "schema:propertyID": "openstreetmap",
-          "schema:value": "way/193000544"
-        }
+      "rdfs:seeAlso": [
+        "https://www.openstreetmap.org/way/193000544",
+        "https://www.wikidata.org/entity/Q477675"
       ]
     },
     {
       "@id": "urn:uuid:019fa880-5cd5-7154-8bff-19d82e0fc560",
       "@type": [
-        "schema:Place",
-        "geo:Feature"
+        "schema:Place"
       ],
-      "geo:hasGeometry": {
-        "geo:asGeoJSON": {
-          "@type": "geo:geoJSONLiteral",
-          "@value": "{\"type\":\"Point\",\"coordinates\":[139.75973,35.6990086]}"
-        }
+      "schema:identifier": [],
+      "schema:geo": {
+        "@type": "schema:GeoCoordinates",
+        "schema:latitude": 35.6990086,
+        "schema:longitude": 139.75973
       },
-      "schema:identifier": [
-        {
-          "@type": "schema:PropertyValue",
-          "schema:propertyID": "openstreetmap",
-          "schema:value": "way/210372594"
-        }
+      "rdfs:seeAlso": [
+        "https://www.openstreetmap.org/way/210372594",
+        "https://www.wikidata.org/entity/Q113160405"
       ]
     },
     {
       "@id": "urn:uuid:019fa880-5cd5-7cf5-8a1f-da236422ebdb",
       "@type": [
-        "schema:Place",
-        "geo:Feature"
+        "schema:Place"
       ],
-      "geo:hasGeometry": {
-        "geo:asGeoJSON": {
-          "@type": "geo:geoJSONLiteral",
-          "@value": "{\"type\":\"Point\",\"coordinates\":[139.7591756,35.7009442]}"
-        }
+      "schema:identifier": [],
+      "schema:geo": {
+        "@type": "schema:GeoCoordinates",
+        "schema:latitude": 35.7009442,
+        "schema:longitude": 139.7591756
       },
-      "schema:identifier": [
-        {
-          "@type": "schema:PropertyValue",
-          "schema:propertyID": "openstreetmap",
-          "schema:value": "node/1420763756"
-        }
+      "rdfs:seeAlso": [
+        "https://www.openstreetmap.org/node/1420763756"
       ]
     },
     {
       "@id": "urn:uuid:019fa880-5cd5-7455-9cf0-647f62f1d59c",
       "@type": [
-        "schema:Place",
-        "geo:Feature"
+        "schema:Place"
       ],
-      "geo:hasGeometry": {
-        "geo:asGeoJSON": {
-          "@type": "geo:geoJSONLiteral",
-          "@value": "{\"type\":\"Point\",\"coordinates\":[139.7535705,35.6938859]}"
-        }
+      "schema:identifier": [],
+      "schema:geo": {
+        "@type": "schema:GeoCoordinates",
+        "schema:latitude": 35.6938859,
+        "schema:longitude": 139.7535705
       },
-      "schema:identifier": [
-        {
-          "@type": "schema:PropertyValue",
-          "schema:propertyID": "openstreetmap",
-          "schema:value": "node/1420770187"
-        }
+      "rdfs:seeAlso": [
+        "https://www.openstreetmap.org/node/1420770187",
+        "https://www.wikidata.org/entity/Q61886796"
       ]
     },
     {
       "@id": "urn:uuid:019fa880-5cd5-7f0e-8fed-c8f624933c61",
       "@type": [
-        "schema:Place",
-        "geo:Feature"
+        "schema:Place"
       ],
-      "geo:hasGeometry": {
-        "geo:asGeoJSON": {
-          "@type": "geo:geoJSONLiteral",
-          "@value": "{\"type\":\"Point\",\"coordinates\":[139.7415971,35.6904422]}"
-        }
+      "schema:identifier": [],
+      "schema:geo": {
+        "@type": "schema:GeoCoordinates",
+        "schema:latitude": 35.6904422,
+        "schema:longitude": 139.7415971
       },
-      "schema:identifier": [
-        {
-          "@type": "schema:PropertyValue",
-          "schema:propertyID": "openstreetmap",
-          "schema:value": "node/1420770188"
-        }
+      "rdfs:seeAlso": [
+        "https://www.openstreetmap.org/node/1420770188",
+        "https://www.wikidata.org/entity/Q61886798"
       ]
     },
     {
       "@id": "urn:uuid:019fa880-5cd5-7d2b-abb0-d80f16d6a04a",
       "@type": [
-        "schema:Place",
-        "geo:Feature"
+        "schema:Place"
       ],
-      "geo:hasGeometry": {
-        "geo:asGeoJSON": {
-          "@type": "geo:geoJSONLiteral",
-          "@value": "{\"type\":\"Point\",\"coordinates\":[139.743661,35.680424]}"
-        }
+      "schema:identifier": [],
+      "schema:geo": {
+        "@type": "schema:GeoCoordinates",
+        "schema:latitude": 35.680424,
+        "schema:longitude": 139.743661
       },
-      "schema:identifier": [
-        {
-          "@type": "schema:PropertyValue",
-          "schema:propertyID": "openstreetmap",
-          "schema:value": "node/1420781684"
-        }
+      "rdfs:seeAlso": [
+        "https://www.openstreetmap.org/node/1420781684",
+        "https://www.wikidata.org/entity/Q11515702"
       ]
     },
     {
       "@id": "urn:uuid:019fa880-5cd5-77f0-ae81-1e52ac5633fa",
       "@type": [
-        "schema:Place",
-        "geo:Feature"
+        "schema:Place"
       ],
-      "geo:hasGeometry": {
-        "geo:asGeoJSON": {
-          "@type": "geo:geoJSONLiteral",
-          "@value": "{\"type\":\"Point\",\"coordinates\":[139.754641,35.671945]}"
-        }
+      "schema:identifier": [],
+      "schema:geo": {
+        "@type": "schema:GeoCoordinates",
+        "schema:latitude": 35.671945,
+        "schema:longitude": 139.754641
       },
-      "schema:identifier": [
-        {
-          "@type": "schema:PropertyValue",
-          "schema:propertyID": "openstreetmap",
-          "schema:value": "node/1420785508"
-        }
+      "rdfs:seeAlso": [
+        "https://www.openstreetmap.org/node/1420785508",
+        "https://www.wikidata.org/entity/Q11509583"
       ]
     },
     {
       "@id": "urn:uuid:019fa880-5cd5-7537-802b-2421832099f4",
       "@type": [
-        "schema:Place",
-        "geo:Feature"
+        "schema:Place"
       ],
-      "geo:hasGeometry": {
-        "geo:asGeoJSON": {
-          "@type": "geo:geoJSONLiteral",
-          "@value": "{\"type\":\"Point\",\"coordinates\":[139.7700608,35.7013313]}"
-        }
+      "schema:identifier": [],
+      "schema:geo": {
+        "@type": "schema:GeoCoordinates",
+        "schema:latitude": 35.7013313,
+        "schema:longitude": 139.7700608
       },
-      "schema:identifier": [
-        {
-          "@type": "schema:PropertyValue",
-          "schema:propertyID": "openstreetmap",
-          "schema:value": "node/2059303798"
-        }
+      "rdfs:seeAlso": [
+        "https://www.openstreetmap.org/node/2059303798",
+        "https://www.wikidata.org/entity/Q61886799"
       ]
     },
     {
       "@id": "urn:uuid:019fa880-5cd5-770e-b950-6cc7603de33e",
       "@type": [
-        "schema:Place",
-        "geo:Feature"
+        "schema:Place"
       ],
-      "geo:hasGeometry": {
-        "geo:asGeoJSON": {
-          "@type": "geo:geoJSONLiteral",
-          "@value": "{\"type\":\"Point\",\"coordinates\":[139.7570462,35.6988082]}"
-        }
+      "schema:identifier": [],
+      "schema:geo": {
+        "@type": "schema:GeoCoordinates",
+        "schema:latitude": 35.6988082,
+        "schema:longitude": 139.7570462
       },
-      "schema:identifier": [
-        {
-          "@type": "schema:PropertyValue",
-          "schema:propertyID": "openstreetmap",
-          "schema:value": "node/3606732125"
-        }
+      "rdfs:seeAlso": [
+        "https://www.openstreetmap.org/node/3606732125"
       ]
     },
     {
       "@id": "urn:uuid:019fa880-5cd5-78a9-9ebf-098c6c4cc4ed",
       "@type": [
-        "schema:Place",
-        "geo:Feature"
+        "schema:Place"
       ],
-      "geo:hasGeometry": {
-        "geo:asGeoJSON": {
-          "@type": "geo:geoJSONLiteral",
-          "@value": "{\"type\":\"Point\",\"coordinates\":[139.7683614,35.6929651]}"
-        }
+      "schema:identifier": [],
+      "schema:geo": {
+        "@type": "schema:GeoCoordinates",
+        "schema:latitude": 35.6929651,
+        "schema:longitude": 139.7683614
       },
-      "schema:identifier": [
-        {
-          "@type": "schema:PropertyValue",
-          "schema:propertyID": "openstreetmap",
-          "schema:value": "node/1420770192"
-        }
+      "rdfs:seeAlso": [
+        "https://www.openstreetmap.org/node/1420770192",
+        "https://www.wikidata.org/entity/Q61886800"
       ]
     },
     {
       "@id": "urn:uuid:019fa880-5cd5-713a-8135-779f14050ab2",
       "@type": [
-        "schema:Place",
-        "geo:Feature"
+        "schema:Place"
       ],
-      "geo:hasGeometry": {
-        "geo:asGeoJSON": {
-          "@type": "geo:geoJSONLiteral",
-          "@value": "{\"type\":\"Point\",\"coordinates\":[139.7788067,35.6992879]}"
-        }
+      "schema:identifier": [],
+      "schema:geo": {
+        "@type": "schema:GeoCoordinates",
+        "schema:latitude": 35.6992879,
+        "schema:longitude": 139.7788067
       },
-      "schema:identifier": [
-        {
-          "@type": "schema:PropertyValue",
-          "schema:propertyID": "openstreetmap",
-          "schema:value": "node/13468335880"
-        }
+      "rdfs:seeAlso": [
+        "https://www.openstreetmap.org/node/13468335880"
       ]
     },
     {
       "@id": "urn:uuid:019fa880-5cd5-7d23-9c07-684d56afd77e",
       "@type": [
-        "schema:Place",
-        "geo:Feature"
+        "schema:Place"
       ],
-      "geo:hasGeometry": {
-        "geo:asGeoJSON": {
-          "@type": "geo:geoJSONLiteral",
-          "@value": "{\"type\":\"Point\",\"coordinates\":[139.778795,35.699229]}"
-        }
-      },
-      "schema:identifier": []
+      "schema:identifier": [],
+      "schema:geo": {
+        "@type": "schema:GeoCoordinates",
+        "schema:latitude": 35.699229,
+        "schema:longitude": 139.778795
+      }
     },
     {
       "@id": "urn:uuid:019fa880-5cd5-7241-a976-801eef6324a9",
       "@type": [
-        "schema:Place",
-        "geo:Feature"
+        "schema:Place"
       ],
-      "geo:hasGeometry": {
-        "geo:asGeoJSON": {
-          "@type": "geo:geoJSONLiteral",
-          "@value": "{\"type\":\"Point\",\"coordinates\":[139.7696731,35.7011916]}"
-        }
+      "schema:identifier": [],
+      "schema:geo": {
+        "@type": "schema:GeoCoordinates",
+        "schema:latitude": 35.7011916,
+        "schema:longitude": 139.7696731
       },
-      "schema:identifier": [
-        {
-          "@type": "schema:PropertyValue",
-          "schema:propertyID": "openstreetmap",
-          "schema:value": "node/2263796343"
-        }
+      "rdfs:seeAlso": [
+        "https://www.openstreetmap.org/node/2263796343"
       ]
     },
     {
       "@id": "urn:uuid:019fa880-5cd5-7d11-8560-3ac4e0486633",
       "@type": [
-        "schema:Place",
-        "geo:Feature"
+        "schema:Place"
       ],
-      "geo:hasGeometry": {
-        "geo:asGeoJSON": {
-          "@type": "geo:geoJSONLiteral",
-          "@value": "{\"type\":\"Point\",\"coordinates\":[139.739284,35.68699]}"
-        }
+      "schema:identifier": [],
+      "schema:geo": {
+        "@type": "schema:GeoCoordinates",
+        "schema:latitude": 35.68699,
+        "schema:longitude": 139.739284
       },
-      "schema:identifier": [
-        {
-          "@type": "schema:PropertyValue",
-          "schema:propertyID": "openstreetmap",
-          "schema:value": "node/1655905663"
-        }
+      "rdfs:seeAlso": [
+        "https://www.openstreetmap.org/node/1655905663"
       ]
     },
     {
       "@id": "urn:uuid:019fa880-5cd5-7b01-9dd8-2e4787f423aa",
       "@type": [
-        "schema:Place",
-        "geo:Feature"
+        "schema:Place"
       ],
-      "geo:hasGeometry": {
-        "geo:asGeoJSON": {
-          "@type": "geo:geoJSONLiteral",
-          "@value": "{\"type\":\"Point\",\"coordinates\":[139.754706,35.698887]}"
-        }
+      "schema:identifier": [],
+      "schema:geo": {
+        "@type": "schema:GeoCoordinates",
+        "schema:latitude": 35.698887,
+        "schema:longitude": 139.754706
       },
-      "schema:identifier": [
-        {
-          "@type": "schema:PropertyValue",
-          "schema:propertyID": "openstreetmap",
-          "schema:value": "node/1655927382"
-        }
+      "rdfs:seeAlso": [
+        "https://www.openstreetmap.org/node/1655927382"
       ]
     },
     {
       "@id": "urn:uuid:019fa880-5cd5-7e95-9ea4-e8808e845cd7",
       "@type": [
-        "schema:Place",
-        "geo:Feature"
+        "schema:Place"
       ],
-      "geo:hasGeometry": {
-        "geo:asGeoJSON": {
-          "@type": "geo:geoJSONLiteral",
-          "@value": "{\"type\":\"Point\",\"coordinates\":[139.7393327,35.6864514]}"
-        }
+      "schema:identifier": [],
+      "schema:geo": {
+        "@type": "schema:GeoCoordinates",
+        "schema:latitude": 35.6864514,
+        "schema:longitude": 139.7393327
       },
-      "schema:identifier": [
-        {
-          "@type": "schema:PropertyValue",
-          "schema:propertyID": "openstreetmap",
-          "schema:value": "node/1420765449"
-        }
+      "rdfs:seeAlso": [
+        "https://www.openstreetmap.org/node/1420765449"
       ]
     },
     {
       "@id": "urn:uuid:019fa880-5cd5-788b-86e8-0ac1e6c4811a",
       "@type": [
-        "schema:Place",
-        "geo:Feature"
+        "schema:Place"
       ],
-      "geo:hasGeometry": {
-        "geo:asGeoJSON": {
-          "@type": "geo:geoJSONLiteral",
-          "@value": "{\"type\":\"Point\",\"coordinates\":[139.74630355,35.6972222]}"
-        }
+      "schema:identifier": [],
+      "schema:geo": {
+        "@type": "schema:GeoCoordinates",
+        "schema:latitude": 35.6972222,
+        "schema:longitude": 139.74630355
       },
-      "schema:identifier": [
-        {
-          "@type": "schema:PropertyValue",
-          "schema:propertyID": "openstreetmap",
-          "schema:value": "way/179575985"
-        }
+      "rdfs:seeAlso": [
+        "https://www.openstreetmap.org/way/179575985",
+        "https://www.wikidata.org/entity/Q81916362"
       ]
     },
     {
       "@id": "urn:uuid:019fa880-5cd5-7b6f-882e-4d07aad02219",
       "@type": [
-        "schema:Place",
-        "geo:Feature"
+        "schema:Place"
       ],
-      "geo:hasGeometry": {
-        "geo:asGeoJSON": {
-          "@type": "geo:geoJSONLiteral",
-          "@value": "{\"type\":\"Point\",\"coordinates\":[139.742245,35.690322]}"
-        }
-      },
-      "schema:identifier": []
+      "schema:identifier": [],
+      "schema:geo": {
+        "@type": "schema:GeoCoordinates",
+        "schema:latitude": 35.690322,
+        "schema:longitude": 139.742245
+      }
     },
     {
       "@id": "urn:uuid:019fa880-5cd5-701b-90d2-e3073a1c337b",
       "@type": [
-        "schema:Place",
-        "geo:Feature"
+        "schema:Place"
       ],
-      "geo:hasGeometry": {
-        "geo:asGeoJSON": {
-          "@type": "geo:geoJSONLiteral",
-          "@value": "{\"type\":\"Point\",\"coordinates\":[139.749567,35.70038]}"
-        }
+      "schema:identifier": [],
+      "schema:geo": {
+        "@type": "schema:GeoCoordinates",
+        "schema:latitude": 35.70038,
+        "schema:longitude": 139.749567
       },
-      "schema:identifier": [
-        {
-          "@type": "schema:PropertyValue",
-          "schema:propertyID": "openstreetmap",
-          "schema:value": "node/1420785407"
-        }
+      "rdfs:seeAlso": [
+        "https://www.openstreetmap.org/node/1420785407"
       ]
     },
     {
       "@id": "urn:uuid:019fa880-5cd5-7740-a44a-9a4e3e81563b",
       "@type": [
-        "schema:Place",
-        "geo:Feature"
+        "schema:Place"
       ],
-      "geo:hasGeometry": {
-        "geo:asGeoJSON": {
-          "@type": "geo:geoJSONLiteral",
-          "@value": "{\"type\":\"Point\",\"coordinates\":[139.7521747,35.6960477]}"
-        }
+      "schema:identifier": [],
+      "schema:geo": {
+        "@type": "schema:GeoCoordinates",
+        "schema:latitude": 35.6960477,
+        "schema:longitude": 139.7521747
       },
-      "schema:identifier": [
-        {
-          "@type": "schema:PropertyValue",
-          "schema:propertyID": "openstreetmap",
-          "schema:value": "node/3774437979"
-        }
+      "rdfs:seeAlso": [
+        "https://www.openstreetmap.org/node/3774437979"
       ]
     },
     {
       "@id": "urn:uuid:019fa880-5cd5-7d9b-ae8f-d7d00901be5d",
       "@type": [
-        "schema:Place",
-        "geo:Feature"
+        "schema:Place"
       ],
-      "geo:hasGeometry": {
-        "geo:asGeoJSON": {
-          "@type": "geo:geoJSONLiteral",
-          "@value": "{\"type\":\"Point\",\"coordinates\":[139.7605387,35.6977313]}"
-        }
+      "schema:identifier": [],
+      "schema:geo": {
+        "@type": "schema:GeoCoordinates",
+        "schema:latitude": 35.6977313,
+        "schema:longitude": 139.7605387
       },
-      "schema:identifier": [
-        {
-          "@type": "schema:PropertyValue",
-          "schema:propertyID": "openstreetmap",
-          "schema:value": "way/184577229"
-        }
+      "rdfs:seeAlso": [
+        "https://www.openstreetmap.org/way/184577229",
+        "https://www.wikidata.org/entity/Q42311499"
       ]
     },
     {
       "@id": "urn:uuid:019fa880-5cd5-7ae6-b7e1-8339b7cccb77",
       "@type": [
-        "schema:Place",
-        "geo:Feature"
+        "schema:Place"
       ],
-      "geo:hasGeometry": {
-        "geo:asGeoJSON": {
-          "@type": "geo:geoJSONLiteral",
-          "@value": "{\"type\":\"Point\",\"coordinates\":[139.7679359,35.6929407]}"
-        }
+      "schema:identifier": [],
+      "schema:geo": {
+        "@type": "schema:GeoCoordinates",
+        "schema:latitude": 35.6929407,
+        "schema:longitude": 139.7679359
       },
-      "schema:identifier": [
-        {
-          "@type": "schema:PropertyValue",
-          "schema:propertyID": "openstreetmap",
-          "schema:value": "way/515133705"
-        }
+      "rdfs:seeAlso": [
+        "https://www.openstreetmap.org/way/515133705",
+        "https://www.wikidata.org/entity/Q42311502"
       ]
     },
     {
       "@id": "urn:uuid:019fa880-5cd5-74c2-836d-5e8b3347e719",
       "@type": [
-        "schema:Place",
-        "geo:Feature"
+        "schema:Place"
       ],
-      "geo:hasGeometry": {
-        "geo:asGeoJSON": {
-          "@type": "geo:geoJSONLiteral",
-          "@value": "{\"type\":\"Point\",\"coordinates\":[139.7348278,35.6905631]}"
-        }
+      "schema:identifier": [],
+      "schema:geo": {
+        "@type": "schema:GeoCoordinates",
+        "schema:latitude": 35.6905631,
+        "schema:longitude": 139.7348278
       },
-      "schema:identifier": [
-        {
-          "@type": "schema:PropertyValue",
-          "schema:propertyID": "openstreetmap",
-          "schema:value": "relation/17416865"
-        }
+      "rdfs:seeAlso": [
+        "https://www.openstreetmap.org/relation/17416865",
+        "https://www.wikidata.org/entity/Q11430498"
       ]
     },
     {
       "@id": "urn:uuid:019fa880-5cd5-7fb2-9df1-c9da871e3bfb",
       "@type": [
-        "schema:Place",
-        "geo:Feature"
+        "schema:Place"
       ],
-      "geo:hasGeometry": {
-        "geo:asGeoJSON": {
-          "@type": "geo:geoJSONLiteral",
-          "@value": "{\"type\":\"Point\",\"coordinates\":[139.7509767,35.6921178]}"
-        }
+      "schema:identifier": [],
+      "schema:geo": {
+        "@type": "schema:GeoCoordinates",
+        "schema:latitude": 35.6921178,
+        "schema:longitude": 139.7509767
       },
-      "schema:identifier": [
-        {
-          "@type": "schema:PropertyValue",
-          "schema:propertyID": "openstreetmap",
-          "schema:value": "way/624081603"
-        }
+      "rdfs:seeAlso": [
+        "https://www.openstreetmap.org/way/624081603",
+        "https://www.wikidata.org/entity/Q1075966"
       ]
     },
     {
       "@id": "urn:uuid:019fa880-5cd5-7ed6-a8bd-337ac263e5a0",
       "@type": [
-        "schema:Place",
-        "geo:Feature"
+        "schema:Place"
       ],
-      "geo:hasGeometry": {
-        "geo:asGeoJSON": {
-          "@type": "geo:geoJSONLiteral",
-          "@value": "{\"type\":\"Point\",\"coordinates\":[139.7400815,35.6903895]}"
-        }
+      "schema:identifier": [],
+      "schema:geo": {
+        "@type": "schema:GeoCoordinates",
+        "schema:latitude": 35.6903895,
+        "schema:longitude": 139.7400815
       },
-      "schema:identifier": [
-        {
-          "@type": "schema:PropertyValue",
-          "schema:propertyID": "openstreetmap",
-          "schema:value": "way/132794875"
-        }
+      "rdfs:seeAlso": [
+        "https://www.openstreetmap.org/way/132794875",
+        "https://www.wikidata.org/entity/Q42311484"
       ]
     },
     {
       "@id": "urn:uuid:019fa880-5cd5-71c8-ba28-7d86e104de84",
       "@type": [
-        "schema:Place",
-        "geo:Feature"
+        "schema:Place"
       ],
-      "geo:hasGeometry": {
-        "geo:asGeoJSON": {
-          "@type": "geo:geoJSONLiteral",
-          "@value": "{\"type\":\"Point\",\"coordinates\":[139.74692340000001,35.6900817]}"
-        }
+      "schema:identifier": [],
+      "schema:geo": {
+        "@type": "schema:GeoCoordinates",
+        "schema:latitude": 35.6900817,
+        "schema:longitude": 139.74692340000001
       },
-      "schema:identifier": [
-        {
-          "@type": "schema:PropertyValue",
-          "schema:propertyID": "openstreetmap",
-          "schema:value": "way/870979561"
-        }
+      "rdfs:seeAlso": [
+        "https://www.openstreetmap.org/way/870979561",
+        "https://www.wikidata.org/entity/Q2972676"
       ]
     },
     {
       "@id": "urn:uuid:019fa880-5cd5-7641-bc19-ad96baeb8230",
       "@type": [
-        "schema:Place",
-        "geo:Feature"
+        "schema:Place"
       ],
-      "geo:hasGeometry": {
-        "geo:asGeoJSON": {
-          "@type": "geo:geoJSONLiteral",
-          "@value": "{\"type\":\"Point\",\"coordinates\":[139.7571878,35.686472]}"
-        }
+      "schema:identifier": [],
+      "schema:geo": {
+        "@type": "schema:GeoCoordinates",
+        "schema:latitude": 35.686472,
+        "schema:longitude": 139.7571878
       },
-      "schema:identifier": [
-        {
-          "@type": "schema:PropertyValue",
-          "schema:propertyID": "openstreetmap",
-          "schema:value": "relation/5415394"
-        }
+      "rdfs:seeAlso": [
+        "https://www.openstreetmap.org/relation/5415394",
+        "https://www.wikidata.org/entity/Q6631907"
       ]
     },
     {
       "@id": "urn:uuid:019fa880-5cd5-79f3-8608-d5a71f5492f7",
       "@type": [
-        "schema:Place",
-        "geo:Feature"
+        "schema:Place"
       ],
-      "geo:hasGeometry": {
-        "geo:asGeoJSON": {
-          "@type": "geo:geoJSONLiteral",
-          "@value": "{\"type\":\"Point\",\"coordinates\":[139.7449548,35.6859119]}"
-        }
+      "schema:identifier": [],
+      "schema:geo": {
+        "@type": "schema:GeoCoordinates",
+        "schema:latitude": 35.6859119,
+        "schema:longitude": 139.7449548
       },
-      "schema:identifier": [
-        {
-          "@type": "schema:PropertyValue",
-          "schema:propertyID": "openstreetmap",
-          "schema:value": "way/43941104"
-        }
+      "rdfs:seeAlso": [
+        "https://www.openstreetmap.org/way/43941104",
+        "https://www.wikidata.org/entity/Q6631821"
       ]
     },
     {
       "@id": "urn:uuid:019fa880-5cd5-7f94-988c-a8ff8b532a55",
       "@type": [
-        "schema:Place",
-        "geo:Feature"
+        "schema:Place"
       ],
-      "geo:hasGeometry": {
-        "geo:asGeoJSON": {
-          "@type": "geo:geoJSONLiteral",
-          "@value": "{\"type\":\"Point\",\"coordinates\":[139.7358866,35.6816756]}"
-        }
+      "schema:identifier": [],
+      "schema:geo": {
+        "@type": "schema:GeoCoordinates",
+        "schema:latitude": 35.6816756,
+        "schema:longitude": 139.7358866
       },
-      "schema:identifier": [
-        {
-          "@type": "schema:PropertyValue",
-          "schema:propertyID": "openstreetmap",
-          "schema:value": "way/666471139"
-        }
+      "rdfs:seeAlso": [
+        "https://www.openstreetmap.org/way/666471139",
+        "https://www.wikidata.org/entity/Q11561179"
       ]
     },
     {
       "@id": "urn:uuid:019fa880-5cd5-775a-bbd0-62db8a21fec0",
       "@type": [
-        "schema:Place",
-        "geo:Feature"
+        "schema:Place"
       ],
-      "geo:hasGeometry": {
-        "geo:asGeoJSON": {
-          "@type": "geo:geoJSONLiteral",
-          "@value": "{\"type\":\"Point\",\"coordinates\":[139.7481601,35.6753971]}"
-        }
+      "schema:identifier": [],
+      "schema:geo": {
+        "@type": "schema:GeoCoordinates",
+        "schema:latitude": 35.6753971,
+        "schema:longitude": 139.7481601
       },
-      "schema:identifier": [
-        {
-          "@type": "schema:PropertyValue",
-          "schema:propertyID": "openstreetmap",
-          "schema:value": "way/140107417"
-        }
+      "rdfs:seeAlso": [
+        "https://www.openstreetmap.org/way/140107417",
+        "https://www.wikidata.org/entity/Q17221580"
       ]
     },
     {
       "@id": "urn:uuid:019fa880-5cd5-729a-8d49-670ce25e8723",
       "@type": [
-        "schema:Place",
-        "geo:Feature"
+        "schema:Place"
       ],
-      "geo:hasGeometry": {
-        "geo:asGeoJSON": {
-          "@type": "geo:geoJSONLiteral",
-          "@value": "{\"type\":\"Point\",\"coordinates\":[139.7561768,35.6737111]}"
-        }
+      "schema:identifier": [],
+      "schema:geo": {
+        "@type": "schema:GeoCoordinates",
+        "schema:latitude": 35.6737111,
+        "schema:longitude": 139.7561768
       },
-      "schema:identifier": [
-        {
-          "@type": "schema:PropertyValue",
-          "schema:propertyID": "openstreetmap",
-          "schema:value": "way/145408909"
-        }
+      "rdfs:seeAlso": [
+        "https://www.openstreetmap.org/way/145408909",
+        "https://www.wikidata.org/entity/Q1378533"
       ]
     },
     {
       "@id": "urn:uuid:019fa880-5cd5-7851-97e2-3eee063f342b",
       "@type": [
-        "schema:Place",
-        "geo:Feature"
+        "schema:Place"
       ],
-      "geo:hasGeometry": {
-        "geo:asGeoJSON": {
-          "@type": "geo:geoJSONLiteral",
-          "@value": "{\"type\":\"Point\",\"coordinates\":[139.7703476,35.7013571]}"
-        }
+      "schema:identifier": [],
+      "schema:geo": {
+        "@type": "schema:GeoCoordinates",
+        "schema:latitude": 35.7013571,
+        "schema:longitude": 139.7703476
       },
-      "schema:identifier": [
-        {
-          "@type": "schema:PropertyValue",
-          "schema:propertyID": "openstreetmap",
-          "schema:value": "node/1916524834"
-        }
+      "rdfs:seeAlso": [
+        "https://www.openstreetmap.org/node/1916524834",
+        "https://www.wikidata.org/entity/Q106020484"
       ]
     },
     {
       "@id": "urn:uuid:019fa880-5cd5-7c84-9bcf-cac96174129f",
       "@type": [
-        "schema:Place",
-        "geo:Feature"
+        "schema:Place"
       ],
-      "geo:hasGeometry": {
-        "geo:asGeoJSON": {
-          "@type": "geo:geoJSONLiteral",
-          "@value": "{\"type\":\"Point\",\"coordinates\":[139.7331755,35.6857881]}"
-        }
+      "schema:identifier": [],
+      "schema:geo": {
+        "@type": "schema:GeoCoordinates",
+        "schema:latitude": 35.6857881,
+        "schema:longitude": 139.7331755
       },
-      "schema:identifier": [
-        {
-          "@type": "schema:PropertyValue",
-          "schema:propertyID": "openstreetmap",
-          "schema:value": "node/1928727937"
-        }
+      "rdfs:seeAlso": [
+        "https://www.openstreetmap.org/node/1928727937",
+        "https://www.wikidata.org/entity/Q107391078"
       ]
     },
     {
       "@id": "urn:uuid:019fa880-5cd5-7eca-9f6d-ad4b35b2c069",
       "@type": [
-        "schema:Place",
-        "geo:Feature"
+        "schema:Place"
       ],
-      "geo:hasGeometry": {
-        "geo:asGeoJSON": {
-          "@type": "geo:geoJSONLiteral",
-          "@value": "{\"type\":\"Point\",\"coordinates\":[139.757157,35.6974277]}"
-        }
+      "schema:identifier": [],
+      "schema:geo": {
+        "@type": "schema:GeoCoordinates",
+        "schema:latitude": 35.6974277,
+        "schema:longitude": 139.757157
       },
-      "schema:identifier": [
-        {
-          "@type": "schema:PropertyValue",
-          "schema:propertyID": "openstreetmap",
-          "schema:value": "node/6768292062"
-        }
+      "rdfs:seeAlso": [
+        "https://www.openstreetmap.org/node/6768292062"
       ]
     },
     {
       "@id": "urn:uuid:019fa880-5cd5-7031-bc8e-250d0074827b",
       "@type": [
-        "schema:Place",
-        "geo:Feature"
+        "schema:Place"
       ],
-      "geo:hasGeometry": {
-        "geo:asGeoJSON": {
-          "@type": "geo:geoJSONLiteral",
-          "@value": "{\"type\":\"Point\",\"coordinates\":[139.74458635000002,35.6950676]}"
-        }
+      "schema:identifier": [],
+      "schema:geo": {
+        "@type": "schema:GeoCoordinates",
+        "schema:latitude": 35.6950676,
+        "schema:longitude": 139.74458635000002
       },
-      "schema:identifier": [
-        {
-          "@type": "schema:PropertyValue",
-          "schema:propertyID": "openstreetmap",
-          "schema:value": "way/30680236"
-        }
+      "rdfs:seeAlso": [
+        "https://www.openstreetmap.org/way/30680236"
       ]
     },
     {
       "@id": "urn:uuid:019fa880-5cd5-7a69-ace7-2a132f6f2b57",
       "@type": [
-        "schema:Place",
-        "geo:Feature"
+        "schema:Place"
       ],
-      "geo:hasGeometry": {
-        "geo:asGeoJSON": {
-          "@type": "geo:geoJSONLiteral",
-          "@value": "{\"type\":\"Point\",\"coordinates\":[139.7443601,35.6993714]}"
-        }
+      "schema:identifier": [],
+      "schema:geo": {
+        "@type": "schema:GeoCoordinates",
+        "schema:latitude": 35.6993714,
+        "schema:longitude": 139.7443601
       },
-      "schema:identifier": [
-        {
-          "@type": "schema:PropertyValue",
-          "schema:propertyID": "openstreetmap",
-          "schema:value": "way/344414571"
-        }
+      "rdfs:seeAlso": [
+        "https://www.openstreetmap.org/way/344414571"
       ]
     },
     {
       "@id": "urn:uuid:019fa880-5cd5-7285-88ba-ab05a68eb601",
       "@type": [
-        "schema:Place",
-        "geo:Feature"
+        "schema:Place"
       ],
-      "geo:hasGeometry": {
-        "geo:asGeoJSON": {
-          "@type": "geo:geoJSONLiteral",
-          "@value": "{\"type\":\"Point\",\"coordinates\":[139.7312545,35.6851483]}"
-        }
+      "schema:identifier": [],
+      "schema:geo": {
+        "@type": "schema:GeoCoordinates",
+        "schema:latitude": 35.6851483,
+        "schema:longitude": 139.7312545
       },
-      "schema:identifier": [
-        {
-          "@type": "schema:PropertyValue",
-          "schema:propertyID": "openstreetmap",
-          "schema:value": "way/377728267"
-        }
+      "rdfs:seeAlso": [
+        "https://www.openstreetmap.org/way/377728267",
+        "https://www.wikidata.org/entity/Q11610869"
       ]
     },
     {
       "@id": "urn:uuid:019fa880-5cd5-7ea9-839d-1c2d04dbff2f",
       "@type": [
-        "schema:Place",
-        "geo:Feature"
+        "schema:Place"
       ],
-      "geo:hasGeometry": {
-        "geo:asGeoJSON": {
-          "@type": "geo:geoJSONLiteral",
-          "@value": "{\"type\":\"Point\",\"coordinates\":[139.7654865,35.698016]}"
-        }
+      "schema:identifier": [],
+      "schema:geo": {
+        "@type": "schema:GeoCoordinates",
+        "schema:latitude": 35.698016,
+        "schema:longitude": 139.7654865
       },
-      "schema:identifier": [
-        {
-          "@type": "schema:PropertyValue",
-          "schema:propertyID": "openstreetmap",
-          "schema:value": "relation/4080936"
-        }
+      "rdfs:seeAlso": [
+        "https://www.openstreetmap.org/relation/4080936",
+        "https://www.wikidata.org/entity/Q2660430"
       ]
     },
     {
       "@id": "urn:uuid:019fa880-5cd5-7459-a206-660bc9edd397",
       "@type": [
-        "schema:Place",
-        "geo:Feature"
+        "schema:Place"
       ],
-      "geo:hasGeometry": {
-        "geo:asGeoJSON": {
-          "@type": "geo:geoJSONLiteral",
-          "@value": "{\"type\":\"Point\",\"coordinates\":[139.7486134,35.6961359]}"
-        }
+      "schema:identifier": [],
+      "schema:geo": {
+        "@type": "schema:GeoCoordinates",
+        "schema:latitude": 35.6961359,
+        "schema:longitude": 139.7486134
       },
-      "schema:identifier": [
-        {
-          "@type": "schema:PropertyValue",
-          "schema:propertyID": "openstreetmap",
-          "schema:value": "node/988763665"
-        }
+      "rdfs:seeAlso": [
+        "https://www.openstreetmap.org/node/988763665"
       ]
     },
     {
       "@id": "urn:uuid:019fa880-5cd5-7d22-aef4-68b4e1172660",
       "@type": [
-        "schema:Place",
-        "geo:Feature"
+        "schema:Place"
       ],
-      "geo:hasGeometry": {
-        "geo:asGeoJSON": {
-          "@type": "geo:geoJSONLiteral",
-          "@value": "{\"type\":\"Point\",\"coordinates\":[139.7575698,35.6994212]}"
-        }
+      "schema:identifier": [],
+      "schema:geo": {
+        "@type": "schema:GeoCoordinates",
+        "schema:latitude": 35.6994212,
+        "schema:longitude": 139.7575698
       },
-      "schema:identifier": [
-        {
-          "@type": "schema:PropertyValue",
-          "schema:propertyID": "openstreetmap",
-          "schema:value": "node/1376774653"
-        }
+      "rdfs:seeAlso": [
+        "https://www.openstreetmap.org/node/1376774653",
+        "https://www.wikidata.org/entity/Q11590603"
       ]
     },
     {
       "@id": "urn:uuid:019fa880-5cd5-7dc7-8e68-e49750a54b8d",
       "@type": [
-        "schema:Place",
-        "geo:Feature"
+        "schema:Place"
       ],
-      "geo:hasGeometry": {
-        "geo:asGeoJSON": {
-          "@type": "geo:geoJSONLiteral",
-          "@value": "{\"type\":\"Point\",\"coordinates\":[139.7702913,35.7019158]}"
-        }
+      "schema:identifier": [],
+      "schema:geo": {
+        "@type": "schema:GeoCoordinates",
+        "schema:latitude": 35.7019158,
+        "schema:longitude": 139.7702913
       },
-      "schema:identifier": [
-        {
-          "@type": "schema:PropertyValue",
-          "schema:propertyID": "openstreetmap",
-          "schema:value": "node/1916530506"
-        }
+      "rdfs:seeAlso": [
+        "https://www.openstreetmap.org/node/1916530506"
       ]
     },
     {
       "@id": "urn:uuid:019fa880-5cd5-7fce-b42f-51fa0dac8c01",
       "@type": [
-        "schema:Place",
-        "geo:Feature"
+        "schema:Place"
       ],
-      "geo:hasGeometry": {
-        "geo:asGeoJSON": {
-          "@type": "geo:geoJSONLiteral",
-          "@value": "{\"type\":\"Point\",\"coordinates\":[139.7608409,35.700482]}"
-        }
+      "schema:identifier": [],
+      "schema:geo": {
+        "@type": "schema:GeoCoordinates",
+        "schema:latitude": 35.700482,
+        "schema:longitude": 139.7608409
       },
-      "schema:identifier": [
-        {
-          "@type": "schema:PropertyValue",
-          "schema:propertyID": "openstreetmap",
-          "schema:value": "node/3781782008"
-        }
+      "rdfs:seeAlso": [
+        "https://www.openstreetmap.org/node/3781782008"
       ]
     },
     {
       "@id": "urn:uuid:019fa880-5cd5-7bae-838d-111510f35ee9",
       "@type": [
-        "schema:Place",
-        "geo:Feature"
+        "schema:Place"
       ],
-      "geo:hasGeometry": {
-        "geo:asGeoJSON": {
-          "@type": "geo:geoJSONLiteral",
-          "@value": "{\"type\":\"Point\",\"coordinates\":[139.7580323,35.6951362]}"
-        }
+      "schema:identifier": [],
+      "schema:geo": {
+        "@type": "schema:GeoCoordinates",
+        "schema:latitude": 35.6951362,
+        "schema:longitude": 139.7580323
       },
-      "schema:identifier": [
-        {
-          "@type": "schema:PropertyValue",
-          "schema:propertyID": "openstreetmap",
-          "schema:value": "node/810027509"
-        }
+      "rdfs:seeAlso": [
+        "https://www.openstreetmap.org/node/810027509"
       ]
     },
     {
       "@id": "urn:uuid:019fa880-5cd5-7832-ae65-182a148bfa2f",
       "@type": [
-        "schema:Place",
-        "geo:Feature"
+        "schema:Place"
       ],
-      "geo:hasGeometry": {
-        "geo:asGeoJSON": {
-          "@type": "geo:geoJSONLiteral",
-          "@value": "{\"type\":\"Point\",\"coordinates\":[139.7608196,35.6950264]}"
-        }
+      "schema:identifier": [],
+      "schema:geo": {
+        "@type": "schema:GeoCoordinates",
+        "schema:latitude": 35.6950264,
+        "schema:longitude": 139.7608196
       },
-      "schema:identifier": [
-        {
-          "@type": "schema:PropertyValue",
-          "schema:propertyID": "openstreetmap",
-          "schema:value": "node/3762241704"
-        }
+      "rdfs:seeAlso": [
+        "https://www.openstreetmap.org/node/3762241704",
+        "https://www.wikidata.org/entity/Q4409942"
       ]
     },
     {
       "@id": "urn:uuid:019fa880-5cd5-7743-8b45-3ba7622c5083",
       "@type": [
-        "schema:Place",
-        "geo:Feature"
+        "schema:Place"
       ],
-      "geo:hasGeometry": {
-        "geo:asGeoJSON": {
-          "@type": "geo:geoJSONLiteral",
-          "@value": "{\"type\":\"Point\",\"coordinates\":[139.7626825,35.6751064]}"
-        }
+      "schema:identifier": [],
+      "schema:geo": {
+        "@type": "schema:GeoCoordinates",
+        "schema:latitude": 35.6751064,
+        "schema:longitude": 139.7626825
       },
-      "schema:identifier": [
-        {
-          "@type": "schema:PropertyValue",
-          "schema:propertyID": "openstreetmap",
-          "schema:value": "node/6575768686"
-        }
+      "rdfs:seeAlso": [
+        "https://www.openstreetmap.org/node/6575768686"
       ]
     },
     {
       "@id": "urn:uuid:019fa880-5cd5-7b37-bb94-a2151c0cdef0",
       "@type": [
-        "schema:Place",
-        "geo:Feature"
+        "schema:Place"
       ],
-      "geo:hasGeometry": {
-        "geo:asGeoJSON": {
-          "@type": "geo:geoJSONLiteral",
-          "@value": "{\"type\":\"Point\",\"coordinates\":[139.7594538,35.6733194]}"
-        }
+      "schema:identifier": [],
+      "schema:geo": {
+        "@type": "schema:GeoCoordinates",
+        "schema:latitude": 35.6733194,
+        "schema:longitude": 139.7594538
       },
-      "schema:identifier": [
-        {
-          "@type": "schema:PropertyValue",
-          "schema:propertyID": "openstreetmap",
-          "schema:value": "node/6900192224"
-        }
+      "rdfs:seeAlso": [
+        "https://www.openstreetmap.org/node/6900192224"
       ]
     },
     {
       "@id": "urn:uuid:019fa880-5cd5-72a9-9547-c3e9269d9c90",
       "@type": [
-        "schema:Place",
-        "geo:Feature"
+        "schema:Place"
       ],
-      "geo:hasGeometry": {
-        "geo:asGeoJSON": {
-          "@type": "geo:geoJSONLiteral",
-          "@value": "{\"type\":\"Point\",\"coordinates\":[139.7604959,35.6734305]}"
-        }
+      "schema:identifier": [],
+      "schema:geo": {
+        "@type": "schema:GeoCoordinates",
+        "schema:latitude": 35.6734305,
+        "schema:longitude": 139.7604959
       },
-      "schema:identifier": [
-        {
-          "@type": "schema:PropertyValue",
-          "schema:propertyID": "openstreetmap",
-          "schema:value": "node/6900192226"
-        }
+      "rdfs:seeAlso": [
+        "https://www.openstreetmap.org/node/6900192226",
+        "https://www.wikidata.org/entity/Q11249601"
       ]
     },
     {
       "@id": "urn:uuid:019fa880-5cd6-7640-8ec1-c2e6c99e5c26",
       "@type": [
-        "schema:Place",
-        "geo:Feature"
+        "schema:Place"
       ],
-      "geo:hasGeometry": {
-        "geo:asGeoJSON": {
-          "@type": "geo:geoJSONLiteral",
-          "@value": "{\"type\":\"Point\",\"coordinates\":[139.7663029,35.6901388]}"
-        }
+      "schema:identifier": [],
+      "schema:geo": {
+        "@type": "schema:GeoCoordinates",
+        "schema:latitude": 35.6901388,
+        "schema:longitude": 139.7663029
       },
-      "schema:identifier": [
-        {
-          "@type": "schema:PropertyValue",
-          "schema:propertyID": "openstreetmap",
-          "schema:value": "node/1744076702"
-        }
+      "rdfs:seeAlso": [
+        "https://www.openstreetmap.org/node/1744076702"
       ]
     },
     {
       "@id": "urn:uuid:019fa880-5cd6-7d72-ac6c-89e27c90a921",
       "@type": [
-        "schema:Place",
-        "geo:Feature"
+        "schema:Place"
       ],
-      "geo:hasGeometry": {
-        "geo:asGeoJSON": {
-          "@type": "geo:geoJSONLiteral",
-          "@value": "{\"type\":\"Point\",\"coordinates\":[139.7679137,35.6981356]}"
-        }
+      "schema:identifier": [],
+      "schema:geo": {
+        "@type": "schema:GeoCoordinates",
+        "schema:latitude": 35.6981356,
+        "schema:longitude": 139.7679137
       },
-      "schema:identifier": [
-        {
-          "@type": "schema:PropertyValue",
-          "schema:propertyID": "openstreetmap",
-          "schema:value": "node/6463426485"
-        }
+      "rdfs:seeAlso": [
+        "https://www.openstreetmap.org/node/6463426485"
       ]
     },
     {
       "@id": "urn:uuid:019fa880-5cd6-78d5-8f0d-d2b980c78320",
       "@type": [
-        "schema:Place",
-        "geo:Feature"
+        "schema:Place"
       ],
-      "geo:hasGeometry": {
-        "geo:asGeoJSON": {
-          "@type": "geo:geoJSONLiteral",
-          "@value": "{\"type\":\"Point\",\"coordinates\":[139.7755499,35.6927651]}"
-        }
+      "schema:identifier": [],
+      "schema:geo": {
+        "@type": "schema:GeoCoordinates",
+        "schema:latitude": 35.6927651,
+        "schema:longitude": 139.7755499
       },
-      "schema:identifier": [
-        {
-          "@type": "schema:PropertyValue",
-          "schema:propertyID": "openstreetmap",
-          "schema:value": "node/6463426486"
-        }
+      "rdfs:seeAlso": [
+        "https://www.openstreetmap.org/node/6463426486"
       ]
     },
     {
       "@id": "urn:uuid:019fa880-5cd6-7d49-888d-1ba85637e081",
       "@type": [
-        "schema:Place",
-        "geo:Feature"
+        "schema:Place"
       ],
-      "geo:hasGeometry": {
-        "geo:asGeoJSON": {
-          "@type": "geo:geoJSONLiteral",
-          "@value": "{\"type\":\"Point\",\"coordinates\":[139.7552918,35.6966741]}"
-        }
+      "schema:identifier": [],
+      "schema:geo": {
+        "@type": "schema:GeoCoordinates",
+        "schema:latitude": 35.6966741,
+        "schema:longitude": 139.7552918
       },
-      "schema:identifier": [
-        {
-          "@type": "schema:PropertyValue",
-          "schema:propertyID": "openstreetmap",
-          "schema:value": "node/6463473885"
-        }
+      "rdfs:seeAlso": [
+        "https://www.openstreetmap.org/node/6463473885"
       ]
     },
     {
       "@id": "urn:uuid:019fa880-5cd6-7c1f-8c9c-a227390405ea",
       "@type": [
-        "schema:Place",
-        "geo:Feature"
+        "schema:Place"
       ],
-      "geo:hasGeometry": {
-        "geo:asGeoJSON": {
-          "@type": "geo:geoJSONLiteral",
-          "@value": "{\"type\":\"Point\",\"coordinates\":[139.7645456,35.6885516]}"
-        }
+      "schema:identifier": [],
+      "schema:geo": {
+        "@type": "schema:GeoCoordinates",
+        "schema:latitude": 35.6885516,
+        "schema:longitude": 139.7645456
       },
-      "schema:identifier": [
-        {
-          "@type": "schema:PropertyValue",
-          "schema:propertyID": "openstreetmap",
-          "schema:value": "node/6709554588"
-        }
+      "rdfs:seeAlso": [
+        "https://www.openstreetmap.org/node/6709554588"
       ]
     },
     {
       "@id": "urn:uuid:019fa880-5cd6-7359-b619-432ecb07b975",
       "@type": [
-        "schema:Place",
-        "geo:Feature"
+        "schema:Place"
       ],
-      "geo:hasGeometry": {
-        "geo:asGeoJSON": {
-          "@type": "geo:geoJSONLiteral",
-          "@value": "{\"type\":\"Point\",\"coordinates\":[139.7380742,35.683313]}"
-        }
+      "schema:identifier": [],
+      "schema:geo": {
+        "@type": "schema:GeoCoordinates",
+        "schema:latitude": 35.683313,
+        "schema:longitude": 139.7380742
       },
-      "schema:identifier": [
-        {
-          "@type": "schema:PropertyValue",
-          "schema:propertyID": "openstreetmap",
-          "schema:value": "node/10595395388"
-        }
+      "rdfs:seeAlso": [
+        "https://www.openstreetmap.org/node/10595395388"
       ]
     },
     {
       "@id": "urn:uuid:019fa880-5cd6-74a8-9544-d37f0c4946c7",
       "@type": [
-        "schema:Place",
-        "geo:Feature"
+        "schema:Place"
       ],
-      "geo:hasGeometry": {
-        "geo:asGeoJSON": {
-          "@type": "geo:geoJSONLiteral",
-          "@value": "{\"type\":\"Point\",\"coordinates\":[139.7640417,35.6945448]}"
-        }
+      "schema:identifier": [],
+      "schema:geo": {
+        "@type": "schema:GeoCoordinates",
+        "schema:latitude": 35.6945448,
+        "schema:longitude": 139.7640417
       },
-      "schema:identifier": [
-        {
-          "@type": "schema:PropertyValue",
-          "schema:propertyID": "openstreetmap",
-          "schema:value": "node/13741796001"
-        }
+      "rdfs:seeAlso": [
+        "https://www.openstreetmap.org/node/13741796001"
       ]
     },
     {
       "@id": "urn:uuid:019fa880-5cd6-7324-b3fe-943c71e289b7",
       "@type": [
-        "schema:Place",
-        "geo:Feature"
+        "schema:Place"
       ],
-      "geo:hasGeometry": {
-        "geo:asGeoJSON": {
-          "@type": "geo:geoJSONLiteral",
-          "@value": "{\"type\":\"Point\",\"coordinates\":[139.7698128,35.6974925]}"
-        }
-      },
-      "schema:identifier": []
+      "schema:identifier": [],
+      "schema:geo": {
+        "@type": "schema:GeoCoordinates",
+        "schema:latitude": 35.6974925,
+        "schema:longitude": 139.7698128
+      }
     },
     {
       "@id": "urn:uuid:019fa880-5cd6-7d38-b17b-55a1378dd9b8",
       "@type": [
-        "schema:Place",
-        "geo:Feature"
+        "schema:Place"
       ],
-      "geo:hasGeometry": {
-        "geo:asGeoJSON": {
-          "@type": "geo:geoJSONLiteral",
-          "@value": "{\"type\":\"Point\",\"coordinates\":[139.7597075,35.6952821]}"
-        }
+      "schema:identifier": [],
+      "schema:geo": {
+        "@type": "schema:GeoCoordinates",
+        "schema:latitude": 35.6952821,
+        "schema:longitude": 139.7597075
       },
-      "schema:identifier": [
-        {
-          "@type": "schema:PropertyValue",
-          "schema:propertyID": "openstreetmap",
-          "schema:value": "node/5445799065"
-        }
+      "rdfs:seeAlso": [
+        "https://www.openstreetmap.org/node/5445799065"
       ]
     },
     {
       "@id": "urn:uuid:019fa880-5cd6-7c6d-8b56-2be683d649a6",
       "@type": [
-        "schema:Place",
-        "geo:Feature"
+        "schema:Place"
       ],
-      "geo:hasGeometry": {
-        "geo:asGeoJSON": {
-          "@type": "geo:geoJSONLiteral",
-          "@value": "{\"type\":\"Point\",\"coordinates\":[139.7546203,35.6904946]}"
-        }
+      "schema:identifier": [],
+      "schema:geo": {
+        "@type": "schema:GeoCoordinates",
+        "schema:latitude": 35.6904946,
+        "schema:longitude": 139.7546203
       },
-      "schema:identifier": [
-        {
-          "@type": "schema:PropertyValue",
-          "schema:propertyID": "openstreetmap",
-          "schema:value": "way/43934324"
-        }
+      "rdfs:seeAlso": [
+        "https://www.openstreetmap.org/way/43934324",
+        "https://www.wikidata.org/entity/Q1359908"
       ]
     },
     {
       "@id": "urn:uuid:019fa880-5cd6-7e0b-9d3a-218e8214e31d",
       "@type": [
-        "schema:Place",
-        "geo:Feature"
+        "schema:Place"
       ],
-      "geo:hasGeometry": {
-        "geo:asGeoJSON": {
-          "@type": "geo:geoJSONLiteral",
-          "@value": "{\"type\":\"Point\",\"coordinates\":[139.7631636,35.6784664]}"
-        }
+      "schema:identifier": [],
+      "schema:geo": {
+        "@type": "schema:GeoCoordinates",
+        "schema:latitude": 35.6784664,
+        "schema:longitude": 139.7631636
       },
-      "schema:identifier": [
-        {
-          "@type": "schema:PropertyValue",
-          "schema:propertyID": "openstreetmap",
-          "schema:value": "way/306116935"
-        }
+      "rdfs:seeAlso": [
+        "https://www.openstreetmap.org/way/306116935",
+        "https://www.wikidata.org/entity/Q3815458"
       ]
     },
     {
       "@id": "urn:uuid:019fa880-5cd6-7aba-bca8-0e770da6c6f9",
       "@type": [
-        "schema:Place",
-        "geo:Feature"
+        "schema:Place"
       ],
-      "geo:hasGeometry": {
-        "geo:asGeoJSON": {
-          "@type": "geo:geoJSONLiteral",
-          "@value": "{\"type\":\"Point\",\"coordinates\":[139.7589461,35.6865373]}"
-        }
+      "schema:identifier": [],
+      "schema:geo": {
+        "@type": "schema:GeoCoordinates",
+        "schema:latitude": 35.6865373,
+        "schema:longitude": 139.7589461
       },
-      "schema:identifier": [
-        {
-          "@type": "schema:PropertyValue",
-          "schema:propertyID": "openstreetmap",
-          "schema:value": "way/145501856"
-        }
+      "rdfs:seeAlso": [
+        "https://www.openstreetmap.org/way/145501856",
+        "https://www.wikidata.org/entity/Q3076188"
       ]
     },
     {
       "@id": "urn:uuid:019fa880-5cd6-78af-b9de-08beeb78d708",
       "@type": [
-        "schema:Place",
-        "geo:Feature"
+        "schema:Place"
       ],
-      "geo:hasGeometry": {
-        "geo:asGeoJSON": {
-          "@type": "geo:geoJSONLiteral",
-          "@value": "{\"type\":\"Point\",\"coordinates\":[139.764418,35.691776]}"
-        }
+      "schema:identifier": [],
+      "schema:geo": {
+        "@type": "schema:GeoCoordinates",
+        "schema:latitude": 35.691776,
+        "schema:longitude": 139.764418
       },
-      "schema:identifier": [
-        {
-          "@type": "schema:PropertyValue",
-          "schema:propertyID": "openstreetmap",
-          "schema:value": "node/1420774624"
-        }
+      "rdfs:seeAlso": [
+        "https://www.openstreetmap.org/node/1420774624"
       ]
     },
     {
       "@id": "urn:uuid:019fa880-5cd6-75c3-b465-be5c4466401e",
       "@type": [
-        "schema:Place",
-        "geo:Feature"
+        "schema:Place"
       ],
-      "geo:hasGeometry": {
-        "geo:asGeoJSON": {
-          "@type": "geo:geoJSONLiteral",
-          "@value": "{\"type\":\"Point\",\"coordinates\":[139.7664939,35.6824302]}"
-        }
+      "schema:identifier": [],
+      "schema:geo": {
+        "@type": "schema:GeoCoordinates",
+        "schema:latitude": 35.6824302,
+        "schema:longitude": 139.7664939
       },
-      "schema:identifier": [
-        {
-          "@type": "schema:PropertyValue",
-          "schema:propertyID": "openstreetmap",
-          "schema:value": "node/3164340661"
-        }
+      "rdfs:seeAlso": [
+        "https://www.openstreetmap.org/node/3164340661",
+        "https://www.wikidata.org/entity/Q115265693"
       ]
     },
     {
       "@id": "urn:uuid:019fa880-5cd6-73ac-bcb9-6bb75bbf99fb",
       "@type": [
-        "schema:Place",
-        "geo:Feature"
+        "schema:Place"
       ],
-      "geo:hasGeometry": {
-        "geo:asGeoJSON": {
-          "@type": "geo:geoJSONLiteral",
-          "@value": "{\"type\":\"Point\",\"coordinates\":[139.7645151,35.6774598]}"
-        }
+      "schema:identifier": [],
+      "schema:geo": {
+        "@type": "schema:GeoCoordinates",
+        "schema:latitude": 35.6774598,
+        "schema:longitude": 139.7645151
       },
-      "schema:identifier": [
-        {
-          "@type": "schema:PropertyValue",
-          "schema:propertyID": "openstreetmap",
-          "schema:value": "node/3666894176"
-        }
+      "rdfs:seeAlso": [
+        "https://www.openstreetmap.org/node/3666894176",
+        "https://www.wikidata.org/entity/Q11582309"
       ]
     },
     {
       "@id": "urn:uuid:019fa880-5cd6-77ce-be2f-ed10dd5a6a9f",
       "@type": [
-        "schema:Place",
-        "geo:Feature"
+        "schema:Place"
       ],
-      "geo:hasGeometry": {
-        "geo:asGeoJSON": {
-          "@type": "geo:geoJSONLiteral",
-          "@value": "{\"type\":\"Point\",\"coordinates\":[139.7609079,35.6763721]}"
-        }
+      "schema:identifier": [],
+      "schema:geo": {
+        "@type": "schema:GeoCoordinates",
+        "schema:latitude": 35.6763721,
+        "schema:longitude": 139.7609079
       },
-      "schema:identifier": [
-        {
-          "@type": "schema:PropertyValue",
-          "schema:propertyID": "openstreetmap",
-          "schema:value": "node/5403425184"
-        }
+      "rdfs:seeAlso": [
+        "https://www.openstreetmap.org/node/5403425184",
+        "https://www.wikidata.org/entity/Q3076590"
       ]
     },
     {
       "@id": "urn:uuid:019fa880-5cd6-7424-81a1-5f4f7a58327a",
       "@type": [
-        "schema:Place",
-        "geo:Feature"
+        "schema:Place"
       ],
-      "geo:hasGeometry": {
-        "geo:asGeoJSON": {
-          "@type": "geo:geoJSONLiteral",
-          "@value": "{\"type\":\"Point\",\"coordinates\":[139.7614042,35.6787799]}"
-        }
+      "schema:identifier": [],
+      "schema:geo": {
+        "@type": "schema:GeoCoordinates",
+        "schema:latitude": 35.6787799,
+        "schema:longitude": 139.7614042
       },
-      "schema:identifier": [
-        {
-          "@type": "schema:PropertyValue",
-          "schema:propertyID": "openstreetmap",
-          "schema:value": "node/11334772769"
-        }
+      "rdfs:seeAlso": [
+        "https://www.openstreetmap.org/node/11334772769"
       ]
     },
     {
       "@id": "urn:uuid:019fa880-5cd6-7d71-bbb5-e795c2abccc6",
       "@type": [
-        "schema:Place",
-        "geo:Feature"
+        "schema:Place"
       ],
-      "geo:hasGeometry": {
-        "geo:asGeoJSON": {
-          "@type": "geo:geoJSONLiteral",
-          "@value": "{\"type\":\"Point\",\"coordinates\":[139.75965915,35.690680150000006]}"
-        }
+      "schema:identifier": [],
+      "schema:geo": {
+        "@type": "schema:GeoCoordinates",
+        "schema:latitude": 35.690680150000006,
+        "schema:longitude": 139.75965915
       },
-      "schema:identifier": [
-        {
-          "@type": "schema:PropertyValue",
-          "schema:propertyID": "openstreetmap",
-          "schema:value": "way/884071202"
-        }
+      "rdfs:seeAlso": [
+        "https://www.openstreetmap.org/way/884071202"
       ]
     },
     {
       "@id": "urn:uuid:019fa880-5cd6-79dd-aaf4-367c7aee85f3",
       "@type": [
-        "schema:Place",
-        "geo:Feature"
+        "schema:Place"
       ],
-      "geo:hasGeometry": {
-        "geo:asGeoJSON": {
-          "@type": "geo:geoJSONLiteral",
-          "@value": "{\"type\":\"Point\",\"coordinates\":[139.7530799,35.6915625]}"
-        }
+      "schema:identifier": [],
+      "schema:geo": {
+        "@type": "schema:GeoCoordinates",
+        "schema:latitude": 35.6915625,
+        "schema:longitude": 139.7530799
       },
-      "schema:identifier": [
-        {
-          "@type": "schema:PropertyValue",
-          "schema:propertyID": "openstreetmap",
-          "schema:value": "way/43898324"
-        }
+      "rdfs:seeAlso": [
+        "https://www.openstreetmap.org/way/43898324",
+        "https://www.wikidata.org/entity/Q10855424"
       ]
     },
     {
       "@id": "urn:uuid:019fa880-5cd6-7627-9186-3eb6765242cb",
       "@type": [
-        "schema:Place",
-        "geo:Feature"
+        "schema:Place"
       ],
-      "geo:hasGeometry": {
-        "geo:asGeoJSON": {
-          "@type": "geo:geoJSONLiteral",
-          "@value": "{\"type\":\"Point\",\"coordinates\":[139.7538782,35.6902601]}"
-        }
+      "schema:identifier": [],
+      "schema:geo": {
+        "@type": "schema:GeoCoordinates",
+        "schema:latitude": 35.6902601,
+        "schema:longitude": 139.7538782
       },
-      "schema:identifier": [
-        {
-          "@type": "schema:PropertyValue",
-          "schema:propertyID": "openstreetmap",
-          "schema:value": "way/43934323"
-        }
+      "rdfs:seeAlso": [
+        "https://www.openstreetmap.org/way/43934323",
+        "https://www.wikidata.org/entity/Q1072875"
       ]
     },
     {
       "@id": "urn:uuid:019fa880-5cd6-7a79-a32a-7399951b7539",
       "@type": [
-        "schema:Place",
-        "geo:Feature"
+        "schema:Place"
       ],
-      "geo:hasGeometry": {
-        "geo:asGeoJSON": {
-          "@type": "geo:geoJSONLiteral",
-          "@value": "{\"type\":\"Point\",\"coordinates\":[139.7678448,35.7022569]}"
-        }
+      "schema:identifier": [],
+      "schema:geo": {
+        "@type": "schema:GeoCoordinates",
+        "schema:latitude": 35.7022569,
+        "schema:longitude": 139.7678448
       },
-      "schema:identifier": [
-        {
-          "@type": "schema:PropertyValue",
-          "schema:propertyID": "openstreetmap",
-          "schema:value": "way/91234941"
-        }
+      "rdfs:seeAlso": [
+        "https://www.openstreetmap.org/way/91234941"
       ]
     },
     {
       "@id": "urn:uuid:019fa880-5cd6-77c9-917c-e02521540bac",
       "@type": [
-        "schema:Place",
-        "geo:Feature"
+        "schema:Place"
       ],
-      "geo:hasGeometry": {
-        "geo:asGeoJSON": {
-          "@type": "geo:geoJSONLiteral",
-          "@value": "{\"type\":\"Point\",\"coordinates\":[139.7470123,35.678347]}"
-        }
+      "schema:identifier": [],
+      "schema:geo": {
+        "@type": "schema:GeoCoordinates",
+        "schema:latitude": 35.678347,
+        "schema:longitude": 139.7470123
       },
-      "schema:identifier": [
-        {
-          "@type": "schema:PropertyValue",
-          "schema:propertyID": "openstreetmap",
-          "schema:value": "way/140099041"
-        }
+      "rdfs:seeAlso": [
+        "https://www.openstreetmap.org/way/140099041",
+        "https://www.wikidata.org/entity/Q11495238"
       ]
     },
     {
       "@id": "urn:uuid:019fa880-5cd6-7046-98c1-b22d2b96d8ad",
       "@type": [
-        "schema:Place",
-        "geo:Feature"
+        "schema:Place"
       ],
-      "geo:hasGeometry": {
-        "geo:asGeoJSON": {
-          "@type": "geo:geoJSONLiteral",
-          "@value": "{\"type\":\"Point\",\"coordinates\":[139.7433692,35.6953152]}"
-        }
+      "schema:identifier": [],
+      "schema:geo": {
+        "@type": "schema:GeoCoordinates",
+        "schema:latitude": 35.6953152,
+        "schema:longitude": 139.7433692
       },
-      "schema:identifier": [
-        {
-          "@type": "schema:PropertyValue",
-          "schema:propertyID": "openstreetmap",
-          "schema:value": "way/144379628"
-        }
+      "rdfs:seeAlso": [
+        "https://www.openstreetmap.org/way/144379628",
+        "https://www.wikidata.org/entity/Q2855971"
       ]
     },
     {
       "@id": "urn:uuid:019fa880-5cd6-74a3-b873-3fc0955ef99a",
       "@type": [
-        "schema:Place",
-        "geo:Feature"
+        "schema:Place"
       ],
-      "geo:hasGeometry": {
-        "geo:asGeoJSON": {
-          "@type": "geo:geoJSONLiteral",
-          "@value": "{\"type\":\"Point\",\"coordinates\":[139.7509066,35.6951109]}"
-        }
+      "schema:identifier": [],
+      "schema:geo": {
+        "@type": "schema:GeoCoordinates",
+        "schema:latitude": 35.6951109,
+        "schema:longitude": 139.7509066
       },
-      "schema:identifier": [
-        {
-          "@type": "schema:PropertyValue",
-          "schema:propertyID": "openstreetmap",
-          "schema:value": "node/988763541"
-        }
+      "rdfs:seeAlso": [
+        "https://www.openstreetmap.org/node/988763541",
+        "https://www.wikidata.org/entity/Q3788883"
       ]
     },
     {
       "@id": "urn:uuid:019fa880-5cd6-77e2-8d4b-1066f9ba07a8",
       "@type": [
-        "schema:Place",
-        "geo:Feature"
+        "schema:Place"
       ],
-      "geo:hasGeometry": {
-        "geo:asGeoJSON": {
-          "@type": "geo:geoJSONLiteral",
-          "@value": "{\"type\":\"Point\",\"coordinates\":[139.74649,35.693263]}"
-        }
+      "schema:identifier": [],
+      "schema:geo": {
+        "@type": "schema:GeoCoordinates",
+        "schema:latitude": 35.693263,
+        "schema:longitude": 139.74649
       },
-      "schema:identifier": [
-        {
-          "@type": "schema:PropertyValue",
-          "schema:propertyID": "openstreetmap",
-          "schema:value": "node/1420770260"
-        }
+      "rdfs:seeAlso": [
+        "https://www.openstreetmap.org/node/1420770260",
+        "https://www.wikidata.org/entity/Q11405795"
       ]
     },
     {
       "@id": "urn:uuid:019fa880-5cd6-740b-bbc1-283f644e1fc1",
       "@type": [
-        "schema:Place",
-        "geo:Feature"
+        "schema:Place"
       ],
-      "geo:hasGeometry": {
-        "geo:asGeoJSON": {
-          "@type": "geo:geoJSONLiteral",
-          "@value": "{\"type\":\"Point\",\"coordinates\":[139.7428472,35.6860582]}"
-        }
+      "schema:identifier": [],
+      "schema:geo": {
+        "@type": "schema:GeoCoordinates",
+        "schema:latitude": 35.6860582,
+        "schema:longitude": 139.7428472
       },
-      "schema:identifier": [
-        {
-          "@type": "schema:PropertyValue",
-          "schema:propertyID": "openstreetmap",
-          "schema:value": "node/1420780980"
-        }
+      "rdfs:seeAlso": [
+        "https://www.openstreetmap.org/node/1420780980",
+        "https://www.wikidata.org/entity/Q21019310"
       ]
     },
     {
       "@id": "urn:uuid:019fa880-5cd6-714a-900f-ff3693145790",
       "@type": [
-        "schema:Place",
-        "geo:Feature"
+        "schema:Place"
       ],
-      "geo:hasGeometry": {
-        "geo:asGeoJSON": {
-          "@type": "geo:geoJSONLiteral",
-          "@value": "{\"type\":\"Point\",\"coordinates\":[139.7621517,35.6986987]}"
-        }
+      "schema:identifier": [],
+      "schema:geo": {
+        "@type": "schema:GeoCoordinates",
+        "schema:latitude": 35.6986987,
+        "schema:longitude": 139.7621517
       },
-      "schema:identifier": [
-        {
-          "@type": "schema:PropertyValue",
-          "schema:propertyID": "openstreetmap",
-          "schema:value": "node/1420781347"
-        }
+      "rdfs:seeAlso": [
+        "https://www.openstreetmap.org/node/1420781347",
+        "https://www.wikidata.org/entity/Q85880847"
       ]
     },
     {
       "@id": "urn:uuid:019fa880-5cd6-784f-b302-95fddf90b44f",
       "@type": [
-        "schema:Place",
-        "geo:Feature"
+        "schema:Place"
       ],
-      "geo:hasGeometry": {
-        "geo:asGeoJSON": {
-          "@type": "geo:geoJSONLiteral",
-          "@value": "{\"type\":\"Point\",\"coordinates\":[139.7510805,35.6970758]}"
-        }
+      "schema:identifier": [],
+      "schema:geo": {
+        "@type": "schema:GeoCoordinates",
+        "schema:latitude": 35.6970758,
+        "schema:longitude": 139.7510805
       },
-      "schema:identifier": [
-        {
-          "@type": "schema:PropertyValue",
-          "schema:propertyID": "openstreetmap",
-          "schema:value": "node/12085101795"
-        }
+      "rdfs:seeAlso": [
+        "https://www.openstreetmap.org/node/12085101795",
+        "https://www.wikidata.org/entity/Q11269143"
       ]
     },
     {
       "@id": "urn:uuid:019fa880-5cd6-7075-b7a1-ce1cd3e9a489",
       "@type": [
-        "schema:Place",
-        "geo:Feature"
+        "schema:Place"
       ],
-      "geo:hasGeometry": {
-        "geo:asGeoJSON": {
-          "@type": "geo:geoJSONLiteral",
-          "@value": "{\"type\":\"Point\",\"coordinates\":[139.764534,35.6800322]}"
-        }
+      "schema:identifier": [],
+      "schema:geo": {
+        "@type": "schema:GeoCoordinates",
+        "schema:latitude": 35.6800322,
+        "schema:longitude": 139.764534
       },
-      "schema:identifier": [
-        {
-          "@type": "schema:PropertyValue",
-          "schema:propertyID": "openstreetmap",
-          "schema:value": "node/4272532291"
-        }
+      "rdfs:seeAlso": [
+        "https://www.openstreetmap.org/node/4272532291"
       ]
     },
     {
       "@id": "urn:uuid:019ca6b1-dc00-71c7-a6b9-a16327abd921",
       "@type": [
-        "schema:Place",
-        "geo:Feature"
+        "schema:Place"
       ],
-      "geo:hasGeometry": {
-        "geo:asGeoJSON": {
-          "@type": "geo:geoJSONLiteral",
-          "@value": "{\"type\":\"Point\",\"coordinates\":[139.77524876,35.70089939]}"
-        }
-      },
       "schema:identifier": [
         {
           "@type": "schema:PropertyValue",
@@ -1720,65 +1341,57 @@
           "schema:propertyID": "wam",
           "schema:value": "A0000117796"
         }
-      ]
+      ],
+      "schema:geo": {
+        "@type": "schema:GeoCoordinates",
+        "schema:latitude": 35.70089939,
+        "schema:longitude": 139.77524876
+      }
     },
     {
       "@id": "urn:uuid:019ca6b1-dc00-7215-add9-ba2573e674e5",
       "@type": [
-        "schema:Place",
-        "geo:Feature"
+        "schema:Place"
       ],
-      "geo:hasGeometry": {
-        "geo:asGeoJSON": {
-          "@type": "geo:geoJSONLiteral",
-          "@value": "{\"type\":\"Point\",\"coordinates\":[139.77751572,35.6925809]}"
-        }
-      },
       "schema:identifier": [
         {
           "@type": "schema:PropertyValue",
           "schema:propertyID": "wam",
           "schema:value": "A0000069174"
         }
-      ]
+      ],
+      "schema:geo": {
+        "@type": "schema:GeoCoordinates",
+        "schema:latitude": 35.6925809,
+        "schema:longitude": 139.77751572
+      }
     },
     {
       "@id": "urn:uuid:019ca6b1-dc00-74d7-b1ea-409942f9799c",
       "@type": [
-        "schema:Place",
-        "geo:Feature"
+        "schema:Place"
       ],
-      "geo:hasGeometry": {
-        "geo:asGeoJSON": {
-          "@type": "geo:geoJSONLiteral",
-          "@value": "{\"type\":\"Point\",\"coordinates\":[139.7639912,35.69358874]}"
-        }
-      },
       "schema:identifier": [
         {
           "@type": "schema:PropertyValue",
           "schema:propertyID": "wam",
           "schema:value": "A0000103706"
-        },
-        {
-          "@type": "schema:PropertyValue",
-          "schema:propertyID": "openstreetmap",
-          "schema:value": "way/231540636"
         }
+      ],
+      "schema:geo": {
+        "@type": "schema:GeoCoordinates",
+        "schema:latitude": 35.69358874,
+        "schema:longitude": 139.7639912
+      },
+      "rdfs:seeAlso": [
+        "https://www.openstreetmap.org/way/231540636"
       ]
     },
     {
       "@id": "urn:uuid:019ca6b1-dc00-7571-905a-f4a52e6913f4",
       "@type": [
-        "schema:Place",
-        "geo:Feature"
+        "schema:Place"
       ],
-      "geo:hasGeometry": {
-        "geo:asGeoJSON": {
-          "@type": "geo:geoJSONLiteral",
-          "@value": "{\"type\":\"Point\",\"coordinates\":[139.7451538,35.6996129]}"
-        }
-      },
       "schema:identifier": [
         {
           "@type": "schema:PropertyValue",
@@ -1790,20 +1403,18 @@
           "schema:propertyID": "wam",
           "schema:value": "E0000087996"
         }
-      ]
+      ],
+      "schema:geo": {
+        "@type": "schema:GeoCoordinates",
+        "schema:latitude": 35.6996129,
+        "schema:longitude": 139.7451538
+      }
     },
     {
       "@id": "urn:uuid:019ca6b1-dc00-7774-920a-bdcf4344c0c0",
       "@type": [
-        "schema:Place",
-        "geo:Feature"
+        "schema:Place"
       ],
-      "geo:hasGeometry": {
-        "geo:asGeoJSON": {
-          "@type": "geo:geoJSONLiteral",
-          "@value": "{\"type\":\"Point\",\"coordinates\":[139.74691158,35.70036253]}"
-        }
-      },
       "schema:identifier": [
         {
           "@type": "schema:PropertyValue",
@@ -1814,26 +1425,22 @@
           "@type": "schema:PropertyValue",
           "schema:propertyID": "wam",
           "schema:value": "A0000072543"
-        },
-        {
-          "@type": "schema:PropertyValue",
-          "schema:propertyID": "openstreetmap",
-          "schema:value": "way/144430416"
         }
+      ],
+      "schema:geo": {
+        "@type": "schema:GeoCoordinates",
+        "schema:latitude": 35.70036253,
+        "schema:longitude": 139.74691158
+      },
+      "rdfs:seeAlso": [
+        "https://www.openstreetmap.org/way/144430416"
       ]
     },
     {
       "@id": "urn:uuid:019ca6b1-dc00-7de7-8c55-4303aa3676d1",
       "@type": [
-        "schema:Place",
-        "geo:Feature"
+        "schema:Place"
       ],
-      "geo:hasGeometry": {
-        "geo:asGeoJSON": {
-          "@type": "geo:geoJSONLiteral",
-          "@value": "{\"type\":\"Point\",\"coordinates\":[139.76839375,35.6931778]}"
-        }
-      },
       "schema:identifier": [
         {
           "@type": "schema:PropertyValue",
@@ -1844,33 +1451,34 @@
           "@type": "schema:PropertyValue",
           "schema:propertyID": "wam",
           "schema:value": "A0000043069"
-        },
-        {
-          "@type": "schema:PropertyValue",
-          "schema:propertyID": "openstreetmap",
-          "schema:value": "node/5285952021"
         }
+      ],
+      "schema:geo": {
+        "@type": "schema:GeoCoordinates",
+        "schema:latitude": 35.6931778,
+        "schema:longitude": 139.76839375
+      },
+      "rdfs:seeAlso": [
+        "https://www.openstreetmap.org/node/5285952021"
       ]
     },
     {
       "@id": "urn:uuid:019ca6b1-dc00-7e93-9ef6-266039bd8e81",
       "@type": [
-        "schema:Place",
-        "geo:Feature"
+        "schema:Place"
       ],
-      "geo:hasGeometry": {
-        "geo:asGeoJSON": {
-          "@type": "geo:geoJSONLiteral",
-          "@value": "{\"type\":\"Point\",\"coordinates\":[139.75723876,35.69569665]}"
-        }
-      },
       "schema:identifier": [
         {
           "@type": "schema:PropertyValue",
           "schema:propertyID": "wam",
           "schema:value": "A0000038689"
         }
-      ]
+      ],
+      "schema:geo": {
+        "@type": "schema:GeoCoordinates",
+        "schema:latitude": 35.69569665,
+        "schema:longitude": 139.75723876
+      }
     }
   ]
 }

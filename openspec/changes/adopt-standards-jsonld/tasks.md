@@ -44,3 +44,14 @@
 - [ ] 5.2 GitHub Actionsで公開物の再生成とbyte-level reproducibilityを検証する
 - [ ] 5.3 全tests、`python3 -m src.facility_data validate .`、`openspec validate adopt-standards-jsonld --strict`、`git diff --check`を実行する
 - [ ] 5.4 移行手順とrollback手順を確認し、Gitの直前公開版へ戻せることを文書で検証する
+
+## 6. 検証で判明した修正範囲
+
+- [ ] 6.1 OSM typed object IDとWikidata QIDから公式resource URIを`rdfs:seeAlso`へ出力し、WAM record IDからURIを合成しない正例と非生成例をテストする
+- [ ] 6.2 registry、GeoJSON、監査履歴、current/superseded参照履歴に依存する旧実装、CLI、testを削除し、公開正本をcanonical JSON-LDだけにして更新と検証を通す
+- [ ] 6.3 OSM reviewの適用起点からIssue本文の編集を削除し、commit済みreview YAMLとPull Requestだけで適用するworkflowと手順を検証する
+- [ ] 6.4 データフロー文書をJSON-LD-onlyへ訂正し、breaking changeとGitの直前公開版へ戻すrollback手順を文書化してリンクを検証する
+- [ ] 6.5 `fac`を作業者向けの正規CLIとして検証し、利用者向け文書の`python3 -m src.fac_cli`例を`fac`へ置換する
+- [ ] 6.6 外部データ更新をGitHub Actionsで完結させ、ローカル取得、生データの目視、`RAW_JSON`の手入力を要求する文書と経路を削除する。raw snapshotはハッシュ検証する内部来歴として保持し、候補YAMLとPull Requestの差分だけを人手review対象にする
+- [ ] 6.7 OSM照合済みrecordにある直接のWikidata QIDを公式resource URIによる`rdfs:seeAlso`として公開し、WAM record IDだけを`schema:PropertyValue`として残すテストを追加する
+- [ ] 6.8 Point座標を`schema:GeoCoordinates`の`latitude`と`longitude`で公開し、GeoSPARQLのgeometry literalが出力にないテストを追加する

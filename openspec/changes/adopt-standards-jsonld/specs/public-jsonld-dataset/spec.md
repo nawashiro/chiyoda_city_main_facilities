@@ -9,19 +9,20 @@
 ### Requirement: JSON-LD Place record
 システム SHALL 各公開施設をJSON-LD recordとして出力します。
 各record MUST 既存UUIDから作る`urn:uuid:`の`@id`を持ちます。
-各record MUST `schema:Place`と`geo:Feature`を型として持ちます。
+各record MUST `schema:Place`を型として持ちます。
 
 #### Scenario: Existing facility is exported
 - **WHEN** 有効な既存施設を公開します
 - **THEN** UUIDを維持したJSON-LD Place recordを出力します
 
 ### Requirement: Standard spatial representation
-システム SHALL Point geometryをGeoSPARQLで出力します。
-geometry MUST `geo:hasGeometry`、`geo:asGeoJSON`、`geo:geoJSONLiteral`を使います。
+システム SHALL Point座標をschema.orgで出力します。
+record MUST `schema:geo`、`schema:GeoCoordinates`、`schema:latitude`、`schema:longitude`を使います。
+record MUST GeoSPARQLのgeometry literalを含みません。
 
 #### Scenario: Point geometry is exported
 - **WHEN** 施設にPoint geometryがあります
-- **THEN** 出力は標準GeoSPARQL geometryを含みます
+- **THEN** 出力は追加のJSON parseなしで取得できる緯度と経度を含みます
 
 ### Requirement: Public record excludes operational history
 公開Place record MUST 監査イベント、参照の履歴状態、更新時刻、LLM投票ログを含みません。

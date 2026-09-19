@@ -113,37 +113,38 @@ class GithubWorkflowTests(unittest.TestCase):
                     f"{name} artifact paths omit data/places.jsonld",
                 )
 
-    def test_osm_update_creates_review_issue_from_uploaded_run_artifact(self):
+    def test_osm_update_creates_review_pr_from_uploaded_run_artifact(self):
         workflow = self.workflow("update-osm.yml")
-        self.assertIn("issues: write", workflow)
         self.assertIn("osm-update-${{ github.run_id }}", workflow)
         self.assertIn("src.github_osm_review build", workflow)
-        self.assertIn("--prepare", workflow)
         self.assertIn("reports/osm-review-needed.yaml", workflow)
-        self.assertIn("automation/osm-review-${{ github.run_id }}", workflow)
-        self.assertIn("pull-request-branch", workflow)
-        self.assertIn("actions/github-script@v7", workflow)
-        self.assertIn("github.rest.issues.create", workflow)
+        self.assertIn("automation/osm-review-osm-update-${{ github.run_id }}", workflow)
+        self.assertIn("commit済みYAMLと元artifactを照合", workflow)
+        self.assertNotIn("issues: write", workflow)
+        self.assertNotIn("github.rest.issues", workflow)
+        self.assertNotIn("osm-apply", workflow)
         self.assertIn('--decision-at "$DECISION_AT"', workflow)
         self.assertIn("cp data/places.jsonld /tmp/places.jsonld", workflow)
         self.assertIn("python3 -m src.facility_data build .", workflow)
         self.assertIn("python3 -m src.fac_cli jsonld-validate data/places.jsonld", workflow)
         self.assertIn("cmp /tmp/places.jsonld data/places.jsonld", workflow)
 
-    def test_checked_review_issue_downloads_exact_artifact_and_opens_pull_request(self):
+    def test_merged_review_pr_is_the_only_osm_apply_route(self):
         workflow = self.workflow("apply-osm-review.yml")
-        self.assertIn("issues:", workflow)
-        self.assertIn("types: [edited]", workflow)
-        self.assertIn("github.event.issue.state == 'open'", workflow)
-        self.assertIn("github.event.issue.labels.*.name", workflow)
-        self.assertIn("osm-human-review", workflow)
-        self.assertIn("group: osm-review-${{ github.event.issue.number }}", workflow)
-        self.assertIn("cancel-in-progress: true", workflow)
-        self.assertIn("osm-apply", workflow)
-        self.assertIn("src.github_osm_review metadata", workflow)
+
+        self.assertIn("pull_request:", workflow)
+        self.assertIn("types: [closed]", workflow)
+        self.assertIn("github.event.pull_request.merged == true", workflow)
+        self.assertIn("github.head_ref", workflow)
+        self.assertIn("automation/osm-review-", workflow)
+        self.assertNotIn("issues:", workflow)
+        self.assertNotIn("github.event.issue", workflow)
+        self.assertNotIn("osm-apply", workflow)
+        self.assertNotIn("src.github_osm_review metadata", workflow)
+        self.assertNotIn("src.github_osm_review apply ", workflow)
         self.assertIn("gh run download", workflow)
-        self.assertIn("src.github_osm_review apply", workflow)
-        self.assertIn("cp /tmp/osm-review-needed.yaml reports/osm-review-needed.yaml", workflow)
+        self.assertIn("src.github_osm_review apply-yaml", workflow)
+        self.assertIn("reports/osm-review-needed.yaml", workflow)
         self.assertIn("src.facility_data update", workflow)
         self.assertIn("peter-evans/create-pull-request@v7", workflow)
         self.assertIn("cp data/places.jsonld /tmp/places.jsonld", workflow)
@@ -163,6 +164,9 @@ class GithubWorkflowTests(unittest.TestCase):
         self.assertIn("--sync-search-names", workflow)
         self.assertEqual(2, workflow.count('--decision-at "$PROCESSED_AT"'))
         self.assertIn("src.github_osm_review build", workflow)
+        self.assertIn("automation/osm-review-reidentify-update-${{ github.run_id }}", workflow)
+        self.assertNotIn("issues: write", workflow)
+        self.assertNotIn("github.rest.issues", workflow)
         self.assertNotIn("src.retrieve_wam", workflow)
         self.assertIn("cp data/places.jsonld /tmp/places.jsonld", workflow)
         self.assertIn("python3 -m src.facility_data build .", workflow)
@@ -171,26 +175,46 @@ class GithubWorkflowTests(unittest.TestCase):
         self.assertNotIn("src.retrieve_osm", workflow)
         self.assertNotIn("curl ", workflow)
 
-    def test_update_osm_builds_issue_from_the_reviewed_report_after_branch_creation(self):
+    def test_update_osm_does_not_build_an_issue_after_review_pr_creation(self):
         workflow = self.workflow("update-osm.yml")
 
-        self.assertIn("cp reports/osm-candidates.json /tmp/osm-candidates.json", workflow)
-        self.assertIn("--report /tmp/osm-candidates.json", workflow)
+        self.assertNotIn("Build compact Issue", workflow)
+        self.assertNotIn("github.rest.issues", workflow)
+        self.assertNotIn("osm-apply", workflow)
 
-    def test_merged_osm_review_production_pr_closes_its_draft_review_pr(self):
+    def test_external_updates_are_action_only_and_create_reviewable_prs_without_raw_review(self):
+        osm_workflow = self.workflow("update-osm.yml")
+        wam_workflow = self.workflow("update-wam.yml")
+        update_docs = (
+            ("update-osm.md", (self.root / "docs/how-to/update-osm.md").read_text(encoding="utf-8")),
+            ("update-wam.md", (self.root / "docs/how-to/update-wam.md").read_text(encoding="utf-8")),
+        )
+
+        self.assertIn("src.retrieve_osm", osm_workflow)
+        self.assertIn('_verified_snapshot(Path("."), "openstreetmap")', osm_workflow)
+        self.assertIn("add-paths: reports/osm-review-needed.yaml", osm_workflow)
+        self.assertIn("peter-evans/create-pull-request@v7", wam_workflow)
+        self.assertIn('_verified_snapshot(Path("."), "wam")', wam_workflow)
+        self.assertIn("contents: write", wam_workflow)
+        self.assertIn("pull-requests: write", wam_workflow)
+        self.assertIn("automation/wam-update-${{ github.run_id }}", wam_workflow)
+        self.assertNotIn("manual review", wam_workflow.lower())
+
+        prohibited = ("RAW_JSON", "生データを確認", "src.update_osm", "update_wam.py")
+        for name, document in update_docs:
+            with self.subTest(document=name):
+                for text in prohibited:
+                    self.assertNotIn(text, document)
+                self.assertIn("GitHub Actions", document)
+                self.assertIn("Pull Request", document)
+                self.assertIn("SHA-256", document)
+
+    def test_merged_osm_review_pr_needs_no_issue_or_draft_cleanup_marker(self):
         apply_workflow = self.workflow("apply-osm-review.yml")
-        cleanup_path = self.root / ".github/workflows" / "close-osm-review-draft.yml"
 
-        self.assertIn("<!-- osm-review-source:", apply_workflow)
-        self.assertTrue(cleanup_path.is_file())
-        cleanup_workflow = cleanup_path.read_text(encoding="utf-8")
-        self.assertIn("pull_request:", cleanup_workflow)
-        self.assertIn("types: [closed]", cleanup_workflow)
-        self.assertIn("github.event.pull_request.merged == true", cleanup_workflow)
-        self.assertIn("- uses: actions/checkout@v4", cleanup_workflow)
-        self.assertIn("reviewPullRequestNumber", apply_workflow)
-        self.assertIn("closeRecordedDraftReview", cleanup_workflow)
-        self.assertIn("scripts/close_osm_review_draft.js", cleanup_workflow)
+        self.assertNotIn("osm-review-source", apply_workflow)
+        self.assertNotIn("github.event.issue", apply_workflow)
+        self.assertIn("github.event.pull_request.html_url", apply_workflow)
 
 
 if __name__ == "__main__":
