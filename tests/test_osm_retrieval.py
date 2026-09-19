@@ -58,7 +58,7 @@ class OsmRetrievalTests(unittest.TestCase):
         }
 
         _, report = prepare_osm_snapshot(
-            {"schemaVersion": 1, "places": []},
+            {"@context": {"@version": 1.1, "schema": "https://schema.org/", "rdfs": "http://www.w3.org/2000/01/rdf-schema#"}, "@graph": []},
             [{"queries": [query]}],
             {
                 "version": "2026-07-29T00:00:00Z",
@@ -90,7 +90,7 @@ class OsmRetrievalTests(unittest.TestCase):
         }
 
         normalized, report = prepare_osm_snapshot(
-            {"schemaVersion": 1, "places": []}, [{"queries": [query]}], raw
+            {"@context": {"@version": 1.1, "schema": "https://schema.org/", "rdfs": "http://www.w3.org/2000/01/rdf-schema#"}, "@graph": []}, [{"queries": [query]}], raw
         )
 
         self.assertEqual([], normalized["records"])
@@ -134,7 +134,7 @@ class OsmRetrievalTests(unittest.TestCase):
         }
 
         normalized, report = prepare_osm_snapshot(
-            {"schemaVersion": 1, "places": []}, search_documents, raw
+            {"@context": {"@version": 1.1, "schema": "https://schema.org/", "rdfs": "http://www.w3.org/2000/01/rdf-schema#"}, "@graph": []}, search_documents, raw
         )
 
         self.assertEqual("187756642", normalized["records"][0]["id"])
@@ -143,7 +143,7 @@ class OsmRetrievalTests(unittest.TestCase):
 
         raw["elements"][0]["tags"]["name"] = "千代田区神田公園出張処・区民館"
         normalized, _ = prepare_osm_snapshot(
-            {"schemaVersion": 1, "places": []}, search_documents, raw
+            {"@context": {"@version": 1.1, "schema": "https://schema.org/", "rdfs": "http://www.w3.org/2000/01/rdf-schema#"}, "@graph": []}, search_documents, raw
         )
         self.assertEqual("187756642", normalized["records"][0]["id"])
 
@@ -157,7 +157,7 @@ class OsmRetrievalTests(unittest.TestCase):
             }
         )
         normalized, report = prepare_osm_snapshot(
-            {"schemaVersion": 1, "places": []}, search_documents, raw
+            {"@context": {"@version": 1.1, "schema": "https://schema.org/", "rdfs": "http://www.w3.org/2000/01/rdf-schema#"}, "@graph": []}, search_documents, raw
         )
         self.assertEqual([], normalized["records"])
         self.assertEqual("ambiguous", report["queries"][0]["status"])
@@ -171,8 +171,8 @@ class OsmRetrievalTests(unittest.TestCase):
             (root / "data").mkdir()
             (root / "inputs/osm-search/manual").mkdir(parents=True)
             (root / "imports/openstreetmap").mkdir(parents=True)
-            (root / "data/registry.json").write_text(
-                json.dumps({"schemaVersion": 1, "places": []}), encoding="utf-8"
+            (root / "data/places.jsonld").write_text(
+                json.dumps({"@context": {"@version": 1.1, "schema": "https://schema.org/", "rdfs": "http://www.w3.org/2000/01/rdf-schema#"}, "@graph": []}), encoding="utf-8"
             )
             (root / "inputs/osm-search/manual/batch.json").write_text(
                 json.dumps({"source": {"kind": "human", "sourceId": None, "retrievedAt": None}, "queries": []}),
@@ -184,74 +184,6 @@ class OsmRetrievalTests(unittest.TestCase):
             with self.assertRaisesRegex(ValueError, "lacks one Tokyo"):
                 run_osm_retrieval(root, "2026-07-29T01:00:00Z", fetch)
 
-    def test_does_not_trust_current_id_after_conflicting_distant_move(self):
-        query_id = "019c0000-0000-7000-8000-000000000104"
-        query = {"id": query_id, "name": "施設D", "coordinates": [139.75, 35.69]}
-        registry = {
-            "schemaVersion": 1,
-            "places": [
-                {
-                    "id": query_id,
-                    "name": "施設D",
-                    "geometry": {"type": "Point", "coordinates": [139.75, 35.69]},
-                    "externalRefs": [
-                        {"sourceId": "openstreetmap", "recordId": "node/9", "status": "current"}
-                    ],
-                }
-            ],
-        }
-        raw = {
-            "version": "2026-07-29T00:00:00Z",
-            "elements": [
-                {"type": "node", "id": 9, "lat": 36.5, "lon": 140.5, "tags": {"name": "別施設"}}
-            ],
-        }
-
-        normalized, report = prepare_osm_snapshot(
-            registry, [{"queries": [query]}], raw
-        )
-
-        self.assertEqual([], normalized["records"])
-        self.assertEqual("none", report["queries"][0]["status"])
-
-    def test_keeps_current_id_when_only_its_name_differs_from_search_input(self):
-        query_id = "019c0000-0000-7000-8000-000000000105"
-        query = {
-            "id": query_id,
-            "name": "えみふる（障害者福祉センター）",
-            "coordinates": [139.75, 35.69],
-        }
-        registry = {
-            "schemaVersion": 1,
-            "places": [
-                {
-                    "id": query_id,
-                    "name": query["name"],
-                    "geometry": {"type": "Point", "coordinates": [139.75, 35.69]},
-                    "externalRefs": [
-                        {"sourceId": "openstreetmap", "recordId": "node/10", "status": "current"}
-                    ],
-                }
-            ],
-        }
-        raw = {
-            "version": "2026-07-29T00:00:00Z",
-            "elements": [
-                {
-                    "type": "node",
-                    "id": 10,
-                    "lat": 35.6901,
-                    "lon": 139.7501,
-                    "tags": {"name": "千代田区立障害者福祉センター　えみふる"},
-                }
-            ],
-        }
-
-        normalized, report = prepare_osm_snapshot(registry, [{"queries": [query]}], raw)
-
-        self.assertEqual("source_record", normalized["records"][0]["matchBasis"])
-        self.assertEqual("node/10", f"{normalized['records'][0]['type']}/{normalized['records'][0]['id']}")
-        self.assertEqual("linked", report["queries"][0]["status"])
 
     def test_run_osm_retrieval_posts_once_and_writes_review_artifacts(self):
         query_id = "019c0000-0000-7000-8000-000000000103"
@@ -277,8 +209,8 @@ class OsmRetrievalTests(unittest.TestCase):
             (root / "data").mkdir()
             (root / "inputs/osm-search/manual").mkdir(parents=True)
             (root / "imports/openstreetmap").mkdir(parents=True)
-            (root / "data/registry.json").write_text(
-                json.dumps({"schemaVersion": 1, "places": []}), encoding="utf-8"
+            (root / "data/places.jsonld").write_text(
+                json.dumps({"@context": {"@version": 1.1, "schema": "https://schema.org/", "rdfs": "http://www.w3.org/2000/01/rdf-schema#"}, "@graph": []}), encoding="utf-8"
             )
             (root / "inputs/osm-search/manual/batch.json").write_text(
                 json.dumps(
@@ -372,7 +304,7 @@ class OsmRetrievalTests(unittest.TestCase):
                 ],
             }
         ]
-        registry = {"schemaVersion": 1, "places": []}
+        registry = {"@context": {"@version": 1.1, "schema": "https://schema.org/", "rdfs": "http://www.w3.org/2000/01/rdf-schema#"}, "@graph": []}
         raw = {
             "version": "2026-07-29T00:00:00Z",
             "elements": [

@@ -14,12 +14,13 @@ Gitを変更履歴とし、関連先には同一性を断定しないリンク�
 - **BREAKING** Placeに保存する監査配列、外部参照のcurrent/superseded履歴、更新時刻を廃止します。
 - 既存UUIDを`urn:uuid:`のPlace IDとして維持します。
 - 検索入力で`publish: false`を明示した施設候補を公開配布物へ出力しません。
-- Placeを`schema:Place`と`geo:Feature`で表現します。
-- Point geometryをGeoSPARQLの`geo:hasGeometry`と`geo:asGeoJSON`で表現します。
-- OSM、Wikidata、WAMの自動関連先を`rdfs:seeAlso`で表現します。
+- Placeを`schema:Place`で表現します。
+- Point座標を`schema:GeoCoordinates`の`latitude`と`longitude`で表現します。
+- OSMとWikidataの自動関連先を、公式のresource URIによる`rdfs:seeAlso`で表現します。
+- WAMの自動関連先を`schema:PropertyValue`の識別子で表現します。
 - `schema:sameAs`、SKOSのmatch関係、Place単位の`prov:wasDerivedFrom`を自動では出力しません。
 - 独自`categoryIds`を公開正本から削除します。
-- WAMの公開Placeへの反映は`rdfs:seeAlso`だけに限定します。
+- WAMの公開Placeへの反映は`schema:PropertyValue`の外部識別子だけに限定します。
 - 営業時間の変換と公開は今回の対象から除外します。
 - 町名、電話番号、OSMタグの公開と導出は今回の対象から除外します。
 - 画像とrights文字列を公開Placeから除外します。

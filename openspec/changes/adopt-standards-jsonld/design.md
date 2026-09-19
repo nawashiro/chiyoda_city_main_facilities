@@ -40,22 +40,21 @@ proposal.mdの背景と範囲を前提にします。
 
 ### Place data uses standard vocabulary
 
-Placeは`schema:Place`と`geo:Feature`を使います。
-Point geometryは`geo:hasGeometry`、`geo:asGeoJSON`、`geo:geoJSONLiteral`で表現します。
+Placeは`schema:Place`を使います。
+Point座標は`schema:geo`、`schema:GeoCoordinates`、`schema:latitude`、`schema:longitude`で表現します。
 Datasetは`schema:Dataset`と`DataDownload`を使います。
 
-schema.orgだけでgeometryを表す案は採用しません。
-GeoSPARQLはgeometryの明確な標準表現を提供します。
+利用者は追加のJSON parseなしで緯度と経度を取得できます。
+Pointだけを公開するため、GeoSPARQLのgeometry literalは採用しません。
 
 ### Automated associations use rdfs:seeAlso
 
-外部識別子（WAMを含む）は、`schema:identifier`の`schema:PropertyValue`で表します。
-`propertyID`へ`sourceId`を、`value`へ`recordId`を設定します。
-WAMの`recordId`からIRIを合成しません。
+OSMのtyped object IDとWikidata QIDは、公式のresource URIを`rdfs:seeAlso`で公開します。
+これらの識別子は、ソースが定めるURI templateに決定的に対応します。
 
-`rdfs:seeAlso`は、ソース入力に明示された`dereferenceable URI`だけを設定します。
-外部recordの識別子やWAMの関連リンクだけでは、`rdfs:seeAlso`を生成しません。
-入力に明示されたURIの解決可能性だけを根拠に、参照先を公開します。
+WAMの外部識別子は、`schema:identifier`の`schema:PropertyValue`で表します。
+`propertyID`へ`wam`を、`value`へWAM record IDを設定します。
+WAM record IDからIRIを合成しません。
 
 `schema:sameAs`は採用しません。
 これは同一性を曖昧なく示すため、自動照合の一般出力には強すぎます。
@@ -63,7 +62,6 @@ SKOS match関係は概念間の対応が必要な場合まで保留します。
 `prov:wasDerivedFrom`はPlaceではなくDataset全体の入力来歴だけに使います。
 
 WAMの公開Placeには、`sourceId`と`recordId`を持つ`schema:PropertyValue`を設定します。
-ソース入力に明示的な`dereferenceable URI`がある場合だけ、`rdfs:seeAlso`も追加します。
 WAMの住所、サービス種別、電話番号を公開Placeへ移しません。
 
 ### History belongs to Git
@@ -164,6 +162,20 @@ API keyは公開データ、ログ、Release artifactへ書きません。
 4. PagesとRelease用の配布物を生成し、再現性を検証します。
 5. 互換性の扱いを告知して旧registryと旧公開形式を削除します。
 6. 問題があれば、Gitで直前の公開版へ戻します。
+
+## Verification Remediation Scope
+
+検証で確認した次の修正を、このchangeの完了条件に追加します。
+
+- Point座標を`schema:GeoCoordinates`へ移し、`latitude`と`longitude`を追加のJSON parseなしで公開します。GeoSPARQLのgeometry literalは出力しません。
+- OSMのtyped object IDとWikidata QIDは、公式のresource URIを`rdfs:seeAlso`で公開します。WAM record IDだけを`schema:PropertyValue`として公開します。
+- registry、GeoJSON、監査履歴、current/superseded参照履歴に依存する旧実装、CLI、testを削除します。
+- OSM reviewの適用起点をIssue本文の編集から外します。commit済みreview YAMLとPull Requestだけを編集面とします。
+- 外部データ更新はGitHub Actionsで取得、正規化、検証、review用Pull Requestの作成まで実行します。作業者にローカル取得、生データの目視、`RAW_JSON`の手入力を要求しません。
+- raw snapshotはハッシュ検証する内部来歴として保持します。人手reviewは候補YAMLとPull Requestの差分だけを対象にします。
+- 作業者向けのCLI例は`fac`を使います。CIと実装内部の`python3 -m src.*`は、必要な場合だけ維持します。
+- JSON-LDだけを正本とするデータフロー、互換性変更、直前の公開版へ戻すrollback手順を文書化します。
+- fixture、本番データ候補、GitHub Actionsで、JSON-LDの内容と再生成時のbyte-level reproducibilityを確認します。
 
 ## Open Questions
 

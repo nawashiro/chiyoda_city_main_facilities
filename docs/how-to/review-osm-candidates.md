@@ -4,13 +4,11 @@
 
 ## 事前条件
 
-作業者は、GitHub の Issue 編集、ブランチへの書込み、Pull Request 作成に必要な権限を持ちます。
-
-作業者は、`osm-human-review` ラベル付きの open Issue を使います。Issue 本文はレビュー用メタデータを含みます。
+作業者は、レビュー用 Pull Request への書込みと merge に必要な権限を持ちます。
 
 ## 1. レビュー対象を開く
 
-作業者は Issue からレビュー用ブランチの `reports/osm-review-needed.yaml` を開きます。
+作業者は、`automation/osm-review-<Actions run ID>` ブランチから作成された下書き Pull Request を開き、`reports/osm-review-needed.yaml` を確認します。
 
 ## 2. 候補を一つ選ぶ
 
@@ -32,14 +30,12 @@
 
 作業者は、全 `確認対象` で `選択肢` の `true` が一つだけであることを確認します。
 
-作業者は YAML の変更を GitHub 上でコミットします。
+作業者は YAML の変更を Pull Request にコミットします。
 
-## 4. 適用を依頼する
+## 4. レビュー Pull Request を merge する
 
-作業者は Issue 本文の `<!-- osm-apply -->` を含むチェック行だけをチェック済みにします。
+作業者は、通常のレビューと承認を完了して下書き Pull Request を merge します。Issue 本文の編集やチェック操作は適用経路に含まれません。
 
-workflow は Issue 編集を受けて適用します。workflow は更新、検証、テスト、JSON-LD の再現性確認を実行します。
+merge を受けた workflow は、merge 済みの `reports/osm-review-needed.yaml` を読み、ブランチ名の Actions run ID に対応する artifact を再取得します。YAML の `reportSha256` が artifact 内の candidate report と一致し、各選択が report 内の候補だけを参照し、OSM record の重複割当がない場合にだけ適用用 Pull Request を作成します。
 
-成功時、workflow は Pull Request を作成し、Issue へ URL をコメントして Issue を閉じます。
-
-失敗時、workflow は Pull Request を作成せず、Issue を閉じません。作業者は Actions の失敗ログを確認し、YAML と元 artifact の整合を確認します。
+失敗時、workflow は適用用 Pull Request を作成しません。作業者は Actions の失敗ログを確認し、レビュー Pull Request の YAML と元 artifact の整合を確認します。
