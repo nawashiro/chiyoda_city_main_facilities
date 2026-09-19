@@ -9,7 +9,8 @@ on:
         type: string
 
 permissions:
-  contents: read
+  contents: write
+  pull-requests: write
 
 jobs:
   process:
@@ -20,13 +21,26 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: "3.13"
-      - name: Retrieve WAM release and update data
+      - name: Retrieve WAM release
+        id: retrieve
         env:
           RELEASE: ${{ inputs.release }}
         run: |
           RETRIEVED_AT=$(date --iso-8601=seconds)
           python3 -m src.retrieve_wam . --release "$RELEASE" --at "$RETRIEVED_AT"
-          python3 -m src.facility_data update . --source wam --at "$RETRIEVED_AT"
+          echo "retrieved_at=$RETRIEVED_AT" >> "$GITHUB_OUTPUT"
+      - name: Verify retained WAM raw snapshot hash
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          from src.reidentify_sources import _verified_snapshot
+
+          _verified_snapshot(Path("."), "wam")
+          PY
+      - name: Update canonical data from verified WAM snapshot
+        env:
+          RETRIEVED_AT: ${{ steps.retrieve.outputs.retrieved_at }}
+        run: python3 -m src.facility_data update . --source wam --at "$RETRIEVED_AT"
       - run: python3 -m src.facility_data validate .
       - run: python3 -m unittest discover -s tests -v
       - name: Verify canonical JSON-LD data
@@ -39,7 +53,7 @@ jobs:
         run: |
           git add -N .
           git diff --binary > reports/wam-update.diff
-      - name: Save generated update for manual review
+      - name: Retain generated provenance for machine validation
         uses: actions/upload-artifact@v4
         with:
           name: wam-update-${{ inputs.release }}
@@ -50,3 +64,14 @@ jobs:
             data/places.jsonld
             reports/latest-update.json
             reports/wam-update.diff
+      - name: Create reviewable Pull Request
+        uses: peter-evans/create-pull-request@v7
+        with:
+          branch: automation/wam-update-${{ github.run_id }}
+          delete-branch: true
+          commit-message: "data: update WAM snapshot"
+          title: "data: update WAM snapshot"
+          body: |
+            このPull RequestはGitHub Actionsが取得、正規化、検証したWAM更新です。
+
+            生データはSHA-256で検証する内部来歴です。候補JSON-LDとPull Requestの差分をreviewしてください。

@@ -324,8 +324,8 @@ class WamRetrievalTests(unittest.TestCase):
                 ),
                 encoding="utf-8",
             )
-            (root / "data/registry.json").write_text(
-                json.dumps({"schemaVersion": 1, "places": []}), encoding="utf-8"
+            (root / "data/places.jsonld").write_text(
+                json.dumps({"@context": {"@version": 1.1, "schema": "https://schema.org/", "rdfs": "http://www.w3.org/2000/01/rdf-schema#"}, "@graph": []}), encoding="utf-8"
             )
             (root / "config/sources.json").write_text(
                 (repository / "config/sources.json").read_text(encoding="utf-8"),
@@ -333,12 +333,11 @@ class WamRetrievalTests(unittest.TestCase):
             )
 
             update_repository(root, "2026-04-16T00:00:00Z", "wam")
-            registry = json.loads((root / "data/registry.json").read_text(encoding="utf-8"))
+            canonical = json.loads((root / "data/places.jsonld").read_text(encoding="utf-8"))
 
-        self.assertEqual(1, len(registry["places"]))
-        self.assertEqual(query["id"], registry["places"][0]["id"])
-        self.assertEqual(["disability-support"], registry["places"][0]["categoryIds"])
-        self.assertEqual("wam", registry["places"][0]["geometrySource"]["sourceId"])
+        self.assertEqual(1, len(canonical["@graph"]))
+        self.assertEqual(f"urn:uuid:{query['id']}", canonical["@graph"][0]["@id"])
+        self.assertEqual("wam", canonical["@graph"][0]["schema:identifier"][0]["schema:propertyID"])
 
 
 if __name__ == "__main__":

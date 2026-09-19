@@ -20,7 +20,7 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument("--at")
     args = parser.parse_args(argv)
     root = Path(args.root)
-    registry = json.loads((root / "data/registry.json").read_text(encoding="utf-8"))
+    canonical = json.loads((root / "data/places.jsonld").read_text(encoding="utf-8"))
     qid_by_query_id = {}
     for path in sorted((root / "inputs/osm-search").rglob("*.json")):
         document = json.loads(path.read_text(encoding="utf-8"))
@@ -34,7 +34,7 @@ def main(argv: list[str] | None = None) -> int:
     if args.command == "query":
         print(
             build_osm_batch_query(
-                collect_osm_ids(registry), sorted(qid_by_query_id)
+                collect_osm_ids(canonical), sorted(qid_by_query_id)
             )
         )
         return 0
@@ -52,25 +52,17 @@ def main(argv: list[str] | None = None) -> int:
         print("ERROR: OSM raw snapshot requires an elements array")
         return 1
     current_by_record_id = {
-        ref["recordId"]: place["id"]
-        for place in registry.get("places", [])
-        for ref in place.get("externalRefs", [])
-        if ref.get("sourceId") == "openstreetmap" and ref.get("status") == "current"
-    }
-    superseded_record_ids = {
-        ref["recordId"]
-        for place in registry.get("places", [])
-        for ref in place.get("externalRefs", [])
-        if ref.get("sourceId") == "openstreetmap"
-        and ref.get("status") == "superseded"
+        uri.removeprefix("https://www.openstreetmap.org/"): record["@id"].removeprefix("urn:uuid:")
+        for record in canonical.get("@graph", [])
+        for uri in record.get("rdfs:seeAlso", [])
+        if isinstance(uri, str) and uri.startswith("https://www.openstreetmap.org/")
     }
     records = []
     for record in normalize_osm_elements(raw["elements"]):
         typed_id = f"{record['type']}/{record['id']}"
         query_id = current_by_record_id.get(typed_id)
         match_basis = "source_record"
-        if query_id is None and typed_id in superseded_record_ids:
-            continue
+
         if query_id is None and record.get("qid") is not None:
             query_id = qid_by_query_id.get(record["qid"])
             if query_id is not None:

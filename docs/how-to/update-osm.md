@@ -1,46 +1,19 @@
 # OpenStreetMap を更新する
 
-この手順は、OpenStreetMap の取得結果を正規化する作業者向けです。
+OpenStreetMap の更新は GitHub Actions だけで実行します。ローカルでの取得、入力JSONの確認、取得日時の指定は不要です。
 
-## 1. 問い合わせを作る
+## 1. 更新workflowを開始する
 
-```sh
-python3 -m src.update_osm query . > /tmp/osm-query.txt
-```
+GitHub の **Actions** から **Update OpenStreetMap data** を選び、**Run workflow** を実行します。workflow は取得、正規化、候補解決、canonical JSON-LDの更新、検証を順に実行します。
 
-作業者は、生成した問い合わせを OpenStreetMap の取得先へ送信します。作業者は、応答 JSON を追跡可能な場所へ保存します。
+raw snapshot と取得metadataは内部来歴として保存されます。workflow はSHA-256をcandidate reportへ結び付け、後続の適用時にも照合します。reviewerがraw payloadを開いたり内容を確認したりする必要はありません。
 
-## 2. 出力を退避する
+## 2. 候補をreviewする
 
-```sh
-cp imports/openstreetmap/normalized.json /tmp/osm-normalized.json.before
-cp imports/openstreetmap/retrieval.json /tmp/osm-retrieval.json.before
-```
+人手判断が必要な候補があれば、workflow は下書きPull Requestを作成します。`reports/osm-review-needed.yaml`だけを編集してcommitし、そのPull Requestをmergeしてください。merge後のworkflowが、commit済みYAMLと生成時artifactを照合し、適用用Pull Requestを作成します。
 
-## 3. 正規化する
+自動解決できた場合も、workflow は更新用Pull Requestを作成します。候補YAML（ある場合）とPull Requestの差分だけをreview対象とします。
 
-生データは `version` 文字列と `elements` 配列を持つ必要があります。
+## 3. 更新を反映する
 
-```sh
-python3 -m src.update_osm normalize . --raw RAW_JSON --at ACTUAL_RETRIEVED_AT
-```
-
-作業者は、実際の取得日時をタイムゾーン付き ISO 8601 形式で指定します。処理は正規化済み記録と取得記録を上書きします。
-
-## 4. 結果を確認する
-
-```sh
-python3 -m src.facility_data validate .
-git diff -- imports/openstreetmap
-```
-
-作業者は、重複 QID、raw 形式エラー、必須引数エラーを解消してから再実行します。これらのエラー時、処理は出力を更新しません。
-
-処理を中断した場合、作業者は次を実行して退避版を復元します。
-
-```sh
-cp /tmp/osm-normalized.json.before imports/openstreetmap/normalized.json
-cp /tmp/osm-retrieval.json.before imports/openstreetmap/retrieval.json
-```
-
-作業者は、復元後に `python3 -m src.facility_data validate .` を実行します。
+適用用Pull Requestまたは自動解決の更新Pull Requestで、検証済みのcanonical JSON-LD差分をreviewしてmergeします。失敗したrunはActionsのログを確認し、workflowを再実行してください。

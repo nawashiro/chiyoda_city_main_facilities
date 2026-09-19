@@ -1,41 +1,41 @@
 # CLI
 
-作業者は `python3 -m src.fac_cli` を実行します。リポジトリ root は既定で `.` です。
+作業者はリポジトリ root で `./fac` を実行します。
 
 ## 検証
 
 ```sh
-python3 -m src.fac_cli jsonld-validate data/places.jsonld
+./fac jsonld-validate data/places.jsonld
 ```
 
 成功時、コマンドは出力しません。
 
-## 施設を確認する
+## 検索入力を確認する
 
 ```sh
-python3 -m src.fac_cli ls .
-python3 -m src.fac_cli get . PLACE_ID
+./fac in ls .
+./fac in get . SEARCH_ID
 ```
 
-`ls` はカテゴリ、名称、OSM 状態、存続状態で絞り込めます。
+`ls` は全検索入力の名称と ID を出力します。
 
-## 施設を編集する
+## 検索入力を追加する
 
 ```sh
-python3 -m src.fac_cli set . PLACE_ID --cat CATEGORY --at 2026-09-18T00:00:00+00:00
-python3 -m src.fac_cli ref . PLACE_ID osm node/123 --at 2026-09-18T00:00:00+00:00
+./fac in add . NAME --lon LONGITUDE --lat LATITUDE
+./fac in add . NAME --qid QID
 ```
 
-`ref` の `none` は OSM 参照を解除します。
+`in add` は経度と緯度の組、または Wikidata QID を受け取ります。
 
 ## 検索入力を編集する
 
 ```sh
-python3 -m src.fac_cli in ls .
-python3 -m src.fac_cli in get . SEARCH_ID
-python3 -m src.fac_cli in add . --name NAME --lon LONGITUDE --lat LATITUDE
+./fac in set . SEARCH_ID --name NAME
+./fac in set . SEARCH_ID --lon LONGITUDE --lat LATITUDE
+./fac in set . SEARCH_ID --qid QID
 ```
 
-`in add` と `in set` は、経度と緯度の組、または QID を受け取ります。
+`in set` は名称、経度と緯度の組、または Wikidata QID を変更します。
 
-入力が不正な場合、コマンドは標準エラーへ `ERROR: <理由>` を出力し、終了コード 1 で停止します。
+入力が不正な場合、コマンドは `ERROR: <理由>` を出力し、終了コード 1 で停止します。
