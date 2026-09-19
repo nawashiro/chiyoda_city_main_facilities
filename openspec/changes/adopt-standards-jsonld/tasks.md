@@ -40,10 +40,10 @@
 
 ## 5. 統合検証と移行
 
-- [ ] 5.1 fixtureと本番データ候補でJSON-LDのID、件数、geometry、関連リンクを検証する
-- [ ] 5.2 GitHub Actionsで公開物の再生成とbyte-level reproducibilityを検証する
-- [ ] 5.3 全tests、`python3 -m src.facility_data validate .`、`openspec validate adopt-standards-jsonld --strict`、`git diff --check`を実行する
-- [ ] 5.4 移行手順とrollback手順を確認し、Gitの直前公開版へ戻せることを文書で検証する
+- [x] 5.1 fixtureと本番データ候補でJSON-LDのID、件数、geometry、関連リンクを検証する
+- [x] 5.2 GitHub Actionsで公開物の再生成とbyte-level reproducibilityを検証する
+- [x] 5.3 全tests、`python3 -m src.facility_data validate .`、`openspec validate adopt-standards-jsonld --strict`、`git diff --check`を実行する
+- [x] 5.4 移行手順とrollback手順を確認し、Gitの直前公開版へ戻せることを文書で検証する
 
 ## 6. 検証で判明した修正範囲
 
