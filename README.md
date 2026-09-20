@@ -23,13 +23,11 @@ git status --short
 - JSON-LD をリリースする: [JSON-LD をリリースする](docs/how-to/publish-release-jsonld.md)
 - 変更を検証する: [検証](docs/reference/verification.md)
 
-## 公開物と互換性
+## 公開物
 
 GitHub Pages は最新の `site/places.jsonld` を配布します。GitHub Releases はタグごとの `places-<version>.jsonld` を配布します。
 
-この移行は breaking change です。`registry.json`、GeoJSON、manifest は公開しません。
-
-利用者は JSON-LD と[データ契約](docs/reference/data-contracts.md)へ移行します。作業者は[データフロー](docs/explanation/data-flow.md)で移行理由と rollback を確認します。
+利用者は JSON-LD と[データ契約](docs/reference/data-contracts.md)を確認します。作業者は[データフロー](docs/explanation/data-flow.md)で rollback 手順を確認します。
 
 作業者は、データ構造と出典条件を変更前に確認します。
 
