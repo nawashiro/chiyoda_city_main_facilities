@@ -17,8 +17,6 @@ git status --short
 
 作業者は、出典や再利用条件を変える場合、[出典とライセンス](../reference/licenses.md)を確認します。
 
-このデータ移行は breaking change です。作業者は `registry.json`、GeoJSON、manifest を編集または生成しません。
-
 ## 3. 正本を変更する
 
 作業者は `data/places.jsonld` だけを正本として編集します。
