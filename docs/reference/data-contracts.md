@@ -18,8 +18,6 @@
 
 作業者は `schema:geo` に `schema:GeoCoordinates` を設定します。作業者は `schema:latitude` と `schema:longitude` に有効な座標を設定します。
 
-作業者は GeoSPARQL geometry literal を出力しません。
-
 作業者は OSM と Wikidata の公式 HTTPS URI を `rdfs:seeAlso` へ設定します。
 
 作業者は WAM record ID を `schema:identifier` の `schema:PropertyValue` へ設定します。作業者は WAM record ID から URI を合成しません。

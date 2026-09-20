@@ -188,7 +188,7 @@ def _index_wam_raw_rows(rows: Any) -> dict[str, dict[str, Any]]:
     return indexed
 
 
-def validate_repository(root: str | Path) -> list[str]:
+def validate_repository(root: str | Path, *, check_public_copy: bool = True) -> list[str]:
     root=Path(root); issues=[]; canonical=root/"data/places.jsonld"
     if not canonical.is_file(): return ["data/places.jsonld: canonical JSON-LD is required"]
     try: document=_read_json(canonical); validate_jsonld_document(document); place_by_id=jsonld_place_index(document)
@@ -209,8 +209,9 @@ def validate_repository(root: str | Path) -> list[str]:
         if not isinstance(records,list): issues.append(f"imports/{source}/normalized.json: records must be an array"); continue
         for i,record in enumerate(records):
             if not isinstance(record,dict) or str(record.get("queryId")) not in search_by_id: issues.append(f"imports/{source}/normalized.json: records[{i}]: unknown or invalid queryId")
-    site=root/"site/places.jsonld"
-    if site.is_file() and site.read_bytes() != canonical.read_bytes(): issues.append("site/places.jsonld must be byte-identical to data/places.jsonld")
+    if check_public_copy:
+        site=root/"site/places.jsonld"
+        if site.is_file() and site.read_bytes() != canonical.read_bytes(): issues.append("site/places.jsonld must be byte-identical to data/places.jsonld")
     return issues
 
 
@@ -262,7 +263,7 @@ def update_repository(root: str | Path, at: str, source: str, **_: Any) -> Path:
 
 
 def build_repository(root: str | Path) -> Path:
-    issues=validate_repository(root)
+    issues=validate_repository(root, check_public_copy=False)
     if issues: raise ValueError("; ".join(issues))
     return Path(root)/"data/places.jsonld"
 

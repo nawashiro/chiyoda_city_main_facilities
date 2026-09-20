@@ -1,0 +1,12 @@
+{
+  "name": "chiyoda_city_main_facilities-maintainer-workflow",
+  "version": "1.0.0",
+  "scripts": {
+    "format:md": "prettier --write \"**/*.md\"",
+    "check:md": "prettier --check \"**/*.md\""
+  },
+  "private": true,
+  "devDependencies": {
+    "prettier": "3.6.2"
+  }
+}

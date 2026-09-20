@@ -1,36 +1,34 @@
 # 検証
 
-作業者は、変更後に次の手順をリポジトリ root で実行します。
+変更を確認するときは、リポジトリ root で次のコマンドを実行します。
 
-## 全体検証
-
-```sh
-python3 -m unittest discover -s tests -v
-python3 -m src.facility_data validate .
-./fac jsonld-validate data/places.jsonld
-cmp data/places.jsonld site/places.jsonld
-git diff --check
-```
-
-`validate` は canonical JSON-LD と公開コピーを検証します。作業者は GeoJSON、`registry.json`、manifest を作成して検証しません。
-
-## 正本の不変性
-
-作業者は、既存の `data/places.jsonld` を `build` が上書きしないことを確認します。
+## 標準コマンド
 
 ```sh
-cp data/places.jsonld /tmp/places.jsonld.before
-python3 -m src.facility_data build .
-./fac jsonld-validate data/places.jsonld
-cmp /tmp/places.jsonld.before data/places.jsonld
+./fac verify
 ```
 
-`cmp` が失敗した場合、作業者は処理を止めて差分の原因を確認します。作業者は、意図しない正本の変更をコミットしません。
+`./fac verify` は、テスト、リポジトリと JSON-LD の検証、正本と公開コピーの byte-level 比較、`git diff --check` をまとめて実行します。成功時は終了コード 0、失敗時は非 0 です。`build` や公開コピーの同期は行いません。
 
-公開物だけを確認する場合、作業者は次を実行します。
+## 失敗時の診断
 
-```sh
-python3 -m unittest tests/test_dataset_publication.py
-```
+出力に示された失敗を修正してから、`./fac verify` を再実行します。
 
-Release の rollback 後、作業者は全体検証を完了してから compensating Release を公開します。
+- JSON-LD の入力を個別に確認する場合:
+
+  ```sh
+  ./fac jsonld-validate data/places.jsonld
+  ```
+
+- 公開コピーが正本と一致しない場合、正本の変更が意図したものか確認します。意図した変更であれば、次の順に実行します。
+
+  ```sh
+  ./fac build
+  ./fac verify
+  ```
+
+- 差分の空白エラーを確認する場合:
+
+  ```sh
+  git diff --check
+  ```

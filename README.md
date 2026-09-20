@@ -4,7 +4,7 @@
 
 ## 最初の 30 秒
 
-初めてデータを変更する作業者は、Python 3.13 を確認し、[最初のデータ変更](docs/tutorials/first-data-change.md)を実行します。
+初めてデータを変更する作業者は、Python 3.13 を確認してから[最初のデータ変更](docs/tutorials/first-data-change.md)を実行します。手順は、`data/places.jsonld` を編集し、`./fac build`、`./fac verify`、意図した差分の確認を順に行う一つの経路です。差分は `git diff -- data/places.jsonld site/places.jsonld` で確認し、各チェックの結果を Pull Request に記録します。
 
 ```sh
 python3 --version
