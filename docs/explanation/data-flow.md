@@ -18,10 +18,8 @@ WAM の取得物は `imports/wam/` に保存します。OpenStreetMap の取得�
 
 人手 OSM レビューは候補の自動選択を補完します。レビュー結果はコミット済み YAML だけで受け付けます。
 
-## 移行と rollback
+## Rollback
 
-この移行は breaking change です。利用者は旧 registry と GeoJSON の取得を停止します。
-
-利用者は[データ契約](../reference/data-contracts.md)に従って JSON-LD を処理します。作業者は旧形式を互換出力として追加しません。
+利用者は[データ契約](../reference/data-contracts.md)に従って JSON-LD を処理します。
 
 公開済み版へ戻す場合、作業者は[JSON-LD をリリースする](../how-to/publish-release-jsonld.md)の rollback 手順を実行します。作業者は `main` を force-push しません。
