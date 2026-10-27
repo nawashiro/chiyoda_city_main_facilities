@@ -1,5 +1,5 @@
 {
-  "version": "202608060200",
+  "version": "202610270100",
   "elements": [
     {
       "type": "node",
@@ -361,14 +361,20 @@
       "lon": 139.757376,
       "lat": 35.6955618,
       "tags": {
+        "addr:floor": "2F",
         "amenity": "restaurant",
-        "check_date": "2024-11-20",
+        "check_date": "2026-09-24",
         "cuisine": "curry",
+        "level": "1",
         "name": "欧風カレー ボンディ 神保町本店",
         "name:en": "BONDY",
         "name:ja": "欧風カレー　ボンディ",
         "opening_hours": "Mo-Su 11:00-22:00",
-        "phone": "+81 3 32242080"
+        "outdoor_seating": "no",
+        "payment:cash": "yes",
+        "phone": "+81 3 32242080",
+        "reservation": "no",
+        "takeaway": "yes"
       }
     },
     {
@@ -511,6 +517,7 @@
         "website": "https://www.city.chiyoda.lg.jp/",
         "wheelchair": "yes",
         "wikidata": "Q11405293",
+        "wikimedia_commons": "File:Kudan Common Government Office Building No-3.JPG",
         "wikipedia": "ja:千代田区役所"
       }
     },
@@ -1045,7 +1052,8 @@
         "opening_hours": "Mo-Fr 08:30-17:00; PH off; Dec 29-Jan 03 off",
         "operator": "千代田区",
         "phone": "+81-3-3253-4931",
-        "website": "https://www.city.chiyoda.lg.jp/shisetsu/kuyakusho/izumibashi-shuchojo.html"
+        "website": "https://www.city.chiyoda.lg.jp/shisetsu/kuyakusho/izumibashi-shuchojo.html",
+        "wikimedia_commons": "File:Chiyoda Ward Office Izumibashi Branch Office.jpg"
       }
     },
     {
@@ -1919,7 +1927,8 @@
         "network": "千代田区地域福祉交通",
         "operator": "千代田区",
         "public_transport": "platform",
-        "shelter": "no"
+        "shelter": "no",
+        "wikimedia_commons": "File:Hitachi Jidosha Kotsu Kazaguruma Izumibashi Branch Office Bus stop 2012.jpg"
       }
     },
     {
@@ -2117,8 +2126,8 @@
     {
       "type": "node",
       "id": 2558121955,
-      "lon": 139.7630483,
-      "lat": 35.6749598,
+      "lon": 139.7630446,
+      "lat": 35.6749572,
       "tags": {
         "contact:website": "https://www.jreast.co.jp/estation/station/info.aspx?StationCd=1617",
         "name": "有楽町",
@@ -2133,6 +2142,7 @@
         "name:ko": "유라쿠초",
         "name:ru": "Юракутё",
         "name:th": "ยูราคุโจ",
+        "name:zh": "有乐町",
         "operator": "東日本旅客鉄道",
         "operator:en": "East Japan Railway Company",
         "operator:ja": "東日本旅客鉄道",
@@ -2148,8 +2158,8 @@
     {
       "type": "node",
       "id": 2569180542,
-      "lon": 139.7628963,
-      "lat": 35.675031,
+      "lon": 139.7629372,
+      "lat": 35.6750582,
       "tags": {
         "local_ref": "1",
         "name": "有楽町",
@@ -2929,8 +2939,8 @@
     {
       "type": "node",
       "id": 3708279864,
-      "lon": 139.7630649,
-      "lat": 35.6749465,
+      "lon": 139.7630598,
+      "lat": 35.6749429,
       "tags": {
         "local_ref": "3",
         "name": "有楽町",
@@ -2954,8 +2964,8 @@
     {
       "type": "node",
       "id": 3708279865,
-      "lon": 139.7630317,
-      "lat": 35.674973,
+      "lon": 139.7630295,
+      "lat": 35.6749714,
       "tags": {
         "local_ref": "2",
         "name": "有楽町",
@@ -3122,11 +3132,12 @@
         "government": "yes",
         "name": "千代田区神保町出張所・区民館",
         "name:en": "Chiyoda City Jimbocho Branch Office and Community Center",
-        "name:ja": "千代田区神保町出張所・区民館",
         "office": "government",
         "opening_hours": "Mo-Fr 08:30-17:00; PH off; Dec 29-Jan 03 off",
+        "operator": "千代田区",
         "phone": "+81-3-3263-0741",
-        "website": "https://www.city.chiyoda.lg.jp/shisetsu/kuyakusho/jinbocho-shuchojo.html"
+        "website": "https://www.city.chiyoda.lg.jp/shisetsu/kuyakusho/jinbocho-shuchojo.html",
+        "wikimedia_commons": "File:Jimbocho himawari kan.jpg"
       }
     },
     {
@@ -3190,7 +3201,8 @@
         "name:en": "Ochanomizu Church of Christ",
         "name:es": "Iglesia de Cristo Ochanomizu",
         "name:ja": "お茶の水キリストの教会",
-        "religion": "christian"
+        "religion": "christian",
+        "wikimedia_commons": "File:障害者福祉センターえみふる・お茶の水キリストの教会.jpg"
       }
     },
     {
@@ -4805,8 +4817,16 @@
       "lon": 139.7683265,
       "lat": 35.692996,
       "tags": {
+        "addr:block_number": "16",
+        "addr:city": "千代田区",
+        "addr:neighbourhood": "2",
+        "addr:postcode": "101-0048",
+        "addr:province": "東京都",
+        "addr:quarter": "神田司町",
         "amenity": "community_centre",
-        "name": "教育研究所 児童・家庭支援センター さくらキッズ"
+        "level": "5",
+        "name": "教育研究所 児童・家庭支援センター さくらキッズ",
+        "website": "https://www.city.chiyoda.lg.jp/koho/kosodate/kosodate/ko-hattatsu/sakura-kids.html"
       }
     },
     {
@@ -6389,11 +6409,14 @@
       "lat": 35.6956365,
       "tags": {
         "amenity": "cafe",
+        "check_date": "2026-09-29",
         "level": "0",
-        "name": "古瀬戸",
+        "name": "ギャラリー珈琲店古瀬戸",
         "outdoor_seating": "no",
         "toilets": "yes",
         "toilets:access": "customers",
+        "website": "https://gallerykoseto.shopinfo.jp/",
+        "website:menu": "https://gallerykoseto.shopinfo.jp/pages/3347686/page_201911010242",
         "wheelchair": "no"
       }
     },
@@ -8233,8 +8256,10 @@
       "lat": 35.6952474,
       "tags": {
         "amenity": "restaurant",
+        "check_date": "2026-09-29",
         "cuisine": "vietnamese",
-        "name": "ベト屋"
+        "name": "ベト屋",
+        "website": "https://betoya.jp/"
       }
     },
     {
@@ -9097,7 +9122,6 @@
         "description": "障害のある方の悩みに専門家が相談に乗り、必要に応じて専門機関を紹介します。",
         "email": "info@hirai-luminal.or.jp",
         "fax": "+81-3-6269-9754",
-        "image": "https://commons.wikimedia.org/wiki/File:%E5%8D%83%E4%BB%A3%E7%94%B0%E5%8C%BA%E9%9A%9C%E5%AE%B3%E8%80%85%E3%82%88%E3%82%8D%E3%81%9A%E7%9B%B8%E8%AB%87_Light.jpg",
         "internet_access": "wlan",
         "internet_access:ssid": "yorozu-free",
         "level": "0",
@@ -9108,7 +9132,8 @@
         "phone": "+81-3-6269-9755",
         "social_facility": "outreach",
         "social_facility:for": "disabled",
-        "website": "https://hirai-luminal.or.jp/office/light/"
+        "website": "https://hirai-luminal.or.jp/office/light/",
+        "wikimedia_commons": "File:千代田区障害者よろず相談 Light.jpg"
       }
     },
     {
@@ -9127,7 +9152,6 @@
         "contact:facebook": "https://www.facebook.com/chiyoda.emifuru/",
         "description": "障害のある方が利用できる施設です。講習会・リハビリテーションや、グループホーム・ショートステイの機能があります。",
         "fax": "+81-3-3291-0608",
-        "image": "https://commons.wikimedia.org/wiki/File:障害者福祉センターえみふる・お茶の水キリストの教会.jpg",
         "internet_access": "wlan",
         "name": "千代田区立障害者福祉センター　えみふる",
         "opening_hours": "Mo-Fr 09:00-21:00; Sa-Su 09:00-17:00; PH 09:00-17:00; Su[2] off",
@@ -9137,7 +9161,8 @@
         "social_facility": "outreach",
         "social_facility:for": "disabled",
         "website": "https://emifuru.com/",
-        "wheelchair": "yes"
+        "wheelchair": "yes",
+        "wikimedia_commons": "File:障害者福祉センターえみふる・お茶の水キリストの教会.jpg"
       }
     },
     {
@@ -9262,6 +9287,18 @@
       "tags": {
         "name": "北新居・青木法律事務所",
         "office": "lawyer"
+      }
+    },
+    {
+      "type": "node",
+      "id": 14241127901,
+      "lon": 139.7628414,
+      "lat": 35.6754202,
+      "tags": {
+        "amenity": "restaurant",
+        "cuisine": "sushi",
+        "name": "Sushiro Yurakucho",
+        "opening_hours": "Mo-Su 10:30-22:30"
       }
     },
     {
@@ -10622,6 +10659,7 @@
       "tags": {
         "colour": "#ffd700",
         "electrified": "contact_line",
+        "embankment": "yes",
         "frequency": "0",
         "gauge": "1067",
         "maxspeed": "95",
@@ -10719,12 +10757,14 @@
         "email": "fujimi@city.chiyoda.lg.jp",
         "fax": "+81-3-3263-3866",
         "government": "public_service",
-        "name": "千代田区富士見出張所・区民館",
+        "name": "千代田区 富士見出張所・区民館",
         "office": "government",
         "opening_hours": "Mo-Fr 08:30-17:00; PH off; Dec 29-Jan 03 off",
+        "operator": "千代田区",
         "phone": "+81-3-3263-3841",
         "source": "Bing,2007-04",
-        "website": "https://www.city.chiyoda.lg.jp/shisetsu/kuyakusho/fujimi-shuchojo.html"
+        "website": "https://www.city.chiyoda.lg.jp/shisetsu/kuyakusho/fujimi-shuchojo.html",
+        "wikimedia_commons": "File:Chiyoda Ward Office Fujimi Branch Office.jpg"
       }
     },
     {
@@ -10926,6 +10966,7 @@
       },
       "tags": {
         "building": "yes",
+        "building:levels": "9",
         "layer": "1",
         "name": "読売会館",
         "name:en": "Yomiuri Kaikan",
@@ -11188,6 +11229,7 @@
         "lat": 35.68653725
       },
       "tags": {
+        "alt_name:es": "Museo de las Colecciones Imperiales del Tercer Recinto",
         "building": "public",
         "check_date": "2026-02-21",
         "contact:instagram": "https://www.instagram.com/shozokan_pr/",
@@ -11195,12 +11237,13 @@
         "fee": "yes",
         "landuse": "construction",
         "museum": "art",
-        "name": "宮内庁 三の丸尚蔵館",
+        "name": "皇居三の丸尚蔵館",
         "name:en": "Sannomaru Shozokan",
-        "name:es": "Museo de colecciones imperiales",
+        "name:es": "Museo de las Colecciones Imperiales Sannomaru",
         "name:fr": "Musée des collections impériales",
-        "name:ja-Hira": "さんのまるしょうぞうかん",
-        "name:ja-Latn": "Kunaichou Sannomaru-Shōzōkan",
+        "name:ja": "皇居三の丸尚蔵館",
+        "name:ja-Hira": "こうきょさんのまるしょうぞうかん",
+        "name:ja-Latn": "Kōkyo Sannomaru Shōzōkan",
         "name:ko": "궁내청 산노마루 상장관",
         "note": "Museum will open at the end of 2026",
         "official_name:en": "The Museum of the Imperial Collections, Sannomaru Shozokan",
@@ -11635,14 +11678,15 @@
         "building": "yes",
         "email": "kandakouen@city.chiyoda.lg.jp",
         "fax": "+81-3-5256-1239",
-        "name": "千代田区神田公園 出張所・区民館",
-        "name:en": "Community Center",
+        "name": "千代田区役所 神田公園出張所・区民館",
+        "name:en": "Chiyoda city Kanda-koen branch office and community center",
         "opening_hours": "Mo-Fr 08:30-17:00; PH off; Dec 29-Jan 03 off",
         "operator": "千代田区",
         "operator:type": "government",
         "phone": "+81-3-3252-7691",
         "source": "Bing",
-        "website": "https://www.city.chiyoda.lg.jp/shisetsu/kuyakusho/kandakoen-shuchojo.html"
+        "website": "https://www.city.chiyoda.lg.jp/shisetsu/kuyakusho/kandakoen-shuchojo.html",
+        "wikimedia_commons": "File:Chiyoda Ward Office Kanda Park Branch Office.jpg"
       }
     },
     {
@@ -11767,17 +11811,18 @@
       },
       "tags": {
         "amenity": "townhall",
-        "building": "public",
+        "building": "government",
         "building:levels": "8",
         "email": "manseibashi@city.chiyoda.lg.jp",
         "fax": "+81-3-5256-1240",
-        "name": "千代田区役所 万世橋出張所",
-        "name:en": "Chiyoda City Hall - Manseibashi Branch Office",
+        "name": "千代田区役所 万世橋出張所・区民館",
+        "name:en": "Chiyoda City Manseibashi Branch Office / Citizen Hall",
         "opening_hours": "Mo-Fr 08:30-17:00; PH off; Dec 29-Jan 03 off",
         "operator": "千代田区",
         "phone": "+81-3-3251-4691",
         "website": "https://www.city.chiyoda.lg.jp/shisetsu/kuyakusho/manseibashi-shuchojo.html",
-        "wheelchair": "yes"
+        "wheelchair": "yes",
+        "wikimedia_commons": "File:Chiyoda Ward Office Manseibashi Branch Office.jpg"
       }
     },
     {
@@ -12432,6 +12477,7 @@
         "lat": 35.69380485
       },
       "tags": {
+        "addr:block_number": "14",
         "building": "yes",
         "name": "CODEN Bldg.",
         "source": "GSI/KIBAN 25000; NARO",
@@ -12488,6 +12534,7 @@
         "lat": 35.693821
       },
       "tags": {
+        "addr:block_number": "14",
         "building": "yes",
         "name": "神田錦町ビル",
         "source": "GSI/KIBAN 25000; NARO",
@@ -12502,6 +12549,7 @@
         "lat": 35.69379535
       },
       "tags": {
+        "addr:block_number": "14",
         "building": "yes",
         "name": "立花日英ビル",
         "source": "GSI/KIBAN 25000; NARO",
@@ -12565,6 +12613,7 @@
         "lat": 35.693779649999996
       },
       "tags": {
+        "addr:block_number": "14",
         "building": "yes",
         "name": "市村ビル",
         "source": "GSI/KIBAN 25000; NARO",
@@ -12579,6 +12628,9 @@
         "lat": 35.694677999999996
       },
       "tags": {
+        "addr:block_number": "2",
+        "addr:neighbourhood": "2丁目",
+        "addr:quarter": "神田小川町",
         "building": "yes",
         "name": "UIビル",
         "source": "GSI/KIBAN 25000; NARO",
@@ -13564,7 +13616,7 @@
       "id": 662223246,
       "center": {
         "lon": 139.7645753,
-        "lat": 35.6918172
+        "lat": 35.69181825
       },
       "tags": {
         "colour": "#00BB85",
@@ -13918,6 +13970,24 @@
     },
     {
       "type": "way",
+      "id": 682979559,
+      "center": {
+        "lon": 139.76414375000002,
+        "lat": 35.68024629999999
+      },
+      "tags": {
+        "highway": "steps",
+        "incline": "down",
+        "indoor": "yes",
+        "layer": "-1",
+        "level": "-1",
+        "name": "東京駅(改札外)",
+        "step_count": "12",
+        "surface": "paving_stones"
+      }
+    },
+    {
+      "type": "way",
       "id": 695983288,
       "center": {
         "lon": 139.76421705,
@@ -14013,6 +14083,7 @@
       "tags": {
         "destination": "四ツ谷",
         "electrified": "contact_line",
+        "embankment": "yes",
         "frequency": "0",
         "gauge": "1067",
         "maxspeed": "95",
@@ -14625,6 +14696,22 @@
     },
     {
       "type": "way",
+      "id": 1352288982,
+      "center": {
+        "lon": 139.7641673,
+        "lat": 35.6803178
+      },
+      "tags": {
+        "highway": "footway",
+        "incline": "down",
+        "indoor": "yes",
+        "layer": "-1",
+        "level": "-1",
+        "name": "東京駅(改札外)"
+      }
+    },
+    {
+      "type": "way",
       "id": 1353305922,
       "center": {
         "lon": 139.76487535,
@@ -14829,6 +14916,24 @@
     },
     {
       "type": "way",
+      "id": 1443231391,
+      "center": {
+        "lon": 139.76412975,
+        "lat": 35.680201
+      },
+      "tags": {
+        "highway": "steps",
+        "incline": "down",
+        "indoor": "yes",
+        "layer": "-1",
+        "level": "-1",
+        "name": "東京駅(改札外)",
+        "step_count": "11",
+        "surface": "paving_stones"
+      }
+    },
+    {
+      "type": "way",
       "id": 1447115646,
       "center": {
         "lon": 139.76278905,
@@ -14971,8 +15076,8 @@
       "type": "way",
       "id": 1447693765,
       "center": {
-        "lon": 139.76263695,
-        "lat": 35.6750775
+        "lon": 139.76287515,
+        "lat": 35.675351899999995
       },
       "tags": {
         "highway": "footway",
@@ -15146,7 +15251,7 @@
         "lat": 35.69152695
       },
       "tags": {
-        "admin_level": "10",
+        "admin_level": "9",
         "boundary": "administrative",
         "name": "北の丸公園",
         "name:en": "Kitanomaru Park",
@@ -15231,11 +15336,12 @@
         "fee": "no",
         "leisure": "park",
         "name": "皇居東御苑",
-        "name:en": "Imperial Palace East Gardens",
-        "name:es": "Jardines Este del Palacio Imperial",
+        "name:en": "The East Gardens of the Imperial Palace",
+        "name:es": "Jardín Oriental del Palacio Imperial",
         "name:fr": "Jardins est du palais impérial de Tokyo",
+        "name:ja": "皇居東御苑",
         "name:ja-Hira": "こうきょひがしぎょえん",
-        "name:ja-Latn": "Kōkyo Higashi-gyoen",
+        "name:ja-Latn": "Kōkyo Higashi Gyoen",
         "name:ko": "황거동어원",
         "name:ru": "Восточные сады Императорского дворца",
         "name:zh": "皇居东御苑",
@@ -15531,7 +15637,7 @@
       "type": "relation",
       "id": 19347938,
       "center": {
-        "lon": 139.75741105,
+        "lon": 139.75741975,
         "lat": 35.69120015
       },
       "tags": {
@@ -15541,6 +15647,35 @@
         "public_transport:version": "2",
         "route": "train",
         "to": "錦糸町",
+        "type": "route"
+      }
+    },
+    {
+      "type": "relation",
+      "id": 21447651,
+      "center": {
+        "lon": 139.7460956,
+        "lat": 35.697575400000005
+      },
+      "tags": {
+        "name": "特別区道千第270号",
+        "ref": "270",
+        "route": "road",
+        "type": "route"
+      }
+    },
+    {
+      "type": "relation",
+      "id": 21710051,
+      "center": {
+        "lon": 139.75541525,
+        "lat": 35.6964028
+      },
+      "tags": {
+        "grid:axis": "east-west",
+        "name": "特別区道千第354号",
+        "ref": "354",
+        "route": "road",
         "type": "route"
       }
     }
