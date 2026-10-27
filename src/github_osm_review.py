@@ -73,7 +73,7 @@ class GitHub:
         owner, name = self.repository.split("/")
         response = self.api("/graphql", {"query": "query($owner:String!,$name:String!,$number:Int!){repository(owner:$owner,name:$name){issue(number:$number){body state lastEditedAt lastEditedBy{login} author{login} url}}}", "variables": {"owner": owner, "name": name, "number": number}})
         if response.get("errors"):
-            raise ValueError("GitHub could not read Issue edit provenance")
+            raise ValueError("GitHub could not read Issue edit provenance: " + json.dumps(response["errors"], ensure_ascii=False))
         return response["data"]["repository"]["issue"]
 
     def may_write(self, login):
