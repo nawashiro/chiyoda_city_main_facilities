@@ -4,7 +4,7 @@
 
 作業者は `data/places.jsonld` を唯一の正本として扱います。
 
-`site/places.jsonld` は正本の公開コピーです。作業者は両ファイルをバイト単位で一致させます。
+`site/places.jsonld` は正本の公開コピーです。公開時に正本から生成し、Git で管理しません。
 
 `site/index.html` は JSON-LD データセットを埋め込みます。埋め込みは `schema:Dataset`、データセット名、説明、公開 URL、`DataDownload` を含めます。
 

@@ -1,5 +1,9 @@
 import json
 import re
+import tempfile
+import shutil
+
+from src.facility_data import build_repository
 import unittest
 from pathlib import Path
 
@@ -43,22 +47,33 @@ class DatasetPublicationTests(unittest.TestCase):
 
         self.assertEqual(EXPECTED_DATASET_URL, metadata["url"])
 
-    def test_pages_jsonld_artifact_matches_canonical_source(self):
-        canonical_source = ROOT / "data/places.jsonld"
-        pages_artifact = ROOT / "site/places.jsonld"
-        self.assertTrue(
-            pages_artifact.is_file(),
-            f"missing GitHub Pages JSON-LD artifact: {pages_artifact}",
-        )
-        self.assertTrue(
-            canonical_source.is_file(),
-            f"missing canonical JSON-LD source: {canonical_source}",
-        )
-        self.assertEqual(
-            canonical_source.read_bytes(),
-            pages_artifact.read_bytes(),
-            "GitHub Pages JSON-LD artifact must be byte-identical to canonical source",
-        )
+    def test_build_publishes_exact_canonical_bytes_without_changing_source(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            (root / "data").mkdir()
+            canonical = root / "data/places.jsonld"
+            shutil.copyfile(ROOT / "data/places.jsonld", canonical)
+            original = canonical.read_bytes()
+            artifact = build_repository(root)
+            self.assertEqual(root / "site/places.jsonld", artifact)
+            self.assertEqual(original, artifact.read_bytes())
+            self.assertEqual(original, canonical.read_bytes())
+            artifact.write_text("stale copy", encoding="utf-8")
+            build_repository(root)
+            self.assertEqual(original, artifact.read_bytes())
+            self.assertEqual(original, canonical.read_bytes())
+
+    def test_invalid_canonical_data_does_not_replace_published_copy(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            (root / "data").mkdir()
+            (root / "site").mkdir()
+            (root / "data/places.jsonld").write_text("{}", encoding="utf-8")
+            artifact = root / "site/places.jsonld"
+            artifact.write_bytes(b"previous publication")
+            with self.assertRaises(ValueError):
+                build_repository(root)
+            self.assertEqual(b"previous publication", artifact.read_bytes())
 
     def test_pages_landing_page_exposes_jsonld_distribution(self):
         landing_page = ROOT / "site/index.html"

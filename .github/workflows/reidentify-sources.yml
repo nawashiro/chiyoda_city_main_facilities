@@ -59,7 +59,6 @@ jobs:
             imports/wam/normalized.json
             imports/openstreetmap/
             data/places.jsonld
-            reports/latest-update.json
             reports/osm-candidates.json
             reports/osm-review-needed.json
             reports/osm-review-needed.yaml

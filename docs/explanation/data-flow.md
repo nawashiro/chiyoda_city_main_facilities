@@ -6,7 +6,7 @@
 
 `data/places.jsonld` は唯一の正本です。`site/places.jsonld` は GitHub Pages 用の公開コピーです。
 
-作業者は両ファイルをバイト単位で一致させます。GitHub Release は正本の版固定コピーを `places-<tag>.jsonld` として添付します。
+GitHub Actions は公開時に正本を `site/places.jsonld` へコピーします。公開コピーは Git で管理しません。GitHub Pages の公開元は Settings > Pages > Build and deployment で `GitHub Actions` に設定します。GitHub Release は正本の版固定コピーを `places-<tag>.jsonld` として添付します。
 
 公開経路は JSON-LD だけです。公開物と Release snapshot は GeoJSON、`registry.json`、manifest を含めません。
 

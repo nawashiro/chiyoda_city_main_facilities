@@ -3,3 +3,5 @@ output
 .temp
 __pycache__/
 *.py[cod]
+site/places.jsonld
+reports/*-update.diff

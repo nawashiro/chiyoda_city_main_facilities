@@ -8,11 +8,12 @@
 python3 -m unittest discover -s tests -v
 python3 -m src.facility_data validate .
 ./fac jsonld-validate data/places.jsonld
+python3 -m src.facility_data build .
 cmp data/places.jsonld site/places.jsonld
 git diff --check
 ```
 
-`validate` は canonical JSON-LD と公開コピーを検証します。作業者は GeoJSON、`registry.json`、manifest を作成して検証しません。
+`validate` は canonical JSON-LD と検索入力、正規化済みレコードの参照を検証します。`build` は検証後に公開コピーを生成します。作業者は GeoJSON、`registry.json`、manifest を作成して検証しません。
 
 ## 正本の不変性
 

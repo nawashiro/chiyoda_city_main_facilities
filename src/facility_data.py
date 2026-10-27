@@ -7,6 +7,7 @@ import hashlib
 import json
 import math
 import re
+import shutil
 import time
 import unicodedata
 import uuid
@@ -209,8 +210,6 @@ def validate_repository(root: str | Path) -> list[str]:
         if not isinstance(records,list): issues.append(f"imports/{source}/normalized.json: records must be an array"); continue
         for i,record in enumerate(records):
             if not isinstance(record,dict) or str(record.get("queryId")) not in search_by_id: issues.append(f"imports/{source}/normalized.json: records[{i}]: unknown or invalid queryId")
-    site=root/"site/places.jsonld"
-    if site.is_file() and site.read_bytes() != canonical.read_bytes(): issues.append("site/places.jsonld must be byte-identical to data/places.jsonld")
     return issues
 
 
@@ -257,14 +256,18 @@ def update_repository(root: str | Path, at: str, source: str, **_: Any) -> Path:
     document=_read_json(root/"data/places.jsonld"); search_by_id={str(q["id"]):q for p in (root/"inputs/osm-search").glob("**/*.json") for q in _read_json(p).get("queries",[])}
     records=lambda name: _read_json(root/f"imports/{name}/normalized.json").get("records",[]) if (root/f"imports/{name}/normalized.json").exists() else []
     updated=apply_source_updates(document,search_by_id,records("wam") if source=="wam" else [],records("openstreetmap") if source=="openstreetmap" else [],at,wam_raw_rows=_read_json(root/"imports/wam/raw.json").get("rows",[]) if source=="wam" else None)
-    _write_json(root/"data/places.jsonld",updated); _write_json(root/"site/places.jsonld",updated)
+    _write_json(root/"data/places.jsonld",updated)
     return root/"data/places.jsonld"
 
 
 def build_repository(root: str | Path) -> Path:
     issues=validate_repository(root)
     if issues: raise ValueError("; ".join(issues))
-    return Path(root)/"data/places.jsonld"
+    root = Path(root)
+    artifact = root / "site/places.jsonld"
+    artifact.parent.mkdir(parents=True, exist_ok=True)
+    shutil.copyfile(root / "data/places.jsonld", artifact)
+    return artifact
 
 
 def main(argv: list[str] | None = None) -> int:

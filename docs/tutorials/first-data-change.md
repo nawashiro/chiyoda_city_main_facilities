@@ -23,14 +23,14 @@ git status --short
 
 作業者は、公開対象でない施設を公開データへ追加しません。
 
-`python3 -m src.facility_data build .` は、既存の `data/places.jsonld` を上書きしません。このコマンドは正本を検証します。
+`python3 -m src.facility_data build .` は、既存の `data/places.jsonld` を上書きしません。このコマンドは正本を検証し、公開コピーを生成します。
 
-## 4. 公開コピーを同期する
+## 4. 公開コピーを生成する
 
-作業者は、正本を確認してから公開コピーへ複製します。
+作業者は正本を検証して公開コピーを生成します。公開コピーは Git で管理しません。
 
 ```sh
-cp data/places.jsonld site/places.jsonld
+python3 -m src.facility_data build .
 cmp data/places.jsonld site/places.jsonld
 ```
 
@@ -42,7 +42,7 @@ cmp data/places.jsonld site/places.jsonld
 
 ```sh
 git diff --check
-git diff -- data/places.jsonld site/places.jsonld
+git diff -- data/places.jsonld
 ```
 
 作業者は、意図した JSON-LD だけが変わったことを確認します。作業者は、検証結果と差分を Pull Request に記録します。

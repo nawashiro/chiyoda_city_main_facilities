@@ -40,7 +40,6 @@ workflow は入力不能、JSON 不正、JSON-LD 検証失敗、書込失敗で�
 
 ```sh
 git cat-file -e <previous-published-tag>:data/places.jsonld
-git cat-file -e <previous-published-tag>:site/places.jsonld
 ```
 
 作業者は `main` から新しい branch を作成します。作業者は確認済みタグの JSON-LD だけを branch へ復元します。
@@ -48,11 +47,11 @@ git cat-file -e <previous-published-tag>:site/places.jsonld
 ```sh
 git switch main
 git switch -c rollback/restore-<previous-published-tag>
-git restore --source <previous-published-tag> -- data/places.jsonld site/places.jsonld
-git diff -- data/places.jsonld site/places.jsonld
+git restore --source <previous-published-tag> -- data/places.jsonld
+git diff -- data/places.jsonld
 ```
 
-作業者は、差分に `data/places.jsonld` と `site/places.jsonld` 以外を含めません。作業者は[検証](../reference/verification.md)を完了します。作業者は差分と検証結果を記録した Pull Request を作成します。
+作業者は、差分に `data/places.jsonld` 以外を含めません。作業者は[検証](../reference/verification.md)を完了します。作業者は差分と検証結果を記録した Pull Request を作成します。
 
 作業者は Pull Request を review して merge します。作業者は merge commit に新しい未使用タグを作成します。
 

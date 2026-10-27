@@ -62,7 +62,6 @@ jobs:
             inputs/osm-search/wam/
             imports/wam/
             data/places.jsonld
-            reports/latest-update.json
             reports/wam-update.diff
       - name: Create reviewable Pull Request
         uses: peter-evans/create-pull-request@v7
