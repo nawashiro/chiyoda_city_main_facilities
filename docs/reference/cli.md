@@ -17,7 +17,7 @@
 ./fac in get . SEARCH_ID
 ```
 
-`ls` は全検索入力の名称と ID を出力します。
+`inputs/facilities.json`を対象にします。`ls`は全検索入力の名称とIDを出力します。
 
 ## 検索入力を追加する
 

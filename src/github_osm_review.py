@@ -1,226 +1,155 @@
+"""GitHub Issue decisions bound to committed facility evidence."""
 from __future__ import annotations
 
-import argparse
-import hashlib
 import json
+import os
 import re
-from pathlib import Path
-from typing import Any
+from urllib.parse import quote
+from urllib.request import Request, urlopen
+
+from src.facility_data import _distance_metres
+from src.http_utils import read_limited_response
+from src.resolve_osm_candidates import OSM
+
+CONFIRM = "判断を確定する"
+MARKER = re.compile(r"<!-- osm-review:([^: ]+):([0-9a-f]{64}) -->")
 
 
-
-def _write_json(path: Path, document: dict[str, Any]) -> None:
-    path.parent.mkdir(parents=True, exist_ok=True)
-    path.write_text(
-        json.dumps(document, ensure_ascii=False, indent=2) + "\n", encoding="utf-8"
-    )
+def escape(text):
+    return str(text).replace("\n", " ").replace("\r", " ").replace("|", "&#124;").replace("<", "&lt;").replace(">", "&gt;").replace("[", "&#91;").replace("]", "&#93;")
 
 
-
-def _yaml_scalar(value: Any) -> str:
-    return json.dumps(value, ensure_ascii=False)
-
-
-def _review_candidates(query: dict[str, Any]) -> list[dict[str, Any]]:
-    return [
-        candidate
-        for candidate in query.get("candidates", [])
-        if isinstance(candidate.get("name"), str) and candidate["name"].strip()
-    ]
-
-
-def _review_reason_text(query: dict[str, Any]) -> str | None:
-    reason = query.get("reviewReason")
-    if not isinstance(reason, dict) or reason.get("code") != "candidate_already_linked":
-        return None
-    name = reason.get("conflictingQueryName")
-    query_id = reason.get("conflictingQueryId")
-    if isinstance(name, str) and name:
-        return f"候補は別の施設に紐付け済みです: {name}"
-    if isinstance(query_id, str) and query_id:
-        return f"候補は別の施設に紐付け済みです（検索ID: {query_id}）"
-    return "候補は別の施設に紐付け済みです"
-
-
-def build_review_yaml(report: dict[str, Any], *, report_sha256: str) -> str:
-    """Render a compact, editable one-choice-per-query review sheet."""
-    queries = [query for query in report.get("queries", []) if query.get("status") == "needs_review"]
-    lines = [
-        "# OSM候補の人間確認",
-        "# 操作手順",
-        "# 1. 各「選択肢」で採用する候補を一つだけtrueに変更します。",
-        "# 2. 採用しない場合は「候補なし（どの候補とも一致しない）」をtrueに変更します。",
-        "# 3. それ以外のtrue/false、ID、施設名、reportSha256は変更しません。",
-        "# 4. GitHubでコミットし、このレビューPull Requestをmergeします。",
-        "schemaVersion: 2",
-        f"reportSha256: {report_sha256}",
-        "確認対象:",
-    ]
-    for query in queries:
-        query_id = str(query["queryId"])
-        lines.extend(
-            [
-                f"  - 検索ID: {_yaml_scalar(query_id)}",
-                f"    施設名: {_yaml_scalar(query['name'])}",
-            ]
-        )
-        reason = _review_reason_text(query)
-        if reason is not None:
-            lines.append(f"    自動取り込みしない理由: {_yaml_scalar(reason)}")
-        lines.append("    選択肢:")
-        for candidate in _review_candidates(query):
-            name = candidate.get("name") or candidate.get("tags", {}).get("name") or "名称なし"
-            label = f"候補 {candidate['recordId']}: {name}"
-            lines.append(f"      {_yaml_scalar(label)}: false")
-        lines.append(f"      {_yaml_scalar('候補なし（どの候補とも一致しない）')}: false")
+def render_issue(query_id, entry):
+    evidence = entry["evidence"]
+    target = evidence["target"]
+    lines = [f"[bot] {escape(target['name'])}のOSM参照を確認してください。", "",
+             f"対象UUID: `{query_id}`", f"現在の参照: {OSM + entry['current'] if entry.get('current') else 'なし'}", "",
+             f"確認理由: {escape(entry.get('reason', '自動判定できませんでした。'))}"]
+    if entry.get("jev"):
+        result = entry["jev"]
+        lines.append(f"Jev: `{result['choice']}` / confidence `{result['confidence']:.4f}`（正答率ではありません）")
+    else:
+        lines.append("Jev: 未実行（" + ("既存ID・QIDでの照合に競合があるため" if evidence["candidates"] else "候補が見つからなかったため") + "）")
+    lines.extend(["", "候補または「該当なし」を一つ選び、最後に確定欄をチェックしてください。", ""])
+    for candidate in evidence["candidates"]:
+        lon, lat = candidate["coordinates"]
+        distance = f"{_distance_metres(target['coordinates'], candidate['coordinates']):.1f} m" if "coordinates" in target else "QID検索（距離なし）"
+        record_id = candidate["recordId"]
+        lines.append(f"- [ ] `{record_id}` {escape(candidate['name'])} / {distance} / [OSM]({OSM}{record_id}) / [地図](https://www.openstreetmap.org/?mlat={lat}&mlon={lon}#map=19/{lat}/{lon})")
+    lines.extend(["- [ ] `none` 該当なし（OSMとそれに伴うWikidataの参照を解除）", "", f"- [ ] {CONFIRM}", "", f"<!-- osm-review:{query_id}:{entry['evidenceHash']} -->"])
     return "\n".join(lines) + "\n"
 
 
-def _parse_review_yaml(text: str) -> dict[str, Any]:
-    lines = text.splitlines()
-    report_sha256 = next((line.removeprefix("reportSha256: ") for line in lines if line.startswith("reportSha256: ")), None)
-    if not isinstance(report_sha256, str) or not re.fullmatch(r"[0-9a-f]{64}", report_sha256):
-        raise ValueError("OSM review YAML report hash is invalid")
-    choices = []
-    current_query_id: str | None = None
-    in_options = False
-    for line in lines:
-        if line.startswith("  - 検索ID: "):
-            current_query_id = json.loads(line.removeprefix("  - 検索ID: "))
-            if not isinstance(current_query_id, str):
-                raise ValueError("OSM review YAML query ID is invalid")
-            in_options = False
-        elif line == "    選択肢:":
-            if current_query_id is None:
-                raise ValueError("OSM review YAML choice has no query ID")
-            choices.append({"queryId": current_query_id, "options": []})
-            in_options = True
-        elif line.startswith("    ") and not line.startswith("      "):
-            in_options = False
-        elif in_options and line.startswith("      "):
-            key, separator, value = line[6:].rpartition(": ")
-            if separator != ": " or value not in {"true", "false"}:
-                raise ValueError("OSM review YAML option is invalid")
-            label = json.loads(key)
-            if not isinstance(label, str):
-                raise ValueError("OSM review YAML option label is invalid")
-            choices[-1]["options"].append((label, value == "true"))
-    if not choices:
-        raise ValueError("OSM review YAML choices are missing")
-    selections = []
-    for choice in choices:
-        selected = [label for label, marked in choice["options"] if marked]
-        if len(selected) != 1:
-            raise ValueError(f"exactly one YAML option is required for query {choice['queryId']}")
-        label = selected[0]
-        if label == "候補なし（どの候補とも一致しない）":
-            decision, candidate_id = "reject", "none"
-        elif label.startswith("候補 ") and ": " in label:
-            decision, candidate_id = "link", label.removeprefix("候補 ").split(": ", 1)[0]
+def parse_issue(body, query_id, entry):
+    if not re.search(rf"^- \[[xX]\] {CONFIRM}$", body, re.M):
+        return None
+    canonical = entry.get("issueBody") or render_issue(query_id, entry)
+    normalize = lambda s: re.sub(r"(?m)^- \[[xX ]\]", "- [ ]", s).strip()
+    if normalize(body) != normalize(canonical):
+        raise ValueError("候補や根拠が更新・変更されています。最新の本文で選び直してください。")
+    selected = re.findall(r"^- \[[xX]\] `([^`]+)` ", body, re.M)
+    if len(selected) != 1:
+        raise ValueError("候補または「該当なし」を一つだけ選び、確定欄をチェックしてください。")
+    allowed = {c["recordId"] for c in entry["evidence"]["candidates"]} | {"none"}
+    if selected[0] not in allowed:
+        raise ValueError("保存済みの候補にない選択です。")
+    return selected[0]
+
+
+class GitHub:
+    def __init__(self, repository=None, token=None):
+        self.repository = repository or os.environ["GITHUB_REPOSITORY"]
+        self.token = token or os.environ["GH_TOKEN"]
+        if not re.fullmatch(r"[\w.-]+/[\w.-]+", self.repository):
+            raise ValueError("invalid GitHub repository")
+
+    def api(self, path, data=None, method=None):
+        request = Request("https://api.github.com" + path, data=json.dumps(data).encode() if data is not None else None,
+                          method=method, headers={"Authorization": f"Bearer {self.token}", "Accept": "application/vnd.github+json", "Content-Type": "application/json", "X-GitHub-Api-Version": "2022-11-28"})
+        with urlopen(request, timeout=60) as response:
+            return json.loads(read_limited_response(response, 4 * 1024 * 1024, "GitHub"))
+
+    def issue(self, number):
+        owner, name = self.repository.split("/")
+        response = self.api("/graphql", {"query": "query($owner:String!,$name:String!,$number:Int!){repository(owner:$owner,name:$name){issue(number:$number){body state lastEditedAt lastEditedBy{login} author{login} url}}}", "variables": {"owner": owner, "name": name, "number": number}})
+        if response.get("errors"):
+            raise ValueError("GitHub could not read Issue edit provenance")
+        return response["data"]["repository"]["issue"]
+
+    def may_write(self, login):
+        permission = self.api(f"/repos/{self.repository}/collaborators/{quote(login, safe='')}/permission")
+        return permission["permission"] in {"admin", "maintain", "write"}
+
+    def find_issue(self, query_id):
+        for page in range(1, 100):
+            issues = self.api(f"/repos/{self.repository}/issues?state=all&per_page=100&page={page}")
+            found = [i for i in issues if not i.get("pull_request") and i["user"]["login"] == "github-actions[bot]" and f"<!-- osm-review:{query_id}:" in (i.get("body") or "")]
+            if found:
+                return max(found, key=lambda i: i["number"])["number"]
+            if len(issues) < 100:
+                return None
+        raise ValueError("Issue search exceeds pagination budget")
+
+    def save_issue(self, query_id, entry):
+        body = render_issue(query_id, entry)
+        number = entry.get("issue") or self.find_issue(query_id)
+        if number:
+            issue = self.issue(number)
+            if entry.get("issueEvidenceHash") == entry["evidenceHash"] or (issue and MARKER.search(issue["body"]) and MARKER.search(issue["body"]).groups() == (query_id, entry["evidenceHash"])):
+                entry.update(issue=number, issueEvidenceHash=entry["evidenceHash"], issueBody=entry.get("issueBody", body))
+                if issue["state"] != "OPEN":
+                    self.api(f"/repos/{self.repository}/issues/{number}", {"state": "open"}, "PATCH")
+                return
+            self.api(f"/repos/{self.repository}/issues/{number}", {"body": body, "state": "open"}, "PATCH")
         else:
-            raise ValueError(f"OSM review YAML option is unsupported for query {choice['queryId']}")
-        selections.append({"queryId": choice["queryId"], "decision": decision, "candidateId": candidate_id})
-    return {"reportSha256": report_sha256, "choices": selections}
+            created = self.api(f"/repos/{self.repository}/issues", {"title": f"[bot] OSM確認: {escape(entry['evidence']['target']['name'])}", "body": body})
+            number = created["number"]
+        entry.update(issue=number, issueEvidenceHash=entry["evidenceHash"], issueBody=body)
+
+    def corrective_comment(self, number, message):
+        body = "[bot] " + message
+        comments = self.api(f"/repos/{self.repository}/issues/{number}/comments?per_page=100")
+        if any(c["user"]["login"] == "github-actions[bot]" and c["body"] == body for c in comments):
+            return
+        self.api(f"/repos/{self.repository}/issues/{number}/comments", {"body": body})
 
 
-def apply_yaml_selections(
-    root: str | Path, yaml_text: str, *, review_url: str
-) -> dict[str, Any]:
-    """Apply artifact-bound selections from a committed review YAML."""
-    selection = _parse_review_yaml(yaml_text)
-    root = Path(root)
-    report_path = root / "reports/osm-candidates.json"
-    report_payload = report_path.read_bytes()
-    if hashlib.sha256(report_payload).hexdigest() != selection["reportSha256"]:
-        raise ValueError("OSM review YAML does not match the reviewed artifact")
-    report = json.loads(report_payload)
-    query_ids = [
-        str(query["queryId"])
-        for query in report.get("queries", [])
-        if query.get("status") == "needs_review"
-    ]
-    choices = {choice["queryId"]: choice for choice in selection["choices"]}
-    if set(choices) != set(query_ids) or len(choices) != len(query_ids):
-        raise ValueError("OSM review YAML query IDs do not match the artifact")
-    review_queries = {str(query["queryId"]): query for query in report["queries"] if query.get("status") == "needs_review"}
-    normalized_path = root / "imports/openstreetmap/normalized.json"
-    normalized = json.loads(normalized_path.read_text(encoding="utf-8"))
-    records = [record for record in normalized.get("records", []) if str(record.get("queryId")) not in review_queries]
-    record_owners: dict[str, str] = {}
-    for record in records:
-        record_id, owner = f"{record['type']}/{record['id']}", str(record["queryId"])
-        if record_id in record_owners and record_owners[record_id] != owner:
-            raise ValueError(f"duplicate current OSM recordId {record_id}")
-        record_owners[record_id] = owner
-    for query_id, query in review_queries.items():
-        choice = choices[query_id]
-        decision, candidate_id = choice["decision"], choice["candidateId"]
-        candidates = {str(candidate["recordId"]): candidate for candidate in _review_candidates(query)}
-        if decision == "link":
-            candidate = candidates.get(candidate_id)
-            if candidate is None:
-                raise ValueError(f"selected candidate is not in the artifact: {candidate_id}")
-            if candidate_id in record_owners and record_owners[candidate_id] != query_id:
-                raise ValueError(f"duplicate current OSM recordId {candidate_id}")
-            record_owners[candidate_id] = query_id
-            records.append({"queryId": query_id, "matchBasis": "human_review", **{key: value for key, value in candidate.items() if key not in {"recordId", "distanceMeters"}}})
-            query["status"] = "linked_human"
-        elif decision == "reject" and candidate_id == "none":
-            query["status"] = "rejected_human"
-        else:
-            raise ValueError(f"invalid human review choice for query {query_id}")
-        query["humanReview"] = {"decision": decision, "candidateId": None if candidate_id == "none" else candidate_id, "reviewUrl": review_url}
-    normalized["records"] = sorted(records, key=lambda item: item["queryId"])
-    _write_json(normalized_path, normalized)
-    _write_json(report_path, report)
-    _write_json(root / "reports/osm-review-needed.json", {"version": report.get("version"), "queries": []})
-    return selection
+def read_confirmations(ledger, github, current_hashes=None):
+    confirmations = {}
+    for query_id, entry in ledger["facilities"].items():
+        if not entry.get("issue") or entry.get("status") != "needs_review":
+            continue
+        issue = github.issue(entry["issue"])
+        if not issue or issue["state"] != "OPEN":
+            continue
+        try:
+            choice = parse_issue(issue["body"], query_id, entry)
+            if choice is None:
+                continue
+            if current_hashes is not None and current_hashes.get(query_id) != entry["evidenceHash"]:
+                raise ValueError("検索入力か候補が変更されています。Update OpenStreetMap dataを再実行し、更新後の本文で選び直してください。")
+            editor = issue.get("lastEditedBy")
+            if not editor or not github.may_write(editor["login"]):
+                raise ValueError("確定には、このリポジトリへの書き込み権限を持つ人の本文編集が必要です。")
+            confirmations[query_id] = {"choice": choice, "editor": editor["login"], "editedAt": issue["lastEditedAt"], "url": issue["url"]}
+        except ValueError as error:
+            github.corrective_comment(entry["issue"], str(error))
+    return confirmations
 
 
-def main(argv: list[str] | None = None) -> int:
-    parser = argparse.ArgumentParser(description="Build and apply committed GitHub OSM reviews")
-    subparsers = parser.add_subparsers(dest="command", required=True)
-    build_parser = subparsers.add_parser("build")
-    build_parser.add_argument("root", nargs="?", default=".")
-    build_parser.add_argument("--output", required=True)
-    build_parser.add_argument("--report")
-    apply_yaml_parser = subparsers.add_parser("apply-yaml")
-    apply_yaml_parser.add_argument("root", nargs="?", default=".")
-    apply_yaml_parser.add_argument("--yaml", required=True)
-    apply_yaml_parser.add_argument("--review-url", required=True)
-    args = parser.parse_args(argv)
-    try:
-        if args.command == "build":
-            root = Path(args.root)
-            report_path = Path(args.report) if args.report else root / "reports/osm-candidates.json"
-            payload = report_path.read_bytes()
-            report = json.loads(payload)
-            report_sha256 = hashlib.sha256(payload).hexdigest()
-            if any(query.get("status") == "needs_review" for query in report.get("queries", [])):
-                (root / "reports/osm-review-needed.yaml").write_text(
-                    build_review_yaml(report, report_sha256=report_sha256), encoding="utf-8"
-                )
-            _write_json(
-                Path(args.output),
-                {
-                    "reviewNeeded": any(
-                        query.get("status") == "needs_review"
-                        for query in report.get("queries", [])
-                    )
-                },
-            )
-        else:
-            result = apply_yaml_selections(
-                args.root,
-                Path(args.yaml).read_text(encoding="utf-8"),
-                review_url=args.review_url,
-            )
-            print(json.dumps(result, separators=(",", ":")))
-    except (OSError, KeyError, TypeError, ValueError, json.JSONDecodeError) as error:
-        print(f"ERROR: {error}")
-        return 1
-    return 0
+def apply_confirmations(ledger, confirmations):
+    for query_id, human in confirmations.items():
+        entry = ledger["facilities"][query_id]
+        entry.update(choice=human["choice"], method="human", human=human, status="decided")
 
 
-if __name__ == "__main__":
-    raise SystemExit(main())
+def close_published(ledger, github):
+    for query_id, entry in ledger["facilities"].items():
+        if entry.get("method") != "human" or entry.get("status") != "decided" or not entry.get("issue"):
+            continue
+        issue = github.issue(entry["issue"])
+        if issue["state"] != "OPEN":
+            continue
+        if parse_issue(issue["body"], query_id, entry) != entry["choice"]:
+            continue
+        github.api(f"/repos/{github.repository}/issues/{entry['issue']}", {"state": "closed", "state_reason": "completed"}, "PATCH")

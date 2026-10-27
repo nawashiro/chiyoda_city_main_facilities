@@ -26,9 +26,9 @@ jobs:
         with:
           python-version: "3.13"
       - name: Validate canonical JSON-LD
-        run: python3 -m src.fac_cli jsonld-validate data/places.jsonld
+        run: python3 -m src.facility_data build .
       - name: Prepare release JSON-LD snapshot
-        run: python3 scripts/prepare_release_jsonld.py --input data/places.jsonld --output-dir release --version "$RELEASE_TAG"
+        run: python3 scripts/prepare_release_jsonld.py --input site/places.jsonld --output-dir release --version "$RELEASE_TAG"
       - name: Upload JSON-LD snapshot
         uses: actions/upload-artifact@v4
         with:

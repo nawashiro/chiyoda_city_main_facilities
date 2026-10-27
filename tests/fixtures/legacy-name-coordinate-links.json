@@ -1,0 +1,199 @@
+[
+  {
+    "query": {
+      "id": "019fa880-5cd5-7031-bc8e-250d0074827b",
+      "name": "シャルトル聖パウロ修道女会",
+      "coordinates": [
+        139.7445864,
+        35.6950676
+      ]
+    },
+    "place": {
+      "@id": "urn:uuid:019fa880-5cd5-7031-bc8e-250d0074827b",
+      "@type": [
+        "schema:Place"
+      ],
+      "schema:identifier": [],
+      "schema:geo": {
+        "@type": "schema:GeoCoordinates",
+        "schema:latitude": 35.6950676,
+        "schema:longitude": 139.74458635000002
+      },
+      "rdfs:seeAlso": [
+        "https://www.openstreetmap.org/way/30680236"
+      ]
+    },
+    "raw": {
+      "version": "202608060200",
+      "elements": [
+        {
+          "type": "way",
+          "id": 30680236,
+          "center": {
+            "lon": 139.74458635000002,
+            "lat": 35.6950676
+          },
+          "tags": {
+            "addr:block_number": "4",
+            "addr:city": "千代田区",
+            "addr:housenumber": "1",
+            "addr:neighbourhood": "2丁目",
+            "addr:province": "東京都",
+            "addr:quarter": "九段北",
+            "amenity": "monastery",
+            "denomination": "catholic",
+            "name": "シャルトル聖パウロ修道女会",
+            "name:en": "Sisters of Saint Paul of Chartres",
+            "name:zh": "沙爾德聖保祿修女會",
+            "religion": "christian",
+            "website": "http://www.spc-japan.org/kudan.php"
+          }
+        }
+      ]
+    }
+  },
+  {
+    "query": {
+      "id": "019fa880-5cd5-781a-bcd1-ee19d7c897f9",
+      "name": "日本ハリストス正教会修道院",
+      "coordinates": [
+        139.7650572,
+        35.6981854
+      ]
+    },
+    "place": {
+      "@id": "urn:uuid:019fa880-5cd5-781a-bcd1-ee19d7c897f9",
+      "@type": [
+        "schema:Place"
+      ],
+      "schema:geo": {
+        "@type": "schema:GeoCoordinates",
+        "schema:longitude": 139.76505715000002,
+        "schema:latitude": 35.69818535
+      },
+      "rdfs:seeAlso": [
+        "https://www.openstreetmap.org/way/67027576"
+      ]
+    },
+    "raw": {
+      "version": "202608060200",
+      "elements": [
+        {
+          "type": "way",
+          "id": 48780823,
+          "center": {
+            "lon": 139.76514294999998,
+            "lat": 35.698439449999995
+          },
+          "tags": {
+            "highway": "unclassified",
+            "lanes": "1",
+            "maxspeed": "20",
+            "name": "紅梅坂",
+            "name:en": "Kobai-zaka",
+            "name:es": "Kobai-zaka",
+            "name:ko": "고바이자카",
+            "surface": "asphalt",
+            "wikidata": "Q113493277"
+          }
+        },
+        {
+          "type": "way",
+          "id": 67027576,
+          "center": {
+            "lon": 139.76505715000002,
+            "lat": 35.69818535
+          },
+          "tags": {
+            "amenity": "monastery",
+            "denomination": "japanese_orthodox",
+            "landuse": "religious",
+            "name": "日本ハリストス正教会修道院",
+            "name:en": "Tokyo Nicholas Monastery",
+            "name:es": "Monasterio de Tokio Nikolsky",
+            "name:ja": "日本ハリストス正教会修道院",
+            "name:ru": "Токийский Никольский монастырь",
+            "religion": "christian"
+          }
+        },
+        {
+          "type": "relation",
+          "id": 4080936,
+          "center": {
+            "lon": 139.76548655,
+            "lat": 35.69801605
+          },
+          "tags": {
+            "addr:block_number": "1",
+            "addr:city": "千代田区",
+            "addr:country": "JP",
+            "addr:housenumber": "3",
+            "addr:neighbourhood": "神田駿河台四丁目",
+            "addr:postcode": "101-0062",
+            "addr:province": "東京都",
+            "amenity": "place_of_worship",
+            "building": "cathedral",
+            "denomination": "japanese_orthodox",
+            "email": "ocj.tokyo@gmail.com",
+            "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f9/Nikolai-do.jpg/300px-Nikolai-do.jpg",
+            "name": "ニコライ堂",
+            "name:en": "Holy Resurrection Cathedral (Nikolai-do)",
+            "name:ja": "ニコライ堂",
+            "name:zh": "尼古拉堂",
+            "official_name": "東京復活大聖堂",
+            "official_name:ja": "東京復活大聖堂",
+            "official_name:ru": "Токийский Кафедральный собор Воскресения Христова",
+            "opening_hours": "Apr-Sep 13:00-16:00; Oct-Mar 13:00-15:30",
+            "phone": "+81 3-3295-6879",
+            "religion": "christian",
+            "type": "multipolygon",
+            "website": "http://www.geocities.jp/ynicojp2/index.html",
+            "wikidata": "Q2660430",
+            "wikipedia": "ja:ニコライ堂"
+          }
+        },
+        {
+          "type": "relation",
+          "id": 7904409,
+          "center": {
+            "lon": 139.76526339999998,
+            "lat": 35.69793555
+          },
+          "tags": {
+            "amenity": "place_of_worship",
+            "building": "temple",
+            "denomination": "japanese_orthodox",
+            "name": "聖ニコライ記念聖堂",
+            "name:ja": "聖ニコライ記念聖堂",
+            "official_name": "日本の亜使徒大主教聖ニコライ記念聖堂",
+            "official_name:ja": "日本の亜使徒大主教聖ニコライ記念聖堂",
+            "religion": "christian",
+            "type": "multipolygon"
+          }
+        },
+        {
+          "type": "relation",
+          "id": 7904427,
+          "center": {
+            "lon": 139.76483675,
+            "lat": 35.69827285
+          },
+          "tags": {
+            "addr:block_number": "1",
+            "addr:city": "千代田区",
+            "addr:country": "JP",
+            "addr:housename": "㈶日本ハリストス正教会教團府主教庁宗務総局",
+            "addr:neighbourhood": "4丁目",
+            "addr:province": "東京都",
+            "addr:quarter": "神田駿河台",
+            "building": "yes",
+            "name": "㈶日本ハリストス正教会教團府主教庁宗務総局",
+            "name:en": "The Orthodox Church in Japan",
+            "office": "religion",
+            "type": "multipolygon"
+          }
+        }
+      ]
+    }
+  }
+]

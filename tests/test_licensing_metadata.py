@@ -24,7 +24,6 @@ EXPECTED_PART_LICENSES = {
 EXPECTED_LEDGER_LICENSES = {
     "openstreetmap": OSM_ODBL_URL,
     "wikidata": CC0_URL,
-    "wam": WAM_TERMS_URL,
 }
 
 # These are exact, unambiguous identity/name forms.  Matching whole values
@@ -206,7 +205,7 @@ class LicensingMetadataTests(unittest.TestCase):
         self.assertEqual(
             len(EXPECTED_LEDGER_LICENSES),
             len(sources),
-            "source ledger must contain exactly the three current source records",
+            "source ledger must contain the active sources",
         )
         source_ids = [
             source.get("id") if isinstance(source, dict) else None
@@ -220,7 +219,7 @@ class LicensingMetadataTests(unittest.TestCase):
         self.assertEqual(
             set(EXPECTED_LEDGER_LICENSES),
             set(source_ids),
-            "source ledger must contain exactly openstreetmap, wikidata, and wam",
+            "source ledger must contain exactly openstreetmap and wikidata",
         )
         if (
             len(sources) != len(EXPECTED_LEDGER_LICENSES)

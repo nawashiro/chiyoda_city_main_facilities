@@ -15,15 +15,6 @@
       "url": "https://www.wikidata.org/wiki/Wikidata:Licensing",
       "license": "Creative Commons CC0 1.0 Universal",
       "license_url": "https://creativecommons.org/publicdomain/zero/1.0/"
-    },
-    {
-      "id": "wam",
-      "title": "WAM NET",
-      "url": "https://www.wam.go.jp/content/wamnet/pcpub/top/sfkopendata/",
-      "license": "WAM NET配布ページ記載のオープンデータ利用条件",
-      "license_url": "https://www.wam.go.jp/content/wamnet/pcpub/top/sfkopendata/",
-      "attribution": "WAM NET",
-      "transformation": "相談支援4サービスから東京都千代田区の施設を抽出し、同一施設を集約"
     }
   ]
 }

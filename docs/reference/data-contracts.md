@@ -1,33 +1,56 @@
 # データ契約
 
-## 正本と公開物
+## 公開JSON-LD
 
-作業者は `data/places.jsonld` を唯一の正本として扱います。
+`data/places.jsonld`を施設の正本とします。施設は一意な`urn:uuid:`のUUIDv7で識別し、`schema:Place`と、有効な経度・緯度を持つ`schema:GeoCoordinates`を設定します。
 
-`site/places.jsonld` は正本の公開コピーです。公開時に正本から生成し、Git で管理しません。
+OSMとWikidataの公式HTTPS URIを`rdfs:seeAlso`へ設定します。OSM IDは`node/123`、`way/123`、`relation/123`を区別します。同じOSM IDを複数の施設へ割り当てません。
 
-`site/index.html` は JSON-LD データセットを埋め込みます。埋め込みは `schema:Dataset`、データセット名、説明、公開 URL、`DataDownload` を含めます。
+関連付けを置換すると古いOSM・Wikidata参照を取り除き、新しい候補の参照と座標へ更新します。「該当なし」を確定すると関連参照を取り除き、UUIDと座標を維持します。判断待ちの施設は前回の公開内容を保ちます。
 
-`DataDownload` は `places.jsonld` と `application/ld+json` を示します。GitHub Release は同じ正本の版固定 `places-<tag>.jsonld` を添付します。
+Pagesは`site/places.jsonld`、Releaseは`places-<tag>.jsonld`を配布します。検索入力の`publish: false`に該当する施設を配布物から除きます。除外がなければ正本のバイト列をそのまま複製します。公開物に判断記録、取得物、履歴を含めません。
 
-公開経路は JSON-LD だけです。`registry.json`、GeoJSON、manifest は正本、公開コピー、Release snapshot に存在しません。
+`site/index.html`には`schema:Dataset`、名称、説明、公開URL、JSON-LDの`DataDownload`と出典表示を埋め込みます。
 
-## 施設 record
+## 検索入力
 
-作業者は UUIDv7 の一意な施設 ID を使います。
+`inputs/facilities.json`の`queries`を人が編集します。配列順は照合結果へ影響しません。
 
-作業者は `schema:geo` に `schema:GeoCoordinates` を設定します。作業者は `schema:latitude` と `schema:longitude` に有効な座標を設定します。
+| 項目 | 契約 |
+| --- | --- |
+| `id` | 施設のUUIDv7。同じファイル内で一意。正本にある施設は同じUUIDを使う |
+| `name` | 空でない施設名 |
+| `coordinates` | `[経度, 緯度]`。有効範囲の数値 |
+| `qid` | Wikidataの`Q`と正の整数からなるID |
+| `publish` | 任意の真偽値。`false`は公開除外。検索対象は維持する |
 
-作業者は GeoSPARQL geometry literal を出力しません。
+`coordinates`か`qid`の少なくとも一方が必要です。両方を指定できます。検索例は次のとおりです。
 
-作業者は OSM と Wikidata の公式 HTTPS URI を `rdfs:seeAlso` へ設定します。
+```json
+{
+  "queries": [{
+    "id": "019c0000-0000-7000-8000-000000000001",
+    "name": "千代田相談支援センター",
+    "coordinates": [139.75, 35.69]
+  }]
+}
+```
 
-作業者は WAM record ID を `schema:identifier` の `schema:PropertyValue` へ設定します。作業者は WAM record ID から URI を合成しません。
+## 判断記録
 
-公開物は公開施設だけを含めます。公開物は registry、監査履歴、current/superseded 参照履歴を含めません。
+`data/osm-decisions.json`は`version: 1`、`facilities`を持ちます。`facilities`は施設UUIDをキーにした生成記録です。人の回答はIssue本文で受け付け、記録を直接編集して回答しません。
 
-## 座標と照合
+| 項目 | 内容 |
+| --- | --- |
+| `evidence`、`evidenceHash` | 対象の名称・検索座標・QID、候補の型付きID・名称・座標・QID・識別用タグとSHA-256 |
+| `status` | `decided`、`needs_review`、`no_candidates` |
+| `method`、`choice` | `human`、`source_record`、`qid`、`jev`などの方法と、型付きIDまたは`none` |
+| `jev` | モデル、選択、信頼度、確率、入力・出力トークン数 |
+| `human` | 確定した選択、編集者、編集日時、Issue URL |
+| `issue`、`issueEvidenceHash`、`issueBody` | Issue番号、その根拠ハッシュ、選択前の本文 |
+| `current`、`reason` | 判定時の既存参照と確認理由 |
+| `reassess` | 過去の名称・座標一致を再評価するための指定。判断待ちの間だけ維持 |
 
-更新処理は座標を WAM、OSM、検索入力の順に採用します。
+根拠の候補は型付きID順に正規化します。取得日時や候補の配列順はハッシュへ含めません。識別用タグは`IDENTITY_TAGS`の許可リストに限定し、Jevに渡す内容と保存内容を一致させます。同じ根拠への人の確定は、モデルやプロンプトが変わっても優先します。
 
-OSM は QID、名称と 50m 以内の座標、または既存参照で照合します。
+`no_candidates`は候補を取得できなかった状態であり、人の`none`とは区別します。APIの障害をこの状態へ変換しません。

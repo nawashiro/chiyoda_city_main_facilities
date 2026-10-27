@@ -1,25 +1,27 @@
 # データフロー
 
-このリポジトリは、施設データの由来と公開物を分離して保守します。
+```mermaid
+flowchart TD
+  A[毎月1日・手動再実行] --> B[OSM取得・ハッシュ検証]
+  B --> C[人の確定・既存OSM ID・一意なQID・Jev]
+  C --> D[確定分を施設単位で正本へ反映]
+  C --> E[不確かな施設だけ確認Issue]
+  E --> F[人が一つ選択し確定]
+  F --> G[最新の根拠・編集権限・重複を検証]
+  G --> D
+  D --> H[検証・mainへ自動コミット]
+  H --> I[該当SHAをPagesへ公開]
+  I --> J[反映済みの確認Issueを閉じる]
+```
 
-## 正本と公開
+`inputs/facilities.json`が検索対象、`data/places.jsonld`が施設の正本、`data/osm-decisions.json`が施設ごとの判断記録です。取得物と取得元・ハッシュは`imports/openstreetmap/`へ保存します。判断待ちでも、ほかの施設の確定分は公開します。
 
-`data/places.jsonld` は唯一の正本です。`site/places.jsonld` は GitHub Pages 用の公開コピーです。
+取得・検証・外部APIの障害はActionsの失敗として扱い、その実行のデータ変更を公開しません。判断の不確かさは確認Issueで扱います。[Issueの操作手順](../how-to/review-osm-candidates.md)に従って回答してください。
 
-GitHub Actions は公開時に正本を `site/places.jsonld` へコピーします。公開コピーは Git で管理しません。GitHub Pages の公開元は Settings > Pages > Build and deployment で `GitHub Actions` に設定します。GitHub Release は正本の版固定コピーを `places-<tag>.jsonld` として添付します。
+更新から公開まで同時実行を制限します。待機実行が置き換わっても回答を失わないよう、毎回、記録にある未解決Issueを読み直します。mainへのpushが競合した場合は最新mainから再計算し、3回失敗したら実行を止めます。
 
-公開経路は JSON-LD だけです。公開物と Release snapshot は GeoJSON、`registry.json`、manifest を含めません。
+`GITHUB_TOKEN`によるpushから通常のpush起点workflowは起動しないため、更新workflowは公開workflowを明示的に呼び、反映コミットSHAを渡します。[GitHubの制約](https://docs.github.com/en/actions/how-tos/writing-workflows/choosing-when-your-workflow-runs/triggering-a-workflow)
 
-## 外部更新
+Pagesの公開元はSettings → Pages → Build and deploymentで`GitHub Actions`に設定します。公開直前にmainのSHAを検査し、古いSHAなら公開を失敗させます。公開に失敗した確認Issueは開いたまま残り、再実行で公開後の完了処理を行います。
 
-WAM の取得物は `imports/wam/` に保存します。OpenStreetMap の取得物は `imports/openstreetmap/` に保存します。
-
-作業者は GitHub Actions から外部更新を開始します。workflow は取得物を検証し、canonical JSON-LD を更新し、review 用 Pull Request を作成します。
-
-人手 OSM レビューは候補の自動選択を補完します。レビュー結果はコミット済み YAML だけで受け付けます。
-
-## Rollback
-
-利用者は[データ契約](../reference/data-contracts.md)に従って JSON-LD を処理します。
-
-公開済み版へ戻す場合、作業者は[JSON-LD をリリースする](../how-to/publish-release-jsonld.md)の rollback 手順を実行します。作業者は `main` を force-push しません。
+公開物はJSON-LDです。判断記録、取得物、確認本文は配布しません。公開対象の指定とReleaseも含む契約は[データ契約](../reference/data-contracts.md)を参照してください。公開データを戻す場合は[リリース手順の復元操作](../how-to/publish-release-jsonld.md#5-公開済み版へ戻す)を使い、mainをforce-pushしません。

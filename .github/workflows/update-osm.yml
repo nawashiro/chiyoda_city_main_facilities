@@ -1,108 +1,85 @@
 name: Update OpenStreetMap data
 
 on:
+  schedule:
+    - cron: '17 3 1 * *'
   workflow_dispatch:
+  issues:
+    types: [edited]
 
 permissions:
   contents: write
-  pull-requests: write
+  issues: write
+  pages: write
+  id-token: write
+
+concurrency:
+  group: osm-maintenance
+  cancel-in-progress: false
 
 jobs:
   process:
+    if: github.event_name != 'issues' || contains(github.event.issue.body, '<!-- osm-review:')
     runs-on: ubuntu-latest
     timeout-minutes: 60
+    outputs:
+      sha: ${{ steps.update.outputs.sha }}
     steps:
       - uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 0
       - uses: actions/setup-python@v5
         with:
-          python-version: "3.13"
-      - name: Install local OSM mirror extractor
-        run: python3 -m pip install -r .github/requirements-osm.txt
-      - name: Retrieve OpenStreetMap data
-        id: retrieve
-        run: |
-          set -o pipefail
-          RETRIEVED_AT=$(date --iso-8601=seconds)
-          echo "[OSM update] $(date --iso-8601=seconds) retrieve mirror"
-          python3 -m src.retrieve_osm . --at "$RETRIEVED_AT"
-          echo "retrieved_at=$RETRIEVED_AT" >> "$GITHUB_OUTPUT"
-      - name: Verify retained OpenStreetMap raw snapshot hash
-        run: |
-          python3 - <<'PY'
-          from pathlib import Path
-          from src.reidentify_sources import _verified_snapshot
-
-          _verified_snapshot(Path("."), "openstreetmap")
-          PY
-      - name: Resolve OpenStreetMap candidates and update data
+          python-version: '3.13'
+      - run: python3 -m pip install -r .github/requirements-osm.txt
+      - name: Update, validate and commit latest main
+        id: update
         env:
-          LLM_API_KEY: ${{ secrets.LLM_API_KEY }}
-          LLM_MODEL: ${{ vars.LLM_MODEL }}
-          LLM_BASE_URL: ${{ vars.LLM_BASE_URL }}
-          RETRIEVED_AT: ${{ steps.retrieve.outputs.retrieved_at }}
+          TYPESAFE_API_KEY: ${{ secrets.TYPESAFE_API_KEY }}
+          GH_TOKEN: ${{ github.token }}
+          UPDATE_MODE: ${{ github.event_name == 'issues' && 'confirm' || 'refresh' }}
         run: |
-          echo "[OSM update] $(date --iso-8601=seconds) resolve candidates"
-          python3 -m src.resolve_osm_candidates .
-          DECISION_AT=$(date --iso-8601=seconds)
-          echo "[OSM update] $(date --iso-8601=seconds) apply snapshot"
-          python3 -m src.facility_data update . --source openstreetmap --at "$RETRIEVED_AT" --decision-at "$DECISION_AT"
-          echo "[OSM update] $(date --iso-8601=seconds) update complete"
-      - run: python3 -m src.facility_data validate .
-      - run: python3 -m unittest discover -s tests -v
-      - name: Verify canonical JSON-LD data
-        run: |
-          cp data/places.jsonld /tmp/places.jsonld
-          python3 -m src.facility_data build .
-          python3 -m src.fac_cli jsonld-validate data/places.jsonld
-          cmp /tmp/places.jsonld data/places.jsonld
-      - name: Produce review diff and editable YAML
-        id: review
-        run: |
-          git add -N .
-          git diff --binary > reports/osm-update.diff
-          python3 -m src.github_osm_review build . \
-            --output /tmp/osm-review-issue.json
-          python3 - <<'PY' >> "$GITHUB_OUTPUT"
-          import json
-          document = json.load(open('/tmp/osm-review-issue.json', encoding='utf-8'))
-          print(f"review_needed={'true' if document['reviewNeeded'] else 'false'}")
-          PY
-      - name: Save generated update for review
-        uses: actions/upload-artifact@v4
+          set -euo pipefail
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          for attempt in 1 2 3; do
+            git fetch origin main
+            git reset --hard origin/main
+            python3 -m src.osm_maintenance "$UPDATE_MODE" .
+            python3 -m src.facility_data validate .
+            python3 -m unittest discover -s tests -v
+            python3 -m src.facility_data build .
+            ./fac jsonld-validate site/places.jsonld
+            git add data/places.jsonld data/osm-decisions.json imports/openstreetmap/
+            if git diff --cached --quiet; then
+              echo "sha=$(git rev-parse HEAD)" >> "$GITHUB_OUTPUT"
+              exit 0
+            fi
+            git commit -m '[bot] data: update OSM associations'
+            if git push origin HEAD:main; then
+              echo "sha=$(git rev-parse HEAD)" >> "$GITHUB_OUTPUT"
+              exit 0
+            fi
+          done
+          echo 'Could not update latest main; no force push was attempted.' >&2
+          exit 1
+  publish:
+    needs: process
+    uses: ./.github/workflows/publish-pages.yml
+    with:
+      sha: ${{ needs.process.outputs.sha }}
+  close-reviews:
+    needs: [process, publish]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
         with:
-          name: osm-update-${{ github.run_id }}
-          retention-days: 30
-          path: |
-            imports/openstreetmap/
-            data/places.jsonld
-            reports/osm-candidates.json
-            reports/osm-review-needed.json
-            reports/osm-review-needed.yaml
-            reports/osm-update.diff
-      - name: Create editable review branch
-        id: review-branch
-        if: steps.review.outputs.review_needed == 'true'
-        uses: peter-evans/create-pull-request@v7
+          ref: ${{ needs.process.outputs.sha }}
+      - uses: actions/setup-python@v5
         with:
-          branch: automation/osm-review-osm-update-${{ github.run_id }}
-          delete-branch: true
-          draft: true
-          commit-message: "data: prepare OSM human review"
-          title: "data: prepare OSM human review"
-          add-paths: reports/osm-review-needed.yaml
-          body: |
-            この下書きPull RequestはOSM候補の人間確認用です。
-            `reports/osm-review-needed.yaml`を編集・コミットして、このPull Requestをmergeしてください。
-            merge後に、commit済みYAMLと元artifactを照合するworkflowが適用用Pull Requestを作成します。
-      - name: Create Pull Request when all candidates were resolved automatically
-        if: steps.review.outputs.review_needed == 'false'
-        uses: peter-evans/create-pull-request@v7
-        with:
-          branch: automation/osm-update-${{ github.run_id }}
-          delete-branch: true
-          commit-message: "data: update OpenStreetMap snapshot"
-          title: "data: update OpenStreetMap snapshot"
-          body: |
-            Updates the retained OpenStreetMap snapshot and applies all deterministic or three-perspective LLM decisions.
-
-            No human review remained. Validation and unit tests passed in the producing workflow.
+          python-version: '3.13'
+      - name: Close decisions after successful publication
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: python3 -m src.osm_maintenance close-published .

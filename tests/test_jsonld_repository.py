@@ -108,10 +108,7 @@ class JsonLdRepositoryArtifactTests(unittest.TestCase):
                     )
                     self.assertFalse(any("wam" in uri.casefold() for uri in links))
 
-                    for identifier in record.get("schema:identifier", []):
-                        self.assertEqual("schema:PropertyValue", identifier.get("@type"))
-                        self.assertEqual("wam", identifier.get("schema:propertyID"))
-                        self.assertRegex(identifier.get("schema:value"), r"^[AE][0-9]{10}$")
+                    self.assertNotIn("schema:identifier", record)
 
                 osm_links = [
                     uri
@@ -132,7 +129,7 @@ class JsonLdRepositoryArtifactTests(unittest.TestCase):
                 ]
                 self.assertTrue(osm_links)
                 self.assertTrue(wikidata_links)
-                self.assertTrue(wam_identifiers)
+                self.assertFalse(wam_identifiers)
 
                 serialized = json.dumps(document, ensure_ascii=False)
                 self.assertFalse(any(term in serialized for term in forbidden_terms))

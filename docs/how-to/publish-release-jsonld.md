@@ -1,6 +1,6 @@
 # JSON-LD をリリースする
 
-この手順は、検証済みの正本 JSON-LD を GitHub Release で配布する作業者向けです。
+この手順は、検証済みの公開対象JSON-LD を GitHub Release で配布する作業者向けです。
 
 ## 1. 正本を検証する
 
@@ -22,7 +22,7 @@
 
 下書きの作成と既存タグだけでは workflow は起動しません。workflow は Release の公開時に起動します。
 
-workflow は正本を検証し、版付き JSON-LD を作成します。workflow は作成物を artifact と Release 添付へ追加します。
+workflowは正本と検索入力を検証し、公開除外を反映したJSON-LDから版付きコピーを作成します。workflow は作成物を artifact と Release 添付へ追加します。
 
 ## 4. 配布物を確認する
 

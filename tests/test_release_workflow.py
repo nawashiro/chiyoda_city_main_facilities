@@ -41,7 +41,7 @@ class ReleaseWorkflowTests(unittest.TestCase):
 
         self.assertRegex(
             workflow,
-            r"(?m)^.*jsonld-validate.*data/places\.jsonld.*$",
+            r"(?m)^.*src\.facility_data build \..*$",
         )
 
         artifact_step = self._workflow_step_containing(
