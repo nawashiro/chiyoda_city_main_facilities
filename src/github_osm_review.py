@@ -71,10 +71,14 @@ class GitHub:
 
     def issue(self, number):
         owner, name = self.repository.split("/")
-        response = self.api("/graphql", {"query": "query($owner:String!,$name:String!,$number:Int!){repository(owner:$owner,name:$name){issue(number:$number){body state lastEditedAt lastEditedBy{login} author{login} url}}}", "variables": {"owner": owner, "name": name, "number": number}})
+        response = self.api("/graphql", {"query": "query($owner:String!,$name:String!,$number:Int!){repository(owner:$owner,name:$name){issue(number:$number){body state lastEditedAt url timelineItems(last: 10, itemTypes: [ISSUE_EDITED]){... on IssueEditedEvent{createdAt editor{login}}}}}}", "variables": {"owner": owner, "name": name, "number": number}})
         if response.get("errors"):
             raise ValueError("GitHub could not read Issue edit provenance: " + json.dumps(response["errors"], ensure_ascii=False))
-        return response["data"]["repository"]["issue"]
+        issue = response["data"]["repository"]["issue"]
+        edited = [event for event in issue.pop("timelineItems") or [] if event and event.get("editor", {}).get("login")]
+        latest = max(edited, key=lambda event: event["createdAt"], default=None)
+        issue["lastEditedBy"] = latest["editor"] if latest else None
+        return issue
 
     def may_write(self, login):
         permission = self.api(f"/repos/{self.repository}/collaborators/{quote(login, safe='')}/permission")
