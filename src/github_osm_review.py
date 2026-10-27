@@ -71,13 +71,13 @@ class GitHub:
 
     def issue(self, number):
         owner, name = self.repository.split("/")
-        response = self.api("/graphql", {"query": "query($owner:String!,$name:String!,$number:Int!){repository(owner:$owner,name:$name){issue(number:$number){body state lastEditedAt url timelineItems(last: 10, itemTypes: [ISSUE_EDITED]){... on IssueEditedEvent{createdAt editor{login}}}}}}", "variables": {"owner": owner, "name": name, "number": number}})
+        response = self.api("/graphql", {"query": "query($owner:String!,$name:String!,$number:Int!){repository(owner:$owner,name:$name){issue(number:$number){body state lastEditedAt url userContentEdits(first: 50){nodes{editedAt editor{login}}}}}}", "variables": {"owner": owner, "name": name, "number": number}})
         if response.get("errors"):
             raise ValueError("GitHub could not read Issue edit provenance: " + json.dumps(response["errors"], ensure_ascii=False))
         issue = response["data"]["repository"]["issue"]
-        edited = [event for event in issue.pop("timelineItems") or [] if event and event.get("editor", {}).get("login")]
-        latest = max(edited, key=lambda event: event["createdAt"], default=None)
-        issue["lastEditedBy"] = latest["editor"] if latest else None
+        edits = [edit for edit in (issue.pop("userContentEdits") or {}).get("nodes") or [] if edit and edit.get("editor", {}).get("login")]
+        latest = max(edits, key=lambda edit: edit["editedAt"], default=None)
+        issue["lastEditedBy"] = {"login": latest["editor"]["login"]} if latest else None
         return issue
 
     def may_write(self, login):

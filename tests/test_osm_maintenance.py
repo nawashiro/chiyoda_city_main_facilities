@@ -95,6 +95,35 @@ class FakeGitHub:
         return []
 
 
+class IssueProvenanceTests(unittest.TestCase):
+    @staticmethod
+    def github_with(response):
+        github = GitHub(repository='owner/repo', token='t')
+        github.api = lambda *args, **kwargs: response
+        return github
+
+    def test_last_user_content_edit_supplies_editor(self):
+        issue_payload = {
+            'body': 'x', 'state': 'OPEN', 'lastEditedAt': '2026-10-27T02:00:00Z', 'url': 'u',
+            'userContentEdits': {'nodes': [
+                {'editedAt': '2026-10-27T01:00:00Z', 'editor': {'login': 'author'}},
+                {'editedAt': '2026-10-27T02:00:00Z', 'editor': {'login': 'maintainer'}}]}}
+        issue = self.github_with({'data': {'repository': {'issue': issue_payload}}}).issue(17)
+        self.assertEqual('maintainer', issue['lastEditedBy']['login'])
+        self.assertEqual('2026-10-27T02:00:00Z', issue['lastEditedAt'])
+        self.assertNotIn('userContentEdits', issue)
+
+    def test_issue_without_edits_has_no_editor(self):
+        issue_payload = {'body': 'x', 'state': 'OPEN', 'lastEditedAt': None, 'url': 'u',
+                         'userContentEdits': {'nodes': []}}
+        issue = self.github_with({'data': {'repository': {'issue': issue_payload}}}).issue(17)
+        self.assertIsNone(issue['lastEditedBy'])
+
+    def test_graphql_error_payload_is_reported(self):
+        with self.assertRaisesRegex(ValueError, 'RATE_LIMITED'):
+            self.github_with({'errors': [{'message': 'rate limited', 'extensions': {'code': 'RATE_LIMITED'}}]}).issue(17)
+
+
 class EvidenceTests(unittest.TestCase):
     def test_single_input_validation(self):
         q = query(publish=False, qid='Q1')
