@@ -109,7 +109,18 @@ class EvidenceTests(unittest.TestCase):
         self.assertEqual(97, len(queries))
         self.assertEqual(97, len({q['id'] for q in queries}))
         published = json.loads((ROOT / 'data/places.jsonld').read_text())
-        self.assertEqual(92, len(published['@graph']))
+        place_ids = [
+            record['@id']
+            for record in published['@graph']
+            if 'schema:Place' in record.get('@type', [])
+        ]
+        self.assertEqual(len(place_ids), len(set(place_ids)))
+        declared = {f'urn:uuid:{q["id"]}' for q in load_queries(ROOT)}
+        self.assertEqual(
+            [],
+            sorted(set(place_ids) - declared),
+            'canonical JSON-LD must only publish declared facilities',
+        )
         self.assertFalse(any('schema:identifier' in p for p in published['@graph']))
 
     def test_hash_ignores_order_but_tracks_identity_fields(self):

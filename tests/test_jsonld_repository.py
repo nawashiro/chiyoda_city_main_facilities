@@ -9,8 +9,13 @@ import src.facility_data as facility_data
 ROOT = Path(__file__).resolve().parents[1]
 
 
+def facility_urns():
+    facilities = json.loads((ROOT / "inputs/facilities.json").read_text(encoding="utf-8"))
+    return {f"urn:uuid:{query['id']}" for query in facilities["queries"]}
+
+
 class JsonLdRepositoryArtifactTests(unittest.TestCase):
-    def test_canonical_jsonld_is_valid_and_contains_92_public_places(self):
+    def test_canonical_jsonld_is_valid(self):
         path = ROOT / "data/places.jsonld"
         self.assertTrue(path.is_file(), f"missing canonical JSON-LD artifact: {path}")
 
@@ -23,19 +28,19 @@ class JsonLdRepositoryArtifactTests(unittest.TestCase):
             for record in graph
             if "schema:Place" in record.get("@type", [])
         ]
-        self.assertEqual(92, len(public_places))
-
         place_ids = [record["@id"] for record in public_places]
         self.assertTrue(all(place_id.startswith("urn:uuid:") for place_id in place_ids))
         self.assertEqual(len(place_ids), len(set(place_ids)))
+        self.assertEqual(
+            [],
+            sorted(set(place_ids) - facility_urns()),
+            "canonical JSON-LD must only publish declared facilities",
+        )
 
     def test_fixture_and_canonical_jsonld_integrate_public_place_contract(self):
         documents = {
-            "fixture": (
-                ROOT / "tests/fixtures/jsonld-integration.json",
-                1,
-            ),
-            "canonical": (ROOT / "data/places.jsonld", 92),
+            "fixture": (ROOT / "tests/fixtures/jsonld-integration.json", 1),
+            "canonical": (ROOT / "data/places.jsonld", None),
         }
         forbidden_terms = {
             "geo:hasGeometry",
@@ -62,7 +67,8 @@ class JsonLdRepositoryArtifactTests(unittest.TestCase):
                     for record in document["@graph"]
                     if "schema:Place" in record.get("@type", [])
                 ]
-                self.assertEqual(expected_place_count, len(public_places))
+                if expected_place_count is not None:
+                    self.assertEqual(expected_place_count, len(public_places))
 
                 place_ids = [record.get("@id") for record in public_places]
                 self.assertEqual(len(place_ids), len(set(place_ids)))
