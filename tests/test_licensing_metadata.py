@@ -190,7 +190,7 @@ class LicensingMetadataTests(unittest.TestCase):
         )
 
     def test_source_ledger_has_only_current_non_uniform_sources_and_licenses(self):
-        ledger_path = ROOT / "config/sources.json"
+        ledger_path = ROOT / "data/sources.json"
         self.assertTrue(ledger_path.is_file(), f"missing source ledger: {ledger_path}")
         ledger = json.loads(ledger_path.read_text(encoding="utf-8"))
         self.assertIsInstance(ledger, dict)

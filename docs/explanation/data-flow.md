@@ -16,7 +16,7 @@ flowchart TD
 
 既存OSM IDが取得結果に残る間は接続を維持します。失われた接続と未接続の対象を、一意なQID、Jevの順に照合します。候補なしや確定した「該当なし」では参照だけを解除し、UUIDと座標を残します。
 
-`inputs/facilities.json`が検索対象、`data/places.jsonld`が施設の正本、`data/osm-decisions.json`が施設ごとの判断記録です。取得物と取得元・ハッシュは`imports/openstreetmap/`へ保存します。判断待ちでも、ほかの施設の確定分は公開します。
+`inputs/facilities.json`が検索対象、`data/places.jsonld`が施設の正本、`data/osm-decisions.json`が施設ごとの判断記録です。取得元・バージョン・ハッシュを`imports/openstreetmap/retrieval.json`へ記録します。生の取得物は実行内の作業ファイルであり、Gitへ保存しません。判断待ちでも、ほかの施設の確定分は公開します。
 
 取得・検証・外部APIの障害はActionsの失敗として扱い、その実行のデータ変更を公開しません。判断の不確かさは施設ごとの確認Issueで扱い、接続先がない対象は一つの通常Issueへまとめます。[Issueの操作手順](../how-to/review-osm-candidates.md)に従って回答してください。
 

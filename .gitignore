@@ -4,6 +4,4 @@ output
 __pycache__/
 *.py[cod]
 site/places.jsonld
-reports/*-update.diff
-
-reports/
+imports/openstreetmap/raw.json

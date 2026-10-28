@@ -86,11 +86,8 @@ def run_osm_retrieval(root: str | Path, at: str, fetch, extractor=extract_elemen
     print(f"OSM mirror: retained {len(elements)} named elements", file=sys.stderr)
     raw = {"version": str(mirror["timestamp"]), "elements": elements}
     raw_payload = (json.dumps(raw, ensure_ascii=False, indent=2) + "\n").encode("utf-8")
-    selection = {"typedIds": sorted(collect_osm_ids(canonical)), "qids": qids, "coordinates": coordinates, "bbox": CHIYODA_BBOX}
-    selection_payload = (json.dumps(selection, ensure_ascii=False, indent=2) + "\n").encode("utf-8")
-    retrieval = {**metadata, "sourceId": "openstreetmap", "retrievedAt": at, "rawVersion": raw["version"], "manifestUrl": MOVISDA_MANIFEST_URL, "pbfUrl": mirror_url, "pbfSha256": hashlib.sha256(pbf_payload).hexdigest(), "pbfBytes": len(pbf_payload), "manifestSha256": hashlib.sha256(manifest_payload).hexdigest(), "extractor": "pyosmium", "selectionSha256": hashlib.sha256(selection_payload).hexdigest(), "rawSha256": hashlib.sha256(raw_payload).hexdigest(), "etag": pbf_headers.get("ETag"), "lastModified": pbf_headers.get("Last-Modified")}
+    retrieval = {**metadata, "sourceId": "openstreetmap", "retrievedAt": at, "rawVersion": raw["version"], "manifestUrl": MOVISDA_MANIFEST_URL, "pbfUrl": mirror_url, "pbfSha256": hashlib.sha256(pbf_payload).hexdigest(), "pbfBytes": len(pbf_payload), "manifestSha256": hashlib.sha256(manifest_payload).hexdigest(), "extractor": "pyosmium", "rawSha256": hashlib.sha256(raw_payload).hexdigest(), "etag": pbf_headers.get("ETag"), "lastModified": pbf_headers.get("Last-Modified")}
     imports_path = root / "imports/openstreetmap"; imports_path.mkdir(parents=True, exist_ok=True)
-    (imports_path / "selection.json").write_bytes(selection_payload)
     (imports_path / "raw.json").write_bytes(raw_payload)
     _write_json(metadata_path, retrieval)
     return imports_path / "raw.json", metadata_path
