@@ -8,9 +8,9 @@ import json
 from datetime import datetime, timezone
 from pathlib import Path
 
-from src.facility_data import _read_json, _write_json, load_queries, normalize_osm_elements, validate_repository
+from src.facility_data import _read_json, _write_json, load_queries, validate_repository
 from src.github_osm_review import GitHub, apply_confirmations, close_published, read_confirmations
-from src.resolve_osm_candidates import apply_decisions, current_id, evidence_for, evidence_hash, resolve
+from src.resolve_osm_candidates import apply_decisions, current_id, resolve
 from src.retrieve_osm import _http_get, run_osm_retrieval
 
 
@@ -37,12 +37,7 @@ def update(root, *, refresh=False, github=None, judge=None, retrieve=run_osm_ret
     if ledger.get("version") != 1 or not isinstance(ledger.get("facilities"), dict):
         raise ValueError("invalid OSM decision ledger")
     ledger = copy.deepcopy(ledger)
-    current_hashes = {}
-    if github and any(e.get("issue") and e.get("status") == "needs_review" for e in ledger["facilities"].values()):
-        elements = normalize_osm_elements(verified_snapshot(root)["elements"])
-        places = {p["@id"].removeprefix("urn:uuid:"): p for p in document["@graph"]}
-        current_hashes = {q["id"]: evidence_hash(evidence_for(q, elements, places.get(q["id"], {}))) for q in queries}
-    confirmations = read_confirmations(ledger, github, current_hashes) if github else {}
+    confirmations = read_confirmations(ledger, github) if github else {}
     existing = {p["@id"].removeprefix("urn:uuid:"): current_id(p) for p in document["@graph"]}
     while confirmations:
         allocations = {}
@@ -58,41 +53,50 @@ def update(root, *, refresh=False, github=None, judge=None, retrieve=run_osm_ret
         if not conflicts:
             break
         for identifier in conflicts:
-            github.corrective_comment(ledger["facilities"][identifier]["issue"], "このOSM候補は別の施設にも割り当てられています。関連付けを確認し、候補か「該当なし」を選び直してください。")
+            github.corrective_comment(confirmations[identifier]["issue"], "このOSM候補は別の施設にも割り当てられています。関連付けを確認し、候補か「該当なし」を選び直してください。")
             del confirmations[identifier]
     apply_confirmations(ledger, confirmations)
     if refresh:
-        retrieve(root, datetime.now(timezone.utc).isoformat(timespec="seconds"), _http_get)
+        document = apply_decisions(document, queries, {k: ledger["facilities"][k] for k in confirmations})
+        retrieve(root, datetime.now(timezone.utc).isoformat(timespec="seconds"), _http_get, canonical=document)
         raw = verified_snapshot(root)
         updated, ledger = resolve(document, queries, raw, ledger, **({"judge": judge} if judge else {}))
     else:
         updated = apply_decisions(document, queries, {k: ledger["facilities"][k] for k in confirmations})
-    if github:
-        for query_id, entry in ledger["facilities"].items():
-            if entry.get("status") == "needs_review":
-                github.save_issue(query_id, entry)
     _write_json(root / "data/places.jsonld", updated)
     _write_json(root / "data/osm-decisions.json", ledger)
     return ledger
 
 
+def present(root, github):
+    ledger = _read_json(Path(root) / "data/osm-decisions.json")
+    for query_id, entry in ledger["facilities"].items():
+        if entry.get("status") == "needs_review":
+            github.save_issue(query_id, entry)
+    github.save_unmatched(ledger["facilities"])
+
+
 def main(argv=None):
     parser = argparse.ArgumentParser(description="Update OSM associations or apply confirmed Issues")
-    parser.add_argument("command", choices=("refresh", "confirm", "close-published"))
+    parser.add_argument("command", choices=("refresh", "confirm", "present", "close-published"))
     parser.add_argument("root", nargs="?", default=".")
     parser.add_argument("--offline", action="store_true", help="Use the retained verified snapshot without GitHub")
     args = parser.parse_args(argv)
     root = Path(args.root)
     try:
         github = None if args.offline else GitHub()
-        if args.command == "close-published":
+        if args.command == "present":
+            if not github:
+                raise ValueError("present requires GitHub")
+            present(root, github)
+        elif args.command == "close-published":
             if not github:
                 raise ValueError("close-published requires GitHub")
             close_published(_read_json(root / "data/osm-decisions.json"), github)
         else:
             kwargs = {"refresh": args.command == "refresh", "github": github}
             if args.offline:
-                kwargs["retrieve"] = lambda *args: None
+                kwargs["retrieve"] = lambda *args, **kwargs: None
             update(root, **kwargs)
     except (OSError, ValueError, KeyError, TypeError) as error:
         print(f"ERROR: {type(error).__name__}: {error}")

@@ -32,7 +32,7 @@
 
 ### Requirement: Replacement and rejection update related references
 
-システム SHALL 新しい関連付けを確定したとき、対象施設の以前のOSM参照とその照合由来のWikidata参照を現在の結果に置き換える。人が「該当なし」を確定した場合は両参照を解除する。システム MUST 関連付けの変更・解除だけを理由に施設UUIDを変更したり施設を削除したりしない。
+システム SHALL 新しい関連付けを確定したとき、対象施設の以前のOSM参照とその照合由来のWikidata参照を現在の結果に置き換える。候補なし、Jevの閾値以上の「該当なし」、人の確定した「該当なし」では両参照を解除し、有効な座標を維持する。システム MUST 関連付けの変更・解除だけを理由に施設UUIDを変更したり施設を削除したりしない。
 
 #### Scenario: New object lacks the previous Wikidata tag
 

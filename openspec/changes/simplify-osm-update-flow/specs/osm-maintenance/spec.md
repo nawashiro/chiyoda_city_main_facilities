@@ -22,11 +22,11 @@
 
 ### Requirement: Deterministic association precedes Jev
 
-システム SHALL 型を含む既存OSM IDが今回の取得物に存在し、名称があり、前回座標から50m以内で、双方にQIDがある場合に矛盾しなければ既存参照を継続する。これで確定できなければ一意なQID一致を適用し、残る候補をJevで判定する。システム MUST 名称と近接座標だけで一致を自動確定しない。
+システム SHALL 現在の取得条件で得た結果に型を含む既存OSM IDがあれば既存参照を継続する。名称・座標・タグ・QIDや入力ハッシュの変化だけでは再審査しない。これで確定できなければ一意なQID一致を適用し、残る候補をJevで判定する。システム MUST 名称と近接座標だけで一致を自動確定しない。
 
 #### Scenario: Previous typed object remains valid
 
-- **WHEN** 前回の`way/123`が今回の取得物にも存在し、既存参照の継続条件を満たす
+- **WHEN** 前回の`way/123`が今回の取得結果にも存在するが、名称・座標・QIDが変わっている
 - **THEN** システムはJevを呼び出さず参照を継続する
 
 #### Scenario: Object number exists with another type
@@ -46,7 +46,7 @@
 
 ### Requirement: Durable evidence-bound human decisions
 
-システム SHALL 人が確定した候補採用と「該当なし」を施設および判断根拠に結び付けて保持する。判断に使う施設情報と候補情報が同じ場合、システム MUST 人の判断を優先し、再判定・再通知しない。取得日時だけの変化は根拠の変更とみなさない。根拠が変わった場合は再評価する。
+システム SHALL 人が選んだOSM IDを正本へ保存し、以後は既存参照として維持する。システム MUST 入力ハッシュだけで採用済みの接続を失効させない。人の「該当なし」と未解決のJev結果は同じ根拠では再利用し、根拠が変われば再評価する。取得日時や候補順だけの変化は根拠の変更とみなさない。
 
 #### Scenario: Rejected candidates recur next month
 
@@ -55,7 +55,7 @@
 
 #### Scenario: Candidate evidence changes
 
-- **WHEN** 人の判断後に候補の名称、座標、QIDなど判断に使う情報が変わる
+- **WHEN** 人の「該当なし」の判断後に候補の名称、座標、QIDなど判断に使う情報が変わる
 - **THEN** システムは古い判断をそのまま適用せず、現在の根拠で再評価する
 
 ### Requirement: Unresolved facilities do not block resolved updates
@@ -74,7 +74,7 @@
 
 ### Requirement: Empty evidence and explicit rejection are distinct
 
-システム SHALL 候補がない状態と、提示した候補を不採用と確定した状態を区別する。未関連付け施設で候補がない場合はOSM参照を作らない。既存参照の解除が必要な場合は人の確定を求める。人が「該当なし」を確定した場合、システム MUST 対象のOSM参照とその照合から得たWikidata参照を解除し、施設UUIDと有効な座標を保持する。
+システム SHALL 候補がない状態と、提示した候補を不採用と確定した状態を区別する。未関連付け施設で候補がない場合はOSM参照を作らない。候補なし、Jevが閾値以上で「該当なし」を選んだ場合、人が「該当なし」を確定した場合、システム MUST 対象のOSM参照とその照合から得たWikidata参照を解除し、施設UUIDと有効な座標を保持する。
 
 #### Scenario: No candidate exists for an unlinked facility
 
@@ -83,8 +83,8 @@
 
 #### Scenario: Existing object disappears
 
-- **WHEN** 既存参照が今回の取得物になく、代わりの関連付けも確定できない
-- **THEN** システムは参照を勝手に解除せず、前回参照と現在の状況を人へ提示する
+- **WHEN** 既存参照が今回の取得物になく、代替候補がない、またはJevが閾値以上で「該当なし」と判定した
+- **THEN** システムはOSMと照合由来のWikidata参照だけを解除し、UUIDと座標を維持する
 
 #### Scenario: Human confirms rejection
 
@@ -108,3 +108,26 @@
 
 - **WHEN** 移行後に月次更新または手動再実行が動く
 - **THEN** システムはWAMの接続先、保存ファイル、設定を必要とせずOSM更新を行う
+
+### Requirement: One notification for unmatched targets
+
+システム SHALL 候補なしまたは確定した「該当なし」の検索対象を一つの通常Issueへまとめて通知する。既存接続の有無で通知を分けず、通知に確定操作を要求しない。システム MUST 同じ内容で閉じた通知を再提示しない。
+
+#### Scenario: Several targets have no match
+
+- **WHEN** 既存接続を失った対象と新しい検索対象の両方に接続先がない
+- **THEN** システムは一つのIssueに列挙し、検索入力の除去またはOSMへの収録の判断を人に委ねる
+
+### Requirement: Commit decisions before presenting Issues
+
+システム SHALL 取得・判定結果を検証してGitへ保存した後にIssueを提示する。保存済み判断だけで提示を再実行できる。システム MUST push失敗時にIssueを提示せず、取得・Jev判定からの自動再試行を行わない。
+
+#### Scenario: Push fails
+
+- **WHEN** 判定結果のpushが失敗する
+- **THEN** 実行は失敗し、Issue提示と公開には進まない
+
+#### Scenario: Presentation is retried
+
+- **WHEN** 保存済み判断のIssue提示を再実行する
+- **THEN** 取得とJevを呼ばず判断記録も変更せずに提示する

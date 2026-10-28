@@ -11,7 +11,7 @@ workflowは`contents: write`、`issues: write`、`pages: write`、`id-token: wri
 ## 再実行と結果の確認
 
 1. Actions → **Update OpenStreetMap data** → **Run workflow**で`main`を選びます。
-2. `process`で取得・照合・検証と、必要なデータコミットが成功したことを確認します。
+2. `process`で取得・照合・検証、必要なデータコミットとpush、その後のIssue提示が成功したことを確認します。
 3. `publish`の対象SHAとPagesの公開結果を確認します。Pages公開URLの`places.jsonld`が配布物です。
 4. 確認Issueがあれば[Issueでの確認・修正](review-osm-candidates.md)を行います。
 
@@ -19,11 +19,25 @@ APIや取得の障害ではIssue回答を求めず実行を失敗させます。
 
 ## 照合条件
 
-同じ根拠への人の確定、既存の型付きOSM ID、一意なQID、Jevの順に判定します。既存IDは今回の取得物に名称があり、前回座標から50m以内で、検索QIDとの矛盾がない場合に継続します。名称と近接座標だけでは確定しません。
+既存の型付きOSM IDが取得結果にあれば、その接続を維持します。名称・座標・タグ・QIDや入力ハッシュの変化だけでは再審査しません。名前のない要素を除く取得条件は維持します。
 
-JevはTypeSafe System Oneの`choice`を`jev-1.14.0`で一施設につき一回呼びます。`confidence >= 0.90`で自動確定しますが、既存参照の変更・解除と施設間の候補競合は人の確認へ回します。信頼度は正答率ではありません。[Choice](https://docs.typesafe.ai/primitives/choice)、[信頼度の定義](https://docs.typesafe.ai/confidence)
+既存IDがなければ、一意なQID、Jevの順に照合します。未接続の検索対象も同じ経路を使います。名称と近接座標だけでは確定しません。
 
-候補も既存参照もない施設は`no_candidates`として記録します。「該当なし」と明示的に不採用にした判断とは区別します。既存参照が消えた場合は確認Issueを作ります。
+JevはTypeSafe System Oneの`choice`を`jev-1.14.0`で呼びます。`confidence >= 0.90`で候補採用または「該当なし」を自動確定します。施設間の候補競合は人の確認へ回します。信頼度は正答率ではありません。[Choice](https://docs.typesafe.ai/primitives/choice)、[信頼度の定義](https://docs.typesafe.ai/confidence)
+
+候補なしではJevを呼びません。候補なし、Jevの高信頼度の「該当なし」、人の「該当なし」はOSMと照合由来のWikidata参照を解除し、施設UUIDと座標を残します。接続先がない対象は一つの通常Issueへまとめて通知します。実在を確認し、検索入力の除去またはOSMへの収録を検討してください。
+
+人が選んだ接続先は以後の既存参照として維持します。人の「該当なし」と未解決のJev結果は同じ照合根拠で再利用し、根拠が変わったときだけ再判定します。
+
+## 保存済み判断の提示
+
+Gitへの保存後にIssue提示だけが失敗した場合は、保存済み判断を使って再提示できます。
+
+```bash
+python3 -m src.osm_maintenance present .
+```
+
+実行には`GITHUB_REPOSITORY`と`GH_TOKEN`が必要です。取得やJev判定、判断記録の書き換えは行いません。同じ内容で手動クローズしたIssueは再提示しません。push失敗時は取得から自動でやり直さず停止するため、原因を確認してください。
 
 ## Jevの使用量と費用
 

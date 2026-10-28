@@ -43,14 +43,13 @@ def render_issue(query_id, entry):
 def parse_issue(body, query_id, entry):
     if not re.search(rf"^- \[[xX]\] {CONFIRM}$", body, re.M):
         return None
-    canonical = entry.get("issueBody") or render_issue(query_id, entry)
-    normalize = lambda s: re.sub(r"(?m)^- \[[xX ]\]", "- [ ]", s).strip()
-    if normalize(body) != normalize(canonical):
-        raise ValueError("候補や根拠が更新・変更されています。最新の本文で選び直してください。")
     selected = re.findall(r"^- \[[xX]\] `([^`]+)` ", body, re.M)
     if len(selected) != 1:
         raise ValueError("候補または「該当なし」を一つだけ選び、確定欄をチェックしてください。")
     allowed = {c["recordId"] for c in entry["evidence"]["candidates"]} | {"none"}
+    marker = MARKER.search(body)
+    if not marker or marker.group(1) != query_id:
+        raise ValueError("対象施設のIDを確認してください。")
     if selected[0] not in allowed:
         raise ValueError("保存済みの候補にない選択です。")
     return selected[0]
@@ -85,9 +84,11 @@ class GitHub:
         return permission["permission"] in {"admin", "maintain", "write"}
 
     def find_issue(self, query_id):
+        marker = f"<!-- osm-review:{query_id}:" if query_id else "<!-- osm-unmatched -->"
         for page in range(1, 100):
             issues = self.api(f"/repos/{self.repository}/issues?state=all&per_page=100&page={page}")
-            found = [i for i in issues if not i.get("pull_request") and i["user"]["login"] == "github-actions[bot]" and f"<!-- osm-review:{query_id}:" in (i.get("body") or "")]
+            found = [i for i in issues if not i.get("pull_request")
+                     and i["user"]["login"] == "github-actions[bot]" and marker in (i.get("body") or "")]
             if found:
                 return max(found, key=lambda i: i["number"])["number"]
             if len(issues) < 100:
@@ -96,19 +97,35 @@ class GitHub:
 
     def save_issue(self, query_id, entry):
         body = render_issue(query_id, entry)
-        number = entry.get("issue") or self.find_issue(query_id)
+        number = self.find_issue(query_id)
         if number:
             issue = self.issue(number)
-            if entry.get("issueEvidenceHash") == entry["evidenceHash"] or (issue and MARKER.search(issue["body"]) and MARKER.search(issue["body"]).groups() == (query_id, entry["evidenceHash"])):
-                entry.update(issue=number, issueEvidenceHash=entry["evidenceHash"], issueBody=entry.get("issueBody", body))
-                if issue["state"] != "OPEN":
-                    self.api(f"/repos/{self.repository}/issues/{number}", {"state": "open"}, "PATCH")
+            marker = MARKER.search(issue["body"])
+            if marker and marker.groups() == (query_id, entry["evidenceHash"]):
                 return
             self.api(f"/repos/{self.repository}/issues/{number}", {"body": body, "state": "open"}, "PATCH")
         else:
-            created = self.api(f"/repos/{self.repository}/issues", {"title": f"[bot] OSM確認: {escape(entry['evidence']['target']['name'])}", "body": body})
-            number = created["number"]
-        entry.update(issue=number, issueEvidenceHash=entry["evidenceHash"], issueBody=body)
+            self.api(f"/repos/{self.repository}/issues", {"title": f"[bot] OSM確認: {escape(entry['evidence']['target']['name'])}", "body": body})
+
+    def save_unmatched(self, entries):
+        missing = [(key, entry) for key, entry in sorted(entries.items())
+                   if entry.get("status") in {"decided", "no_candidates"} and entry.get("choice") == "none"]
+        number = self.find_issue(None)
+        if not missing:
+            if number and self.issue(number)["state"] == "OPEN":
+                self.api(f"/repos/{self.repository}/issues/{number}", {"state": "closed"}, "PATCH")
+            return
+        lines = ["[bot] 接続先が見つからなかった検索対象です。", "",
+                 "実在を確認し、検索入力の除去またはOSMへの収録を検討してください。", ""]
+        lines.extend(f"- {escape(entry['evidence']['target']['name'])} — `{key}`" for key, entry in missing)
+        lines.extend(["", "<!-- osm-unmatched -->"])
+        body = "\n".join(lines) + "\n"
+        if number:
+            issue = self.issue(number)
+            if issue["body"] != body:
+                self.api(f"/repos/{self.repository}/issues/{number}", {"body": body, "state": "open"}, "PATCH")
+        else:
+            self.api(f"/repos/{self.repository}/issues", {"title": "[bot] OSM接続先なし", "body": body})
 
     def corrective_comment(self, number, message):
         body = "[bot] " + message
@@ -118,33 +135,34 @@ class GitHub:
         self.api(f"/repos/{self.repository}/issues/{number}/comments", {"body": body})
 
 
-def read_confirmations(ledger, github, current_hashes=None):
+def read_confirmations(ledger, github):
     confirmations = {}
     for query_id, entry in ledger["facilities"].items():
-        if not entry.get("issue") or entry.get("status") != "needs_review":
+        if entry.get("status") != "needs_review":
             continue
-        issue = github.issue(entry["issue"])
+        number = github.find_issue(query_id)
+        if not number:
+            continue
+        issue = github.issue(number)
         if not issue or issue["state"] != "OPEN":
             continue
         try:
             choice = parse_issue(issue["body"], query_id, entry)
             if choice is None:
                 continue
-            if current_hashes is not None and current_hashes.get(query_id) != entry["evidenceHash"]:
-                raise ValueError("検索入力か候補が変更されています。Update OpenStreetMap dataを再実行し、更新後の本文で選び直してください。")
             editor = issue.get("lastEditedBy")
             if not editor or not github.may_write(editor["login"]):
                 raise ValueError("確定には、このリポジトリへの書き込み権限を持つ人の本文編集が必要です。")
-            confirmations[query_id] = {"choice": choice, "editor": editor["login"], "editedAt": issue["lastEditedAt"], "url": issue["url"]}
+            confirmations[query_id] = {"choice": choice, "editor": editor["login"], "editedAt": issue["lastEditedAt"], "url": issue["url"], "issue": number}
         except ValueError as error:
-            github.corrective_comment(entry["issue"], str(error))
+            github.corrective_comment(number, str(error))
     return confirmations
 
 
 def apply_confirmations(ledger, confirmations):
     for query_id, human in confirmations.items():
         entry = ledger["facilities"][query_id]
-        entry.update(choice=human["choice"], method="human", human=human, status="decided")
+        entry.update(choice=human["choice"], method="human", human=human, issue=human["issue"], status="decided")
 
 
 def close_published(ledger, github):

@@ -12,7 +12,7 @@ from src.facility_data import (_distance_metres, _write_json, build_repository,
                                load_queries, normalize_osm_elements, validate_search_document)
 from src.github_osm_review import (CONFIRM, GitHub, apply_confirmations, close_published,
                                    parse_issue, read_confirmations, render_issue)
-from src.osm_maintenance import update, verified_snapshot
+from src.osm_maintenance import present, update, verified_snapshot
 from src.resolve_osm_candidates import (MODEL, OSM, THRESHOLD, WIKIDATA, apply_decisions,
                                         decide, evidence_for, evidence_hash, request_choice,
                                         resolve, validate_choice)
@@ -79,6 +79,9 @@ class FakeGitHub:
         self.comments = []
         self.calls = []
         self.state = 'OPEN'
+
+    def find_issue(self, query_id):
+        return 18 if query_id == B else 17
 
     def issue(self, number):
         return {'body': self.body, 'state': self.state, 'lastEditedBy': {'login': 'maintainer'},
@@ -190,25 +193,32 @@ class MatchingTests(unittest.TestCase):
             self.assertEqual(method, decisions['facilities'][A]['method'])
             self.assertEqual(OSM+'node/1', result['@graph'][0]['rdfs:seeAlso'][0])
 
-    def test_qid_contradiction_and_name_proximity_do_not_bypass_jev(self):
-        for p, q, e in [(place(osm='node/1'), query(qid='Q1'), raw_element(wikidata='Q2')),
-                        (place(), query(), raw_element())]:
-            calls = []
-            _, decisions = resolve(document(p), [q], raw(e), ledger(), lambda ev: calls.append(ev) or judgement(confidence=.5))
-            self.assertEqual(1, len(calls))
-            self.assertEqual('needs_review', decisions['facilities'][A]['status'])
+    def test_existing_id_survives_changed_identity_evidence(self):
+        element = raw_element(name='改名', wikidata='Q2', operator='新事業者')
+        element['lon'] += .01
+        previous = {'version': 1, 'facilities': {A: {
+            'method': 'human', 'choice': 'node/1', 'human': {'editor': 'owner'},
+            'evidenceHash': 'old'}}}
+        result, saved = resolve(document(place(osm='node/1')), [query(qid='Q1')], raw(element), previous,
+                                lambda _: self.fail('existing connection must survive'))
+        self.assertEqual('human', saved['facilities'][A]['method'])
+        self.assertEqual({'editor': 'owner'}, saved['facilities'][A]['human'])
+        self.assertEqual(OSM+'node/1', result['@graph'][0]['rdfs:seeAlso'][0])
 
-    def test_real_legacy_name_coordinate_links_are_rejudged(self):
-        cases = json.loads((ROOT/'tests/fixtures/legacy-name-coordinate-links.json').read_text())
-        self.assertEqual(2, len(cases))
+    def test_new_name_proximity_match_requires_jev(self):
         calls = []
+        _, saved = resolve(document(place()), [query()], raw(raw_element()), ledger(),
+                           lambda ev: calls.append(ev) or judgement(confidence=.5))
+        self.assertEqual(1, len(calls))
+        self.assertEqual('needs_review', saved['facilities'][A]['status'])
+
+    def test_existing_links_are_retained_without_migration_reassessment(self):
+        cases = json.loads((ROOT/'tests/fixtures/legacy-name-coordinate-links.json').read_text())
         for case in cases:
             identifier = case['query']['id']
-            saved = {'version': 1, 'facilities': {identifier: {'reassess': True}}}
-            _, result = resolve(document(case['place']), [case['query']], case['raw'], saved,
-                                lambda ev: calls.append(ev) or judgement('none', .5))
-            self.assertEqual('needs_review', result['facilities'][identifier]['status'])
-        self.assertEqual(2, len(calls))
+            _, result = resolve(document(case['place']), [case['query']], case['raw'], ledger(),
+                                lambda _: self.fail('existing connection must survive'))
+            self.assertEqual('source_record', result['facilities'][identifier]['method'])
 
     def test_human_none_wins_over_existing_and_qid_on_same_evidence(self):
         original = document(place(osm='node/1', qid='Q1'))
@@ -226,18 +236,26 @@ class MatchingTests(unittest.TestCase):
         result, decisions = resolve(original, [query(), q2], raw(raw_element()), ledger(), lambda _: judgement())
         self.assertIn('rdfs:seeAlso', result['@graph'][0])
         self.assertEqual('no_candidates', decisions['facilities'][B]['status'])
-        _, unresolved = resolve(document(place(osm='node/8')), [query()], raw(), ledger(), lambda _: self.fail('no candidates'))
-        self.assertEqual('needs_review', unresolved['facilities'][A]['status'])
+        original = document(place(osm='node/8', qid='Q8'))
+        cleared, unresolved = resolve(original, [query()], raw(), ledger(), lambda _: self.fail('no candidates'))
+        self.assertEqual('no_candidates', unresolved['facilities'][A]['status'])
+        self.assertNotIn('rdfs:seeAlso', cleared['@graph'][0])
+        self.assertEqual(original['@graph'][0]['schema:geo'], cleared['@graph'][0]['schema:geo'])
         result, none = resolve(document(place()), [query()], raw(raw_element()), ledger(), lambda _: judgement('none'))
         self.assertEqual('decided', none['facilities'][A]['status'])
         self.assertEqual('none', none['facilities'][A]['choice'])
 
-    def test_existing_reference_removal_or_replacement_requires_human(self):
+    def test_lost_reference_is_automatically_removed_or_replaced(self):
         for choice in ['none', 'node/1']:
             original = document(place(osm='node/9', qid='Q9'))
             result, decisions = resolve(original, [query()], raw(raw_element()), ledger(), lambda _: judgement(choice))
-            self.assertEqual(original, result)
-            self.assertEqual('needs_review', decisions['facilities'][A]['status'])
+            self.assertEqual('decided', decisions['facilities'][A]['status'])
+            self.assertEqual(original['@graph'][0]['@id'], result['@graph'][0]['@id'])
+            if choice == 'none':
+                self.assertNotIn('rdfs:seeAlso', result['@graph'][0])
+                self.assertEqual(original['@graph'][0]['schema:geo'], result['@graph'][0]['schema:geo'])
+            else:
+                self.assertEqual([OSM+choice], result['@graph'][0]['rdfs:seeAlso'])
 
     def test_conflicting_allocations_are_reviewed_and_direct_apply_rejects(self):
         q2 = query(B, '同一建物内の別施設')
@@ -256,6 +274,40 @@ class MatchingTests(unittest.TestCase):
         self.assertEqual([OSM+'node/1', WIKIDATA+'Q1'], result['@graph'][0]['rdfs:seeAlso'])
         self.assertEqual(original['@graph'][0]['@id'], result['@graph'][0]['@id'])
 
+    def test_human_none_and_uncertain_jev_are_reused_until_evidence_changes(self):
+        for method, confidence in [('human', .5), ('jev', .5)]:
+            original = document(place())
+            snapshot = raw(raw_element())
+            _, saved = resolve(original, [query()], snapshot, ledger(), lambda _: judgement('none', confidence))
+            if method == 'human':
+                saved['facilities'][A].update(method='human', choice='none', status='decided', human={'editor': 'owner'})
+            _, reused = resolve(original, [query()], snapshot, saved, lambda _: self.fail('must reuse saved result'))
+            self.assertEqual(method, reused['facilities'][A].get('method', 'jev'))
+            calls = []
+            _, changed = resolve(original, [query(name='更新')], snapshot, reused,
+                                 lambda ev: calls.append(ev) or judgement())
+            self.assertEqual(1, len(calls))
+            self.assertEqual('node/1', changed['facilities'][A]['choice'])
+
+    def test_existing_owner_is_preserved_when_new_target_selects_same_id(self):
+        result, saved = resolve(document(place(osm='node/1'), place(B)), [query(), query(B)],
+                                raw(raw_element()), ledger(), lambda _: judgement())
+        self.assertEqual('decided', saved['facilities'][A]['status'])
+        self.assertEqual('needs_review', saved['facilities'][B]['status'])
+        self.assertEqual([OSM+'node/1'], result['@graph'][0]['rdfs:seeAlso'])
+        self.assertNotIn('rdfs:seeAlso', result['@graph'][1])
+
+    def test_released_id_can_be_assigned_to_another_facility(self):
+        result, saved = resolve(document(place(osm='node/9'), place(B)), [query(), query(B)],
+                                raw(raw_element(9)), ledger(), lambda _: judgement('node/9'))
+        self.assertEqual('needs_review', saved['facilities'][B]['status'])
+        evidence = evidence_for(query(), normalize_osm_elements([raw_element(9)]), place(osm='node/9'))
+        saved = {'version': 1, 'facilities': {A: {'method': 'human', 'choice': 'none',
+                 'human': {'editor': 'owner'}, 'evidenceHash': evidence_hash(evidence)}}}
+        result, saved = resolve(document(place(osm='node/9'), place(B)), [query(), query(B)],
+                                raw(raw_element(9)), saved, lambda _: judgement('node/9'))
+        self.assertNotIn('rdfs:seeAlso', result['@graph'][0])
+        self.assertEqual([OSM+'node/9'], result['@graph'][1]['rdfs:seeAlso'])
 
 class JevTests(unittest.TestCase):
     def response(self, confidence=.9, choice='candidate_0'):
@@ -327,7 +379,7 @@ class IssueTests(unittest.TestCase):
         self.assertEqual('node/1', parse_issue(checked(body), A, entry))
         self.assertEqual('none', parse_issue(checked(body, 'none'), A, entry))
         for invalid in [checked(checked(body, 'none')), body.replace(f'- [ ] {CONFIRM}', f'- [x] {CONFIRM}'),
-                        checked(body).replace('node/1', 'node/99'), checked(body).replace(entry['evidenceHash'], '0'*64)]:
+                        checked(body).replace('node/1', 'node/99'), checked(body).replace(A, B)]:
             with self.assertRaises(ValueError): parse_issue(invalid, A, entry)
 
     def test_permission_and_invalid_confirmation_receive_correction(self):
@@ -357,6 +409,7 @@ class IssueTests(unittest.TestCase):
         entry = reviewed_entry()
         github = GitHub.__new__(GitHub)
         github.repository = 'owner/repo'
+        github.find_issue = lambda q: 17
         github.issue = lambda n: {'body': checked(entry['issueBody'], confirm=False), 'state': 'OPEN'}
         calls = []
         github.api = lambda *args: calls.append(args)
@@ -368,32 +421,33 @@ class IssueTests(unittest.TestCase):
         self.assertEqual(1, len(calls))
         self.assertIn('- [ ] `node/1`', calls[0][1]['body'])
         self.assertNotIn('- [x]', calls[0][1]['body'])
-        with self.assertRaises(ValueError):
-            parse_issue(checked(reviewed_entry()['issueBody']), A, entry)
+        self.assertEqual('node/1', parse_issue(checked(reviewed_entry()['issueBody']), A, entry))
 
-    def test_tampered_body_never_becomes_saved_canonical_body(self):
+    def test_description_and_confidence_edits_do_not_invalidate_answer(self):
         entry = reviewed_entry()
         original = entry['issueBody']
         github = GitHub.__new__(GitHub)
         github.repository = 'owner/repo'
+        github.find_issue = lambda q: 17
         github.issue = lambda n: {'body': original.replace('千代田相談支援センター', '偽の対象'), 'state': 'OPEN'}
         github.api = lambda *args: self.fail('partial body should not be rewritten')
         github.save_issue(A, entry)
         self.assertEqual(original, entry['issueBody'])
-        with self.assertRaises(ValueError):
-            parse_issue(checked(github.issue(17)['body']), A, entry)
+        body = checked(github.issue(17)['body']).replace('0.5000', '0.4000').replace(entry['evidenceHash'], '0'*64)
+        self.assertEqual('node/1', parse_issue(body, A, entry))
 
-    def test_recover_orphan_issue_after_commit_failure_without_duplicate(self):
+    def test_present_reuses_issue_without_mutating_saved_decision(self):
         entry = reviewed_entry()
         entry.pop('issue')
         entry.pop('issueEvidenceHash')
         github = GitHub.__new__(GitHub)
         github.repository = 'owner/repo'
         github.find_issue = lambda q: 17
+        github.find_issue = lambda q: 17
         github.issue = lambda n: {'body': checked(entry['issueBody'], confirm=False), 'state': 'OPEN'}
         github.api = lambda *args: self.fail('same Issue must be reused')
         github.save_issue(A, entry)
-        self.assertEqual(17, entry['issue'])
+        self.assertNotIn('issue', entry)
 
     def test_human_decision_closes_only_in_post_publication_step(self):
         entry = reviewed_entry()
@@ -410,6 +464,36 @@ class IssueTests(unittest.TestCase):
         close_published(saved, github)
         self.assertEqual(1, len(github.calls))
 
+    def test_closed_review_is_not_reopened_for_unchanged_evidence(self):
+        entry = reviewed_entry()
+        github = GitHub(repository='owner/repo', token='t')
+        github.find_issue = lambda _: 17
+        github.issue = lambda _: {'body': render_issue(A, entry), 'state': 'CLOSED'}
+        github.api = lambda *args: self.fail('same closed review must stay closed')
+        github.save_issue(A, entry)
+
+    def test_unmatched_targets_share_one_plain_notification(self):
+        _, saved = resolve(document(place(osm='node/9'), place(B)),
+                           [query(), query(B, coordinates=[139.751, 35.69])], raw(raw_element()),
+                           ledger(), lambda _: judgement('none'))
+        github = GitHub(repository='owner/repo', token='t')
+        github.find_issue = lambda _: None
+        calls = []
+        github.api = lambda *args: calls.append(args)
+        github.save_unmatched(saved['facilities'])
+        self.assertEqual(1, len(calls))
+        body = calls[0][1]['body']
+        self.assertIn(A, body)
+        self.assertIn(B, body)
+        self.assertNotIn('[ ]', body)
+        self.assertIn('検索入力の除去', body)
+        github.find_issue = lambda _: 18
+        github.issue = lambda _: {'body': body, 'state': 'CLOSED'}
+        github.save_unmatched(saved['facilities'])
+        self.assertEqual(1, len(calls))
+        github.save_unmatched({B: saved['facilities'][B]})
+        self.assertEqual(2, len(calls))
+        self.assertEqual('open', calls[-1][1]['state'])
 
 class IntegrationTests(unittest.TestCase):
     def setup_root(self, directory):
@@ -427,7 +511,7 @@ class IntegrationTests(unittest.TestCase):
             root = self.setup_root(directory)
             before = [(root/p).read_bytes() for p in ['data/places.jsonld', 'data/osm-decisions.json']]
             for error_at in ['retrieve', 'hash', 'jev']:
-                def retrieve(*args):
+                def retrieve(*args, **kwargs):
                     if error_at == 'retrieve': raise OSError('download failed')
                     if error_at == 'hash': (root/'imports/openstreetmap/raw.json').write_text('{}')
                 with self.subTest(error_at=error_at):
@@ -439,7 +523,7 @@ class IntegrationTests(unittest.TestCase):
     def test_resolved_progress_and_pending_issue_survive_without_artifacts(self):
         with tempfile.TemporaryDirectory() as directory:
             root = self.setup_root(directory)
-            saved = update(root, refresh=True, retrieve=lambda *args: None, judge=lambda ev: judgement('node/1') if ev['target']['id'] == A else judgement('node/2', .5))
+            saved = update(root, refresh=True, retrieve=lambda *args, **kwargs: None, judge=lambda ev: judgement('node/1') if ev['target']['id'] == A else judgement('node/2', .5))
             entry = saved['facilities'][B]
             entry.update(issue=17, issueEvidenceHash=entry['evidenceHash'])
             entry['issueBody'] = render_issue(B, entry)
@@ -461,10 +545,10 @@ class IntegrationTests(unittest.TestCase):
             update(root, github=github)
             self.assertEqual(after, (root/'data/places.jsonld').read_bytes())
 
-    def test_changed_input_rejects_old_confirmation(self):
+    def test_changed_input_does_not_invalidate_saved_candidate_answer(self):
         with tempfile.TemporaryDirectory() as directory:
             root = self.setup_root(directory)
-            saved = update(root, refresh=True, retrieve=lambda *args: None, judge=lambda ev: judgement('node/1' if ev['target']['id'] == A else 'node/2', .5))
+            saved = update(root, refresh=True, retrieve=lambda *args, **kwargs: None, judge=lambda ev: judgement('node/1' if ev['target']['id'] == A else 'node/2', .5))
             entry = saved['facilities'][A]
             entry.update(issue=17, issueEvidenceHash=entry['evidenceHash'])
             entry['issueBody'] = render_issue(A, entry)
@@ -473,11 +557,12 @@ class IntegrationTests(unittest.TestCase):
             queries[0]['name'] = '変更後の対象'
             _write_json(root/'inputs/facilities.json', {'queries': queries})
             github = FakeGitHub(checked(entry['issueBody']))
+            github.find_issue = lambda q: 17 if q == A else None
             github.save_issue = lambda *args: None
-            before = (root/'data/places.jsonld').read_bytes()
             update(root, github=github)
-            self.assertEqual(before, (root/'data/places.jsonld').read_bytes())
-            self.assertIn('再実行', github.comments[0])
+            after = json.loads((root/'data/places.jsonld').read_text())
+            self.assertEqual([OSM+'node/1'], after['@graph'][0]['rdfs:seeAlso'])
+            self.assertEqual([], github.comments)
 
     def test_conflicting_confirmation_does_not_block_other_valid_answer(self):
         with tempfile.TemporaryDirectory() as directory:
@@ -503,6 +588,49 @@ class IntegrationTests(unittest.TestCase):
             self.assertEqual('needs_review', result['facilities'][A]['status'])
             self.assertEqual('decided', result['facilities'][B]['status'])
             self.assertIn('別の施設', github.comments[0])
+
+    def test_refresh_extracts_the_just_confirmed_id_before_rejudging(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = self.setup_root(directory)
+            entry = reviewed_entry()
+            _write_json(root/'data/osm-decisions.json', {'version': 1, 'facilities': {A: entry}})
+            _write_json(root/'inputs/facilities.json', {'queries': [query(coordinates=[139.76, 35.69]), query(B)]})
+            github = FakeGitHub(checked(entry['issueBody']))
+            def retrieve(*args, canonical):
+                self.assertEqual([OSM+'node/1'], canonical['@graph'][0]['rdfs:seeAlso'])
+            result = update(root, refresh=True, github=github, retrieve=retrieve,
+                            judge=lambda _: judgement('none'))
+            self.assertEqual('human', result['facilities'][A]['method'])
+            self.assertEqual('node/1', result['facilities'][A]['choice'])
+
+    def test_present_uses_only_saved_decisions_and_leaves_files_unchanged(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = self.setup_root(directory)
+            saved = update(root, refresh=True, retrieve=lambda *args, **kwargs: None,
+                           judge=lambda ev: judgement('node/1' if ev['target']['id'] == A else 'node/2', .5))
+            before = (root/'data/osm-decisions.json').read_bytes()
+            (root/'imports/openstreetmap/raw.json').unlink()
+            github = FakeGitHub('')
+            presented = []
+            github.save_issue = lambda key, entry: presented.append(key)
+            github.save_unmatched = lambda entries: self.assertEqual(saved['facilities'], entries)
+            present(root, github)
+            self.assertEqual([A, B], presented)
+            self.assertEqual(before, (root/'data/osm-decisions.json').read_bytes())
+
+    def test_confirm_does_not_retrieve_judge_or_present_issues(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = self.setup_root(directory)
+            entry = reviewed_entry()
+            _write_json(root/'data/osm-decisions.json', {'version': 1, 'facilities': {A: entry}})
+            (root/'imports/openstreetmap/raw.json').unlink()
+            github = FakeGitHub(checked(entry['issueBody']))
+            github.save_issue = lambda *args: self.fail('confirm must not present reviews')
+            github.save_unmatched = lambda *args: self.fail('confirm must not notify unmatched')
+            result = update(root, github=github, retrieve=lambda *args, **kwargs: self.fail('must not retrieve'),
+                            judge=lambda *args: self.fail('must not judge'))
+            self.assertEqual('human', result['facilities'][A]['method'])
+            self.assertEqual(17, result['facilities'][A]['issue'])
 
     def test_publish_false_does_not_remove_search_target(self):
         with tempfile.TemporaryDirectory() as directory:

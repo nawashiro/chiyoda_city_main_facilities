@@ -6,7 +6,6 @@ import hashlib
 import json
 import math
 import os
-from pathlib import Path
 from urllib.request import Request, urlopen
 
 from src.facility_data import _distance_metres, normalize_osm_elements, validate_jsonld_document
@@ -34,11 +33,6 @@ def current_id(place) -> str | None:
     if len(ids) > 1:
         raise ValueError("multiple current OSM references")
     return ids[0] if ids else None
-
-
-def coordinates(place):
-    geo = place["schema:geo"]
-    return [geo["schema:longitude"], geo["schema:latitude"]]
 
 
 def evidence_for(query, elements, place):
@@ -121,20 +115,20 @@ def decide(query, place, evidence, previous, judge=request_choice):
     same = previous.get("evidenceHash") == digest
     entry = {"evidence": evidence, "evidenceHash": digest,
              "current": current_id(place), "status": "needs_review"}
-    for key in ("issue", "issueEvidenceHash", "issueBody"):
-        if key in previous:
-            entry[key] = previous[key]
+    if "issue" in previous:
+        entry["issue"] = previous["issue"]
     candidates = {c["recordId"]: c for c in evidence["candidates"]}
     chosen, method = None, None
-    if same and previous.get("method") == "human":
+    if same and previous.get("method") == "human" and previous.get("choice") == "none":
         chosen, method = previous["choice"], "human"
         entry["human"] = previous["human"]
     else:
         current = candidates.get(current_id(place))
-        if (current and not previous.get("reassess") and
-                _distance_metres(coordinates(place), current["coordinates"]) <= 50 and
-                (not query.get("qid") or not current.get("qid") or query["qid"] == current["qid"])):
+        if current:
             chosen, method = current["recordId"], "source_record"
+            if previous.get("method") == "human" and previous.get("choice") == chosen:
+                method = "human"
+                entry["human"] = previous["human"]
         else:
             qid_matches = [c for c in candidates.values() if query.get("qid") and c.get("qid") == query["qid"]]
             if len(qid_matches) == 1:
@@ -148,17 +142,11 @@ def decide(query, place, evidence, previous, judge=request_choice):
                     chosen, method = result["choice"], "jev"
                 else:
                     entry["reason"] = "Jevの信頼度が閾値に届きません。"
-            elif not current_id(place):
-                entry.update(status="no_candidates", method="no_candidates")
+            else:
+                entry.update(status="no_candidates", method="no_candidates", choice="none")
                 return entry
     if method:
         entry.update(choice=chosen, method=method, status="decided")
-        if method == "jev" and current_id(place) and chosen != current_id(place):
-            entry.update(status="needs_review", reason="既存の参照の変更・解除には確認が必要です。")
-    if entry["status"] == "needs_review" and "reason" not in entry:
-        entry["reason"] = "既存の参照が取得物に存在しないか、継続条件を満たしません。"
-    if previous.get("reassess") and entry["status"] == "needs_review":
-        entry["reassess"] = True
     return entry
 
 
@@ -167,7 +155,7 @@ def apply_decisions(document, queries, entries):
     index = {p["@id"].removeprefix("urn:uuid:"): p for p in updated["@graph"]}
     for query in queries:
         entry = entries.get(query["id"], {})
-        if entry.get("status") != "decided":
+        if entry.get("status") not in {"decided", "no_candidates"}:
             continue
         choice = entry["choice"]
         place = index.get(query["id"])
@@ -202,14 +190,20 @@ def resolve(document, queries, raw, ledger, judge=request_choice):
         place = places.get(query["id"], {})
         evidence = evidence_for(query, elements, place)
         entries[query["id"]] = decide(query, place, evidence, ledger["facilities"].get(query["id"], {}), judge)
-    allocations = {}
-    for place in document["@graph"]:
-        if current_id(place):
-            allocations.setdefault(current_id(place), set()).add(place["@id"].removeprefix("urn:uuid:"))
-    for query_id, entry in entries.items():
-        if entry["status"] == "decided" and entry["choice"] != "none":
-            allocations.setdefault(entry["choice"], set()).add(query_id)
-    for entry in entries.values():
-        if entry["status"] == "decided" and entry["choice"] != "none" and len(allocations[entry["choice"]]) > 1:
+    while True:
+        allocations = {}
+        for query_id in places.keys() | entries.keys():
+            entry = entries.get(query_id, {})
+            choice = (entry["choice"] if entry.get("status") in {"decided", "no_candidates"}
+                      else current_id(places.get(query_id, {})))
+            if choice and choice != "none":
+                allocations.setdefault(choice, set()).add(query_id)
+        conflicts = [entry for query_id, entry in entries.items()
+                     if entry["status"] == "decided" and entry["choice"] != "none"
+                     and len(allocations[entry["choice"]]) > 1
+                     and entry["choice"] != current_id(places.get(query_id, {}))]
+        if not conflicts:
+            break
+        for entry in conflicts:
             entry.update(status="needs_review", reason="候補は別の施設にも関連付けられています。")
     return apply_decisions(document, queries, entries), {"version": 1, "facilities": entries}

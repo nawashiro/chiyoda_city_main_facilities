@@ -43,27 +43,22 @@ jobs:
           set -euo pipefail
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-          for attempt in 1 2 3; do
-            git fetch origin main
-            git reset --hard origin/main
-            python3 -m src.osm_maintenance "$UPDATE_MODE" .
-            python3 -m src.facility_data validate .
-            python3 -m unittest discover -s tests -v
-            python3 -m src.facility_data build .
-            ./fac jsonld-validate site/places.jsonld
-            git add data/places.jsonld data/osm-decisions.json imports/openstreetmap/
-            if git diff --cached --quiet; then
-              echo "sha=$(git rev-parse HEAD)" >> "$GITHUB_OUTPUT"
-              exit 0
-            fi
+          python3 -m src.osm_maintenance "$UPDATE_MODE" .
+          python3 -m src.facility_data validate .
+          python3 -m unittest discover -s tests -v
+          python3 -m src.facility_data build .
+          ./fac jsonld-validate site/places.jsonld
+          git add data/places.jsonld data/osm-decisions.json imports/openstreetmap/
+          if ! git diff --cached --quiet; then
             git commit -m '[bot] data: update OSM associations'
-            if git push origin HEAD:main; then
-              echo "sha=$(git rev-parse HEAD)" >> "$GITHUB_OUTPUT"
-              exit 0
-            fi
-          done
-          echo 'Could not update latest main; no force push was attempted.' >&2
-          exit 1
+            git push origin HEAD:main
+          fi
+          echo "sha=$(git rev-parse HEAD)" >> "$GITHUB_OUTPUT"
+      - name: Present committed decisions
+        if: github.event_name != 'issues'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: python3 -m src.osm_maintenance present .
   publish:
     needs: process
     uses: ./.github/workflows/publish-pages.yml

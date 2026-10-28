@@ -59,13 +59,14 @@ def _named_osm_elements(elements: list[dict[str, Any]]) -> list[dict[str, Any]]:
     ]
 
 
-def run_osm_retrieval(root: str | Path, at: str, fetch, extractor=extract_elements) -> tuple[Path, Path]:
+def run_osm_retrieval(root: str | Path, at: str, fetch, extractor=extract_elements, *, canonical=None) -> tuple[Path, Path]:
     """Download the Tokyo mirror once and prepare reviewable local artifacts."""
     root = Path(root)
     metadata_path = root / "imports/openstreetmap/retrieval.json"
     metadata = json.loads(metadata_path.read_text(encoding="utf-8"))
     source_refresh_due(None, at)
-    canonical = json.loads((root / "data/places.jsonld").read_text(encoding="utf-8"))
+    if canonical is None:
+        canonical = json.loads((root / "data/places.jsonld").read_text(encoding="utf-8"))
     queries = load_queries(root)
     qids = sorted({query["qid"] for query in queries if "qid" in query})
     coordinates = [query["coordinates"] for query in queries if "coordinates" in query]
