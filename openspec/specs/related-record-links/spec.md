@@ -7,26 +7,34 @@
 ## Requirements
 
 ### Requirement: Conservative related-record links
-システム SHALL 自動照合したOSM typed object IDとWikidata QIDを、公式resource URIによる`rdfs:seeAlso`で出力します。
-システム SHALL WAMの外部識別子を`schema:identifier`で出力します。
-WAMの`schema:identifier` MUST `schema:PropertyValue`として表現し、`propertyID`に`wam`、`value`にWAM record IDを設定します。
-システム MUST WAM record IDから`rdfs:seeAlso`のURIを合成しません。
-自動出力 MUST `schema:sameAs`、SKOS match関係、Place単位の`prov:wasDerivedFrom`を含みません。
+
+システム SHALL 確定したOSM typed object IDと、そのrecordが直接持つWikidata QIDを、公式resource URIによる`rdfs:seeAlso`で出力する。システム MUST WAM識別子を公開Placeへ出力しない。自動出力 MUST `schema:sameAs`、SKOS match関係、Place単位の`prov:wasDerivedFrom`を含まない。
 
 #### Scenario: Automated OSM association is exported
-- **WHEN** 施設とOSM recordの照合結果を公開します
-- **THEN** 出力はそのtyped object IDに対応する公式OSM resource URIを`rdfs:seeAlso`で表現します
+
+- **WHEN** 施設とOSM recordの照合結果を公開する
+- **THEN** 出力はそのtyped object IDに対応する公式OSM resource URIを`rdfs:seeAlso`で表現する
 
 #### Scenario: Wikidata association is exported
-- **WHEN** OSM照合済みrecordが直接のWikidata QIDを含みます
-- **THEN** 出力はQIDに対応する公式Wikidata resource URIを`rdfs:seeAlso`で表現します
 
-### Requirement: WAM service distinction
-システム MUST WAMのサービスrecordをPlaceの同一実体として扱いません。
-システム MUST WAMの外部識別子を`schema:identifier`の`schema:PropertyValue`で表現し、`propertyID`に`wam`、`value`に`recordId`を設定します。
-システム MUST WAMの`recordId`からIRIを合成しません。
-システム MUST WAM由来の住所、サービス種別、電話番号を公開Placeへ出力しません。
+- **WHEN** OSM照合済みrecordが直接のWikidata QIDを含む
+- **THEN** 出力はQIDに対応する公式Wikidata resource URIを`rdfs:seeAlso`で表現する
 
-#### Scenario: Multiple WAM services relate to one facility
-- **WHEN** 一施設に複数のWAMサービスrecordがあります
-- **THEN** 出力は施設recordを複製せず、各recordを`schema:identifier`の`schema:PropertyValue`で表現し、WAM IRIを`rdfs:seeAlso`へ合成しません
+#### Scenario: Migrated facility is exported
+
+- **WHEN** WAM由来の検索対象を移行した後に公開する
+- **THEN** 出力は既存の施設UUIDを持ち、WAM識別子とWAMから合成した参照を含まない
+
+### Requirement: Replacement and rejection update related references
+
+システム SHALL 新しい関連付けを確定したとき、対象施設の以前のOSM参照とその照合由来のWikidata参照を現在の結果に置き換える。候補なし、Jevの閾値以上の「該当なし」、人の確定した「該当なし」では両参照を解除し、有効な座標を維持する。システム MUST 関連付けの変更・解除だけを理由に施設UUIDを変更したり施設を削除したりしない。
+
+#### Scenario: New object lacks the previous Wikidata tag
+
+- **WHEN** 新しく確定したOSM recordに前回のWikidata QIDがない
+- **THEN** システムは前回のOSM照合由来のWikidata参照を残さない
+
+#### Scenario: Human rejects every candidate
+
+- **WHEN** 人が「該当なし」を確定した結果を公開する
+- **THEN** 対象のOSM参照とその照合由来のWikidata参照を含めず、施設UUIDを維持する
