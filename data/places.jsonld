@@ -1320,29 +1320,29 @@
       "@type": [
         "schema:Place"
       ],
-      "rdfs:seeAlso": [
-        "https://www.openstreetmap.org/way/67027576"
-      ],
       "schema:geo": {
         "@type": "schema:GeoCoordinates",
         "schema:longitude": 139.76505715000002,
         "schema:latitude": 35.69818535
-      }
+      },
+      "rdfs:seeAlso": [
+        "https://www.openstreetmap.org/way/67027576"
+      ]
     },
     {
       "@id": "urn:uuid:019fdf3b-cf63-71f9-96f3-bb64777f330a",
       "@type": [
         "schema:Place"
       ],
-      "rdfs:seeAlso": [
-        "https://www.openstreetmap.org/way/675832452",
-        "https://www.wikidata.org/entity/Q6751576"
-      ],
       "schema:geo": {
         "@type": "schema:GeoCoordinates",
         "schema:longitude": 139.7698128,
         "schema:latitude": 35.69749255
-      }
+      },
+      "rdfs:seeAlso": [
+        "https://www.openstreetmap.org/way/675832452",
+        "https://www.wikidata.org/entity/Q6751576"
+      ]
     }
   ]
 }

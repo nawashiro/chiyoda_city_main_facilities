@@ -1274,57 +1274,17 @@
       },
       "evidenceHash": "ea2d7620ae0882904674b65377b6477a68f1eddc9de2cfc3cb583f59686bc250",
       "current": null,
-      "status": "needs_review",
-      "jev": {
-        "choice": "none",
-        "confidence": 0.75,
-        "probabilities": {
-          "node/10153258543": 0.02,
-          "node/10153290037": 0.0,
-          "node/4964138925": 0.0,
-          "node/4964138926": 0.0,
-          "node/4970528624": 0.0,
-          "node/4970528630": 0.0,
-          "node/4970528633": 0.0,
-          "node/4970528634": 0.0,
-          "node/4970528636": 0.0,
-          "node/4970528637": 0.0,
-          "node/4970528638": 0.0,
-          "node/6031702639": 0.0,
-          "node/10153290038": 0.0,
-          "node/989291887": 0.01,
-          "node/989291902": 0.0,
-          "node/989291924": 0.0,
-          "node/989291942": 0.0,
-          "node/990019183": 0.0,
-          "node/990019188": 0.0,
-          "way/1110136753": 0.01,
-          "way/143581472": 0.09,
-          "way/143581482": 0.03,
-          "way/144351265": 0.01,
-          "node/10153290039": 0.01,
-          "way/144351298": 0.01,
-          "way/144351303": 0.0,
-          "way/144351310": 0.05,
-          "way/85333744": 0.0,
-          "node/10153290040": 0.0,
-          "node/10153290042": 0.0,
-          "node/10153290043": 0.0,
-          "node/10153290044": 0.0,
-          "node/10153304173": 0.0,
-          "node/4791664322": 0.0,
-          "none": 0.76
-        },
-        "usage": {
-          "input_tokens": 4473,
-          "output_tokens": 354
-        },
-        "model": "jev-1.14.0"
-      },
-      "reason": "Jevの信頼度が閾値に届きません。",
+      "status": "decided",
       "issue": 58,
-      "issueEvidenceHash": "ea2d7620ae0882904674b65377b6477a68f1eddc9de2cfc3cb583f59686bc250",
-      "issueBody": "[bot] 特定非営利活動法人ホープのOSM参照を確認してください。\n\n対象UUID: `019ca6b1-dc00-7571-905a-f4a52e6913f4`\n現在の参照: なし\n\n確認理由: Jevの信頼度が閾値に届きません。\nJev: `none` / confidence `0.7500`（正答率ではありません）\n\n候補または「該当なし」を一つ選び、最後に確定欄をチェックしてください。\n\n- [ ] `node/10153258543` あおもり北彩館 / 26.0 m / [OSM](https://www.openstreetmap.org/node/10153258543) / [地図](https://www.openstreetmap.org/?mlat=35.6995273&mlon=139.7448861#map=19/35.6995273/139.7448861)\n- [ ] `node/10153290037` Brochette / 26.1 m / [OSM](https://www.openstreetmap.org/node/10153290037) / [地図](https://www.openstreetmap.org/?mlat=35.6994646&mlon=139.7453782#map=19/35.6994646/139.7453782)\n- [ ] `node/10153290038` 好子ちゃん / 15.0 m / [OSM](https://www.openstreetmap.org/node/10153290038) / [地図](https://www.openstreetmap.org/?mlat=35.6994844&mlon=139.7451043#map=19/35.6994844/139.7451043)\n- [ ] `node/10153290039` うお座 / 13.3 m / [OSM](https://www.openstreetmap.org/node/10153290039) / [地図](https://www.openstreetmap.org/?mlat=35.6994938&mlon=139.7451431#map=19/35.6994938/139.7451431)\n- [ ] `node/10153290040` えにし / 29.4 m / [OSM](https://www.openstreetmap.org/node/10153290040) / [地図](https://www.openstreetmap.org/?mlat=35.6994345&mlon=139.745394#map=19/35.6994345/139.745394)\n- [ ] `node/10153290042` 七宝麻辣湯 / 30.1 m / [OSM](https://www.openstreetmap.org/node/10153290042) / [地図](https://www.openstreetmap.org/?mlat=35.6993433&mlon=139.7451815#map=19/35.6993433/139.7451815)\n- [ ] `node/10153290043` ホルモン焼 千歳 / 32.7 m / [OSM](https://www.openstreetmap.org/node/10153290043) / [地図](https://www.openstreetmap.org/?mlat=35.699321&mlon=139.7451974#map=19/35.699321/139.7451974)\n- [ ] `node/10153290044` 定食のまる大 / 9.1 m / [OSM](https://www.openstreetmap.org/node/10153290044) / [地図](https://www.openstreetmap.org/?mlat=35.6995448&mlon=139.7452103#map=19/35.6995448/139.7452103)\n- [ ] `node/10153304173` こんぺいとう / 29.5 m / [OSM](https://www.openstreetmap.org/node/10153304173) / [地図](https://www.openstreetmap.org/?mlat=35.6993586&mlon=139.7452462#map=19/35.6993586/139.7452462)\n- [ ] `node/4791664322` Hop-Scotch Tokyo / 34.0 m / [OSM](https://www.openstreetmap.org/node/4791664322) / [地図](https://www.openstreetmap.org/?mlat=35.6994468&mlon=139.7454705#map=19/35.6994468/139.7454705)\n- [ ] `node/4964138925` TOKYO SUNFLOWER / 39.7 m / [OSM](https://www.openstreetmap.org/node/4964138925) / [地図](https://www.openstreetmap.org/?mlat=35.6992563&mlon=139.7451316#map=19/35.6992563/139.7451316)\n- [ ] `node/4964138926` 魂心家 / 35.2 m / [OSM](https://www.openstreetmap.org/node/4964138926) / [地図](https://www.openstreetmap.org/?mlat=35.6992999&mlon=139.7450931#map=19/35.6992999/139.7450931)\n- [ ] `node/4970528624` ツジタプリント / 47.7 m / [OSM](https://www.openstreetmap.org/node/4970528624) / [地図](https://www.openstreetmap.org/?mlat=35.6997583&mlon=139.7456506#map=19/35.6997583/139.7456506)\n- [ ] `node/4970528630` LIBRAIRIE OMEISHA / 44.8 m / [OSM](https://www.openstreetmap.org/node/4970528630) / [地図](https://www.openstreetmap.org/?mlat=35.699672&mlon=139.7456443#map=19/35.699672/139.7456443)\n- [ ] `node/4970528633` 六献 / 48.6 m / [OSM](https://www.openstreetmap.org/node/4970528633) / [地図](https://www.openstreetmap.org/?mlat=35.6994836&mlon=139.7456683#map=19/35.6994836/139.7456683)\n- [ ] `node/4970528634` 日本三昧 / 46.5 m / [OSM](https://www.openstreetmap.org/node/4970528634) / [地図](https://www.openstreetmap.org/?mlat=35.6994866&mlon=139.7456446#map=19/35.6994866/139.7456446)\n- [ ] `node/4970528636` 原価ビストロBAN! / 36.5 m / [OSM](https://www.openstreetmap.org/node/4970528636) / [地図](https://www.openstreetmap.org/?mlat=35.6994735&mlon=139.7455202#map=19/35.6994735/139.7455202)\n- [ ] `node/4970528637` Cafe RAG TIME / 32.9 m / [OSM](https://www.openstreetmap.org/node/4970528637) / [地図](https://www.openstreetmap.org/?mlat=35.6994712&mlon=139.7454736#map=19/35.6994712/139.7454736)\n- [ ] `node/4970528638` SAPANA / 35.4 m / [OSM](https://www.openstreetmap.org/node/4970528638) / [地図](https://www.openstreetmap.org/?mlat=35.6994381&mlon=139.7454812#map=19/35.6994381/139.7454812)\n- [ ] `node/6031702639` くいしんぼ / 29.1 m / [OSM](https://www.openstreetmap.org/node/6031702639) / [地図](https://www.openstreetmap.org/?mlat=35.6994031&mlon=139.7449605#map=19/35.6994031/139.7449605)\n- [ ] `node/989291887` ルノアール / 44.2 m / [OSM](https://www.openstreetmap.org/node/989291887) / [地図](https://www.openstreetmap.org/?mlat=35.6992167&mlon=139.7451955#map=19/35.6992167/139.7451955)\n- [ ] `node/989291902` ファミリーマート / 47.2 m / [OSM](https://www.openstreetmap.org/node/989291902) / [地図](https://www.openstreetmap.org/?mlat=35.6991917&mlon=139.745219#map=19/35.6991917/139.745219)\n- [ ] `node/989291924` 飯田橋耳鼻咽喉科 / 31.8 m / [OSM](https://www.openstreetmap.org/node/989291924) / [地図](https://www.openstreetmap.org/?mlat=35.6993827&mlon=139.7449449#map=19/35.6993827/139.7449449)\n- [ ] `node/989291942` ドトールコーヒーショップ / 34.3 m / [OSM](https://www.openstreetmap.org/node/989291942) / [地図](https://www.openstreetmap.org/?mlat=35.6993645&mlon=139.7449293#map=19/35.6993645/139.7449293)\n- [ ] `node/990019183` バーガーキング / 50.0 m / [OSM](https://www.openstreetmap.org/node/990019183) / [地図](https://www.openstreetmap.org/?mlat=35.6995517&mlon=139.7446055#map=19/35.6995517/139.7446055)\n- [ ] `node/990019188` 日本歯科大学東京短期大学 / 42.5 m / [OSM](https://www.openstreetmap.org/node/990019188) / [地図](https://www.openstreetmap.org/?mlat=35.6995517&mlon=139.7446896#map=19/35.6995517/139.7446896)\n- [ ] `way/1110136753` 富士見二丁目広場 / 25.7 m / [OSM](https://www.openstreetmap.org/way/1110136753) / [地図](https://www.openstreetmap.org/?mlat=35.699693350000004&mlon=139.7454202#map=19/35.699693350000004/139.7454202)\n- [ ] `way/143581472` 青森県会館 / 16.4 m / [OSM](https://www.openstreetmap.org/way/143581472) / [地図](https://www.openstreetmap.org/?mlat=35.69960365&mlon=139.74497295#map=19/35.69960365/139.74497295)\n- [ ] `way/143581482` 鏑木ビル / 35.2 m / [OSM](https://www.openstreetmap.org/way/143581482) / [地図](https://www.openstreetmap.org/?mlat=35.6992986&mlon=139.74510555#map=19/35.6992986/139.74510555)\n- [ ] `way/144351265` OSビル / 32.1 m / [OSM](https://www.openstreetmap.org/way/144351265) / [地図](https://www.openstreetmap.org/?mlat=35.6993257&mlon=139.7451946#map=19/35.6993257/139.7451946)\n- [ ] `way/144351298` 一直ビル / 39.3 m / [OSM](https://www.openstreetmap.org/way/144351298) / [地図](https://www.openstreetmap.org/?mlat=35.6994327&mlon=139.7455279#map=19/35.6994327/139.7455279)\n- [ ] `way/144351303` 富士見ヨシダビル / 36.0 m / [OSM](https://www.openstreetmap.org/way/144351303) / [地図](https://www.openstreetmap.org/?mlat=35.69942605&mlon=139.74547905#map=19/35.69942605/139.74547905)\n- [ ] `way/144351310` 横江ビル / 13.8 m / [OSM](https://www.openstreetmap.org/way/144351310) / [地図](https://www.openstreetmap.org/?mlat=35.69949815&mlon=139.74509655#map=19/35.69949815/139.74509655)\n- [ ] `way/85333744` 大神宮通り / 27.1 m / [OSM](https://www.openstreetmap.org/way/85333744) / [地図](https://www.openstreetmap.org/?mlat=35.69942235&mlon=139.74534110000002#map=19/35.69942235/139.74534110000002)\n- [ ] `none` 該当なし（OSMとそれに伴うWikidataの参照を解除）\n\n- [ ] 判断を確定する\n\n<!-- osm-review:019ca6b1-dc00-7571-905a-f4a52e6913f4:ea2d7620ae0882904674b65377b6477a68f1eddc9de2cfc3cb583f59686bc250 -->\n"
+      "human": {
+        "choice": "none",
+        "editor": "nawashiro",
+        "editedAt": "2026-10-28T07:22:58Z",
+        "url": "https://github.com/nawashiro/chiyoda_city_main_facilities/issues/58",
+        "issue": 58
+      },
+      "choice": "none",
+      "method": "human"
     },
     "019ca6b1-dc00-7774-920a-bdcf4344c0c0": {
       "evidence": {
@@ -2588,74 +2548,17 @@
       },
       "evidenceHash": "6222ccc4d985b49b15bff3569259b6bc0ba9f2b2f48961edac1c3fd60079bd9e",
       "current": null,
-      "status": "needs_review",
-      "jev": {
-        "choice": "none",
-        "confidence": 0.84,
-        "probabilities": {
-          "node/12350277701": 0.0,
-          "node/1276856487": 0.0,
-          "node/3163981761": 0.01,
-          "node/3163982261": 0.0,
-          "node/3244187061": 0.0,
-          "node/3343046270": 0.0,
-          "node/3343046271": 0.01,
-          "node/3343046272": 0.01,
-          "node/3343046273": 0.0,
-          "node/3343046274": 0.0,
-          "node/3343046275": 0.01,
-          "node/3343046276": 0.0,
-          "node/1276856510": 0.0,
-          "node/3343046277": 0.0,
-          "node/3343046278": 0.0,
-          "node/3343046279": 0.0,
-          "node/3343046280": 0.0,
-          "node/3731202386": 0.0,
-          "node/3824356137": 0.0,
-          "node/4013837839": 0.0,
-          "node/4027548389": 0.0,
-          "node/4030794381": 0.0,
-          "node/4855419881": 0.0,
-          "node/13674307491": 0.0,
-          "node/5085885719": 0.0,
-          "node/5456398077": 0.0,
-          "node/5456398079": 0.0,
-          "node/6186649794": 0.0,
-          "node/6186649798": 0.0,
-          "node/6817614530": 0.02,
-          "node/6817614546": 0.0,
-          "node/6817614547": 0.0,
-          "node/7124730785": 0.0,
-          "relation/3545325": 0.0,
-          "node/3163977862": 0.0,
-          "relation/9188032": 0.0,
-          "way/112307863": 0.02,
-          "way/231778809": 0.02,
-          "way/231778976": 0.02,
-          "way/231779036": 0.0,
-          "way/231779254": 0.0,
-          "way/231779256": 0.0,
-          "way/327516815": 0.0,
-          "way/682699851": 0.0,
-          "way/894161835": 0.0,
-          "node/3163979862": 0.0,
-          "way/894161836": 0.0,
-          "node/3163980561": 0.04,
-          "node/3163981462": 0.0,
-          "node/3163981463": 0.0,
-          "node/3163981662": 0.0,
-          "none": 0.84
-        },
-        "usage": {
-          "input_tokens": 7093,
-          "output_tokens": 524
-        },
-        "model": "jev-1.14.0"
-      },
-      "reason": "Jevの信頼度が閾値に届きません。",
+      "status": "decided",
       "issue": 59,
-      "issueEvidenceHash": "6222ccc4d985b49b15bff3569259b6bc0ba9f2b2f48961edac1c3fd60079bd9e",
-      "issueBody": "[bot] 相談支援事業所ＭｏｉのOSM参照を確認してください。\n\n対象UUID: `019ca6b1-dc00-7e93-9ef6-266039bd8e81`\n現在の参照: なし\n\n確認理由: Jevの信頼度が閾値に届きません。\nJev: `none` / confidence `0.8400`（正答率ではありません）\n\n候補または「該当なし」を一つ選び、最後に確定欄をチェックしてください。\n\n- [ ] `node/12350277701` 神房 / 22.5 m / [OSM](https://www.openstreetmap.org/node/12350277701) / [地図](https://www.openstreetmap.org/?mlat=35.6955603&mlon=139.757423#map=19/35.6955603/139.757423)\n- [ ] `node/1276856487` 欧風カレー ボンディ 神保町本店 / 19.5 m / [OSM](https://www.openstreetmap.org/node/1276856487) / [地図](https://www.openstreetmap.org/?mlat=35.6955618&mlon=139.757376#map=19/35.6955618/139.757376)\n- [ ] `node/1276856510` みわ書房 / 12.3 m / [OSM](https://www.openstreetmap.org/node/1276856510) / [地図](https://www.openstreetmap.org/?mlat=35.6956788&mlon=139.7573733#map=19/35.6956788/139.7573733)\n- [ ] `node/13674307491` 神田神保町 / 23.2 m / [OSM](https://www.openstreetmap.org/node/13674307491) / [地図](https://www.openstreetmap.org/?mlat=35.6956696&mlon=139.7569835#map=19/35.6956696/139.7569835)\n- [ ] `node/3163977862` 古賀書店 / 24.9 m / [OSM](https://www.openstreetmap.org/node/3163977862) / [地図](https://www.openstreetmap.org/?mlat=35.69575&mlon=139.756971#map=19/35.69575/139.756971)\n- [ ] `node/3163979862` 日本特価書籍 / 44.2 m / [OSM](https://www.openstreetmap.org/node/3163979862) / [地図](https://www.openstreetmap.org/?mlat=35.6957121&mlon=139.7567499#map=19/35.6957121/139.7567499)\n- [ ] `node/3163980561` 文華堂書店 / 2.2 m / [OSM](https://www.openstreetmap.org/node/3163980561) / [地図](https://www.openstreetmap.org/?mlat=35.6956926&mlon=139.7572152#map=19/35.6956926/139.7572152)\n- [ ] `node/3163981462` 長島書店 / 30.6 m / [OSM](https://www.openstreetmap.org/node/3163981462) / [地図](https://www.openstreetmap.org/?mlat=35.695759&mlon=139.756909#map=19/35.695759/139.756909)\n- [ ] `node/3163981463` 篠村書店 / 41.5 m / [OSM](https://www.openstreetmap.org/node/3163981463) / [地図](https://www.openstreetmap.org/?mlat=35.6957321&mlon=139.756781#map=19/35.6957321/139.756781)\n- [ ] `node/3163981662` 山陽堂書店 / 38.8 m / [OSM](https://www.openstreetmap.org/node/3163981662) / [地図](https://www.openstreetmap.org/?mlat=35.6957489&mlon=139.7568135#map=19/35.6957489/139.7568135)\n- [ ] `node/3163981761` 矢口書店 / 19.6 m / [OSM](https://www.openstreetmap.org/node/3163981761) / [地図](https://www.openstreetmap.org/?mlat=35.6957383&mlon=139.7570282#map=19/35.6957383/139.7570282)\n- [ ] `node/3163982261` 澤口書店 / 34.8 m / [OSM](https://www.openstreetmap.org/node/3163982261) / [地図](https://www.openstreetmap.org/?mlat=35.695744&mlon=139.756858#map=19/35.695744/139.756858)\n- [ ] `node/3244187061` セブン-イレブン / 49.8 m / [OSM](https://www.openstreetmap.org/node/3244187061) / [地図](https://www.openstreetmap.org/?mlat=35.696122&mlon=139.757066#map=19/35.696122/139.757066)\n- [ ] `node/3343046270` ブックパワー R.B.S / 12.1 m / [OSM](https://www.openstreetmap.org/node/3343046270) / [地図](https://www.openstreetmap.org/?mlat=35.6957065&mlon=139.7573721#map=19/35.6957065/139.7573721)\n- [ ] `node/3343046271` ブンケン・ロック・サイド / 7.9 m / [OSM](https://www.openstreetmap.org/node/3343046271) / [地図](https://www.openstreetmap.org/?mlat=35.6957654&mlon=139.7572586#map=19/35.6957654/139.7572586)\n- [ ] `node/3343046272` 中川書店 / 5.0 m / [OSM](https://www.openstreetmap.org/node/3343046272) / [地図](https://www.openstreetmap.org/?mlat=35.6956844&mlon=139.757185#map=19/35.6956844/139.757185)\n- [ ] `node/3343046273` 夢野書店 / 13.7 m / [OSM](https://www.openstreetmap.org/node/3343046273) / [地図](https://www.openstreetmap.org/?mlat=35.6957561&mlon=139.7573721#map=19/35.6957561/139.7573721)\n- [ ] `node/3343046274` 南海堂書店 / 8.8 m / [OSM](https://www.openstreetmap.org/node/3343046274) / [地図](https://www.openstreetmap.org/?mlat=35.6957641&mlon=139.7571875#map=19/35.6957641/139.7571875)\n- [ ] `node/3343046275` 原書房 / 8.1 m / [OSM](https://www.openstreetmap.org/node/3343046275) / [地図](https://www.openstreetmap.org/?mlat=35.6957514&mlon=139.7572986#map=19/35.6957514/139.7572986)\n- [ ] `node/3343046276` 神保町ブックセンター / 27.4 m / [OSM](https://www.openstreetmap.org/node/3343046276) / [地図](https://www.openstreetmap.org/?mlat=35.6957517&mlon=139.7575349#map=19/35.6957517/139.7575349)\n- [ ] `node/3343046277` 芳賀書店 / 13.4 m / [OSM](https://www.openstreetmap.org/node/3343046277) / [地図](https://www.openstreetmap.org/?mlat=35.6956472&mlon=139.757374#map=19/35.6956472/139.757374)\n- [ ] `node/3343046278` 飯島書店 / 4.4 m / [OSM](https://www.openstreetmap.org/node/3343046278) / [地図](https://www.openstreetmap.org/?mlat=35.6957276&mlon=139.7572692#map=19/35.6957276/139.7572692)\n- [ ] `node/3343046279` 高山本店 / 15.1 m / [OSM](https://www.openstreetmap.org/node/3343046279) / [地図](https://www.openstreetmap.org/?mlat=35.6957784&mlon=139.7573723#map=19/35.6957784/139.7573723)\n- [ ] `node/3343046280` 鳥海書房 / 12.7 m / [OSM](https://www.openstreetmap.org/node/3343046280) / [地図](https://www.openstreetmap.org/?mlat=35.695733&mlon=139.7573718#map=19/35.695733/139.7573718)\n- [ ] `node/3731202386` ファミリーマート / 36.0 m / [OSM](https://www.openstreetmap.org/node/3731202386) / [地図](https://www.openstreetmap.org/?mlat=35.6954129&mlon=139.7574312#map=19/35.6954129/139.7574312)\n- [ ] `node/3824356137` 歴史と文化の散歩道 神田本屋街散歩 / 48.6 m / [OSM](https://www.openstreetmap.org/node/3824356137) / [地図](https://www.openstreetmap.org/?mlat=35.6958412&mlon=139.7577461#map=19/35.6958412/139.7577461)\n- [ ] `node/4013837839` 株式会社富士レコード社 / 17.0 m / [OSM](https://www.openstreetmap.org/node/4013837839) / [地図](https://www.openstreetmap.org/?mlat=35.6955684&mlon=139.7573411#map=19/35.6955684/139.7573411)\n- [ ] `node/4027548389` らくごカフェ / 15.2 m / [OSM](https://www.openstreetmap.org/node/4027548389) / [地図](https://www.openstreetmap.org/?mlat=35.6956151&mlon=139.7573744#map=19/35.6956151/139.7573744)\n- [ ] `node/4030794381` 秦川堂書店 / 27.0 m / [OSM](https://www.openstreetmap.org/node/4030794381) / [地図](https://www.openstreetmap.org/?mlat=35.6957167&mlon=139.7575369#map=19/35.6957167/139.7575369)\n- [ ] `node/4855419881` 神保町 / 43.1 m / [OSM](https://www.openstreetmap.org/node/4855419881) / [地図](https://www.openstreetmap.org/?mlat=35.6959843&mlon=139.756919#map=19/35.6959843/139.756919)\n- [ ] `node/5085885719` 神田北神保町郵便局 / 47.0 m / [OSM](https://www.openstreetmap.org/node/5085885719) / [地図](https://www.openstreetmap.org/?mlat=35.6961194&mlon=139.75725#map=19/35.6961194/139.75725)\n- [ ] `node/5456398077` なかや / 34.7 m / [OSM](https://www.openstreetmap.org/node/5456398077) / [地図](https://www.openstreetmap.org/?mlat=35.6953963&mlon=139.7573425#map=19/35.6953963/139.7573425)\n- [ ] `node/5456398079` Muang Thai / 43.8 m / [OSM](https://www.openstreetmap.org/node/5456398079) / [地図](https://www.openstreetmap.org/?mlat=35.6954016&mlon=139.7575605#map=19/35.6954016/139.7575605)\n- [ ] `node/6186649794` 神保町 / 33.8 m / [OSM](https://www.openstreetmap.org/node/6186649794) / [地図](https://www.openstreetmap.org/?mlat=35.6958683&mlon=139.75693#map=19/35.6958683/139.75693)\n- [ ] `node/6186649798` 神保町 / 25.8 m / [OSM](https://www.openstreetmap.org/node/6186649798) / [地図](https://www.openstreetmap.org/?mlat=35.6959273&mlon=139.7572047#map=19/35.6959273/139.7572047)\n- [ ] `node/6817614530` すごろくや / 12.0 m / [OSM](https://www.openstreetmap.org/node/6817614530) / [地図](https://www.openstreetmap.org/?mlat=35.6956938&mlon=139.7573721#map=19/35.6956938/139.7573721)\n- [ ] `node/6817614546` 虎連坊 / 49.4 m / [OSM](https://www.openstreetmap.org/node/6817614546) / [地図](https://www.openstreetmap.org/?mlat=35.6956489&mlon=139.7577828#map=19/35.6956489/139.7577828)\n- [ ] `node/6817614547` 三菱UFJ不動産販売 / 49.0 m / [OSM](https://www.openstreetmap.org/node/6817614547) / [地図](https://www.openstreetmap.org/?mlat=35.6956794&mlon=139.7577815#map=19/35.6956794/139.7577815)\n- [ ] `node/7124730785` 原書房 / 6.9 m / [OSM](https://www.openstreetmap.org/node/7124730785) / [地図](https://www.openstreetmap.org/?mlat=35.6957575&mlon=139.7572262#map=19/35.6957575/139.7572262)\n- [ ] `relation/3545325` 神田神保町 / 49.1 m / [OSM](https://www.openstreetmap.org/relation/3545325) / [地図](https://www.openstreetmap.org/?mlat=35.69606675&mlon=139.75694195#map=19/35.69606675/139.75694195)\n- [ ] `relation/9188032` 神保町駅 (stop_area_group) / 21.0 m / [OSM](https://www.openstreetmap.org/relation/9188032) / [地図](https://www.openstreetmap.org/?mlat=35.695617999999996&mlon=139.7570275#map=19/35.695617999999996/139.7570275)\n- [ ] `way/112307863` 神田古書センタービル / 13.2 m / [OSM](https://www.openstreetmap.org/way/112307863) / [地図](https://www.openstreetmap.org/?mlat=35.69566465&mlon=139.7573793#map=19/35.69566465/139.7573793)\n- [ ] `way/231778809` 神保町藤和ビル / 31.6 m / [OSM](https://www.openstreetmap.org/way/231778809) / [地図](https://www.openstreetmap.org/?mlat=35.69541235&mlon=139.75723435#map=19/35.69541235/139.75723435)\n- [ ] `way/231778976` 英光ビル / 14.2 m / [OSM](https://www.openstreetmap.org/way/231778976) / [地図](https://www.openstreetmap.org/?mlat=35.69556895&mlon=139.75722975000002#map=19/35.69556895/139.75722975000002)\n- [ ] `way/231779036` MF BUILD. / 35.7 m / [OSM](https://www.openstreetmap.org/way/231779036) / [地図](https://www.openstreetmap.org/?mlat=35.69542165&mlon=139.7574436#map=19/35.69542165/139.7574436)\n- [ ] `way/231779254` タイムズ / 29.7 m / [OSM](https://www.openstreetmap.org/way/231779254) / [地図](https://www.openstreetmap.org/?mlat=35.69556625&mlon=139.75695175#map=19/35.69556625/139.75695175)\n- [ ] `way/231779256` 岩波書店アネックス / 26.8 m / [OSM](https://www.openstreetmap.org/way/231779256) / [地図](https://www.openstreetmap.org/?mlat=35.69567605&mlon=139.75753435000001#map=19/35.69567605/139.75753435000001)\n- [ ] `way/327516815` 神保町交差点自転車駐車場 / 18.4 m / [OSM](https://www.openstreetmap.org/way/327516815) / [地図](https://www.openstreetmap.org/?mlat=35.6957063&mlon=139.75744214999997#map=19/35.6957063/139.75744214999997)\n- [ ] `way/682699851` 靖国通り / 22.3 m / [OSM](https://www.openstreetmap.org/way/682699851) / [地図](https://www.openstreetmap.org/?mlat=35.69587715&mlon=139.75713224999998#map=19/35.69587715/139.75713224999998)\n- [ ] `way/894161835` 都営地下鉄新宿線 / 28.7 m / [OSM](https://www.openstreetmap.org/way/894161835) / [地図](https://www.openstreetmap.org/?mlat=35.6959515&mlon=139.75718815#map=19/35.6959515/139.75718815)\n- [ ] `way/894161836` 都営地下鉄新宿線 / 24.2 m / [OSM](https://www.openstreetmap.org/way/894161836) / [地図](https://www.openstreetmap.org/?mlat=35.695911249999995&mlon=139.7571919#map=19/35.695911249999995/139.7571919)\n- [ ] `none` 該当なし（OSMとそれに伴うWikidataの参照を解除）\n\n- [ ] 判断を確定する\n\n<!-- osm-review:019ca6b1-dc00-7e93-9ef6-266039bd8e81:6222ccc4d985b49b15bff3569259b6bc0ba9f2b2f48961edac1c3fd60079bd9e -->\n"
+      "human": {
+        "choice": "none",
+        "editor": "nawashiro",
+        "editedAt": "2026-10-28T07:22:38Z",
+        "url": "https://github.com/nawashiro/chiyoda_city_main_facilities/issues/59",
+        "issue": 59
+      },
+      "choice": "none",
+      "method": "human"
     },
     "019fa880-5cd4-7122-bc68-e8a327846042": {
       "evidence": {
@@ -4829,21 +4732,8 @@
       "evidenceHash": "7fc5c90e73f280add564a112c1470b31a9e8aaedbb710c2d1dcf66dfa3708021",
       "current": "way/30680236",
       "status": "decided",
-      "jev": {
-        "choice": "way/30680236",
-        "confidence": 0.96,
-        "probabilities": {
-          "way/30680236": 0.98,
-          "none": 0.02
-        },
-        "usage": {
-          "input_tokens": 656,
-          "output_tokens": 35
-        },
-        "model": "jev-1.14.0"
-      },
       "choice": "way/30680236",
-      "method": "jev"
+      "method": "source_record"
     },
     "019fa880-5cd5-713a-8135-779f14050ab2": {
       "evidence": {
@@ -6963,27 +6853,10 @@
         ]
       },
       "evidenceHash": "f5a4113fd02a6c26f1dc87f43ecf57db6ac7d24e2ba2a4d96ae2e62c07f7f6b1",
-      "current": null,
+      "current": "way/67027576",
       "status": "decided",
-      "jev": {
-        "choice": "way/67027576",
-        "confidence": 0.99,
-        "probabilities": {
-          "relation/4080936": 0.0,
-          "relation/7904409": 0.0,
-          "relation/7904427": 0.0,
-          "way/48780823": 0.0,
-          "way/67027576": 0.99,
-          "none": 0.01
-        },
-        "usage": {
-          "input_tokens": 1378,
-          "output_tokens": 71
-        },
-        "model": "jev-1.14.0"
-      },
       "choice": "way/67027576",
-      "method": "jev"
+      "method": "source_record"
     },
     "019fa880-5cd5-7832-ae65-182a148bfa2f": {
       "evidence": {
@@ -8540,28 +8413,17 @@
       },
       "evidenceHash": "9c72c768100eeb0c936325cc2dbd4660a3bc2621f2577c67a44f771c9ea665b9",
       "current": null,
-      "status": "needs_review",
-      "jev": {
-        "choice": "none",
-        "confidence": 0.65,
-        "probabilities": {
-          "node/13468335880": 0.28,
-          "node/5665860805": 0.0,
-          "node/5746689924": 0.0,
-          "way/217378904": 0.01,
-          "way/217378912": 0.0,
-          "none": 0.71
-        },
-        "usage": {
-          "input_tokens": 1185,
-          "output_tokens": 69
-        },
-        "model": "jev-1.14.0"
-      },
-      "reason": "Jevの信頼度が閾値に届きません。",
+      "status": "decided",
       "issue": 60,
-      "issueEvidenceHash": "9c72c768100eeb0c936325cc2dbd4660a3bc2621f2577c67a44f771c9ea665b9",
-      "issueBody": "[bot] ちよだパークサイドプラザのOSM参照を確認してください。\n\n対象UUID: `019fa880-5cd5-7d23-9c07-684d56afd77e`\n現在の参照: なし\n\n確認理由: Jevの信頼度が閾値に届きません。\nJev: `none` / confidence `0.6500`（正答率ではありません）\n\n候補または「該当なし」を一つ選び、最後に確定欄をチェックしてください。\n\n- [ ] `node/13468335880` ちよだパークサイドプラザ区民図書室 / 6.6 m / [OSM](https://www.openstreetmap.org/node/13468335880) / [地図](https://www.openstreetmap.org/?mlat=35.6992879&mlon=139.7788067#map=19/35.6992879/139.7788067)\n- [ ] `node/5665860805` 千代田区立いずみこども園 / 46.7 m / [OSM](https://www.openstreetmap.org/node/5665860805) / [地図](https://www.openstreetmap.org/?mlat=35.6993449&mlon=139.7782981#map=19/35.6993449/139.7782981)\n- [ ] `node/5746689924` 和泉公園（西側入口） / 47.5 m / [OSM](https://www.openstreetmap.org/node/5746689924) / [地図](https://www.openstreetmap.org/?mlat=35.6988162&mlon=139.7789316#map=19/35.6988162/139.7789316)\n- [ ] `way/217378904` 和泉公園 / 41.5 m / [OSM](https://www.openstreetmap.org/way/217378904) / [地図](https://www.openstreetmap.org/?mlat=35.69904685&mlon=139.7791959#map=19/35.69904685/139.7791959)\n- [ ] `way/217378912` 千代田区立 和泉小学校 / 31.0 m / [OSM](https://www.openstreetmap.org/way/217378912) / [地図](https://www.openstreetmap.org/?mlat=35.69910685000001&mlon=139.77848645#map=19/35.69910685000001/139.77848645)\n- [ ] `none` 該当なし（OSMとそれに伴うWikidataの参照を解除）\n\n- [ ] 判断を確定する\n\n<!-- osm-review:019fa880-5cd5-7d23-9c07-684d56afd77e:9c72c768100eeb0c936325cc2dbd4660a3bc2621f2577c67a44f771c9ea665b9 -->\n"
+      "human": {
+        "choice": "none",
+        "editor": "nawashiro",
+        "editedAt": "2026-10-28T07:22:04Z",
+        "url": "https://github.com/nawashiro/chiyoda_city_main_facilities/issues/60",
+        "issue": 60
+      },
+      "choice": "none",
+      "method": "human"
     },
     "019fa880-5cd5-7d2b-abb0-d80f16d6a04a": {
       "evidence": {
@@ -8666,27 +8528,17 @@
       },
       "evidenceHash": "fc53d58e3a3cad4cce291702424cb137cf22c79af630c8113c1ba767f86739e5",
       "current": null,
-      "status": "needs_review",
-      "jev": {
-        "choice": "node/5021209549",
-        "confidence": 0.74,
-        "probabilities": {
-          "node/11436157594": 0.16,
-          "node/5021209549": 0.79,
-          "way/47418327": 0.0,
-          "way/651691640": 0.01,
-          "none": 0.04
-        },
-        "usage": {
-          "input_tokens": 910,
-          "output_tokens": 62
-        },
-        "model": "jev-1.14.0"
-      },
-      "reason": "Jevの信頼度が閾値に届きません。",
+      "status": "decided",
       "issue": 61,
-      "issueEvidenceHash": "fc53d58e3a3cad4cce291702424cb137cf22c79af630c8113c1ba767f86739e5",
-      "issueBody": "[bot] 岩本町ほほえみプラザのOSM参照を確認してください。\n\n対象UUID: `019fa880-5cd5-7d31-9979-79d32157427a`\n現在の参照: なし\n\n確認理由: Jevの信頼度が閾値に届きません。\nJev: `node/5021209549` / confidence `0.7400`（正答率ではありません）\n\n候補または「該当なし」を一つ選び、最後に確定欄をチェックしてください。\n\n- [ ] `node/11436157594` 岩本町ほほえみプラザ / 22.6 m / [OSM](https://www.openstreetmap.org/node/11436157594) / [地図](https://www.openstreetmap.org/?mlat=35.69441&mlon=139.777715#map=19/35.69441/139.777715)\n- [ ] `node/5021209549` 岩本町ほほえみプラザ / 7.9 m / [OSM](https://www.openstreetmap.org/node/5021209549) / [地図](https://www.openstreetmap.org/?mlat=35.6942078&mlon=139.7777528#map=19/35.6942078/139.7777528)\n- [ ] `way/47418327` 大門通り / 40.9 m / [OSM](https://www.openstreetmap.org/way/47418327) / [地図](https://www.openstreetmap.org/?mlat=35.6942353&mlon=139.77738184999998#map=19/35.6942353/139.77738184999998)\n- [ ] `way/651691640` 七瀬ビル / 48.0 m / [OSM](https://www.openstreetmap.org/way/651691640) / [地図](https://www.openstreetmap.org/?mlat=35.69465795&mlon=139.7777462#map=19/35.69465795/139.7777462)\n- [ ] `none` 該当なし（OSMとそれに伴うWikidataの参照を解除）\n\n- [ ] 判断を確定する\n\n<!-- osm-review:019fa880-5cd5-7d31-9979-79d32157427a:fc53d58e3a3cad4cce291702424cb137cf22c79af630c8113c1ba767f86739e5 -->\n"
+      "human": {
+        "choice": "none",
+        "editor": "nawashiro",
+        "editedAt": "2026-10-28T07:20:33Z",
+        "url": "https://github.com/nawashiro/chiyoda_city_main_facilities/issues/61",
+        "issue": 61
+      },
+      "choice": "none",
+      "method": "human"
     },
     "019fa880-5cd5-7d9b-ae8f-d7d00901be5d": {
       "evidence": {
@@ -8950,6 +8802,7 @@
       "evidenceHash": "de78ca919a30031fb96c0b2dbe2fceb3dd6609c8993a705ad5c1671e6dbe1edc",
       "current": null,
       "status": "needs_review",
+      "issue": 62,
       "jev": {
         "choice": "node/6900192225",
         "confidence": 0.77,
@@ -8974,10 +8827,7 @@
         },
         "model": "jev-1.14.0"
       },
-      "reason": "Jevの信頼度が閾値に届きません。",
-      "issue": 62,
-      "issueEvidenceHash": "de78ca919a30031fb96c0b2dbe2fceb3dd6609c8993a705ad5c1671e6dbe1edc",
-      "issueBody": "[bot] TOHO CINEMAS HIBIYAのOSM参照を確認してください。\n\n対象UUID: `019fa880-5cd5-7d9d-9713-970aa8443759`\n現在の参照: なし\n\n確認理由: Jevの信頼度が閾値に届きません。\nJev: `node/6900192225` / confidence `0.7700`（正答率ではありません）\n\n候補または「該当なし」を一つ選び、最後に確定欄をチェックしてください。\n\n- [ ] `node/12103749508` 阪神電気鉄道株式会社東京事務所 / 48.8 m / [OSM](https://www.openstreetmap.org/node/12103749508) / [地図](https://www.openstreetmap.org/?mlat=35.6731065&mlon=139.7599528#map=19/35.6731065/139.7599528)\n- [ ] `node/1367460925` 日比谷しまね館 / 49.1 m / [OSM](https://www.openstreetmap.org/node/1367460925) / [地図](https://www.openstreetmap.org/?mlat=35.6729335&mlon=139.7599337#map=19/35.6729335/139.7599337)\n- [ ] `node/260409658` 東京宝塚劇場 / 32.9 m / [OSM](https://www.openstreetmap.org/node/260409658) / [地図](https://www.openstreetmap.org/?mlat=35.6728254&mlon=139.7592046#map=19/35.6728254/139.7592046)\n- [ ] `node/4743155124` 日比谷シャンテ / 42.8 m / [OSM](https://www.openstreetmap.org/node/4743155124) / [地図](https://www.openstreetmap.org/?mlat=35.6730477&mlon=139.7598882#map=19/35.6730477/139.7598882)\n- [ ] `node/5539721821` 東京ミッドタウン日比谷 / 47.5 m / [OSM](https://www.openstreetmap.org/node/5539721821) / [地図](https://www.openstreetmap.org/?mlat=35.6734721&mlon=139.7592489#map=19/35.6734721/139.7592489)\n- [ ] `node/6900192224` TOHO CINEMAS HIBIYA / 28.3 m / [OSM](https://www.openstreetmap.org/node/6900192224) / [地図](https://www.openstreetmap.org/?mlat=35.6733194&mlon=139.7594538#map=19/35.6733194/139.7594538)\n- [ ] `node/6900192225` TOHO CINEMAS HIBIYA / 0.0 m / [OSM](https://www.openstreetmap.org/node/6900192225) / [地図](https://www.openstreetmap.org/?mlat=35.6730666&mlon=139.7594149#map=19/35.6730666/139.7594149)\n- [ ] `node/7021069137` 東宝 / 49.8 m / [OSM](https://www.openstreetmap.org/node/7021069137) / [地図](https://www.openstreetmap.org/?mlat=35.6731603&mlon=139.7599541#map=19/35.6731603/139.7599541)\n- [ ] `node/9064072598` 宝塚歌劇インフォメーションセンター / 42.2 m / [OSM](https://www.openstreetmap.org/node/9064072598) / [地図](https://www.openstreetmap.org/?mlat=35.6728563&mlon=139.759026#map=19/35.6728563/139.759026)\n- [ ] `way/145402280` 日比谷仲通り / 26.8 m / [OSM](https://www.openstreetmap.org/way/145402280) / [地図](https://www.openstreetmap.org/?mlat=35.6730577&mlon=139.75971155#map=19/35.6730577/139.75971155)\n- [ ] `way/145402292` 東宝日比谷ビル / 48.2 m / [OSM](https://www.openstreetmap.org/way/145402292) / [地図](https://www.openstreetmap.org/?mlat=35.67307785&mlon=139.75994839999998#map=19/35.67307785/139.75994839999998)\n- [ ] `way/145402338` 東京宝塚ビル / 30.7 m / [OSM](https://www.openstreetmap.org/way/145402338) / [地図](https://www.openstreetmap.org/?mlat=35.6729641&mlon=139.7590988#map=19/35.6729641/139.7590988)\n- [ ] `none` 該当なし（OSMとそれに伴うWikidataの参照を解除）\n\n- [ ] 判断を確定する\n\n<!-- osm-review:019fa880-5cd5-7d9d-9713-970aa8443759:de78ca919a30031fb96c0b2dbe2fceb3dd6609c8993a705ad5c1671e6dbe1edc -->\n"
+      "reason": "Jevの信頼度が閾値に届きません。"
     },
     "019fa880-5cd5-7dc7-8e68-e49750a54b8d": {
       "evidence": {
@@ -10076,28 +9926,17 @@
       },
       "evidenceHash": "ff62641ba812c49631d0307105c7b390e7f31a29eadeca8642f24b76db952825",
       "current": null,
-      "status": "needs_review",
-      "jev": {
-        "choice": "none",
-        "confidence": 0.87,
-        "probabilities": {
-          "node/13325098701": 0.03,
-          "node/1420770195": 0.01,
-          "node/7780246985": 0.0,
-          "way/144852506": 0.01,
-          "way/144852516": 0.06,
-          "none": 0.89
-        },
-        "usage": {
-          "input_tokens": 1061,
-          "output_tokens": 69
-        },
-        "model": "jev-1.14.0"
-      },
-      "reason": "Jevの信頼度が閾値に届きません。",
+      "status": "decided",
       "issue": 63,
-      "issueEvidenceHash": "ff62641ba812c49631d0307105c7b390e7f31a29eadeca8642f24b76db952825",
-      "issueBody": "[bot] 四番町児童館のOSM参照を確認してください。\n\n対象UUID: `019fa880-5cd5-7e0d-8300-8ab683bd0c1d`\n現在の参照: なし\n\n確認理由: Jevの信頼度が閾値に届きません。\nJev: `none` / confidence `0.8700`（正答率ではありません）\n\n候補または「該当なし」を一つ選び、最後に確定欄をチェックしてください。\n\n- [ ] `node/13325098701` No4 / 45.0 m / [OSM](https://www.openstreetmap.org/node/13325098701) / [地図](https://www.openstreetmap.org/?mlat=35.6881905&mlon=139.7360651#map=19/35.6881905/139.7360651)\n- [ ] `node/1420770195` 千代田四番町郵便局 / 47.7 m / [OSM](https://www.openstreetmap.org/node/1420770195) / [地図](https://www.openstreetmap.org/?mlat=35.6886239&mlon=139.7362186#map=19/35.6886239/139.7362186)\n- [ ] `node/7780246985` No.4 / 44.4 m / [OSM](https://www.openstreetmap.org/node/7780246985) / [地図](https://www.openstreetmap.org/?mlat=35.6881915&mlon=139.7360715#map=19/35.6881915/139.7360715)\n- [ ] `way/144852506` 日テレ四番町ビル 3号館 / 43.8 m / [OSM](https://www.openstreetmap.org/way/144852506) / [地図](https://www.openstreetmap.org/?mlat=35.6878973&mlon=139.73649484999999#map=19/35.6878973/139.73649484999999)\n- [ ] `way/144852516` 日テレ四番町ビル 4号館 / 47.8 m / [OSM](https://www.openstreetmap.org/way/144852516) / [地図](https://www.openstreetmap.org/?mlat=35.6878981&mlon=139.7367686#map=19/35.6878981/139.7367686)\n- [ ] `none` 該当なし（OSMとそれに伴うWikidataの参照を解除）\n\n- [ ] 判断を確定する\n\n<!-- osm-review:019fa880-5cd5-7e0d-8300-8ab683bd0c1d:ff62641ba812c49631d0307105c7b390e7f31a29eadeca8642f24b76db952825 -->\n"
+      "human": {
+        "choice": "none",
+        "editor": "nawashiro",
+        "editedAt": "2026-10-28T07:18:15Z",
+        "url": "https://github.com/nawashiro/chiyoda_city_main_facilities/issues/63",
+        "issue": 63
+      },
+      "choice": "none",
+      "method": "human"
     },
     "019fa880-5cd5-7e95-9ea4-e8808e845cd7": {
       "evidence": {
@@ -11529,35 +11368,17 @@
       },
       "evidenceHash": "03907358c9feb9039a7da3d1d0df505aedc038e19e64e9e06e1f2548e7379cac",
       "current": null,
-      "status": "needs_review",
-      "jev": {
-        "choice": "none",
-        "confidence": 0.47,
-        "probabilities": {
-          "node/11374755862": 0.12,
-          "node/11374755863": 0.01,
-          "way/675832452": 0.23,
-          "way/743276344": 0.0,
-          "node/2286588160": 0.0,
-          "node/2509984547": 0.0,
-          "node/2509991339": 0.01,
-          "node/7132279496": 0.0,
-          "node/8995417645": 0.02,
-          "way/137964516": 0.0,
-          "way/171225126": 0.09,
-          "way/28728110": 0.01,
-          "none": 0.51
-        },
-        "usage": {
-          "input_tokens": 1959,
-          "output_tokens": 134
-        },
-        "model": "jev-1.14.0"
-      },
-      "reason": "Jevの信頼度が閾値に届きません。",
+      "status": "decided",
       "issue": 64,
-      "issueEvidenceHash": "03907358c9feb9039a7da3d1d0df505aedc038e19e64e9e06e1f2548e7379cac",
-      "issueBody": "[bot] JAPAN ART BRIDGEのOSM参照を確認してください。\n\n対象UUID: `019fa880-5cd6-7324-b3fe-943c71e289b7`\n現在の参照: なし\n\n確認理由: Jevの信頼度が閾値に届きません。\nJev: `none` / confidence `0.4700`（正答率ではありません）\n\n候補または「該当なし」を一つ選び、最後に確定欄をチェックしてください。\n\n- [ ] `node/11374755862` 万世橋と神田祭り / 35.6 m / [OSM](https://www.openstreetmap.org/node/11374755862) / [地図](https://www.openstreetmap.org/?mlat=35.697201&mlon=139.7696502#map=19/35.697201/139.7696502)\n- [ ] `node/11374755863` 御成道（筋違門跡） / 31.9 m / [OSM](https://www.openstreetmap.org/node/11374755863) / [地図](https://www.openstreetmap.org/?mlat=35.6974531&mlon=139.7694632#map=19/35.6974531/139.7694632)\n- [ ] `node/2286588160` NewDays / 48.8 m / [OSM](https://www.openstreetmap.org/node/2286588160) / [地図](https://www.openstreetmap.org/?mlat=35.6970576&mlon=139.769882#map=19/35.6970576/139.769882)\n- [ ] `node/2509984547` La Petit Kanda / 49.0 m / [OSM](https://www.openstreetmap.org/node/2509984547) / [地図](https://www.openstreetmap.org/?mlat=35.697711&mlon=139.769342#map=19/35.697711/139.769342)\n- [ ] `node/2509991339` フクモリ / 35.7 m / [OSM](https://www.openstreetmap.org/node/2509991339) / [地図](https://www.openstreetmap.org/?mlat=35.697606&mlon=139.769443#map=19/35.697606/139.769443)\n- [ ] `node/7132279496` マーチエキュート神田万世橋 / 34.2 m / [OSM](https://www.openstreetmap.org/node/7132279496) / [地図](https://www.openstreetmap.org/?mlat=35.6971931&mlon=139.7698975#map=19/35.6971931/139.7698975)\n- [ ] `node/8995417645` 万世橋駅 跡地 / 21.5 m / [OSM](https://www.openstreetmap.org/node/8995417645) / [地図](https://www.openstreetmap.org/?mlat=35.6975133&mlon=139.7695765#map=19/35.6975133/139.7695765)\n- [ ] `way/137964516` 中央本線 / 5.7 m / [OSM](https://www.openstreetmap.org/way/137964516) / [地図](https://www.openstreetmap.org/?mlat=35.697506399999995&mlon=139.7697517#map=19/35.697506399999995/139.7697517)\n- [ ] `way/171225126` 旧万世橋駅 / 14.9 m / [OSM](https://www.openstreetmap.org/way/171225126) / [地図](https://www.openstreetmap.org/?mlat=35.69736245&mlon=139.7698546#map=19/35.69736245/139.7698546)\n- [ ] `way/28728110` 中央本線 / 10.1 m / [OSM](https://www.openstreetmap.org/way/28728110) / [地図](https://www.openstreetmap.org/?mlat=35.6974658&mlon=139.76970575#map=19/35.6974658/139.76970575)\n- [ ] `way/675832452` マーチ エキュート 神田万世橋 / 0.0 m / [OSM](https://www.openstreetmap.org/way/675832452) / [地図](https://www.openstreetmap.org/?mlat=35.69749255&mlon=139.7698128#map=19/35.69749255/139.7698128)\n- [ ] `way/743276344` RESTAURANT PLATINUM FISH マーチエキュート神田万世橋店 / 33.3 m / [OSM](https://www.openstreetmap.org/way/743276344) / [地図](https://www.openstreetmap.org/?mlat=35.6972406&mlon=139.77001315#map=19/35.6972406/139.77001315)\n- [ ] `none` 該当なし（OSMとそれに伴うWikidataの参照を解除）\n\n- [ ] 判断を確定する\n\n<!-- osm-review:019fa880-5cd6-7324-b3fe-943c71e289b7:03907358c9feb9039a7da3d1d0df505aedc038e19e64e9e06e1f2548e7379cac -->\n"
+      "human": {
+        "choice": "none",
+        "editor": "nawashiro",
+        "editedAt": "2026-10-28T07:17:41Z",
+        "url": "https://github.com/nawashiro/chiyoda_city_main_facilities/issues/64",
+        "issue": 64
+      },
+      "choice": "none",
+      "method": "human"
     },
     "019fa880-5cd6-7359-b619-432ecb07b975": {
       "evidence": {
@@ -15868,10 +15689,10 @@
         ]
       },
       "evidenceHash": "afa80d6399dd9adc127d7808a520b808615dad01a86e123c4b28e772796a92d6",
-      "current": null,
+      "current": "way/675832452",
       "status": "decided",
       "choice": "way/675832452",
-      "method": "qid"
+      "method": "source_record"
     }
   }
 }
