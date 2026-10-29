@@ -13,4 +13,18 @@ OpenStreetMapの取得、施設の照合、確定分の反映、GitHub Pagesへ�
 | 変更を検証する | [検証](docs/reference/verification.md) |
 | 版を固定して配布する | [JSON-LDのリリース](docs/how-to/publish-release-jsonld.md) |
 
-GitHub Pagesは`site/places.jsonld`、GitHub Releasesは`places-<version>.jsonld`を配布します。形式と関連参照は[データ契約](docs/reference/data-contracts.md)、更新の流れは[データフロー](docs/explanation/data-flow.md)、再利用条件は[出典とライセンス](docs/reference/licenses.md)を参照してください。
+GitHub Pagesは`site/places.jsonld`、GitHub Releasesは`places-<version>.jsonld`を配布します。形式と関連参照は[データ契約](docs/reference/data-contracts.md)、更新の流れは[データフロー](docs/explanation/data-flow.md)、再利用条件は[出典とライセンス](docs/reference/sources-and-licenses.md)を参照してください。
+
+## リポジトリの構成
+
+| 場所 | 内容 |
+| --- | --- |
+| `data/` | 施設の正本`places.jsonld`、判断記録`osm-decisions.json`、更新元`sources.json` |
+| `imports/` | OSMの取得元・バージョン・ハッシュの記録 |
+| `inputs/` | 検索対象`facilities.json`（人が編集） |
+| `site/` | GitHub Pagesの配布物 |
+| `src/` `scripts/` | 検証・取得・照合・公開のPythonコードと`./fac` CLI |
+| `tests/` | unittest一式 |
+| `docs/` | この文書一式 |
+| `.github/` | 取得・公開・リリース・検証のworkflow |
+| `openspec/` | 仕様と変更の記録 |

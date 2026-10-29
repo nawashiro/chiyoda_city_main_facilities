@@ -15,7 +15,7 @@ git status --short
 
 作業者は、編集前に[データ契約](../reference/data-contracts.md)を確認します。
 
-作業者は、出典や再利用条件を変える場合、[出典とライセンス](../reference/licenses.md)を確認します。
+作業者は、出典や再利用条件を変える場合、[出典とライセンス](../reference/sources-and-licenses.md)を確認します。
 
 ## 3. 正本を変更する
 
