@@ -26,4 +26,4 @@ flowchart TD
 
 Pagesの公開元はSettings → Pages → Build and deploymentで`GitHub Actions`に設定します。公開直前にmainのSHAを検査し、古いSHAなら公開を失敗させます。公開に失敗した確認Issueは開いたまま残り、再実行で公開後の完了処理を行います。
 
-公開物はJSON-LDです。判断記録、取得物、確認本文は配布しません。公開対象の指定とReleaseも含む契約は[データ契約](../reference/data-contracts.md)を参照してください。公開データを戻す場合は[リリース手順の復元操作](../how-to/publish-release-jsonld.md#5-公開済み版へ戻す)を使い、mainをforce-pushしません。
+公開物はJSON-LDです。判断記録、取得物、確認本文は配布しません。公開対象の指定とReleaseも含む契約は[データ契約](../reference/data-contracts.md)を参照してください。公開データを戻す場合は[リリース手順の復元操作](../how-to/publish-release-jsonld.md#4-公開済み版へ戻す)を使い、mainをforce-pushしません。

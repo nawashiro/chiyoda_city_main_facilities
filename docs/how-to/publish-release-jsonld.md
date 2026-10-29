@@ -14,7 +14,7 @@ Actions の `release-jsonld` を手動実行し、`tag` に版番号を入力し
 
 ## 3. GitHub Release を公開する
 
-既存タグを対象に GitHub Release を作成し、published にします。下書きの作成や既存タグの存在だけでは workflow は起動せず、Release の公開時に起動します。
+配布するタグを対象に GitHub Release を作成し、published にします。タグがまだ存在しない場合は、Release の作成時に作られます。下書きの作成や既存タグの存在だけでは workflow は起動せず、Release の公開時に起動します。
 
 workflowは正本と検索入力を検証し、公開除外を反映したJSON-LDから版付きコピーを作成して、artifact と Release 添付に追加します。入力不能、JSON 不正、JSON-LD 検証失敗、書込失敗では停止します。Release 添付の `places-<tag>.jsonld` を確認します。
 
