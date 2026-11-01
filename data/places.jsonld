@@ -910,17 +910,6 @@
       ]
     },
     {
-      "@id": "urn:uuid:019fa880-5cd6-7324-b3fe-943c71e289b7",
-      "@type": [
-        "schema:Place"
-      ],
-      "schema:geo": {
-        "@type": "schema:GeoCoordinates",
-        "schema:latitude": 35.6974925,
-        "schema:longitude": 139.7698128
-      }
-    },
-    {
       "@id": "urn:uuid:019fa880-5cd6-7d38-b17b-55a1378dd9b8",
       "@type": [
         "schema:Place"
@@ -1230,28 +1219,6 @@
       ]
     },
     {
-      "@id": "urn:uuid:019ca6b1-dc00-71c7-a6b9-a16327abd921",
-      "@type": [
-        "schema:Place"
-      ],
-      "schema:geo": {
-        "@type": "schema:GeoCoordinates",
-        "schema:latitude": 35.70089939,
-        "schema:longitude": 139.77524876
-      }
-    },
-    {
-      "@id": "urn:uuid:019ca6b1-dc00-7215-add9-ba2573e674e5",
-      "@type": [
-        "schema:Place"
-      ],
-      "schema:geo": {
-        "@type": "schema:GeoCoordinates",
-        "schema:latitude": 35.6925809,
-        "schema:longitude": 139.77751572
-      }
-    },
-    {
       "@id": "urn:uuid:019ca6b1-dc00-74d7-b1ea-409942f9799c",
       "@type": [
         "schema:Place"
@@ -1264,17 +1231,6 @@
       "rdfs:seeAlso": [
         "https://www.openstreetmap.org/way/231540636"
       ]
-    },
-    {
-      "@id": "urn:uuid:019ca6b1-dc00-7571-905a-f4a52e6913f4",
-      "@type": [
-        "schema:Place"
-      ],
-      "schema:geo": {
-        "@type": "schema:GeoCoordinates",
-        "schema:latitude": 35.6996129,
-        "schema:longitude": 139.7451538
-      }
     },
     {
       "@id": "urn:uuid:019ca6b1-dc00-7774-920a-bdcf4344c0c0",
@@ -1303,17 +1259,6 @@
       "rdfs:seeAlso": [
         "https://www.openstreetmap.org/node/5285952021"
       ]
-    },
-    {
-      "@id": "urn:uuid:019ca6b1-dc00-7e93-9ef6-266039bd8e81",
-      "@type": [
-        "schema:Place"
-      ],
-      "schema:geo": {
-        "@type": "schema:GeoCoordinates",
-        "schema:latitude": 35.69569665,
-        "schema:longitude": 139.75723876
-      }
     },
     {
       "@id": "urn:uuid:019fa880-5cd5-781a-bcd1-ee19d7c897f9",

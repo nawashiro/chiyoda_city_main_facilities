@@ -25,9 +25,9 @@ def main(argv:list[str]|None=None)->int:
     subs=parser.add_subparsers(dest="command",required=True)
     validate=subs.add_parser("jsonld-validate"); validate.add_argument("path")
     inp=subs.add_parser("in",help="maintain OSM search inputs"); commands=inp.add_subparsers(dest="input",required=True)
-    for name in ("ls","get","add","set"):
+    for name in ("ls","get","add","set","rm"):
         p=commands.add_parser(name); p.add_argument("root",nargs="?",default=".")
-        if name in {"get","set"}: p.add_argument("query_id")
+        if name in {"get","set","rm"}: p.add_argument("query_id")
         if name=="add": p.add_argument("name")
         if name in {"add","set"}:
             p.add_argument("--name",dest="new_name"); p.add_argument("--lon",type=float); p.add_argument("--lat",type=float); p.add_argument("--qid")
@@ -49,6 +49,8 @@ def main(argv:list[str]|None=None)->int:
             query={"id":new_uuid7(),"name":args.name}; query.update({"qid":args.qid} if args.qid is not None else {"coordinates":[args.lon,args.lat]}); doc["queries"].append(query); _write(path,doc); print(f"id={query['id']}"); return 0
         if len(selected)!=1: raise ValueError(f"search input not found: {args.query_id}")
         path,doc,query=selected[0]
+        if args.input=="rm":
+            doc["queries"].remove(query); _write(path,doc); print(f"removed {query['id']}"); return 0
         if (args.lon is None)!=(args.lat is None) or (args.lon is not None and args.qid is not None) or (args.new_name is None and args.lon is None and args.qid is None): raise ValueError("set requires --name, --lon/--lat, or --qid")
         if args.new_name is not None: query["name"]=args.new_name
         if args.lon is not None: query.update({"coordinates":[args.lon,args.lat]}); query.pop("qid",None)

@@ -38,4 +38,12 @@
 
 `in set` は名称、経度と緯度の組、または Wikidata QID を変更します。
 
+## 検索入力を除去する
+
+```sh
+./fac in rm . SEARCH_ID
+```
+
+`in rm` は `SEARCH_ID` の検索入力を `queries` から取り除きます。
+
 入力が不正な場合、コマンドは `ERROR: <理由>` を出力し、終了コード 1 で停止します。
