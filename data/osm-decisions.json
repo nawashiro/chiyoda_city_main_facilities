@@ -9834,93 +9834,35 @@
         },
         "candidates": [
           {
-            "recordId": "node/13325098701",
-            "name": "No4",
+            "recordId": "node/14344547101",
+            "name": "千代田区立四番町保育園",
             "coordinates": [
-              139.7360651,
-              35.6881905
+              139.7365932,
+              35.6883208
             ],
             "qid": null,
             "tags": {
-              "name": "No4"
-            }
-          },
-          {
-            "recordId": "node/1420770195",
-            "name": "千代田四番町郵便局",
-            "coordinates": [
-              139.7362186,
-              35.6886239
-            ],
-            "qid": null,
-            "tags": {
-              "addr:block_number": "4",
-              "addr:city": "千代田区",
-              "addr:housenumber": "8",
-              "addr:quarter": "四番町",
-              "amenity": "post_office",
-              "name": "千代田四番町郵便局"
-            }
-          },
-          {
-            "recordId": "node/7780246985",
-            "name": "No.4",
-            "coordinates": [
-              139.7360715,
-              35.6881915
-            ],
-            "qid": null,
-            "tags": {
-              "addr:block_number": "5",
-              "addr:city": "千代田区",
-              "addr:housenumber": "9",
-              "addr:neighbourhood": "四番町",
-              "amenity": "cafe",
-              "name": "No.4",
-              "website": "http://tysons.jp/no4"
-            }
-          },
-          {
-            "recordId": "way/144852506",
-            "name": "日テレ四番町ビル 3号館",
-            "coordinates": [
-              139.73649484999999,
-              35.6878973
-            ],
-            "qid": null,
-            "tags": {
-              "building": "yes",
-              "name": "日テレ四番町ビル 3号館"
-            }
-          },
-          {
-            "recordId": "way/144852516",
-            "name": "日テレ四番町ビル 4号館",
-            "coordinates": [
-              139.7367686,
-              35.6878981
-            ],
-            "qid": null,
-            "tags": {
-              "building": "yes",
-              "name": "日テレ四番町ビル 4号館"
+              "amenity": "kindergarten",
+              "name": "千代田区立四番町保育園",
+              "name:en": "Chiyoda City Yonbancho Nursery School",
+              "website": "https://www.city.chiyoda.lg.jp/shisetsu/hoikuen/yonbancho-ho.html"
             }
           }
         ]
       },
-      "evidenceHash": "ff62641ba812c49631d0307105c7b390e7f31a29eadeca8642f24b76db952825",
-      "current": null,
+      "evidenceHash": "624f48b2740755f107b14c4cb1d506d155fe0dbf1c9ea30f93b6dabf7aaa7c58",
+      "current": "node/14344547101",
       "status": "decided",
-      "issue": 63,
+      "issue": 9,
+      "choice": "node/14344547101",
+      "method": "human",
       "human": {
-        "choice": "none",
+        "choice": "node/14344547101",
         "editor": "nawashiro",
-        "editedAt": "2026-10-28T07:18:15Z",
-        "url": "https://github.com/nawashiro/chiyoda_city_main_facilities/issues/63",
-        "issue": 63
-      },
-      "choice": "none",
-      "method": "human"
+        "editedAt": "2026-11-03T10:18:09Z",
+        "url": "https://github.com/nawashiro/chiyoda_city_main_facilities/issues/9",
+        "issue": 9
+      }
     },
     "019fa880-5cd5-7e95-9ea4-e8808e845cd7": {
       "evidence": {

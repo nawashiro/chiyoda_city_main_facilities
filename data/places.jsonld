@@ -1288,6 +1288,20 @@
         "https://www.openstreetmap.org/way/675832452",
         "https://www.wikidata.org/entity/Q6751576"
       ]
+    },
+    {
+      "@id": "urn:uuid:019fa880-5cd5-7e0d-8300-8ab683bd0c1d",
+      "@type": [
+        "schema:Place"
+      ],
+      "rdfs:seeAlso": [
+        "https://www.openstreetmap.org/node/14344547101"
+      ],
+      "schema:geo": {
+        "@type": "schema:GeoCoordinates",
+        "schema:longitude": 139.7365932,
+        "schema:latitude": 35.6883208
+      }
     }
   ]
 }
