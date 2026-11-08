@@ -1,11 +1,14 @@
-"""Maintainer CLI for canonical JSON-LD validation and OSM search inputs."""
+"""Maintainer CLI for canonical JSON-LD validation, OSM search inputs and associations."""
 from __future__ import annotations
 import argparse
 import copy
 import json
+import subprocess
+from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
-from src.facility_data import new_uuid7, validate_jsonld_document, validate_search_document
+from src.facility_data import _read_json, _write_json, load_queries, new_uuid7, validate_jsonld_document, validate_search_document
+from src.resolve_osm_candidates import apply_decisions, evidence_hash, osm_candidate
 
 def _read(path: Path) -> Any: return json.loads(path.read_text(encoding="utf-8"))
 def _write(path: Path, document: dict[str, Any]) -> None:
@@ -31,9 +34,43 @@ def main(argv:list[str]|None=None)->int:
         if name=="add": p.add_argument("name")
         if name in {"add","set"}:
             p.add_argument("--name",dest="new_name"); p.add_argument("--lon",type=float); p.add_argument("--lat",type=float); p.add_argument("--qid")
+    assoc=subs.add_parser("assoc",help="record a survey-confirmed OSM association as a human decision")
+    assoc.add_argument("root",nargs="?",default=".")
+    assoc.add_argument("query_id")
+    exclusive=assoc.add_mutually_exclusive_group(required=True)
+    exclusive.add_argument("--osm-id")
+    exclusive.add_argument("--choice",choices=("none",))
+    assoc.add_argument("--editor")
     args=parser.parse_args(argv)
     try:
         if args.command=="jsonld-validate": validate_jsonld_document(_read(Path(args.path))); return 0
+        if args.command=="assoc":
+            root=Path(args.root)
+            queries=load_queries(root)
+            query=next((q for q in queries if q["id"]==args.query_id), None)
+            if query is None: raise ValueError(f"search input not found: {args.query_id}")
+            choice=args.choice if args.choice=="none" else args.osm_id
+            if choice=="none":
+                candidate=None
+            else:
+                candidate=osm_candidate(choice)
+            evidence={"target":{k:query[k] for k in ("id","name","coordinates","qid") if k in query},
+                      "candidates":[] if candidate is None else [candidate]}
+            editor=args.editor or subprocess.run(["git","config","--get","user.name"],cwd=root,capture_output=True,text=True).stdout.strip()
+            if not editor: raise ValueError("editor is required: pass --editor or set git user.name")
+            now=datetime.now(timezone.utc).isoformat(timespec="seconds").replace("+00:00","Z")
+            entry={"evidence":evidence,"evidenceHash":evidence_hash(evidence),
+                   "current":None if candidate is None else choice,"status":"decided",
+                   "choice":choice,"method":"human",
+                   "human":{"choice":choice,"editor":editor,"editedAt":now}}
+            ledger=_read_json(root/"data/osm-decisions.json")
+            if ledger.get("version")!=1 or not isinstance(ledger.get("facilities"),dict): raise ValueError("invalid OSM decision ledger")
+            ledger=copy.deepcopy(ledger)
+            ledger["facilities"][args.query_id]=entry
+            updated=apply_decisions(_read_json(root/"data/places.jsonld"),queries,{args.query_id:entry})
+            _write_json(root/"data/osm-decisions.json",ledger)
+            _write_json(root/"data/places.jsonld",updated)
+            return 0
         root=Path(args.root); documents=_documents(root)
         if args.input=="ls":
             for _,doc in documents:

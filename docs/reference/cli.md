@@ -46,4 +46,15 @@
 
 `in rm` は `SEARCH_ID` の検索入力を `queries` から取り除きます。
 
+## 実地調査の関連付けを反映する
+
+```sh
+./fac assoc . SEARCH_ID --osm-id node/123456789
+./fac assoc . SEARCH_ID --choice none
+```
+
+`assoc` は実地調査で確定したOSM要素を人の判断として正本に反映します。OSM APIから要素の名称・座標・タグを取得し、確認Issueと同じ根拠として`data/osm-decisions.json`へ保存し、`data/places.jsonld`へ参照と座標を適用します。`--choice none`は「該当なし」を記録し、既存のOSM参照を解除します。
+
+編集者は`--editor NAME`を指定するか、リポジトリのgit `user.name`から取ります。
+
 入力が不正な場合、コマンドは `ERROR: <理由>` を出力し、終了コード 1 で停止します。

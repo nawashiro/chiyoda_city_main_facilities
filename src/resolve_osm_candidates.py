@@ -8,7 +8,7 @@ import math
 import os
 from urllib.request import Request, urlopen
 
-from src.facility_data import _distance_metres, normalize_osm_elements, validate_jsonld_document
+from src.facility_data import _distance_metres, _valid_coordinates, _QID, normalize_osm_elements, validate_jsonld_document
 from src.http_utils import read_limited_response
 
 MODEL = "jev-1.14.0"
@@ -61,6 +61,40 @@ def evidence_hash(evidence):
     stable = copy.deepcopy(evidence)
     stable["candidates"].sort(key=lambda c: c["recordId"])
     return hashlib.sha256(encoded(stable)).hexdigest()
+
+
+def _fetch_osm(url: str) -> bytes:
+    request = Request(url, headers={"User-Agent": "chiyoda_city_main_facilities/1.0 (maintainer CLI)"})
+    with urlopen(request, timeout=60) as response:
+        return read_limited_response(response, 4 * 1024 * 1024, "OSM")
+
+
+def osm_candidate(record_id: str, fetch=_fetch_osm) -> dict:
+    """Build one candidate with issue-confirmation evidence tags from the live OSM API."""
+    kind, _, identifier = record_id.partition("/")
+    if kind not in {"node", "way", "relation"} or not identifier.isdigit() or not identifier:
+        raise ValueError(f"invalid OSM element id: {record_id}")
+    url = f"{OSM}api/0.6/{kind}/{identifier}{'' if kind == 'node' else '/full'}.json"
+    elements = json.loads(fetch(url))["elements"]
+    element = next((e for e in elements if e.get("type") == kind and e.get("id") == int(identifier)), None)
+    if element is None:
+        raise ValueError(f"OSM element not found: {record_id}")
+    tags = element.get("tags", {})
+    if not isinstance(tags.get("name"), str) or not tags["name"].strip():
+        raise ValueError(f"nameless OSM element cannot be associated: {record_id}")
+    if kind == "node":
+        coordinates = [element.get("lon"), element.get("lat")]
+    else:
+        points = [(node.get("lon"), node.get("lat")) for node in elements if node.get("type") == "node"]
+        if not points:
+            raise ValueError(f"OSM element lacks member nodes: {record_id}")
+        coordinates = [round(sum(axis) / len(points), 7) for axis in zip(*points)]
+    if not _valid_coordinates(coordinates):
+        raise ValueError(f"invalid OSM coordinates: {record_id}")
+    qid = tags.get("wikidata")
+    return {"recordId": record_id, "name": tags["name"], "coordinates": coordinates,
+            "qid": qid if isinstance(qid, str) and _QID.fullmatch(qid) else None,
+            "tags": {k: v for k, v in sorted(tags.items()) if k in IDENTITY_TAGS}}
 
 
 def request_choice(evidence, api_key=None):
