@@ -41,11 +41,29 @@
         "license": "https://www.wam.go.jp/content/wamnet/pcpub/top/sfkopendata/"
       }
     ],
-    "distribution": {
-      "@type": "DataDownload",
-      "contentUrl": "https://nawashiro.github.io/chiyoda_city_main_facilities/places.jsonld",
-      "encodingFormat": "application/ld+json"
-    },
+    "distribution": [
+      {
+        "@type": "DataDownload",
+        "name": "Facility JSON-LD",
+        "contentUrl": "https://nawashiro.github.io/chiyoda_city_main_facilities/places.jsonld",
+        "encodingFormat": "application/ld+json"
+      },
+      {
+        "@type": "DataDownload",
+        "name": "OpenStreetMap mirror (Chiyoda)",
+        "contentUrl": "https://nawashiro.github.io/chiyoda_city_main_facilities/mirrors/osm.json",
+        "encodingFormat": "application/json",
+        "license": "https://opendatacommons.org/licenses/odbl/1-0/",
+        "creditText": "© OpenStreetMap contributors"
+      },
+      {
+        "@type": "DataDownload",
+        "name": "Wikidata mirror (retained QIDs)",
+        "contentUrl": "https://nawashiro.github.io/chiyoda_city_main_facilities/mirrors/wikidata.json",
+        "encodingFormat": "application/json",
+        "license": "https://creativecommons.org/publicdomain/zero/1.0/"
+      }
+    ],
     "url": "https://nawashiro.github.io/chiyoda_city_main_facilities/"
   }
   </script>

@@ -12,6 +12,7 @@ from src.facility_data import _read_json, _write_json, load_queries, validate_re
 from src.github_osm_review import GitHub, apply_confirmations, close_published, read_confirmations
 from src.resolve_osm_candidates import apply_decisions, current_id, resolve
 from src.retrieve_osm import _http_get, run_osm_retrieval
+from src.wikidata_retrieval import run_wikidata_retrieval
 
 
 def verified_snapshot(root):
@@ -26,7 +27,7 @@ def verified_snapshot(root):
     return raw
 
 
-def update(root, *, refresh=False, github=None, judge=None, retrieve=run_osm_retrieval):
+def update(root, *, refresh=False, github=None, judge=None, retrieve=run_osm_retrieval, wikidata=run_wikidata_retrieval):
     root = Path(root)
     issues = validate_repository(root)
     if issues:
@@ -58,8 +59,14 @@ def update(root, *, refresh=False, github=None, judge=None, retrieve=run_osm_ret
     apply_confirmations(ledger, confirmations)
     if refresh:
         document = apply_decisions(document, queries, {k: ledger["facilities"][k] for k in confirmations})
-        retrieve(root, datetime.now(timezone.utc).isoformat(timespec="seconds"), _http_get, canonical=document)
+        at = datetime.now(timezone.utc).isoformat(timespec="seconds")
+        retrieve(root, at, _http_get, canonical=document)
         raw = verified_snapshot(root)
+        try:
+            if wikidata:
+                wikidata(root, at)
+        except (OSError, ValueError, KeyError, json.JSONDecodeError) as error:
+            print(f"WARNING: Wikidata mirror refresh skipped: {type(error).__name__}: {error}")
         updated, ledger = resolve(document, queries, raw, ledger, **({"judge": judge} if judge else {}))
     else:
         updated = apply_decisions(document, queries, {k: ledger["facilities"][k] for k in confirmations})
@@ -97,6 +104,7 @@ def main(argv=None):
             kwargs = {"refresh": args.command == "refresh", "github": github}
             if args.offline:
                 kwargs["retrieve"] = lambda *args, **kwargs: None
+                kwargs["wikidata"] = None
             update(root, **kwargs)
     except (OSError, ValueError, KeyError, TypeError) as error:
         print(f"ERROR: {type(error).__name__}: {error}")

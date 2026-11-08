@@ -174,6 +174,12 @@ def build_repository(root: str | Path) -> Path:
         _write_json(artifact, document)
     else:
         shutil.copyfile(root / "data/places.jsonld", artifact)
+    for source_id, filename in (("openstreetmap", "osm.json"), ("wikidata", "wikidata.json")):
+        source = root / f"imports/{source_id}/raw.json"
+        if source.exists():
+            mirrors = root / "site/mirrors"
+            mirrors.mkdir(parents=True, exist_ok=True)
+            shutil.copyfile(source, mirrors / filename)
     return artifact
 
 
