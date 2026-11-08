@@ -9834,30 +9834,30 @@
         },
         "candidates": [
           {
-            "recordId": "node/14344547101",
-            "name": "千代田区立四番町保育園",
+            "recordId": "node/14344547001",
+            "name": "千代田区立四番町児童館",
             "coordinates": [
-              139.7365932,
-              35.6883208
+              139.7365076,
+              35.6882993
             ],
             "qid": null,
             "tags": {
-              "amenity": "kindergarten",
-              "name": "千代田区立四番町保育園",
-              "name:en": "Chiyoda City Yonbancho Nursery School",
-              "website": "https://www.city.chiyoda.lg.jp/shisetsu/hoikuen/yonbancho-ho.html"
+              "amenity": "community_centre",
+              "name": "千代田区立四番町児童館",
+              "name:en": "Chiyoda City Yonbancho Children's Center",
+              "website": "https://www.city.chiyoda.lg.jp/koho/kosodate/jidocenter/ichiran/4bancho.html"
             }
           }
         ]
       },
-      "evidenceHash": "624f48b2740755f107b14c4cb1d506d155fe0dbf1c9ea30f93b6dabf7aaa7c58",
-      "current": "node/14344547101",
+      "evidenceHash": "85974563f33817891cbc2b237a30c745c95f1a70ee23a8a215e607301503e5fa",
+      "current": "node/14344547001",
       "status": "decided",
       "issue": 9,
-      "choice": "node/14344547101",
+      "choice": "node/14344547001",
       "method": "human",
       "human": {
-        "choice": "node/14344547101",
+        "choice": "node/14344547001",
         "editor": "nawashiro",
         "editedAt": "2026-11-03T10:18:09Z",
         "url": "https://github.com/nawashiro/chiyoda_city_main_facilities/issues/9",

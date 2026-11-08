@@ -1294,14 +1294,14 @@
       "@type": [
         "schema:Place"
       ],
-      "rdfs:seeAlso": [
-        "https://www.openstreetmap.org/node/14344547101"
-      ],
       "schema:geo": {
         "@type": "schema:GeoCoordinates",
-        "schema:longitude": 139.7365932,
-        "schema:latitude": 35.6883208
-      }
+        "schema:longitude": 139.7365076,
+        "schema:latitude": 35.6882993
+      },
+      "rdfs:seeAlso": [
+        "https://www.openstreetmap.org/node/14344547001"
+      ]
     }
   ]
 }
