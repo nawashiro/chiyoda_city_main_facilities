@@ -48,7 +48,7 @@ jobs:
           python3 -m unittest discover -s tests -v
           python3 -m src.facility_data build .
           ./fac jsonld-validate site/places.jsonld
-          git add data/places.jsonld data/osm-decisions.json imports/openstreetmap/ imports/wikidata/
+          git add data/places.jsonld data/osm-decisions.json imports/openstreetmap/ imports/wikidata/ site/mirrors/
           if ! git diff --cached --quiet; then
             git commit -m '[bot] data: update OSM associations'
             git push origin HEAD:main

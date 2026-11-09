@@ -144,6 +144,10 @@ def collect_osm_ids(document: dict[str, Any]) -> list[str]:
     return sorted({uri.removeprefix("https://www.openstreetmap.org/") for record in document.get("@graph", []) for uri in record.get("rdfs:seeAlso", []) if isinstance(uri, str) and uri.startswith("https://www.openstreetmap.org/") and _OSM_TYPED_OBJECT_ID.fullmatch(uri.removeprefix("https://www.openstreetmap.org/"))})
 
 
+def collect_wikidata_ids(document: dict[str, Any]) -> set[str]:
+    return {uri.rsplit("/", 1)[1] for record in document.get("@graph", []) for uri in record.get("rdfs:seeAlso", []) if isinstance(uri, str) and _WIKIDATA_ENTITY_URI.fullmatch(uri)}
+
+
 def _distance_metres(first: list[float], second: list[float]) -> float:
     lon1, lat1, lon2, lat2 = map(math.radians, [*first, *second]); dlon, dlat = lon2-lon1, lat2-lat1
     return 6_371_000 * 2 * math.atan2(math.sqrt(math.sin(dlat/2)**2 + math.cos(lat1)*math.cos(lat2)*math.sin(dlon/2)**2), math.sqrt(1-(math.sin(dlat/2)**2 + math.cos(lat1)*math.cos(lat2)*math.sin(dlon/2)**2)))
@@ -206,12 +210,19 @@ def build_repository(root: str | Path) -> Path:
         _write_json(artifact, document)
     else:
         shutil.copyfile(root / "data/places.jsonld", artifact)
+    associated_ids = set(collect_osm_ids(document))
+    referenced_qids = collect_wikidata_ids(document)
     for source_id, filename in (("openstreetmap", "osm.json"), ("wikidata", "wikidata.json")):
         source = root / f"imports/{source_id}/raw.json"
-        if source.exists():
-            mirrors = root / "site/mirrors"
-            mirrors.mkdir(parents=True, exist_ok=True)
-            shutil.copyfile(source, mirrors / filename)
+        if not source.exists(): continue
+        mirrors = root / "site/mirrors"
+        mirrors.mkdir(parents=True, exist_ok=True)
+        filtered = _read_json(source)
+        if source_id == "openstreetmap":
+            filtered["elements"] = [element for element in filtered.get("elements", []) if f"{element.get('type')}/{element.get('id')}" in associated_ids]
+        else:
+            filtered["entities"] = {qid: entity for qid, entity in filtered.get("entities", {}).items() if qid in referenced_qids}
+        _write_json(mirrors / filename, filtered)
     return artifact
 
 
