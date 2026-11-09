@@ -12,10 +12,10 @@
 
 ## 3. 関連付け実施（施行者: Chiyoda-Dev）
 
-- [ ] 3.1 言葉の道案内の該当施設を特定し、`fac link` で登録する
-- [ ] 3.2 東京バリアフリーマップの該当施設を特定し、`fac link` で登録する
-- [ ] 3.3 登録結果一覧をissue #67へ報告する（`[bot]` 付き）
+- [x] 3.1 言葉の道案内の該当施設を特定し、`fac link` で登録する
+- [x] 3.2 東京バリアフリーマップの該当施設を特定し、`fac link` で登録する
+- [x] 3.3 登録結果一覧をissue #67へ報告する（`[bot]` 付き）
 
 ## 4. 統合確認
 
-- [ ] 4.1 実データ `data/places.jsonld` に対して追加・解除・jsonld-validate の一連を実行し、UUIDと `rdfs:seeAlso` が不変であることを `./fac jsonld-validate` で確認
+- [x] 4.1 実データ `data/places.jsonld` に対して追加・解除・jsonld-validate の一連を実行し、UUIDと `rdfs:seeAlso` が不変であることを `./fac jsonld-validate` で確認
