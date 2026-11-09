@@ -1614,6 +1614,31 @@
           }
         }
       ]
+    },
+    {
+      "@id": "urn:uuid:019fa880-5cd5-7d31-9979-79d32157427a",
+      "@type": [
+        "schema:Place"
+      ],
+      "rdfs:seeAlso": [
+        "https://www.openstreetmap.org/node/14337499601"
+      ],
+      "schema:geo": {
+        "@type": "schema:GeoCoordinates",
+        "schema:longitude": 139.7779715,
+        "schema:latitude": 35.6943553
+      },
+      "schema:subjectOf": [
+        {
+          "@type": "schema:WebPage",
+          "schema:url": "https://walkingnavi.com/list_route.php?grp=5&no=2070&lang=ja",
+          "schema:name": "言葉の道案内",
+          "schema:provider": {
+            "@type": "schema:Organization",
+            "schema:name": "言葉の道案内"
+          }
+        }
+      ]
     }
   ]
 }

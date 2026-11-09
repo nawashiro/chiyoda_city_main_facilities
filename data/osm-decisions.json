@@ -8471,74 +8471,32 @@
         },
         "candidates": [
           {
-            "recordId": "node/11436157594",
+            "recordId": "node/14337499601",
             "name": "岩本町ほほえみプラザ",
             "coordinates": [
-              139.777715,
-              35.69441
+              139.7779715,
+              35.6943553
             ],
             "qid": null,
             "tags": {
-              "amenity": "bicycle_rental",
-              "brand": "Docomo Bike Share",
+              "amenity": "social_facility",
               "name": "岩本町ほほえみプラザ",
-              "name:ja": "岩本町ほほえみプラザ"
-            }
-          },
-          {
-            "recordId": "node/5021209549",
-            "name": "岩本町ほほえみプラザ",
-            "coordinates": [
-              139.7777528,
-              35.6942078
-            ],
-            "qid": null,
-            "tags": {
-              "name": "岩本町ほほえみプラザ",
-              "operator": "千代田区"
-            }
-          },
-          {
-            "recordId": "way/47418327",
-            "name": "大門通り",
-            "coordinates": [
-              139.77738184999998,
-              35.6942353
-            ],
-            "qid": null,
-            "tags": {
-              "name": "大門通り",
-              "name:en": "Daimon-dori Street"
-            }
-          },
-          {
-            "recordId": "way/651691640",
-            "name": "七瀬ビル",
-            "coordinates": [
-              139.7777462,
-              35.69465795
-            ],
-            "qid": null,
-            "tags": {
-              "building": "yes",
-              "name": "七瀬ビル"
+              "operator": "社会福祉法人多摩同胞会",
+              "website": "https://www.tama-dhk.or.jp/iwamoto/"
             }
           }
         ]
       },
-      "evidenceHash": "fc53d58e3a3cad4cce291702424cb137cf22c79af630c8113c1ba767f86739e5",
-      "current": null,
+      "evidenceHash": "76eb5e6b7e231e3c28b945096cd68bdb529ec3d9702637b51c217ace5f7598f7",
+      "current": "node/14337499601",
       "status": "decided",
-      "issue": 61,
+      "choice": "node/14337499601",
+      "method": "human",
       "human": {
-        "choice": "none",
-        "editor": "nawashiro",
-        "editedAt": "2026-10-28T07:20:33Z",
-        "url": "https://github.com/nawashiro/chiyoda_city_main_facilities/issues/61",
-        "issue": 61
-      },
-      "choice": "none",
-      "method": "human"
+        "choice": "node/14337499601",
+        "editor": "Nawashiro(实地調査)経由の指定",
+        "editedAt": "2026-11-09T04:17:50Z"
+      }
     },
     "019fa880-5cd5-7d9b-ae8f-d7d00901be5d": {
       "evidence": {
