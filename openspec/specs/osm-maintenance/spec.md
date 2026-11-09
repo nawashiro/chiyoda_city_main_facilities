@@ -18,7 +18,6 @@
 
 - **WHEN** 取得したOSMに未登録施設が含まれる
 - **THEN** システムはその施設を公開対象に追加しない
-
 ### Requirement: Deterministic association precedes Jev
 
 システム SHALL 現在の取得条件で得た結果に型を含む既存OSM IDがあれば既存参照を継続する。名称・座標・タグ・QIDや入力ハッシュの変化だけでは再審査しない。これで確定できなければ一意なQID一致を適用し、残る候補をJevで判定する。システム MUST 名称と近接座標だけで一致を自動確定しない。
@@ -42,10 +41,16 @@
 
 - **WHEN** 一意なQID一致がなく、名称の似た候補が50m以内に一つある
 - **THEN** システムは名称と距離で確定せずJevへ判定を求める
-
 ### Requirement: Durable evidence-bound human decisions
 
 システム SHALL 人が選んだOSM IDを正本へ保存し、以後は既存参照として維持する。システム MUST 入力ハッシュだけで採用済みの接続を失効させない。人の「該当なし」と未解決のJev結果は同じ根拠では再利用し、根拠が変われば再評価する。取得日時や候補順だけの変化は根拠の変更とみなさない。
+
+人が実地調査で確定した接続先 SHALL 専用CLIの`assoc`サブコマンドで記録・正本へ適用できる。システム SHALL OSM APIから指定された要素の実データを取得し、確認Issueと同じ`IDENTITY_TAGS`に基づく根拠を一つの候補として作る。システム MUST 取得できない要素を候補にせず、正本を変更しない。編集者と実行時刻 SHALL 人の判断として`human`へ記録する。
+
+#### Scenario: Field-survey OSM ID is recorded as a human decision
+
+- **WHEN** 保守者が`./fac assoc <query_id> --osm-id node/123 --editor <editor>`を実行する
+- **THEN** システムはOSM APIから`node/123`の名称・座標・タグを取得し、候補一つの根拠を作って`method: human`の判断を判断記録へ保存し、`places.jsonld`の当該施設へ参照と座標を適用する
 
 #### Scenario: Rejected candidates recur next month
 
@@ -57,6 +62,20 @@
 - **WHEN** 人の「該当なし」の判断後に候補の名称、座標、QIDなど判断に使う情報が変わる
 - **THEN** システムは古い判断をそのまま適用せず、現在の根拠で再評価する
 
+#### Scenario: Element does not exist in OSM
+
+- **WHEN** 指定されたOSM要素がOSM APIに存在しない
+- **THEN** システムは判断記録と正本を変更せず失敗を報告する
+
+#### Scenario: None choice is recorded
+
+- **WHEN** 保守者が`--choice none`を指定する
+- **THEN** システムは人による「該当なし」を判断記録へ保存し、当該施設のOSM参照を解除してUUIDと座標を残す
+
+#### Scenario: Duplicate OSM allocation is rejected
+
+- **WHEN** 指定した要素が別の施設に既に割り当てられている
+- **THEN** システムは正本を変更せず失敗を報告する
 ### Requirement: Unresolved facilities do not block resolved updates
 
 システム SHALL 検証済みの確定分を、他施設の人手判断を待たず正本へ反映する。未確定施設は直前の公開状態を保ち、判断待ちであることを確認Issueに示す。システム MUST 一つのOSM typed object IDを複数施設へ同時に割り当てない。
@@ -70,7 +89,6 @@
 
 - **WHEN** 複数施設の判定が同じOSM typed object IDを選ぶ
 - **THEN** システムは競合する新しい割り当てを自動適用せず、競合を確認Issueに示す
-
 ### Requirement: Empty evidence and explicit rejection are distinct
 
 システム SHALL 候補がない状態と、提示した候補を不採用と確定した状態を区別する。未関連付け施設で候補がない場合はOSM参照を作らない。候補なし、Jevが閾値以上で「該当なし」を選んだ場合、人が「該当なし」を確定した場合、システム MUST 対象のOSM参照とその照合から得たWikidata参照を解除し、施設UUIDと有効な座標を保持する。
@@ -89,7 +107,6 @@
 
 - **WHEN** 人が既存関連付けのある施設で「該当なし」を確定する
 - **THEN** システムは対象の関連参照を解除し、施設と座標は残す
-
 ### Requirement: Operational failures do not become identity reviews
 
 システム MUST 取得失敗、取得物の検証失敗、Jevの認証・通信失敗、不正なAPI応答を候補の不採用や低信頼度と扱わない。システム SHALL 実行を失敗として報告し、その実行の未検証結果を正本へ反映・公開しない。
@@ -98,7 +115,6 @@
 
 - **WHEN** Jevの呼び出しが通信エラーで終了する
 - **THEN** システムは運用上の失敗を報告し、施設判断用Issueを作らず、その実行のデータ変更を公開しない
-
 ### Requirement: WAM is a documentary reference
 
 システム MUST 通常更新・手動再実行・候補判定でWAMを取得、読み込み、照合しない。WAMは参考資料と必要な出典・利用条件の文書に残す。移行は既存施設UUID、検索対象および利用可能な座標を保持し、公開データからWAM識別子を除く。
@@ -107,7 +123,6 @@
 
 - **WHEN** 移行後に月次更新または手動再実行が動く
 - **THEN** システムはWAMの接続先、保存ファイル、設定を必要とせずOSM更新を行う
-
 ### Requirement: One notification for unmatched targets
 
 システム SHALL 候補なしまたは確定した「該当なし」の検索対象を一つの通常Issueへまとめて通知する。既存接続の有無で通知を分けず、通知に確定操作を要求しない。システム MUST 同じ内容で閉じた通知を再提示しない。
@@ -116,7 +131,6 @@
 
 - **WHEN** 既存接続を失った対象と新しい検索対象の両方に接続先がない
 - **THEN** システムは一つのIssueに列挙し、検索入力の除去またはOSMへの収録の判断を人に委ねる
-
 ### Requirement: Commit decisions before presenting Issues
 
 システム SHALL 取得・判定結果を検証してGitへ保存した後にIssueを提示する。保存済み判断だけで提示を再実行できる。システム MUST push失敗時にIssueを提示せず、取得・Jev判定からの自動再試行を行わない。
