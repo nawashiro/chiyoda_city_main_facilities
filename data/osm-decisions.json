@@ -1,587 +1,6 @@
 {
   "version": 1,
   "facilities": {
-    "019ca6b1-dc00-71c7-a6b9-a16327abd921": {
-      "evidence": {
-        "target": {
-          "id": "019ca6b1-dc00-71c7-a6b9-a16327abd921",
-          "name": "相談支援事業所みつき",
-          "coordinates": [
-            139.77524876,
-            35.70089939
-          ]
-        },
-        "candidates": [
-          {
-            "recordId": "node/12908845946",
-            "name": "ZAKI",
-            "coordinates": [
-              139.7750635,
-              35.7005706
-            ],
-            "qid": null,
-            "tags": {
-              "amenity": "restaurant",
-              "name": "ZAKI"
-            }
-          },
-          {
-            "recordId": "node/12908845948",
-            "name": "ハセベデンタルクリニック",
-            "coordinates": [
-              139.7751392,
-              35.7013149
-            ],
-            "qid": null,
-            "tags": {
-              "amenity": "dentist",
-              "healthcare": "dentist",
-              "name": "ハセベデンタルクリニック"
-            }
-          },
-          {
-            "recordId": "node/2059303757",
-            "name": "ドトールコーヒーショップ",
-            "coordinates": [
-              139.7751967,
-              35.7005792
-            ],
-            "qid": null,
-            "tags": {
-              "addr:block_number": "18",
-              "addr:city": "千代田区",
-              "addr:housenumber": "1",
-              "addr:neighbourhood": "神田松永町",
-              "amenity": "cafe",
-              "brand": "ドトール",
-              "name": "ドトールコーヒーショップ",
-              "name:en": "Doutor Coffee Shop",
-              "name:ja": "ドトールコーヒーショップ",
-              "operator": "ドトール・日レスHD",
-              "operator:wikidata": "Q11322732",
-              "short_name": "DCS",
-              "website": "https://www.doutor.co.jp/dcs/"
-            }
-          },
-          {
-            "recordId": "node/4873039521",
-            "name": "アキバフクロウ",
-            "coordinates": [
-              139.7748636,
-              35.7007854
-            ],
-            "qid": null,
-            "tags": {
-              "amenity": "cafe",
-              "name": "アキバフクロウ",
-              "name:en": "Akiba Fukurou Owl Cafe"
-            }
-          },
-          {
-            "recordId": "node/5175739092",
-            "name": "はんこ屋さん21",
-            "coordinates": [
-              139.775358,
-              35.7013389
-            ],
-            "qid": null,
-            "tags": {
-              "name": "はんこ屋さん21",
-              "name:en": "Hankoyasan 21"
-            }
-          },
-          {
-            "recordId": "node/5210427661",
-            "name": "叶不動産株式会社",
-            "coordinates": [
-              139.7753432,
-              35.7012873
-            ],
-            "qid": null,
-            "tags": {
-              "name": "叶不動産株式会社",
-              "office": "estate_agent"
-            }
-          },
-          {
-            "recordId": "node/5210427662",
-            "name": "ゴルフパートナー",
-            "coordinates": [
-              139.7752802,
-              35.7008473
-            ],
-            "qid": null,
-            "tags": {
-              "brand": "ゴルフパートナー",
-              "name": "ゴルフパートナー",
-              "name:en": "Golf Partner",
-              "name:ja": "ゴルフパートナー"
-            }
-          },
-          {
-            "recordId": "node/5210427663",
-            "name": "東京シティ信用金庫",
-            "coordinates": [
-              139.7751957,
-              35.7007231
-            ],
-            "qid": null,
-            "tags": {
-              "amenity": "bank",
-              "name": "東京シティ信用金庫"
-            }
-          },
-          {
-            "recordId": "node/5210427664",
-            "name": "マンションニュース",
-            "coordinates": [
-              139.7752675,
-              35.7004781
-            ],
-            "qid": null,
-            "tags": {
-              "name": "マンションニュース",
-              "office": "estate_agent"
-            }
-          },
-          {
-            "recordId": "node/5210427665",
-            "name": "超ごってり麺 ごっつ",
-            "coordinates": [
-              139.7752748,
-              35.7005603
-            ],
-            "qid": null,
-            "tags": {
-              "amenity": "restaurant",
-              "name": "超ごってり麺 ごっつ"
-            }
-          },
-          {
-            "recordId": "node/5278800872",
-            "name": "たか庄",
-            "coordinates": [
-              139.775361,
-              35.7012807
-            ],
-            "qid": null,
-            "tags": {
-              "name": "たか庄",
-              "name:en": "Takasho"
-            }
-          },
-          {
-            "recordId": "node/5816955079",
-            "name": "伊藤園",
-            "coordinates": [
-              139.775042,
-              35.7006145
-            ],
-            "qid": null,
-            "tags": {
-              "amenity": "vending_machine",
-              "brand": "伊藤園",
-              "name": "伊藤園",
-              "name:en": "Ito En",
-              "name:ja": "伊藤園",
-              "operator": "伊藤園"
-            }
-          },
-          {
-            "recordId": "node/5816955087",
-            "name": "株式会社ムラタヤ",
-            "coordinates": [
-              139.7748978,
-              35.7009834
-            ],
-            "qid": null,
-            "tags": {
-              "name": "株式会社ムラタヤ",
-              "office": "company"
-            }
-          },
-          {
-            "recordId": "node/6114555912",
-            "name": "ラブリー動物病院",
-            "coordinates": [
-              139.7749299,
-              35.7007894
-            ],
-            "qid": null,
-            "tags": {
-              "amenity": "veterinary",
-              "name": "ラブリー動物病院"
-            }
-          },
-          {
-            "recordId": "node/6114555923",
-            "name": "蔵屋",
-            "coordinates": [
-              139.7747973,
-              35.7008059
-            ],
-            "qid": null,
-            "tags": {
-              "amenity": "restaurant",
-              "name": "蔵屋"
-            }
-          },
-          {
-            "recordId": "way/160438915",
-            "name": "加賀電子",
-            "coordinates": [
-              139.77522514999998,
-              35.7010668
-            ],
-            "qid": null,
-            "tags": {
-              "building": "commercial",
-              "name": "加賀電子",
-              "name:en": "Kaga Electronics",
-              "office": "company"
-            }
-          },
-          {
-            "recordId": "way/160438961",
-            "name": "ムラタヤビル",
-            "coordinates": [
-              139.77481914999998,
-              35.70097685
-            ],
-            "qid": null,
-            "tags": {
-              "building": "commercial",
-              "name": "ムラタヤビル",
-              "name:en": "Murataya Building"
-            }
-          },
-          {
-            "recordId": "way/160439029",
-            "name": "第2横島ビル",
-            "coordinates": [
-              139.77473585,
-              35.70088045
-            ],
-            "qid": null,
-            "tags": {
-              "building": "yes",
-              "name": "第2横島ビル",
-              "name:en": "Dai2 Yokoshima Building"
-            }
-          },
-          {
-            "recordId": "way/160439081",
-            "name": "千代田ビル",
-            "coordinates": [
-              139.77493895,
-              35.70079265
-            ],
-            "qid": null,
-            "tags": {
-              "building": "commercial",
-              "name": "千代田ビル"
-            }
-          },
-          {
-            "recordId": "way/162324880",
-            "name": "たか庄ビル",
-            "coordinates": [
-              139.77531915,
-              35.70128615
-            ],
-            "qid": null,
-            "tags": {
-              "building": "yes",
-              "name": "たか庄ビル",
-              "name:en": "Takasho Building"
-            }
-          },
-          {
-            "recordId": "way/162324888",
-            "name": "コインパーク",
-            "coordinates": [
-              139.7749205,
-              35.7010984
-            ],
-            "qid": null,
-            "tags": {
-              "amenity": "parking",
-              "brand": "コインパーク",
-              "name": "コインパーク",
-              "name:en": "COIN PARK",
-              "name:ja": "コインパーク",
-              "operator": "コインパーク",
-              "operator:wikidata": "Q135274149"
-            }
-          },
-          {
-            "recordId": "way/254326655",
-            "name": "首都高速1号上野線",
-            "coordinates": [
-              139.77555124999998,
-              35.70098925
-            ],
-            "qid": null,
-            "tags": {
-              "name": "首都高速1号上野線",
-              "name:en": "Route 1 Ueno Line",
-              "name:ja": "首都高速1号上野線"
-            }
-          }
-        ]
-      },
-      "evidenceHash": "0cca26a7b5de9741ab93f98034a7102bab046f195dcf4b041b6645cb7b77d504",
-      "current": null,
-      "status": "decided",
-      "jev": {
-        "choice": "none",
-        "confidence": 0.9,
-        "probabilities": {
-          "node/12908845946": 0.0,
-          "node/12908845948": 0.0,
-          "node/5278800872": 0.0,
-          "node/5816955079": 0.0,
-          "node/5816955087": 0.0,
-          "node/6114555912": 0.0,
-          "node/6114555923": 0.0,
-          "way/160438915": 0.01,
-          "way/160438961": 0.0,
-          "way/160439029": 0.0,
-          "way/160439081": 0.03,
-          "way/162324880": 0.0,
-          "node/2059303757": 0.0,
-          "way/162324888": 0.0,
-          "way/254326655": 0.0,
-          "node/4873039521": 0.0,
-          "node/5175739092": 0.0,
-          "node/5210427661": 0.0,
-          "node/5210427662": 0.03,
-          "node/5210427663": 0.01,
-          "node/5210427664": 0.02,
-          "node/5210427665": 0.0,
-          "none": 0.9
-        },
-        "usage": {
-          "input_tokens": 3179,
-          "output_tokens": 234
-        },
-        "model": "jev-1.14.0"
-      },
-      "choice": "none",
-      "method": "jev"
-    },
-    "019ca6b1-dc00-7215-add9-ba2573e674e5": {
-      "evidence": {
-        "target": {
-          "id": "019ca6b1-dc00-7215-add9-ba2573e674e5",
-          "name": "相談支援センターＡｋｉｂａ",
-          "coordinates": [
-            139.77751572,
-            35.6925809
-          ]
-        },
-        "candidates": [
-          {
-            "recordId": "node/12173713843",
-            "name": "つぶ庵",
-            "coordinates": [
-              139.777439,
-              35.6924268
-            ],
-            "qid": null,
-            "tags": {
-              "amenity": "restaurant",
-              "name": "つぶ庵"
-            }
-          },
-          {
-            "recordId": "node/12437850392",
-            "name": "タジー食堂",
-            "coordinates": [
-              139.7777053,
-              35.6927193
-            ],
-            "qid": null,
-            "tags": {
-              "amenity": "restaurant",
-              "name": "タジー食堂"
-            }
-          },
-          {
-            "recordId": "node/12437850393",
-            "name": "こし庵",
-            "coordinates": [
-              139.7773649,
-              35.6925128
-            ],
-            "qid": null,
-            "tags": {
-              "amenity": "restaurant",
-              "name": "こし庵"
-            }
-          },
-          {
-            "recordId": "node/1655929908",
-            "name": "ＳＳＳ１",
-            "coordinates": [
-              139.777738,
-              35.692542
-            ],
-            "qid": null,
-            "tags": {
-              "addr:block_number": "8",
-              "addr:city": "千代田区",
-              "addr:housenumber": "6",
-              "addr:neighbourhood": "岩本町一丁目",
-              "amenity": "social_facility",
-              "name": "ＳＳＳ１",
-              "social_facility": "group_home"
-            }
-          },
-          {
-            "recordId": "node/384612065",
-            "name": "岩本町一丁目",
-            "coordinates": [
-              139.7771859,
-              35.6926269
-            ],
-            "qid": null,
-            "tags": {
-              "name": "岩本町一丁目",
-              "name:en": "Iwamotocho 1",
-              "name:ja": "岩本町一丁目"
-            }
-          },
-          {
-            "recordId": "node/4637127705",
-            "name": "小町食堂",
-            "coordinates": [
-              139.7771647,
-              35.6925741
-            ],
-            "qid": null,
-            "tags": {
-              "amenity": "fast_food",
-              "name": "小町食堂",
-              "name:en": "Komachi Shokudo",
-              "name:ja": "小町食堂"
-            }
-          },
-          {
-            "recordId": "node/4674410890",
-            "name": "おひげ寿司",
-            "coordinates": [
-              139.7775405,
-              35.6924688
-            ],
-            "qid": null,
-            "tags": {
-              "amenity": "restaurant",
-              "name": "おひげ寿司",
-              "name:en": "Ohige Sushi",
-              "name:ja": "おひげ寿司"
-            }
-          },
-          {
-            "recordId": "node/4674416191",
-            "name": "一亀",
-            "coordinates": [
-              139.7776245,
-              35.6923596
-            ],
-            "qid": null,
-            "tags": {
-              "amenity": "bar",
-              "name": "一亀",
-              "name:en": "Ichikame",
-              "name:ja": "一亀"
-            }
-          },
-          {
-            "recordId": "node/8359075235",
-            "name": "岩本町一丁目",
-            "coordinates": [
-              139.777635,
-              35.692346
-            ],
-            "qid": null,
-            "tags": {
-              "name": "岩本町一丁目",
-              "name:en": "Iwamotocho 1-chome",
-              "name:ja": "岩本町一丁目"
-            }
-          },
-          {
-            "recordId": "node/9712992080",
-            "name": "岩本町一丁目",
-            "coordinates": [
-              139.7772771,
-              35.6922082
-            ],
-            "qid": null,
-            "tags": {
-              "name": "岩本町一丁目",
-              "operator": "東京都交通局"
-            }
-          },
-          {
-            "recordId": "relation/3553650",
-            "name": "岩本町一丁目",
-            "coordinates": [
-              139.7774398,
-              35.692409999999995
-            ],
-            "qid": null,
-            "tags": {
-              "name": "岩本町一丁目"
-            }
-          },
-          {
-            "recordId": "way/1057067192",
-            "name": "水天宮通り",
-            "coordinates": [
-              139.7773185,
-              35.6923237
-            ],
-            "qid": null,
-            "tags": {
-              "name": "水天宮通り",
-              "name:en": "Suitengu-dori",
-              "name:ja": "水天宮通り"
-            }
-          }
-        ]
-      },
-      "evidenceHash": "29cc95a19672432d7a08dc924d2538368e574815484eb00a4c1da7efc000af47",
-      "current": null,
-      "status": "decided",
-      "jev": {
-        "choice": "none",
-        "confidence": 0.9,
-        "probabilities": {
-          "node/12173713843": 0.0,
-          "node/12437850392": 0.0,
-          "relation/3553650": 0.0,
-          "way/1057067192": 0.0,
-          "node/12437850393": 0.0,
-          "node/1655929908": 0.08,
-          "node/384612065": 0.0,
-          "node/4637127705": 0.0,
-          "node/4674410890": 0.0,
-          "node/4674416191": 0.0,
-          "node/8359075235": 0.0,
-          "node/9712992080": 0.01,
-          "none": 0.91
-        },
-        "usage": {
-          "input_tokens": 1853,
-          "output_tokens": 134
-        },
-        "model": "jev-1.14.0"
-      },
-      "choice": "none",
-      "method": "jev"
-    },
     "019ca6b1-dc00-74d7-b1ea-409942f9799c": {
       "evidence": {
         "target": {
@@ -785,506 +204,6 @@
       "status": "decided",
       "choice": "way/231540636",
       "method": "source_record"
-    },
-    "019ca6b1-dc00-7571-905a-f4a52e6913f4": {
-      "evidence": {
-        "target": {
-          "id": "019ca6b1-dc00-7571-905a-f4a52e6913f4",
-          "name": "特定非営利活動法人ホープ",
-          "coordinates": [
-            139.7451538,
-            35.6996129
-          ]
-        },
-        "candidates": [
-          {
-            "recordId": "node/10153258543",
-            "name": "あおもり北彩館",
-            "coordinates": [
-              139.7448861,
-              35.6995273
-            ],
-            "qid": null,
-            "tags": {
-              "addr:block_number": "3",
-              "addr:city": "千代田区",
-              "addr:housenumber": "11",
-              "addr:neighbourhood": "2",
-              "addr:quarter": "富士見",
-              "name": "あおもり北彩館"
-            }
-          },
-          {
-            "recordId": "node/10153290037",
-            "name": "Brochette",
-            "coordinates": [
-              139.7453782,
-              35.6994646
-            ],
-            "qid": null,
-            "tags": {
-              "amenity": "pub",
-              "name": "Brochette"
-            }
-          },
-          {
-            "recordId": "node/10153290038",
-            "name": "好子ちゃん",
-            "coordinates": [
-              139.7451043,
-              35.6994844
-            ],
-            "qid": null,
-            "tags": {
-              "amenity": "restaurant",
-              "name": "好子ちゃん"
-            }
-          },
-          {
-            "recordId": "node/10153290039",
-            "name": "うお座",
-            "coordinates": [
-              139.7451431,
-              35.6994938
-            ],
-            "qid": null,
-            "tags": {
-              "amenity": "pub",
-              "name": "うお座"
-            }
-          },
-          {
-            "recordId": "node/10153290040",
-            "name": "えにし",
-            "coordinates": [
-              139.745394,
-              35.6994345
-            ],
-            "qid": null,
-            "tags": {
-              "amenity": "pub",
-              "name": "えにし"
-            }
-          },
-          {
-            "recordId": "node/10153290042",
-            "name": "七宝麻辣湯",
-            "coordinates": [
-              139.7451815,
-              35.6993433
-            ],
-            "qid": null,
-            "tags": {
-              "amenity": "restaurant",
-              "name": "七宝麻辣湯"
-            }
-          },
-          {
-            "recordId": "node/10153290043",
-            "name": "ホルモン焼 千歳",
-            "coordinates": [
-              139.7451974,
-              35.699321
-            ],
-            "qid": null,
-            "tags": {
-              "amenity": "restaurant",
-              "name": "ホルモン焼 千歳"
-            }
-          },
-          {
-            "recordId": "node/10153290044",
-            "name": "定食のまる大",
-            "coordinates": [
-              139.7452103,
-              35.6995448
-            ],
-            "qid": null,
-            "tags": {
-              "amenity": "restaurant",
-              "name": "定食のまる大"
-            }
-          },
-          {
-            "recordId": "node/10153304173",
-            "name": "こんぺいとう",
-            "coordinates": [
-              139.7452462,
-              35.6993586
-            ],
-            "qid": null,
-            "tags": {
-              "name": "こんぺいとう"
-            }
-          },
-          {
-            "recordId": "node/4791664322",
-            "name": "Hop-Scotch Tokyo",
-            "coordinates": [
-              139.7454705,
-              35.6994468
-            ],
-            "qid": null,
-            "tags": {
-              "amenity": "pub",
-              "name": "Hop-Scotch Tokyo",
-              "website": "http://hopscotchtokyo.com"
-            }
-          },
-          {
-            "recordId": "node/4964138925",
-            "name": "TOKYO SUNFLOWER",
-            "coordinates": [
-              139.7451316,
-              35.6992563
-            ],
-            "qid": null,
-            "tags": {
-              "amenity": "restaurant",
-              "name": "TOKYO SUNFLOWER"
-            }
-          },
-          {
-            "recordId": "node/4964138926",
-            "name": "魂心家",
-            "coordinates": [
-              139.7450931,
-              35.6992999
-            ],
-            "qid": null,
-            "tags": {
-              "amenity": "restaurant",
-              "name": "魂心家",
-              "website": "http://www.konshinya.com/"
-            }
-          },
-          {
-            "recordId": "node/4970528624",
-            "name": "ツジタプリント",
-            "coordinates": [
-              139.7456506,
-              35.6997583
-            ],
-            "qid": null,
-            "tags": {
-              "name": "ツジタプリント"
-            }
-          },
-          {
-            "recordId": "node/4970528630",
-            "name": "LIBRAIRIE OMEISHA",
-            "coordinates": [
-              139.7456443,
-              35.699672
-            ],
-            "qid": null,
-            "tags": {
-              "name": "LIBRAIRIE OMEISHA"
-            }
-          },
-          {
-            "recordId": "node/4970528633",
-            "name": "六献",
-            "coordinates": [
-              139.7456683,
-              35.6994836
-            ],
-            "qid": null,
-            "tags": {
-              "amenity": "pub",
-              "name": "六献"
-            }
-          },
-          {
-            "recordId": "node/4970528634",
-            "name": "日本三昧",
-            "coordinates": [
-              139.7456446,
-              35.6994866
-            ],
-            "qid": null,
-            "tags": {
-              "amenity": "pub",
-              "name": "日本三昧"
-            }
-          },
-          {
-            "recordId": "node/4970528636",
-            "name": "原価ビストロBAN!",
-            "coordinates": [
-              139.7455202,
-              35.6994735
-            ],
-            "qid": null,
-            "tags": {
-              "amenity": "pub",
-              "name": "原価ビストロBAN!"
-            }
-          },
-          {
-            "recordId": "node/4970528637",
-            "name": "Cafe RAG TIME",
-            "coordinates": [
-              139.7454736,
-              35.6994712
-            ],
-            "qid": null,
-            "tags": {
-              "amenity": "cafe",
-              "name": "Cafe RAG TIME",
-              "name:en": "Cafe RAG TIME",
-              "short_name": "RAG TIME"
-            }
-          },
-          {
-            "recordId": "node/4970528638",
-            "name": "SAPANA",
-            "coordinates": [
-              139.7454812,
-              35.6994381
-            ],
-            "qid": null,
-            "tags": {
-              "amenity": "pub",
-              "name": "SAPANA"
-            }
-          },
-          {
-            "recordId": "node/6031702639",
-            "name": "くいしんぼ",
-            "coordinates": [
-              139.7449605,
-              35.6994031
-            ],
-            "qid": null,
-            "tags": {
-              "alt_name": "下町の洋食屋さん くいしんぼ",
-              "amenity": "restaurant",
-              "name": "くいしんぼ"
-            }
-          },
-          {
-            "recordId": "node/989291887",
-            "name": "ルノアール",
-            "coordinates": [
-              139.7451955,
-              35.6992167
-            ],
-            "qid": null,
-            "tags": {
-              "addr:block_number": "2",
-              "addr:city": "千代田区",
-              "addr:housenumber": "6",
-              "addr:neighbourhood": "富士見二丁目",
-              "amenity": "cafe",
-              "brand": "ルノアール",
-              "name": "ルノアール",
-              "name:en": "Renoir",
-              "name:ja": "ルノアール",
-              "official_name": "喫茶室ルノアール",
-              "website": "https://www.ginza-renoir.co.jp/renoir/"
-            }
-          },
-          {
-            "recordId": "node/989291902",
-            "name": "ファミリーマート",
-            "coordinates": [
-              139.745219,
-              35.6991917
-            ],
-            "qid": null,
-            "tags": {
-              "brand": "FamilyMart",
-              "name": "ファミリーマート",
-              "name:en": "FamilyMart",
-              "name:ja": "ファミリーマート"
-            }
-          },
-          {
-            "recordId": "node/989291924",
-            "name": "飯田橋耳鼻咽喉科",
-            "coordinates": [
-              139.7449449,
-              35.6993827
-            ],
-            "qid": null,
-            "tags": {
-              "amenity": "doctors",
-              "healthcare": "doctor",
-              "name": "飯田橋耳鼻咽喉科"
-            }
-          },
-          {
-            "recordId": "node/989291942",
-            "name": "ドトールコーヒーショップ",
-            "coordinates": [
-              139.7449293,
-              35.6993645
-            ],
-            "qid": null,
-            "tags": {
-              "addr:block_number": "3",
-              "addr:city": "千代田区",
-              "addr:housenumber": "10",
-              "addr:neighbourhood": "富士見二丁目",
-              "amenity": "cafe",
-              "brand": "ドトール",
-              "name": "ドトールコーヒーショップ",
-              "name:en": "Doutor Coffee Shop",
-              "name:ja": "ドトールコーヒーショップ",
-              "operator": "ドトールコーヒー",
-              "operator:wikidata": "Q11322732",
-              "short_name": "DCS",
-              "website": "https://www.doutor.co.jp/dcs/"
-            }
-          },
-          {
-            "recordId": "node/990019183",
-            "name": "バーガーキング",
-            "coordinates": [
-              139.7446055,
-              35.6995517
-            ],
-            "qid": null,
-            "tags": {
-              "amenity": "fast_food",
-              "brand": "バーガーキング",
-              "name": "バーガーキング",
-              "name:en": "Burger King",
-              "name:ja": "バーガーキング"
-            }
-          },
-          {
-            "recordId": "node/990019188",
-            "name": "日本歯科大学東京短期大学",
-            "coordinates": [
-              139.7446896,
-              35.6995517
-            ],
-            "qid": "Q7754229",
-            "tags": {
-              "amenity": "college",
-              "name": "日本歯科大学東京短期大学",
-              "wikidata": "Q7754229"
-            }
-          },
-          {
-            "recordId": "way/1110136753",
-            "name": "富士見二丁目広場",
-            "coordinates": [
-              139.7454202,
-              35.699693350000004
-            ],
-            "qid": null,
-            "tags": {
-              "name": "富士見二丁目広場"
-            }
-          },
-          {
-            "recordId": "way/143581472",
-            "name": "青森県会館",
-            "coordinates": [
-              139.74497295,
-              35.69960365
-            ],
-            "qid": null,
-            "tags": {
-              "building": "yes",
-              "name": "青森県会館"
-            }
-          },
-          {
-            "recordId": "way/143581482",
-            "name": "鏑木ビル",
-            "coordinates": [
-              139.74510555,
-              35.6992986
-            ],
-            "qid": null,
-            "tags": {
-              "building": "yes",
-              "name": "鏑木ビル"
-            }
-          },
-          {
-            "recordId": "way/144351265",
-            "name": "OSビル",
-            "coordinates": [
-              139.7451946,
-              35.6993257
-            ],
-            "qid": null,
-            "tags": {
-              "building": "yes",
-              "name": "OSビル"
-            }
-          },
-          {
-            "recordId": "way/144351298",
-            "name": "一直ビル",
-            "coordinates": [
-              139.7455279,
-              35.6994327
-            ],
-            "qid": null,
-            "tags": {
-              "building": "yes",
-              "name": "一直ビル"
-            }
-          },
-          {
-            "recordId": "way/144351303",
-            "name": "富士見ヨシダビル",
-            "coordinates": [
-              139.74547905,
-              35.69942605
-            ],
-            "qid": null,
-            "tags": {
-              "building": "yes",
-              "name": "富士見ヨシダビル"
-            }
-          },
-          {
-            "recordId": "way/144351310",
-            "name": "横江ビル",
-            "coordinates": [
-              139.74509655,
-              35.69949815
-            ],
-            "qid": null,
-            "tags": {
-              "building": "apartments",
-              "name": "横江ビル"
-            }
-          },
-          {
-            "recordId": "way/85333744",
-            "name": "大神宮通り",
-            "coordinates": [
-              139.74534110000002,
-              35.69942235
-            ],
-            "qid": null,
-            "tags": {
-              "name": "大神宮通り"
-            }
-          }
-        ]
-      },
-      "evidenceHash": "ea2d7620ae0882904674b65377b6477a68f1eddc9de2cfc3cb583f59686bc250",
-      "current": null,
-      "status": "decided",
-      "issue": 58,
-      "human": {
-        "choice": "none",
-        "editor": "nawashiro",
-        "editedAt": "2026-10-28T07:22:58Z",
-        "url": "https://github.com/nawashiro/chiyoda_city_main_facilities/issues/58",
-        "issue": 58
-      },
-      "choice": "none",
-      "method": "human"
     },
     "019ca6b1-dc00-7774-920a-bdcf4344c0c0": {
       "evidence": {
@@ -1791,775 +710,6 @@
       "choice": "node/5285952021",
       "method": "source_record"
     },
-    "019ca6b1-dc00-7e93-9ef6-266039bd8e81": {
-      "evidence": {
-        "target": {
-          "id": "019ca6b1-dc00-7e93-9ef6-266039bd8e81",
-          "name": "相談支援事業所Ｍｏｉ",
-          "coordinates": [
-            139.75723876,
-            35.69569665
-          ]
-        },
-        "candidates": [
-          {
-            "recordId": "node/12350277701",
-            "name": "神房",
-            "coordinates": [
-              139.757423,
-              35.6955603
-            ],
-            "qid": null,
-            "tags": {
-              "amenity": "restaurant",
-              "name": "神房"
-            }
-          },
-          {
-            "recordId": "node/1276856487",
-            "name": "欧風カレー ボンディ 神保町本店",
-            "coordinates": [
-              139.757376,
-              35.6955618
-            ],
-            "qid": null,
-            "tags": {
-              "amenity": "restaurant",
-              "name": "欧風カレー ボンディ 神保町本店",
-              "name:en": "BONDY",
-              "name:ja": "欧風カレー　ボンディ"
-            }
-          },
-          {
-            "recordId": "node/1276856510",
-            "name": "みわ書房",
-            "coordinates": [
-              139.7573733,
-              35.6956788
-            ],
-            "qid": null,
-            "tags": {
-              "name": "みわ書房",
-              "name:en": "Miwa Book Store"
-            }
-          },
-          {
-            "recordId": "node/13674307491",
-            "name": "神田神保町",
-            "coordinates": [
-              139.7569835,
-              35.6956696
-            ],
-            "qid": "Q1689258",
-            "tags": {
-              "name": "神田神保町",
-              "name:en": "Kanda-Jimbocho",
-              "name:ja": "神田神保町",
-              "wikidata": "Q1689258"
-            }
-          },
-          {
-            "recordId": "node/3163977862",
-            "name": "古賀書店",
-            "coordinates": [
-              139.756971,
-              35.69575
-            ],
-            "qid": "Q115908872",
-            "tags": {
-              "name": "古賀書店",
-              "name:en": "Koga's Bookstore",
-              "wikidata": "Q115908872"
-            }
-          },
-          {
-            "recordId": "node/3163979862",
-            "name": "日本特価書籍",
-            "coordinates": [
-              139.7567499,
-              35.6957121
-            ],
-            "qid": null,
-            "tags": {
-              "name": "日本特価書籍",
-              "name:en": "Nippon Tokka Shoseki Ltd."
-            }
-          },
-          {
-            "recordId": "node/3163980561",
-            "name": "文華堂書店",
-            "coordinates": [
-              139.7572152,
-              35.6956926
-            ],
-            "qid": null,
-            "tags": {
-              "name": "文華堂書店"
-            }
-          },
-          {
-            "recordId": "node/3163981462",
-            "name": "長島書店",
-            "coordinates": [
-              139.756909,
-              35.695759
-            ],
-            "qid": null,
-            "tags": {
-              "name": "長島書店",
-              "name:en": "Nagashima's Bookstore"
-            }
-          },
-          {
-            "recordId": "node/3163981463",
-            "name": "篠村書店",
-            "coordinates": [
-              139.756781,
-              35.6957321
-            ],
-            "qid": null,
-            "tags": {
-              "name": "篠村書店",
-              "name:en": "Shinomura's Bookstore"
-            }
-          },
-          {
-            "recordId": "node/3163981662",
-            "name": "山陽堂書店",
-            "coordinates": [
-              139.7568135,
-              35.6957489
-            ],
-            "qid": null,
-            "tags": {
-              "name": "山陽堂書店",
-              "name:en": "Sanyodo Bookstore"
-            }
-          },
-          {
-            "recordId": "node/3163981761",
-            "name": "矢口書店",
-            "coordinates": [
-              139.7570282,
-              35.6957383
-            ],
-            "qid": null,
-            "tags": {
-              "addr:neighbourhood": "神田神保町",
-              "name": "矢口書店",
-              "name:en": "Yaguchi Book Store",
-              "name:ja": "矢口書店",
-              "website": "http://yaguchishoten.jp/"
-            }
-          },
-          {
-            "recordId": "node/3163982261",
-            "name": "澤口書店",
-            "coordinates": [
-              139.756858,
-              35.695744
-            ],
-            "qid": null,
-            "tags": {
-              "name": "澤口書店",
-              "name:en": "Sawaguchi's Bookstore"
-            }
-          },
-          {
-            "recordId": "node/3244187061",
-            "name": "セブン-イレブン",
-            "coordinates": [
-              139.757066,
-              35.696122
-            ],
-            "qid": null,
-            "tags": {
-              "addr:block_number": "2",
-              "addr:city": "千代田区",
-              "addr:neighbourhood": "神田神保町二丁目",
-              "brand": "7-ELEVEN",
-              "name": "セブン-イレブン",
-              "name:en": "7-Eleven",
-              "name:ja": "セブン-イレブン",
-              "operator": "セブンイレブン・ジャパン",
-              "website": "https://www.sej.co.jp/"
-            }
-          },
-          {
-            "recordId": "node/3343046270",
-            "name": "ブックパワー R.B.S",
-            "coordinates": [
-              139.7573721,
-              35.6957065
-            ],
-            "qid": null,
-            "tags": {
-              "name": "ブックパワー R.B.S",
-              "name:en": "Book Power R.B.S."
-            }
-          },
-          {
-            "recordId": "node/3343046271",
-            "name": "ブンケン・ロック・サイド",
-            "coordinates": [
-              139.7572586,
-              35.6957654
-            ],
-            "qid": null,
-            "tags": {
-              "name": "ブンケン・ロック・サイド",
-              "name:en": "Bunken Rock Side"
-            }
-          },
-          {
-            "recordId": "node/3343046272",
-            "name": "中川書店",
-            "coordinates": [
-              139.757185,
-              35.6956844
-            ],
-            "qid": null,
-            "tags": {
-              "name": "中川書店",
-              "name:en": "Nakagawa's Bookstore"
-            }
-          },
-          {
-            "recordId": "node/3343046273",
-            "name": "夢野書店",
-            "coordinates": [
-              139.7573721,
-              35.6957561
-            ],
-            "qid": null,
-            "tags": {
-              "name": "夢野書店",
-              "name:en": "Yumeno Book Store"
-            }
-          },
-          {
-            "recordId": "node/3343046274",
-            "name": "南海堂書店",
-            "coordinates": [
-              139.7571875,
-              35.6957641
-            ],
-            "qid": null,
-            "tags": {
-              "name": "南海堂書店",
-              "name:en": "Nankaido Bookstore"
-            }
-          },
-          {
-            "recordId": "node/3343046275",
-            "name": "原書房",
-            "coordinates": [
-              139.7572986,
-              35.6957514
-            ],
-            "qid": null,
-            "tags": {
-              "name": "原書房",
-              "name:en": "Hara's Bookstore"
-            }
-          },
-          {
-            "recordId": "node/3343046276",
-            "name": "神保町ブックセンター",
-            "coordinates": [
-              139.7575349,
-              35.6957517
-            ],
-            "qid": null,
-            "tags": {
-              "name": "神保町ブックセンター",
-              "name:en": "Jimbocho Book Center",
-              "website": "https://www.jimbocho-book.jp"
-            }
-          },
-          {
-            "recordId": "node/3343046277",
-            "name": "芳賀書店",
-            "coordinates": [
-              139.757374,
-              35.6956472
-            ],
-            "qid": null,
-            "tags": {
-              "name": "芳賀書店",
-              "name:en": "Haga's Bookstore"
-            }
-          },
-          {
-            "recordId": "node/3343046278",
-            "name": "飯島書店",
-            "coordinates": [
-              139.7572692,
-              35.6957276
-            ],
-            "qid": null,
-            "tags": {
-              "name": "飯島書店",
-              "name:en": "Iijima's Bookstore"
-            }
-          },
-          {
-            "recordId": "node/3343046279",
-            "name": "高山本店",
-            "coordinates": [
-              139.7573723,
-              35.6957784
-            ],
-            "qid": null,
-            "tags": {
-              "name": "高山本店",
-              "name:en": "Takayama-Honten Book Store"
-            }
-          },
-          {
-            "recordId": "node/3343046280",
-            "name": "鳥海書房",
-            "coordinates": [
-              139.7573718,
-              35.695733
-            ],
-            "qid": null,
-            "tags": {
-              "name": "鳥海書房",
-              "name:en": "Toriumi Book Store"
-            }
-          },
-          {
-            "recordId": "node/3731202386",
-            "name": "ファミリーマート",
-            "coordinates": [
-              139.7574312,
-              35.6954129
-            ],
-            "qid": null,
-            "tags": {
-              "brand": "FamilyMart",
-              "name": "ファミリーマート",
-              "name:en": "FamilyMart",
-              "name:ja": "ファミリーマート"
-            }
-          },
-          {
-            "recordId": "node/3824356137",
-            "name": "歴史と文化の散歩道 神田本屋街散歩",
-            "coordinates": [
-              139.7577461,
-              35.6958412
-            ],
-            "qid": null,
-            "tags": {
-              "name": "歴史と文化の散歩道 神田本屋街散歩",
-              "name:en": "Kanda Honnyagai Walk"
-            }
-          },
-          {
-            "recordId": "node/4013837839",
-            "name": "株式会社富士レコード社",
-            "coordinates": [
-              139.7573411,
-              35.6955684
-            ],
-            "qid": null,
-            "tags": {
-              "addr:block_number": "3",
-              "addr:city": "千代田区",
-              "addr:neighbourhood": "神田神保町二丁目",
-              "name": "株式会社富士レコード社",
-              "name:en": "Fuji Record Company",
-              "office": "company"
-            }
-          },
-          {
-            "recordId": "node/4027548389",
-            "name": "らくごカフェ",
-            "coordinates": [
-              139.7573744,
-              35.6956151
-            ],
-            "qid": null,
-            "tags": {
-              "amenity": "cafe",
-              "name": "らくごカフェ",
-              "name:en": "rakugocafe"
-            }
-          },
-          {
-            "recordId": "node/4030794381",
-            "name": "秦川堂書店",
-            "coordinates": [
-              139.7575369,
-              35.6957167
-            ],
-            "qid": null,
-            "tags": {
-              "name": "秦川堂書店",
-              "name:en": "Shinsendo Bookstore"
-            }
-          },
-          {
-            "recordId": "node/4855419881",
-            "name": "神保町",
-            "coordinates": [
-              139.756919,
-              35.6959843
-            ],
-            "qid": "Q76805",
-            "tags": {
-              "name": "神保町",
-              "name:en": "Jimbocho",
-              "name:ja": "神保町",
-              "operator": "東京地下鉄",
-              "website": "https://www.tokyometro.jp/lang_en/station/jimbocho/",
-              "wikidata": "Q76805"
-            }
-          },
-          {
-            "recordId": "node/5085885719",
-            "name": "神田北神保町郵便局",
-            "coordinates": [
-              139.75725,
-              35.6961194
-            ],
-            "qid": null,
-            "tags": {
-              "amenity": "post_office",
-              "name": "神田北神保町郵便局",
-              "name:en": "Kanda Kita jimbocho Post Office",
-              "operator": "日本郵便",
-              "operator:wikidata": "Q11509260"
-            }
-          },
-          {
-            "recordId": "node/5456398077",
-            "name": "なかや",
-            "coordinates": [
-              139.7573425,
-              35.6953963
-            ],
-            "qid": null,
-            "tags": {
-              "amenity": "restaurant",
-              "name": "なかや",
-              "name:en": "Nakaya"
-            }
-          },
-          {
-            "recordId": "node/5456398079",
-            "name": "Muang Thai",
-            "coordinates": [
-              139.7575605,
-              35.6954016
-            ],
-            "qid": null,
-            "tags": {
-              "amenity": "restaurant",
-              "name": "Muang Thai"
-            }
-          },
-          {
-            "recordId": "node/6186649794",
-            "name": "神保町",
-            "coordinates": [
-              139.75693,
-              35.6958683
-            ],
-            "qid": "Q76805",
-            "tags": {
-              "name": "神保町",
-              "name:en": "Jimbocho",
-              "name:ja": "神保町",
-              "operator": "東京地下鉄",
-              "website": "https://www.tokyometro.jp/lang_en/station/jimbocho/",
-              "wikidata": "Q76805"
-            }
-          },
-          {
-            "recordId": "node/6186649798",
-            "name": "神保町",
-            "coordinates": [
-              139.7572047,
-              35.6959273
-            ],
-            "qid": "Q76805",
-            "tags": {
-              "name": "神保町",
-              "name:en": "Jimbocho",
-              "name:ja": "神保町",
-              "operator": "東京地下鉄",
-              "website": "https://www.tokyometro.jp/lang_en/station/jimbocho/",
-              "wikidata": "Q76805"
-            }
-          },
-          {
-            "recordId": "node/6817614530",
-            "name": "すごろくや",
-            "coordinates": [
-              139.7573721,
-              35.6956938
-            ],
-            "qid": null,
-            "tags": {
-              "addr:block_number": "3",
-              "addr:city": "千代田区",
-              "addr:neighbourhood": "神田神保町二丁目",
-              "name": "すごろくや",
-              "name:en": "Sugorokuya",
-              "name:ja": "すごろくや",
-              "website": "https://sugorokuya.jp/shops/jimbocho"
-            }
-          },
-          {
-            "recordId": "node/6817614546",
-            "name": "虎連坊",
-            "coordinates": [
-              139.7577828,
-              35.6956489
-            ],
-            "qid": null,
-            "tags": {
-              "amenity": "pub",
-              "name": "虎連坊"
-            }
-          },
-          {
-            "recordId": "node/6817614547",
-            "name": "三菱UFJ不動産販売",
-            "coordinates": [
-              139.7577815,
-              35.6956794
-            ],
-            "qid": null,
-            "tags": {
-              "brand": "三菱UFJ不動産販売",
-              "name": "三菱UFJ不動産販売",
-              "name:en": "Mitsubishi UFJ Real Estate Services",
-              "name:ja": "三菱UFJ不動産販売",
-              "office": "estate_agent"
-            }
-          },
-          {
-            "recordId": "node/7124730785",
-            "name": "原書房",
-            "coordinates": [
-              139.7572262,
-              35.6957575
-            ],
-            "qid": null,
-            "tags": {
-              "addr:block_number": "3",
-              "addr:city": "千代田区",
-              "addr:housenumber": "22",
-              "addr:neighbourhood": "神田神保町二丁目",
-              "name": "原書房",
-              "name:en": "Hara Shobo Japanese Ukiyo-e Prints",
-              "name:ja": "原書房",
-              "website": "https://www.harashobo.com/ukiyoe/"
-            }
-          },
-          {
-            "recordId": "relation/3545325",
-            "name": "神田神保町",
-            "coordinates": [
-              139.75694195,
-              35.69606675
-            ],
-            "qid": "Q1689258",
-            "tags": {
-              "name": "神田神保町",
-              "name:en": "Kanda-Jimbocho",
-              "name:ja": "神田神保町",
-              "wikidata": "Q1689258"
-            }
-          },
-          {
-            "recordId": "relation/9188032",
-            "name": "神保町駅 (stop_area_group)",
-            "coordinates": [
-              139.7570275,
-              35.695617999999996
-            ],
-            "qid": null,
-            "tags": {
-              "name": "神保町駅 (stop_area_group)",
-              "name:en": "Jimbocho (Group)",
-              "name:ja": "神保町駅 (stop_area_group)"
-            }
-          },
-          {
-            "recordId": "way/112307863",
-            "name": "神田古書センタービル",
-            "coordinates": [
-              139.7573793,
-              35.69566465
-            ],
-            "qid": null,
-            "tags": {
-              "addr:block_number": "3",
-              "addr:city": "千代田区",
-              "addr:neighbourhood": "神田神保町二丁目",
-              "building": "retail",
-              "name": "神田古書センタービル",
-              "name:en": "Kanda Kosho Center Building"
-            }
-          },
-          {
-            "recordId": "way/231778809",
-            "name": "神保町藤和ビル",
-            "coordinates": [
-              139.75723435,
-              35.69541235
-            ],
-            "qid": null,
-            "tags": {
-              "addr:block_number": "13",
-              "addr:neighbourhood": "2丁目",
-              "building": "commercial",
-              "name": "神保町藤和ビル"
-            }
-          },
-          {
-            "recordId": "way/231778976",
-            "name": "英光ビル",
-            "coordinates": [
-              139.75722975000002,
-              35.69556895
-            ],
-            "qid": null,
-            "tags": {
-              "building": "yes",
-              "name": "英光ビル",
-              "name:en": "Eiko Building"
-            }
-          },
-          {
-            "recordId": "way/231779036",
-            "name": "MF BUILD.",
-            "coordinates": [
-              139.7574436,
-              35.69542165
-            ],
-            "qid": null,
-            "tags": {
-              "addr:block_number": "13",
-              "addr:neighbourhood": "2丁目",
-              "building": "commercial",
-              "name": "MF BUILD."
-            }
-          },
-          {
-            "recordId": "way/231779254",
-            "name": "タイムズ",
-            "coordinates": [
-              139.75695175,
-              35.69556625
-            ],
-            "qid": null,
-            "tags": {
-              "amenity": "parking",
-              "brand": "タイムズ",
-              "name": "タイムズ",
-              "name:en": "Times",
-              "name:ja": "タイムズ",
-              "operator": "タイムズ24",
-              "operator:wikidata": "Q115263626"
-            }
-          },
-          {
-            "recordId": "way/231779256",
-            "name": "岩波書店アネックス",
-            "coordinates": [
-              139.75753435000001,
-              35.69567605
-            ],
-            "qid": null,
-            "tags": {
-              "building": "yes",
-              "name": "岩波書店アネックス",
-              "name:en": "Iwanami Shoten Annex"
-            }
-          },
-          {
-            "recordId": "way/327516815",
-            "name": "神保町交差点自転車駐車場",
-            "coordinates": [
-              139.75744214999997,
-              35.6957063
-            ],
-            "qid": null,
-            "tags": {
-              "amenity": "bicycle_parking",
-              "name": "神保町交差点自転車駐車場",
-              "operator": "千代田区"
-            }
-          },
-          {
-            "recordId": "way/682699851",
-            "name": "靖国通り",
-            "coordinates": [
-              139.75713224999998,
-              35.69587715
-            ],
-            "qid": "Q111948762",
-            "tags": {
-              "name": "靖国通り",
-              "name:en": "Yasukuni Street",
-              "name:ja": "靖国通り",
-              "official_name": "特例主要地方道新宿両国線",
-              "wikidata": "Q111948762"
-            }
-          },
-          {
-            "recordId": "way/894161835",
-            "name": "都営地下鉄新宿線",
-            "coordinates": [
-              139.75718815,
-              35.6959515
-            ],
-            "qid": null,
-            "tags": {
-              "name": "都営地下鉄新宿線",
-              "name:en": "Toei Shinjuku Line",
-              "name:ja": "都営地下鉄新宿線",
-              "operator": "東京都交通局"
-            }
-          },
-          {
-            "recordId": "way/894161836",
-            "name": "都営地下鉄新宿線",
-            "coordinates": [
-              139.7571919,
-              35.695911249999995
-            ],
-            "qid": "Q1374502",
-            "tags": {
-              "name": "都営地下鉄新宿線",
-              "name:en": "Toei Shinjuku Line",
-              "name:ja": "都営地下鉄新宿線",
-              "operator": "東京都交通局",
-              "wikidata": "Q1374502"
-            }
-          }
-        ]
-      },
-      "evidenceHash": "6222ccc4d985b49b15bff3569259b6bc0ba9f2b2f48961edac1c3fd60079bd9e",
-      "current": null,
-      "status": "decided",
-      "issue": 59,
-      "human": {
-        "choice": "none",
-        "editor": "nawashiro",
-        "editedAt": "2026-10-28T07:22:38Z",
-        "url": "https://github.com/nawashiro/chiyoda_city_main_facilities/issues/59",
-        "issue": 59
-      },
-      "choice": "none",
-      "method": "human"
-    },
     "019fa880-5cd4-7122-bc68-e8a327846042": {
       "evidence": {
         "target": {
@@ -2743,12 +893,13 @@
             "tags": {
               "building": "public",
               "name": "神保町ひまわり館",
-              "name:en": "Jimbocho Himawari Bldg."
+              "name:en": "Jimbocho Himawari Bldg.",
+              "website": "https://www.city.chiyoda.lg.jp/shisetsu/kuyakusho/jinbocho-shuchojo.html"
             }
           }
         ]
       },
-      "evidenceHash": "9e9ac071034a3c5f92350b1bab6210cb1dc027550f74d73146619f0519c3fe76",
+      "evidenceHash": "2276045d20f9ed633742a601610de7c41534848d310061f0eaa7f70d900fd910",
       "current": "node/3777876586",
       "status": "decided",
       "choice": "node/3777876586",
@@ -3509,7 +1660,7 @@
         "candidates": [
           {
             "recordId": "way/193000544",
-            "name": "国立国会図書館・東京本館",
+            "name": "国立国会図書館",
             "coordinates": [
               139.7443356,
               35.6786257
@@ -3518,16 +1669,16 @@
             "tags": {
               "alt_name": "NDL",
               "amenity": "library",
-              "name": "国立国会図書館・東京本館",
-              "name:en": "National Diet Library - Tokyo Main",
-              "name:ja": "国立国会図書館・東京本館",
+              "name": "国立国会図書館",
+              "name:en": "National Diet Library",
+              "name:ja": "国立国会図書館",
               "website": "https://www.ndl.go.jp/jp/service/tokyo/",
               "wikidata": "Q477675"
             }
           }
         ]
       },
-      "evidenceHash": "6292c48fca4f843ff3e53836f7f4e4277ff9ecb434173d5042ffdcf74eb6cefd",
+      "evidenceHash": "d92961368a981c627d1fb80907bf0594a8dbe08e4ee85d4951cd49be311ac324",
       "current": "way/193000544",
       "status": "decided",
       "choice": "way/193000544",
@@ -4760,20 +2911,55 @@
               "addr:neighbourhood": "神田和泉町",
               "amenity": "library",
               "name": "ちよだパークサイドプラザ区民図書室",
-              "operator": "千代田区"
+              "operator": "千代田区",
+              "website": "https://www.city.chiyoda.lg.jp/shisetsu/toshokan/parkside-tosho.html"
+            }
+          },
+          {
+            "recordId": "node/14337525601",
+            "name": "いずみこどもプラザ",
+            "coordinates": [
+              139.7787853,
+              35.6992391
+            ],
+            "qid": null,
+            "tags": {
+              "amenity": "kindergarten",
+              "name": "いずみこどもプラザ",
+              "operator": "千代田区",
+              "operator:wikidata": "Q214051"
+            }
+          },
+          {
+            "recordId": "node/14337531401",
+            "name": "ちよだパークサイドプラザ",
+            "coordinates": [
+              139.778781,
+              35.6991784
+            ],
+            "qid": null,
+            "tags": {
+              "amenity": "community_centre",
+              "name": "ちよだパークサイドプラザ",
+              "operator": "千代田区",
+              "operator:wikidata": "Q214051",
+              "website": "https://www.city.chiyoda.lg.jp/shisetsu/bunka/parkside.html"
             }
           },
           {
             "recordId": "node/5665860805",
             "name": "千代田区立いずみこども園",
             "coordinates": [
-              139.7782981,
+              139.778304,
               35.6993449
             ],
             "qid": null,
             "tags": {
               "amenity": "childcare",
-              "name": "千代田区立いずみこども園"
+              "name": "千代田区立いずみこども園",
+              "operator": "千代田区",
+              "operator:wikidata": "Q214051",
+              "website": "https://chiyoda.schoolweb.ne.jp/1380033"
             }
           },
           {
@@ -4801,11 +2987,12 @@
               139.7791959,
               35.69904685
             ],
-            "qid": null,
+            "qid": "Q42311501",
             "tags": {
               "name": "和泉公園",
               "name:en": "Izumi Park",
-              "name:ja": "和泉公園"
+              "name:ja": "和泉公園",
+              "wikidata": "Q42311501"
             }
           },
           {
@@ -4825,7 +3012,7 @@
           }
         ]
       },
-      "evidenceHash": "779e194334572244a07a1ca3091ae8c5e9673f0d6be4d5b3eb6cbc8755e8bff7",
+      "evidenceHash": "9fc792b09c715b092f58752ddf0f31faadb4779e60d6b656d425db297d36adb2",
       "current": "node/13468335880",
       "status": "decided",
       "choice": "node/13468335880",
@@ -6948,6 +5135,22 @@
             }
           },
           {
+            "recordId": "node/14344607026",
+            "name": "千代田区立 富士見小学校",
+            "coordinates": [
+              139.7463641,
+              35.6971909
+            ],
+            "qid": "Q81916362",
+            "tags": {
+              "amenity": "school",
+              "name": "千代田区立 富士見小学校",
+              "name:en": "Fujimi Elementary School",
+              "website": "https://chiyoda.schoolweb.ne.jp/1310164",
+              "wikidata": "Q81916362"
+            }
+          },
+          {
             "recordId": "relation/21447651",
             "name": "特別区道千第270号",
             "coordinates": [
@@ -6975,22 +5178,23 @@
           },
           {
             "recordId": "way/179575985",
-            "name": "千代田区立 富士見小学校",
+            "name": "富士見みらい館",
             "coordinates": [
               139.74630355,
               35.6972222
             ],
-            "qid": "Q81916362",
+            "qid": null,
             "tags": {
-              "amenity": "school",
-              "name": "千代田区立 富士見小学校",
-              "name:en": "Fujimi Elementary School",
-              "wikidata": "Q81916362"
+              "amenity": "community_centre",
+              "name": "富士見みらい館",
+              "operator": "千代田区",
+              "operator:wikidata": "Q214051",
+              "website": "https://www.city.chiyoda.lg.jp/shisetsu/bunka/fujimimirai.html"
             }
           }
         ]
       },
-      "evidenceHash": "6ad5a076a8bcd00d7650dccfedbef13cf111b4d6fb2ec4e082aaec1a1bf0c988",
+      "evidenceHash": "e4b3ed0344840f713bdd66b3f895c079b1bb892c71d3c26a1e7d5efd3e569838",
       "current": "way/179575985",
       "status": "decided",
       "choice": "way/179575985",
@@ -8346,20 +6550,55 @@
               "addr:neighbourhood": "神田和泉町",
               "amenity": "library",
               "name": "ちよだパークサイドプラザ区民図書室",
-              "operator": "千代田区"
+              "operator": "千代田区",
+              "website": "https://www.city.chiyoda.lg.jp/shisetsu/toshokan/parkside-tosho.html"
+            }
+          },
+          {
+            "recordId": "node/14337525601",
+            "name": "いずみこどもプラザ",
+            "coordinates": [
+              139.7787853,
+              35.6992391
+            ],
+            "qid": null,
+            "tags": {
+              "amenity": "kindergarten",
+              "name": "いずみこどもプラザ",
+              "operator": "千代田区",
+              "operator:wikidata": "Q214051"
+            }
+          },
+          {
+            "recordId": "node/14337531401",
+            "name": "ちよだパークサイドプラザ",
+            "coordinates": [
+              139.778781,
+              35.6991784
+            ],
+            "qid": null,
+            "tags": {
+              "amenity": "community_centre",
+              "name": "ちよだパークサイドプラザ",
+              "operator": "千代田区",
+              "operator:wikidata": "Q214051",
+              "website": "https://www.city.chiyoda.lg.jp/shisetsu/bunka/parkside.html"
             }
           },
           {
             "recordId": "node/5665860805",
             "name": "千代田区立いずみこども園",
             "coordinates": [
-              139.7782981,
+              139.778304,
               35.6993449
             ],
             "qid": null,
             "tags": {
               "amenity": "childcare",
-              "name": "千代田区立いずみこども園"
+              "name": "千代田区立いずみこども園",
+              "operator": "千代田区",
+              "operator:wikidata": "Q214051",
+              "website": "https://chiyoda.schoolweb.ne.jp/1380033"
             }
           },
           {
@@ -8387,11 +6626,12 @@
               139.7791959,
               35.69904685
             ],
-            "qid": null,
+            "qid": "Q42311501",
             "tags": {
               "name": "和泉公園",
               "name:en": "Izumi Park",
-              "name:ja": "和泉公園"
+              "name:ja": "和泉公園",
+              "wikidata": "Q42311501"
             }
           },
           {
@@ -8411,19 +6651,31 @@
           }
         ]
       },
-      "evidenceHash": "9c72c768100eeb0c936325cc2dbd4660a3bc2621f2577c67a44f771c9ea665b9",
+      "evidenceHash": "5eac5c485355ccd6b86327317878ac9afa2cfdf5e089dc065983d1fe7673e742",
       "current": null,
       "status": "decided",
       "issue": 60,
-      "human": {
-        "choice": "none",
-        "editor": "nawashiro",
-        "editedAt": "2026-10-28T07:22:04Z",
-        "url": "https://github.com/nawashiro/chiyoda_city_main_facilities/issues/60",
-        "issue": 60
+      "jev": {
+        "choice": "node/14337531401",
+        "confidence": 0.99,
+        "probabilities": {
+          "node/13468335880": 0.0,
+          "node/14337525601": 0.0,
+          "node/14337531401": 0.99,
+          "node/5665860805": 0.0,
+          "node/5746689924": 0.0,
+          "way/217378904": 0.0,
+          "way/217378912": 0.0,
+          "none": 0.01
+        },
+        "usage": {
+          "input_tokens": 1581,
+          "output_tokens": 89
+        },
+        "model": "jev-1.14.0"
       },
-      "choice": "none",
-      "method": "human"
+      "choice": "node/14337531401",
+      "method": "jev"
     },
     "019fa880-5cd5-7d2b-abb0-d80f16d6a04a": {
       "evidence": {
@@ -8471,6 +6723,21 @@
         },
         "candidates": [
           {
+            "recordId": "node/11436157594",
+            "name": "岩本町ほほえみプラザ",
+            "coordinates": [
+              139.777715,
+              35.69441
+            ],
+            "qid": null,
+            "tags": {
+              "amenity": "bicycle_rental",
+              "brand": "Docomo Bike Share",
+              "name": "岩本町ほほえみプラザ",
+              "name:ja": "岩本町ほほえみプラザ"
+            }
+          },
+          {
             "recordId": "node/14337499601",
             "name": "岩本町ほほえみプラザ",
             "coordinates": [
@@ -8484,19 +6751,58 @@
               "operator": "社会福祉法人多摩同胞会",
               "website": "https://www.tama-dhk.or.jp/iwamoto/"
             }
+          },
+          {
+            "recordId": "node/5021209549",
+            "name": "岩本町ほほえみプラザ",
+            "coordinates": [
+              139.7777528,
+              35.6942078
+            ],
+            "qid": null,
+            "tags": {
+              "name": "岩本町ほほえみプラザ",
+              "operator": "千代田区"
+            }
+          },
+          {
+            "recordId": "way/47418327",
+            "name": "大門通り",
+            "coordinates": [
+              139.77738184999998,
+              35.6942353
+            ],
+            "qid": null,
+            "tags": {
+              "name": "大門通り",
+              "name:en": "Daimon-dori Street"
+            }
+          },
+          {
+            "recordId": "way/651691640",
+            "name": "七瀬ビル",
+            "coordinates": [
+              139.7777462,
+              35.69465795
+            ],
+            "qid": null,
+            "tags": {
+              "building": "yes",
+              "name": "七瀬ビル"
+            }
           }
         ]
       },
-      "evidenceHash": "76eb5e6b7e231e3c28b945096cd68bdb529ec3d9702637b51c217ace5f7598f7",
+      "evidenceHash": "a261ac56073590235d40c90ea37a3f1ce867974795dba47e03dd3fe18109cc73",
       "current": "node/14337499601",
       "status": "decided",
-      "choice": "node/14337499601",
-      "method": "human",
       "human": {
         "choice": "node/14337499601",
         "editor": "Nawashiro(实地調査)経由の指定",
         "editedAt": "2026-11-09T04:17:50Z"
-      }
+      },
+      "choice": "node/14337499601",
+      "method": "human"
     },
     "019fa880-5cd5-7d9b-ae8f-d7d00901be5d": {
       "evidence": {
@@ -8529,247 +6835,6 @@
       "status": "decided",
       "choice": "way/184577229",
       "method": "source_record"
-    },
-    "019fa880-5cd5-7d9d-9713-970aa8443759": {
-      "evidence": {
-        "target": {
-          "id": "019fa880-5cd5-7d9d-9713-970aa8443759",
-          "name": "TOHO CINEMAS HIBIYA",
-          "coordinates": [
-            139.7594149,
-            35.6730666
-          ]
-        },
-        "candidates": [
-          {
-            "recordId": "node/12103749508",
-            "name": "阪神電気鉄道株式会社東京事務所",
-            "coordinates": [
-              139.7599528,
-              35.6731065
-            ],
-            "qid": null,
-            "tags": {
-              "addr:block_number": "2",
-              "addr:city": "千代田区",
-              "addr:housenumber": "2",
-              "addr:neighbourhood": "1丁目",
-              "addr:quarter": "有楽町",
-              "name": "阪神電気鉄道株式会社東京事務所",
-              "office": "company"
-            }
-          },
-          {
-            "recordId": "node/1367460925",
-            "name": "日比谷しまね館",
-            "coordinates": [
-              139.7599337,
-              35.6729335
-            ],
-            "qid": null,
-            "tags": {
-              "name": "日比谷しまね館"
-            }
-          },
-          {
-            "recordId": "node/260409658",
-            "name": "東京宝塚劇場",
-            "coordinates": [
-              139.7592046,
-              35.6728254
-            ],
-            "qid": "Q1134652",
-            "tags": {
-              "addr:block_number": "1",
-              "addr:city": "千代田区",
-              "addr:housenumber": "3",
-              "addr:neighbourhood": "有楽町一丁目",
-              "amenity": "theatre",
-              "contact:website": "https://kageki.hankyu.co.jp/theater/tokyo/",
-              "name": "東京宝塚劇場",
-              "name:en": "Tokyo Takarazuka Theater",
-              "operator": "宝塚歌劇団",
-              "website": "https://kageki.hankyu.co.jp/theater/tokyo/",
-              "wikidata": "Q1134652"
-            }
-          },
-          {
-            "recordId": "node/4743155124",
-            "name": "日比谷シャンテ",
-            "coordinates": [
-              139.7598882,
-              35.6730477
-            ],
-            "qid": null,
-            "tags": {
-              "addr:block_number": "2",
-              "addr:city": "千代田区",
-              "addr:housenumber": "2",
-              "addr:neighbourhood": "有楽町一丁目",
-              "name": "日比谷シャンテ",
-              "name:en": "Hibiya chanter",
-              "name:ja": "日比谷シャンテ",
-              "website": "https://www.hibiya-chanter.com/"
-            }
-          },
-          {
-            "recordId": "node/5539721821",
-            "name": "東京ミッドタウン日比谷",
-            "coordinates": [
-              139.7592489,
-              35.6734721
-            ],
-            "qid": "Q48752023",
-            "tags": {
-              "name": "東京ミッドタウン日比谷",
-              "name:en": "TOKYO Midtown HIBIYA",
-              "website": "http://www.hibiya.tokyo-midtown.com.e.adj.hp.transer.com/en/",
-              "wikidata": "Q48752023"
-            }
-          },
-          {
-            "recordId": "node/6900192224",
-            "name": "TOHO CINEMAS HIBIYA",
-            "coordinates": [
-              139.7594538,
-              35.6733194
-            ],
-            "qid": null,
-            "tags": {
-              "amenity": "cinema",
-              "brand": "TOHOシネマズ",
-              "name": "TOHO CINEMAS HIBIYA",
-              "name:en": "Toho Cinemas",
-              "name:ja": "TOHOシネマズ",
-              "operator": "東宝"
-            }
-          },
-          {
-            "recordId": "node/6900192225",
-            "name": "TOHO CINEMAS HIBIYA",
-            "coordinates": [
-              139.7594149,
-              35.6730666
-            ],
-            "qid": "Q11249598",
-            "tags": {
-              "amenity": "cinema",
-              "brand": "TOHOシネマズ",
-              "name": "TOHO CINEMAS HIBIYA",
-              "name:en": "Toho Cinemas",
-              "name:ja": "TOHOシネマズ",
-              "operator": "東宝",
-              "operator:wikidata": "Q875920",
-              "short_name": "TOHO",
-              "wikidata": "Q11249598"
-            }
-          },
-          {
-            "recordId": "node/7021069137",
-            "name": "東宝",
-            "coordinates": [
-              139.7599541,
-              35.6731603
-            ],
-            "qid": null,
-            "tags": {
-              "addr:block_number": "2",
-              "addr:city": "千代田区",
-              "addr:housenumber": "2",
-              "addr:neighbourhood": "有楽町一丁目",
-              "name": "東宝",
-              "name:en": "Toho Co. Ltd.",
-              "name:ja": "東宝",
-              "office": "company",
-              "website": "https://www.toho.co.jp/"
-            }
-          },
-          {
-            "recordId": "node/9064072598",
-            "name": "宝塚歌劇インフォメーションセンター",
-            "coordinates": [
-              139.759026,
-              35.6728563
-            ],
-            "qid": null,
-            "tags": {
-              "addr:block_number": "1",
-              "addr:city": "千代田区",
-              "addr:housenumber": "3",
-              "addr:neighbourhood": "有楽町一丁目",
-              "name": "宝塚歌劇インフォメーションセンター",
-              "name:en": "Takarazuka Revue Information Centre",
-              "name:ja": "宝塚歌劇インフォメーションセンター"
-            }
-          },
-          {
-            "recordId": "way/145402280",
-            "name": "日比谷仲通り",
-            "coordinates": [
-              139.75971155,
-              35.6730577
-            ],
-            "qid": null,
-            "tags": {
-              "name": "日比谷仲通り"
-            }
-          },
-          {
-            "recordId": "way/145402292",
-            "name": "東宝日比谷ビル",
-            "coordinates": [
-              139.75994839999998,
-              35.67307785
-            ],
-            "qid": "Q11526607",
-            "tags": {
-              "addr:block_number": "2",
-              "addr:city": "千代田区",
-              "addr:housenumber": "2",
-              "addr:neighbourhood": "有楽町一丁目",
-              "building": "yes",
-              "name": "東宝日比谷ビル",
-              "name:en": "Toho Hibiya Building",
-              "name:ja": "東宝日比谷ビル",
-              "wikidata": "Q11526607"
-            }
-          },
-          {
-            "recordId": "way/145402338",
-            "name": "東京宝塚ビル",
-            "coordinates": [
-              139.7590988,
-              35.6729641
-            ],
-            "qid": "Q65271271",
-            "tags": {
-              "addr:block_number": "1",
-              "addr:city": "千代田区",
-              "addr:housenumber": "3",
-              "addr:neighbourhood": "有楽町一丁目",
-              "building": "public",
-              "name": "東京宝塚ビル",
-              "name:en": "Tokyo Takarazuka Building",
-              "name:ja": "東京宝塚ビル",
-              "website": "https://kageki.hankyu.co.jp/theater/tokyo/",
-              "wikidata": "Q65271271"
-            }
-          }
-        ]
-      },
-      "evidenceHash": "de78ca919a30031fb96c0b2dbe2fceb3dd6609c8993a705ad5c1671e6dbe1edc",
-      "current": null,
-      "status": "decided",
-      "issue": 62,
-      "human": {
-        "choice": "none",
-        "editor": "nawashiro",
-        "editedAt": "2026-10-28T14:57:00Z",
-        "url": "https://github.com/nawashiro/chiyoda_city_main_facilities/issues/62",
-        "issue": 62
-      },
-      "choice": "none",
-      "method": "human"
     },
     "019fa880-5cd5-7dc7-8e68-e49750a54b8d": {
       "evidence": {
@@ -9598,12 +7663,13 @@
             "recordId": "way/88992010",
             "name": "末広ビル",
             "coordinates": [
-              139.77067935000002,
-              35.70164185
+              139.77068435,
+              35.70164445
             ],
             "qid": null,
             "tags": {
               "addr:block_number": "9",
+              "addr:city": "千代田区",
               "addr:neighbourhood": "外神田三丁目",
               "building": "yes",
               "name": "末広ビル",
@@ -9614,12 +7680,13 @@
             "recordId": "way/88992013",
             "name": "飯田通商",
             "coordinates": [
-              139.77066085,
-              35.7017718
+              139.77066255,
+              35.7017727
             ],
             "qid": null,
             "tags": {
               "addr:block_number": "9",
+              "addr:city": "千代田区",
               "addr:neighbourhood": "外神田三丁目",
               "building": "commercial",
               "name": "飯田通商",
@@ -9774,7 +7841,7 @@
           }
         ]
       },
-      "evidenceHash": "bb5eb7f0ee554aa6e25a9a8533b370d0cc01584a447a4d7639e6203901b2f379",
+      "evidenceHash": "e043ab4aca3a9fd346c99824ab1e1f0fc712521cdc95f1c71a29c038f330e2ba",
       "current": "node/1916530506",
       "status": "decided",
       "choice": "node/1916530506",
@@ -9792,6 +7859,35 @@
         },
         "candidates": [
           {
+            "recordId": "node/13325098701",
+            "name": "No4",
+            "coordinates": [
+              139.7360651,
+              35.6881905
+            ],
+            "qid": null,
+            "tags": {
+              "name": "No4"
+            }
+          },
+          {
+            "recordId": "node/1420770195",
+            "name": "千代田四番町郵便局",
+            "coordinates": [
+              139.7362186,
+              35.6886239
+            ],
+            "qid": null,
+            "tags": {
+              "addr:block_number": "4",
+              "addr:city": "千代田区",
+              "addr:housenumber": "8",
+              "addr:quarter": "四番町",
+              "amenity": "post_office",
+              "name": "千代田四番町郵便局"
+            }
+          },
+          {
             "recordId": "node/14344547001",
             "name": "千代田区立四番町児童館",
             "coordinates": [
@@ -9805,22 +7901,81 @@
               "name:en": "Chiyoda City Yonbancho Children's Center",
               "website": "https://www.city.chiyoda.lg.jp/koho/kosodate/jidocenter/ichiran/4bancho.html"
             }
+          },
+          {
+            "recordId": "node/14344547101",
+            "name": "千代田区立四番町保育園",
+            "coordinates": [
+              139.7365932,
+              35.6883208
+            ],
+            "qid": null,
+            "tags": {
+              "amenity": "kindergarten",
+              "name": "千代田区立四番町保育園",
+              "name:en": "Chiyoda City Yonbancho Nursery School",
+              "website": "https://www.city.chiyoda.lg.jp/shisetsu/hoikuen/yonbancho-ho.html"
+            }
+          },
+          {
+            "recordId": "node/7780246985",
+            "name": "No.4",
+            "coordinates": [
+              139.7360715,
+              35.6881915
+            ],
+            "qid": null,
+            "tags": {
+              "addr:block_number": "5",
+              "addr:city": "千代田区",
+              "addr:housenumber": "9",
+              "addr:neighbourhood": "四番町",
+              "amenity": "cafe",
+              "name": "No.4",
+              "website": "http://tysons.jp/no4"
+            }
+          },
+          {
+            "recordId": "way/144852506",
+            "name": "日テレ四番町ビル 3号館",
+            "coordinates": [
+              139.73649484999999,
+              35.6878973
+            ],
+            "qid": null,
+            "tags": {
+              "building": "yes",
+              "name": "日テレ四番町ビル 3号館"
+            }
+          },
+          {
+            "recordId": "way/144852516",
+            "name": "日テレ四番町ビル 4号館",
+            "coordinates": [
+              139.7367686,
+              35.6878981
+            ],
+            "qid": null,
+            "tags": {
+              "building": "yes",
+              "name": "日テレ四番町ビル 4号館"
+            }
           }
         ]
       },
-      "evidenceHash": "85974563f33817891cbc2b237a30c745c95f1a70ee23a8a215e607301503e5fa",
+      "evidenceHash": "2199f8fb7c7971c88aa332bca28a3ef33d02cc8056e1f057521d1731b51c511e",
       "current": "node/14344547001",
       "status": "decided",
       "issue": 9,
-      "choice": "node/14344547001",
-      "method": "human",
       "human": {
         "choice": "node/14344547001",
         "editor": "nawashiro",
         "editedAt": "2026-11-03T10:18:09Z",
         "url": "https://github.com/nawashiro/chiyoda_city_main_facilities/issues/9",
         "issue": 9
-      }
+      },
+      "choice": "node/14344547001",
+      "method": "human"
     },
     "019fa880-5cd5-7e95-9ea4-e8808e845cd7": {
       "evidence": {
@@ -11068,201 +9223,6 @@
       "status": "decided",
       "choice": "node/1420781347",
       "method": "source_record"
-    },
-    "019fa880-5cd6-7324-b3fe-943c71e289b7": {
-      "evidence": {
-        "target": {
-          "id": "019fa880-5cd6-7324-b3fe-943c71e289b7",
-          "name": "JAPAN ART BRIDGE",
-          "coordinates": [
-            139.7698128,
-            35.6974925
-          ]
-        },
-        "candidates": [
-          {
-            "recordId": "node/11374755862",
-            "name": "万世橋と神田祭り",
-            "coordinates": [
-              139.7696502,
-              35.697201
-            ],
-            "qid": null,
-            "tags": {
-              "name": "万世橋と神田祭り"
-            }
-          },
-          {
-            "recordId": "node/11374755863",
-            "name": "御成道（筋違門跡）",
-            "coordinates": [
-              139.7694632,
-              35.6974531
-            ],
-            "qid": null,
-            "tags": {
-              "name": "御成道（筋違門跡）"
-            }
-          },
-          {
-            "recordId": "node/2286588160",
-            "name": "NewDays",
-            "coordinates": [
-              139.769882,
-              35.6970576
-            ],
-            "qid": null,
-            "tags": {
-              "alt_name": "ニューデイズ",
-              "brand": "NewDays",
-              "name": "NewDays"
-            }
-          },
-          {
-            "recordId": "node/2509984547",
-            "name": "La Petit Kanda",
-            "coordinates": [
-              139.769342,
-              35.697711
-            ],
-            "qid": null,
-            "tags": {
-              "amenity": "restaurant",
-              "name": "La Petit Kanda"
-            }
-          },
-          {
-            "recordId": "node/2509991339",
-            "name": "フクモリ",
-            "coordinates": [
-              139.769443,
-              35.697606
-            ],
-            "qid": null,
-            "tags": {
-              "name": "フクモリ"
-            }
-          },
-          {
-            "recordId": "node/7132279496",
-            "name": "マーチエキュート神田万世橋",
-            "coordinates": [
-              139.7698975,
-              35.6971931
-            ],
-            "qid": null,
-            "tags": {
-              "amenity": "bicycle_rental",
-              "name": "マーチエキュート神田万世橋",
-              "name:en": "mAAch ecute Kanda-Manseibashi"
-            }
-          },
-          {
-            "recordId": "node/8995417645",
-            "name": "万世橋駅 跡地",
-            "coordinates": [
-              139.7695765,
-              35.6975133
-            ],
-            "qid": null,
-            "tags": {
-              "name": "万世橋駅 跡地"
-            }
-          },
-          {
-            "recordId": "way/137964516",
-            "name": "中央本線",
-            "coordinates": [
-              139.7697517,
-              35.697506399999995
-            ],
-            "qid": null,
-            "tags": {
-              "name": "中央本線",
-              "name:en": "Chuō Main Line",
-              "name:ja": "中央本線",
-              "official_name": "中央本線",
-              "operator": "東日本旅客鉄道"
-            }
-          },
-          {
-            "recordId": "way/171225126",
-            "name": "旧万世橋駅",
-            "coordinates": [
-              139.7698546,
-              35.69736245
-            ],
-            "qid": null,
-            "tags": {
-              "name": "旧万世橋駅"
-            }
-          },
-          {
-            "recordId": "way/28728110",
-            "name": "中央本線",
-            "coordinates": [
-              139.76970575,
-              35.6974658
-            ],
-            "qid": null,
-            "tags": {
-              "name": "中央本線",
-              "name:en": "Chuō Main Line",
-              "name:ja": "中央本線",
-              "official_name": "中央本線",
-              "operator": "東日本旅客鉄道"
-            }
-          },
-          {
-            "recordId": "way/675832452",
-            "name": "マーチ エキュート 神田万世橋",
-            "coordinates": [
-              139.7698128,
-              35.69749255
-            ],
-            "qid": "Q6751576",
-            "tags": {
-              "alt_name": "mAAch ecute",
-              "building": "retail",
-              "name": "マーチ エキュート 神田万世橋",
-              "name:en": "Maach ecute Kanda Manseibashi",
-              "wikidata": "Q6751576"
-            }
-          },
-          {
-            "recordId": "way/743276344",
-            "name": "RESTAURANT PLATINUM FISH マーチエキュート神田万世橋店",
-            "coordinates": [
-              139.77001315,
-              35.6972406
-            ],
-            "qid": null,
-            "tags": {
-              "addr:block_number": "25",
-              "addr:city": "千代田区",
-              "addr:housenumber": "4",
-              "addr:neighbourhood": "神田須田町一丁目",
-              "amenity": "restaurant",
-              "name": "RESTAURANT PLATINUM FISH マーチエキュート神田万世橋店",
-              "name:en": "Platinum Fish",
-              "website": "https://platinumfish.jp/shoplist/manseibashi/"
-            }
-          }
-        ]
-      },
-      "evidenceHash": "03907358c9feb9039a7da3d1d0df505aedc038e19e64e9e06e1f2548e7379cac",
-      "current": null,
-      "status": "decided",
-      "issue": 64,
-      "human": {
-        "choice": "none",
-        "editor": "nawashiro",
-        "editedAt": "2026-10-28T07:17:41Z",
-        "url": "https://github.com/nawashiro/chiyoda_city_main_facilities/issues/64",
-        "issue": 64
-      },
-      "choice": "none",
-      "method": "human"
     },
     "019fa880-5cd6-7359-b619-432ecb07b975": {
       "evidence": {
