@@ -1,5 +1,5 @@
 {
-  "version": "202610270100",
+  "version": "202611080100",
   "elements": [
     {
       "type": "node",
@@ -178,7 +178,6 @@
         "amenity": "library",
         "baby_feeding": "room",
         "changing_table": "yes",
-        "image": "https://upload.wikimedia.org/wikipedia/commons/2/2e/Yonbancho-library.webp",
         "internet_access": "yes",
         "internet_access:fee": "no",
         "name": "千代田区立四番町図書館",
@@ -192,7 +191,8 @@
         "source": "KSJ2",
         "source_ref": "http://nlftp.mlit.go.jp/ksj/jpgis/datalist/KsjTmplt-P02-v2_0.html",
         "toilets": "yes",
-        "wikidata": "Q61886798"
+        "wikidata": "Q61886798",
+        "wikimedia_commons": "File:Yonbancho-library.webp"
       }
     },
     {
@@ -735,7 +735,8 @@
         "bath:sand_bath": "no",
         "name": "RAKU SPA 1010 神田",
         "opening_hours": "Mo-Su 11:00-08:00",
-        "website": "https://rakuspa.com/kanda/"
+        "website": "https://rakuspa.com/kanda/",
+        "wikimedia_commons": "File:RAKU SPA 1010 神田 - Aug 27, 2019.jpg"
       }
     },
     {
@@ -964,13 +965,17 @@
         "addr:neighbourhood": "神田和泉町",
         "addr:province": "東京都",
         "amenity": "library",
+        "check_date": "2026-11-01",
+        "check_date:opening_hours": "2026-11-01",
+        "email": "kodomoshisetsu@city.chiyoda.lg.jp",
         "level": "4",
         "name": "ちよだパークサイドプラザ区民図書室",
-        "opening_hours": "Mo-Fr 09:00-19:00; Su 09:00-17:00; PH 09:00-17:00; Su[3] off",
+        "opening_hours": "Mo-Sa 09:00-19:00; Su 09:00-17:00",
         "operator": "千代田区",
         "operator:type": "public",
         "phone": "+81-3-3864-8931",
-        "ref:isil": "none"
+        "ref:isil": "none",
+        "website": "https://www.city.chiyoda.lg.jp/shisetsu/toshokan/parkside-tosho.html"
       }
     },
     {
@@ -982,6 +987,64 @@
         "amenity": "cafe",
         "name": "優美堂",
         "opening_hours": "Su-Tu, Th 11:30-18:00; Fr-Sa 11:30-21:00"
+      }
+    },
+    {
+      "type": "node",
+      "id": 14337499601,
+      "lon": 139.7779715,
+      "lat": 35.6943553,
+      "tags": {
+        "addr:postcode": "1010032",
+        "amenity": "social_facility",
+        "check_date": "2026-11-01",
+        "contact:facebook": "iwamotohohoemi",
+        "contact:instagram": "iwamotochohohoemi",
+        "email": "iwamoto@tama-dhk.or.jp",
+        "internet_access": "wlan",
+        "name": "岩本町ほほえみプラザ",
+        "operator": "社会福祉法人多摩同胞会",
+        "operator:type": "public",
+        "phone": "+81358253407",
+        "social_facility:for": "senior",
+        "website": "https://www.tama-dhk.or.jp/iwamoto/",
+        "wikimedia_commons": "File:Iwamotocho Hohoemi Plaza.jpg"
+      }
+    },
+    {
+      "type": "node",
+      "id": 14337531401,
+      "lon": 139.778781,
+      "lat": 35.6991784,
+      "tags": {
+        "amenity": "community_centre",
+        "check_date": "2026-11-01",
+        "check_date:opening_hours": "2026-11-01",
+        "email": "odomoshisetsu@city.chiyoda.lg.jp",
+        "name": "ちよだパークサイドプラザ",
+        "opening_hours": "Mo-Sa 09:00-10:00; Su 09:00-17:00",
+        "operator": "千代田区",
+        "operator:type": "public",
+        "operator:wikidata": "Q214051",
+        "phone": "+81-3-3864-8931",
+        "website": "https://www.city.chiyoda.lg.jp/shisetsu/bunka/parkside.html",
+        "wikimedia_commons": "File:ちよだパークサイドプラザ.jpg"
+      }
+    },
+    {
+      "type": "node",
+      "id": 14344547001,
+      "lon": 139.7365076,
+      "lat": 35.6882993,
+      "tags": {
+        "amenity": "community_centre",
+        "check_date": "2026-11-03",
+        "check_date:opening_hours": "2026-11-03",
+        "name": "千代田区立四番町児童館",
+        "name:en": "Chiyoda City Yonbancho Children's Center",
+        "opening_hours": "Mo-Sa 09:00-17:00",
+        "phone": "+81332343084",
+        "website": "https://www.city.chiyoda.lg.jp/koho/kosodate/jidocenter/ichiran/4bancho.html"
       }
     },
     {
@@ -1039,12 +1102,16 @@
         "architect": "松下清夫; 平山嵩",
         "architect:wikidata": "Q79018012;Q11482510",
         "building": "public",
+        "building:levels": "6",
+        "check_date": "2026-11-03",
+        "check_date:opening_hours": "2026-11-03",
         "contact:facebook": "ScienceMuseum.jp",
         "contact:instagram": "sciencemuseum.jp",
         "contact:tripadvisor": "1637721",
         "contact:twitter": "JSF_SMT",
         "contact:website": "https://www.jsf.or.jp/",
         "contact:youtube": "UC49I9-_5zsYNO4ue1lTI-OQ",
+        "fee": "yes",
         "name": "科学技術館",
         "name:en": "Science Museum",
         "name:es": "Museo de Ciencia",
@@ -1058,6 +1125,7 @@
         "note:ja": "国土数値情報（公共施設データ）平成19年 国土交通省",
         "official_name": "科学技術館",
         "official_name:en": "Science and Technology Museum",
+        "opening_hours": "Mo-Su 09:30-16:50",
         "source": "NRPB of MLIT Japan;KSJ2",
         "source:ja": "国土画像情報（オルソ化空中写真）国土計画局",
         "source_ref": "http://nlftp.mlit.go.jp/ksj/jpgis/datalist/KsjTmplt-P02-v2_0.html",
@@ -1410,17 +1478,19 @@
         "lat": 35.6972222
       },
       "tags": {
-        "amenity": "school",
-        "education": "school",
-        "name": "千代田区立 富士見小学校",
-        "name:en": "Fujimi Elementary School",
-        "name:es": "Escuela primaria Fujimi",
+        "amenity": "community_centre",
+        "community_centre": "cultural_centre",
+        "name": "富士見みらい館",
         "note": "National-Land Numerical Information (Public Facility) 2006, MLIT Japan",
         "note:ja": "国土数値情報（公共施設データ）平成19年　国土交通省",
+        "opening_hours": "Mo-Su 09:00-17:00; Su[2] off; Dec 29-Jan 03 off",
+        "operator": "千代田区",
+        "operator:type": "public",
+        "operator:wikidata": "Q214051",
+        "phone": "+81-3-3263-1180",
         "source": "KSJ2;Bing 2010",
         "source_ref": "http://nlftp.mlit.go.jp/ksj/jpgis/datalist/KsjTmplt-P02-v2_0.html",
-        "wikidata": "Q81916362",
-        "wikipedia": "ja:千代田区立富士見小学校"
+        "website": "https://www.city.chiyoda.lg.jp/shisetsu/bunka/fujimimirai.html"
       }
     },
     {
@@ -1498,13 +1568,14 @@
       "tags": {
         "alt_name": "NDL",
         "amenity": "library",
-        "name": "国立国会図書館・東京本館",
-        "name:en": "National Diet Library - Tokyo Main",
+        "name": "国立国会図書館",
+        "name:en": "National Diet Library",
         "name:es": "Biblioteca Nacional de la Dieta",
-        "name:ja": "国立国会図書館・東京本館",
+        "name:ja": "国立国会図書館",
         "name:ko": "국립국회도서관 도쿄본관",
         "name:ru": "Национальная парламентская библиотека (Токийское отделение)",
         "opening_hours": "Mo-Fr 09:30-19:00; Sa 09:30-17:00",
+        "ref:isil": "JP-1000001",
         "source": "Bing, 1980/1-2007/4",
         "website": "https://www.ndl.go.jp/jp/service/tokyo/",
         "wikidata": "Q477675",
