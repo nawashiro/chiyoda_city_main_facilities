@@ -18,6 +18,10 @@ _QID = re.compile(r"^Q[1-9][0-9]*$")
 _OSM_TYPED_OBJECT_ID = re.compile(r"^(node|way|relation)/([1-9][0-9]*)$")
 _WIKIDATA_ENTITY_URI = re.compile(r"^https://www\.wikidata\.org/entity/Q[1-9][0-9]*$")
 _URN_UUID = re.compile(r"^urn:uuid:[0-9a-fA-F-]{36}$")
+_BARRIER_FREE_SOURCES = {
+    "https://walkingnavi.com/": "言葉の道案内",
+    "https://www.lwd.tokyo/": "東京バリアフリーマップ",
+}
 _LEGACY_FIELDS = frozenset({"audit", "auditTrail", "externalRefs", "history", "referenceHistory", "refHistory", "changeHistory", "changedAt", "updatedAt", "confirmedAt", "firstConfirmedAt", "lastConfirmedAt", "supersededAt", "current", "superseded", "llmVote", "llmVotes", "llmVoteLog", "voteLog", "voteHistory", "decisionLog", "votes"})
 
 
@@ -37,6 +41,18 @@ def _is_uuid7(value: Any) -> bool:
 
 def _valid_coordinates(value: Any) -> bool:
     return isinstance(value, list) and len(value) == 2 and all(isinstance(x, (int, float)) and not isinstance(x, bool) for x in value) and -180 <= value[0] <= 180 and -90 <= value[1] <= 90
+
+
+def barrier_free_source(prefix: str) -> str:
+    for source_prefix, name in _BARRIER_FREE_SOURCES.items():
+        if prefix.startswith(source_prefix): return name
+    raise ValueError(f"URL is outside the allowed barrier-free link domains: {prefix}")
+
+
+def barrier_free_webpage(url: str) -> dict[str, Any]:
+    name = barrier_free_source(url)
+    return {"@type": "schema:WebPage", "schema:url": url, "schema:name": name,
+            "schema:provider": {"@type": "schema:Organization", "schema:name": name}}
 
 
 def _read_json(path: Path) -> Any:
@@ -101,6 +117,22 @@ def validate_jsonld_document(document: Any) -> None:
             if not isinstance(item, dict) or item.get("@type") != "schema:PropertyValue" or not isinstance(item.get("schema:propertyID"), str) or not item["schema:propertyID"] or not isinstance(item.get("schema:value"), str) or not item["schema:value"] or item["schema:propertyID"] in {"openstreetmap", "wikidata"}: raise ValueError(f"JSON-LD {path} has invalid schema:identifier")
         links = record.get("rdfs:seeAlso", [])
         if not isinstance(links, list) or any(not isinstance(uri, str) or (_OSM_TYPED_OBJECT_ID.fullmatch(uri.removeprefix("https://www.openstreetmap.org/")) is None and _WIKIDATA_ENTITY_URI.fullmatch(uri) is None) for uri in links): raise ValueError(f"JSON-LD {path} rdfs:seeAlso must be official HTTPS OpenStreetMap or Wikidata URIs")
+        pages = record.get("schema:subjectOf", [])
+        urls = []
+        if not isinstance(pages, list) or any(not _valid_webpage(page) for page in pages): raise ValueError(f"JSON-LD {path} schema:subjectOf must be barrier-free schema:WebPage nodes")
+        for page in pages:
+            if page["schema:url"] in urls: raise ValueError(f"JSON-LD {path} schema:subjectOf duplicates a URL: {page['schema:url']}")
+            urls.append(page["schema:url"])
+
+
+def _valid_webpage(page: Any) -> bool:
+    if not isinstance(page, dict) or page.get("@type") != "schema:WebPage": return False
+    url = page.get("schema:url")
+    if not isinstance(url, str): return False
+    try: name = barrier_free_source(url)
+    except ValueError: return False
+    if page.get("schema:name") != name: return False
+    return page.get("schema:provider") == {"@type": "schema:Organization", "schema:name": name}
 
 
 def jsonld_place_index(document: dict[str, Any]) -> dict[str, dict[str, Any]]:

@@ -18,6 +18,26 @@
       "rdfs:seeAlso": [
         "https://www.openstreetmap.org/node/1420770185",
         "https://www.wikidata.org/entity/Q11405293"
+      ],
+      "schema:subjectOf": [
+        {
+          "@type": "schema:WebPage",
+          "schema:url": "https://walkingnavi.com/list_route.php?grp=5&no=57&lang=ja",
+          "schema:name": "言葉の道案内",
+          "schema:provider": {
+            "@type": "schema:Organization",
+            "schema:name": "言葉の道案内"
+          }
+        },
+        {
+          "@type": "schema:WebPage",
+          "schema:url": "https://www.lwd.tokyo/public#:~:text=①千代田区役所",
+          "schema:name": "東京バリアフリーマップ",
+          "schema:provider": {
+            "@type": "schema:Organization",
+            "schema:name": "東京バリアフリーマップ"
+          }
+        }
       ]
     },
     {
@@ -32,6 +52,26 @@
       },
       "rdfs:seeAlso": [
         "https://www.openstreetmap.org/node/3777876586"
+      ],
+      "schema:subjectOf": [
+        {
+          "@type": "schema:WebPage",
+          "schema:url": "https://walkingnavi.com/list_route.php?grp=5&no=1284&lang=ja",
+          "schema:name": "言葉の道案内",
+          "schema:provider": {
+            "@type": "schema:Organization",
+            "schema:name": "言葉の道案内"
+          }
+        },
+        {
+          "@type": "schema:WebPage",
+          "schema:url": "https://www.lwd.tokyo/public#:~:text=⑤神保町出張所・区民館",
+          "schema:name": "東京バリアフリーマップ",
+          "schema:provider": {
+            "@type": "schema:Organization",
+            "schema:name": "東京バリアフリーマップ"
+          }
+        }
       ]
     },
     {
@@ -46,6 +86,26 @@
       },
       "rdfs:seeAlso": [
         "https://www.openstreetmap.org/way/144351353"
+      ],
+      "schema:subjectOf": [
+        {
+          "@type": "schema:WebPage",
+          "schema:url": "https://walkingnavi.com/list_route.php?grp=5&no=1282&lang=ja",
+          "schema:name": "言葉の道案内",
+          "schema:provider": {
+            "@type": "schema:Organization",
+            "schema:name": "言葉の道案内"
+          }
+        },
+        {
+          "@type": "schema:WebPage",
+          "schema:url": "https://www.lwd.tokyo/public#:~:text=㉒富士見出張所",
+          "schema:name": "東京バリアフリーマップ",
+          "schema:provider": {
+            "@type": "schema:Organization",
+            "schema:name": "東京バリアフリーマップ"
+          }
+        }
       ]
     },
     {
@@ -60,6 +120,17 @@
       },
       "rdfs:seeAlso": [
         "https://www.openstreetmap.org/way/187756642"
+      ],
+      "schema:subjectOf": [
+        {
+          "@type": "schema:WebPage",
+          "schema:url": "https://walkingnavi.com/list_route.php?grp=5&no=1279&lang=ja",
+          "schema:name": "言葉の道案内",
+          "schema:provider": {
+            "@type": "schema:Organization",
+            "schema:name": "言葉の道案内"
+          }
+        }
       ]
     },
     {
@@ -74,6 +145,17 @@
       },
       "rdfs:seeAlso": [
         "https://www.openstreetmap.org/way/191732177"
+      ],
+      "schema:subjectOf": [
+        {
+          "@type": "schema:WebPage",
+          "schema:url": "https://www.lwd.tokyo/public#:~:text=③万世橋出張所",
+          "schema:name": "東京バリアフリーマップ",
+          "schema:provider": {
+            "@type": "schema:Organization",
+            "schema:name": "東京バリアフリーマップ"
+          }
+        }
       ]
     },
     {
@@ -88,6 +170,26 @@
       },
       "rdfs:seeAlso": [
         "https://www.openstreetmap.org/node/1636575850"
+      ],
+      "schema:subjectOf": [
+        {
+          "@type": "schema:WebPage",
+          "schema:url": "https://walkingnavi.com/list_route.php?grp=5&no=1276&lang=ja",
+          "schema:name": "言葉の道案内",
+          "schema:provider": {
+            "@type": "schema:Organization",
+            "schema:name": "言葉の道案内"
+          }
+        },
+        {
+          "@type": "schema:WebPage",
+          "schema:url": "https://www.lwd.tokyo/public#:~:text=④和泉橋出張所",
+          "schema:name": "東京バリアフリーマップ",
+          "schema:provider": {
+            "@type": "schema:Organization",
+            "schema:name": "東京バリアフリーマップ"
+          }
+        }
       ]
     },
     {
@@ -102,6 +204,17 @@
       },
       "rdfs:seeAlso": [
         "https://www.openstreetmap.org/node/13465461815"
+      ],
+      "schema:subjectOf": [
+        {
+          "@type": "schema:WebPage",
+          "schema:url": "https://www.lwd.tokyo/public#:~:text=⑪障害者福祉センターえみふる",
+          "schema:name": "東京バリアフリーマップ",
+          "schema:provider": {
+            "@type": "schema:Organization",
+            "schema:name": "東京バリアフリーマップ"
+          }
+        }
       ]
     },
     {
@@ -116,6 +229,17 @@
       },
       "rdfs:seeAlso": [
         "https://www.openstreetmap.org/node/13465379795"
+      ],
+      "schema:subjectOf": [
+        {
+          "@type": "schema:WebPage",
+          "schema:url": "https://walkingnavi.com/list_route.php?grp=5&no=1922&lang=ja",
+          "schema:name": "言葉の道案内",
+          "schema:provider": {
+            "@type": "schema:Organization",
+            "schema:name": "言葉の道案内"
+          }
+        }
       ]
     },
     {
@@ -189,6 +313,26 @@
       "rdfs:seeAlso": [
         "https://www.openstreetmap.org/node/1420770187",
         "https://www.wikidata.org/entity/Q61886796"
+      ],
+      "schema:subjectOf": [
+        {
+          "@type": "schema:WebPage",
+          "schema:url": "https://walkingnavi.com/list_route.php?grp=5&no=1174&lang=ja",
+          "schema:name": "言葉の道案内",
+          "schema:provider": {
+            "@type": "schema:Organization",
+            "schema:name": "言葉の道案内"
+          }
+        },
+        {
+          "@type": "schema:WebPage",
+          "schema:url": "https://www.lwd.tokyo/public#:~:text=⑥千代田図書館",
+          "schema:name": "東京バリアフリーマップ",
+          "schema:provider": {
+            "@type": "schema:Organization",
+            "schema:name": "東京バリアフリーマップ"
+          }
+        }
       ]
     },
     {
@@ -204,6 +348,26 @@
       "rdfs:seeAlso": [
         "https://www.openstreetmap.org/node/1420770188",
         "https://www.wikidata.org/entity/Q61886798"
+      ],
+      "schema:subjectOf": [
+        {
+          "@type": "schema:WebPage",
+          "schema:url": "https://walkingnavi.com/list_route.php?grp=5&no=1629&lang=ja",
+          "schema:name": "言葉の道案内",
+          "schema:provider": {
+            "@type": "schema:Organization",
+            "schema:name": "言葉の道案内"
+          }
+        },
+        {
+          "@type": "schema:WebPage",
+          "schema:url": "https://www.lwd.tokyo/public#:~:text=⑲四番町図書館仮施設",
+          "schema:name": "東京バリアフリーマップ",
+          "schema:provider": {
+            "@type": "schema:Organization",
+            "schema:name": "東京バリアフリーマップ"
+          }
+        }
       ]
     },
     {
@@ -234,6 +398,26 @@
       "rdfs:seeAlso": [
         "https://www.openstreetmap.org/node/1420785508",
         "https://www.wikidata.org/entity/Q11509583"
+      ],
+      "schema:subjectOf": [
+        {
+          "@type": "schema:WebPage",
+          "schema:url": "https://walkingnavi.com/list_route.php?grp=5&no=1175&lang=ja",
+          "schema:name": "言葉の道案内",
+          "schema:provider": {
+            "@type": "schema:Organization",
+            "schema:name": "言葉の道案内"
+          }
+        },
+        {
+          "@type": "schema:WebPage",
+          "schema:url": "https://www.lwd.tokyo/public#:~:text=⑨日比谷図書文化館",
+          "schema:name": "東京バリアフリーマップ",
+          "schema:provider": {
+            "@type": "schema:Organization",
+            "schema:name": "東京バリアフリーマップ"
+          }
+        }
       ]
     },
     {
@@ -249,6 +433,17 @@
       "rdfs:seeAlso": [
         "https://www.openstreetmap.org/node/2059303798",
         "https://www.wikidata.org/entity/Q61886799"
+      ],
+      "schema:subjectOf": [
+        {
+          "@type": "schema:WebPage",
+          "schema:url": "https://www.lwd.tokyo/public#:~:text=⑧昌平まちかど図書館",
+          "schema:name": "東京バリアフリーマップ",
+          "schema:provider": {
+            "@type": "schema:Organization",
+            "schema:name": "東京バリアフリーマップ"
+          }
+        }
       ]
     },
     {
@@ -278,6 +473,17 @@
       "rdfs:seeAlso": [
         "https://www.openstreetmap.org/node/1420770192",
         "https://www.wikidata.org/entity/Q61886800"
+      ],
+      "schema:subjectOf": [
+        {
+          "@type": "schema:WebPage",
+          "schema:url": "https://www.lwd.tokyo/public#:~:text=⑦神田まちかど図書館",
+          "schema:name": "東京バリアフリーマップ",
+          "schema:provider": {
+            "@type": "schema:Organization",
+            "schema:name": "東京バリアフリーマップ"
+          }
+        }
       ]
     },
     {
@@ -303,7 +509,18 @@
         "@type": "schema:GeoCoordinates",
         "schema:latitude": 35.699229,
         "schema:longitude": 139.778795
-      }
+      },
+      "schema:subjectOf": [
+        {
+          "@type": "schema:WebPage",
+          "schema:url": "https://walkingnavi.com/list_route.php?grp=5&no=1593&lang=ja",
+          "schema:name": "言葉の道案内",
+          "schema:provider": {
+            "@type": "schema:Organization",
+            "schema:name": "言葉の道案内"
+          }
+        }
+      ]
     },
     {
       "@id": "urn:uuid:019fa880-5cd5-7241-a976-801eef6324a9",
@@ -317,6 +534,17 @@
       },
       "rdfs:seeAlso": [
         "https://www.openstreetmap.org/node/2263796343"
+      ],
+      "schema:subjectOf": [
+        {
+          "@type": "schema:WebPage",
+          "schema:url": "https://walkingnavi.com/list_route.php?grp=5&no=1503&lang=ja",
+          "schema:name": "言葉の道案内",
+          "schema:provider": {
+            "@type": "schema:Organization",
+            "schema:name": "言葉の道案内"
+          }
+        }
       ]
     },
     {
@@ -331,6 +559,17 @@
       },
       "rdfs:seeAlso": [
         "https://www.openstreetmap.org/node/1655905663"
+      ],
+      "schema:subjectOf": [
+        {
+          "@type": "schema:WebPage",
+          "schema:url": "https://www.lwd.tokyo/public#:~:text=㉓いきいきプラザ一番町",
+          "schema:name": "東京バリアフリーマップ",
+          "schema:provider": {
+            "@type": "schema:Organization",
+            "schema:name": "東京バリアフリーマップ"
+          }
+        }
       ]
     },
     {
@@ -345,6 +584,17 @@
       },
       "rdfs:seeAlso": [
         "https://www.openstreetmap.org/node/1655927382"
+      ],
+      "schema:subjectOf": [
+        {
+          "@type": "schema:WebPage",
+          "schema:url": "https://www.lwd.tokyo/public#:~:text=⑯西神田コスモス館",
+          "schema:name": "東京バリアフリーマップ",
+          "schema:provider": {
+            "@type": "schema:Organization",
+            "schema:name": "東京バリアフリーマップ"
+          }
+        }
       ]
     },
     {
@@ -359,6 +609,17 @@
       },
       "rdfs:seeAlso": [
         "https://www.openstreetmap.org/node/1420765449"
+      ],
+      "schema:subjectOf": [
+        {
+          "@type": "schema:WebPage",
+          "schema:url": "https://www.lwd.tokyo/public#:~:text=㉑一番町児童館",
+          "schema:name": "東京バリアフリーマップ",
+          "schema:provider": {
+            "@type": "schema:Organization",
+            "schema:name": "東京バリアフリーマップ"
+          }
+        }
       ]
     },
     {
@@ -374,6 +635,26 @@
       "rdfs:seeAlso": [
         "https://www.openstreetmap.org/way/179575985",
         "https://www.wikidata.org/entity/Q81916362"
+      ],
+      "schema:subjectOf": [
+        {
+          "@type": "schema:WebPage",
+          "schema:url": "https://walkingnavi.com/list_route.php?grp=5&no=1595&lang=ja",
+          "schema:name": "言葉の道案内",
+          "schema:provider": {
+            "@type": "schema:Organization",
+            "schema:name": "言葉の道案内"
+          }
+        },
+        {
+          "@type": "schema:WebPage",
+          "schema:url": "https://www.lwd.tokyo/public#:~:text=㉔富士見みらい館",
+          "schema:name": "東京バリアフリーマップ",
+          "schema:provider": {
+            "@type": "schema:Organization",
+            "schema:name": "東京バリアフリーマップ"
+          }
+        }
       ]
     },
     {
@@ -413,6 +694,26 @@
       },
       "rdfs:seeAlso": [
         "https://www.openstreetmap.org/node/3774437979"
+      ],
+      "schema:subjectOf": [
+        {
+          "@type": "schema:WebPage",
+          "schema:url": "https://walkingnavi.com/list_route.php?grp=5&no=252&lang=ja",
+          "schema:name": "言葉の道案内",
+          "schema:provider": {
+            "@type": "schema:Organization",
+            "schema:name": "言葉の道案内"
+          }
+        },
+        {
+          "@type": "schema:WebPage",
+          "schema:url": "https://www.lwd.tokyo/public#:~:text=⑬千代田保健所",
+          "schema:name": "東京バリアフリーマップ",
+          "schema:provider": {
+            "@type": "schema:Organization",
+            "schema:name": "東京バリアフリーマップ"
+          }
+        }
       ]
     },
     {
@@ -1301,6 +1602,17 @@
       },
       "rdfs:seeAlso": [
         "https://www.openstreetmap.org/node/14344547001"
+      ],
+      "schema:subjectOf": [
+        {
+          "@type": "schema:WebPage",
+          "schema:url": "https://www.lwd.tokyo/public#:~:text=⑳四番町児童館",
+          "schema:name": "東京バリアフリーマップ",
+          "schema:provider": {
+            "@type": "schema:Organization",
+            "schema:name": "東京バリアフリーマップ"
+          }
+        }
       ]
     }
   ]

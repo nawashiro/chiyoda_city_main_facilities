@@ -7,7 +7,7 @@ import subprocess
 from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
-from src.facility_data import _read_json, _write_json, load_queries, new_uuid7, validate_jsonld_document, validate_search_document
+from src.facility_data import _read_json, _write_json, barrier_free_webpage, load_queries, new_uuid7, validate_jsonld_document, validate_search_document
 from src.resolve_osm_candidates import apply_decisions, evidence_hash, osm_candidate
 
 def _read(path: Path) -> Any: return json.loads(path.read_text(encoding="utf-8"))
@@ -41,9 +41,35 @@ def main(argv:list[str]|None=None)->int:
     exclusive.add_argument("--osm-id")
     exclusive.add_argument("--choice",choices=("none",))
     assoc.add_argument("--editor")
+    link=subs.add_parser("link",help="maintain barrier-free guide webpage links of a place")
+    commands=link.add_subparsers(dest="action",required=True)
+    for name in ("add","rm"):
+        p=commands.add_parser(name)
+        p.add_argument("root",nargs="?",default=".")
+        p.add_argument("place_id")
+        p.add_argument("url")
     args=parser.parse_args(argv)
     try:
         if args.command=="jsonld-validate": validate_jsonld_document(_read(Path(args.path))); return 0
+        if args.command=="link":
+            root=Path(args.root)
+            places_path=root/"data/places.jsonld"
+            document=_read_json(places_path)
+            place=next((p for p in document["@graph"] if p["@id"].removeprefix("urn:uuid:")==args.place_id),None)
+            if place is None: raise ValueError(f"place not found: {args.place_id}")
+            existing=place.get("schema:subjectOf",[])
+            pages=[page for page in existing if page["schema:url"]!=args.url]
+            if args.action=="add":
+                if len(pages)!=len(existing): raise ValueError(f"link already recorded: {args.url}")
+                pages.append(barrier_free_webpage(args.url))
+            if len(pages)==len(existing) and args.action=="rm": raise ValueError(f"link not recorded: {args.url}")
+            if pages: place["schema:subjectOf"]=pages
+            else: place.pop("schema:subjectOf",None)
+            validate_jsonld_document(document)
+            _write_json(places_path,document)
+            published=root/"site/places.jsonld"
+            if published.is_file(): _write_json(published,document)
+            return 0
         if args.command=="assoc":
             root=Path(args.root)
             queries=load_queries(root)
