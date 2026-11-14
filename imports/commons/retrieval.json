@@ -1,0 +1,8 @@
+{
+  "sourceId": "commons",
+  "retrievedAt": "2026-11-14T05:52:02+00:00",
+  "endpoint": "https://commons.wikimedia.org/w/api.php",
+  "fileCount": 40,
+  "pages": 1,
+  "rawSha256": "8824f1dd52fe76b91819ba464badcbce6acadb470fe6c23a51df04bf2fe3792b"
+}
