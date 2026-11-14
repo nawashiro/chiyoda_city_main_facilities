@@ -12,23 +12,21 @@ from src.osm_maintenance import update
 from tests.test_osm_maintenance import A, B, document, judgement, ledger, place, query, raw, raw_element
 
 
-def osm_raw():
-    return raw(
-        {**raw_element(1, '千代田施設'), 'tags': {'name': '千代田施設', 'wikimedia_commons': 'File:Chiyoda.jpg'}},
-        {**raw_element(2, '別施設'), 'tags': {'name': '別施設', 'wikimedia_commons': 'Category:別施設'}},
-        {**raw_element(3, '紐付けのないカフェ'), 'tags': {'name': '紐付けのないカフェ', 'wikimedia_commons': 'File:Cafe.jpg'}},
+def osm_mirror():
+    return {'elements': [
+        {'type': 'node', 'id': 1, 'lon': 139.74, 'lat': 35.68, 'tags': {'name': '千代田施設', 'wikimedia_commons': 'File:Chiyoda.jpg'}},
+        {'type': 'node', 'id': 2, 'lon': 139.751, 'lat': 35.69, 'tags': {'name': '別施設', 'wikimedia_commons': 'Category:別施設'}},
         raw_element(4, 'タグのない要素'),
-    )
+    ]}
 
 
-def wikidata_raw():
+def wikidata_mirror():
     return {'sourceId': 'wikidata', 'retrievedAt': 'at', 'entities': {
         'Q1': {'id': 'Q1', 'claims': {'P18': [
             {'mainsnak': {'datavalue': {'value': 'Chiyoda-first.jpg'}}},
             {'mainsnak': {'datavalue': {'value': 'Chiyoda-second.jpg'}}},
         ]}},
         'Q2': {'id': 'Q2', 'claims': {'P18': [{'mainsnak': {'datavalue': {'value': 'File:別施設.jpg'}}}]}},
-        'Q999': {'id': 'Q999', 'claims': {'P18': [{'mainsnak': {'datavalue': {'value': 'Unlinked.jpg'}}}]}},
     }}
 
 
@@ -53,15 +51,14 @@ def commons_response(titles):
 
 
 class CollectFileNamesTests(unittest.TestCase):
-    def test_collects_associated_p18_and_file_tags_only(self):
+    def test_collects_mirrored_p18_and_file_tags(self):
         with tempfile.TemporaryDirectory() as directory:
             root = Path(directory)
-            _write_json(root / 'data/places.jsonld', canonical())
-            _write_json(root / 'imports/openstreetmap/raw.json', osm_raw())
-            _write_json(root / 'imports/wikidata/raw.json', wikidata_raw())
+            _write_json(root / 'site/mirrors/osm.json', osm_mirror())
+            _write_json(root / 'site/mirrors/wikidata.json', wikidata_mirror())
             self.assertEqual(['File:Chiyoda-first.jpg', 'File:Chiyoda-second.jpg', 'File:Chiyoda.jpg', 'File:別施設.jpg'], collect_file_names(root))
 
-    def test_missing_imports_yield_no_names(self):
+    def test_missing_mirrors_yield_no_names(self):
         with tempfile.TemporaryDirectory() as directory:
             root = Path(directory)
             _write_json(root / 'data/places.jsonld', canonical())
@@ -72,8 +69,8 @@ class CommonsRetrievalTests(unittest.TestCase):
     def setup_root(self, directory):
         root = Path(directory)
         _write_json(root / 'data/places.jsonld', canonical())
-        _write_json(root / 'imports/openstreetmap/raw.json', osm_raw())
-        _write_json(root / 'imports/wikidata/raw.json', wikidata_raw())
+        _write_json(root / 'site/mirrors/osm.json', osm_mirror())
+        _write_json(root / 'site/mirrors/wikidata.json', wikidata_mirror())
         return root
 
     def test_retrieval_writes_files_and_metadata(self):
@@ -102,13 +99,8 @@ class CommonsRetrievalTests(unittest.TestCase):
     def test_paging_over_fifty_files(self):
         with tempfile.TemporaryDirectory() as directory:
             root = self.setup_root(directory)
-            wikidata = {'sourceId': 'wikidata', 'retrievedAt': 'at', 'entities': {
-                f'Q{i}': {'id': f'Q{i}', 'claims': {'P18': [{'mainsnak': {'datavalue': {'value': f'p{i}.jpg'}}}]}} for i in range(1, 56)}}
-            _write_json(root / 'imports/wikidata/raw.json', wikidata)
-            place_a, place_b = place(A, osm='node/1'), place(B, osm='node/2')
-            place_a['rdfs:seeAlso'] += [f'https://www.wikidata.org/entity/Q{i}' for i in range(1, 28)]
-            place_b['rdfs:seeAlso'] += [f'https://www.wikidata.org/entity/Q{i}' for i in range(28, 56)]
-            _write_json(root / 'data/places.jsonld', document(place_a, place_b))
+            _write_json(root / 'site/mirrors/wikidata.json', {'sourceId': 'wikidata', 'retrievedAt': 'at', 'entities': {
+                f'Q{i}': {'id': f'Q{i}', 'claims': {'P18': [{'mainsnak': {'datavalue': {'value': f'p{i}.jpg'}}}]}} for i in range(1, 56)}})
             calls = []
 
             def fetch(url):

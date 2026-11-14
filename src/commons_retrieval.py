@@ -12,7 +12,7 @@ from typing import Any
 from urllib.parse import urlencode
 from urllib.request import Request, urlopen
 
-from src.facility_data import _read_json, _write_json, collect_osm_ids, collect_wikidata_ids
+from src.facility_data import _read_json, _write_json
 from src.http_utils import read_limited_response
 
 
@@ -32,23 +32,19 @@ def _common_title(value: str) -> str:
 
 
 def collect_file_names(root: str | Path) -> list[str]:
+    """The committed mirrors already hold the association-scoped elements and entities."""
     root = Path(root)
-    canonical = _read_json(root / "data/places.jsonld")
-    associated_osm = set(collect_osm_ids(canonical))
-    associated_qids = collect_wikidata_ids(canonical)
     names: set[str] = set()
-    osm_path = root / "imports/openstreetmap/raw.json"
-    if osm_path.exists():
-        for element in _read_json(osm_path).get("elements", []):
-            if f"{element.get('type')}/{element.get('id')}" in associated_osm:
-                tag = (element.get("tags") or {}).get("wikimedia_commons")
-                if isinstance(tag, str) and tag.startswith("File:"):
-                    names.add(tag)
-    wikidata_path = root / "imports/wikidata/raw.json"
-    if wikidata_path.exists():
-        entities = _read_json(wikidata_path).get("entities", {})
-        for qid in associated_qids:
-            for claim in (entities.get(qid, {}).get("claims") or {}).get("P18", []):
+    osm_mirror = root / "site/mirrors/osm.json"
+    if osm_mirror.exists():
+        for element in _read_json(osm_mirror).get("elements", []):
+            tag = (element.get("tags") or {}).get("wikimedia_commons")
+            if isinstance(tag, str) and tag.startswith("File:"):
+                names.add(tag)
+    wikidata_mirror = root / "site/mirrors/wikidata.json"
+    if wikidata_mirror.exists():
+        for entity in _read_json(wikidata_mirror).get("entities", {}).values():
+            for claim in (entity.get("claims") or {}).get("P18", []):
                 value = claim.get("mainsnak", {}).get("datavalue", {}).get("value")
                 if isinstance(value, str) and value:
                     names.add(_common_title(value))

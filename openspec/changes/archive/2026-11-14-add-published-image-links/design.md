@@ -16,7 +16,7 @@
 - **合成は公開時（`build_repository`）にする。** 正本は触らない。画像の鮮度は月次の取得で保ち、公開物は常にコミット済みの入力から決定的に作る。正本へ書く案はissueの議論で除外済み。
 - **合成の入力はコミット済みの`site/mirrors/{osm,wikidata}.json`を使う。** 紐付け集合で絞られた配布物そのものであり、どのcheckoutにも存在する。`imports/*/raw.json`はpublish-pagesやreleaseの実行に無いため使えない。ミラー再生成のあとで配布物を書くよう、`build_repository`内の順序を入れ替える。
 - **Commonsメタデータは`imports/commons/raw.json`にコミットし、配信しない。** 第三の配布物はライセンス宣言義務を生む一方、中身は公開物の`schema:image`に全部焼き込まれるため新しい情報がない。`retrieval.json`（取得日時・エンドポイント・応答SHA256）を同封し、監査はファイルページURLとretrievalメタで足りる。
-- **取得モジュールは`wikidata_retrieval.py`と同型にする。** `run_commons_retrieval(root, at, fetch=_get)`を新設し、`osm_maintenance.update`に`commons`引数で組み込む。保存済み判断だけで再実行する経路では`wikidata=None`に合わせ`commons`を呼ばない。50ファイル/リクエストでページングし、応答は既存の`read_limited_response`で上限を取る。
+- **取得モジュールは`wikidata_retrieval.py`と同型にする。** `run_commons_retrieval(root, at, fetch=_get)`を新設し、`osm_maintenance.update`に`commons`引数で組み込む。保存済み判断だけで再実行する経路では`wikidata=None`に合わせ`commons`を呼ばない。50ファイル/リクエストでページングし、応答は既存の`read_limited_response`で上限を取る。ファイル名の収集はコミット済みの`site/mirrors/{osm,wikidata}.json`に限る。ミラーは紐付け集合で絞られた配布物であり、`imports/openstreetmap/raw.json`はgitignore対象でcheckoutに存在しない。収集と合成が同じソースを参照する。
 - **`schema:license`はURL優先、無ければライセンス名の文字列。** schema.orgの`license`はTextも受け付ける。実測の「Attribution」のように`LicenseUrl`が付かないライセンスを落とさないため。
 - **作者は`schema:creator`を`schema:Person`の`schema:name`として載せる。** Commonsの`Artist`はHTMLで人・組織の区別を持たないので、タグを外したプレーンテキストにし、型は`Person`で固定する。
 - **選択規則はspecどおり。** 先頭のP18、無ければ`File:`タグ、`Category:`は無視、施設あたり1枚。同名ファイルはメタデータをファイル名で共有する。
