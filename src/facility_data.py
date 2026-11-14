@@ -6,7 +6,6 @@ import copy
 import json
 import math
 import re
-import shutil
 import time
 import uuid
 from datetime import datetime, timedelta
@@ -86,7 +85,7 @@ def validate_search_document(document: dict[str, Any]) -> list[str]:
     return issues
 
 
-def validate_jsonld_document(document: Any) -> None:
+def validate_jsonld_document(document: Any, *, allow_image: bool = False) -> None:
     if not isinstance(document, dict): raise ValueError("JSON-LD document must be an object")
     context = document.get("@context")
     if not isinstance(context, dict) or context.get("@version") != 1.1 or context.get("schema") != "https://schema.org/" or context.get("rdfs") != "http://www.w3.org/2000/01/rdf-schema#": raise ValueError("JSON-LD @context must declare the canonical schema and rdfs prefixes")
@@ -109,6 +108,10 @@ def validate_jsonld_document(document: Any) -> None:
         if identifier in seen: raise ValueError(f"JSON-LD {path} @id duplicates a previous record: {identifier}")
         seen.add(identifier)
         if not isinstance(record.get("@type"), list) or "schema:Place" not in record["@type"]: raise ValueError(f"JSON-LD {path} @type must contain schema:Place")
+        image = record.get("schema:image")
+        if image is not None:
+            if not allow_image: raise ValueError(f"JSON-LD {path} must not contain schema:image: the canonical dataset carries associations only")
+            if not _valid_image(image): raise ValueError(f"JSON-LD {path} schema:image must be a single schema:ImageObject with schema:contentUrl, schema:license and schema:creator")
         geo = record.get("schema:geo")
         if "geo:hasGeometry" in record or "geo:asGeoJSON" in record or not isinstance(geo, dict) or geo.get("@type") != "schema:GeoCoordinates" or not _valid_coordinates([geo.get("schema:longitude"), geo.get("schema:latitude")]): raise ValueError(f"JSON-LD {path} schema:geo must be schema:GeoCoordinates with valid schema:latitude and schema:longitude")
         identifiers = record.get("schema:identifier", [])
@@ -123,6 +126,20 @@ def validate_jsonld_document(document: Any) -> None:
         for page in pages:
             if page["schema:url"] in urls: raise ValueError(f"JSON-LD {path} schema:subjectOf duplicates a URL: {page['schema:url']}")
             urls.append(page["schema:url"])
+
+
+def _valid_image(image: Any) -> bool:
+    if not isinstance(image, dict) or not isinstance(image.get("@type"), list) or "schema:ImageObject" not in image["@type"]: return False
+    if not isinstance(image.get("schema:contentUrl"), str) or not image["schema:contentUrl"].startswith("https://"): return False
+    license_value = image.get("schema:license")
+    if not isinstance(license_value, str) or not license_value.strip(): return False
+    creator = image.get("schema:creator")
+    if not isinstance(creator, dict) or not isinstance(creator.get("@type"), list) or "schema:Person" not in creator["@type"]: return False
+    return isinstance(creator.get("schema:name"), str) and bool(creator["schema:name"].strip())
+
+
+def validate_published_document(document: Any) -> None:
+    validate_jsonld_document(document, allow_image=True)
 
 
 def _valid_webpage(page: Any) -> bool:
@@ -204,12 +221,6 @@ def build_repository(root: str | Path) -> Path:
     document = _read_json(root / "data/places.jsonld")
     excluded = {q["id"] for q in load_queries(root) if q.get("publish") is False} if (root / "inputs/facilities.json").exists() else set()
     document["@graph"] = [p for p in document["@graph"] if p["@id"].removeprefix("urn:uuid:") not in excluded]
-    artifact = root / "site/places.jsonld"
-    artifact.parent.mkdir(parents=True, exist_ok=True)
-    if excluded:
-        _write_json(artifact, document)
-    else:
-        shutil.copyfile(root / "data/places.jsonld", artifact)
     associated_ids = set(collect_osm_ids(document))
     referenced_qids = collect_wikidata_ids(document)
     for source_id, filename in (("openstreetmap", "osm.json"), ("wikidata", "wikidata.json")):
@@ -223,7 +234,47 @@ def build_repository(root: str | Path) -> Path:
         else:
             filtered["entities"] = {qid: entity for qid, entity in filtered.get("entities", {}).items() if qid in referenced_qids}
         _write_json(mirrors / filename, filtered)
+    _apply_images(root, document)
+    validate_jsonld_document(document, allow_image=True)
+    artifact = root / "site/places.jsonld"
+    artifact.parent.mkdir(parents=True, exist_ok=True)
+    _write_json(artifact, document)
     return artifact
+
+
+def _image_file_name(place: dict[str, Any], osm_files: dict[str, Any], p18_files: dict[str, str]) -> str | None:
+    for uri in place.get("rdfs:seeAlso", []):
+        if isinstance(uri, str) and uri.startswith("https://www.wikidata.org/entity/"):
+            value = p18_files.get(uri.rsplit("/", 1)[1])
+            if value: return value
+    for uri in place.get("rdfs:seeAlso", []):
+        if isinstance(uri, str) and uri.startswith("https://www.openstreetmap.org/"):
+            value = osm_files.get(uri.removeprefix("https://www.openstreetmap.org/"))
+            if isinstance(value, str) and value.startswith("File:"): return value
+    return None
+
+
+def _apply_images(root: Path, document: dict[str, Any]) -> None:
+    osm_mirror, wikidata_mirror, commons_path = root / "site/mirrors/osm.json", root / "site/mirrors/wikidata.json", root / "imports/commons/raw.json"
+    if not (osm_mirror.exists() and wikidata_mirror.exists() and commons_path.exists()): return
+    osm_files = {f"{element.get('type')}/{element.get('id')}": (element.get("tags") or {}).get("wikimedia_commons") for element in _read_json(osm_mirror).get("elements", []) if isinstance(element, dict)}
+    p18_files = {}
+    for qid, entity in _read_json(wikidata_mirror).get("entities", {}).items():
+        claims = (entity.get("claims") or {}).get("P18", [])
+        value = claims[0].get("mainsnak", {}).get("datavalue", {}).get("value") if claims else None
+        if isinstance(value, str) and value:
+            p18_files[qid] = value if value.startswith("File:") else f"File:{value}"
+    metadata = _read_json(commons_path).get("files", {})
+    for place in document["@graph"]:
+        name = _image_file_name(place, osm_files, p18_files)
+        meta = metadata.get(name) if name else None
+        if not isinstance(meta, dict) or not meta.get("url") or not meta.get("license") or not meta.get("artist"): continue
+        place["schema:image"] = {
+            "@type": ["schema:ImageObject"],
+            "schema:contentUrl": meta["url"],
+            "schema:license": meta.get("licenseUrl") or meta["license"],
+            "schema:creator": {"@type": ["schema:Person"], "schema:name": meta["artist"]},
+        }
 
 
 def main(argv: list[str] | None = None) -> int:

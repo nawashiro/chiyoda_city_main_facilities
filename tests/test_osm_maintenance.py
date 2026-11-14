@@ -532,7 +532,7 @@ class IntegrationTests(unittest.TestCase):
             self.assertIn('rdfs:seeAlso', public['@graph'][0])
             self.assertNotIn('rdfs:seeAlso', public['@graph'][1])
             self.assertNotIn('facilities', public)
-            self.assertEqual(['mirrors', 'places.jsonld'], [p.name for p in (root/'site').iterdir()])
+            self.assertEqual({'mirrors', 'places.jsonld'}, {p.name for p in (root/'site').iterdir()})
             # Human application uses only the newly confirmed facility in latest data.
             public['@graph'][0]['schema:geo']['schema:longitude'] = 139.749
             _write_json(root/'data/places.jsonld', public)

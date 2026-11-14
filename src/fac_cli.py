@@ -7,7 +7,7 @@ import subprocess
 from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
-from src.facility_data import _read_json, _write_json, barrier_free_webpage, load_queries, new_uuid7, validate_jsonld_document, validate_search_document
+from src.facility_data import _read_json, _write_json, barrier_free_webpage, load_queries, new_uuid7, validate_jsonld_document, validate_published_document, validate_search_document
 from src.resolve_osm_candidates import apply_decisions, evidence_hash, osm_candidate
 
 def _read(path: Path) -> Any: return json.loads(path.read_text(encoding="utf-8"))
@@ -26,7 +26,7 @@ def _documents(root:Path) -> list[tuple[Path,dict[str,Any]]]:
 def main(argv:list[str]|None=None)->int:
     parser=argparse.ArgumentParser(prog="fac",description="Maintain canonical JSON-LD facility data")
     subs=parser.add_subparsers(dest="command",required=True)
-    validate=subs.add_parser("jsonld-validate"); validate.add_argument("path")
+    validate=subs.add_parser("jsonld-validate"); validate.add_argument("path"); validate.add_argument("--published",action="store_true",help="validate the published distribution, which may carry derived schema:image")
     inp=subs.add_parser("in",help="maintain OSM search inputs"); commands=inp.add_subparsers(dest="input",required=True)
     for name in ("ls","get","add","set","rm"):
         p=commands.add_parser(name); p.add_argument("root",nargs="?",default=".")
@@ -50,7 +50,10 @@ def main(argv:list[str]|None=None)->int:
         p.add_argument("url")
     args=parser.parse_args(argv)
     try:
-        if args.command=="jsonld-validate": validate_jsonld_document(_read(Path(args.path))); return 0
+        if args.command=="jsonld-validate":
+            document=_read(Path(args.path))
+            (validate_published_document if args.published else validate_jsonld_document)(document)
+            return 0
         if args.command=="link":
             root=Path(args.root)
             places_path=root/"data/places.jsonld"

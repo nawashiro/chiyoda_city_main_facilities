@@ -16,7 +16,7 @@ _REPOSITORY_ROOT = Path(__file__).resolve().parents[1]
 if str(_REPOSITORY_ROOT) not in sys.path:
     sys.path.insert(0, str(_REPOSITORY_ROOT))
 
-from src.facility_data import validate_jsonld_document
+from src.facility_data import validate_published_document
 
 
 def _parser() -> argparse.ArgumentParser:
@@ -49,7 +49,7 @@ def main(argv: list[str] | None = None) -> int:
     try:
         source_bytes = input_path.read_bytes()
         document = json.loads(source_bytes)
-        validate_jsonld_document(document)
+        validate_published_document(document)
         output_dir.mkdir(parents=True, exist_ok=True)
         output_path.write_bytes(source_bytes)
     except (OSError, UnicodeDecodeError, json.JSONDecodeError, TypeError, ValueError) as error:
