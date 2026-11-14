@@ -58,3 +58,11 @@
 編集者は`--editor NAME`を指定するか、リポジトリのgit `user.name`から取ります。
 
 入力が不正な場合、コマンドは `ERROR: <理由>` を出力し、終了コード 1 で停止します。
+
+## 保存済み判断を再提示する
+
+```sh
+python3 -m src.osm_maintenance present .
+```
+
+Gitへの保存後にIssue提示だけが失敗した場合に、保存済み判断の確認Issueを再提示します。実行には環境変数`GITHUB_REPOSITORY`と`GH_TOKEN`が必要です。取得、Jev判定、判断記録の書き換えは行いません。同じ内容で手動クローズしたIssueは再提示しません。
