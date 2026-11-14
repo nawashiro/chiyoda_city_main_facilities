@@ -1627,6 +1627,20 @@
       "rdfs:seeAlso": [
         "https://www.openstreetmap.org/node/14337499601"
       ]
+    },
+    {
+      "@id": "urn:uuid:01a1d8cc-5f68-7070-9a8e-bded3ad47398",
+      "@type": [
+        "schema:Place"
+      ],
+      "rdfs:seeAlso": [
+        "https://www.openstreetmap.org/node/13744716801"
+      ],
+      "schema:geo": {
+        "@type": "schema:GeoCoordinates",
+        "schema:longitude": 139.7607434,
+        "schema:latitude": 35.6967064
+      }
     }
   ]
 }

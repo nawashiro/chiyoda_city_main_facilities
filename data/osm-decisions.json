@@ -13414,6 +13414,44 @@
       "status": "decided",
       "choice": "way/675832452",
       "method": "source_record"
+    },
+    "01a1d8cc-5f68-7070-9a8e-bded3ad47398": {
+      "evidence": {
+        "target": {
+          "id": "01a1d8cc-5f68-7070-9a8e-bded3ad47398",
+          "name": "CINEMALICE",
+          "coordinates": [
+            139.7607434,
+            35.6967064
+          ]
+        },
+        "candidates": [
+          {
+            "recordId": "node/13744716801",
+            "name": "CINEMALICE",
+            "coordinates": [
+              139.7607434,
+              35.6967064
+            ],
+            "qid": null,
+            "tags": {
+              "amenity": "cinema",
+              "name": "CINEMALICE",
+              "website": "https://cinemalice.theater/"
+            }
+          }
+        ]
+      },
+      "evidenceHash": "ecef08221bd1cee37f935f422538b35b5e4d02899c0df51072d1d45ae8c5530f",
+      "current": "node/13744716801",
+      "status": "decided",
+      "choice": "node/13744716801",
+      "method": "human",
+      "human": {
+        "choice": "node/13744716801",
+        "editor": "Navi",
+        "editedAt": "2026-11-14T06:43:57Z"
+      }
     }
   }
 }
