@@ -12,11 +12,11 @@ OpenStreetMapの取得、施設の照合、確定分の反映、GitHub Pagesへ�
 | 実地調査で確定した接続先を反映する | [CLI](docs/reference/cli.md)の`assoc` |
 | 更新を再実行する | [OpenStreetMapの更新](docs/how-to/update-osm.md) |
 | 通知された候補を判断する | [Issueでの確認・修正](docs/how-to/review-osm-candidates.md) |
-| 版を固定して配布する | [JSON-LDのリリース](docs/how-to/publish-release-jsonld.md) |
+| 版を固定して配布する | [データセットのリリース](docs/how-to/release-dataset.md) |
 
 データ変更の検証は、`validate.yml`がPull Requestとmainへのpushで実行します。
 
-GitHub Pagesは`site/places.jsonld`、GitHub Releasesは`places-<version>.jsonld`を配布します。形式と関連参照は[データ契約](docs/reference/data-contracts.md)、再利用条件は[出典とライセンス](docs/reference/sources-and-licenses.md)を参照してください。
+GitHub Pagesは`site/`の配布物を、GitHub Releasesは同じコミットのビルドから`places-<版>.jsonld`、`osm-<版>.json`、`wikidata-<版>.json`を配布します。形式と関連参照は[データ契約](docs/reference/data-contracts.md)、再利用条件は[出典とライセンス](docs/reference/sources-and-licenses.md)を参照してください。
 
 ## リポジトリの構成
 

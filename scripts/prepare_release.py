@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Prepare a byte-preserving versioned JSON-LD release snapshot."""
+"""Prepare versioned release assets from a built site directory."""
 
 from __future__ import annotations
 
@@ -19,11 +19,18 @@ if str(_REPOSITORY_ROOT) not in sys.path:
 from src.facility_data import validate_published_document
 
 
+_ASSETS = (
+    ("places.jsonld", "places-{}.jsonld"),
+    ("mirrors/osm.json", "osm-{}.json"),
+    ("mirrors/wikidata.json", "wikidata-{}.json"),
+)
+
+
 def _parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(
-        description="Prepare a byte-preserving JSON-LD release snapshot."
+        description="Prepare versioned release assets from a built site directory."
     )
-    parser.add_argument("--input", required=True, help="canonical JSON-LD input path")
+    parser.add_argument("--site-dir", required=True, help="built site directory")
     parser.add_argument("--output-dir", required=True, help="release output directory")
     parser.add_argument("--version", required=True, help="release version token")
     return parser
@@ -42,21 +49,21 @@ def main(argv: list[str] | None = None) -> int:
     args = parser.parse_args(argv)
     _validate_version(parser, args.version)
 
-    input_path = Path(args.input)
+    site_dir = Path(args.site_dir)
     output_dir = Path(args.output_dir)
-    output_path = output_dir / f"places-{args.version}.jsonld"
 
     try:
-        source_bytes = input_path.read_bytes()
-        document = json.loads(source_bytes)
-        validate_published_document(document)
-        output_dir.mkdir(parents=True, exist_ok=True)
-        output_path.write_bytes(source_bytes)
+        payloads = [(template, (site_dir / source).read_bytes()) for source, template in _ASSETS]
+        validate_published_document(json.loads(payloads[0][1]))
     except (OSError, UnicodeDecodeError, json.JSONDecodeError, TypeError, ValueError) as error:
-        print(f"ERROR: unable to prepare release snapshot: {error}", file=sys.stderr)
+        print(f"ERROR: unable to prepare release assets: {error}", file=sys.stderr)
         return 1
 
-    print(output_path)
+    output_dir.mkdir(parents=True, exist_ok=True)
+    for template, payload in payloads:
+        output_path = output_dir / template.format(args.version)
+        output_path.write_bytes(payload)
+        print(output_path)
     return 0
 
 

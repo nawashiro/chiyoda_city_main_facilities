@@ -1,0 +1,52 @@
+name: Release dataset snapshot
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: release
+  cancel-in-progress: false
+
+jobs:
+  release:
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+      - name: Require latest main
+        run: |
+          test "$(git rev-parse HEAD)" = "$(git ls-remote origin refs/heads/main | cut -f1)"
+      - run: python3 -m unittest discover -s tests -v
+      - run: python3 -m src.facility_data build .
+      - name: Create the release tag
+        id: tag
+        run: |
+          tag="$(date -u +%Y.%m.%d)"
+          if git ls-remote --exit-code --tags origin "refs/tags/$tag" >/dev/null 2>&1; then
+            echo "release tag already exists: $tag" >&2
+            exit 1
+          fi
+          echo "tag=$tag" >> "$GITHUB_OUTPUT"
+      - name: Prepare release assets
+        run: python3 scripts/prepare_release.py --site-dir site --output-dir release --version "$TAG"
+        env:
+          TAG: ${{ steps.tag.outputs.tag }}
+      - name: Publish the GitHub Release
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: ${{ steps.tag.outputs.tag }}
+          body: |
+            千代田区区民向け施設データ ${{ steps.tag.outputs.tag }} の版固定配布物です。landing pageの最新配布物は https://nawashiro.github.io/chiyoda_city_main_facilities/ にあります。
+
+            - `places-${{ steps.tag.outputs.tag }}.jsonld`: 公開JSON-LD(施設データ本体)
+            - `osm-${{ steps.tag.outputs.tag }}.json`: OSMミラー。ライセンスは [ODbL 1.0](https://opendatacommons.org/licenses/odbl/1-0/)、© OpenStreetMap contributors
+            - `wikidata-${{ steps.tag.outputs.tag }}.json`: Wikidataミラー。ライセンスは [CC0 1.0](https://creativecommons.org/publicdomain/zero/1.0/)
+          files: release/*
+          token: ${{ secrets.GITHUB_TOKEN }}

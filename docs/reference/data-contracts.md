@@ -8,7 +8,7 @@ OSMとWikidataの公式HTTPS URIを`rdfs:seeAlso`へ設定します。OSM IDは`
 
 関連付けを置換すると古いOSM・Wikidata参照を取り除き、新しい候補の参照と座標へ更新します。候補なし、Jevの高信頼度の「該当なし」、人の「該当なし」では関連参照を取り除き、UUIDと座標を維持します。判断待ちの施設は前回の公開内容を保ちます。
 
-Pagesは`site/places.jsonld`、Releaseは`places-<tag>.jsonld`を配布します。検索入力の`publish: false`に該当する施設を配布物から除きます。除外がなければ正本のバイト列をそのまま複製します。公開物に判断記録、取得物、履歴を含めません。
+Pagesは`site/places.jsonld`と両ミラーを配布します。Releaseは同じコミットのビルドから`places-<tag>.jsonld`、`osm-<tag>.json`、`wikidata-<tag>.json`を配布します。検索入力の`publish: false`に該当する施設を配布物から除きます。除外がなければ正本のバイト列をそのまま複製します。公開物に判断記録、取得物、履歴を含めません。
 
 `site/index.html`には`schema:Dataset`、名称、説明、公開URL、JSON-LDの`DataDownload`と出典表示を埋め込みます。
 
