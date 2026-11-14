@@ -1,5 +1,5 @@
 {
-  "version": "202611080100",
+  "version": "202611130100",
   "elements": [
     {
       "type": "node",
@@ -395,7 +395,10 @@
       "lon": 139.739284,
       "lat": 35.68699,
       "tags": {
-        "addr:full": "東京都千代田区一番町12",
+        "addr:block_number": "12",
+        "addr:city": "千代田区",
+        "addr:neighbourhood": "一番町",
+        "addr:province": "東京都",
         "amenity": "social_facility",
         "name": "千代田区立一番町高齢者在宅介護支援センター",
         "note": "National-Land Numerical Information (Public Facility) 2006, MLIT Japan",
@@ -413,7 +416,11 @@
       "lon": 139.754706,
       "lat": 35.698887,
       "tags": {
-        "addr:full": "東京都千代田区西神田2-6-2",
+        "addr:block_number": "6",
+        "addr:city": "千代田区",
+        "addr:housenumber": "2",
+        "addr:neighbourhood": "西神田二丁目",
+        "addr:province": "東京都",
         "amenity": "social_facility",
         "name": "西神田児童・家庭支援センター",
         "note": "National-Land Numerical Information (Public Facility) 2006, MLIT Japan",

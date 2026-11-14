@@ -5488,7 +5488,10 @@
             ],
             "qid": null,
             "tags": {
-              "addr:full": "東京都千代田区西神田2-6-2",
+              "addr:block_number": "6",
+              "addr:city": "千代田区",
+              "addr:housenumber": "2",
+              "addr:neighbourhood": "西神田二丁目",
               "amenity": "social_facility",
               "name": "西神田児童・家庭支援センター",
               "operator": "東京都千代田区",
@@ -5574,7 +5577,7 @@
           }
         ]
       },
-      "evidenceHash": "323b38010c106d18288bf61fb7f52bb5f575154e01b52bb4b226d9a3d5996378",
+      "evidenceHash": "2daf89ed337b56d91a15906eab00177d0c49a64871e7da6497306584e2339e2b",
       "current": "node/1655927382",
       "status": "decided",
       "choice": "node/1655927382",
@@ -6433,7 +6436,9 @@
             ],
             "qid": null,
             "tags": {
-              "addr:full": "東京都千代田区一番町12",
+              "addr:block_number": "12",
+              "addr:city": "千代田区",
+              "addr:neighbourhood": "一番町",
               "amenity": "social_facility",
               "name": "千代田区立一番町高齢者在宅介護支援センター",
               "operator": "東京都千代田区",
@@ -6486,7 +6491,7 @@
           }
         ]
       },
-      "evidenceHash": "b4c9e42ba7f3cd5396243d7d77b4e0d5dd44f9dce96f96ed5043c887f75f92a7",
+      "evidenceHash": "15ac2a7ae296e26664bb44a2a712fdf3a4e09225c077b50a6ea1f4b83c4aeb8f",
       "current": "node/1655905663",
       "status": "decided",
       "choice": "node/1655905663",
@@ -6652,30 +6657,11 @@
         ]
       },
       "evidenceHash": "5eac5c485355ccd6b86327317878ac9afa2cfdf5e089dc065983d1fe7673e742",
-      "current": null,
+      "current": "node/14337531401",
       "status": "decided",
       "issue": 60,
-      "jev": {
-        "choice": "node/14337531401",
-        "confidence": 0.99,
-        "probabilities": {
-          "node/13468335880": 0.0,
-          "node/14337525601": 0.0,
-          "node/14337531401": 0.99,
-          "node/5665860805": 0.0,
-          "node/5746689924": 0.0,
-          "way/217378904": 0.0,
-          "way/217378912": 0.0,
-          "none": 0.01
-        },
-        "usage": {
-          "input_tokens": 1581,
-          "output_tokens": 89
-        },
-        "model": "jev-1.14.0"
-      },
       "choice": "node/14337531401",
-      "method": "jev"
+      "method": "source_record"
     },
     "019fa880-5cd5-7d2b-abb0-d80f16d6a04a": {
       "evidence": {
@@ -9450,16 +9436,19 @@
           },
           {
             "recordId": "node/1420800563",
-            "name": "麹町警察署 麹町四丁目交番",
+            "name": "麹町警察署麹町四丁目交番",
             "coordinates": [
               139.738042,
               35.683547
             ],
             "qid": null,
             "tags": {
-              "addr:full": "東京都千代田区麹町4-1-1",
+              "addr:block_number": "1",
+              "addr:city": "千代田区",
+              "addr:housenumber": "1",
+              "addr:neighbourhood": "麹町四丁目",
               "amenity": "police",
-              "name": "麹町警察署 麹町四丁目交番",
+              "name": "麹町警察署麹町四丁目交番",
               "operator": "東京都"
             }
           },
@@ -9813,7 +9802,7 @@
           }
         ]
       },
-      "evidenceHash": "d347ae0b0a1a429076c975dd891c1137ef7900c3dbeaeaee0805c1db3b6b31af",
+      "evidenceHash": "d963acf1a57387af50fb6ea983e40eb09880892ddbd59d0b5a550a6f78b18a71",
       "current": "node/10595395388",
       "status": "decided",
       "choice": "node/10595395388",
