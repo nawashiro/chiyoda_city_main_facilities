@@ -138,8 +138,8 @@ class EvidenceTests(unittest.TestCase):
 
     def test_migration_preserves_targets_and_public_geometry(self):
         queries = load_queries(ROOT)
-        self.assertEqual(91, len(queries))
-        self.assertEqual(91, len({q['id'] for q in queries}))
+        self.assertEqual(90, len(queries))
+        self.assertEqual(90, len({q['id'] for q in queries}))
         published = json.loads((ROOT / 'data/places.jsonld').read_text())
         place_ids = [
             record['@id']

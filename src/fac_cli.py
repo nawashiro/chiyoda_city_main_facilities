@@ -116,7 +116,19 @@ def main(argv:list[str]|None=None)->int:
         if len(selected)!=1: raise ValueError(f"search input not found: {args.query_id}")
         path,doc,query=selected[0]
         if args.input=="rm":
-            doc["queries"].remove(query); _write(path,doc); print(f"removed {query['id']}"); return 0
+            doc["queries"].remove(query); _write(path,doc)
+            identifier=f"urn:uuid:{query['id']}"
+            places=_read_json(root/"data/places.jsonld")
+            places["@graph"]=[p for p in places["@graph"] if p["@id"]!=identifier]
+            validate_jsonld_document(places)
+            _write_json(root/"data/places.jsonld",places)
+            published=root/"site/places.jsonld"
+            if published.is_file(): _write_json(published,places)
+            ledger=_read_json(root/"data/osm-decisions.json")
+            if ledger.get("version")!=1 or not isinstance(ledger.get("facilities"),dict): raise ValueError("invalid OSM decision ledger")
+            ledger["facilities"].pop(query["id"],None)
+            _write_json(root/"data/osm-decisions.json",ledger)
+            print(f"removed {query['id']}"); return 0
         if (args.lon is None)!=(args.lat is None) or (args.lon is not None and args.qid is not None) or (args.new_name is None and args.lon is None and args.qid is None): raise ValueError("set requires --name, --lon/--lat, or --qid")
         if args.new_name is not None: query["name"]=args.new_name
         if args.lon is not None: query.update({"coordinates":[args.lon,args.lat]}); query.pop("qid",None)

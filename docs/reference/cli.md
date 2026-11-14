@@ -44,7 +44,7 @@
 ./fac in rm . SEARCH_ID
 ```
 
-`in rm` は `SEARCH_ID` の検索入力を `queries` から取り除きます。
+`in rm` は `SEARCH_ID` の検索入力を `queries` から取り除き、同じIDのPlace recordを `data/places.jsonld` と `site/places.jsonld` から、判断記録を `data/osm-decisions.json` からも取り除きます。除去された施設を参照する外部のURIは無効になりますが、過去の公開版はGitHub Releaseの版固定スナップショットで引き続き取得できます。
 
 ## 実地調査の関連付けを反映する
 

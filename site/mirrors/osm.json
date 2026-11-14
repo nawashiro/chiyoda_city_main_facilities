@@ -1244,25 +1244,6 @@
     },
     {
       "type": "way",
-      "id": 67027576,
-      "center": {
-        "lon": 139.76505715000002,
-        "lat": 35.69818535
-      },
-      "tags": {
-        "amenity": "monastery",
-        "denomination": "japanese_orthodox",
-        "landuse": "religious",
-        "name": "日本ハリストス正教会修道院",
-        "name:en": "Tokyo Nicholas Monastery",
-        "name:es": "Monasterio de Tokio Nikolsky",
-        "name:ja": "日本ハリストス正教会修道院",
-        "name:ru": "Токийский Никольский монастырь",
-        "religion": "christian"
-      }
-    },
-    {
-      "type": "way",
       "id": 91234941,
       "center": {
         "lon": 139.76784485,

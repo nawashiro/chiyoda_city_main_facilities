@@ -82,6 +82,18 @@ class SourceMirrorTests(unittest.TestCase):
             wikidata = json.loads((root / 'site/mirrors/wikidata.json').read_text())
             self.assertEqual({'Q2'}, set(wikidata['entities']))  # Q3 is not in the imports pool until a Wikidata refresh fetches it
 
+    def test_mirrors_narrow_again_when_the_raw_snapshot_is_absent(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = self.setup_root(directory)
+            build_repository(root)
+            (root / 'imports/openstreetmap/raw.json').unlink()
+            document = json.loads((root / 'data/places.jsonld').read_text())
+            document['@graph'].pop(0)
+            _write_json(root / 'data/places.jsonld', document)
+            build_repository(root)
+            osm = json.loads((root / 'site/mirrors/osm.json').read_text())
+            self.assertEqual(['node/2'], [f"{e['type']}/{e['id']}" for e in osm['elements']])
+
     def test_wikidata_mirror_pages_are_preserved_without_source_change(self):
         with tempfile.TemporaryDirectory() as directory:
             root = self.setup_root(directory)

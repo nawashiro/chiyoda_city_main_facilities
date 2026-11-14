@@ -225,10 +225,12 @@ def build_repository(root: str | Path) -> Path:
     referenced_qids = collect_wikidata_ids(document)
     for source_id, filename in (("openstreetmap", "osm.json"), ("wikidata", "wikidata.json")):
         source = root / f"imports/{source_id}/raw.json"
-        if not source.exists(): continue
         mirrors = root / "site/mirrors"
         mirrors.mkdir(parents=True, exist_ok=True)
-        filtered = _read_json(source)
+        mirror = mirrors / filename
+        if source.exists(): filtered = _read_json(source)
+        elif mirror.exists(): filtered = _read_json(mirror)
+        else: continue
         if source_id == "openstreetmap":
             filtered["elements"] = [element for element in filtered.get("elements", []) if f"{element.get('type')}/{element.get('id')}" in associated_ids]
         else:
