@@ -37,3 +37,13 @@
 - [ ] 6.1 `fac category review`でrule提案を確認し、Jev判定を実行する。検証: ruleとJevで確定した判断が`data/categories.json`に記録される
 - [ ] 6.2 未解決施設を確認Issueへ出し、人の確定を反映する。検証: 全91施設の判断が確定または意図的な未分類になる
 - [ ] 6.3 公開生成と検証を通して、additionalTypeつきの正本をsiteへ公開する。検証: `./fac jsonld-validate data/places.jsonld --published`を通す
+
+## 7. 再設計の適用（additionalTypeからgif-poi識別子へ）
+
+探索で確定した再設計。recordはgif-poi識別子を運び、名前辞書は名前だけを持つ。
+
+- [ ] 7.1 語彙文書を`data/category-names.jsonld`へ改名し、`schema:citation`とtermごとの`schema:identifier`を外した純粋な名前辞書へ書き直す。検証: 改名後の語彙検証を通す
+- [ ] 7.2 検証と正本の適用を`schema:identifier`のgif-poi識別子へ切り替え、additionalTypeの検証と適用を除去する。検証: 既存71件のrecordがgif-poi識別子に書き換わりadditionalTypeが消えることを、検証とテストで確認する
+- [ ] 7.3 `site/index.html`の`schema:Dataset`にGIF POIコード表（タグ付き版、CC0）を出典として加え、docs/reference/sources-and-licenses.mdにも記載する。検証: landing pageのmetadata点検とテストが通る
+- [ ] 7.4 `scripts/prepare_release.py`とrelease workflowの資産名を`category-names-<版>.jsonld`へ改める。検証: リリーステストが通る
+- [ ] 7.5 buildと検証を通してsiteを更新する。検証: `./fac jsonld-validate --published site/places.jsonld`と辞書のバイト複製確認を通す

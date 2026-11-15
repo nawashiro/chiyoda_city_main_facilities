@@ -2,21 +2,26 @@
 
 ## Purpose
 
-GIF POIコード表をカテゴリ語彙の正本とし、OSMタグと施設名称からの翻訳規則とJev、人手で決めた施設ごとのカテゴリを確定した判断として保存します。保存済み判断だけを公開に渡し、名称やタグの変化で判断を再審査しません。
+GIF POIコード表を語彙の正本とし、OSMタグと施設名称からの翻訳規則とJev、人手で決めた施設ごとのカテゴリを確定した判断として保存します。保存済み判断だけを公開にgif-poi識別子で渡し、名称やタグの変化で判断を再審査しません。
 
 ## ADDED Requirements
 
-### Requirement: Category vocabulary from the GIF POI code table
-システム SHALL デジタル庁GIFのPOIコード表から採用したカテゴリのサブセットを、語彙文書`data/categories.jsonld`に定義します。語彙文書 MUST schema.orgの`DefinedTermSet`と`DefinedTerm`で構成します。各`DefinedTerm` MUST 語彙文書のURLを`@id`に持ち、fragment MUST GIF POIコードの4桁コードそのものです。各`DefinedTerm` MUST `schema:identifier`の`schema:PropertyValue`に`propertyID`が`gif-poi`で`value`が4桁コードの値を持ち、GIFの項目名を日本語ラベルとして持ちます。語彙文書 MUST 採用したGIFコード表の版をGitHubのタグ付き参照として記録します。
+### Requirement: Category name dictionary from the GIF POI code table
+システム SHALL デジタル庁GIFのPOIコード表から採用したカテゴリの名前辞書を、語彙文書`data/category-names.jsonld`に定義します。辞書 MUST schema.orgの`DefinedTermSet`で構成し、`@id` MUST 公開URL `https://nawashiro.github.io/chiyoda_city_main_facilities/category-names.jsonld`です。各term MUST `schema:DefinedTerm`で、`@id`は辞書のURLにGIF POIコードの4桁fragmentを付けたterm URLを持ち、GIFの項目名を日本語ラベルとして持ちます。辞書 MUST GIFへの出典や体系名の参照を含みません。出典はDatasetのmetadataで表現します。
 
-#### Scenario: Vocabulary document is inspected
+#### Scenario: Name dictionary is inspected
 
-- **WHEN** 利用者が語彙文書を取得します
-- **THEN** 各termは`#4桁コード`のURL、`gif-poi`の識別子、日本語ラベルを持ちます
+- **WHEN** 利用者が名前辞書を取得します
+- **THEN** 各termは`#4桁コード`のterm URLと日本語ラベルを持ちます
 
-#### Scenario: Adopted version is recorded
+#### Scenario: Dictionary stays a name list
 
-- **WHEN** 語彙文書の出典を点検します
+- **WHEN** 名前辞書を点検します
+- **THEN** 出典や体系名の参照は含まれません
+
+#### Scenario: Adopted version is documented
+
+- **WHEN** 利用者がDatasetのmetadataを取得します
 - **THEN** 採用したGIFコード表のGitHubのタグ付き版を確認できます
 
 ### Requirement: Adopted subset groups welfare under code 1499
@@ -51,7 +56,7 @@ GIF POIコード表をカテゴリ語彙の正本とし、OSMタグと施設名�
 #### Scenario: Decided record keeps its category
 
 - **WHEN** 判断の保存後に公開生成を実行します
-- **THEN** recordは保存済みのカテゴリをadditionalTypeとして持ちます
+- **THEN** recordは保存済みのカテゴリをgif-poi識別子として持ちます
 
 #### Scenario: Undecided record stays uncategorized
 

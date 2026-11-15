@@ -10,8 +10,9 @@ GIF POIコード表（651項目、4桁コード、GitHub `digital-go-jp/GIF`で�
 
 **Goals:**
 
-- カテゴリを施設ごとに確定した判断として持ち、公開に`schema:additionalType`のterm URLで渡す
+- カテゴリを施設ごとに確定した判断として持ち、公開に`schema:identifier`のgif-poi識別子で渡す
 - 語彙はGIF POIコード表の採用サブセットとし、版をGitHubのタグで固定する
+- 名前辞書は名前だけを持ち、出典はDatasetのmetadataで表現する
 - 判断の見直しを関連付けの変更時だけに限定し、月々の分類負担をゼロに保つ
 
 **Non-Goals:**
@@ -19,16 +20,20 @@ GIF POIコード表（651項目、4桁コード、GitHub `digital-go-jp/GIF`で�
 - 障害者・高齢者福祉の細分（1499に集約。必要になったときに改めて設計する）
 - GIFコード651全項目の採用と、コードごとの翻訳規則の整備
 - kazaguruma-transit側の移行とサブセット絞り込み
-- 公開recordへの日本語ラベルやコード値の複製
+- 公開recordへの日本語ラベルの複製
 - 分類の強制（判断のないrecordは未分類のままでよい）
 
 ## Decisions
 
-### Vocabulary IDs are GIF POI codes with term URLs in a DefinedTermSet
+### Category codes travel as gif-poi identifiers, the dictionary carries names only
 
-語彙文書はschema.orgの`DefinedTermSet`と`DefinedTerm`だけで構成する。各termの`@id`を`https://nawashiro.github.io/chiyoda_city_main_facilities/categories.jsonld#<4桁コード>`にする。外部コードは`schema:identifier`の`schema:PropertyValue`（`propertyID: gif-poi`）に書く。SKOSの`ConceptScheme`と`skos:notation`は採用しない。schema.orgに寄せることで公開レコードと同じ語彙系で完結するからである。GIFはRDF語彙として公開されていないため、term URLと識別子の形式はこのリポジトリが提供する。
+公開recordは`schema:identifier`の`schema:PropertyValue`（`propertyID: gif-poi`、`value: 4桁コード`）で分類を運ぶ。先行案の`schema:additionalType`（term URL）は廃止する。値を見ただけでは何の分類か分からないこと、コードはresolvable URIでないのでidentifierの席がschema.orgとして正しいこと、WAM識別子と同じ`propertyID`で体系を名乗る形が再利用者に自明であることが理由である。
 
-代替案としてSKOSを採る路線は、既存のWAM識別子契約（`schema:identifier`の`PropertyValue`）と表記が分かれるため退けた。
+名前辞書`data/category-names.jsonld`は`@id`を公開URL `https://nawashiro.github.io/chiyoda_city_main_facilities/category-names.jsonld`とし、各`DefinedTerm`はterm URL（fragmentは4桁コード）と日本語ラベルだけを持つ。`propertyID`やGIFへの参照を辞書に含めない。コードはterm URLのfragmentそのものが運び、辞書は名簿に徹する。recordが辞書URLを埋め込まないため、リネームはrecordへの影響なしに行える。
+
+### Provenance lives at the dataset level
+
+GIF POIコード表（GitHub `digital-go-jp/GIF`、タグ`v2.4`固定、CC0-1.0）の出典は、landing pageの`schema:Dataset`にhasPartとして表現し、docs/reference/sources-and-licenses.mdにも記す。辞書単体に典拠を埋め込まない。GIFはCC0なので表示は帰属義務ではなく、辞書の源を案内するための記録である。
 
 ### Categories are frozen decisions, not publish-time derivations
 
@@ -50,19 +55,19 @@ rule（翻訳規則の一意な一致）→ Jev（閾値以上なら`method: jev
 
 ## Risks / Trade-offs
 
-- [GIFコード表のGitHub参照が変わる] → 語彙文書にタグ付きの版を記録し、取り込み時にその版の表との突合を検証する
-- [term URLの恒久維持] → GitHub Pagesの既存正本と同じURL基盤を使い、新規ドメインを導入しない
+- [GIFコード表のGitHub参照が変わる] → タグ付きの版をdocsとlanding pageで記録し、取り込み時にその版の表との突合を検証する
+- [gif-poi識別子の体系名から辞書が自明でない] → landing pageのDataDownloadで名前辞書を表現し、propertyIDと辞書の対応をdocsに記す
 - [名称の部分一致規則が脆い] → 規則はタグの一致を主とし、名称規則を最小限にする。誤一致は初回の一括判断で人へ出る
 - [rule結果と保存済み判断の乖離が積もる] → `fac category review`が乖離を報告し、人が`clear`して再評価できる
 - [未分類recordが分類閲覧の消費者に穴を開ける] → 仕様は未分類を許し、穴の詰め方（kazaguruma側の「その他」扱い）は消費者の設計に任せる
 
 ## Migration Plan
 
-1. 語彙文書と翻訳規則表を用意し、採用版のGIFコード表との突合テストを通す
-2. `fac category review`でrule提案を確認し、Jev判定を実行して残りを確認Issueで人へ出す。初回の一括判断を完了する
-3. 正本の生成に`schema:additionalType`を加え、検証を更新する。specの修正（`public-jsonld-dataset`、`dataset-publication`）を反映する
-4. siteとReleaseの配布物に語彙文書を加える
-5. 公開recordが増えるだけで既存の`@id`、座標、参照は変わらないため、ロールバックは語彙文書と判断記録を消して生成経路を戻すだけでよい
+1. 語彙文書を`data/category-names.jsonld`へ改名し、出典を外した純粋な名前辞書に書き直す。検証も新しい契約へ合わせる
+2. 正本生成と検証を`schema:identifier`のgif-poi識別子へ切り替え、additionalTypeの検証を除去する。既存の71件は次回の適用で書き換わる
+3. landing pageとdocsにGIF出典を加え、siteとRelease資産（`category-names-<版>.jsonld`）を更新する
+4. specの修正（`public-jsonld-dataset`、`dataset-publication`）をdelta specとして確定させ、archive時の同期で正本specへ反映する
+5. 公開recordの`@id`、座標、参照は変わらないため、ロールバックは語彙文書と判断記録を消して生成経路を戻すだけでよい
 
 ## Open Questions
 
