@@ -114,7 +114,17 @@ class JsonLdRepositoryArtifactTests(unittest.TestCase):
                     )
                     self.assertFalse(any("wam" in uri.casefold() for uri in links))
 
-                    self.assertNotIn("schema:identifier", record)
+                    identifiers = record.get("schema:identifier", [])
+                    self.assertTrue(
+                        all(
+                            isinstance(item, dict)
+                            and item.get("@type") == "schema:PropertyValue"
+                            and item.get("schema:propertyID") == "gif-poi"
+                            for item in identifiers
+                        ),
+                        "public records may only carry gif-poi category identifiers",
+                    )
+                    self.assertNotIn("schema:additionalType", record)
 
                 osm_links = [
                     uri
@@ -132,6 +142,7 @@ class JsonLdRepositoryArtifactTests(unittest.TestCase):
                     identifier
                     for record in public_places
                     for identifier in record.get("schema:identifier", [])
+                    if identifier.get("schema:propertyID") != "gif-poi"
                 ]
                 self.assertTrue(osm_links)
                 self.assertTrue(wikidata_links)

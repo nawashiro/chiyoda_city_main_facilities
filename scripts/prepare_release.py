@@ -22,7 +22,7 @@ from src.facility_data import validate_published_document
 
 _ASSETS = (
     ("places.jsonld", "places-{}.jsonld"),
-    ("categories.jsonld", "categories-{}.jsonld"),
+    ("category-names.jsonld", "category-names-{}.jsonld"),
     ("mirrors/osm.json", "osm-{}.json"),
     ("mirrors/wikidata.json", "wikidata-{}.json"),
 )

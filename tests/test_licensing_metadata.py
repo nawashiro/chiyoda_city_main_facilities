@@ -18,6 +18,7 @@ EXPECTED_PART_LICENSES = {
     "repository": CC0_URL,
     "openstreetmap": OSM_ODBL_URL,
     "wikidata": CC0_URL,
+    "gif": CC0_URL,
     "wam": WAM_TERMS_URL,
 }
 
@@ -41,6 +42,7 @@ SOURCE_IDENTITY_ALIASES = {
     ),
     "openstreetmap": ("openstreetmap", "openstreetmap data", "osm"),
     "wikidata": ("wikidata", "wikidata data"),
+    "gif": ("gif", "gif poi code table", "poi code table"),
     "wam": ("wam", "wamnet", "wam data"),
 }
 
@@ -137,7 +139,7 @@ class LicensingMetadataTests(unittest.TestCase):
         self.assertEqual(
             len(EXPECTED_PART_LICENSES),
             len(has_part),
-            "Dataset JSON-LD must contain exactly four source-specific hasPart entries",
+            "Dataset JSON-LD must contain exactly five source-specific hasPart entries",
         )
 
         matched_sources = []
@@ -168,7 +170,7 @@ class LicensingMetadataTests(unittest.TestCase):
             set(EXPECTED_PART_LICENSES),
             set(matched_sources),
             "hasPart must contain one distinct entry for repository, OpenStreetMap, "
-            "Wikidata, and WAM",
+            "Wikidata, GIF, and WAM",
         )
         self.assertEqual(
             len(matched_sources),

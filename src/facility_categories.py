@@ -9,7 +9,6 @@ from pathlib import Path
 from urllib.request import Request, urlopen
 
 from src.facility_data import (
-    _CATEGORIES_URL,
     _OSM_TYPED_OBJECT_ID,
     _is_uuid7,
     _read_json,
@@ -20,53 +19,42 @@ from src.facility_data import (
 from src.http_utils import read_limited_response
 from src.resolve_osm_candidates import MODEL, THRESHOLD, current_id, encoded, validate_choice
 
+VOCABULARY_URL = "https://nawashiro.github.io/chiyoda_city_main_facilities/category-names.jsonld"
 POI_CODE = re.compile(r"^[0-9]{4}$")
-POI_TABLE_PATH = "490_%E3%81%9D%E3%81%AE%E4%BB%96/491-3-1_POI%E3%82%B3%E3%83%BC%E3%83%89%E8%A1%A8.xlsx"
 TERMS_KEY = "schema:hasDefinedTerm"
-
-
-def term_url(code: str) -> str:
-    return f"{_CATEGORIES_URL}#{code}"
 
 
 def validate_vocabulary(document) -> None:
     if not isinstance(document, dict):
-        raise ValueError("category vocabulary must be an object")
+        raise ValueError("category name dictionary must be an object")
     context = document.get("@context")
     if not isinstance(context, dict) or context.get("@version") != 1.1 or context.get("schema") != "https://schema.org/":
-        raise ValueError("category vocabulary @context must declare the schema prefix")
+        raise ValueError("category name dictionary @context must declare the schema prefix")
     if document.get("@type") != "schema:DefinedTermSet":
-        raise ValueError("category vocabulary must be a schema:DefinedTermSet")
-    if document.get("@id") != _CATEGORIES_URL:
-        raise ValueError(f"category vocabulary @id must be {_CATEGORIES_URL}")
+        raise ValueError("category name dictionary must be a schema:DefinedTermSet")
+    if document.get("@id") != VOCABULARY_URL:
+        raise ValueError(f"category name dictionary @id must be {VOCABULARY_URL}")
+    if set(document) - {"@context", "@type", "@id", "schema:name", TERMS_KEY}:
+        raise ValueError("category name dictionary carries names only")
     if not isinstance(document.get("schema:name"), str) or not document["schema:name"].strip():
-        raise ValueError("category vocabulary needs a schema:name")
-    citation = document.get("schema:citation")
-    if not isinstance(citation, dict) or citation.get("@type") != "schema:CreativeWork":
-        raise ValueError("category vocabulary must cite the GIF POI code table as a schema:CreativeWork")
-    if not isinstance(citation.get("schema:url"), str) or not citation["schema:url"].startswith("https://github.com/digital-go-jp/GIF/blob/"):
-        raise ValueError("category vocabulary citation must be a GitHub GIF blob URL")
-    if not isinstance(citation.get("schema:version"), str) or not citation["schema:version"].strip():
-        raise ValueError("category vocabulary citation must record the GIF version tag")
+        raise ValueError("category name dictionary needs a schema:name")
     terms = document.get(TERMS_KEY)
     if not isinstance(terms, list) or not terms:
-        raise ValueError("category vocabulary must define at least one term")
+        raise ValueError("category name dictionary must define at least one term")
     codes: dict[str, str] = {}
     for index, term in enumerate(terms):
         if not isinstance(term, dict) or term.get("@type") != "schema:DefinedTerm":
             raise ValueError(f"category term {index} must be a schema:DefinedTerm")
+        if set(term) - {"@type", "@id", "schema:name"}:
+            raise ValueError(f"category term {index} carries a name only")
         identifier = term.get("@id")
-        if not isinstance(identifier, str) or not identifier.startswith(_CATEGORIES_URL + "#"):
-            raise ValueError(f"category term {index} @id must be a term URL of the vocabulary")
-        code = identifier.removeprefix(_CATEGORIES_URL + "#")
+        if not isinstance(identifier, str) or not identifier.startswith(VOCABULARY_URL + "#"):
+            raise ValueError(f"category term {index} @id must be a term URL of the dictionary")
+        code = identifier.removeprefix(VOCABULARY_URL + "#")
         if not POI_CODE.fullmatch(code):
             raise ValueError(f"category term {index} fragment must be a 4-digit POI code: {code}")
         if not isinstance(term.get("schema:name"), str) or not term["schema:name"].strip():
             raise ValueError(f"category term {code} needs a schema:name")
-        value = term.get("schema:identifier")
-        if (not isinstance(value, dict) or value.get("@type") != "schema:PropertyValue"
-                or value.get("schema:propertyID") != "gif-poi" or value.get("schema:value") != code):
-            raise ValueError(f"category term {code} needs a gif-poi schema:identifier")
         if code in codes:
             raise ValueError(f"category term {code} is defined twice")
         codes[code] = term["schema:name"]
@@ -169,9 +157,9 @@ def validate_decisions(document, codes: dict[str, str]) -> list[str]:
 
 
 def load_vocabulary(root: Path) -> dict[str, str]:
-    document = _read_json(Path(root) / "data/categories.jsonld")
+    document = _read_json(Path(root) / "data/category-names.jsonld")
     validate_vocabulary(document)
-    return {term["@id"].removeprefix(_CATEGORIES_URL + "#"): term["schema:name"] for term in document[TERMS_KEY]}
+    return {term["@id"].removeprefix(VOCABULARY_URL + "#"): term["schema:name"] for term in document[TERMS_KEY]}
 
 
 def load_rules(root: Path, codes: dict[str, str]) -> list[dict]:
@@ -234,10 +222,14 @@ def apply_categories(document: dict, decisions: dict, codes: dict[str, str]) -> 
     for place in document["@graph"]:
         uuid = place["@id"].removeprefix("urn:uuid:")
         entry = decisions["facilities"].get(uuid)
+        others = [item for item in place.get("schema:identifier", []) if isinstance(item, dict) and item.get("schema:propertyID") != "gif-poi"]
         if entry and uuid not in stale:
-            place["schema:additionalType"] = [term_url(entry["category"])]
+            others.append({"@type": "schema:PropertyValue", "schema:propertyID": "gif-poi", "schema:value": entry["category"]})
+        if others:
+            place["schema:identifier"] = others
         else:
-            place.pop("schema:additionalType", None)
+            place.pop("schema:identifier", None)
+        place.pop("schema:additionalType", None)
     return stale
 
 

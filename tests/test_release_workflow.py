@@ -51,7 +51,7 @@ class ReleaseWorkflowTests(unittest.TestCase):
             "workflow must use a GitHub Release upload action",
         )
 
-        for asset_marker in ("places-", "categories-", "osm-", "wikidata-"):
+        for asset_marker in ("places-", "category-names-", "osm-", "wikidata-"):
             with self.subTest(asset_marker=asset_marker):
                 self.assertIn(asset_marker, workflow)
         self.assertIn("files: release/*", workflow)
@@ -105,11 +105,11 @@ class PrepareReleaseTests(unittest.TestCase):
         self.assertTrue(script.is_file(), f"missing release preparation script: {script}")
         self.assertTrue(canonical.is_file(), f"missing canonical JSON-LD source: {canonical}")
         canonical_bytes = canonical.read_bytes()
-        vocabulary_bytes = (ROOT / "data/categories.jsonld").read_bytes()
+        vocabulary_bytes = (ROOT / "data/category-names.jsonld").read_bytes()
         version = "2026.11.14"
         expected = {
             "places-2026.11.14.jsonld": canonical_bytes,
-            "categories-2026.11.14.jsonld": vocabulary_bytes,
+            "category-names-2026.11.14.jsonld": vocabulary_bytes,
             "osm-2026.11.14.json": b'{"elements": []}',
             "wikidata-2026.11.14.json": b'{"entities": {}}',
         }
@@ -119,7 +119,7 @@ class PrepareReleaseTests(unittest.TestCase):
             site_dir = temporary_root / "site"
             (site_dir / "mirrors").mkdir(parents=True)
             (site_dir / "places.jsonld").write_bytes(canonical_bytes)
-            (site_dir / "categories.jsonld").write_bytes(vocabulary_bytes)
+            (site_dir / "category-names.jsonld").write_bytes(vocabulary_bytes)
             (site_dir / "mirrors/osm.json").write_bytes(expected["osm-2026.11.14.json"])
             (site_dir / "mirrors/wikidata.json").write_bytes(
                 expected["wikidata-2026.11.14.json"]

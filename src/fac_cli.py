@@ -77,7 +77,7 @@ def main(argv:list[str]|None=None)->int:
                 return 0
             codes=None
             for parent in [Path(args.path).resolve(), *Path(args.path).resolve().parents]:
-                candidate=parent/"data/categories.jsonld"
+                candidate=parent/"data/category-names.jsonld"
                 if candidate.exists():
                     from src.facility_categories import load_vocabulary
                     codes=set(load_vocabulary(parent))

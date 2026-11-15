@@ -153,7 +153,13 @@ class EvidenceTests(unittest.TestCase):
             sorted(set(place_ids) - declared),
             'canonical JSON-LD must only publish declared facilities',
         )
-        self.assertFalse(any('schema:identifier' in p for p in published['@graph']))
+        non_category_identifiers = [
+            item
+            for record in published['@graph']
+            for item in record.get('schema:identifier', [])
+            if item.get('schema:propertyID') != 'gif-poi'
+        ]
+        self.assertEqual([], non_category_identifiers)
 
     def test_hash_ignores_order_but_tracks_identity_fields(self):
         evidence = evidence_for(query(), normalize_osm_elements([raw_element(1), raw_element(2)]), {})

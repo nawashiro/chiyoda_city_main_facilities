@@ -30,6 +30,18 @@
 | 帰属 | なし |
 | 加工内容 | なし |
 
+## GIF POIコード表
+
+カテゴリ名辞書 `data/category-names.jsonld` の項目名は、デジタル庁の政府相互運用性フレームワーク（GIF）POIコード表から採用しています。版は GitHub リポジトリ `digital-go-jp/GIF` のタグ `v2.4` に固定します。
+
+| 項目 | 内容 |
+| --- | --- |
+| 出典 | <https://github.com/digital-go-jp/GIF/blob/v2.4/490_%E3%81%9D%E3%81%AE%E4%BB%96/491-3-1_POI%E3%82%B3%E3%83%BC%E3%83%89%E8%A1%A8.xlsx> |
+| ライセンス | Creative Commons CC0 1.0 Universal |
+| ライセンス URL | <https://creativecommons.org/publicdomain/zero/1.0/> |
+| 帰属 | なし |
+| 加工内容 | 採用したコードの項目名をそのまま用い、コードとの対応を `category-names.jsonld` に編集する。 |
+
 ## WAM NET由来の残存情報
 
 このリポジトリで残るWAM由来の施設情報には、配布ページの利用条件が適用されます。
