@@ -3,12 +3,14 @@ from __future__ import annotations
 import argparse
 import copy
 import json
+import os
 import subprocess
 from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
 from src.facility_data import _read_json, _write_json, barrier_free_webpage, load_queries, new_uuid7, validate_jsonld_document, validate_published_document, validate_search_document
 from src.resolve_osm_candidates import apply_decisions, evidence_hash, osm_candidate
+from src import facility_categories
 
 def _read(path: Path) -> Any: return json.loads(path.read_text(encoding="utf-8"))
 def _write(path: Path, document: dict[str, Any]) -> None:
@@ -41,6 +43,21 @@ def main(argv:list[str]|None=None)->int:
     exclusive.add_argument("--osm-id")
     exclusive.add_argument("--choice",choices=("none",))
     assoc.add_argument("--editor")
+    category=subs.add_parser("category",help="maintain facility category decisions")
+    commands=category.add_subparsers(dest="action",required=True)
+    review=commands.add_parser("review")
+    review.add_argument("root",nargs="?",default=".")
+    assign=commands.add_parser("assign")
+    assign.add_argument("root",nargs="?",default=".")
+    assign.add_argument("query_id")
+    assign.add_argument("poi_code")
+    assign.add_argument("--editor")
+    clear=commands.add_parser("clear")
+    clear.add_argument("root",nargs="?",default=".")
+    clear.add_argument("query_id")
+    refresh=commands.add_parser("refresh")
+    refresh.add_argument("root",nargs="?",default=".")
+    refresh.add_argument("--present",action="store_true",help="present unresolved facilities as a GitHub Issue")
     link=subs.add_parser("link",help="maintain barrier-free guide webpage links of a place")
     commands=link.add_subparsers(dest="action",required=True)
     for name in ("add","rm"):
@@ -52,8 +69,53 @@ def main(argv:list[str]|None=None)->int:
     try:
         if args.command=="jsonld-validate":
             document=_read(Path(args.path))
-            (validate_published_document if args.published else validate_jsonld_document)(document)
+            if document.get("@type")=="schema:DefinedTermSet":
+                from src.facility_categories import validate_vocabulary
+                validate_vocabulary(document)
+                return 0
+            codes=None
+            for parent in [Path(args.path).resolve(), *Path(args.path).resolve().parents]:
+                candidate=parent/"data/categories.jsonld"
+                if candidate.exists():
+                    from src.facility_categories import load_vocabulary
+                    codes=set(load_vocabulary(parent))
+                    break
+            (validate_published_document if args.published else validate_jsonld_document)(document, category_codes=codes)
             return 0
+        if args.command=="category":
+            root=Path(args.root)
+            if args.action=="review":
+                report=facility_categories.review(root)
+                for entry in report["decided"]:
+                    print(f"decided {entry['method']} {entry['category']} {entry['name']}\n  id={entry['id']}")
+                for entry in report["divergent"]:
+                    print(f"divergent stored={entry['stored']} proposal={entry['proposal']} {entry['name']}\n  id={entry['id']}")
+                for uuid in report["stale"]:
+                    print(f"stale id={uuid}")
+                for entry in report["uncategorized"]:
+                    proposal=f" proposal={entry['proposal']}" if entry["proposal"] else ""
+                    print(f"unresolved{proposal} {entry['name']}\n  id={entry['id']}")
+                return 0
+            if args.action=="assign":
+                editor=args.editor or subprocess.run(["git","config","--get","user.name"],cwd=root,capture_output=True,text=True).stdout.strip()
+                facility_categories.assign(root,args.query_id,args.poi_code,editor)
+                return 0
+            if args.action=="clear":
+                facility_categories.clear(root,args.query_id)
+                return 0
+            if args.action=="refresh":
+                judge=facility_categories._request_category if os.environ.get("TYPESAFE_API_KEY") else None
+                document,report=facility_categories.refresh(root,judge=judge)
+                if judge is None and report["pending"]:
+                    print("NOTICE: TYPESAFE_API_KEY is not set; Jev judging skipped")
+                for uuid,result in report["unresolved"].items():
+                    print(f"unresolved confidence={result['confidence']:.4f} id={uuid}")
+                for uuid in report["stale"]:
+                    print(f"re-evaluated id={uuid}")
+                if args.present:
+                    from src.github_osm_review import GitHub
+                    GitHub().save_category_review(facility_categories.unresolved_facilities(root, document))
+                return 0
         if args.command=="link":
             root=Path(args.root)
             places_path=root/"data/places.jsonld"

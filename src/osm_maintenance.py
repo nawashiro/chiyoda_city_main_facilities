@@ -11,6 +11,7 @@ from pathlib import Path
 from src.facility_data import _read_json, _write_json, load_queries, validate_repository
 from src.github_osm_review import GitHub, apply_confirmations, close_published, read_confirmations
 from src.resolve_osm_candidates import apply_decisions, current_id, resolve
+from src import facility_categories
 from src.commons_retrieval import run_commons_retrieval
 from src.retrieve_osm import _http_get, run_osm_retrieval
 from src.wikidata_retrieval import run_wikidata_retrieval
@@ -76,17 +77,28 @@ def update(root, *, refresh=False, github=None, judge=None, retrieve=run_osm_ret
         updated, ledger = resolve(document, queries, raw, ledger, **({"judge": judge} if judge else {}))
     else:
         updated = apply_decisions(document, queries, {k: ledger["facilities"][k] for k in confirmations})
+    updated = _maintain_categories(root, updated, judge=judge, raw=raw if refresh else None)
     _write_json(root / "data/places.jsonld", updated)
     _write_json(root / "data/osm-decisions.json", ledger)
     return ledger
 
 
+def _maintain_categories(root, updated, *, judge, raw):
+    if not (Path(root) / "data/categories.jsonld").exists() or not (Path(root) / "data/category-rules.json").exists():
+        return updated
+    updated, _report = facility_categories.refresh(root, judge=judge, elements=raw.get("elements") if raw else None, document=updated)
+    return updated
+
+
 def present(root, github):
-    ledger = _read_json(Path(root) / "data/osm-decisions.json")
+    root = Path(root)
+    ledger = _read_json(root / "data/osm-decisions.json")
     for query_id, entry in ledger["facilities"].items():
         if entry.get("status") == "needs_review":
             github.save_issue(query_id, entry)
     github.save_unmatched(ledger["facilities"])
+    if (root / "data/categories.jsonld").exists() and (root / "data/category-rules.json").exists():
+        github.save_category_review(facility_categories.unresolved_facilities(root))
 
 
 def main(argv=None):

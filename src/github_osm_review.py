@@ -13,6 +13,7 @@ from src.resolve_osm_candidates import OSM
 
 CONFIRM = "判断を確定する"
 MARKER = re.compile(r"<!-- osm-review:([^: ]+):([0-9a-f]{64}) -->")
+CATEGORY_MARKER = "<!-- category-review -->"
 
 
 def escape(text):
@@ -83,8 +84,9 @@ class GitHub:
         permission = self.api(f"/repos/{self.repository}/collaborators/{quote(login, safe='')}/permission")
         return permission["permission"] in {"admin", "maintain", "write"}
 
-    def find_issue(self, query_id):
-        marker = f"<!-- osm-review:{query_id}:" if query_id else "<!-- osm-unmatched -->"
+    def find_issue(self, query_id, marker=None):
+        if marker is None:
+            marker = f"<!-- osm-review:{query_id}:" if query_id else "<!-- osm-unmatched -->"
         for page in range(1, 100):
             issues = self.api(f"/repos/{self.repository}/issues?state=all&per_page=100&page={page}")
             found = [i for i in issues if not i.get("pull_request")
@@ -126,6 +128,23 @@ class GitHub:
                 self.api(f"/repos/{self.repository}/issues/{number}", {"body": body, "state": "open"}, "PATCH")
         else:
             self.api(f"/repos/{self.repository}/issues", {"title": "[bot] OSM接続先なし", "body": body})
+
+    def save_category_review(self, unresolved):
+        if not unresolved:
+            number = self.find_issue(None, CATEGORY_MARKER)
+            if number and self.issue(number)["state"] == "OPEN":
+                self.api(f"/repos/{self.repository}/issues/{number}", {"state": "closed"}, "PATCH")
+            return
+        lines = ["[bot] カテゴリが確定していない施設です。", "",
+                 "`./fac category assign <uuid> <poi-code>`で確定するか、関連付けや語彙を確認してください。", ""]
+        lines.extend(f"- {escape(entry['name'])} — `{entry['id']}` / 参照: {entry['osmId'] or 'なし'}" for entry in unresolved)
+        lines.extend(["", CATEGORY_MARKER])
+        body = "\n".join(lines) + "\n"
+        number = self.find_issue(None, CATEGORY_MARKER)
+        if number:
+            self.api(f"/repos/{self.repository}/issues/{number}", {"body": body, "state": "open"}, "PATCH")
+        else:
+            self.api(f"/repos/{self.repository}/issues", {"title": "[bot] カテゴリ確認", "body": body})
 
     def corrective_comment(self, number, message):
         body = "[bot] " + message

@@ -53,6 +53,7 @@ class DatasetPublicationTests(unittest.TestCase):
             (root / "data").mkdir()
             canonical = root / "data/places.jsonld"
             shutil.copyfile(ROOT / "data/places.jsonld", canonical)
+            shutil.copyfile(ROOT / "data/categories.jsonld", root / "data/categories.jsonld")
             original = canonical.read_bytes()
             artifact = build_repository(root)
             self.assertEqual(root / "site/places.jsonld", artifact)

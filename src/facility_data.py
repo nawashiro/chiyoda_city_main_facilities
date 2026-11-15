@@ -16,6 +16,8 @@ from typing import Any
 _QID = re.compile(r"^Q[1-9][0-9]*$")
 _OSM_TYPED_OBJECT_ID = re.compile(r"^(node|way|relation)/([1-9][0-9]*)$")
 _WIKIDATA_ENTITY_URI = re.compile(r"^https://www\.wikidata\.org/entity/Q[1-9][0-9]*$")
+_CATEGORIES_URL = "https://nawashiro.github.io/chiyoda_city_main_facilities/categories.jsonld"
+_CATEGORIES_TERM = re.compile(re.escape(_CATEGORIES_URL) + r"#([0-9]{4})$")
 _URN_UUID = re.compile(r"^urn:uuid:[0-9a-fA-F-]{36}$")
 _BARRIER_FREE_SOURCES = {
     "https://walkingnavi.com/": "言葉の道案内",
@@ -85,7 +87,7 @@ def validate_search_document(document: dict[str, Any]) -> list[str]:
     return issues
 
 
-def validate_jsonld_document(document: Any, *, allow_image: bool = False) -> None:
+def validate_jsonld_document(document: Any, *, allow_image: bool = False, category_codes: set[str] | None = None) -> None:
     if not isinstance(document, dict): raise ValueError("JSON-LD document must be an object")
     context = document.get("@context")
     if not isinstance(context, dict) or context.get("@version") != 1.1 or context.get("schema") != "https://schema.org/" or context.get("rdfs") != "http://www.w3.org/2000/01/rdf-schema#": raise ValueError("JSON-LD @context must declare the canonical schema and rdfs prefixes")
@@ -120,6 +122,9 @@ def validate_jsonld_document(document: Any, *, allow_image: bool = False) -> Non
             if not isinstance(item, dict) or item.get("@type") != "schema:PropertyValue" or not isinstance(item.get("schema:propertyID"), str) or not item["schema:propertyID"] or not isinstance(item.get("schema:value"), str) or not item["schema:value"] or item["schema:propertyID"] in {"openstreetmap", "wikidata"}: raise ValueError(f"JSON-LD {path} has invalid schema:identifier")
         links = record.get("rdfs:seeAlso", [])
         if not isinstance(links, list) or any(not isinstance(uri, str) or (_OSM_TYPED_OBJECT_ID.fullmatch(uri.removeprefix("https://www.openstreetmap.org/")) is None and _WIKIDATA_ENTITY_URI.fullmatch(uri) is None) for uri in links): raise ValueError(f"JSON-LD {path} rdfs:seeAlso must be official HTTPS OpenStreetMap or Wikidata URIs")
+        additional = record.get("schema:additionalType", [])
+        if not isinstance(additional, list) or any(not isinstance(uri, str) or (match := _CATEGORIES_TERM.fullmatch(uri)) is None for uri in additional) or len(set(additional)) != len(additional): raise ValueError(f"JSON-LD {path} schema:additionalType must be vocabulary term URLs")
+        if additional and category_codes is not None and any(match.group(1) not in category_codes for match in (_CATEGORIES_TERM.fullmatch(uri) for uri in additional)): raise ValueError(f"JSON-LD {path} schema:additionalType must reference an adopted category")
         pages = record.get("schema:subjectOf", [])
         urls = []
         if not isinstance(pages, list) or any(not _valid_webpage(page) for page in pages): raise ValueError(f"JSON-LD {path} schema:subjectOf must be barrier-free schema:WebPage nodes")
@@ -138,8 +143,16 @@ def _valid_image(image: Any) -> bool:
     return isinstance(creator.get("schema:name"), str) and bool(creator["schema:name"].strip())
 
 
-def validate_published_document(document: Any) -> None:
-    validate_jsonld_document(document, allow_image=True)
+def validate_published_document(document: Any, category_codes: set[str] | None = None) -> None:
+    validate_jsonld_document(document, allow_image=True, category_codes=category_codes)
+
+
+def vocabulary_codes(root: str | Path) -> set[str] | None:
+    path = Path(root) / "data/categories.jsonld"
+    if not path.exists():
+        return None
+    from src.facility_categories import load_vocabulary
+    return set(load_vocabulary(path.parents[1]))
 
 
 def _valid_webpage(page: Any) -> bool:
@@ -206,7 +219,11 @@ def load_queries(root: Path) -> list[dict[str, Any]]:
 def validate_repository(root: str | Path) -> list[str]:
     root = Path(root)
     try:
-        validate_jsonld_document(_read_json(root / "data/places.jsonld"))
+        codes = vocabulary_codes(root)
+        document = _read_json(root / "data/places.jsonld")
+        if codes is None and any(record.get("schema:additionalType") for record in document.get("@graph", [])):
+            raise ValueError("schema:additionalType requires the category vocabulary")
+        validate_jsonld_document(document, category_codes=codes)
         if (root / "inputs/facilities.json").exists():
             load_queries(root)
     except (OSError, ValueError, TypeError) as error:
@@ -237,10 +254,13 @@ def build_repository(root: str | Path) -> Path:
             filtered["entities"] = {qid: entity for qid, entity in filtered.get("entities", {}).items() if qid in referenced_qids}
         _write_json(mirrors / filename, filtered)
     _apply_images(root, document)
-    validate_jsonld_document(document, allow_image=True)
+    validate_jsonld_document(document, allow_image=True, category_codes=vocabulary_codes(root))
     artifact = root / "site/places.jsonld"
     artifact.parent.mkdir(parents=True, exist_ok=True)
     _write_json(artifact, document)
+    vocabulary = root / "data/categories.jsonld"
+    if vocabulary.exists():
+        (artifact.parent / "categories.jsonld").write_bytes(vocabulary.read_bytes())
     return artifact
 
 

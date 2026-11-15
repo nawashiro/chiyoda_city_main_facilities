@@ -123,9 +123,9 @@ def request_choice(evidence, api_key=None):
     return validate_choice(result, options)
 
 
-def validate_choice(result, options):
+def validate_choice(result, options, *, key="association"):
     try:
-        answer = result["answers"]["association"]
+        answer = result["answers"][key]
         allowed = {*options, "none"}
         probabilities = answer["probabilities"]
         confidence = answer["confidence"]

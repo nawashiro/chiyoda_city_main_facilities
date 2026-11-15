@@ -1,0 +1,100 @@
+{
+  "version": 1,
+  "rules": [
+    {
+      "id": "library-tag",
+      "category": "1512",
+      "tags": {"amenity": "library"}
+    },
+    {
+      "id": "worship-buddhist-tag",
+      "category": "0702",
+      "tags": {"religion": "buddhist"}
+    },
+    {
+      "id": "temple-name",
+      "category": "0702",
+      "nameIncludes": ["寺"]
+    },
+    {
+      "id": "worship-christian-tag",
+      "category": "0703",
+      "tags": {"religion": "christian"}
+    },
+    {
+      "id": "museum-art-subtag",
+      "category": "0802",
+      "tags": {"museum": "art"}
+    },
+    {
+      "id": "art-museum-name",
+      "category": "0802",
+      "nameIncludes": ["美術館", "ギャラリー"]
+    },
+    {
+      "id": "memorial-name",
+      "category": "0803",
+      "nameIncludes": ["記念館", "資料館"]
+    },
+    {
+      "id": "museum-tag",
+      "category": "0801",
+      "tags": {"tourism": "museum"}
+    },
+    {
+      "id": "public-bath-tag",
+      "category": "0903",
+      "tags": {"amenity": "public_bath"}
+    },
+    {
+      "id": "park-tag",
+      "category": "1003",
+      "tags": {"leisure": "park"}
+    },
+    {
+      "id": "cemetery-tag",
+      "category": "1003",
+      "tags": {"landuse": "cemetery"}
+    },
+    {
+      "id": "garden-tag",
+      "category": "1004",
+      "tags": {"leisure": "garden"}
+    },
+    {
+      "id": "cinema-tag",
+      "category": "1011",
+      "tags": {"amenity": "cinema"}
+    },
+    {
+      "id": "city-office-name",
+      "category": "1302",
+      "nameEquals": ["千代田区役所"]
+    },
+    {
+      "id": "branch-office-name",
+      "category": "1304",
+      "nameIncludes": ["出張所"]
+    },
+    {
+      "id": "community-centre-tag",
+      "category": "1307",
+      "tags": {"amenity": "community_centre"}
+    },
+    {
+      "id": "childrens-center-name",
+      "category": "1403",
+      "nameIncludes": ["児童館"]
+    },
+    {
+      "id": "social-facility-tag",
+      "category": "1499",
+      "tags": {"amenity": "social_facility"}
+    },
+    {
+      "id": "health-centre-name",
+      "category": "1606",
+      "nameIncludes": ["保健所"]
+    }
+  ]
+}

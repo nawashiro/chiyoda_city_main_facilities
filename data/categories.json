@@ -1,0 +1,360 @@
+{
+  "version": 1,
+  "facilities": {
+    "019ca6b1-dc00-7de7-8c55-4303aa3676d1": {
+      "category": "1307",
+      "method": "rule",
+      "osmId": "node/5285952021"
+    },
+    "019fa880-5cd4-7122-bc68-e8a327846042": {
+      "category": "1304",
+      "method": "rule",
+      "osmId": "node/3777876586"
+    },
+    "019fa880-5cd4-7178-bfbc-d7b174721469": {
+      "category": "1512",
+      "method": "rule",
+      "osmId": "way/23974981"
+    },
+    "019fa880-5cd4-71bb-bab2-80c97e636918": {
+      "category": "1304",
+      "method": "rule",
+      "osmId": "way/144351353"
+    },
+    "019fa880-5cd4-729d-8095-deb5f1a4597f": {
+      "category": "1499",
+      "method": "rule",
+      "osmId": "node/13465461815"
+    },
+    "019fa880-5cd4-75da-ae8b-ec6d104eb49b": {
+      "category": "1304",
+      "method": "rule",
+      "osmId": "node/1636575850"
+    },
+    "019fa880-5cd4-78e1-aa8b-c4ce83a065bc": {
+      "category": "1302",
+      "method": "rule",
+      "osmId": "node/1420770185"
+    },
+    "019fa880-5cd4-7984-988b-923b526a8d9a": {
+      "category": "1512",
+      "method": "rule",
+      "osmId": "way/193000544"
+    },
+    "019fa880-5cd4-7ba6-a5af-481b9cb95516": {
+      "category": "1304",
+      "method": "rule",
+      "osmId": "way/191732177"
+    },
+    "019fa880-5cd4-7d3c-a9e1-f01c12ebf008": {
+      "category": "1499",
+      "method": "rule",
+      "osmId": "node/13465379795"
+    },
+    "019fa880-5cd5-7031-bc8e-250d0074827b": {
+      "category": "0703",
+      "method": "rule",
+      "osmId": "way/30680236"
+    },
+    "019fa880-5cd5-713a-8135-779f14050ab2": {
+      "category": "1512",
+      "method": "rule",
+      "osmId": "node/13468335880"
+    },
+    "019fa880-5cd5-7154-8bff-19d82e0fc560": {
+      "category": "1512",
+      "method": "rule",
+      "osmId": "way/210372594"
+    },
+    "019fa880-5cd5-71c8-ba28-7d86e104de84": {
+      "category": "1003",
+      "method": "rule",
+      "osmId": "way/870979561"
+    },
+    "019fa880-5cd5-7241-a976-801eef6324a9": {
+      "category": "1307",
+      "method": "rule",
+      "osmId": "node/2263796343"
+    },
+    "019fa880-5cd5-7285-88ba-ab05a68eb601": {
+      "category": "0703",
+      "method": "rule",
+      "osmId": "way/377728267"
+    },
+    "019fa880-5cd5-729a-8d49-670ce25e8723": {
+      "category": "1003",
+      "method": "rule",
+      "osmId": "way/145408909"
+    },
+    "019fa880-5cd5-72a9-9547-c3e9269d9c90": {
+      "category": "1011",
+      "method": "rule",
+      "osmId": "node/6900192226"
+    },
+    "019fa880-5cd5-7455-9cf0-647f62f1d59c": {
+      "category": "1512",
+      "method": "rule",
+      "osmId": "node/1420770187"
+    },
+    "019fa880-5cd5-7459-a206-660bc9edd397": {
+      "category": "0703",
+      "method": "rule",
+      "osmId": "node/988763665"
+    },
+    "019fa880-5cd5-74c2-836d-5e8b3347e719": {
+      "category": "1003",
+      "method": "rule",
+      "osmId": "relation/17416865"
+    },
+    "019fa880-5cd5-7537-802b-2421832099f4": {
+      "category": "1512",
+      "method": "rule",
+      "osmId": "node/2059303798"
+    },
+    "019fa880-5cd5-7641-bc19-ad96baeb8230": {
+      "category": "1003",
+      "method": "rule",
+      "osmId": "relation/5415394"
+    },
+    "019fa880-5cd5-770e-b950-6cc7603de33e": {
+      "category": "1512",
+      "method": "rule",
+      "osmId": "node/3606732125"
+    },
+    "019fa880-5cd5-7740-a44a-9a4e3e81563b": {
+      "category": "1606",
+      "method": "rule",
+      "osmId": "node/3774437979"
+    },
+    "019fa880-5cd5-7743-8b45-3ba7622c5083": {
+      "category": "1011",
+      "method": "rule",
+      "osmId": "node/6575768686"
+    },
+    "019fa880-5cd5-775a-bbd0-62db8a21fec0": {
+      "category": "1004",
+      "method": "rule",
+      "osmId": "way/140107417"
+    },
+    "019fa880-5cd5-77f0-ae81-1e52ac5633fa": {
+      "category": "1512",
+      "method": "rule",
+      "osmId": "node/1420785508"
+    },
+    "019fa880-5cd5-7832-ae65-182a148bfa2f": {
+      "category": "1011",
+      "method": "rule",
+      "osmId": "node/3762241704"
+    },
+    "019fa880-5cd5-7851-97e2-3eee063f342b": {
+      "category": "0702",
+      "method": "rule",
+      "osmId": "node/1916524834"
+    },
+    "019fa880-5cd5-788b-86e8-0ac1e6c4811a": {
+      "category": "1307",
+      "method": "rule",
+      "osmId": "way/179575985"
+    },
+    "019fa880-5cd5-78a9-9ebf-098c6c4cc4ed": {
+      "category": "1512",
+      "method": "rule",
+      "osmId": "node/1420770192"
+    },
+    "019fa880-5cd5-79f3-8608-d5a71f5492f7": {
+      "category": "1003",
+      "method": "rule",
+      "osmId": "way/43941104"
+    },
+    "019fa880-5cd5-7a69-ace7-2a132f6f2b57": {
+      "category": "0703",
+      "method": "rule",
+      "osmId": "way/344414571"
+    },
+    "019fa880-5cd5-7ae6-b7e1-8339b7cccb77": {
+      "category": "1003",
+      "method": "rule",
+      "osmId": "way/515133705"
+    },
+    "019fa880-5cd5-7b01-9dd8-2e4787f423aa": {
+      "category": "1499",
+      "method": "rule",
+      "osmId": "node/1655927382"
+    },
+    "019fa880-5cd5-7b37-bb94-a2151c0cdef0": {
+      "category": "1011",
+      "method": "rule",
+      "osmId": "node/6900192224"
+    },
+    "019fa880-5cd5-7bae-838d-111510f35ee9": {
+      "category": "0703",
+      "method": "rule",
+      "osmId": "node/810027509"
+    },
+    "019fa880-5cd5-7c84-9bcf-cac96174129f": {
+      "category": "0702",
+      "method": "rule",
+      "osmId": "node/1928727937"
+    },
+    "019fa880-5cd5-7cf5-8a1f-da236422ebdb": {
+      "category": "1512",
+      "method": "rule",
+      "osmId": "node/1420763756"
+    },
+    "019fa880-5cd5-7d11-8560-3ac4e0486633": {
+      "category": "1499",
+      "method": "rule",
+      "osmId": "node/1655905663"
+    },
+    "019fa880-5cd5-7d22-aef4-68b4e1172660": {
+      "category": "0703",
+      "method": "rule",
+      "osmId": "node/1376774653"
+    },
+    "019fa880-5cd5-7d23-9c07-684d56afd77e": {
+      "category": "1307",
+      "method": "rule",
+      "osmId": "node/14337531401"
+    },
+    "019fa880-5cd5-7d2b-abb0-d80f16d6a04a": {
+      "category": "1512",
+      "method": "rule",
+      "osmId": "node/1420781684"
+    },
+    "019fa880-5cd5-7d31-9979-79d32157427a": {
+      "category": "1499",
+      "method": "rule",
+      "osmId": "node/14337499601"
+    },
+    "019fa880-5cd5-7d9b-ae8f-d7d00901be5d": {
+      "category": "1003",
+      "method": "rule",
+      "osmId": "way/184577229"
+    },
+    "019fa880-5cd5-7dc7-8e68-e49750a54b8d": {
+      "category": "0703",
+      "method": "rule",
+      "osmId": "node/1916530506"
+    },
+    "019fa880-5cd5-7ea9-839d-1c2d04dbff2f": {
+      "category": "0703",
+      "method": "rule",
+      "osmId": "relation/4080936"
+    },
+    "019fa880-5cd5-7eca-9f6d-ad4b35b2c069": {
+      "category": "0702",
+      "method": "rule",
+      "osmId": "node/6768292062"
+    },
+    "019fa880-5cd5-7ed6-a8bd-337ac263e5a0": {
+      "category": "1003",
+      "method": "rule",
+      "osmId": "way/132794875"
+    },
+    "019fa880-5cd5-7f0e-8fed-c8f624933c61": {
+      "category": "1512",
+      "method": "rule",
+      "osmId": "node/1420770188"
+    },
+    "019fa880-5cd5-7f94-988c-a8ff8b532a55": {
+      "category": "1003",
+      "method": "rule",
+      "osmId": "way/666471139"
+    },
+    "019fa880-5cd5-7fb2-9df1-c9da871e3bfb": {
+      "category": "1003",
+      "method": "rule",
+      "osmId": "way/624081603"
+    },
+    "019fa880-5cd5-7fce-b42f-51fa0dac8c01": {
+      "category": "0703",
+      "method": "rule",
+      "osmId": "node/3781782008"
+    },
+    "019fa880-5cd6-7046-98c1-b22d2b96d8ad": {
+      "category": "0801",
+      "method": "rule",
+      "osmId": "way/144379628"
+    },
+    "019fa880-5cd6-7075-b7a1-ce1cd3e9a489": {
+      "category": "0801",
+      "method": "rule",
+      "osmId": "node/4272532291"
+    },
+    "019fa880-5cd6-714a-900f-ff3693145790": {
+      "category": "0801",
+      "method": "rule",
+      "osmId": "node/1420781347"
+    },
+    "019fa880-5cd6-7359-b619-432ecb07b975": {
+      "category": "0903",
+      "method": "rule",
+      "osmId": "node/10595395388"
+    },
+    "019fa880-5cd6-740b-bbc1-283f644e1fc1": {
+      "category": "0801",
+      "method": "rule",
+      "osmId": "node/1420780980"
+    },
+    "019fa880-5cd6-74a3-b873-3fc0955ef99a": {
+      "category": "0801",
+      "method": "rule",
+      "osmId": "node/988763541"
+    },
+    "019fa880-5cd6-7627-9186-3eb6765242cb": {
+      "category": "1512",
+      "method": "rule",
+      "osmId": "way/43934323"
+    },
+    "019fa880-5cd6-7640-8ec1-c2e6c99e5c26": {
+      "category": "0903",
+      "method": "rule",
+      "osmId": "node/1744076702"
+    },
+    "019fa880-5cd6-77ce-be2f-ed10dd5a6a9f": {
+      "category": "0802",
+      "method": "rule",
+      "osmId": "node/5403425184"
+    },
+    "019fa880-5cd6-77e2-8d4b-1066f9ba07a8": {
+      "category": "0801",
+      "method": "rule",
+      "osmId": "node/1420770260"
+    },
+    "019fa880-5cd6-784f-b302-95fddf90b44f": {
+      "category": "0801",
+      "method": "rule",
+      "osmId": "node/12085101795"
+    },
+    "019fa880-5cd6-78d5-8f0d-d2b980c78320": {
+      "category": "0903",
+      "method": "rule",
+      "osmId": "node/6463426486"
+    },
+    "019fa880-5cd6-79dd-aaf4-367c7aee85f3": {
+      "category": "0801",
+      "method": "rule",
+      "osmId": "way/43898324"
+    },
+    "019fa880-5cd6-7c1f-8c9c-a227390405ea": {
+      "category": "0903",
+      "method": "rule",
+      "osmId": "node/6709554588"
+    },
+    "019fa880-5cd6-7d49-888d-1ba85637e081": {
+      "category": "0903",
+      "method": "rule",
+      "osmId": "node/6463473885"
+    },
+    "019fa880-5cd6-7d71-bbb5-e795c2abccc6": {
+      "category": "0802",
+      "method": "rule",
+      "osmId": "way/884071202"
+    },
+    "019fa880-5cd6-7d72-ac6c-89e27c90a921": {
+      "category": "0903",
+      "method": "rule",
+      "osmId": "node/6463426485"
+    }
+  }
+}
