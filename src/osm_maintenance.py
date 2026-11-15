@@ -12,6 +12,7 @@ from src.facility_data import _read_json, _write_json, load_queries, validate_re
 from src.github_osm_review import GitHub, apply_confirmations, close_published, read_confirmations
 from src.resolve_osm_candidates import apply_decisions, current_id, resolve
 from src import facility_categories
+from src.env_utils import load_dotenv
 from src.commons_retrieval import run_commons_retrieval
 from src.retrieve_osm import _http_get, run_osm_retrieval
 from src.wikidata_retrieval import run_wikidata_retrieval
@@ -108,6 +109,7 @@ def main(argv=None):
     parser.add_argument("--offline", action="store_true", help="Use the retained verified snapshot without GitHub")
     args = parser.parse_args(argv)
     root = Path(args.root)
+    load_dotenv(root)
     try:
         github = None if args.offline else GitHub()
         if args.command == "present":

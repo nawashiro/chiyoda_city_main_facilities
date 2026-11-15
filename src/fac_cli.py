@@ -11,6 +11,7 @@ from typing import Any
 from src.facility_data import _read_json, _write_json, barrier_free_webpage, load_queries, new_uuid7, validate_jsonld_document, validate_published_document, validate_search_document
 from src.resolve_osm_candidates import apply_decisions, evidence_hash, osm_candidate
 from src import facility_categories
+from src.env_utils import load_dotenv
 
 def _read(path: Path) -> Any: return json.loads(path.read_text(encoding="utf-8"))
 def _write(path: Path, document: dict[str, Any]) -> None:
@@ -66,6 +67,7 @@ def main(argv:list[str]|None=None)->int:
         p.add_argument("place_id")
         p.add_argument("url")
     args=parser.parse_args(argv)
+    load_dotenv(getattr(args, "root", "."))
     try:
         if args.command=="jsonld-validate":
             document=_read(Path(args.path))
