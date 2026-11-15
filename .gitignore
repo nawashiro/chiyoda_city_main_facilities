@@ -5,3 +5,4 @@ __pycache__/
 *.py[cod]
 site/places.jsonld
 imports/openstreetmap/raw.json
+.env
