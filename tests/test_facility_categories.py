@@ -31,7 +31,7 @@ def vocabulary(*codes):
             "schema:url": "https://github.com/digital-go-jp/GIF/blob/v2.4/490_%E3%81%9D%E3%81%AE%E4%BB%96/491-3-1_POI%E3%82%B3%E3%83%BC%E3%83%89%E8%A1%A8.xlsx",
             "schema:version": "v2.4",
         },
-        "hasDefinedTerm": [term(code) for code in codes],
+        "schema:hasDefinedTerm": [term(code) for code in codes],
     }
 
 

@@ -22,7 +22,7 @@ from src.resolve_osm_candidates import MODEL, THRESHOLD, current_id, encoded, va
 
 POI_CODE = re.compile(r"^[0-9]{4}$")
 POI_TABLE_PATH = "490_%E3%81%9D%E3%81%AE%E4%BB%96/491-3-1_POI%E3%82%B3%E3%83%BC%E3%83%89%E8%A1%A8.xlsx"
-TERMS_KEY = "hasDefinedTerm"
+TERMS_KEY = "schema:hasDefinedTerm"
 
 
 def term_url(code: str) -> str:
