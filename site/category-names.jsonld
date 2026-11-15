@@ -54,6 +54,11 @@
     },
     {
       "@type": "schema:DefinedTerm",
+      "@id": "https://nawashiro.github.io/chiyoda_city_main_facilities/category-names.jsonld#1219",
+      "schema:name": "職業安定所"
+    },
+    {
+      "@type": "schema:DefinedTerm",
       "@id": "https://nawashiro.github.io/chiyoda_city_main_facilities/category-names.jsonld#1302",
       "schema:name": "市役所・東京都の区役所"
     },
@@ -71,6 +76,11 @@
       "@type": "schema:DefinedTerm",
       "@id": "https://nawashiro.github.io/chiyoda_city_main_facilities/category-names.jsonld#1307",
       "schema:name": "公民館"
+    },
+    {
+      "@type": "schema:DefinedTerm",
+      "@id": "https://nawashiro.github.io/chiyoda_city_main_facilities/category-names.jsonld#1402",
+      "schema:name": "保育園"
     },
     {
       "@type": "schema:DefinedTerm",

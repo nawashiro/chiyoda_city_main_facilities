@@ -410,6 +410,20 @@
       "category": "1011",
       "method": "jev",
       "osmId": "node/13744716801"
+    },
+    "019fa880-5cd5-701b-90d2-e3073a1c337b": {
+      "category": "1219",
+      "method": "human",
+      "editor": "Navi",
+      "editedAt": "2026-11-15T08:05:25Z",
+      "osmId": "node/1420785407"
+    },
+    "019fa880-5cd5-7b6f-882e-4d07aad02219": {
+      "category": "1402",
+      "method": "human",
+      "editor": "Navi",
+      "editedAt": "2026-11-15T08:05:32Z",
+      "osmId": null
     }
   }
 }

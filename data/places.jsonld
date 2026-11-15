@@ -843,7 +843,14 @@
         "@type": "schema:GeoCoordinates",
         "schema:latitude": 35.690322,
         "schema:longitude": 139.742245
-      }
+      },
+      "schema:identifier": [
+        {
+          "@type": "schema:PropertyValue",
+          "schema:propertyID": "gif-poi",
+          "schema:value": "1402"
+        }
+      ]
     },
     {
       "@id": "urn:uuid:019fa880-5cd5-701b-90d2-e3073a1c337b",
@@ -857,6 +864,13 @@
       },
       "rdfs:seeAlso": [
         "https://www.openstreetmap.org/node/1420785407"
+      ],
+      "schema:identifier": [
+        {
+          "@type": "schema:PropertyValue",
+          "schema:propertyID": "gif-poi",
+          "schema:value": "1219"
+        }
       ]
     },
     {

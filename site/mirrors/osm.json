@@ -1387,19 +1387,6 @@
     },
     {
       "type": "way",
-      "id": 144430416,
-      "center": {
-        "lon": 139.746943,
-        "lat": 35.70036595
-      },
-      "tags": {
-        "building": "apartments",
-        "name": "ダイアパレス飯田橋",
-        "source": "Bing,2007-04"
-      }
-    },
-    {
-      "type": "way",
       "id": 145408909,
       "center": {
         "lon": 139.7561768,
@@ -1585,20 +1572,6 @@
         "name:es": "Librería conmemorativa de Manga y Subcultura Yoshihiro Yonezawa",
         "source": "Bing",
         "wikidata": "Q113160405"
-      }
-    },
-    {
-      "type": "way",
-      "id": 231540636,
-      "center": {
-        "lon": 139.7640083,
-        "lat": 35.6936171
-      },
-      "tags": {
-        "building": "yes",
-        "name": "アーク錦町ビル",
-        "source": "GSI/KIBAN 25000; NARO",
-        "source_ref": "http://wiki.osm.org/wiki/GSI_KIBAN"
       }
     },
     {
