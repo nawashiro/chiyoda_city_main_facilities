@@ -152,6 +152,13 @@
       ],
       "rdfs:seeAlso": [
         "https://www.openstreetmap.org/way/187756642"
+      ],
+      "schema:identifier": [
+        {
+          "@type": "schema:PropertyValue",
+          "schema:propertyID": "gif-poi",
+          "schema:value": "1304"
+        }
       ]
     },
     {
@@ -1637,6 +1644,13 @@
       },
       "rdfs:seeAlso": [
         "https://www.openstreetmap.org/node/13741796001"
+      ],
+      "schema:identifier": [
+        {
+          "@type": "schema:PropertyValue",
+          "schema:propertyID": "gif-poi",
+          "schema:value": "0802"
+        }
       ]
     },
     {
@@ -1717,6 +1731,13 @@
       "rdfs:seeAlso": [
         "https://www.openstreetmap.org/way/145501856",
         "https://www.wikidata.org/entity/Q3076188"
+      ],
+      "schema:identifier": [
+        {
+          "@type": "schema:PropertyValue",
+          "schema:propertyID": "gif-poi",
+          "schema:value": "0802"
+        }
       ]
     },
     {
@@ -1904,6 +1925,13 @@
       },
       "rdfs:seeAlso": [
         "https://www.openstreetmap.org/way/91234941"
+      ],
+      "schema:identifier": [
+        {
+          "@type": "schema:PropertyValue",
+          "schema:propertyID": "gif-poi",
+          "schema:value": "0803"
+        }
       ]
     },
     {
@@ -1919,6 +1947,13 @@
       "rdfs:seeAlso": [
         "https://www.openstreetmap.org/way/140099041",
         "https://www.wikidata.org/entity/Q11495238"
+      ],
+      "schema:identifier": [
+        {
+          "@type": "schema:PropertyValue",
+          "schema:propertyID": "gif-poi",
+          "schema:value": "0803"
+        }
       ]
     },
     {

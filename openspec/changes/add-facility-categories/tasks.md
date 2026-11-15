@@ -35,8 +35,8 @@
 ## 6. 初回の一括判断
 
 - [x] 6.1 `fac category review`でrule提案を確認し、Jev判定を実行する。検証: ruleとJevで確定した判断が`data/categories.json`に記録される
-- [ ] 6.2 未解決施設を確認Issueへ出し、人の確定を反映する。検証: 全91施設の判断が確定または意図的な未分類になる
-- [ ] 6.3 公開生成と検証を通して、gif-poi識別子つきの正本をsiteへ公開する。検証: `./fac jsonld-validate data/places.jsonld --published`を通す
+- [x] 6.2 未解決施設を確認Issueへ出し、人の確定を反映する。検証: 全91施設の判断が確定または意図的な未分類になる
+- [x] 6.3 公開生成と検証を通して、gif-poi識別子つきの正本をsiteへ公開する。検証: `./fac jsonld-validate data/places.jsonld --published`を通す
 
 ## 7. 再設計の適用（additionalTypeからgif-poi識別子へ）
 
