@@ -692,6 +692,9 @@
       ],
       "rdfs:seeAlso": [
         "https://www.openstreetmap.org/node/1420765449"
+      ],
+      "schema:additionalType": [
+        "https://nawashiro.github.io/chiyoda_city_main_facilities/categories.jsonld#1403"
       ]
     },
     {
@@ -1398,6 +1401,9 @@
       },
       "rdfs:seeAlso": [
         "https://www.openstreetmap.org/node/5445799065"
+      ],
+      "schema:additionalType": [
+        "https://nawashiro.github.io/chiyoda_city_main_facilities/categories.jsonld#0802"
       ]
     },
     {
@@ -1413,6 +1419,9 @@
       "rdfs:seeAlso": [
         "https://www.openstreetmap.org/way/43934324",
         "https://www.wikidata.org/entity/Q1359908"
+      ],
+      "schema:additionalType": [
+        "https://nawashiro.github.io/chiyoda_city_main_facilities/categories.jsonld#0802"
       ]
     },
     {
@@ -1428,6 +1437,9 @@
       "rdfs:seeAlso": [
         "https://www.openstreetmap.org/way/306116935",
         "https://www.wikidata.org/entity/Q3815458"
+      ],
+      "schema:additionalType": [
+        "https://nawashiro.github.io/chiyoda_city_main_facilities/categories.jsonld#0802"
       ]
     },
     {
@@ -1457,6 +1469,9 @@
       },
       "rdfs:seeAlso": [
         "https://www.openstreetmap.org/node/1420774624"
+      ],
+      "schema:additionalType": [
+        "https://nawashiro.github.io/chiyoda_city_main_facilities/categories.jsonld#0802"
       ]
     },
     {
@@ -1472,6 +1487,9 @@
       "rdfs:seeAlso": [
         "https://www.openstreetmap.org/node/3164340661",
         "https://www.wikidata.org/entity/Q115265693"
+      ],
+      "schema:additionalType": [
+        "https://nawashiro.github.io/chiyoda_city_main_facilities/categories.jsonld#0802"
       ]
     },
     {
@@ -1487,6 +1505,9 @@
       "rdfs:seeAlso": [
         "https://www.openstreetmap.org/node/3666894176",
         "https://www.wikidata.org/entity/Q11582309"
+      ],
+      "schema:additionalType": [
+        "https://nawashiro.github.io/chiyoda_city_main_facilities/categories.jsonld#0802"
       ]
     },
     {
@@ -1519,6 +1540,9 @@
       },
       "rdfs:seeAlso": [
         "https://www.openstreetmap.org/node/11334772769"
+      ],
+      "schema:additionalType": [
+        "https://nawashiro.github.io/chiyoda_city_main_facilities/categories.jsonld#0802"
       ]
     },
     {
@@ -1786,6 +1810,9 @@
       "rdfs:seeAlso": [
         "https://www.openstreetmap.org/way/675832452",
         "https://www.wikidata.org/entity/Q6751576"
+      ],
+      "schema:additionalType": [
+        "https://nawashiro.github.io/chiyoda_city_main_facilities/categories.jsonld#2603"
       ]
     },
     {
@@ -1811,6 +1838,9 @@
       ],
       "rdfs:seeAlso": [
         "https://www.openstreetmap.org/node/14344547001"
+      ],
+      "schema:additionalType": [
+        "https://nawashiro.github.io/chiyoda_city_main_facilities/categories.jsonld#1403"
       ]
     },
     {
@@ -1853,7 +1883,10 @@
         "@type": "schema:GeoCoordinates",
         "schema:longitude": 139.7607434,
         "schema:latitude": 35.6967064
-      }
+      },
+      "schema:additionalType": [
+        "https://nawashiro.github.io/chiyoda_city_main_facilities/categories.jsonld#1011"
+      ]
     }
   ]
 }

@@ -355,6 +355,61 @@
       "category": "0903",
       "method": "rule",
       "osmId": "node/6463426485"
+    },
+    "019fa880-5cd5-7e0d-8300-8ab683bd0c1d": {
+      "category": "1403",
+      "method": "jev",
+      "osmId": "node/14344547001"
+    },
+    "019fa880-5cd5-7e95-9ea4-e8808e845cd7": {
+      "category": "1403",
+      "method": "jev",
+      "osmId": "node/1420765449"
+    },
+    "019fa880-5cd6-73ac-bcb9-6bb75bbf99fb": {
+      "category": "0802",
+      "method": "jev",
+      "osmId": "node/3666894176"
+    },
+    "019fa880-5cd6-7424-81a1-5f4f7a58327a": {
+      "category": "0802",
+      "method": "jev",
+      "osmId": "node/11334772769"
+    },
+    "019fa880-5cd6-75c3-b465-be5c4466401e": {
+      "category": "0802",
+      "method": "jev",
+      "osmId": "node/3164340661"
+    },
+    "019fa880-5cd6-78af-b9de-08beeb78d708": {
+      "category": "0802",
+      "method": "jev",
+      "osmId": "node/1420774624"
+    },
+    "019fa880-5cd6-7c6d-8b56-2be683d649a6": {
+      "category": "0802",
+      "method": "jev",
+      "osmId": "way/43934324"
+    },
+    "019fa880-5cd6-7d38-b17b-55a1378dd9b8": {
+      "category": "0802",
+      "method": "jev",
+      "osmId": "node/5445799065"
+    },
+    "019fa880-5cd6-7e0b-9d3a-218e8214e31d": {
+      "category": "0802",
+      "method": "jev",
+      "osmId": "way/306116935"
+    },
+    "019fdf3b-cf63-71f9-96f3-bb64777f330a": {
+      "category": "2603",
+      "method": "jev",
+      "osmId": "way/675832452"
+    },
+    "01a1d8cc-5f68-7070-9a8e-bded3ad47398": {
+      "category": "1011",
+      "method": "jev",
+      "osmId": "node/13744716801"
     }
   }
 }
