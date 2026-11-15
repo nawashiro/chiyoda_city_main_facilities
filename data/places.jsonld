@@ -2061,34 +2061,6 @@
       ]
     },
     {
-      "@id": "urn:uuid:019ca6b1-dc00-74d7-b1ea-409942f9799c",
-      "@type": [
-        "schema:Place"
-      ],
-      "schema:geo": {
-        "@type": "schema:GeoCoordinates",
-        "schema:longitude": 139.7640083,
-        "schema:latitude": 35.6936171
-      },
-      "rdfs:seeAlso": [
-        "https://www.openstreetmap.org/way/231540636"
-      ]
-    },
-    {
-      "@id": "urn:uuid:019ca6b1-dc00-7774-920a-bdcf4344c0c0",
-      "@type": [
-        "schema:Place"
-      ],
-      "schema:geo": {
-        "@type": "schema:GeoCoordinates",
-        "schema:longitude": 139.746943,
-        "schema:latitude": 35.70036595
-      },
-      "rdfs:seeAlso": [
-        "https://www.openstreetmap.org/way/144430416"
-      ]
-    },
-    {
       "@id": "urn:uuid:019ca6b1-dc00-7de7-8c55-4303aa3676d1",
       "@type": [
         "schema:Place"

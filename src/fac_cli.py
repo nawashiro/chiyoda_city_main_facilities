@@ -192,6 +192,14 @@ def main(argv:list[str]|None=None)->int:
             if ledger.get("version")!=1 or not isinstance(ledger.get("facilities"),dict): raise ValueError("invalid OSM decision ledger")
             ledger["facilities"].pop(query["id"],None)
             _write_json(root/"data/osm-decisions.json",ledger)
+            if (root/"data/categories.json").exists() and (root/"data/category-names.jsonld").exists():
+                codes=facility_categories.load_vocabulary(root)
+                categories=_read_json(root/"data/categories.json")
+                issues=facility_categories.validate_decisions(categories,codes)
+                if issues: raise ValueError("; ".join(issues))
+                if query["id"] in categories["facilities"]:
+                    del categories["facilities"][query["id"]]
+                    _write_json(root/"data/categories.json",categories)
             print(f"removed {query['id']}"); return 0
         if (args.lon is None)!=(args.lat is None) or (args.lon is not None and args.qid is not None) or (args.new_name is None and args.lon is None and args.qid is None): raise ValueError("set requires --name, --lon/--lat, or --qid")
         if args.new_name is not None: query["name"]=args.new_name
