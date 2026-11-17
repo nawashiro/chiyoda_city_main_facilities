@@ -7,6 +7,17 @@
       "tags": {"amenity": "library"}
     },
     {
+      "id": "hospital-tag",
+      "category": "1601",
+      "tags": {"amenity": "hospital"}
+    },
+    {
+      "id": "elementary-school-tag",
+      "category": "1503",
+      "tags": {"amenity": "school"},
+      "nameIncludes": ["小学校"]
+    },
+    {
       "id": "worship-buddhist-tag",
       "category": "0702",
       "tags": {"religion": "buddhist"}

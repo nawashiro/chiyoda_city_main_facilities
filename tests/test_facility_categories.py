@@ -114,6 +114,28 @@ class RulesTests(unittest.TestCase):
         self.assertTrue(facility_categories.validate_rules(document, self.codes))
 
 
+class HospitalAndSchoolRuleTests(unittest.TestCase):
+    def setUp(self):
+        self.codes = facility_categories.load_vocabulary(ROOT)
+        self.rule_list = facility_categories.load_rules(ROOT, self.codes)
+
+    def test_hospital_tag_decides_hospital(self):
+        matched = facility_categories.evaluate_rules(self.rule_list, {"amenity": "hospital"}, "九段坂病院")
+        self.assertEqual(["1601"], matched)
+
+    def test_school_tag_with_elementary_name_decides_elementary_school(self):
+        matched = facility_categories.evaluate_rules(self.rule_list, {"amenity": "school"}, "千代田区立麹町小学校")
+        self.assertEqual(["1503"], matched)
+
+    def test_school_name_without_school_tag_is_not_decided(self):
+        matched = facility_categories.evaluate_rules(self.rule_list, {"building": "school"}, "千代田区立麹町小学校")
+        self.assertEqual([], matched)
+
+    def test_school_tag_without_elementary_name_is_not_decided(self):
+        matched = facility_categories.evaluate_rules(self.rule_list, {"amenity": "school"}, "千代田区立麹町中学校")
+        self.assertEqual([], matched)
+
+
 class DecisionAndApplyTests(unittest.TestCase):
     def test_apply_adds_and_removes_gif_poi_identifiers(self):
         temporary, root = repository()
@@ -207,6 +229,32 @@ class RefreshTests(unittest.TestCase):
                 facility_categories.refresh(root, judge=judge)
             self.assertFalse((root / "data/categories.json").exists())
 
+    def test_unassociated_place_is_not_classified(self):
+        record = canonical_record()
+        record.pop("rdfs:seeAlso")
+        temporary, root = repository(record=record)
+        with temporary:
+            def judge(evidence, codes):
+                self.fail("Jev must not judge a facility without an OSM association")
+
+            _document, report = facility_categories.refresh(root, judge=judge)
+            self.assertEqual([], report["pending"])
+            decisions = json.loads((root / "data/categories.json").read_text(encoding="utf-8"))
+            self.assertNotIn(UUID, decisions["facilities"])
+
+    def test_facility_without_place_is_not_classified(self):
+        temporary, root = repository()
+        with temporary:
+            _write_json(root / "data/places.jsonld", {"@context": {"@version": 1.1, "schema": "https://schema.org/", "rdfs": "http://www.w3.org/2000/01/rdf-schema#"}, "@graph": []})
+
+            def judge(evidence, codes):
+                self.fail("Jev must not judge a facility without a place")
+
+            _document, report = facility_categories.refresh(root, judge=judge)
+            self.assertEqual([], report["pending"])
+            decisions = json.loads((root / "data/categories.json").read_text(encoding="utf-8"))
+            self.assertNotIn(UUID, decisions["facilities"])
+
     def test_stale_decision_stays_until_reevaluated(self):
         decisions = {"version": 1, "facilities": {UUID: {"category": "1512", "method": "rule", "osmId": "node/456"}}}
         temporary, root = repository(decisions=decisions)
@@ -249,6 +297,26 @@ class CliDecisionTests(unittest.TestCase):
             code, output = self._main("category", "assign", str(root), UUID, "9999", "--editor", "tester")
             self.assertEqual(1, code)
             self.assertIn("not in the vocabulary", output)
+
+
+class UnresolvedFacilityTests(unittest.TestCase):
+    def test_associated_undecided_place_is_unresolved(self):
+        temporary, root = repository()
+        with temporary:
+            self.assertEqual([{"id": UUID, "name": "テスト美術館", "osmId": "node/123"}],
+                             facility_categories.unresolved_facilities(root))
+
+    def test_current_decision_is_not_unresolved(self):
+        decisions = {"version": 1, "facilities": {UUID: {"category": "0801", "method": "rule", "osmId": "node/123"}}}
+        temporary, root = repository(decisions=decisions)
+        with temporary:
+            self.assertEqual([], facility_categories.unresolved_facilities(root))
+
+    def test_facility_without_place_is_not_unresolved(self):
+        temporary, root = repository()
+        with temporary:
+            _write_json(root / "data/places.jsonld", {"@context": {"@version": 1.1, "schema": "https://schema.org/", "rdfs": "http://www.w3.org/2000/01/rdf-schema#"}, "@graph": []})
+            self.assertEqual([], facility_categories.unresolved_facilities(root))
 
 
 class CategoryReviewIssueTests(unittest.TestCase):

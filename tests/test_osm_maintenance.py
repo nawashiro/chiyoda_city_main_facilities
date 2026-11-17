@@ -52,6 +52,13 @@ def ledger():
     return {'version': 1, 'facilities': {}}
 
 
+def category_vocabulary(*codes):
+    url = 'https://nawashiro.github.io/chiyoda_city_main_facilities/category-names.jsonld'
+    return {'@context': {'@version': 1.1, 'schema': 'https://schema.org/'},
+            '@type': 'schema:DefinedTermSet', '@id': url, 'schema:name': 'テスト語彙',
+            'schema:hasDefinedTerm': [{'@type': 'schema:DefinedTerm', '@id': f'{url}#{code}', 'schema:name': f'ラベル{code}'} for code in codes]}
+
+
 def judgement(choice='node/1', confidence=.95):
     return {'choice': choice, 'confidence': confidence, 'probabilities': {choice: .99, 'none' if choice != 'none' else 'node/1': .01}, 'usage': {'input_tokens': 100, 'output_tokens': 1}, 'model': MODEL}
 
@@ -500,6 +507,103 @@ class IssueTests(unittest.TestCase):
         github.save_unmatched({B: saved['facilities'][B]})
         self.assertEqual(2, len(calls))
         self.assertEqual('open', calls[-1][1]['state'])
+
+class CategoryMaintenanceTests(unittest.TestCase):
+    def setup_root(self, directory, *, vocabulary=True, element=None):
+        root = Path(directory)
+        _write_json(root/'inputs/facilities.json', {'queries': [query()]})
+        _write_json(root/'data/places.jsonld', document(place()))
+        _write_json(root/'data/osm-decisions.json', ledger())
+        _write_json(root/'imports/openstreetmap/raw.json', raw(element or raw_element(amenity='hospital')))
+        payload = (root/'imports/openstreetmap/raw.json').read_bytes()
+        _write_json(root/'imports/openstreetmap/retrieval.json', {'rawSha256': hashlib.sha256(payload).hexdigest(), 'rawVersion': '20261027'})
+        if vocabulary:
+            _write_json(root/'data/category-names.jsonld', category_vocabulary('1601'))
+            _write_json(root/'data/category-rules.json', {'version': 1, 'rules': [{'id': 'hospital-tag', 'category': '1601', 'tags': {'amenity': 'hospital'}}]})
+        return root
+
+    def test_category_jev_decides_unmatched_associated_facility(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = self.setup_root(directory, element=raw_element())
+            seen = []
+
+            def category_judge(evidence, codes):
+                seen.append((evidence['element']['recordId'], sorted(codes)))
+                return {'choice': '1601', 'confidence': 0.95}
+
+            update(root, refresh=True, retrieve=lambda *args, **kwargs: None,
+                   judge=lambda _: judgement('node/1'), category_judge=category_judge)
+            self.assertEqual([('node/1', ['1601'])], seen)
+            decisions = json.loads((root/'data/categories.json').read_text())
+            self.assertEqual({'category': '1601', 'method': 'jev', 'osmId': 'node/1'}, decisions['facilities'][A])
+
+    def test_category_jev_low_confidence_is_presented(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = self.setup_root(directory, element=raw_element())
+            update(root, refresh=True, retrieve=lambda *args, **kwargs: None,
+                   judge=lambda _: judgement('node/1'),
+                   category_judge=lambda evidence, codes: {'choice': 'none', 'confidence': 0.4})
+            decisions = json.loads((root/'data/categories.json').read_text())
+            self.assertNotIn(A, decisions['facilities'])
+            recorded = []
+            github = FakeGitHub('')
+            github.save_issue = lambda *args: None
+            github.save_unmatched = lambda *args: None
+            github.save_category_review = lambda unresolved: recorded.append(unresolved)
+            present(root, github)
+            self.assertEqual([[{'id': A, 'name': '千代田相談支援センター', 'osmId': 'node/1'}]], recorded)
+
+    def test_category_jev_failure_leaves_data_unchanged(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = self.setup_root(directory, element=raw_element())
+            before = [(root/p).read_bytes() for p in ['data/places.jsonld', 'data/osm-decisions.json']]
+            with self.assertRaises(ValueError):
+                update(root, refresh=True, retrieve=lambda *args, **kwargs: None,
+                       judge=lambda _: judgement('node/1'),
+                       category_judge=lambda evidence, codes: (_ for _ in ()).throw(ValueError('TYPESAFE_API_KEY is required')))
+            self.assertEqual(before, [(root/p).read_bytes() for p in ['data/places.jsonld', 'data/osm-decisions.json']])
+            self.assertFalse((root/'data/categories.json').exists())
+
+    def test_refresh_reevaluates_categories_through_the_vocabulary(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = self.setup_root(directory)
+            update(root, refresh=True, retrieve=lambda *args, **kwargs: None, judge=lambda _: judgement('node/1'))
+            decisions = json.loads((root/'data/categories.json').read_text())
+            self.assertEqual({'category': '1601', 'method': 'rule', 'osmId': 'node/1'}, decisions['facilities'][A])
+            updated = json.loads((root/'data/places.jsonld').read_text())
+            self.assertEqual([{'@type': 'schema:PropertyValue', 'schema:propertyID': 'gif-poi', 'schema:value': '1601'}], updated['@graph'][0]['schema:identifier'])
+
+    def test_update_skips_category_maintenance_without_vocabulary(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = self.setup_root(directory, vocabulary=False)
+            update(root, refresh=True, retrieve=lambda *args, **kwargs: None, judge=lambda _: judgement('node/1'))
+            self.assertFalse((root/'data/categories.json').exists())
+            self.assertNotIn('schema:identifier', json.loads((root/'data/places.jsonld').read_text())['@graph'][0])
+
+    def test_present_reports_unresolved_categories_through_the_vocabulary(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = self.setup_root(directory)
+            _write_json(root/'data/categories.json', {'version': 1, 'facilities': {A: {'category': '1601', 'method': 'rule', 'osmId': 'node/999'}}})
+            recorded = []
+            github = FakeGitHub('')
+            github.save_issue = lambda *args: None
+            github.save_unmatched = lambda *args: None
+            github.save_category_review = lambda unresolved: recorded.append(unresolved)
+            present(root, github)
+            self.assertEqual([[{'id': A, 'name': '千代田相談支援センター', 'osmId': None}]], recorded)
+
+    def test_present_skips_category_review_without_vocabulary(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = self.setup_root(directory, vocabulary=False)
+            _write_json(root/'data/categories.json', {'version': 1, 'facilities': {A: {'category': '1601', 'method': 'rule', 'osmId': 'node/999'}}})
+            recorded = []
+            github = FakeGitHub('')
+            github.save_issue = lambda *args: None
+            github.save_unmatched = lambda *args: None
+            github.save_category_review = lambda unresolved: recorded.append(unresolved)
+            present(root, github)
+            self.assertEqual([], recorded)
+
 
 class IntegrationTests(unittest.TestCase):
     def setup_root(self, directory):

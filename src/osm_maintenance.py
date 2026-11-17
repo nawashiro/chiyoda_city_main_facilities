@@ -5,6 +5,7 @@ import argparse
 import copy
 import hashlib
 import json
+import os
 from datetime import datetime, timezone
 from pathlib import Path
 
@@ -30,7 +31,7 @@ def verified_snapshot(root):
     return raw
 
 
-def update(root, *, refresh=False, github=None, judge=None, retrieve=run_osm_retrieval, wikidata=run_wikidata_retrieval, commons=run_commons_retrieval):
+def update(root, *, refresh=False, github=None, judge=None, category_judge=None, retrieve=run_osm_retrieval, wikidata=run_wikidata_retrieval, commons=run_commons_retrieval):
     root = Path(root)
     issues = validate_repository(root)
     if issues:
@@ -78,16 +79,18 @@ def update(root, *, refresh=False, github=None, judge=None, retrieve=run_osm_ret
         updated, ledger = resolve(document, queries, raw, ledger, **({"judge": judge} if judge else {}))
     else:
         updated = apply_decisions(document, queries, {k: ledger["facilities"][k] for k in confirmations})
-    updated = _maintain_categories(root, updated, judge=judge, raw=raw if refresh else None)
+    updated = _maintain_categories(root, updated, judge=category_judge, raw=raw if refresh else None)
     _write_json(root / "data/places.jsonld", updated)
     _write_json(root / "data/osm-decisions.json", ledger)
     return ledger
 
 
 def _maintain_categories(root, updated, *, judge, raw):
-    if not (Path(root) / "data/categories.jsonld").exists() or not (Path(root) / "data/category-rules.json").exists():
+    if not (Path(root) / "data/category-names.jsonld").exists() or not (Path(root) / "data/category-rules.json").exists():
         return updated
-    updated, _report = facility_categories.refresh(root, judge=judge, elements=raw.get("elements") if raw else None, document=updated)
+    updated, report = facility_categories.refresh(root, judge=judge, elements=raw.get("elements") if raw else None, document=updated)
+    if judge is None and report["pending"]:
+        print("NOTICE: TYPESAFE_API_KEY is not set; category Jev judging skipped")
     return updated
 
 
@@ -98,7 +101,7 @@ def present(root, github):
         if entry.get("status") == "needs_review":
             github.save_issue(query_id, entry)
     github.save_unmatched(ledger["facilities"])
-    if (root / "data/categories.jsonld").exists() and (root / "data/category-rules.json").exists():
+    if (root / "data/category-names.jsonld").exists() and (root / "data/category-rules.json").exists():
         github.save_category_review(facility_categories.unresolved_facilities(root))
 
 
@@ -121,7 +124,8 @@ def main(argv=None):
                 raise ValueError("close-published requires GitHub")
             close_published(_read_json(root / "data/osm-decisions.json"), github)
         else:
-            kwargs = {"refresh": args.command == "refresh", "github": github}
+            kwargs = {"refresh": args.command == "refresh", "github": github,
+                      "category_judge": facility_categories._request_category if os.environ.get("TYPESAFE_API_KEY") else None}
             if args.offline:
                 kwargs["retrieve"] = lambda *args, **kwargs: None
                 kwargs["wikidata"] = None

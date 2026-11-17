@@ -190,8 +190,10 @@ def element_tags(root: Path, elements: list | None) -> dict[str, dict]:
 def rule_proposals(rules: list[dict], queries: list[dict], places: dict, tags_by_id: dict[str, dict]) -> dict[str, str]:
     proposals: dict[str, str] = {}
     for query in queries:
-        place = places.get(query["id"], {})
-        matched = evaluate_rules(rules, tags_by_id.get(current_id(place), {}), query["name"])
+        record_id = current_id(places.get(query["id"], {}))
+        if record_id is None:
+            continue
+        matched = evaluate_rules(rules, tags_by_id.get(record_id, {}), query["name"])
         if len(matched) == 1:
             proposals[query["id"]] = matched[0]
     return proposals
@@ -211,9 +213,10 @@ def unresolved_facilities(root: Path, document: dict | None = None) -> list[dict
     decisions = load_decisions(root, codes)
     places = {p["@id"].removeprefix("urn:uuid:"): p for p in (document if document is not None else _read_json(root / "data/places.jsonld"))["@graph"]}
     names = {q["id"]: q["name"] for q in load_queries(root)}
+    stale = set(stale_facilities(decisions, places))
     return [{"id": uuid, "name": names.get(uuid, uuid), "osmId": current_id(places.get(uuid, {}))}
             for uuid in sorted(set(places) | set(decisions["facilities"]))
-            if uuid not in places or uuid in stale_facilities(decisions, places)]
+            if uuid not in decisions["facilities"] or uuid not in places or uuid in stale]
 
 
 def apply_categories(document: dict, decisions: dict, codes: dict[str, str]) -> list[str]:
@@ -256,7 +259,7 @@ def _request_category(evidence: dict, codes: dict[str, str], api_key: str | None
 
 
 def refresh(root: Path, *, judge=None, elements: list | None = None, document: dict | None = None) -> tuple[dict, dict]:
-    """Re-evaluate undecided and stale facilities: rules first, then Jev."""
+    """Re-evaluate undecided and stale OSM-associated facilities: rules first, then Jev."""
     root = Path(root)
     write_document = document is None
     codes = load_vocabulary(root)
@@ -272,8 +275,10 @@ def refresh(root: Path, *, judge=None, elements: list | None = None, document: d
     pending: list[dict] = []
     for query in queries:
         uuid = query["id"]
-        entry = decisions["facilities"].get(uuid)
         current = current_id(places.get(uuid, {}))
+        if current is None:
+            continue
+        entry = decisions["facilities"].get(uuid)
         if entry and entry.get("osmId") == current:
             continue
         proposal = proposals.get(uuid)

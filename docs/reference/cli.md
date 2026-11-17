@@ -59,6 +59,50 @@
 
 入力が不正な場合、コマンドは `ERROR: <理由>` を出力し、終了コード 1 で停止します。
 
+## カテゴリ判断を確認する
+
+```sh
+./fac category review .
+```
+
+`data/categories.json`の保存済み判断を`decided`、保存済み判断と規則の提案が食い違う施設を`divergent`、関連付けが変わった施設を`stale`、判断のない検索入力を`unresolved`として出力します。`unresolved`には、規則が一意に決めたコードを`proposal=コード`として添えます。
+
+## 人の判断でカテゴリを確定する
+
+```sh
+./fac category assign . SEARCH_ID POI_CODE --editor NAME
+```
+
+`assign`は、語彙`data/category-names.jsonld`にある4桁のPOIコードだけを受け付けます。判断は`method: human`として`data/categories.json`へ保存し、`data/places.jsonld`と、あれば`site/places.jsonld`のrecordへ`gif-poi`識別子として適用します。placeのない検索入力には記録できないため、先にOSMの関連付けを確定してください。
+
+編集者は`--editor NAME`を指定するか、リポジトリのgit `user.name`から取ります。
+
+## カテゴリ判断を取り消す
+
+```sh
+./fac category clear . SEARCH_ID
+```
+
+`clear`は判断を取り消し、施設を未分類へ戻します。
+
+## 未決定のカテゴリを再評価する
+
+```sh
+./fac category refresh .
+./fac category refresh . --present
+```
+
+`refresh`は規則`data/category-rules.json`で、OSM関連付けのある未決定施設と、関連付けが変わった施設だけを再評価します。関連付けのない検索入力は未分類のままです。環境変数`TYPESAFE_API_KEY`があれば、規則で決まらない施設をJevで判定します。`--present`は、カテゴリを確定できない施設をGitHubのカテゴリ確認Issueに提示し、`GITHUB_REPOSITORY`と`GH_TOKEN`が必要です。
+
+## カテゴリの反映を検証する
+
+```sh
+./fac jsonld-validate data/places.jsonld
+./fac category review .
+```
+
+`jsonld-validate`は、`gif-poi`識別子が語彙にある4桁のPOIコードかを検証します。`category review`は、確定した判断と未分類の施設を一覧で示します。
+
 ## 保存済み判断を再提示する
 
 ```sh
