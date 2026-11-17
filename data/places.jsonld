@@ -2236,6 +2236,20 @@
           "schema:value": "1011"
         }
       ]
+    },
+    {
+      "@id": "urn:uuid:01a1e8c7-83fd-76ea-a425-b3fec7d992f8",
+      "@type": [
+        "schema:Place"
+      ],
+      "rdfs:seeAlso": [
+        "https://www.openstreetmap.org/node/1420766935"
+      ],
+      "schema:geo": {
+        "@type": "schema:GeoCoordinates",
+        "schema:longitude": 139.762933,
+        "schema:latitude": 35.698402
+      }
     }
   ]
 }

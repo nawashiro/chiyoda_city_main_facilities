@@ -13033,6 +13033,46 @@
         "editor": "Navi",
         "editedAt": "2026-11-14T06:43:57Z"
       }
+    },
+    "01a1e8c7-83fd-76ea-a425-b3fec7d992f8": {
+      "evidence": {
+        "target": {
+          "id": "01a1e8c7-83fd-76ea-a425-b3fec7d992f8",
+          "name": "杏雲堂病院",
+          "coordinates": [
+            139.762933,
+            35.698402
+          ]
+        },
+        "candidates": [
+          {
+            "recordId": "node/1420766935",
+            "name": "佐々木研究所附属杏雲堂病院",
+            "coordinates": [
+              139.762933,
+              35.698402
+            ],
+            "qid": null,
+            "tags": {
+              "amenity": "hospital",
+              "healthcare": "hospital",
+              "name": "佐々木研究所附属杏雲堂病院",
+              "name:en": "Kyoundo Hospital",
+              "name:ja": "佐々木研究所附属杏雲堂病院"
+            }
+          }
+        ]
+      },
+      "evidenceHash": "86af0e95ed363568d84c726b3a84ee9e5a68080a4e321ad121cf214d10fdfc1a",
+      "current": "node/1420766935",
+      "status": "decided",
+      "choice": "node/1420766935",
+      "method": "human",
+      "human": {
+        "choice": "node/1420766935",
+        "editor": "Navi",
+        "editedAt": "2026-11-17T09:12:35Z"
+      }
     }
   }
 }
