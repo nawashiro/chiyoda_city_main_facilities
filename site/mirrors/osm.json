@@ -1,5 +1,5 @@
 {
-  "version": "202611130100",
+  "version": "202611160100",
   "elements": [
     {
       "type": "node",
@@ -98,6 +98,46 @@
         "note:ja": "国土数値情報（公共施設データ）平成19年　国土交通省",
         "source": "KSJ2",
         "source_ref": "http://nlftp.mlit.go.jp/ksj/jpgis/datalist/KsjTmplt-P02-v2_0.html"
+      }
+    },
+    {
+      "type": "node",
+      "id": 1420765470,
+      "lon": 139.779126,
+      "lat": 35.699902,
+      "tags": {
+        "addr:full": "東京都千代田区神田和泉町1",
+        "amenity": "hospital",
+        "healthcare": "hospital",
+        "name": "三井記念病院",
+        "name:en": "Mitsui Memorial Hospital",
+        "note": "National-Land Numerical Information (Public Facility) 2006, MLIT Japan",
+        "note:ja": "国土数値情報（公共施設データ）平成19年 国土交通省",
+        "operator:type": "private",
+        "source": "KSJ2",
+        "source_ref": "http://nlftp.mlit.go.jp/ksj/jpgis/datalist/KsjTmplt-P02-v2_0.html",
+        "wikidata": "Q11354313",
+        "wikimedia_commons": "Category:Mitsui Memorial Hospital",
+        "wikipedia": "ja:三井記念病院"
+      }
+    },
+    {
+      "type": "node",
+      "id": 1420766935,
+      "lon": 139.762933,
+      "lat": 35.698402,
+      "tags": {
+        "amenity": "hospital",
+        "healthcare": "hospital",
+        "name": "佐々木研究所附属杏雲堂病院",
+        "name:en": "Kyoundo Hospital",
+        "name:es": "Hospital Kyoundo",
+        "name:ja": "佐々木研究所附属杏雲堂病院",
+        "note": "National-Land Numerical Information (Public Facility) 2006, MLIT Japan",
+        "note:ja": "国土数値情報（公共施設データ）平成19年　国土交通省",
+        "source": "KSJ2",
+        "source_ref": "http://nlftp.mlit.go.jp/ksj/jpgis/datalist/KsjTmplt-P02-v2_0.html",
+        "wheelchair": "yes"
       }
     },
     {
@@ -335,6 +375,28 @@
         "website": "https://www.courts.go.jp/saikosai/tosyokan/index.html",
         "wikidata": "Q11515702",
         "wikipedia": "ja:最高裁判所図書館"
+      }
+    },
+    {
+      "type": "node",
+      "id": 1420785374,
+      "lon": 139.761279,
+      "lat": 35.700103,
+      "tags": {
+        "addr:full": "東京都千代田区神田駿河台2-5",
+        "amenity": "hospital",
+        "fixme": "addr:fullを機械付与した時点でオリジナルと位置が32.2m変化しています",
+        "healthcare": "hospital",
+        "name": "東京都教職員互助会三楽病院",
+        "name:en": "Sanraku Hospital",
+        "name:ja": "東京都教職員互助会三楽病院",
+        "note": "National-Land Numerical Information (Public Facility) 2006, MLIT Japan",
+        "note:ja": "国土数値情報（公共施設データ）平成19年 国土交通省",
+        "operator:type": "private",
+        "source": "KSJ2",
+        "source_ref": "http://nlftp.mlit.go.jp/ksj/jpgis/datalist/KsjTmplt-P02-v2_0.html",
+        "wikidata": "Q11355990",
+        "wikipedia": "ja:三楽病院"
       }
     },
     {
@@ -663,6 +725,29 @@
         "name:ja": "お茶の水キリストの教会",
         "religion": "christian",
         "wikimedia_commons": "File:障害者福祉センターえみふる・お茶の水キリストの教会.jpg"
+      }
+    },
+    {
+      "type": "node",
+      "id": 3851695361,
+      "lon": 139.7522986,
+      "lat": 35.6938447,
+      "tags": {
+        "amenity": "hospital",
+        "healthcare": "hospital",
+        "name": "九段坂病院",
+        "name:en": "Kudanzaka Hospital",
+        "name:it": "Kudanzaka",
+        "payment:american_express": "yes",
+        "payment:coins": "yes",
+        "payment:jcb": "yes",
+        "payment:mastercard": "yes",
+        "payment:notes": "yes",
+        "payment:visa": "yes",
+        "phone": "03-3262-9191",
+        "website": "http://www.kudanzaka.com/",
+        "wikidata": "Q30280522",
+        "wikipedia": "ja:九段坂病院"
       }
     },
     {
@@ -998,6 +1083,21 @@
     },
     {
       "type": "node",
+      "id": 13744716801,
+      "lon": 139.7607434,
+      "lat": 35.6967064,
+      "tags": {
+        "amenity": "cinema",
+        "email": "info@cinemalice.theater",
+        "internet_access": "wlan",
+        "name": "CINEMALICE",
+        "name:ja_kana": "シネマリス",
+        "phone": "+81-3-6803-3214",
+        "website": "https://cinemalice.theater/"
+      }
+    },
+    {
+      "type": "node",
       "id": 14337499601,
       "lon": 139.7779715,
       "lat": 35.6943553,
@@ -1052,6 +1152,23 @@
         "opening_hours": "Mo-Sa 09:00-17:00",
         "phone": "+81332343084",
         "website": "https://www.city.chiyoda.lg.jp/koho/kosodate/jidocenter/ichiran/4bancho.html"
+      }
+    },
+    {
+      "type": "node",
+      "id": 14344607026,
+      "lon": 139.7463641,
+      "lat": 35.6971909,
+      "tags": {
+        "amenity": "school",
+        "education": "school",
+        "name": "千代田区立 富士見小学校",
+        "name:en": "Fujimi Elementary School",
+        "name:es": "Escuela primaria Fujimi",
+        "phone": "+81-3-3263-1006",
+        "website": "https://chiyoda.schoolweb.ne.jp/1310164",
+        "wikidata": "Q81916362",
+        "wikipedia": "ja:千代田区立富士見小学校"
       }
     },
     {
@@ -1240,6 +1357,26 @@
         "wikidata": "Q6631821",
         "wikimedia_commons": "Category:Chidorigafuchi Park",
         "wikipedia": "ja:千鳥ヶ淵公園"
+      }
+    },
+    {
+      "type": "way",
+      "id": 46982684,
+      "center": {
+        "lon": 139.7698485,
+        "lat": 35.70118755
+      },
+      "tags": {
+        "amenity": "school",
+        "education": "school",
+        "name": "千代田区立 昌平小学校",
+        "name:en": "Shohei Elementary School",
+        "name:es": "Escuela primaria Shohei",
+        "name:ko": "쇼헤이 소학교",
+        "note": "estimated",
+        "wheelchair": "limited",
+        "wikidata": "Q81916367",
+        "wikipedia": "ja:千代田区立昌平小学校"
       }
     },
     {
@@ -1447,6 +1584,49 @@
     },
     {
       "type": "way",
+      "id": 179565358,
+      "center": {
+        "lon": 139.74087255,
+        "lat": 35.69038355
+      },
+      "tags": {
+        "amenity": "school",
+        "education": "school",
+        "name": "千代田区立 九段小学校",
+        "name:en": "Chiyoda elementary school",
+        "name:es": "Escuela primaria de Chiyoda",
+        "note": "National-Land Numerical Information (Public Facility) 2006, MLIT Japan",
+        "note:ja": "国土数値情報（公共施設データ）平成19年　国土交通省",
+        "source": "KSJ2,Bing 2010",
+        "source_ref": "http://nlftp.mlit.go.jp/ksj/jpgis/datalist/KsjTmplt-P02-v2_0.html",
+        "wikidata": "Q81916360",
+        "wikipedia": "ja:千代田区立九段小学校"
+      }
+    },
+    {
+      "type": "way",
+      "id": 179565779,
+      "center": {
+        "lon": 139.73976635000002,
+        "lat": 35.68533445
+      },
+      "tags": {
+        "amenity": "school",
+        "education": "school",
+        "name": "千代田区立麹町小学校",
+        "name:en": "Kōjimachi Chidoya elementary school",
+        "name:es": "Escuela primaria de Chiyoda Kōjimachi",
+        "name:ja": "千代田区立麹町小学校",
+        "note": "National-Land Numerical Information (Public Facility) 2006, MLIT Japan",
+        "note:ja": "国土数値情報（公共施設データ）平成19年　国土交通省",
+        "source": "KSJ2,Bing 2010",
+        "source_ref": "http://nlftp.mlit.go.jp/ksj/jpgis/datalist/KsjTmplt-P02-v2_0.html",
+        "wikidata": "Q11405301",
+        "wikipedia": "ja:千代田区立麹町小学校"
+      }
+    },
+    {
+      "type": "way",
       "id": 179575985,
       "center": {
         "lon": 139.74630355,
@@ -1466,6 +1646,28 @@
         "source": "KSJ2;Bing 2010",
         "source_ref": "http://nlftp.mlit.go.jp/ksj/jpgis/datalist/KsjTmplt-P02-v2_0.html",
         "website": "https://www.city.chiyoda.lg.jp/shisetsu/bunka/fujimimirai.html"
+      }
+    },
+    {
+      "type": "way",
+      "id": 184577228,
+      "center": {
+        "lon": 139.76032105000002,
+        "lat": 35.6971733
+      },
+      "tags": {
+        "area": "yes",
+        "name": "千代田区立 お茶の水小学校",
+        "name:en": "Ochanomizu Elementary School",
+        "name:es": "Escuela primaria Ochanomizu",
+        "note": "National-Land Numerical Information (Public Facility) 2006, MLIT Japan",
+        "note:ja": "国土数値情報（公共施設データ）平成19年　国土交通省",
+        "opening_date": "2023-05",
+        "source": "KSJ2",
+        "source_ref": "http://nlftp.mlit.go.jp/ksj/jpgis/datalist/KsjTmplt-P02-v2_0.html",
+        "was:amenity": "school",
+        "wikidata": "Q11405295",
+        "wikipedia": "ja:千代田区立お茶の水小学校"
       }
     },
     {
@@ -1572,6 +1774,51 @@
         "name:es": "Librería conmemorativa de Manga y Subcultura Yoshihiro Yonezawa",
         "source": "Bing",
         "wikidata": "Q113160405"
+      }
+    },
+    {
+      "type": "way",
+      "id": 217378912,
+      "center": {
+        "lon": 139.77848645,
+        "lat": 35.69910685000001
+      },
+      "tags": {
+        "amenity": "school",
+        "education": "school",
+        "name": "千代田区立 和泉小学校",
+        "name:en": "Izumi Elementary School",
+        "name:es": "Escuela de primaria Izumi",
+        "note": "National-Land Numerical Information (Public Facility) 2006, MLIT Japan",
+        "note:ja": "国土数値情報（公共施設データ）平成19年　国土交通省",
+        "source": "KSJ2",
+        "source_ref": "http://nlftp.mlit.go.jp/ksj/jpgis/datalist/KsjTmplt-P02-v2_0.html",
+        "wikidata": "Q81916370",
+        "wikimedia_commons": "File:千代田区立和泉小学校.jpg"
+      }
+    },
+    {
+      "type": "way",
+      "id": 219877271,
+      "center": {
+        "lon": 139.7626696,
+        "lat": 35.69735935
+      },
+      "tags": {
+        "amenity": "hospital",
+        "building": "yes",
+        "emergency": "yes",
+        "healthcare": "hospital",
+        "name": "日本大学病院",
+        "name:de": "Nihon Universitätsklinikum",
+        "name:en": "Nihon University Hospital",
+        "name:es": "Hospital de la universidad Nihon",
+        "operator": "日本大学",
+        "phone": "+81 3 3293 1711",
+        "source": "knowledge",
+        "website": "https://www.nihon-u.ac.jp/hospital/",
+        "wheelchair": "yes",
+        "wikidata": "Q11668487"
       }
     },
     {
@@ -1684,6 +1931,28 @@
     },
     {
       "type": "way",
+      "id": 620327839,
+      "center": {
+        "lon": 139.768436,
+        "lat": 35.693195700000004
+      },
+      "tags": {
+        "amenity": "school",
+        "education": "school",
+        "name": "千代田区立 千代田小学校",
+        "name:en": "Chiyoda Elementary School",
+        "name:ja": "千代田小学校",
+        "note": "National-Land Numerical Information (Public Facility) 2006, MLIT Japan",
+        "note:ja": "国土数値情報（公共施設データ）平成19年　国土交通省",
+        "source": "KSJ2",
+        "source_ref": "http://nlftp.mlit.go.jp/ksj/jpgis/datalist/KsjTmplt-P02-v2_0.html",
+        "wikidata": "Q97168414",
+        "wikimedia_commons": "Category:Chiyoda elementary school, Chiyoda",
+        "wikipedia": "ja:千代田区立千代田小学校"
+      }
+    },
+    {
+      "type": "way",
       "id": 624081603,
       "center": {
         "lon": 139.7509767,
@@ -1703,6 +1972,28 @@
         "wikidata": "Q1075966",
         "wikimedia_commons": "Category:Kitanomaru Park",
         "wikipedia": "ja:北の丸公園"
+      }
+    },
+    {
+      "type": "way",
+      "id": 625044719,
+      "center": {
+        "lon": 139.7337972,
+        "lat": 35.68797945
+      },
+      "tags": {
+        "amenity": "school",
+        "education": "school",
+        "name": "千代田区立番町小学校",
+        "name:en": "Chiyoda elementary school",
+        "name:es": "Escuela primaria Chiyoda",
+        "name:ja": "千代田区立番町小学校",
+        "note": "National-Land Numerical Information (Public Facility) 2006, MLIT Japan",
+        "note:ja": "国土数値情報（公共施設データ）平成19年 国土交通省",
+        "source": "KSJ2",
+        "source_ref": "http://nlftp.mlit.go.jp/ksj/jpgis/datalist/KsjTmplt-P02-v2_0.html",
+        "wikidata": "Q11405297",
+        "wikipedia": "ja:千代田区立番町小学校"
       }
     },
     {
@@ -1859,6 +2150,27 @@
         "wikidata": "Q6631907",
         "wikimedia_commons": "Category:East Gardens of Tokyo Imperial Palace",
         "wikipedia": "ja:皇居東御苑"
+      }
+    },
+    {
+      "type": "relation",
+      "id": 14509145,
+      "center": {
+        "lon": 139.74271425,
+        "lat": 35.69722515
+      },
+      "tags": {
+        "amenity": "hospital",
+        "healthcare": "hospital",
+        "name": "東京逓信病院",
+        "note": "National-Land Numerical Information (Public Facility) 2006, MLIT Japan",
+        "note:ja": "国土数値情報（公共施設データ）平成19年　国土交通省",
+        "operator": "日本郵政",
+        "source": "KSJ2",
+        "source_ref": "http://nlftp.mlit.go.jp/ksj/jpgis/datalist/KsjTmplt-P02-v2_0.html",
+        "type": "multipolygon",
+        "wikidata": "Q11525177",
+        "wikipedia": "ja:東京逓信病院"
       }
     },
     {

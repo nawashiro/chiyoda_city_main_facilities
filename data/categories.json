@@ -459,6 +459,78 @@
       "editor": "Navi",
       "editedAt": "2026-11-15T08:06:34Z",
       "osmId": "way/145501856"
+    },
+    "01a1e8ab-f038-7ce4-b0fb-c9684533e7e3": {
+      "category": "1503",
+      "method": "rule",
+      "osmId": "way/179565779"
+    },
+    "01a1e8ab-f07e-7424-8199-f8ce84712814": {
+      "category": "1503",
+      "method": "rule",
+      "osmId": "way/179565358"
+    },
+    "01a1e8ab-f0c4-79e3-a1d4-42b3c152ffcf": {
+      "category": "1503",
+      "method": "rule",
+      "osmId": "way/625044719"
+    },
+    "01a1e8ab-f109-7794-bbe6-d6d05f476328": {
+      "category": "1503",
+      "method": "rule",
+      "osmId": "node/14344607026"
+    },
+    "01a1e8ab-f1d8-7b07-a074-43cb7833f6b0": {
+      "category": "1503",
+      "method": "rule",
+      "osmId": "way/46982684"
+    },
+    "01a1e8ab-f21f-7e46-adb6-24f430ef1f28": {
+      "category": "1503",
+      "method": "rule",
+      "osmId": "way/217378912"
+    },
+    "01a1e8c0-2938-795c-874c-ce0091270aaf": {
+      "category": "1601",
+      "method": "rule",
+      "osmId": "node/3851695361"
+    },
+    "01a1e8c0-297e-7d68-96c0-61e2a611646b": {
+      "category": "1601",
+      "method": "rule",
+      "osmId": "node/1420785374"
+    },
+    "01a1e8c0-29c3-7ace-8777-a8a2b17edcda": {
+      "category": "1601",
+      "method": "rule",
+      "osmId": "way/219877271"
+    },
+    "01a1e8c0-2a08-7672-b846-34526c4e12ba": {
+      "category": "1601",
+      "method": "rule",
+      "osmId": "node/1420765470"
+    },
+    "01a1e8c0-2a4c-74d9-b466-4a915c81991a": {
+      "category": "1601",
+      "method": "rule",
+      "osmId": "relation/14509145"
+    },
+    "01a1e8c7-83fd-76ea-a425-b3fec7d992f8": {
+      "category": "1601",
+      "method": "rule",
+      "osmId": "node/1420766935"
+    },
+    "01a1e8ab-f14e-7d43-bf8c-022b06f17c7c": {
+      "category": "1503",
+      "method": "human",
+      "editor": "Navi",
+      "editedAt": "2026-11-17T09:49:02Z",
+      "osmId": "way/184577228"
+    },
+    "01a1e8ab-f193-77b8-8c30-c21e337a05e5": {
+      "category": "1503",
+      "method": "rule",
+      "osmId": "way/620327839"
     }
   }
 }

@@ -94,8 +94,18 @@
     },
     {
       "@type": "schema:DefinedTerm",
+      "@id": "https://nawashiro.github.io/chiyoda_city_main_facilities/category-names.jsonld#1503",
+      "schema:name": "小学校"
+    },
+    {
+      "@type": "schema:DefinedTerm",
       "@id": "https://nawashiro.github.io/chiyoda_city_main_facilities/category-names.jsonld#1512",
       "schema:name": "図書館"
+    },
+    {
+      "@type": "schema:DefinedTerm",
+      "@id": "https://nawashiro.github.io/chiyoda_city_main_facilities/category-names.jsonld#1601",
+      "schema:name": "病院"
     },
     {
       "@type": "schema:DefinedTerm",

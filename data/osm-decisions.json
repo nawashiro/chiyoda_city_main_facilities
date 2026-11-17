@@ -12519,6 +12519,18 @@
             }
           },
           {
+            "recordId": "node/11038593226",
+            "name": "黒門",
+            "coordinates": [
+              139.7547531,
+              35.6965977
+            ],
+            "qid": null,
+            "tags": {
+              "name": "黒門"
+            }
+          },
+          {
             "recordId": "node/3777815475",
             "name": "ローソン",
             "coordinates": [
@@ -12611,6 +12623,19 @@
             }
           },
           {
+            "recordId": "way/175993821",
+            "name": "専修大学8号館",
+            "coordinates": [
+              139.7552327,
+              35.6969579
+            ],
+            "qid": null,
+            "tags": {
+              "building": "university",
+              "name": "専修大学8号館"
+            }
+          },
+          {
             "recordId": "way/231778926",
             "name": "楠ビル",
             "coordinates": [
@@ -12667,7 +12692,7 @@
           }
         ]
       },
-      "evidenceHash": "8eecf2355781cf5ae155b93a2cfe7ee76373e46d41e641a4e9ac946ccdc0ad20",
+      "evidenceHash": "b1843abcd097fe185011cdd3803dc68faec637f9092ddd8e5d288d7182934ae2",
       "current": "node/6463473885",
       "status": "decided",
       "choice": "node/6463473885",
@@ -13008,6 +13033,56 @@
         },
         "candidates": [
           {
+            "recordId": "node/11674977896",
+            "name": "申家ね",
+            "coordinates": [
+              139.7611849,
+              35.6964782
+            ],
+            "qid": null,
+            "tags": {
+              "amenity": "restaurant",
+              "name": "申家ね"
+            }
+          },
+          {
+            "recordId": "node/11674977901",
+            "name": "レピック",
+            "coordinates": [
+              139.7612046,
+              35.6964697
+            ],
+            "qid": null,
+            "tags": {
+              "name": "レピック"
+            }
+          },
+          {
+            "recordId": "node/11674977903",
+            "name": "なごみ",
+            "coordinates": [
+              139.7612401,
+              35.6966217
+            ],
+            "qid": null,
+            "tags": {
+              "amenity": "restaurant",
+              "name": "なごみ"
+            }
+          },
+          {
+            "recordId": "node/11674977917",
+            "name": "パルモ神保町整骨院",
+            "coordinates": [
+              139.7611367,
+              35.69646
+            ],
+            "qid": null,
+            "tags": {
+              "name": "パルモ神保町整骨院"
+            }
+          },
+          {
             "recordId": "node/13744716801",
             "name": "CINEMALICE",
             "coordinates": [
@@ -13020,19 +13095,704 @@
               "name": "CINEMALICE",
               "website": "https://cinemalice.theater/"
             }
+          },
+          {
+            "recordId": "node/14213376201",
+            "name": "BANDE À PART",
+            "coordinates": [
+              139.7607887,
+              35.6967273
+            ],
+            "qid": null,
+            "tags": {
+              "amenity": "cafe",
+              "name": "BANDE À PART",
+              "website": "http://bandeapart-tokyo.com/"
+            }
+          },
+          {
+            "recordId": "node/2405021545",
+            "name": "三井住友銀行",
+            "coordinates": [
+              139.760557,
+              35.696296
+            ],
+            "qid": null,
+            "tags": {
+              "amenity": "bank",
+              "brand": "三井住友銀行",
+              "name": "三井住友銀行",
+              "name:en": "Sumitomo Mitsui Banking Corporation",
+              "name:ja": "三井住友銀行"
+            }
+          },
+          {
+            "recordId": "node/3164009261",
+            "name": "ポレット",
+            "coordinates": [
+              139.7608852,
+              35.6963821
+            ],
+            "qid": null,
+            "tags": {
+              "amenity": "studio",
+              "name": "ポレット"
+            }
+          },
+          {
+            "recordId": "node/3164011861",
+            "name": "Gracia",
+            "coordinates": [
+              139.7608734,
+              35.6963767
+            ],
+            "qid": null,
+            "tags": {
+              "amenity": "bar",
+              "name": "Gracia"
+            }
+          },
+          {
+            "recordId": "node/3164012461",
+            "name": "漢陽楼",
+            "coordinates": [
+              139.7609549,
+              35.6963949
+            ],
+            "qid": null,
+            "tags": {
+              "amenity": "restaurant",
+              "name": "漢陽楼",
+              "name:en": "Kanyo-ro"
+            }
+          },
+          {
+            "recordId": "node/4016047465",
+            "name": "スタイルズケイクス &カンパニー",
+            "coordinates": [
+              139.7604507,
+              35.6967447
+            ],
+            "qid": null,
+            "tags": {
+              "amenity": "cafe",
+              "name": "スタイルズケイクス &カンパニー",
+              "name:en": "Style's cakes＆co."
+            }
+          },
+          {
+            "recordId": "node/4938059048",
+            "name": "ジャニス",
+            "coordinates": [
+              139.7610091,
+              35.6966339
+            ],
+            "qid": null,
+            "tags": {
+              "addr:block_number": "20",
+              "addr:city": "千代田区",
+              "addr:neighbourhood": "神田小川町三丁目",
+              "name": "ジャニス"
+            }
+          },
+          {
+            "recordId": "node/4938059049",
+            "name": "ジャニス",
+            "coordinates": [
+              139.7609581,
+              35.6965146
+            ],
+            "qid": null,
+            "tags": {
+              "addr:block_number": "14",
+              "addr:city": "千代田区",
+              "addr:neighbourhood": "神田小川町三丁目",
+              "name": "ジャニス",
+              "name:en": "Janis"
+            }
+          },
+          {
+            "recordId": "node/5516394094",
+            "name": "巣鴨金剛苑",
+            "coordinates": [
+              139.760815,
+              35.6963475
+            ],
+            "qid": null,
+            "tags": {
+              "amenity": "restaurant",
+              "name": "巣鴨金剛苑"
+            }
+          },
+          {
+            "recordId": "node/5516491706",
+            "name": "理容室K・STYLE",
+            "coordinates": [
+              139.7608153,
+              35.6963588
+            ],
+            "qid": null,
+            "tags": {
+              "name": "理容室K・STYLE"
+            }
+          },
+          {
+            "recordId": "node/5516491707",
+            "name": "Estagent",
+            "coordinates": [
+              139.7607967,
+              35.6963739
+            ],
+            "qid": null,
+            "tags": {
+              "name": "Estagent",
+              "office": "estate_agent"
+            }
+          },
+          {
+            "recordId": "node/5516491708",
+            "name": "Siesta",
+            "coordinates": [
+              139.7608025,
+              35.6963683
+            ],
+            "qid": null,
+            "tags": {
+              "name": "Siesta"
+            }
+          },
+          {
+            "recordId": "node/5516505476",
+            "name": "華月いけばな教室",
+            "coordinates": [
+              139.7612736,
+              35.6965775
+            ],
+            "qid": null,
+            "tags": {
+              "amenity": "prep_school",
+              "name": "華月いけばな教室"
+            }
+          },
+          {
+            "recordId": "node/5550113193",
+            "name": "キッチンジロー",
+            "coordinates": [
+              139.7611959,
+              35.6965313
+            ],
+            "qid": "Q11296808",
+            "tags": {
+              "name": "キッチンジロー",
+              "wikidata": "Q11296808"
+            }
+          },
+          {
+            "recordId": "way/171673450",
+            "name": "第一万水ビル",
+            "coordinates": [
+              139.76118050000002,
+              35.6965239
+            ],
+            "qid": null,
+            "tags": {
+              "building": "yes",
+              "name": "第一万水ビル"
+            }
+          },
+          {
+            "recordId": "way/171673454",
+            "name": "OGAWAMACHI HIKARI BLDG.",
+            "coordinates": [
+              139.7608045,
+              35.69636345
+            ],
+            "qid": null,
+            "tags": {
+              "building": "yes",
+              "name": "OGAWAMACHI HIKARI BLDG."
+            }
+          },
+          {
+            "recordId": "way/171673467",
+            "name": "漢陽ビル",
+            "coordinates": [
+              139.76095575,
+              35.6963991
+            ],
+            "qid": null,
+            "tags": {
+              "building": "yes",
+              "name": "漢陽ビル",
+              "name:en": "Kan'yo Building"
+            }
+          },
+          {
+            "recordId": "way/171673482",
+            "name": "三井住友銀行神保町ビル",
+            "coordinates": [
+              139.76054764999998,
+              35.696368050000004
+            ],
+            "qid": null,
+            "tags": {
+              "building": "yes",
+              "name": "三井住友銀行神保町ビル",
+              "name:en": "SMBC Jimbocho Building"
+            }
+          },
+          {
+            "recordId": "way/231716153",
+            "name": "中山ビル",
+            "coordinates": [
+              139.76022260000002,
+              35.6966543
+            ],
+            "qid": null,
+            "tags": {
+              "addr:block_number": "1",
+              "addr:neighbourhood": "1丁目",
+              "addr:quarter": "猿楽町",
+              "building": "yes",
+              "name": "中山ビル",
+              "name:en": "Nakayama Building"
+            }
           }
         ]
       },
-      "evidenceHash": "ecef08221bd1cee37f935f422538b35b5e4d02899c0df51072d1d45ae8c5530f",
+      "evidenceHash": "63e669c99d5459e3902ba8d7e99da44332813a7c7d94ca9c88b5911c3f2eb447",
       "current": "node/13744716801",
       "status": "decided",
-      "choice": "node/13744716801",
-      "method": "human",
       "human": {
         "choice": "node/13744716801",
         "editor": "Navi",
         "editedAt": "2026-11-14T06:43:57Z"
+      },
+      "choice": "node/13744716801",
+      "method": "human"
+    },
+    "01a1e8ab-f038-7ce4-b0fb-c9684533e7e3": {
+      "evidence": {
+        "target": {
+          "id": "01a1e8ab-f038-7ce4-b0fb-c9684533e7e3",
+          "name": "千代田区立麹町小学校",
+          "qid": "Q11405301"
+        },
+        "candidates": [
+          {
+            "recordId": "way/179565779",
+            "name": "千代田区立麹町小学校",
+            "coordinates": [
+              139.73976635000002,
+              35.68533445
+            ],
+            "qid": "Q11405301",
+            "tags": {
+              "amenity": "school",
+              "name": "千代田区立麹町小学校",
+              "name:en": "Kōjimachi Chidoya elementary school",
+              "name:ja": "千代田区立麹町小学校",
+              "wikidata": "Q11405301"
+            }
+          }
+        ]
+      },
+      "evidenceHash": "eed50fab31725e96b4d371f8d8fa9bf79a24a86b65469312edee102bc7e338bc",
+      "current": null,
+      "status": "decided",
+      "choice": "way/179565779",
+      "method": "qid"
+    },
+    "01a1e8ab-f07e-7424-8199-f8ce84712814": {
+      "evidence": {
+        "target": {
+          "id": "01a1e8ab-f07e-7424-8199-f8ce84712814",
+          "name": "千代田区立九段小学校",
+          "qid": "Q81916360"
+        },
+        "candidates": [
+          {
+            "recordId": "way/179565358",
+            "name": "千代田区立 九段小学校",
+            "coordinates": [
+              139.74087255,
+              35.69038355
+            ],
+            "qid": "Q81916360",
+            "tags": {
+              "amenity": "school",
+              "name": "千代田区立 九段小学校",
+              "name:en": "Chiyoda elementary school",
+              "wikidata": "Q81916360"
+            }
+          }
+        ]
+      },
+      "evidenceHash": "10b8a88f1facc7f45e107461c4a91e7f48de9da26b4c5136b624b57c0fc2df77",
+      "current": null,
+      "status": "decided",
+      "choice": "way/179565358",
+      "method": "qid"
+    },
+    "01a1e8ab-f0c4-79e3-a1d4-42b3c152ffcf": {
+      "evidence": {
+        "target": {
+          "id": "01a1e8ab-f0c4-79e3-a1d4-42b3c152ffcf",
+          "name": "千代田区立番町小学校",
+          "qid": "Q11405297"
+        },
+        "candidates": [
+          {
+            "recordId": "way/625044719",
+            "name": "千代田区立番町小学校",
+            "coordinates": [
+              139.7337972,
+              35.68797945
+            ],
+            "qid": "Q11405297",
+            "tags": {
+              "amenity": "school",
+              "name": "千代田区立番町小学校",
+              "name:en": "Chiyoda elementary school",
+              "name:ja": "千代田区立番町小学校",
+              "wikidata": "Q11405297"
+            }
+          }
+        ]
+      },
+      "evidenceHash": "e3b7cb10a7fa9dd933818c27e474b6c0902c468289a1db8fa65a36a3881b1bcf",
+      "current": null,
+      "status": "decided",
+      "choice": "way/625044719",
+      "method": "qid"
+    },
+    "01a1e8ab-f109-7794-bbe6-d6d05f476328": {
+      "evidence": {
+        "target": {
+          "id": "01a1e8ab-f109-7794-bbe6-d6d05f476328",
+          "name": "千代田区立富士見小学校",
+          "qid": "Q81916362"
+        },
+        "candidates": [
+          {
+            "recordId": "node/14344607026",
+            "name": "千代田区立 富士見小学校",
+            "coordinates": [
+              139.7463641,
+              35.6971909
+            ],
+            "qid": "Q81916362",
+            "tags": {
+              "amenity": "school",
+              "name": "千代田区立 富士見小学校",
+              "name:en": "Fujimi Elementary School",
+              "website": "https://chiyoda.schoolweb.ne.jp/1310164",
+              "wikidata": "Q81916362"
+            }
+          }
+        ]
+      },
+      "evidenceHash": "1ce33f67ea767507d0c78a74149f2035628053d01ae43a0642d2c23023188c0b",
+      "current": null,
+      "status": "decided",
+      "choice": "node/14344607026",
+      "method": "qid"
+    },
+    "01a1e8ab-f14e-7d43-bf8c-022b06f17c7c": {
+      "evidence": {
+        "target": {
+          "id": "01a1e8ab-f14e-7d43-bf8c-022b06f17c7c",
+          "name": "千代田区立お茶の水小学校",
+          "qid": "Q11405295"
+        },
+        "candidates": [
+          {
+            "recordId": "way/184577228",
+            "name": "千代田区立 お茶の水小学校",
+            "coordinates": [
+              139.76032105000002,
+              35.6971733
+            ],
+            "qid": "Q11405295",
+            "tags": {
+              "name": "千代田区立 お茶の水小学校",
+              "name:en": "Ochanomizu Elementary School",
+              "wikidata": "Q11405295"
+            }
+          }
+        ]
+      },
+      "evidenceHash": "996ca777de76ffec38924e1853e4466a2eb62efc4befa86843ccb41094e0c7ec",
+      "current": null,
+      "status": "decided",
+      "choice": "way/184577228",
+      "method": "qid"
+    },
+    "01a1e8ab-f193-77b8-8c30-c21e337a05e5": {
+      "evidence": {
+        "target": {
+          "id": "01a1e8ab-f193-77b8-8c30-c21e337a05e5",
+          "name": "千代田区立千代田小学校",
+          "qid": "Q81916365"
+        },
+        "candidates": [
+          {
+            "recordId": "way/620327839",
+            "name": "千代田区立 千代田小学校",
+            "coordinates": [
+              139.7684397,
+              35.6931954
+            ],
+            "qid": "Q81916365",
+            "tags": {
+              "amenity": "school",
+              "name": "千代田区立 千代田小学校",
+              "name:en": "Chiyoda Elementary School",
+              "name:ja": "千代田小学校",
+              "wikidata": "Q81916365"
+            }
+          }
+        ]
+      },
+      "evidenceHash": "e530ba5ec33667364ff330f977d946ee79fb28fef9ab138ef8dc3fc4905416b3",
+      "current": "way/620327839",
+      "status": "decided",
+      "choice": "way/620327839",
+      "method": "human",
+      "human": {
+        "choice": "way/620327839",
+        "editor": "Navi",
+        "editedAt": "2026-11-17T09:50:06Z"
       }
+    },
+    "01a1e8ab-f1d8-7b07-a074-43cb7833f6b0": {
+      "evidence": {
+        "target": {
+          "id": "01a1e8ab-f1d8-7b07-a074-43cb7833f6b0",
+          "name": "千代田区立昌平小学校",
+          "qid": "Q81916367"
+        },
+        "candidates": [
+          {
+            "recordId": "way/46982684",
+            "name": "千代田区立 昌平小学校",
+            "coordinates": [
+              139.7698485,
+              35.70118755
+            ],
+            "qid": "Q81916367",
+            "tags": {
+              "amenity": "school",
+              "name": "千代田区立 昌平小学校",
+              "name:en": "Shohei Elementary School",
+              "wikidata": "Q81916367"
+            }
+          }
+        ]
+      },
+      "evidenceHash": "14556f2cfc28741fdc36ba1e686e5932eb3c6be19d0211aa3e5d0afdd43fadf1",
+      "current": null,
+      "status": "decided",
+      "choice": "way/46982684",
+      "method": "qid"
+    },
+    "01a1e8ab-f21f-7e46-adb6-24f430ef1f28": {
+      "evidence": {
+        "target": {
+          "id": "01a1e8ab-f21f-7e46-adb6-24f430ef1f28",
+          "name": "千代田区立和泉小学校",
+          "qid": "Q81916370"
+        },
+        "candidates": [
+          {
+            "recordId": "way/217378912",
+            "name": "千代田区立 和泉小学校",
+            "coordinates": [
+              139.77848645,
+              35.69910685000001
+            ],
+            "qid": "Q81916370",
+            "tags": {
+              "amenity": "school",
+              "name": "千代田区立 和泉小学校",
+              "name:en": "Izumi Elementary School",
+              "wikidata": "Q81916370"
+            }
+          }
+        ]
+      },
+      "evidenceHash": "b4d66b31aa35f4ebfd73d11d0c3f276d42435904a243f5a2a5d5b5434d593c5d",
+      "current": null,
+      "status": "decided",
+      "choice": "way/217378912",
+      "method": "qid"
+    },
+    "01a1e8c0-2938-795c-874c-ce0091270aaf": {
+      "evidence": {
+        "target": {
+          "id": "01a1e8c0-2938-795c-874c-ce0091270aaf",
+          "name": "九段坂病院",
+          "qid": "Q30280522"
+        },
+        "candidates": [
+          {
+            "recordId": "node/3851695361",
+            "name": "九段坂病院",
+            "coordinates": [
+              139.7522986,
+              35.6938447
+            ],
+            "qid": "Q30280522",
+            "tags": {
+              "amenity": "hospital",
+              "healthcare": "hospital",
+              "name": "九段坂病院",
+              "name:en": "Kudanzaka Hospital",
+              "website": "http://www.kudanzaka.com/",
+              "wikidata": "Q30280522"
+            }
+          }
+        ]
+      },
+      "evidenceHash": "d85cbe0fc4c291c4b94b4648a29502c72ca4b22c8b536896ab2ac84c8d5e9a49",
+      "current": null,
+      "status": "decided",
+      "choice": "node/3851695361",
+      "method": "qid"
+    },
+    "01a1e8c0-297e-7d68-96c0-61e2a611646b": {
+      "evidence": {
+        "target": {
+          "id": "01a1e8c0-297e-7d68-96c0-61e2a611646b",
+          "name": "三楽病院",
+          "qid": "Q11355990"
+        },
+        "candidates": [
+          {
+            "recordId": "node/1420785374",
+            "name": "東京都教職員互助会三楽病院",
+            "coordinates": [
+              139.761279,
+              35.700103
+            ],
+            "qid": "Q11355990",
+            "tags": {
+              "addr:full": "東京都千代田区神田駿河台2-5",
+              "amenity": "hospital",
+              "healthcare": "hospital",
+              "name": "東京都教職員互助会三楽病院",
+              "name:en": "Sanraku Hospital",
+              "name:ja": "東京都教職員互助会三楽病院",
+              "wikidata": "Q11355990"
+            }
+          }
+        ]
+      },
+      "evidenceHash": "3a3487b5755712856a9e9d1f6d342c66d70fd5cfd05cee4530cde3b128e8c6f4",
+      "current": null,
+      "status": "decided",
+      "choice": "node/1420785374",
+      "method": "qid"
+    },
+    "01a1e8c0-29c3-7ace-8777-a8a2b17edcda": {
+      "evidence": {
+        "target": {
+          "id": "01a1e8c0-29c3-7ace-8777-a8a2b17edcda",
+          "name": "日本大学病院",
+          "qid": "Q11668487"
+        },
+        "candidates": [
+          {
+            "recordId": "way/219877271",
+            "name": "日本大学病院",
+            "coordinates": [
+              139.7626696,
+              35.69735935
+            ],
+            "qid": "Q11668487",
+            "tags": {
+              "amenity": "hospital",
+              "building": "yes",
+              "healthcare": "hospital",
+              "name": "日本大学病院",
+              "name:en": "Nihon University Hospital",
+              "operator": "日本大学",
+              "website": "https://www.nihon-u.ac.jp/hospital/",
+              "wikidata": "Q11668487"
+            }
+          }
+        ]
+      },
+      "evidenceHash": "0da741b928ef5196d84994c893735917ce6350f0cec22d2ec89217d104037657",
+      "current": null,
+      "status": "decided",
+      "choice": "way/219877271",
+      "method": "qid"
+    },
+    "01a1e8c0-2a08-7672-b846-34526c4e12ba": {
+      "evidence": {
+        "target": {
+          "id": "01a1e8c0-2a08-7672-b846-34526c4e12ba",
+          "name": "三井記念病院",
+          "qid": "Q11354313"
+        },
+        "candidates": [
+          {
+            "recordId": "node/1420765470",
+            "name": "三井記念病院",
+            "coordinates": [
+              139.779126,
+              35.699902
+            ],
+            "qid": "Q11354313",
+            "tags": {
+              "addr:full": "東京都千代田区神田和泉町1",
+              "amenity": "hospital",
+              "healthcare": "hospital",
+              "name": "三井記念病院",
+              "name:en": "Mitsui Memorial Hospital",
+              "wikidata": "Q11354313"
+            }
+          }
+        ]
+      },
+      "evidenceHash": "ca24fafaf60a4a7a1ce8cf404b7fa72f8d8b5332c9b9a31e9290cae523886b6f",
+      "current": null,
+      "status": "decided",
+      "choice": "node/1420765470",
+      "method": "qid"
+    },
+    "01a1e8c0-2a4c-74d9-b466-4a915c81991a": {
+      "evidence": {
+        "target": {
+          "id": "01a1e8c0-2a4c-74d9-b466-4a915c81991a",
+          "name": "東京逓信病院",
+          "qid": "Q11525177"
+        },
+        "candidates": [
+          {
+            "recordId": "relation/14509145",
+            "name": "東京逓信病院",
+            "coordinates": [
+              139.74271425,
+              35.69722515
+            ],
+            "qid": "Q11525177",
+            "tags": {
+              "amenity": "hospital",
+              "healthcare": "hospital",
+              "name": "東京逓信病院",
+              "operator": "日本郵政",
+              "wikidata": "Q11525177"
+            }
+          }
+        ]
+      },
+      "evidenceHash": "0ad7ab31b3f13724d80c12e0bd0b6e07da2a4026aafda01524facff3c91e8acf",
+      "current": null,
+      "status": "decided",
+      "choice": "relation/14509145",
+      "method": "qid"
     },
     "01a1e8c7-83fd-76ea-a425-b3fec7d992f8": {
       "evidence": {
@@ -13045,6 +13805,32 @@
           ]
         },
         "candidates": [
+          {
+            "recordId": "node/11674977898",
+            "name": "キク調剤薬局",
+            "coordinates": [
+              139.7630572,
+              35.6987532
+            ],
+            "qid": null,
+            "tags": {
+              "amenity": "pharmacy",
+              "healthcare": "pharmacy",
+              "name": "キク調剤薬局"
+            }
+          },
+          {
+            "recordId": "node/13074874941",
+            "name": "Dr. Ochanomizu Manhole Cover",
+            "coordinates": [
+              139.7624652,
+              35.698318
+            ],
+            "qid": null,
+            "tags": {
+              "name": "Dr. Ochanomizu Manhole Cover"
+            }
+          },
           {
             "recordId": "node/1420766935",
             "name": "佐々木研究所附属杏雲堂病院",
@@ -13060,19 +13846,209 @@
               "name:en": "Kyoundo Hospital",
               "name:ja": "佐々木研究所附属杏雲堂病院"
             }
+          },
+          {
+            "recordId": "node/2204921527",
+            "name": "日本大学歯学部付属歯科病院",
+            "coordinates": [
+              139.7634569,
+              35.69826
+            ],
+            "qid": "Q11507855",
+            "tags": {
+              "amenity": "hospital",
+              "healthcare": "hospital",
+              "name": "日本大学歯学部付属歯科病院",
+              "name:en": "Nihon University School of Dentistry Dental Hospital",
+              "wikidata": "Q11507855"
+            }
+          },
+          {
+            "recordId": "node/3888675427",
+            "name": "Zemaitis",
+            "coordinates": [
+              139.7625848,
+              35.698065
+            ],
+            "qid": null,
+            "tags": {
+              "addr:block_number": "8",
+              "addr:city": "千代田区",
+              "addr:neighbourhood": "神田駿河台一丁目",
+              "name": "Zemaitis"
+            }
+          },
+          {
+            "recordId": "node/3888680550",
+            "name": "谷口楽器",
+            "coordinates": [
+              139.762618,
+              35.6980517
+            ],
+            "qid": "Q59186491",
+            "tags": {
+              "addr:block_number": "8",
+              "addr:city": "千代田区",
+              "addr:neighbourhood": "神田駿河台一丁目",
+              "brand": "谷口楽器",
+              "name": "谷口楽器",
+              "name:en": "Taniguchi-Gakki",
+              "name:ja": "谷口楽器",
+              "website": "https://taniguchi-gakki.jp/",
+              "wikidata": "Q59186491"
+            }
+          },
+          {
+            "recordId": "node/4013994590",
+            "name": "お茶の水　下倉楽器　本店",
+            "coordinates": [
+              139.7629739,
+              35.6987924
+            ],
+            "qid": null,
+            "tags": {
+              "addr:city": "千代田区神田駿河台2-2",
+              "name": "お茶の水　下倉楽器　本店"
+            }
+          },
+          {
+            "recordId": "node/4059137885",
+            "name": "法政大学発祥の地碑",
+            "coordinates": [
+              139.7628413,
+              35.698663
+            ],
+            "qid": null,
+            "tags": {
+              "name": "法政大学発祥の地碑",
+              "name:en": "Hosei University birthplace"
+            }
+          },
+          {
+            "recordId": "node/5253445635",
+            "name": "下倉楽器",
+            "coordinates": [
+              139.7630145,
+              35.6988431
+            ],
+            "qid": "Q115941344",
+            "tags": {
+              "addr:block_number": "2",
+              "addr:city": "千代田区",
+              "addr:neighbourhood": "神田駿河台二丁目",
+              "alt_name": "Shimokura Musical Instruments",
+              "brand": "下倉楽器",
+              "name": "下倉楽器",
+              "name:en": "Shimokura",
+              "name:ja": "下倉楽器",
+              "website": "http://www.shimokura-gakki.com/",
+              "wikidata": "Q115941344"
+            }
+          },
+          {
+            "recordId": "node/5253445644",
+            "name": "富士そば",
+            "coordinates": [
+              139.7629942,
+              35.6987974
+            ],
+            "qid": null,
+            "tags": {
+              "amenity": "fast_food",
+              "brand": "富士そば",
+              "name": "富士そば",
+              "name:en": "Fuji Soba",
+              "name:ja": "富士そば",
+              "operator": "ダイタンフード"
+            }
+          },
+          {
+            "recordId": "node/6187350691",
+            "name": "ESP Guitar Workshop",
+            "coordinates": [
+              139.7631238,
+              35.698736
+            ],
+            "qid": null,
+            "tags": {
+              "name": "ESP Guitar Workshop"
+            }
+          },
+          {
+            "recordId": "way/217745103",
+            "name": "國井ビル",
+            "coordinates": [
+              139.76299,
+              35.6987916
+            ],
+            "qid": null,
+            "tags": {
+              "addr:block_number": "2",
+              "addr:neighbourhood": "神田駿河台二丁目",
+              "building": "office",
+              "name": "國井ビル"
+            }
+          },
+          {
+            "recordId": "way/217745106",
+            "name": "お茶の水鎌倉ビル",
+            "coordinates": [
+              139.7630673,
+              35.6987885
+            ],
+            "qid": null,
+            "tags": {
+              "addr:block_number": "2",
+              "addr:neighbourhood": "神田駿河台二丁目",
+              "building": "office",
+              "name": "お茶の水鎌倉ビル"
+            }
+          },
+          {
+            "recordId": "way/232719468",
+            "name": "タニグチビル",
+            "coordinates": [
+              139.7626277,
+              35.6980447
+            ],
+            "qid": null,
+            "tags": {
+              "addr:block_number": "8",
+              "addr:city": "千代田区",
+              "addr:neighbourhood": "神田駿河台一丁目",
+              "building": "office",
+              "name": "タニグチビル"
+            }
+          },
+          {
+            "recordId": "way/67027571",
+            "name": "杏雲堂病院",
+            "coordinates": [
+              139.76294585,
+              35.69838455
+            ],
+            "qid": null,
+            "tags": {
+              "amenity": "hospital",
+              "building": "hospital",
+              "healthcare": "hospital",
+              "name": "杏雲堂病院",
+              "name:en": "Kyoundo Hospital",
+              "name:ja": "杏雲堂病院"
+            }
           }
         ]
       },
-      "evidenceHash": "86af0e95ed363568d84c726b3a84ee9e5a68080a4e321ad121cf214d10fdfc1a",
+      "evidenceHash": "a2191aeb8862a3de45d209ec1d2826e43a6d4988571755fd4673c4fb5c60ab0f",
       "current": "node/1420766935",
       "status": "decided",
-      "choice": "node/1420766935",
-      "method": "human",
       "human": {
         "choice": "node/1420766935",
         "editor": "Navi",
         "editedAt": "2026-11-17T09:12:35Z"
-      }
+      },
+      "choice": "node/1420766935",
+      "method": "human"
     }
   }
 }
