@@ -866,8 +866,8 @@
       ],
       "schema:geo": {
         "@type": "schema:GeoCoordinates",
-        "schema:longitude": 139.749567,
-        "schema:latitude": 35.70038
+        "schema:longitude": 139.7498669,
+        "schema:latitude": 35.7001594
       },
       "schema:identifier": [
         {
@@ -877,7 +877,8 @@
         }
       ],
       "rdfs:seeAlso": [
-        "https://www.openstreetmap.org/node/1420785407"
+        "https://www.openstreetmap.org/node/13735063550",
+        "https://www.wikidata.org/entity/Q11524020"
       ]
     },
     {

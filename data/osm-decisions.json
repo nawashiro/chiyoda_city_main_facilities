@@ -2404,27 +2404,19 @@
               "website": "https://www.tokyoshigoto.jp/",
               "wikidata": "Q11524020"
             }
-          },
-          {
-            "recordId": "node/1420785407",
-            "name": "東京都産業労働局労働相談情報センター",
-            "coordinates": [
-              139.749567,
-              35.70038
-            ],
-            "qid": null,
-            "tags": {
-              "name": "東京都産業労働局労働相談情報センター",
-              "office": "government"
-            }
           }
         ]
       },
-      "evidenceHash": "b41bacf8f79fce420fa8dc657b99e5f2db294ba964df99ab3fc80326baf20b49",
-      "current": "node/1420785407",
+      "evidenceHash": "725dacefc09a0086d8ecbb57713e0194dbf9d3a1381f6dc3ad1b2302df77f001",
+      "current": "node/13735063550",
       "status": "decided",
-      "choice": "node/1420785407",
-      "method": "source_record"
+      "choice": "node/13735063550",
+      "method": "human",
+      "human": {
+        "choice": "node/13735063550",
+        "editor": "Navi",
+        "editedAt": "2026-11-18T14:13:10Z"
+      }
     },
     "019fa880-5cd5-7031-bc8e-250d0074827b": {
       "evidence": {
