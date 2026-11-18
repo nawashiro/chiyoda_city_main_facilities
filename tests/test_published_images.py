@@ -12,6 +12,9 @@ B = '019c0000-0000-7000-8000-000000000002'
 C = '019c0000-0000-7000-8000-000000000003'
 D = '019c0000-0000-7000-8000-000000000004'
 E = '019c0000-0000-7000-8000-000000000005'
+F = '019c0000-0000-7000-8000-000000000006'
+G = '019c0000-0000-7000-8000-000000000007'
+H = '019c0000-0000-7000-8000-000000000008'
 COORD = [139.75, 35.69]
 CONTEXT = {'@version': 1.1, 'schema': 'https://schema.org/', 'rdfs': 'http://www.w3.org/2000/01/rdf-schema#'}
 OSM = 'https://www.openstreetmap.org/'
@@ -34,6 +37,9 @@ def setup_root(directory):
         place(C, osm='node/3'),
         place(D, osm='node/4', qid='Q4'),
         place(E, osm='node/5', qid='Q5'),
+        place(F, osm='node/6'),
+        place(G, osm='node/7'),
+        place(H, osm='node/8', qid='Q8'),
     ]})
     _write_json(root / 'imports/openstreetmap/raw.json', {'version': '1', 'elements': [
         {'type': 'node', 'id': number, 'lon': COORD[0], 'lat': COORD[1], 'tags': {'name': f'n{number}', **tags}}
@@ -43,6 +49,9 @@ def setup_root(directory):
             (3, {'wikimedia_commons': 'Category:分類のみ'}),
             (4, {}),
             (5, {}),
+            (6, {'wikimedia_commons': 'Category:未対応'}),
+            (7, {'wikimedia_commons': 'Category:不完全'}),
+            (8, {'wikidata': 'Q8', 'wikimedia_commons': 'Category:両方'}),
         )]})
     _write_json(root / 'imports/wikidata/raw.json', {'sourceId': 'wikidata', 'retrievedAt': 'at', 'entities': {
         'Q1': {'id': 'Q1', 'claims': {'P18': [
@@ -51,6 +60,7 @@ def setup_root(directory):
         'Q2': {'id': 'Q2', 'claims': {}},
         'Q4': {'id': 'Q4', 'claims': {'P18': [{'mainsnak': {'datavalue': {'value': 'artistless.jpg'}}}]}},
         'Q5': {'id': 'Q5', 'claims': {'P18': [{'mainsnak': {'datavalue': {'value': 'nameless-license.jpg'}}}]}},
+        'Q8': {'id': 'Q8', 'claims': {'P18': [{'mainsnak': {'datavalue': {'value': 'both.jpg'}}}]}},
         'Q999': {'id': 'Q999', 'claims': {'P18': [{'mainsnak': {'datavalue': {'value': 'Unlinked.jpg'}}}]}},
     }})
     _write_json(root / 'imports/commons/raw.json', {'sourceId': 'commons', 'retrievedAt': 'at', 'files': {
@@ -67,24 +77,51 @@ def setup_root(directory):
                                       'license': 'Public domain', 'licenseUrl': None, 'artist': '作者'},
         'File:Unlinked.jpg': {'url': 'https://upload.wikimedia.org/wikipedia/commons/f/unlinked.jpg',
                               'license': 'CC0', 'licenseUrl': None, 'artist': '誰か'},
+        'File:分類のみ.jpg': {'url': 'https://upload.wikimedia.org/wikipedia/commons/g/category-only.jpg',
+                            'license': 'CC BY 4.0', 'licenseUrl': 'https://creativecommons.org/licenses/by/4.0/', 'artist': '分類作者'},
+        'File:不完全.jpg': {'url': 'https://upload.wikimedia.org/wikipedia/commons/h/incomplete.jpg',
+                          'license': 'CC BY-SA 4.0', 'licenseUrl': None, 'artist': None},
+        'File:カテゴリ.jpg': {'url': 'https://upload.wikimedia.org/wikipedia/commons/i/category.jpg',
+                           'license': 'CC0', 'licenseUrl': None, 'artist': 'カテゴリ作者'},
+        'File:both.jpg': {'url': 'https://upload.wikimedia.org/wikipedia/commons/j/both.jpg',
+                          'license': 'CC0', 'licenseUrl': None, 'artist': '両方作者'},
+    }, 'categories': {
+        'Category:分類のみ': 'File:分類のみ.jpg',
+        'Category:不完全': 'File:不完全.jpg',
+        'Category:両方': 'File:カテゴリ.jpg',
     }})
     return root
 
 
 class PublishedImageTests(unittest.TestCase):
+    def images(self, root):
+        published = json.loads(build_repository(root).read_text())
+        return {p['@id'].rsplit(':', 1)[1]: p.get('schema:image') for p in published['@graph']}
+
     def test_build_enriches_the_published_distribution(self):
         with tempfile.TemporaryDirectory() as directory:
-            root = setup_root(directory)
-            artifact = build_repository(root)
-            published = json.loads(artifact.read_text())
-            images = {p['@id'].rsplit(':', 1)[1]: p.get('schema:image') for p in published['@graph']}
+            images = self.images(setup_root(directory))
             self.assertEqual('https://upload.wikimedia.org/wikipedia/commons/a/first.jpg', images[A]['schema:contentUrl'])
             self.assertEqual(['schema:Person'], images[A]['schema:creator']['@type'])
             self.assertEqual('作者', images[A]['schema:creator']['schema:name'])
             self.assertEqual('Attribution', images[B]['schema:license'])
-            self.assertIsNone(images[C])
+            self.assertEqual('https://upload.wikimedia.org/wikipedia/commons/g/category-only.jpg', images[C]['schema:contentUrl'])
             self.assertIsNone(images[D])
             self.assertEqual('Public domain', images[E]['schema:license'])
+            self.assertIsNone(images[F])
+            self.assertIsNone(images[G])
+            self.assertEqual('https://upload.wikimedia.org/wikipedia/commons/j/both.jpg', images[H]['schema:contentUrl'])
+
+    def test_missing_categories_map_leaves_category_records_image_free(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = setup_root(directory)
+            commons = json.loads((root / 'imports/commons/raw.json').read_text())
+            commons.pop('categories')
+            _write_json(root / 'imports/commons/raw.json', commons)
+            images = self.images(root)
+            self.assertIsNone(images[C])
+            self.assertIsNone(images[G])
+            self.assertIsNotNone(images[A])
 
     def test_canonical_source_stays_image_free(self):
         with tempfile.TemporaryDirectory() as directory:

@@ -262,15 +262,20 @@ def build_repository(root: str | Path) -> Path:
     return artifact
 
 
-def _image_file_name(place: dict[str, Any], osm_files: dict[str, Any], p18_files: dict[str, str]) -> str | None:
-    for uri in place.get("rdfs:seeAlso", []):
-        if isinstance(uri, str) and uri.startswith("https://www.wikidata.org/entity/"):
+def _image_file_name(place: dict[str, Any], osm_files: dict[str, Any], p18_files: dict[str, str], categories: dict[str, str]) -> str | None:
+    links = [uri for uri in place.get("rdfs:seeAlso", []) if isinstance(uri, str)]
+    for uri in links:
+        if uri.startswith("https://www.wikidata.org/entity/"):
             value = p18_files.get(uri.rsplit("/", 1)[1])
             if value: return value
-    for uri in place.get("rdfs:seeAlso", []):
-        if isinstance(uri, str) and uri.startswith("https://www.openstreetmap.org/"):
+    for uri in links:
+        if uri.startswith("https://www.openstreetmap.org/"):
             value = osm_files.get(uri.removeprefix("https://www.openstreetmap.org/"))
             if isinstance(value, str) and value.startswith("File:"): return value
+    for uri in links:
+        if uri.startswith("https://www.openstreetmap.org/"):
+            value = osm_files.get(uri.removeprefix("https://www.openstreetmap.org/"))
+            if isinstance(value, str) and value.startswith("Category:") and value in categories: return categories[value]
     return None
 
 
@@ -284,9 +289,11 @@ def _apply_images(root: Path, document: dict[str, Any]) -> None:
         value = claims[0].get("mainsnak", {}).get("datavalue", {}).get("value") if claims else None
         if isinstance(value, str) and value:
             p18_files[qid] = value if value.startswith("File:") else f"File:{value}"
-    metadata = _read_json(commons_path).get("files", {})
+    commons = _read_json(commons_path)
+    metadata = commons.get("files", {})
+    categories = commons.get("categories") or {}
     for place in document["@graph"]:
-        name = _image_file_name(place, osm_files, p18_files)
+        name = _image_file_name(place, osm_files, p18_files, categories)
         meta = metadata.get(name) if name else None
         if not isinstance(meta, dict) or not meta.get("url") or not meta.get("license") or not meta.get("artist"): continue
         place["schema:image"] = {

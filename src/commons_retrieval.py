@@ -19,6 +19,7 @@ from src.http_utils import read_limited_response
 COMMONS_API = "https://commons.wikimedia.org/w/api.php"
 PAGE_SIZE = 50
 EXTMETADATA = "LicenseShortName|LicenseUrl|Artist"
+_WORDS = re.compile(r"[^\W_]+")
 
 
 def _get(url: str) -> bytes:
@@ -31,16 +32,29 @@ def _common_title(value: str) -> str:
     return value if value.startswith("File:") else f"File:{value}"
 
 
+def _osm_commons_tags(root: Path) -> list[str]:
+    osm_mirror = root / "site/mirrors/osm.json"
+    if not osm_mirror.exists():
+        return []
+    tags = []
+    for element in _read_json(osm_mirror).get("elements", []):
+        tag = (element.get("tags") or {}).get("wikimedia_commons")
+        if isinstance(tag, str):
+            tags.append(tag)
+    return tags
+
+
+def collect_categories(root: str | Path) -> list[str]:
+    return sorted({tag for tag in _osm_commons_tags(Path(root)) if tag.startswith("Category:")})
+
+
 def collect_file_names(root: str | Path) -> list[str]:
     """The committed mirrors already hold the association-scoped elements and entities."""
     root = Path(root)
     names: set[str] = set()
-    osm_mirror = root / "site/mirrors/osm.json"
-    if osm_mirror.exists():
-        for element in _read_json(osm_mirror).get("elements", []):
-            tag = (element.get("tags") or {}).get("wikimedia_commons")
-            if isinstance(tag, str) and tag.startswith("File:"):
-                names.add(tag)
+    for tag in _osm_commons_tags(root):
+        if tag.startswith("File:"):
+            names.add(tag)
     wikidata_mirror = root / "site/mirrors/wikidata.json"
     if wikidata_mirror.exists():
         for entity in _read_json(wikidata_mirror).get("entities", {}).values():
@@ -98,16 +112,82 @@ def _query_files(titles: list[str], fetch) -> dict[str, dict[str, Any]]:
     return files
 
 
+def _plain_title(title: str) -> str:
+    return title.split(":", 1)[-1]
+
+
+def _title_words(title: str) -> set[str]:
+    return set(_WORDS.findall(_plain_title(title).lower()))
+
+
+def _origin_titles(query: dict[str, Any]) -> dict[str, str]:
+    """Map a response title back to the requested title through normalization and redirects."""
+    origin: dict[str, str] = {}
+    for item in query.get("normalized", []):
+        if isinstance(item, dict) and isinstance(item.get("from"), str) and isinstance(item.get("to"), str):
+            origin[item["to"]] = item["from"]
+    for item in query.get("redirects", []):
+        if isinstance(item, dict) and isinstance(item.get("from"), str) and isinstance(item.get("to"), str):
+            origin[item["to"]] = origin.get(item["from"], item["from"])
+    return origin
+
+
+def _query_page_images(categories: list[str], fetch) -> dict[str, str]:
+    url = f"{COMMONS_API}?{urlencode({'action': 'query', 'titles': '|'.join(categories), 'prop': 'pageimages', 'piprop': 'name', 'redirects': '1', 'format': 'json'})}"
+    query = (json.loads(fetch(url)).get("query") or {})
+    origin = _origin_titles(query)
+    images: dict[str, str] = {}
+    for page in (query.get("pages") or {}).values():
+        if not isinstance(page, dict) or "missing" in page:
+            continue
+        title = origin.get(page.get("title"), page.get("title"))
+        name = page.get("pageimage")
+        if isinstance(title, str) and isinstance(name, str) and name:
+            images[title] = _common_title(name)
+    return images
+
+
+def _query_category_members(category: str, fetch) -> list[str]:
+    url = f"{COMMONS_API}?{urlencode({'action': 'query', 'list': 'categorymembers', 'cmtitle': category, 'cmtype': 'file', 'cmlimit': PAGE_SIZE, 'cmprop': 'title|sortkey', 'format': 'json'})}"
+    members = (json.loads(fetch(url)).get("query") or {}).get("categorymembers") or []
+    return [member["title"] for member in members if isinstance(member, dict) and isinstance(member.get("title"), str) and member["title"]]
+
+
+def _select_member(category: str, titles: list[str]) -> str | None:
+    if not titles:
+        return None
+    wanted = _title_words(category)
+    scored = [(len(wanted & _title_words(title)), title) for title in titles]
+    best = max(score for score, _ in scored)
+    if best == 0:
+        return titles[0]
+    return min((title for score, title in scored if score == best), key=lambda title: (len(title), title))
+
+
+def resolve_categories(categories: list[str], fetch) -> dict[str, str]:
+    resolved: dict[str, str] = {}
+    for start in range(0, len(categories), PAGE_SIZE):
+        resolved.update(_query_page_images(categories[start:start + PAGE_SIZE], fetch))
+    for category in categories:
+        if category in resolved:
+            continue
+        selected = _select_member(category, _query_category_members(category, fetch))
+        if selected:
+            resolved[category] = selected
+    return {category: resolved[category] for category in categories if category in resolved}
+
+
 def run_commons_retrieval(root: str | Path, at: str, fetch=_get) -> Path:
     root = Path(root)
-    names = collect_file_names(root)
+    categories = resolve_categories(collect_categories(root), fetch)
+    names = sorted(set(collect_file_names(root)) | set(categories.values()))
     files: dict[str, dict[str, Any]] = {}
     pages = 0
     for start in range(0, len(names), PAGE_SIZE):
         chunk = names[start:start + PAGE_SIZE]
         files.update(_query_files(chunk, fetch))
         pages += 1
-    document = {"sourceId": "commons", "retrievedAt": at, "files": files}
+    document = {"sourceId": "commons", "retrievedAt": at, "files": files, "categories": categories}
     payload = (json.dumps(document, ensure_ascii=False, indent=2) + "\n").encode("utf-8")
     metadata = {"sourceId": "commons", "retrievedAt": at, "endpoint": COMMONS_API, "fileCount": len(names), "pages": pages, "rawSha256": hashlib.sha256(payload).hexdigest()}
     _write_json(root / "imports/commons/raw.json", document)
