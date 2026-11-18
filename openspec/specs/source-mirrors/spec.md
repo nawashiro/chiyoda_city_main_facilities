@@ -44,7 +44,7 @@ OSM と Wikidata の Raw ミラーを月次パイプラインで更新し、常�
 - **THEN** OSM ミラーと Wikidata ミラーが別ファイルであり、混合配布物としての単一 CC0 表示になっていない
 
 ### Requirement: Commons license metadata extraction
-システム SHALL 月次パイプラインで、紐付け済み要素から集めたCommonsのファイル名それぞれについて、Commons APIから直接URL、ライセンス、作者を取得し、`imports/commons/raw.json`に保持します。ファイル名の収集 SHALL Wikidata P18とOSMの`File:`タグに由来し、紐付け集合の要素に限定します。抽出物 MUST Pages配信の対象にしません。システム MUST 取得メタ（取得日時・エンドポイント・応答SHA256）を既存のretrievalメタと同種の記録として残します。
+システム SHALL 月次パイプラインで、紐付け済み要素から集めたCommonsのファイル名それぞれについて、Commons APIから直接URL、ライセンス、作者を取得し、`imports/commons/raw.json`に保持します。ファイル名の収集 SHALL Wikidata P18、OSMの`File:`タグ、OSMの`Category:`タグが指すCommonsカテゴリに由来し、紐付け集合の要素に限定します。カテゴリは代表画像を優先し、無いときはカテゴリ内のファイルからカテゴリ名に最も一致するものを選びます。システム MUST カテゴリ名からファイル名への対応を`imports/commons/raw.json`に記録します。抽出物 MUST Pages配信の対象にしません。システム MUST 取得メタ（取得日時・エンドポイント・応答SHA256）を既存のretrievalメタと同種の記録として残します。
 
 #### Scenario: Monthly pipeline refreshes the metadata
 
@@ -60,6 +60,21 @@ OSM と Wikidata の Raw ミラーを月次パイプラインで更新し、常�
 
 - **WHEN** `site/mirrors/`の配布物が点検される
 - **THEN** Commonsのメタデータ抽出物は配布物の外の`imports/commons/`に留まる
+
+#### Scenario: Category page image is resolved
+
+- **WHEN** OSM要素の`wikimedia_commons`が`Category:`を指し、そのカテゴリに代表画像がある
+- **THEN** 代表画像のファイル名が取得対象になり、カテゴリ名からファイル名への対応が`imports/commons/raw.json`に記録される
+
+#### Scenario: Category without a page image falls back to its files
+
+- **WHEN** カテゴリに代表画像がなく、ファイルメンバーがある
+- **THEN** カテゴリ名に最も一致するファイル名が取得対象になり、対応が`imports/commons/raw.json`に記録される
+
+#### Scenario: Category without files stays unresolved
+
+- **WHEN** カテゴリに代表画像もファイルメンバーもない
+- **THEN** そのカテゴリの対応は記録されず、公開時に画像は付かない
 
 ### Requirement: Retrieval failure does not block publication
 システム SHALL Wikidata ミラーと Commons メタデータの更新失敗時に OSM 関係の月次更新と Pages 公開を継続します。

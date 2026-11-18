@@ -77,7 +77,7 @@ recordの分類は `schema:identifier` の `schema:PropertyValue`（`propertyID`
 
 #### Scenario: Facility with an upstream image is published
 
-- **WHEN** 公開対象の施設にWikidata P18またはOSMの`File:`タグがあり、Commonsのメタデータが得られる
+- **WHEN** 公開対象の施設にWikidata P18、OSMの`File:`タグ、またはOSMの`Category:`タグに対応する画像があり、Commonsのメタデータが得られる
 - **THEN** 公開recordは`schema:ImageObject`に直接URL、ライセンス、作者名を含む
 
 #### Scenario: Commons metadata is absent
@@ -91,12 +91,17 @@ recordの分類は `schema:identifier` の `schema:PropertyValue`（`propertyID`
 - **THEN** recordは`schema:image`を含まない
 
 ### Requirement: Deterministic single image selection
-システム SHALL 画像の選択を、取得物だけで決まるように行います。Wikidata P18を優先し、無いときはOSMの`wikimedia_commons`タグのうち`File:`で始まるものを使います。`Category:`タグはシステム MUST 画像の対象にしません。一つのrecord MUST 画像を高々一つにします。
+システム SHALL 画像の選択を、取得物だけで決まるように行います。Wikidata P18を優先し、無いときはOSMの`wikimedia_commons`タグのうち`File:`で始まるものを使います。`Category:`タグのときは、`imports/commons/raw.json`に記録されたカテゴリ名からファイル名への対応を使います。一つのrecord MUST 画像を高々一つにします。
 
 #### Scenario: Both P18 and OSM tag exist
 
 - **WHEN** 施設のWikidata entityにP18があり、OSM要素にも`File:`タグがある
 - **THEN** 選択はP18で確定し、OSMタグは使わない
+
+#### Scenario: Both P18 and a category tag exist
+
+- **WHEN** 施設のWikidata entityにP18があり、OSM要素にも`Category:`タグがある
+- **THEN** 選択はP18で確定し、カテゴリの代表画像は使わない
 
 #### Scenario: Multiple P18 claims exist
 
@@ -105,5 +110,10 @@ recordの分類は `schema:identifier` の `schema:PropertyValue`（`propertyID`
 
 #### Scenario: Only a category tag exists
 
-- **WHEN** OSMタグが`Category:`のみで、P18がない
+- **WHEN** OSMタグが`Category:`のみで、P18がなく、対応するファイルのメタデータが得られる
+- **THEN** システムはそのファイルを`schema:image`に使う
+
+#### Scenario: Category image metadata is insufficient
+
+- **WHEN** OSMタグが`Category:`のみで、P18がなく、対応するファイルがない、またはメタデータが不完全
 - **THEN** システムはその施設に`schema:image`を付けない
