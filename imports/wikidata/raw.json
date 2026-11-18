@@ -1,6 +1,6 @@
 {
   "sourceId": "wikidata",
-  "retrievedAt": "2026-11-17T09:38:31+00:00",
+  "retrievedAt": "2026-11-18T03:15:13+00:00",
   "entities": {
     "Q106020484": {
       "pageid": 101358885,
@@ -104045,8 +104045,8 @@
       "pageid": 6460677,
       "ns": 0,
       "title": "Q6631821",
-      "lastrevid": 2346371483,
-      "modified": "2025-05-09T05:20:40Z",
+      "lastrevid": 2570848985,
+      "modified": "2026-11-17T11:10:39Z",
       "type": "item",
       "id": "Q6631821",
       "labels": {
@@ -104077,6 +104077,10 @@
         "fr": {
           "language": "fr",
           "value": "parc de la douve de Chidori"
+        },
+        "hi": {
+          "language": "hi",
+          "value": "चिदोरिगाफ़ुची पार्क"
         }
       },
       "descriptions": {
@@ -104123,6 +104127,10 @@
         "fr": {
           "language": "fr",
           "value": "parc dans l'arrondissement de Chiyoda à Tokyo, au Japon"
+        },
+        "hi": {
+          "language": "hi",
+          "value": "टोक्यो के चियोदा, जापान में पार्क"
         }
       },
       "aliases": {

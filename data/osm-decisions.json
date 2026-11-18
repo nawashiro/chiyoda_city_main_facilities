@@ -13398,10 +13398,10 @@
         ]
       },
       "evidenceHash": "eed50fab31725e96b4d371f8d8fa9bf79a24a86b65469312edee102bc7e338bc",
-      "current": null,
+      "current": "way/179565779",
       "status": "decided",
       "choice": "way/179565779",
-      "method": "qid"
+      "method": "source_record"
     },
     "01a1e8ab-f07e-7424-8199-f8ce84712814": {
       "evidence": {
@@ -13429,10 +13429,10 @@
         ]
       },
       "evidenceHash": "10b8a88f1facc7f45e107461c4a91e7f48de9da26b4c5136b624b57c0fc2df77",
-      "current": null,
+      "current": "way/179565358",
       "status": "decided",
       "choice": "way/179565358",
-      "method": "qid"
+      "method": "source_record"
     },
     "01a1e8ab-f0c4-79e3-a1d4-42b3c152ffcf": {
       "evidence": {
@@ -13461,10 +13461,10 @@
         ]
       },
       "evidenceHash": "e3b7cb10a7fa9dd933818c27e474b6c0902c468289a1db8fa65a36a3881b1bcf",
-      "current": null,
+      "current": "way/625044719",
       "status": "decided",
       "choice": "way/625044719",
-      "method": "qid"
+      "method": "source_record"
     },
     "01a1e8ab-f109-7794-bbe6-d6d05f476328": {
       "evidence": {
@@ -13493,10 +13493,10 @@
         ]
       },
       "evidenceHash": "1ce33f67ea767507d0c78a74149f2035628053d01ae43a0642d2c23023188c0b",
-      "current": null,
+      "current": "node/14344607026",
       "status": "decided",
       "choice": "node/14344607026",
-      "method": "qid"
+      "method": "source_record"
     },
     "01a1e8ab-f14e-7d43-bf8c-022b06f17c7c": {
       "evidence": {
@@ -13523,10 +13523,10 @@
         ]
       },
       "evidenceHash": "996ca777de76ffec38924e1853e4466a2eb62efc4befa86843ccb41094e0c7ec",
-      "current": null,
+      "current": "way/184577228",
       "status": "decided",
       "choice": "way/184577228",
-      "method": "qid"
+      "method": "source_record"
     },
     "01a1e8ab-f193-77b8-8c30-c21e337a05e5": {
       "evidence": {
@@ -13540,30 +13540,30 @@
             "recordId": "way/620327839",
             "name": "千代田区立 千代田小学校",
             "coordinates": [
-              139.7684397,
-              35.6931954
+              139.768436,
+              35.693195700000004
             ],
-            "qid": "Q81916365",
+            "qid": "Q97168414",
             "tags": {
               "amenity": "school",
               "name": "千代田区立 千代田小学校",
               "name:en": "Chiyoda Elementary School",
               "name:ja": "千代田小学校",
-              "wikidata": "Q81916365"
+              "wikidata": "Q97168414"
             }
           }
         ]
       },
-      "evidenceHash": "e530ba5ec33667364ff330f977d946ee79fb28fef9ab138ef8dc3fc4905416b3",
+      "evidenceHash": "45e5cc79c5a6f19b505c42831cf3fc24e84389aca24780810a4b585720fceb55",
       "current": "way/620327839",
       "status": "decided",
-      "choice": "way/620327839",
-      "method": "human",
       "human": {
         "choice": "way/620327839",
         "editor": "Navi",
         "editedAt": "2026-11-17T09:50:06Z"
-      }
+      },
+      "choice": "way/620327839",
+      "method": "human"
     },
     "01a1e8ab-f1d8-7b07-a074-43cb7833f6b0": {
       "evidence": {
@@ -13591,10 +13591,10 @@
         ]
       },
       "evidenceHash": "14556f2cfc28741fdc36ba1e686e5932eb3c6be19d0211aa3e5d0afdd43fadf1",
-      "current": null,
+      "current": "way/46982684",
       "status": "decided",
       "choice": "way/46982684",
-      "method": "qid"
+      "method": "source_record"
     },
     "01a1e8ab-f21f-7e46-adb6-24f430ef1f28": {
       "evidence": {
@@ -13622,10 +13622,10 @@
         ]
       },
       "evidenceHash": "b4d66b31aa35f4ebfd73d11d0c3f276d42435904a243f5a2a5d5b5434d593c5d",
-      "current": null,
+      "current": "way/217378912",
       "status": "decided",
       "choice": "way/217378912",
-      "method": "qid"
+      "method": "source_record"
     },
     "01a1e8c0-2938-795c-874c-ce0091270aaf": {
       "evidence": {
@@ -13655,10 +13655,10 @@
         ]
       },
       "evidenceHash": "d85cbe0fc4c291c4b94b4648a29502c72ca4b22c8b536896ab2ac84c8d5e9a49",
-      "current": null,
+      "current": "node/3851695361",
       "status": "decided",
       "choice": "node/3851695361",
-      "method": "qid"
+      "method": "source_record"
     },
     "01a1e8c0-297e-7d68-96c0-61e2a611646b": {
       "evidence": {
@@ -13689,10 +13689,10 @@
         ]
       },
       "evidenceHash": "3a3487b5755712856a9e9d1f6d342c66d70fd5cfd05cee4530cde3b128e8c6f4",
-      "current": null,
+      "current": "node/1420785374",
       "status": "decided",
       "choice": "node/1420785374",
-      "method": "qid"
+      "method": "source_record"
     },
     "01a1e8c0-29c3-7ace-8777-a8a2b17edcda": {
       "evidence": {
@@ -13724,10 +13724,10 @@
         ]
       },
       "evidenceHash": "0da741b928ef5196d84994c893735917ce6350f0cec22d2ec89217d104037657",
-      "current": null,
+      "current": "way/219877271",
       "status": "decided",
       "choice": "way/219877271",
-      "method": "qid"
+      "method": "source_record"
     },
     "01a1e8c0-2a08-7672-b846-34526c4e12ba": {
       "evidence": {
@@ -13757,10 +13757,10 @@
         ]
       },
       "evidenceHash": "ca24fafaf60a4a7a1ce8cf404b7fa72f8d8b5332c9b9a31e9290cae523886b6f",
-      "current": null,
+      "current": "node/1420765470",
       "status": "decided",
       "choice": "node/1420765470",
-      "method": "qid"
+      "method": "source_record"
     },
     "01a1e8c0-2a4c-74d9-b466-4a915c81991a": {
       "evidence": {
@@ -13789,10 +13789,10 @@
         ]
       },
       "evidenceHash": "0ad7ab31b3f13724d80c12e0bd0b6e07da2a4026aafda01524facff3c91e8acf",
-      "current": null,
+      "current": "relation/14509145",
       "status": "decided",
       "choice": "relation/14509145",
-      "method": "qid"
+      "method": "source_record"
     },
     "01a1e8c7-83fd-76ea-a425-b3fec7d992f8": {
       "evidence": {
