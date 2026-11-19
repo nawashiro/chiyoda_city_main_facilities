@@ -5226,55 +5226,32 @@
         },
         "candidates": [
           {
-            "recordId": "node/1420784761",
-            "name": "東京社会保険事務局麹町事務所",
+            "recordId": "node/14394442841",
+            "name": "子育てひろば あい・ぽーと麹町",
             "coordinates": [
-              139.74249,
-              35.690402
+              139.7422072,
+              35.6903081
             ],
             "qid": null,
             "tags": {
-              "building": "public",
-              "name": "東京社会保険事務局麹町事務所"
-            }
-          },
-          {
-            "recordId": "node/1420800550",
-            "name": "麹町社会保険事務所",
-            "coordinates": [
-              139.7424816,
-              35.6904006
-            ],
-            "qid": null,
-            "tags": {
-              "building": "public",
-              "name": "麹町社会保険事務所",
-              "office": "government",
-              "operator": "日本年金機構",
-              "operator:wikidata": "Q11508070"
+              "amenity": "childcare",
+              "name": "子育てひろば あい・ぽーと麹町",
+              "operator": "NPO法人あい・ぽーとステーション",
+              "website": "https://www.ai-port.jp/kojimachi/"
             }
           }
         ]
       },
-      "evidenceHash": "78db72157ed56bd87df9aa8e66b83b03f79b7dd2f02572bdac37575a373e1b6f",
-      "current": null,
+      "evidenceHash": "72ec75cdef0d368ffab7aab7901dd0c7a701789215ff2be1923b8c199f831758",
+      "current": "node/14394442841",
       "status": "decided",
-      "jev": {
-        "choice": "none",
-        "confidence": 0.95,
-        "probabilities": {
-          "node/1420784761": 0.01,
-          "node/1420800550": 0.02,
-          "none": 0.97
-        },
-        "usage": {
-          "input_tokens": 706,
-          "output_tokens": 42
-        },
-        "model": "jev-1.14.0"
-      },
-      "choice": "none",
-      "method": "jev"
+      "choice": "node/14394442841",
+      "method": "human",
+      "human": {
+        "choice": "node/14394442841",
+        "editor": "Navi",
+        "editedAt": "2026-11-19T04:14:30Z"
+      }
     },
     "019fa880-5cd5-7bae-838d-111510f35ee9": {
       "evidence": {
