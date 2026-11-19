@@ -80,7 +80,7 @@
     {
       "@type": "schema:DefinedTerm",
       "@id": "https://nawashiro.github.io/chiyoda_city_main_facilities/category-names.jsonld#1402",
-      "schema:name": "保育園"
+      "schema:name": "保育所・託児所"
     },
     {
       "@type": "schema:DefinedTerm",
