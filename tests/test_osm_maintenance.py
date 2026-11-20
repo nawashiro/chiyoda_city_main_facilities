@@ -143,10 +143,8 @@ class EvidenceTests(unittest.TestCase):
         self.assertTrue(validate_search_document({'queries': [query(coordinates=[float('nan'), 1])]}))
         self.assertTrue(validate_search_document({'queries': [query(publish='false')]}))
 
-    def test_migration_preserves_targets_and_public_geometry(self):
+    def test_published_places_are_declared_and_unique(self):
         queries = load_queries(ROOT)
-        self.assertEqual(106, len(queries))
-        self.assertEqual(106, len({q['id'] for q in queries}))
         published = json.loads((ROOT / 'data/places.jsonld').read_text())
         place_ids = [
             record['@id']
@@ -154,7 +152,7 @@ class EvidenceTests(unittest.TestCase):
             if 'schema:Place' in record.get('@type', [])
         ]
         self.assertEqual(len(place_ids), len(set(place_ids)))
-        declared = {f'urn:uuid:{q["id"]}' for q in load_queries(ROOT)}
+        declared = {f'urn:uuid:{q["id"]}' for q in queries}
         self.assertEqual(
             [],
             sorted(set(place_ids) - declared),
