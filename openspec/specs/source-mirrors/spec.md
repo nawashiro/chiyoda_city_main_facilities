@@ -44,7 +44,7 @@ OSM と Wikidata の Raw ミラーを月次パイプラインで更新し、常�
 - **THEN** OSM ミラーと Wikidata ミラーが別ファイルであり、混合配布物としての単一 CC0 表示になっていない
 
 ### Requirement: Commons license metadata extraction
-システム SHALL 月次パイプラインで、紐付け済み要素から集めたCommonsのファイル名それぞれについて、Commons APIから直接URL、ライセンス、作者を取得し、`imports/commons/raw.json`に保持します。ファイル名の収集 SHALL Wikidata P18、OSMの`File:`タグ、OSMの`Category:`タグが指すCommonsカテゴリに由来し、紐付け集合の要素に限定します。カテゴリは代表画像を優先し、無いときはカテゴリ内のファイルからカテゴリ名に最も一致するものを選びます。システム MUST カテゴリ名からファイル名への対応を`imports/commons/raw.json`に記録します。抽出物 MUST Pages配信の対象にしません。システム MUST 取得メタ（取得日時・エンドポイント・応答SHA256）を既存のretrievalメタと同種の記録として残します。
+システム SHALL 月次パイプラインで、紐付け済み要素から集めたCommonsのファイル名それぞれについて、Commons APIから直接URL、ライセンス、作者を取得し、`imports/commons/raw.json`に保持します。ファイル名の収集 SHALL Wikidata P18、OSMの`File:`タグ、OSMの`Category:`タグが指すCommonsカテゴリに由来し、紐付け集合の要素に限定します。カテゴリは代表画像を優先し、無いときはカテゴリ内のファイルからカテゴリ名に最も一致するものを選びます。作者欄のHTMLに含まれる非表示要素（`display:none`、`hidden`）の文字列 MUST 作者名に含めません。作者名がCommonsのプレースホルダ（`Unknown author`など）のとき、システム MUST 作者なしとして扱い、`artist`を`null`にします。システム MUST カテゴリ名からファイル名への対応を`imports/commons/raw.json`に記録します。抽出物 MUST Pages配信の対象にしません。システム MUST 取得メタ（取得日時・エンドポイント・応答SHA256）を既存のretrievalメタと同種の記録として残します。
 
 #### Scenario: Monthly pipeline refreshes the metadata
 
@@ -75,6 +75,16 @@ OSM と Wikidata の Raw ミラーを月次パイプラインで更新し、常�
 
 - **WHEN** カテゴリに代表画像もファイルメンバーもない
 - **THEN** そのカテゴリの対応は記録されず、公開時に画像は付かない
+
+#### Scenario: Hidden author text is ignored
+
+- **WHEN** 作者欄が可視テキストと非表示要素（`display:none`）の文字列をあわせて持つ
+- **THEN** 保存される`artist`は可視テキストだけになる
+
+#### Scenario: Unknown author placeholder yields no author
+
+- **WHEN** 作者欄が`{{unknown|author}}`由来のプレースホルダのみである
+- **THEN** `imports/commons/raw.json`の`artist`は`null`になる
 
 ### Requirement: Retrieval failure does not block publication
 システム SHALL Wikidata ミラーと Commons メタデータの更新失敗時に OSM 関係の月次更新と Pages 公開を継続します。
