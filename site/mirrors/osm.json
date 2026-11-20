@@ -1,5 +1,5 @@
 {
-  "version": "202611170100",
+  "version": "202611160100",
   "elements": [
     {
       "type": "node",
@@ -401,20 +401,6 @@
     },
     {
       "type": "node",
-      "id": 1420785407,
-      "lon": 139.749567,
-      "lat": 35.70038,
-      "tags": {
-        "name": "東京都産業労働局労働相談情報センター",
-        "note": "National-Land Numerical Information (Public Facility) 2006, MLIT Japan",
-        "note:ja": "国土数値情報（公共施設データ）平成19年 国土交通省",
-        "office": "government",
-        "source": "KSJ2",
-        "source_ref": "http://nlftp.mlit.go.jp/ksj/jpgis/datalist/KsjTmplt-P02-v2_0.html"
-      }
-    },
-    {
-      "type": "node",
       "id": 1420785508,
       "lon": 139.754641,
       "lat": 35.671945,
@@ -449,48 +435,6 @@
         "phone": "+81-3-3253-4931",
         "website": "https://www.city.chiyoda.lg.jp/shisetsu/kuyakusho/izumibashi-shuchojo.html",
         "wikimedia_commons": "File:Chiyoda Ward Office Izumibashi Branch Office.jpg"
-      }
-    },
-    {
-      "type": "node",
-      "id": 1655905663,
-      "lon": 139.739284,
-      "lat": 35.68699,
-      "tags": {
-        "addr:block_number": "12",
-        "addr:city": "千代田区",
-        "addr:neighbourhood": "一番町",
-        "addr:province": "東京都",
-        "amenity": "social_facility",
-        "name": "千代田区立一番町高齢者在宅介護支援センター",
-        "note": "National-Land Numerical Information (Public Facility) 2006, MLIT Japan",
-        "note:ja": "国土数値情報（公共施設データ）平成19年 国土交通省",
-        "operator": "東京都千代田区",
-        "social_facility": "outreach",
-        "social_facility:for": "senior",
-        "source": "KSJ2",
-        "source_ref": "http://nlftp.mlit.go.jp/ksj/jpgis/datalist/KsjTmplt-P02-v2_0.html"
-      }
-    },
-    {
-      "type": "node",
-      "id": 1655927382,
-      "lon": 139.754706,
-      "lat": 35.698887,
-      "tags": {
-        "addr:block_number": "6",
-        "addr:city": "千代田区",
-        "addr:housenumber": "2",
-        "addr:neighbourhood": "西神田二丁目",
-        "addr:province": "東京都",
-        "amenity": "social_facility",
-        "name": "西神田児童・家庭支援センター",
-        "note": "National-Land Numerical Information (Public Facility) 2006, MLIT Japan",
-        "note:ja": "国土数値情報（公共施設データ）平成19年 国土交通省",
-        "operator": "東京都千代田区",
-        "social_facility": "assisted_living",
-        "source": "KSJ2",
-        "source_ref": "http://nlftp.mlit.go.jp/ksj/jpgis/datalist/KsjTmplt-P02-v2_0.html"
       }
     },
     {
@@ -1072,6 +1016,21 @@
     },
     {
       "type": "node",
+      "id": 13735063550,
+      "lon": 139.7498669,
+      "lat": 35.7001594,
+      "tags": {
+        "name": "東京しごとセンター",
+        "office": "employment_agency",
+        "opening_hours": "Mo-Fr 09:00-20:00; Sa 09:00-17:00; Su,PH off; Dec 29-Jan 03 off",
+        "phone": "+81-3-5211-1571",
+        "website": "https://www.tokyoshigoto.jp/",
+        "wikidata": "Q11524020",
+        "wikipedia": "ja:東京しごとセンター"
+      }
+    },
+    {
+      "type": "node",
       "id": 13741796001,
       "lon": 139.7640417,
       "lat": 35.6945448,
@@ -1120,6 +1079,24 @@
     },
     {
       "type": "node",
+      "id": 14337525601,
+      "lon": 139.7787853,
+      "lat": 35.6992391,
+      "tags": {
+        "after_school": "yes",
+        "amenity": "kindergarten",
+        "check_date": "2026-11-01",
+        "check_date:opening_hours": "2026-11-01",
+        "level": "5",
+        "name": "いずみこどもプラザ",
+        "opening_hours": "Mo-Sa 09:00-05:00",
+        "operator": "千代田区",
+        "operator:type": "public",
+        "operator:wikidata": "Q214051"
+      }
+    },
+    {
+      "type": "node",
       "id": 14337531401,
       "lon": 139.778781,
       "lat": 35.6991784,
@@ -1152,23 +1129,6 @@
         "opening_hours": "Mo-Sa 09:00-17:00",
         "phone": "+81332343084",
         "website": "https://www.city.chiyoda.lg.jp/koho/kosodate/jidocenter/ichiran/4bancho.html"
-      }
-    },
-    {
-      "type": "node",
-      "id": 14344607026,
-      "lon": 139.7463641,
-      "lat": 35.6971909,
-      "tags": {
-        "amenity": "school",
-        "education": "school",
-        "name": "千代田区立 富士見小学校",
-        "name:en": "Fujimi Elementary School",
-        "name:es": "Escuela primaria Fujimi",
-        "phone": "+81-3-3263-1006",
-        "website": "https://chiyoda.schoolweb.ne.jp/1310164",
-        "wikidata": "Q81916362",
-        "wikipedia": "ja:千代田区立富士見小学校"
       }
     },
     {
@@ -1580,6 +1540,25 @@
         "wikidata": "Q3076188",
         "wikimedia_commons": "Category:Museum of the Imperial Collections",
         "wikipedia": "ja:皇居三の丸尚蔵館"
+      }
+    },
+    {
+      "type": "way",
+      "id": 173230196,
+      "center": {
+        "lon": 139.7698588,
+        "lat": 35.70120285
+      },
+      "tags": {
+        "addr:block_number": "4",
+        "addr:housenumber": "7",
+        "addr:neighbourhood": "3丁目",
+        "building": "school",
+        "building:levels": "6",
+        "name": "昌平童夢館",
+        "name:en": "Shohei Domukan Children's Hall",
+        "name:ja_rm": "Shōhei Dōmu-kan",
+        "source": "Bing"
       }
     },
     {
