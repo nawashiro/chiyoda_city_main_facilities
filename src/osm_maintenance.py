@@ -11,7 +11,7 @@ from pathlib import Path
 
 from src.facility_data import _read_json, _write_json, load_queries, validate_repository
 from src.github_osm_review import GitHub, apply_confirmations, close_published, read_confirmations
-from src.resolve_osm_candidates import apply_decisions, current_id, resolve
+from src.resolve_osm_candidates import apply_decisions, current_id, resolve, validate_ledger
 from src import facility_categories
 from src.env_utils import load_dotenv
 from src.commons_retrieval import run_commons_retrieval
@@ -41,6 +41,9 @@ def update(root, *, refresh=False, github=None, judge=None, category_judge=None,
     ledger = _read_json(root / "data/osm-decisions.json")
     if ledger.get("version") != 1 or not isinstance(ledger.get("facilities"), dict):
         raise ValueError("invalid OSM decision ledger")
+    hold_issues = validate_ledger(ledger)
+    if hold_issues:
+        raise ValueError("; ".join(hold_issues))
     ledger = copy.deepcopy(ledger)
     confirmations = read_confirmations(ledger, github) if github else {}
     existing = {p["@id"].removeprefix("urn:uuid:"): current_id(p) for p in document["@graph"]}

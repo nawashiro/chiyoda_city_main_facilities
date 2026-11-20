@@ -207,16 +207,27 @@ def stale_facilities(decisions: dict, places: dict) -> list[str]:
     return sorted(stale)
 
 
+def held_facilities(root: Path) -> dict[str, dict]:
+    """Return the association holds recorded in the OSM decision ledger."""
+    path = Path(root) / "data/osm-decisions.json"
+    if not path.is_file():
+        return {}
+    facilities = _read_json(path).get("facilities") or {}
+    return {uuid: entry for uuid, entry in facilities.items()
+            if isinstance(entry, dict) and entry.get("status") == "hold"}
+
+
 def unresolved_facilities(root: Path, document: dict | None = None) -> list[dict]:
     root = Path(root)
     codes = load_vocabulary(root)
     decisions = load_decisions(root, codes)
     places = {p["@id"].removeprefix("urn:uuid:"): p for p in (document if document is not None else _read_json(root / "data/places.jsonld"))["@graph"]}
     names = {q["id"]: q["name"] for q in load_queries(root)}
+    held = set(held_facilities(root))
     stale = set(stale_facilities(decisions, places))
     return [{"id": uuid, "name": names.get(uuid, uuid), "osmId": current_id(places.get(uuid, {}))}
             for uuid in sorted(set(places) | set(decisions["facilities"]))
-            if uuid not in decisions["facilities"] or uuid not in places or uuid in stale]
+            if uuid not in held and (uuid not in decisions["facilities"] or uuid not in places or uuid in stale)]
 
 
 def apply_categories(document: dict, decisions: dict, codes: dict[str, str]) -> list[str]:
@@ -266,6 +277,7 @@ def refresh(root: Path, *, judge=None, elements: list | None = None, document: d
     rules = load_rules(root, codes)
     decisions = load_decisions(root, codes)
     queries = load_queries(root)
+    held = set(held_facilities(root))
     if document is None:
         document = _read_json(root / "data/places.jsonld")
     places = {p["@id"].removeprefix("urn:uuid:"): p for p in document["@graph"]}
@@ -275,6 +287,8 @@ def refresh(root: Path, *, judge=None, elements: list | None = None, document: d
     pending: list[dict] = []
     for query in queries:
         uuid = query["id"]
+        if uuid in held:
+            continue
         current = current_id(places.get(uuid, {}))
         if current is None:
             continue
@@ -313,7 +327,8 @@ def refresh(root: Path, *, judge=None, elements: list | None = None, document: d
         published = root / "site/places.jsonld"
         if published.is_file():
             _write_json(published, document)
-    return document, {"unresolved": unresolved, "stale": stale, "pending": [q["id"] for q in pending]}
+    return document, {"unresolved": unresolved, "stale": [uuid for uuid in stale if uuid not in held],
+                      "pending": [q["id"] for q in pending]}
 
 
 def assign(root: Path, query_id: str, code: str, editor: str) -> None:
@@ -378,17 +393,23 @@ def review(root: Path) -> dict:
     tags_by_id = element_tags(root, None)
     proposals = rule_proposals(rules, queries, places, tags_by_id)
     stale = stale_facilities(decisions, places)
-    decided, divergent, uncategorized = [], [], []
+    held = held_facilities(root)
+    decided, divergent, uncategorized, holds = [], [], [], []
     for query in queries:
         uuid = query["id"]
         entry = decisions["facilities"].get(uuid)
+        if uuid in held:
+            holds.append({"id": uuid, "name": query["name"], "reason": held[uuid].get("reason")})
         if entry is None:
-            uncategorized.append({"id": uuid, "name": query["name"], "proposal": proposals.get(uuid)})
+            if uuid not in held:
+                uncategorized.append({"id": uuid, "name": query["name"], "proposal": proposals.get(uuid)})
             continue
         decided.append({"id": uuid, "name": query["name"], "category": entry["category"], "method": entry["method"]})
-        if uuid in stale:
+        if uuid in stale or uuid in held:
             continue
         proposal = proposals.get(uuid)
         if proposal and proposal != entry["category"]:
             divergent.append({"id": uuid, "name": query["name"], "stored": entry["category"], "proposal": proposal})
-    return {"decided": decided, "divergent": divergent, "stale": stale, "uncategorized": uncategorized}
+    return {"decided": decided, "divergent": divergent,
+            "stale": [uuid for uuid in stale if uuid not in held],
+            "uncategorized": uncategorized, "held": holds}

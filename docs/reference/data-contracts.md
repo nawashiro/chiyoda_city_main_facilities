@@ -36,3 +36,9 @@ Pagesは`site/places.jsonld`と両ミラーを配布します。Releaseは同じ
 }
 ```
 
+
+## 判断記録
+
+`data/osm-decisions.json`は施設ごとのOSM関連付けの判断を保存します。エントリは`status`を持ち、`decided`、`no_candidates`、`needs_review`、`hold`のいずれかです。
+
+`status: hold`は実地調査を待つ保留です。`reason`、`previous`（解除したOSM ID。なければ`null`）、`human`（`editor`と`editedAt`）を必要とし、専用CLIの`./fac assoc --hold`だけが記録します。保留中はOSM参照とWikidata参照を公開せず、カテゴリ判断も取り消します。解除は`./fac assoc --osm-id`または`./fac assoc --choice none`で行います。

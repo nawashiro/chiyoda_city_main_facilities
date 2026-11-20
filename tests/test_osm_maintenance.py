@@ -8,14 +8,14 @@ import unittest
 from pathlib import Path
 from unittest.mock import patch
 
-from src.facility_data import (_distance_metres, _write_json, build_repository,
+from src.facility_data import (_distance_metres, _write_json, barrier_free_webpage, build_repository,
                                load_queries, normalize_osm_elements, validate_search_document)
 from src.github_osm_review import (CONFIRM, GitHub, apply_confirmations, close_published,
                                    parse_issue, read_confirmations, render_issue)
 from src.osm_maintenance import present, update, verified_snapshot
 from src.resolve_osm_candidates import (MODEL, OSM, THRESHOLD, WIKIDATA, apply_decisions,
                                         decide, evidence_for, evidence_hash, request_choice,
-                                        resolve, validate_choice)
+                                        resolve, validate_choice, validate_hold)
 
 ROOT = Path(__file__).resolve().parents[1]
 A = '019c0000-0000-7000-8000-000000000001'
@@ -322,6 +322,40 @@ class MatchingTests(unittest.TestCase):
         self.assertNotIn('rdfs:seeAlso', result['@graph'][0])
         self.assertEqual([OSM+'node/9'], result['@graph'][1]['rdfs:seeAlso'])
 
+class AssociationHoldTests(unittest.TestCase):
+    def held(self):
+        return {'version': 1, 'facilities': {A: {
+            'status': 'hold', 'reason': '実地調査待ち', 'previous': 'node/1',
+            'human': {'editor': 'tester', 'editedAt': '2026-11-20T00:00:00Z'}}}}
+
+    def test_resolve_keeps_a_hold_without_reassessment(self):
+        result, saved = resolve(document(place(osm='node/1')), [query()], raw(raw_element()), self.held(),
+                                lambda _: self.fail('held facilities must not be judged'))
+        self.assertEqual(self.held()['facilities'][A], saved['facilities'][A])
+        self.assertNotIn('rdfs:seeAlso', result['@graph'][0])
+
+    def test_apply_decisions_clears_references_and_keeps_geometry_and_pages(self):
+        original = place(osm='node/1', qid='Q1')
+        original['schema:subjectOf'] = [barrier_free_webpage('https://walkingnavi.com/list_route.php?grp=5&no=57&lang=ja')]
+        result = apply_decisions(document(original), [query()], self.held()['facilities'])
+        record = result['@graph'][0]
+        self.assertNotIn('rdfs:seeAlso', record)
+        self.assertEqual(original['schema:geo'], record['schema:geo'])
+        self.assertEqual(original['schema:subjectOf'], record['schema:subjectOf'])
+
+    def test_hold_entry_requires_reason_editor_and_time(self):
+        for entry in [{'status': 'hold'},
+                      {'status': 'hold', 'reason': 'x', 'human': {'editor': ''}},
+                      {'status': 'hold', 'reason': 'x', 'human': {'editor': 't', 'editedAt': ''}},
+                      {'status': 'hold', 'reason': 'x', 'human': {'editor': 't', 'editedAt': 'now'}, 'previous': 'nonsense'}]:
+            self.assertTrue(validate_hold(entry), entry)
+        self.assertEqual([], validate_hold(self.held()['facilities'][A]))
+
+    def test_resolve_rejects_an_unusable_hold_entry(self):
+        with self.assertRaisesRegex(ValueError, 'hold entry needs a reason'):
+            resolve(document(place()), [query()], raw(), {'version': 1, 'facilities': {A: {'status': 'hold'}}})
+
+
 class JevTests(unittest.TestCase):
     def response(self, confidence=.9, choice='candidate_0'):
         return {'model': MODEL, 'answers': {'association': {'type': 'choice', 'choice': choice, 'confidence': confidence,
@@ -592,6 +626,21 @@ class CategoryMaintenanceTests(unittest.TestCase):
             present(root, github)
             self.assertEqual([[{'id': A, 'name': '千代田相談支援センター', 'osmId': None}]], recorded)
 
+    def test_present_skips_held_facilities(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = self.setup_root(directory)
+            _write_json(root/'data/osm-decisions.json', {'version': 1, 'facilities': {A: {
+                'status': 'hold', 'reason': '実地調査待ち',
+                'human': {'editor': 'tester', 'editedAt': '2026-11-20T00:00:00Z'}}}})
+            recorded = []
+            github = FakeGitHub('')
+            github.save_issue = lambda *args: recorded.append(('issue', args))
+            github.save_unmatched = lambda *args: recorded.append(('unmatched', args))
+            github.save_category_review = lambda unresolved: recorded.append(('category', unresolved))
+            present(root, github)
+            self.assertFalse([payload for kind, payload in recorded if kind == 'issue'])
+            self.assertEqual([], [payload for kind, payload in recorded if kind == 'category'][0])
+
     def test_present_skips_category_review_without_vocabulary(self):
         with tempfile.TemporaryDirectory() as directory:
             root = self.setup_root(directory, vocabulary=False)
@@ -615,6 +664,27 @@ class IntegrationTests(unittest.TestCase):
         payload = (root/'imports/openstreetmap/raw.json').read_bytes()
         _write_json(root/'imports/openstreetmap/retrieval.json', {'rawSha256': hashlib.sha256(payload).hexdigest(), 'rawVersion': '20261027'})
         return root
+
+    def test_update_keeps_a_hold_unassociated_and_uncategorized(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = self.setup_root(directory)
+            _write_json(root/'data/category-names.jsonld', category_vocabulary('1601'))
+            _write_json(root/'data/category-rules.json', {'version': 1, 'rules': []})
+            linked = place(osm='node/1')
+            linked['schema:identifier'] = [{'@type': 'schema:PropertyValue', 'schema:propertyID': 'gif-poi', 'schema:value': '1601'}]
+            _write_json(root/'data/places.jsonld', document(linked, place(B)))
+            _write_json(root/'data/osm-decisions.json', {'version': 1, 'facilities': {A: {
+                'status': 'hold', 'reason': '実地調査待ち', 'previous': 'node/1',
+                'human': {'editor': 'tester', 'editedAt': '2026-11-20T00:00:00Z'}}}})
+            update(root, refresh=True, retrieve=lambda *args, **kwargs: None,
+                   judge=lambda ev: judgement('node/2') if ev['target']['id'] == B
+                   else self.fail('held facilities must not be judged'))
+            public = json.loads((root/'data/places.jsonld').read_text())['@graph'][0]
+            self.assertNotIn('rdfs:seeAlso', public)
+            self.assertNotIn('schema:identifier', public)
+            entry = json.loads((root/'data/osm-decisions.json').read_text())['facilities'][A]
+            self.assertEqual('hold', entry['status'])
+            self.assertEqual('実地調査待ち', entry['reason'])
 
     def test_operational_failures_leave_canonical_and_ledger_unchanged(self):
         with tempfile.TemporaryDirectory() as directory:

@@ -350,5 +350,30 @@ class CategoryReviewIssueTests(unittest.TestCase):
         self.assertIn("category-review", body["body"])
 
 
+class HeldFacilityTests(unittest.TestCase):
+    def held_repository(self):
+        record = {"@id": f"urn:uuid:{UUID}", "@type": ["schema:Place"],
+                  "schema:geo": {"@type": "schema:GeoCoordinates", "schema:longitude": 139.75, "schema:latitude": 35.69}}
+        temporary, root = repository(record=record)
+        self.addCleanup(temporary.cleanup)
+        _write_json(root / "data/osm-decisions.json", {"version": 1, "facilities": {UUID: {
+            "status": "hold", "reason": "実地調査待ち", "previous": "node/123",
+            "human": {"editor": "tester", "editedAt": "2026-11-20T00:00:00Z"}}}})
+        return root
+
+    def test_review_lists_holds_separately_from_unresolved(self):
+        report = facility_categories.review(self.held_repository())
+        self.assertEqual([{"id": UUID, "name": "テスト美術館", "reason": "実地調査待ち"}], report["held"])
+        self.assertEqual([], report["uncategorized"])
+
+    def test_unresolved_facilities_skip_holds(self):
+        self.assertEqual([], facility_categories.unresolved_facilities(self.held_repository()))
+
+    def test_refresh_skips_holds(self):
+        _, report = facility_categories.refresh(self.held_repository())
+        self.assertEqual([], report["pending"])
+        self.assertEqual([], report["stale"])
+
+
 if __name__ == "__main__":
     unittest.main()

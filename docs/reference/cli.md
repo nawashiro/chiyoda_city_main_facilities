@@ -51,9 +51,12 @@
 ```sh
 ./fac assoc . SEARCH_ID --osm-id node/123456789
 ./fac assoc . SEARCH_ID --choice none
+./fac assoc . SEARCH_ID --hold --reason "実地調査で接続先を確定するまで保留"
 ```
 
 `assoc` は実地調査で確定したOSM要素を人の判断として正本に反映します。OSM APIから要素の名称・座標・タグを取得し、確認Issueと同じ根拠として`data/osm-decisions.json`へ保存し、`data/places.jsonld`へ参照と座標を適用します。`--choice none`は「該当なし」を記録し、既存のOSM参照を解除します。
+
+`--hold`は実地調査を待つ保留を記録します。`--reason`を必須とし、OSMとWikidataの参照を解除してUUID・座標・既存の`schema:subjectOf`を残し、カテゴリ判断を取り消します。保留中は月次更新の関連付け再評価、Jev、確認Issueの対象になりません。解除は`--osm-id`または`--choice none`で行います。
 
 編集者は`--editor NAME`を指定するか、リポジトリのgit `user.name`から取ります。
 
@@ -65,7 +68,7 @@
 ./fac category review .
 ```
 
-`data/categories.json`の保存済み判断を`decided`、保存済み判断と規則の提案が食い違う施設を`divergent`、関連付けが変わった施設を`stale`、判断のない検索入力を`unresolved`として出力します。`unresolved`には、規則が一意に決めたコードを`proposal=コード`として添えます。
+`data/categories.json`の保存済み判断を`decided`、保存済み判断と規則の提案が食い違う施設を`divergent`、関連付けが変わった施設を`stale`、判断のない検索入力を`unresolved`として出力します。`unresolved`には、規則が一意に決めたコードを`proposal=コード`として添えます。関連付けを保留した施設は`held`として理由つきで出力し、`unresolved`には含めません。
 
 ## 人の判断でカテゴリを確定する
 
@@ -101,7 +104,7 @@
 ./fac category review .
 ```
 
-`jsonld-validate`は、`gif-poi`識別子が語彙にある4桁のPOIコードかを検証します。`category review`は、確定した判断と未分類の施設を一覧で示します。
+`jsonld-validate`は、`gif-poi`識別子が語彙にある4桁のPOIコードかを検証します。`category review`は、確定した判断、未分類の施設、保留中の施設を一覧で示します。
 
 ## 保存済み判断を再提示する
 

@@ -9,7 +9,7 @@ from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
 from src.facility_data import _read_json, _write_json, barrier_free_webpage, load_queries, new_uuid7, validate_jsonld_document, validate_published_document, validate_search_document
-from src.resolve_osm_candidates import apply_decisions, evidence_hash, osm_candidate
+from src.resolve_osm_candidates import apply_decisions, current_id, evidence_hash, hold_entry, osm_candidate, validate_hold
 from src import facility_categories
 from src.env_utils import load_dotenv
 
@@ -18,6 +18,48 @@ def _write(path: Path, document: dict[str, Any]) -> None:
     issues=validate_search_document(document)
     if issues: raise ValueError("; ".join(issues))
     path.parent.mkdir(parents=True,exist_ok=True); path.write_text(json.dumps(document,ensure_ascii=False,indent=2)+"\n",encoding="utf-8")
+def _hold(root: Path, query_id: str, reason: str | None, editor: str | None) -> None:
+    if not isinstance(reason, str) or not reason.strip():
+        raise ValueError("reason is required: pass --reason with --hold")
+    if not any(query["id"] == query_id for query in load_queries(root)):
+        raise ValueError(f"search input not found: {query_id}")
+    document = _read_json(root / "data/places.jsonld")
+    place = next((p for p in document["@graph"] if p["@id"] == f"urn:uuid:{query_id}"), None)
+    if place is None:
+        raise ValueError(f"place not found: {query_id}")
+    editor = editor or subprocess.run(["git", "config", "--get", "user.name"], cwd=root, capture_output=True, text=True).stdout.strip()
+    if not editor:
+        raise ValueError("editor is required: pass --editor or set git user.name")
+    now = datetime.now(timezone.utc).isoformat(timespec="seconds").replace("+00:00", "Z")
+    entry = hold_entry(current_id(place), reason.strip(), editor, now)
+    issues = validate_hold(entry)
+    if issues:
+        raise ValueError("; ".join(issues))
+    ledger = _read_json(root / "data/osm-decisions.json")
+    if ledger.get("version") != 1 or not isinstance(ledger.get("facilities"), dict):
+        raise ValueError("invalid OSM decision ledger")
+    ledger = copy.deepcopy(ledger)
+    ledger["facilities"][query_id] = entry
+    place.pop("rdfs:seeAlso", None)
+    codes = None
+    categories_path = root / "data/categories.json"
+    if categories_path.exists() and (root / "data/category-names.jsonld").exists():
+        codes = facility_categories.load_vocabulary(root)
+        categories = _read_json(categories_path)
+        issues = facility_categories.validate_decisions(categories, codes)
+        if issues:
+            raise ValueError("; ".join(issues))
+        categories["facilities"].pop(query_id, None)
+        facility_categories.apply_categories(document, categories, codes)
+        _write_json(categories_path, categories)
+    validate_jsonld_document(document, category_codes=set(codes) if codes else None)
+    _write_json(root / "data/osm-decisions.json", ledger)
+    _write_json(root / "data/places.jsonld", document)
+    published = root / "site/places.jsonld"
+    if published.is_file():
+        _write_json(published, document)
+
+
 def _documents(root:Path) -> list[tuple[Path,dict[str,Any]]]:
     result=[]
     path = root / "inputs/facilities.json"
@@ -43,6 +85,8 @@ def main(argv:list[str]|None=None)->int:
     exclusive=assoc.add_mutually_exclusive_group(required=True)
     exclusive.add_argument("--osm-id")
     exclusive.add_argument("--choice",choices=("none",))
+    exclusive.add_argument("--hold",action="store_true",help="defer the association until a field survey")
+    assoc.add_argument("--reason",help="why the association is deferred; required with --hold")
     assoc.add_argument("--editor")
     category=subs.add_parser("category",help="maintain facility category decisions")
     commands=category.add_subparsers(dest="action",required=True)
@@ -97,6 +141,8 @@ def main(argv:list[str]|None=None)->int:
                 for entry in report["uncategorized"]:
                     proposal=f" proposal={entry['proposal']}" if entry["proposal"] else ""
                     print(f"unresolved{proposal} {entry['name']}\n  id={entry['id']}")
+                for entry in report["held"]:
+                    print(f"held {entry['name']}\n  id={entry['id']}\n  reason={entry['reason']}")
                 return 0
             if args.action=="assign":
                 editor=args.editor or subprocess.run(["git","config","--get","user.name"],cwd=root,capture_output=True,text=True).stdout.strip()
@@ -142,6 +188,9 @@ def main(argv:list[str]|None=None)->int:
             queries=load_queries(root)
             query=next((q for q in queries if q["id"]==args.query_id), None)
             if query is None: raise ValueError(f"search input not found: {args.query_id}")
+            if args.reason is not None and not args.hold: raise ValueError("--reason is only valid with --hold")
+            if args.hold:
+                _hold(root,args.query_id,args.reason,args.editor); return 0
             choice=args.choice if args.choice=="none" else args.osm_id
             if choice=="none":
                 candidate=None

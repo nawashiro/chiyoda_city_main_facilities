@@ -8,7 +8,8 @@ import math
 import os
 from urllib.request import Request, urlopen
 
-from src.facility_data import _distance_metres, _valid_coordinates, _QID, normalize_osm_elements, validate_jsonld_document
+from src.facility_data import (_OSM_TYPED_OBJECT_ID, _distance_metres, _valid_coordinates, _QID,
+                               normalize_osm_elements, validate_jsonld_document)
 from src.http_utils import read_limited_response
 
 MODEL = "jev-1.14.0"
@@ -33,6 +34,38 @@ def current_id(place) -> str | None:
     if len(ids) > 1:
         raise ValueError("multiple current OSM references")
     return ids[0] if ids else None
+
+
+def hold_entry(previous, reason, editor, edited_at):
+    return {"status": "hold", "reason": reason, "previous": previous,
+            "human": {"editor": editor, "editedAt": edited_at}}
+
+
+def validate_hold(entry):
+    """Return the problems that make a hold entry unusable."""
+    if not isinstance(entry, dict) or entry.get("status") != "hold":
+        return []
+    issues = []
+    if not isinstance(entry.get("reason"), str) or not entry["reason"].strip():
+        issues.append("hold entry needs a reason")
+    human = entry.get("human")
+    if not isinstance(human, dict):
+        return issues + ["hold entry needs a human editor and editedAt"]
+    if not isinstance(human.get("editor"), str) or not human["editor"].strip():
+        issues.append("hold entry needs a human editor")
+    if not isinstance(human.get("editedAt"), str) or not human["editedAt"].strip():
+        issues.append("hold entry needs editedAt")
+    previous = entry.get("previous")
+    if previous is not None and (not isinstance(previous, str) or _OSM_TYPED_OBJECT_ID.fullmatch(previous) is None):
+        issues.append("hold previous must be a typed OSM id")
+    return issues
+
+
+def validate_ledger(ledger):
+    facilities = ledger.get("facilities") if isinstance(ledger, dict) else None
+    if not isinstance(facilities, dict):
+        return ["osm decision ledger must hold a facilities object"]
+    return [f"{uuid}: {issue}" for uuid, entry in sorted(facilities.items()) for issue in validate_hold(entry)]
 
 
 def evidence_for(query, elements, place):
@@ -189,6 +222,11 @@ def apply_decisions(document, queries, entries):
     index = {p["@id"].removeprefix("urn:uuid:"): p for p in updated["@graph"]}
     for query in queries:
         entry = entries.get(query["id"], {})
+        if entry.get("status") == "hold":
+            place = index.get(query["id"])
+            if place is not None:
+                place.pop("rdfs:seeAlso", None)
+            continue
         if entry.get("status") not in {"decided", "no_candidates"}:
             continue
         choice = entry["choice"]
@@ -217,13 +255,20 @@ def apply_decisions(document, queries, entries):
 def resolve(document, queries, raw, ledger, judge=request_choice):
     if not isinstance(raw.get("version"), str) or not isinstance(raw.get("elements"), list):
         raise ValueError("invalid OSM raw snapshot")
+    issues = validate_ledger(ledger)
+    if issues:
+        raise ValueError("; ".join(issues))
     elements = normalize_osm_elements(raw["elements"])
     places = {p["@id"].removeprefix("urn:uuid:"): p for p in document["@graph"]}
     entries = {}
     for query in queries:
+        previous = ledger["facilities"].get(query["id"], {})
+        if previous.get("status") == "hold":
+            entries[query["id"]] = previous
+            continue
         place = places.get(query["id"], {})
         evidence = evidence_for(query, elements, place)
-        entries[query["id"]] = decide(query, place, evidence, ledger["facilities"].get(query["id"], {}), judge)
+        entries[query["id"]] = decide(query, place, evidence, previous, judge)
     while True:
         allocations = {}
         for query_id in places.keys() | entries.keys():

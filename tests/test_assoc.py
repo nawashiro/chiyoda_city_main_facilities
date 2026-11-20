@@ -6,11 +6,25 @@ from tempfile import TemporaryDirectory
 from unittest.mock import patch
 
 from src import fac_cli
-from src.facility_data import new_uuid7
+from src.facility_data import barrier_free_webpage, new_uuid7
 from src.resolve_osm_candidates import osm_candidate as real_osm_candidate
 
 REPO = Path(__file__).resolve().parents[1]
 CONTEXT = {"@version": 1.1, "schema": "https://schema.org/", "rdfs": "http://www.w3.org/2000/01/rdf-schema#"}
+VOCABULARY = {
+    "@context": {"@version": 1.1, "schema": "https://schema.org/"},
+    "@type": "schema:DefinedTermSet",
+    "@id": "https://nawashiro.github.io/chiyoda_city_main_facilities/category-names.jsonld",
+    "schema:name": "テスト語彙",
+    "schema:hasDefinedTerm": [
+        {"@type": "schema:DefinedTerm",
+         "@id": "https://nawashiro.github.io/chiyoda_city_main_facilities/category-names.jsonld#1403",
+         "schema:name": "児童館（児童センター）"},
+        {"@type": "schema:DefinedTerm",
+         "@id": "https://nawashiro.github.io/chiyoda_city_main_facilities/category-names.jsonld#1499",
+         "schema:name": "その他の社会福祉施設"},
+    ],
+}
 
 
 def osm_json(elements):
@@ -86,6 +100,76 @@ class AssocTests(unittest.TestCase):
         self.assertEqual("none", entry["choice"])
         self.assertEqual([], entry["evidence"]["candidates"])
         self.assertIsNone(entry["current"])
+
+    def seed_place(self):
+        self.places["@graph"] = [{
+            "@id": f"urn:uuid:{self.query_id}", "@type": ["schema:Place"],
+            "schema:geo": {"@type": "schema:GeoCoordinates", "schema:longitude": 139.736548, "schema:latitude": 35.688289},
+            "schema:identifier": [{"@type": "schema:PropertyValue", "schema:propertyID": "gif-poi", "schema:value": "1403"}],
+            "schema:subjectOf": [barrier_free_webpage("https://walkingnavi.com/list_route.php?grp=5&no=57&lang=ja")],
+            "rdfs:seeAlso": ["https://www.openstreetmap.org/node/7", "https://www.wikidata.org/entity/Q1"],
+        }]
+        (self.root / "data/places.jsonld").write_text(json.dumps(self.places, ensure_ascii=False), encoding="utf-8")
+        (self.root / "site").mkdir()
+        (self.root / "site/places.jsonld").write_text(json.dumps(self.places, ensure_ascii=False), encoding="utf-8")
+        (self.root / "data/category-names.jsonld").write_text(json.dumps(VOCABULARY, ensure_ascii=False), encoding="utf-8")
+        (self.root / "data/categories.json").write_text(json.dumps({"version": 1, "facilities": {
+            self.query_id: {"category": "1403", "method": "human", "editor": "tester",
+                            "editedAt": "2026-11-01T00:00:00Z", "osmId": "node/7"}}}, ensure_ascii=False), encoding="utf-8")
+
+    def test_hold_records_reason_and_withdraws_links_and_category(self):
+        self.seed_place()
+        self.assertEqual(0, fac_cli.main(["assoc", str(self.root), self.query_id, "--hold",
+                                          "--reason", "実地調査待ち", "--editor", "tester"]))
+        place = json.loads((self.root / "data/places.jsonld").read_text(encoding="utf-8"))["@graph"][0]
+        self.assertNotIn("rdfs:seeAlso", place)
+        self.assertNotIn("schema:identifier", place)
+        self.assertIn("schema:subjectOf", place)
+        entry = json.loads((self.root / "data/osm-decisions.json").read_text(encoding="utf-8"))["facilities"][self.query_id]
+        self.assertEqual("hold", entry["status"])
+        self.assertEqual("実地調査待ち", entry["reason"])
+        self.assertEqual("node/7", entry["previous"])
+        self.assertEqual("tester", entry["human"]["editor"])
+        self.assertTrue(entry["human"]["editedAt"])
+        self.assertEqual(place, json.loads((self.root / "site/places.jsonld").read_text(encoding="utf-8"))["@graph"][0])
+        self.assertNotIn(self.query_id, json.loads((self.root / "data/categories.json").read_text(encoding="utf-8"))["facilities"])
+
+    def test_hold_requires_a_reason(self):
+        self.seed_place()
+        self.assertEqual(1, fac_cli.main(["assoc", str(self.root), self.query_id, "--hold", "--editor", "tester"]))
+        self.assertEqual({}, json.loads((self.root / "data/osm-decisions.json").read_text(encoding="utf-8"))["facilities"])
+
+    def test_reason_without_hold_is_refused(self):
+        self.seed_place()
+        self.assertEqual(1, fac_cli.main(["assoc", str(self.root), self.query_id, "--osm-id", "node/7",
+                                          "--reason", "実地調査待ち", "--editor", "tester"]))
+
+    def test_hold_is_exclusive_with_osm_id(self):
+        self.seed_place()
+        with self.assertRaises(SystemExit):
+            fac_cli.main(["assoc", str(self.root), self.query_id, "--hold", "--osm-id", "node/7",
+                          "--reason", "実地調査待ち", "--editor", "tester"])
+
+    def test_survey_confirmed_association_replaces_a_hold(self):
+        self.seed_place()
+        fac_cli.main(["assoc", str(self.root), self.query_id, "--hold", "--reason", "実地調査待ち", "--editor", "tester"])
+        nodes = [{"type": "node", "id": 8, "lat": 35.6882993, "lon": 139.7365076, "tags": {"name": "千代田区立テスト児童館"}}]
+        self.assertEqual(0, self.run_assoc("--osm-id", "node/8", elements=lambda: nodes))
+        place = json.loads((self.root / "data/places.jsonld").read_text(encoding="utf-8"))["@graph"][0]
+        self.assertEqual(["https://www.openstreetmap.org/node/8"], place["rdfs:seeAlso"])
+        entry = json.loads((self.root / "data/osm-decisions.json").read_text(encoding="utf-8"))["facilities"][self.query_id]
+        self.assertEqual("decided", entry["status"])
+        self.assertEqual("node/8", entry["choice"])
+
+    def test_none_choice_replaces_a_hold(self):
+        self.seed_place()
+        fac_cli.main(["assoc", str(self.root), self.query_id, "--hold", "--reason", "実地調査待ち", "--editor", "tester"])
+        self.assertEqual(0, self.run_assoc("--choice", "none", elements=lambda: []))
+        place = json.loads((self.root / "data/places.jsonld").read_text(encoding="utf-8"))["@graph"][0]
+        self.assertNotIn("rdfs:seeAlso", place)
+        entry = json.loads((self.root / "data/osm-decisions.json").read_text(encoding="utf-8"))["facilities"][self.query_id]
+        self.assertEqual("decided", entry["status"])
+        self.assertEqual("none", entry["choice"])
 
     def test_missing_element_writes_nothing(self):
         before_places = (self.root / "data/places.jsonld").read_text(encoding="utf-8")
