@@ -679,8 +679,8 @@
       ],
       "schema:geo": {
         "@type": "schema:GeoCoordinates",
-        "schema:longitude": 139.7696731,
-        "schema:latitude": 35.7011916
+        "schema:longitude": 139.769885,
+        "schema:latitude": 35.7012402
       },
       "schema:subjectOf": [
         {
@@ -693,15 +693,15 @@
           }
         }
       ],
+      "rdfs:seeAlso": [
+        "https://www.openstreetmap.org/way/173230196"
+      ],
       "schema:identifier": [
         {
           "@type": "schema:PropertyValue",
           "schema:propertyID": "gif-poi",
           "schema:value": "1307"
         }
-      ],
-      "rdfs:seeAlso": [
-        "https://www.openstreetmap.org/node/2263796343"
       ]
     },
     {
@@ -711,8 +711,8 @@
       ],
       "schema:geo": {
         "@type": "schema:GeoCoordinates",
-        "schema:longitude": 139.739284,
-        "schema:latitude": 35.68699
+        "schema:longitude": 139.7395948,
+        "schema:latitude": 35.6869274
       },
       "schema:subjectOf": [
         {
@@ -725,15 +725,15 @@
           }
         }
       ],
+      "rdfs:seeAlso": [
+        "https://www.openstreetmap.org/way/144866171"
+      ],
       "schema:identifier": [
         {
           "@type": "schema:PropertyValue",
           "schema:propertyID": "gif-poi",
           "schema:value": "1499"
         }
-      ],
-      "rdfs:seeAlso": [
-        "https://www.openstreetmap.org/node/1655905663"
       ]
     },
     {
@@ -743,8 +743,8 @@
       ],
       "schema:geo": {
         "@type": "schema:GeoCoordinates",
-        "schema:longitude": 139.754706,
-        "schema:latitude": 35.698887
+        "schema:longitude": 139.754802,
+        "schema:latitude": 35.6988974
       },
       "schema:subjectOf": [
         {
@@ -755,6 +755,16 @@
             "@type": "schema:Organization",
             "schema:name": "東京バリアフリーマップ"
           }
+        }
+      ],
+      "rdfs:seeAlso": [
+        "https://www.openstreetmap.org/relation/9323146"
+      ],
+      "schema:identifier": [
+        {
+          "@type": "schema:PropertyValue",
+          "schema:propertyID": "gif-poi",
+          "schema:value": "1307"
         }
       ]
     },
@@ -2325,8 +2335,8 @@
       ],
       "schema:geo": {
         "@type": "schema:GeoCoordinates",
-        "schema:longitude": 139.7463641,
-        "schema:latitude": 35.6971909
+        "schema:longitude": 139.7465227,
+        "schema:latitude": 35.6972953
       },
       "schema:identifier": [
         {
@@ -2336,7 +2346,7 @@
         }
       ],
       "rdfs:seeAlso": [
-        "https://www.openstreetmap.org/node/14344607026",
+        "https://www.openstreetmap.org/way/460729041",
         "https://www.wikidata.org/entity/Q81916362"
       ]
     },
@@ -2536,6 +2546,69 @@
       "rdfs:seeAlso": [
         "https://www.openstreetmap.org/way/620327839",
         "https://www.wikidata.org/entity/Q97168414"
+      ]
+    },
+    {
+      "@id": "urn:uuid:01a1f74a-56c5-7fdc-9022-ac0ab000f2c1",
+      "@type": [
+        "schema:Place"
+      ],
+      "rdfs:seeAlso": [
+        "https://www.openstreetmap.org/way/187756645"
+      ],
+      "schema:geo": {
+        "@type": "schema:GeoCoordinates",
+        "schema:longitude": 139.7684565,
+        "schema:latitude": 35.6931405
+      },
+      "schema:identifier": [
+        {
+          "@type": "schema:PropertyValue",
+          "schema:propertyID": "gif-poi",
+          "schema:value": "1307"
+        }
+      ]
+    },
+    {
+      "@id": "urn:uuid:01a1f74a-7ced-7363-a7e6-08976d268c4d",
+      "@type": [
+        "schema:Place"
+      ],
+      "rdfs:seeAlso": [
+        "https://www.openstreetmap.org/node/2263796343"
+      ],
+      "schema:geo": {
+        "@type": "schema:GeoCoordinates",
+        "schema:longitude": 139.7696731,
+        "schema:latitude": 35.7011916
+      },
+      "schema:identifier": [
+        {
+          "@type": "schema:PropertyValue",
+          "schema:propertyID": "gif-poi",
+          "schema:value": "1403"
+        }
+      ]
+    },
+    {
+      "@id": "urn:uuid:01a1f74a-a0c2-74dc-b23b-01397190d364",
+      "@type": [
+        "schema:Place"
+      ],
+      "rdfs:seeAlso": [
+        "https://www.openstreetmap.org/node/14337525601"
+      ],
+      "schema:geo": {
+        "@type": "schema:GeoCoordinates",
+        "schema:longitude": 139.7787853,
+        "schema:latitude": 35.6992391
+      },
+      "schema:identifier": [
+        {
+          "@type": "schema:PropertyValue",
+          "schema:propertyID": "gif-poi",
+          "schema:value": "1403"
+        }
       ]
     }
   ]

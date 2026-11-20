@@ -73,8 +73,10 @@
     },
     "019fa880-5cd5-7241-a976-801eef6324a9": {
       "category": "1307",
-      "method": "rule",
-      "osmId": "node/2263796343"
+      "method": "human",
+      "editor": "Navi",
+      "editedAt": "2026-11-20T04:48:49Z",
+      "osmId": "way/173230196"
     },
     "019fa880-5cd5-7285-88ba-ab05a68eb601": {
       "category": "0703",
@@ -198,8 +200,10 @@
     },
     "019fa880-5cd5-7d11-8560-3ac4e0486633": {
       "category": "1499",
-      "method": "rule",
-      "osmId": "node/1655905663"
+      "method": "human",
+      "editor": "Navi",
+      "editedAt": "2026-11-20T04:49:44Z",
+      "osmId": "way/144866171"
     },
     "019fa880-5cd5-7d22-aef4-68b4e1172660": {
       "category": "0703",
@@ -472,8 +476,10 @@
     },
     "01a1e8ab-f109-7794-bbe6-d6d05f476328": {
       "category": "1503",
-      "method": "rule",
-      "osmId": "node/14344607026"
+      "method": "human",
+      "editor": "Navi",
+      "editedAt": "2026-11-20T04:50:31Z",
+      "osmId": "way/460729041"
     },
     "01a1e8ab-f1d8-7b07-a074-43cb7833f6b0": {
       "category": "1503",
@@ -526,6 +532,34 @@
       "category": "1503",
       "method": "rule",
       "osmId": "way/620327839"
+    },
+    "019fa880-5cd5-7b01-9dd8-2e4787f423aa": {
+      "category": "1307",
+      "method": "human",
+      "editor": "Navi",
+      "editedAt": "2026-11-20T04:49:51Z",
+      "osmId": "relation/9323146"
+    },
+    "01a1f74a-56c5-7fdc-9022-ac0ab000f2c1": {
+      "category": "1307",
+      "method": "human",
+      "editor": "Navi",
+      "editedAt": "2026-11-20T04:50:12Z",
+      "osmId": "way/187756645"
+    },
+    "01a1f74a-7ced-7363-a7e6-08976d268c4d": {
+      "category": "1403",
+      "method": "human",
+      "editor": "Navi",
+      "editedAt": "2026-11-20T04:50:21Z",
+      "osmId": "node/2263796343"
+    },
+    "01a1f74a-a0c2-74dc-b23b-01397190d364": {
+      "category": "1403",
+      "method": "human",
+      "editor": "Navi",
+      "editedAt": "2026-11-20T04:50:26Z",
+      "osmId": "node/14337525601"
     }
   }
 }
