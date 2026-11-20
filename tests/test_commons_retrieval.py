@@ -6,7 +6,7 @@ from pathlib import Path
 from urllib.parse import parse_qs, urlparse
 
 from src.facility_data import _write_json
-from src.commons_retrieval import COMMONS_API, collect_categories, collect_file_names, resolve_categories, run_commons_retrieval
+from src.commons_retrieval import COMMONS_API, _artist_text, _query_files, collect_categories, collect_file_names, resolve_categories, run_commons_retrieval
 from src.osm_maintenance import update
 
 from tests.test_osm_maintenance import A, B, document, judgement, ledger, place, query, raw, raw_element
@@ -242,6 +242,32 @@ class UpdateCommonsTests(unittest.TestCase):
                    commons=lambda r, at: calls.append(r),
                    judge=lambda ev: judgement('node/1') if ev['target']['id'] == A else judgement('node/2'))
             self.assertEqual([root], calls)
+
+
+class QueryFilesTests(unittest.TestCase):
+    def test_file_metadata_is_keyed_by_the_page_title(self):
+        def fetch(url):
+            return json.dumps({'query': {
+                'normalized': [{'from': 'File:Chiyoda_写真.jpg', 'to': 'File:Chiyoda 写真.jpg'}],
+                'pages': {'1': {'title': 'File:Chiyoda 写真.jpg', 'imageinfo': [{
+                    'url': 'https://upload.wikimedia.org/wikipedia/commons/a/Chiyoda.jpg',
+                    'extmetadata': {'LicenseShortName': {'value': 'CC0'}, 'Artist': {'value': '作者'}}}]}}}}).encode()
+
+        files = _query_files(['File:Chiyoda_写真.jpg'], fetch)
+
+        self.assertEqual(['File:Chiyoda 写真.jpg'], list(files))
+        self.assertEqual('作者', files['File:Chiyoda 写真.jpg']['artist'])
+
+
+class ArtistTextTests(unittest.TestCase):
+    def test_hidden_author_text_is_ignored(self):
+        extmetadata = {'Artist': {'value': '作者<span style="display: none;">作者</span>'}}
+        self.assertEqual('作者', _artist_text(extmetadata))
+
+    def test_unknown_author_placeholder_means_no_author(self):
+        for value in ('Unknown author', 'Unknown artist'):
+            with self.subTest(value=value):
+                self.assertIsNone(_artist_text({'Artist': {'value': value}}))
 
 
 if __name__ == '__main__':

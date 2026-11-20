@@ -3,10 +3,10 @@ from __future__ import annotations
 
 import argparse
 import hashlib
-import html
 import json
 import re
 import sys
+from html.parser import HTMLParser
 from pathlib import Path
 from typing import Any
 from urllib.parse import urlencode
@@ -20,6 +20,7 @@ COMMONS_API = "https://commons.wikimedia.org/w/api.php"
 PAGE_SIZE = 50
 EXTMETADATA = "LicenseShortName|LicenseUrl|Artist"
 _WORDS = re.compile(r"[^\W_]+")
+_UNKNOWN_ARTIST = re.compile(r"^unknown\b", re.IGNORECASE)
 
 
 def _get(url: str) -> bytes:
@@ -72,12 +73,45 @@ def _metadata_text(extmetadata: dict[str, Any], key: str) -> str | None:
     return value.strip()
 
 
+class _VisibleText(HTMLParser):
+    _VOID = frozenset({"area", "base", "br", "col", "embed", "hr", "img", "input", "link", "meta", "param", "source", "track", "wbr"})
+
+    def __init__(self) -> None:
+        super().__init__(convert_charrefs=True)
+        self._hidden = [False]
+        self._parts: list[str] = []
+
+    def handle_starttag(self, tag: str, attrs: list[tuple[str, str | None]]) -> None:
+        if tag not in self._VOID:
+            self._hidden.append(self._hidden[-1] or _hidden_element(attrs))
+
+    def handle_endtag(self, tag: str) -> None:
+        if tag not in self._VOID and len(self._hidden) > 1:
+            self._hidden.pop()
+
+    def handle_data(self, data: str) -> None:
+        if not self._hidden[-1]:
+            self._parts.append(data)
+
+    def text(self) -> str:
+        return re.sub(r"\s+", " ", "".join(self._parts)).strip()
+
+
+def _hidden_element(attrs: list[tuple[str, str | None]]) -> bool:
+    return any(name == "hidden" or (name == "style" and value is not None and re.search(r"display\s*:\s*none", value, re.IGNORECASE)) for name, value in attrs)
+
+
 def _artist_text(extmetadata: dict[str, Any]) -> str | None:
     value = _metadata_text(extmetadata, "Artist")
     if value is None:
         return None
-    text = html.unescape(re.sub(r"<[^>]*>", "", value)).strip()
-    return text or None
+    parser = _VisibleText()
+    parser.feed(value)
+    parser.close()
+    text = parser.text()
+    if not text or _UNKNOWN_ARTIST.match(text):
+        return None
+    return text
 
 
 def _content_url(info: dict[str, Any]) -> str | None:
@@ -91,12 +125,11 @@ def _content_url(info: dict[str, Any]) -> str | None:
 def _query_files(titles: list[str], fetch) -> dict[str, dict[str, Any]]:
     url = f"{COMMONS_API}?{urlencode({'action': 'query', 'titles': '|'.join(titles), 'prop': 'imageinfo', 'iiprop': 'url|extmetadata', 'iiextmetadatafilter': EXTMETADATA, 'format': 'json'})}"
     query = (json.loads(fetch(url)).get("query") or {})
-    normalized = {item["to"]: item["from"] for item in query.get("normalized", []) if isinstance(item, dict) and "from" in item and "to" in item}
     files: dict[str, dict[str, Any]] = {}
     for page in (query.get("pages") or {}).values():
         if not isinstance(page, dict) or "missing" in page:
             continue
-        title = normalized.get(page.get("title"), page.get("title"))
+        title = page.get("title")
         info = (page.get("imageinfo") or [{}])[0]
         content_url = _content_url(info)
         extmetadata = info.get("extmetadata") or {}

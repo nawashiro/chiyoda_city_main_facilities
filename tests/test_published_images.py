@@ -15,6 +15,7 @@ E = '019c0000-0000-7000-8000-000000000005'
 F = '019c0000-0000-7000-8000-000000000006'
 G = '019c0000-0000-7000-8000-000000000007'
 H = '019c0000-0000-7000-8000-000000000008'
+I = '019c0000-0000-7000-8000-000000000009'
 COORD = [139.75, 35.69]
 CONTEXT = {'@version': 1.1, 'schema': 'https://schema.org/', 'rdfs': 'http://www.w3.org/2000/01/rdf-schema#'}
 OSM = 'https://www.openstreetmap.org/'
@@ -40,6 +41,7 @@ def setup_root(directory):
         place(F, osm='node/6'),
         place(G, osm='node/7'),
         place(H, osm='node/8', qid='Q8'),
+        place(I, osm='node/9', qid='Q9'),
     ]})
     _write_json(root / 'imports/openstreetmap/raw.json', {'version': '1', 'elements': [
         {'type': 'node', 'id': number, 'lon': COORD[0], 'lat': COORD[1], 'tags': {'name': f'n{number}', **tags}}
@@ -52,6 +54,7 @@ def setup_root(directory):
             (6, {'wikimedia_commons': 'Category:未対応'}),
             (7, {'wikimedia_commons': 'Category:不完全'}),
             (8, {'wikidata': 'Q8', 'wikimedia_commons': 'Category:両方'}),
+            (9, {'wikidata': 'Q9'}),
         )]})
     _write_json(root / 'imports/wikidata/raw.json', {'sourceId': 'wikidata', 'retrievedAt': 'at', 'entities': {
         'Q1': {'id': 'Q1', 'claims': {'P18': [
@@ -61,6 +64,7 @@ def setup_root(directory):
         'Q4': {'id': 'Q4', 'claims': {'P18': [{'mainsnak': {'datavalue': {'value': 'artistless.jpg'}}}]}},
         'Q5': {'id': 'Q5', 'claims': {'P18': [{'mainsnak': {'datavalue': {'value': 'nameless-license.jpg'}}}]}},
         'Q8': {'id': 'Q8', 'claims': {'P18': [{'mainsnak': {'datavalue': {'value': 'both.jpg'}}}]}},
+        'Q9': {'id': 'Q9', 'claims': {'P18': [{'mainsnak': {'datavalue': {'value': 'spaced_file.jpg'}}}]}},
         'Q999': {'id': 'Q999', 'claims': {'P18': [{'mainsnak': {'datavalue': {'value': 'Unlinked.jpg'}}}]}},
     }})
     _write_json(root / 'imports/commons/raw.json', {'sourceId': 'commons', 'retrievedAt': 'at', 'files': {
@@ -85,6 +89,8 @@ def setup_root(directory):
                            'license': 'CC0', 'licenseUrl': None, 'artist': 'カテゴリ作者'},
         'File:both.jpg': {'url': 'https://upload.wikimedia.org/wikipedia/commons/j/both.jpg',
                           'license': 'CC0', 'licenseUrl': None, 'artist': '両方作者'},
+        'File:spaced file.jpg': {'url': 'https://upload.wikimedia.org/wikipedia/commons/k/spaced.jpg',
+                                 'license': 'CC0', 'licenseUrl': None, 'artist': '空白作者'},
     }, 'categories': {
         'Category:分類のみ': 'File:分類のみ.jpg',
         'Category:不完全': 'File:不完全.jpg',
@@ -106,11 +112,17 @@ class PublishedImageTests(unittest.TestCase):
             self.assertEqual('作者', images[A]['schema:creator']['schema:name'])
             self.assertEqual('Attribution', images[B]['schema:license'])
             self.assertEqual('https://upload.wikimedia.org/wikipedia/commons/g/category-only.jpg', images[C]['schema:contentUrl'])
-            self.assertIsNone(images[D])
+            self.assertEqual('https://upload.wikimedia.org/wikipedia/commons/d/none.jpg', images[D]['schema:contentUrl'])
+            self.assertEqual('https://creativecommons.org/licenses/by-sa/3.0/', images[D]['schema:license'])
+            self.assertNotIn('schema:creator', images[D])
             self.assertEqual('Public domain', images[E]['schema:license'])
             self.assertIsNone(images[F])
-            self.assertIsNone(images[G])
+            self.assertEqual('https://upload.wikimedia.org/wikipedia/commons/h/incomplete.jpg', images[G]['schema:contentUrl'])
+            self.assertEqual('CC BY-SA 4.0', images[G]['schema:license'])
+            self.assertNotIn('schema:creator', images[G])
             self.assertEqual('https://upload.wikimedia.org/wikipedia/commons/j/both.jpg', images[H]['schema:contentUrl'])
+            self.assertEqual('https://upload.wikimedia.org/wikipedia/commons/k/spaced.jpg', images[I]['schema:contentUrl'])
+            self.assertEqual('空白作者', images[I]['schema:creator']['schema:name'])
 
     def test_missing_categories_map_leaves_category_records_image_free(self):
         with tempfile.TemporaryDirectory() as directory:
@@ -153,13 +165,18 @@ class ImageValidationTests(unittest.TestCase):
         validate_published_document(self.valid_document({'@type': ['schema:ImageObject'], 'schema:contentUrl': 'https://x/y.jpg',
             'schema:license': 'CC0', 'schema:creator': {'@type': ['schema:Person'], 'schema:name': '作者'}}))
 
+    def test_published_document_accepts_an_image_without_a_creator(self):
+        validate_published_document(self.valid_document({'@type': ['schema:ImageObject'], 'schema:contentUrl': 'https://x/y.jpg',
+            'schema:license': 'CC0'}))
+
     def test_published_document_rejects_incomplete_images(self):
         cases = [
             {'schema:contentUrl': 'https://x/y.jpg', 'schema:license': 'CC0', 'schema:creator': {'@type': ['schema:Person'], 'schema:name': '作者'}},
             {'@type': ['schema:ImageObject'], 'schema:contentUrl': 'http://x/y.jpg', 'schema:license': 'CC0', 'schema:creator': {'@type': ['schema:Person'], 'schema:name': '作者'}},
             {'@type': ['schema:ImageObject'], 'schema:contentUrl': 'https://x/y.jpg', 'schema:license': ' ', 'schema:creator': {'@type': ['schema:Person'], 'schema:name': '作者'}},
             {'@type': ['schema:ImageObject'], 'schema:contentUrl': 'https://x/y.jpg', 'schema:license': 'CC0', 'schema:creator': {'@type': ['schema:Person'], 'schema:name': '  '}},
-            {'@type': ['schema:ImageObject'], 'schema:contentUrl': 'https://x/y.jpg', 'schema:license': 'CC0'},
+            {'@type': ['schema:ImageObject'], 'schema:contentUrl': 'https://x/y.jpg', 'schema:license': 'CC0', 'schema:creator': '作者'},
+            {'@type': ['schema:ImageObject'], 'schema:contentUrl': 'https://x/y.jpg', 'schema:license': 'CC0', 'schema:creator': {'@type': ['schema:Organization'], 'schema:name': '作者'}},
         ]
         for image in cases:
             with self.subTest(image=image):

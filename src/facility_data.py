@@ -112,7 +112,7 @@ def validate_jsonld_document(document: Any, *, allow_image: bool = False, catego
         image = record.get("schema:image")
         if image is not None:
             if not allow_image: raise ValueError(f"JSON-LD {path} must not contain schema:image: the canonical dataset carries associations only")
-            if not _valid_image(image): raise ValueError(f"JSON-LD {path} schema:image must be a single schema:ImageObject with schema:contentUrl, schema:license and schema:creator")
+            if not _valid_image(image): raise ValueError(f"JSON-LD {path} schema:image must be a single schema:ImageObject with schema:contentUrl, schema:license and an optional schema:creator")
         geo = record.get("schema:geo")
         if "schema:additionalType" in record: raise ValueError(f"JSON-LD {path} must not carry classification in schema:additionalType")
         if "geo:hasGeometry" in record or "geo:asGeoJSON" in record or not isinstance(geo, dict) or geo.get("@type") != "schema:GeoCoordinates" or not _valid_coordinates([geo.get("schema:longitude"), geo.get("schema:latitude")]): raise ValueError(f"JSON-LD {path} schema:geo must be schema:GeoCoordinates with valid schema:latitude and schema:longitude")
@@ -137,6 +137,7 @@ def _valid_image(image: Any) -> bool:
     license_value = image.get("schema:license")
     if not isinstance(license_value, str) or not license_value.strip(): return False
     creator = image.get("schema:creator")
+    if creator is None: return True
     if not isinstance(creator, dict) or not isinstance(creator.get("@type"), list) or "schema:Person" not in creator["@type"]: return False
     return isinstance(creator.get("schema:name"), str) and bool(creator["schema:name"].strip())
 
@@ -262,6 +263,11 @@ def build_repository(root: str | Path) -> Path:
     return artifact
 
 
+def _image_key(name: str) -> str:
+    """MediaWiki serves the same file under underscores and spaces."""
+    return name.replace("_", " ")
+
+
 def _image_file_name(place: dict[str, Any], osm_files: dict[str, Any], p18_files: dict[str, str], categories: dict[str, str]) -> str | None:
     links = [uri for uri in place.get("rdfs:seeAlso", []) if isinstance(uri, str)]
     for uri in links:
@@ -290,18 +296,20 @@ def _apply_images(root: Path, document: dict[str, Any]) -> None:
         if isinstance(value, str) and value:
             p18_files[qid] = value if value.startswith("File:") else f"File:{value}"
     commons = _read_json(commons_path)
-    metadata = commons.get("files", {})
+    metadata = {_image_key(key): value for key, value in (commons.get("files") or {}).items()}
     categories = commons.get("categories") or {}
     for place in document["@graph"]:
         name = _image_file_name(place, osm_files, p18_files, categories)
-        meta = metadata.get(name) if name else None
-        if not isinstance(meta, dict) or not meta.get("url") or not meta.get("license") or not meta.get("artist"): continue
-        place["schema:image"] = {
+        meta = metadata.get(_image_key(name)) if name else None
+        if not isinstance(meta, dict) or not meta.get("url") or not meta.get("license"): continue
+        image = {
             "@type": ["schema:ImageObject"],
             "schema:contentUrl": meta["url"],
             "schema:license": meta.get("licenseUrl") or meta["license"],
-            "schema:creator": {"@type": ["schema:Person"], "schema:name": meta["artist"]},
         }
+        if meta.get("artist"):
+            image["schema:creator"] = {"@type": ["schema:Person"], "schema:name": meta["artist"]}
+        place["schema:image"] = image
 
 
 def main(argv: list[str] | None = None) -> int:
