@@ -756,16 +756,6 @@
             "schema:name": "東京バリアフリーマップ"
           }
         }
-      ],
-      "schema:identifier": [
-        {
-          "@type": "schema:PropertyValue",
-          "schema:propertyID": "gif-poi",
-          "schema:value": "1499"
-        }
-      ],
-      "rdfs:seeAlso": [
-        "https://www.openstreetmap.org/node/1655927382"
       ]
     },
     {
