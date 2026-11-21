@@ -453,6 +453,19 @@
         "https://www.openstreetmap.org/way/210372594",
         "https://www.wikidata.org/entity/Q113160405"
       ],
+      "schema:image": {
+        "@type": [
+          "schema:ImageObject"
+        ],
+        "schema:contentUrl": "https://upload.wikimedia.org/wikipedia/commons/f/f6/Yoshihiro_Yonezawa_Memorial_Library_of_Manga_and_Subcultures_2024-02-15.jpg",
+        "schema:license": "http://creativecommons.org/publicdomain/zero/1.0/deed.en",
+        "schema:creator": {
+          "@type": [
+            "schema:Person"
+          ],
+          "schema:name": "Asanagi"
+        }
+      },
       "schema:keywords": [
         {
           "@id": "urn:uuid:5e39eca0-e02b-5366-bacd-0ef8f65dfb9c"
@@ -669,6 +682,19 @@
         "https://www.openstreetmap.org/node/2059303798",
         "https://www.wikidata.org/entity/Q61886799"
       ],
+      "schema:image": {
+        "@type": [
+          "schema:ImageObject"
+        ],
+        "schema:contentUrl": "https://upload.wikimedia.org/wikipedia/commons/b/b8/%E5%8D%83%E4%BB%A3%E7%94%B0%E5%8C%BA%E7%AB%8B%E6%98%8C%E5%B9%B3%E3%81%BE%E3%81%A1%E3%81%8B%E3%81%A9%E5%9B%B3%E6%9B%B8%E9%A4%A8.jpg",
+        "schema:license": "https://creativecommons.org/licenses/by-sa/4.0",
+        "schema:creator": {
+          "@type": [
+            "schema:Person"
+          ],
+          "schema:name": "Irure veniam"
+        }
+      },
       "schema:keywords": [
         {
           "@id": "urn:uuid:5e39eca0-e02b-5366-bacd-0ef8f65dfb9c"
@@ -719,6 +745,19 @@
         "https://www.openstreetmap.org/node/1420770192",
         "https://www.wikidata.org/entity/Q61886800"
       ],
+      "schema:image": {
+        "@type": [
+          "schema:ImageObject"
+        ],
+        "schema:contentUrl": "https://upload.wikimedia.org/wikipedia/commons/5/54/%E5%8D%83%E4%BB%A3%E7%94%B0%E5%8C%BA%E7%AB%8B%E7%A5%9E%E7%94%B0%E3%81%BE%E3%81%A1%E3%81%8B%E3%81%A9%E5%9B%B3%E6%9B%B8%E9%A4%A8.jpg",
+        "schema:license": "https://creativecommons.org/licenses/by-sa/4.0",
+        "schema:creator": {
+          "@type": [
+            "schema:Person"
+          ],
+          "schema:name": "Irure veniam"
+        }
+      },
       "schema:keywords": [
         {
           "@id": "urn:uuid:5e39eca0-e02b-5366-bacd-0ef8f65dfb9c"
@@ -867,14 +906,6 @@
             "schema:name": "東京バリアフリーマップ"
           }
         }
-      ],
-      "rdfs:seeAlso": [
-        "https://www.openstreetmap.org/relation/9323146"
-      ],
-      "schema:keywords": [
-        {
-          "@id": "urn:uuid:c8fe25cb-a169-51d1-bf7c-7f1e28e96c5c"
-        }
       ]
     },
     {
@@ -959,6 +990,19 @@
       "rdfs:seeAlso": [
         "https://www.openstreetmap.org/node/14394442841"
       ],
+      "schema:image": {
+        "@type": [
+          "schema:ImageObject"
+        ],
+        "schema:contentUrl": "https://upload.wikimedia.org/wikipedia/commons/2/22/%E5%8D%83%E4%BB%A3%E7%94%B0%E5%8C%BA_%E5%AD%90%E8%82%B2%E3%81%A6%E3%81%B2%E3%82%8D%E3%81%B0_%E3%81%82%E3%81%84%E3%83%BB%E3%81%BD%E3%83%BC%E3%81%A8%E9%BA%B9%E7%94%BA.png",
+        "schema:license": "https://creativecommons.org/licenses/by-sa/4.0",
+        "schema:creator": {
+          "@type": [
+            "schema:Person"
+          ],
+          "schema:name": "Irure veniam"
+        }
+      },
       "schema:keywords": [
         {
           "@id": "urn:uuid:c19296b9-7bcc-5d7b-b714-e7b3adc48f88"
@@ -979,6 +1023,19 @@
         "https://www.openstreetmap.org/node/13735063550",
         "https://www.wikidata.org/entity/Q11524020"
       ],
+      "schema:image": {
+        "@type": [
+          "schema:ImageObject"
+        ],
+        "schema:contentUrl": "https://upload.wikimedia.org/wikipedia/commons/c/c0/%E6%9D%B1%E4%BA%AC%E3%81%97%E3%81%94%E3%81%A8%E3%82%BB%E3%83%B3%E3%82%BF%E3%83%BC.jpg",
+        "schema:license": "https://creativecommons.org/licenses/by-sa/4.0",
+        "schema:creator": {
+          "@type": [
+            "schema:Person"
+          ],
+          "schema:name": "Irure veniam"
+        }
+      },
       "schema:keywords": [
         {
           "@id": "urn:uuid:1249bae9-f68e-59e8-bfd8-d85a76f4b54d"
@@ -1038,6 +1095,19 @@
         "https://www.openstreetmap.org/way/184577229",
         "https://www.wikidata.org/entity/Q42311499"
       ],
+      "schema:image": {
+        "@type": [
+          "schema:ImageObject"
+        ],
+        "schema:contentUrl": "https://upload.wikimedia.org/wikipedia/commons/6/62/%E5%8D%83%E4%BB%A3%E7%94%B0%E5%8C%BA%E9%8C%A6%E8%8F%AF%E5%85%AC%E5%9C%92.jpg",
+        "schema:license": "https://creativecommons.org/licenses/by-sa/4.0",
+        "schema:creator": {
+          "@type": [
+            "schema:Person"
+          ],
+          "schema:name": "Irure veniam"
+        }
+      },
       "schema:keywords": [
         {
           "@id": "urn:uuid:48dbc3b1-117c-5dc9-8029-20c3320f7781"
@@ -1058,6 +1128,19 @@
         "https://www.openstreetmap.org/way/515133705",
         "https://www.wikidata.org/entity/Q42311502"
       ],
+      "schema:image": {
+        "@type": [
+          "schema:ImageObject"
+        ],
+        "schema:contentUrl": "https://upload.wikimedia.org/wikipedia/commons/7/77/%E7%A5%9E%E7%94%B0%E5%85%90%E7%AB%A5%E5%85%AC%E5%9C%92.jpg",
+        "schema:license": "https://creativecommons.org/licenses/by-sa/4.0",
+        "schema:creator": {
+          "@type": [
+            "schema:Person"
+          ],
+          "schema:name": "Irure veniam"
+        }
+      },
       "schema:keywords": [
         {
           "@id": "urn:uuid:48dbc3b1-117c-5dc9-8029-20c3320f7781"
@@ -1144,6 +1227,19 @@
         "https://www.openstreetmap.org/way/132794875",
         "https://www.wikidata.org/entity/Q42311484"
       ],
+      "schema:image": {
+        "@type": [
+          "schema:ImageObject"
+        ],
+        "schema:contentUrl": "https://upload.wikimedia.org/wikipedia/commons/e/e4/%E6%9D%B1%E9%83%B7%E5%85%83%E5%B8%A5%E8%A8%98%E5%BF%B5%E5%85%AC%E5%9C%92.jpg",
+        "schema:license": "https://creativecommons.org/licenses/by-sa/4.0",
+        "schema:creator": {
+          "@type": [
+            "schema:Person"
+          ],
+          "schema:name": "Irure veniam"
+        }
+      },
       "schema:keywords": [
         {
           "@id": "urn:uuid:48dbc3b1-117c-5dc9-8029-20c3320f7781"
@@ -2525,6 +2621,19 @@
       "rdfs:seeAlso": [
         "https://www.openstreetmap.org/way/675832452"
       ],
+      "schema:image": {
+        "@type": [
+          "schema:ImageObject"
+        ],
+        "schema:contentUrl": "https://upload.wikimedia.org/wikipedia/commons/0/0d/MAAch_ecute_Kanda_Manseibashi.jpg",
+        "schema:license": "https://creativecommons.org/licenses/by-sa/4.0",
+        "schema:creator": {
+          "@type": [
+            "schema:Person"
+          ],
+          "schema:name": "Tyuvc"
+        }
+      },
       "schema:keywords": [
         {
           "@id": "urn:uuid:4524d665-f076-549d-b0fe-16e5462c2730"
@@ -2617,6 +2726,19 @@
       "rdfs:seeAlso": [
         "https://www.openstreetmap.org/node/13744716801"
       ],
+      "schema:image": {
+        "@type": [
+          "schema:ImageObject"
+        ],
+        "schema:contentUrl": "https://upload.wikimedia.org/wikipedia/commons/9/9f/%E6%98%A0%E7%94%BB%E9%A4%A8%E3%80%8CCINEMALICE%E3%80%8D%E5%85%A5%E5%8F%A3.jpg",
+        "schema:license": "https://creativecommons.org/licenses/by-sa/4.0",
+        "schema:creator": {
+          "@type": [
+            "schema:Person"
+          ],
+          "schema:name": "Irure veniam"
+        }
+      },
       "schema:keywords": [
         {
           "@id": "urn:uuid:2205a59f-200d-5346-8bd6-077985e0f999"
@@ -3037,19 +3159,11 @@
       "@type": [
         "schema:Place"
       ],
-      "rdfs:seeAlso": [
-        "https://www.openstreetmap.org/way/187756645"
-      ],
       "schema:geo": {
         "@type": "schema:GeoCoordinates",
         "schema:longitude": 139.7684565,
         "schema:latitude": 35.6931405
-      },
-      "schema:keywords": [
-        {
-          "@id": "urn:uuid:c8fe25cb-a169-51d1-bf7c-7f1e28e96c5c"
-        }
-      ]
+      }
     },
     {
       "@id": "urn:uuid:01a1f74a-7ced-7363-a7e6-08976d268c4d",

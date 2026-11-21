@@ -1,6 +1,6 @@
 {
   "sourceId": "commons",
-  "retrievedAt": "2026-11-21T02:55:32+00:00",
+  "retrievedAt": "2026-11-21T03:35:00+00:00",
   "files": {
     "File:Bancho Elementary School-1a.jpg": {
       "url": "https://upload.wikimedia.org/wikipedia/commons/7/75/Bancho_Elementary_School-1a.jpg",
@@ -146,11 +146,11 @@
       "licenseUrl": null,
       "artist": "Abasaa"
     },
-    "File:Manseibashi Station original.jpg": {
-      "url": "https://upload.wikimedia.org/wikipedia/commons/a/a0/Manseibashi_Station_original.jpg",
-      "license": "Public domain",
-      "licenseUrl": null,
-      "artist": null
+    "File:MAAch ecute Kanda Manseibashi.jpg": {
+      "url": "https://upload.wikimedia.org/wikipedia/commons/0/0d/MAAch_ecute_Kanda_Manseibashi.jpg",
+      "license": "CC BY-SA 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+      "artist": "Tyuvc"
     },
     "File:Memorial Hall of constitutional politics Japan01s3200.jpg": {
       "url": "https://upload.wikimedia.org/wikipedia/commons/e/e3/Memorial_Hall_of_constitutional_politics_Japan01s3200.jpg",
@@ -302,6 +302,12 @@
       "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
       "artist": "いてれぇた"
     },
+    "File:Yoshihiro Yonezawa Memorial Library of Manga and Subcultures 2024-02-15.jpg": {
+      "url": "https://upload.wikimedia.org/wikipedia/commons/f/f6/Yoshihiro_Yonezawa_Memorial_Library_of_Manga_and_Subcultures_2024-02-15.jpg",
+      "license": "CC0",
+      "licenseUrl": "http://creativecommons.org/publicdomain/zero/1.0/deed.en",
+      "artist": "Asanagi"
+    },
     "File:しょうけい館.jpg": {
       "url": "https://upload.wikimedia.org/wikipedia/commons/a/a8/%E3%81%97%E3%82%87%E3%81%86%E3%81%91%E3%81%84%E9%A4%A8.jpg",
       "license": "CC BY 4.0",
@@ -320,8 +326,26 @@
       "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
       "artist": "mzaki @ Mapillary"
     },
+    "File:千代田区 子育てひろば あい・ぽーと麹町.png": {
+      "url": "https://upload.wikimedia.org/wikipedia/commons/2/22/%E5%8D%83%E4%BB%A3%E7%94%B0%E5%8C%BA_%E5%AD%90%E8%82%B2%E3%81%A6%E3%81%B2%E3%82%8D%E3%81%B0_%E3%81%82%E3%81%84%E3%83%BB%E3%81%BD%E3%83%BC%E3%81%A8%E9%BA%B9%E7%94%BA.png",
+      "license": "CC BY-SA 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+      "artist": "Irure veniam"
+    },
     "File:千代田区立和泉小学校.jpg": {
       "url": "https://upload.wikimedia.org/wikipedia/commons/2/28/%E5%8D%83%E4%BB%A3%E7%94%B0%E5%8C%BA%E7%AB%8B%E5%92%8C%E6%B3%89%E5%B0%8F%E5%AD%A6%E6%A0%A1.jpg",
+      "license": "CC BY-SA 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+      "artist": "Irure veniam"
+    },
+    "File:千代田区立昌平まちかど図書館.jpg": {
+      "url": "https://upload.wikimedia.org/wikipedia/commons/b/b8/%E5%8D%83%E4%BB%A3%E7%94%B0%E5%8C%BA%E7%AB%8B%E6%98%8C%E5%B9%B3%E3%81%BE%E3%81%A1%E3%81%8B%E3%81%A9%E5%9B%B3%E6%9B%B8%E9%A4%A8.jpg",
+      "license": "CC BY-SA 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+      "artist": "Irure veniam"
+    },
+    "File:千代田区立神田まちかど図書館.jpg": {
+      "url": "https://upload.wikimedia.org/wikipedia/commons/5/54/%E5%8D%83%E4%BB%A3%E7%94%B0%E5%8C%BA%E7%AB%8B%E7%A5%9E%E7%94%B0%E3%81%BE%E3%81%A1%E3%81%8B%E3%81%A9%E5%9B%B3%E6%9B%B8%E9%A4%A8.jpg",
       "license": "CC BY-SA 4.0",
       "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
       "artist": "Irure veniam"
@@ -331,6 +355,12 @@
       "license": "CC BY-SA 4.0",
       "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
       "artist": "ジェフ・カールソン"
+    },
+    "File:千代田区錦華公園.jpg": {
+      "url": "https://upload.wikimedia.org/wikipedia/commons/6/62/%E5%8D%83%E4%BB%A3%E7%94%B0%E5%8C%BA%E9%8C%A6%E8%8F%AF%E5%85%AC%E5%9C%92.jpg",
+      "license": "CC BY-SA 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+      "artist": "Irure veniam"
     },
     "File:千代田区障害者よろず相談 Light.jpg": {
       "url": "https://upload.wikimedia.org/wikipedia/commons/6/62/%E5%8D%83%E4%BB%A3%E7%94%B0%E5%8C%BA%E9%9A%9C%E5%AE%B3%E8%80%85%E3%82%88%E3%82%8D%E3%81%9A%E7%9B%B8%E8%AB%87_Light.jpg",
@@ -349,6 +379,30 @@
       "license": "CC BY-SA 4.0",
       "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
       "artist": "柏木村民"
+    },
+    "File:映画館「CINEMALICE」入口.jpg": {
+      "url": "https://upload.wikimedia.org/wikipedia/commons/9/9f/%E6%98%A0%E7%94%BB%E9%A4%A8%E3%80%8CCINEMALICE%E3%80%8D%E5%85%A5%E5%8F%A3.jpg",
+      "license": "CC BY-SA 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+      "artist": "Irure veniam"
+    },
+    "File:東京しごとセンター.jpg": {
+      "url": "https://upload.wikimedia.org/wikipedia/commons/c/c0/%E6%9D%B1%E4%BA%AC%E3%81%97%E3%81%94%E3%81%A8%E3%82%BB%E3%83%B3%E3%82%BF%E3%83%BC.jpg",
+      "license": "CC BY-SA 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+      "artist": "Irure veniam"
+    },
+    "File:東郷元帥記念公園.jpg": {
+      "url": "https://upload.wikimedia.org/wikipedia/commons/e/e4/%E6%9D%B1%E9%83%B7%E5%85%83%E5%B8%A5%E8%A8%98%E5%BF%B5%E5%85%AC%E5%9C%92.jpg",
+      "license": "CC BY-SA 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+      "artist": "Irure veniam"
+    },
+    "File:神田児童公園.jpg": {
+      "url": "https://upload.wikimedia.org/wikipedia/commons/7/77/%E7%A5%9E%E7%94%B0%E5%85%90%E7%AB%A5%E5%85%AC%E5%9C%92.jpg",
+      "license": "CC BY-SA 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+      "artist": "Irure veniam"
     },
     "File:科学技術館 - panoramio.jpg": {
       "url": "https://upload.wikimedia.org/wikipedia/commons/8/8d/%E7%A7%91%E5%AD%A6%E6%8A%80%E8%A1%93%E9%A4%A8_-_panoramio.jpg",
@@ -387,7 +441,7 @@
     "Category:JCII Camera Museum": "File:Camera_Nuseum1.JPG",
     "Category:Kensei Kinenkan": "File:Memorial_Hall_of_constitutional_politics_Japan01s3200.jpg",
     "Category:Kitanomaru Park": "File:Kitanomaru_Park_01.jpg",
-    "Category:Manseibashi Station": "File:Manseibashi_Station_original.jpg",
+    "Category:MAAch ecute Kanda-Manseibashi": "File:MAAch ecute Kanda Manseibashi.jpg",
     "Category:Mitsubishi Ichigokan Museum": "File:Mitsubishi_Ichigokan_Museum.JPG",
     "Category:Mitsui Memorial Hospital": "File:Mitsui_Memorial_Hospital-3.JPG",
     "Category:Mitsuo Aida Museum": "File:Mitsuo_Aida_Museum_wall_signage.jpg",

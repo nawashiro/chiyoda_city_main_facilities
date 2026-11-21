@@ -5044,31 +5044,9 @@
         ]
       },
       "evidenceHash": "2daf89ed337b56d91a15906eab00177d0c49a64871e7da6497306584e2339e2b",
-      "current": "relation/9323146",
+      "current": null,
       "status": "decided",
-      "jev": {
-        "choice": "node/3794695440",
-        "confidence": 0.85,
-        "probabilities": {
-          "node/12945536601": 0.0,
-          "node/1420797864": 0.0,
-          "node/1655927382": 0.1,
-          "node/3794695440": 0.87,
-          "node/3794707263": 0.0,
-          "node/4603367541": 0.0,
-          "relation/3545352": 0.0,
-          "way/175993983": 0.0,
-          "none": 0.03
-        },
-        "usage": {
-          "input_tokens": 1583,
-          "output_tokens": 98
-        },
-        "model": "jev-1.14.0"
-      },
-      "reason": "Jevの信頼度が閾値に届きません。",
-      "choice": "none",
-      "method": "human",
+      "issue": 76,
       "human": {
         "choice": "none",
         "editor": "nawashiro",
@@ -5076,7 +5054,8 @@
         "url": "https://github.com/nawashiro/chiyoda_city_main_facilities/issues/76",
         "issue": 76
       },
-      "issue": 76
+      "choice": "none",
+      "method": "human"
     },
     "019fa880-5cd5-7b37-bb94-a2151c0cdef0": {
       "evidence": {
@@ -13571,10 +13550,10 @@
         ]
       },
       "evidenceHash": "1ce33f67ea767507d0c78a74149f2035628053d01ae43a0642d2c23023188c0b",
-      "current": "way/460729041",
+      "current": "node/14344607026",
       "status": "decided",
       "choice": "node/14344607026",
-      "method": "qid"
+      "method": "source_record"
     },
     "01a1e8ab-f14e-7d43-bf8c-022b06f17c7c": {
       "evidence": {
@@ -14364,39 +14343,9 @@
         ]
       },
       "evidenceHash": "5578de075785284e9cbcb7bbaf3fba320096642777b640d8db0ec929e8f71af8",
-      "current": "way/187756645",
+      "current": null,
       "status": "decided",
-      "jev": {
-        "choice": "none",
-        "confidence": 0.52,
-        "probabilities": {
-          "node/1420770192": 0.06,
-          "node/1420770197": 0.0,
-          "node/8931799986": 0.0,
-          "way/187756642": 0.09,
-          "way/187756691": 0.0,
-          "way/231665293": 0.02,
-          "way/546746166": 0.0,
-          "way/620327839": 0.02,
-          "node/5283363638": 0.01,
-          "node/5283363644": 0.0,
-          "node/5285945917": 0.01,
-          "node/5285945918": 0.0,
-          "node/5285945920": 0.02,
-          "node/5285952021": 0.22,
-          "node/8930433491": 0.0,
-          "node/8931799985": 0.0,
-          "none": 0.55
-        },
-        "usage": {
-          "input_tokens": 2591,
-          "output_tokens": 174
-        },
-        "model": "jev-1.14.0"
-      },
-      "reason": "Jevの信頼度が閾値に届きません。",
-      "choice": "none",
-      "method": "human",
+      "issue": 77,
       "human": {
         "choice": "none",
         "editor": "nawashiro",
@@ -14404,7 +14353,8 @@
         "url": "https://github.com/nawashiro/chiyoda_city_main_facilities/issues/77",
         "issue": 77
       },
-      "issue": 77
+      "choice": "none",
+      "method": "human"
     },
     "01a1f74a-7ced-7363-a7e6-08976d268c4d": {
       "evidence": {
