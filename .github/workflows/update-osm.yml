@@ -48,11 +48,16 @@ jobs:
           python3 -m unittest discover -s tests -v
           python3 -m src.facility_data build .
           ./fac jsonld-validate --published site/dataset.jsonld
-          git add data/places.jsonld data/osm-decisions.json imports/openstreetmap/ imports/wikidata/ imports/commons/ site/mirrors/
+          git add data/ imports/openstreetmap/ imports/wikidata/ imports/commons/ site/
           if ! git diff --cached --quiet; then
             git commit -m '[bot] data: update OSM associations'
-            git push origin HEAD:main
           fi
+          leftover="$(git status --porcelain -- data imports site)"
+          if [ -n "$leftover" ]; then
+            echo "$leftover" >&2
+            exit 1
+          fi
+          git push origin HEAD:main
           echo "sha=$(git rev-parse HEAD)" >> "$GITHUB_OUTPUT"
       - name: Present committed decisions
         if: github.event_name != 'issues'
