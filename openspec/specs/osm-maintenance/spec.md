@@ -43,14 +43,24 @@
 - **THEN** システムは名称と距離で確定せずJevへ判定を求める
 ### Requirement: Durable evidence-bound human decisions
 
-システム SHALL 人が選んだOSM IDを正本へ保存し、以後は既存参照として維持する。システム MUST 入力ハッシュだけで採用済みの接続を失効させない。人の「該当なし」と未解決のJev結果は同じ根拠では再利用し、根拠が変われば再評価する。取得日時や候補順だけの変化は根拠の変更とみなさない。
+システム SHALL 人が選んだOSM IDを正本へ保存し、以後は既存参照として維持する。システム MUST 入力ハッシュだけで採用済みの接続を失効させない。人の「該当なし」と未解決のJev結果は同じ根拠では再利用し、根拠が変われば再評価する。取得日時や候補順だけの変化は根拠の変更とみなさない。システム MUST 保持スナップショットに収録されていない要素を、確定した人の判断として記録しない。
 
-人が実地調査で確定した接続先 SHALL 専用CLIの`assoc`サブコマンドで記録・正本へ適用できる。システム SHALL OSM APIから指定された要素の実データを取得し、確認Issueと同じ`IDENTITY_TAGS`に基づく根拠を一つの候補として作る。システム MUST 取得できない要素を候補にせず、正本を変更しない。編集者と実行時刻 SHALL 人の判断として`human`へ記録する。
+人が実地調査で確定した接続先 SHALL 専用CLIの`assoc`サブコマンドで記録・正本へ適用できる。システム SHALL OSM APIから指定された要素の実データを取得し、確認Issueと同じ`IDENTITY_TAGS`に基づく根拠を一つの候補として作る。システム SHALL 指定された要素が保持スナップショットに収録されているかを記録前に確認する。収録されていない場合、システム MUST 確定判断を記録せず、その要素を`previous`とする保留を自動の理由つきで保存する。スナップショットを検証できない場合、システム SHALL 照合しなかったことを示し、指定された要素を確定した判断として記録する。システム MUST 取得できない要素を候補にせず、正本を変更しない。編集者と実行時刻 SHALL 人の判断として`human`へ記録する。
 
 #### Scenario: Field-survey OSM ID is recorded as a human decision
 
 - **WHEN** 保守者が`./fac assoc <query_id> --osm-id node/123 --editor <editor>`を実行する
 - **THEN** システムはOSM APIから`node/123`の名称・座標・タグを取得し、候補一つの根拠を作って`method: human`の判断を判断記録へ保存し、`places.jsonld`の当該施設へ参照と座標を適用する
+
+#### Scenario: Element is missing from the retained snapshot
+
+- **WHEN** 保守者が保持スナップショットに収録されていないOSM要素を`./fac assoc <query_id> --osm-id <id>`で指定する
+- **THEN** システムは`WARNING`を表示し、その要素を`previous`とする保留を自動の理由と編集者・実行時刻つきで判断記録へ保存し、施設へOSM参照とWikidata参照を付けない
+
+#### Scenario: Snapshot cannot be verified
+
+- **WHEN** 保持スナップショットが無い、または取得メタのハッシュと一致しない
+- **THEN** システムは照合できなかったことを`WARNING`で示し、指定された要素を人の確定した判断として記録する
 
 #### Scenario: Rejected candidates recur next month
 
@@ -76,6 +86,7 @@
 
 - **WHEN** 指定した要素が別の施設に既に割り当てられている
 - **THEN** システムは正本を変更せず失敗を報告する
+
 ### Requirement: Unresolved facilities do not block resolved updates
 
 システム SHALL 検証済みの確定分を、他施設の人手判断を待たず正本へ反映する。未確定施設は直前の公開状態を保ち、判断待ちであることを確認Issueに示す。システム MUST 一つのOSM typed object IDを複数施設へ同時に割り当てない。
