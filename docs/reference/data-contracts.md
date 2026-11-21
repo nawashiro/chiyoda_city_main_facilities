@@ -2,13 +2,46 @@
 
 ## 公開JSON-LD
 
-`data/places.jsonld`を施設の正本とします。施設は一意な`urn:uuid:`のUUIDv7で識別し、`schema:Place`と、有効な経度・緯度を持つ`schema:GeoCoordinates`を設定します。正本は施設だけを含み、カテゴリ参照と画像を含みません。
+`data/places.jsonld`を施設の正本とします。施設は一意な`urn:uuid:`のUUIDv7で識別し、`schema:Place`と、有効な経度・緯度を持つ`schema:GeoCoordinates`を設定します。正本は施設と関連付けを含み、カテゴリ参照を持ちません。画像はCommonsファイルページへの参照だけを持つことがあります。
 
 `python3 -m src.facility_data build .`は、正本、カテゴリ語彙`data/category-vocabulary.jsonld`、形状`data/dataset-shape.jsonld`、判断記録`data/categories.json`から`site/dataset.jsonld`を合成します。公開文書の`@graph`はPlace、`schema:DefinedTermSet`、`schema:DefinedTerm`、`sh:NodeShape`を含みます。Pagesは`site/dataset.jsonld`と両ミラーを配布します。Releaseは同じコミットのビルドから`dataset-<tag>.jsonld`、`osm-<tag>.json`、`wikidata-<tag>.json`を配布します。検索入力の`publish: false`に該当する施設は配布物から除きます。
 
 カテゴリは`schema:keywords`で参照します。各カテゴリtermは`urn:uuid:`の`@id`、人間用の`schema:name`、`schema:identifier`の`gif-poi`コードを持ちます。Placeは判断のあるカテゴリtermを`schema:keywords`に並べます。複数カテゴリを許します。Placeは`gif-poi`の`schema:identifier`を持ちません。
 
 公開文書はSHACLの`sh:NodeShape`を含み、`schema:geo`の必須、`schema:image`の単一、`schema:contentUrl`と`schema:license`の必須、`schema:creator`の任意と、`schema:creator`を出すときの`schema:name`必須を表します。カテゴリtermの形状はUUID、名前、`gif-poi`識別子を必須にします。
+
+### 画像の手動参照
+
+正本のPlace recordは、`schema:image`にCommonsファイルページのIRI参照を一つだけ持てます。参照は`{"@id": "https://commons.wikimedia.org/wiki/File:..."}`の形で、直接URL、ライセンス、作者を含みません。
+
+```json
+{
+  "@id": "urn:uuid:019fa880-...",
+  "@type": ["schema:Place"],
+  "schema:geo": {"@type": "schema:GeoCoordinates", "schema:longitude": 139.75, "schema:latitude": 35.69},
+  "schema:image": {"@id": "https://commons.wikimedia.org/wiki/File:Chiyoda_Ward_Office.jpg"}
+}
+```
+
+ビルドは手動参照をWikidata P18、OSMの`File:`タグ、OSMの`Category:`タグより優先し、`imports/commons/raw.json`のメタデータから公開recordの`schema:ImageObject`を作ります。手動参照のファイルのメタデータが得られないときは、自動候補へフォールバックせず、画像なしの公開recordを生成して警告を出します。
+
+公開recordでは、同じ場所の`schema:image`は次の形になります。
+
+```json
+{
+  "@id": "urn:uuid:019fa880-...",
+  "@type": ["schema:Place"],
+  "schema:geo": {"@type": "schema:GeoCoordinates", "schema:longitude": 139.75, "schema:latitude": 35.69},
+  "schema:image": {
+    "@type": ["schema:ImageObject"],
+    "schema:contentUrl": "https://upload.wikimedia.org/wikipedia/commons/a/Chiyoda.jpg",
+    "schema:license": "https://creativecommons.org/licenses/by-sa/4.0/",
+    "schema:creator": {"@type": ["schema:Person"], "schema:name": "作者"}
+  }
+}
+```
+
+正本の`schema:image`は参照形だけを許可し、公開物は`schema:ImageObject`を要求します。`./fac image set`、`./fac image clear`、`./fac image review`で参照を設定・解除・確認します。指定直後はメタデータが未取得であり、次の月次Commons取得とビルドで公開物へ反映されます。
 
 OSMとWikidataの公式HTTPS URIを`rdfs:seeAlso`へ設定します。OSM IDは`node/123`、`way/123`、`relation/123`を区別します。同じOSM IDを複数の施設へ割り当てません。
 

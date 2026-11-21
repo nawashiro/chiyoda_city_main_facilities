@@ -8,7 +8,8 @@ import subprocess
 from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
-from src.facility_data import _read_json, _write_json, barrier_free_webpage, load_queries, new_uuid7, validate_jsonld_document, validate_published_document, validate_search_document
+from src.commons_files import commons_file_page, commons_file_title
+from src.facility_data import _image_key, _read_json, _write_json, barrier_free_webpage, load_queries, new_uuid7, validate_jsonld_document, validate_published_document, validate_search_document
 from src.resolve_osm_candidates import apply_decisions, current_id, evidence_hash, hold_entry, osm_candidate, validate_hold
 from src import facility_categories
 from src.env_utils import load_dotenv
@@ -53,6 +54,56 @@ def _hold(root: Path, query_id: str, reason: str | None, editor: str | None) -> 
     validate_jsonld_document(document)
     _write_json(root / "data/osm-decisions.json", ledger)
     _write_json(root / "data/places.jsonld", document)
+
+
+def _image_place(root: Path, query_id: str) -> tuple[dict[str, Any], dict[str, Any]]:
+    document = _read_json(root / "data/places.jsonld")
+    place = next((p for p in document["@graph"] if p.get("@id") == f"urn:uuid:{query_id}"), None)
+    if place is None:
+        raise ValueError(f"place not found: {query_id}")
+    return document, place
+
+
+def _image_set(root: Path, query_id: str, value: str) -> None:
+    page = commons_file_page(value)
+    document, place = _image_place(root, query_id)
+    place["schema:image"] = {"@id": page}
+    validate_jsonld_document(document)
+    _write_json(root / "data/places.jsonld", document)
+    print(f"image={page}")
+
+
+def _image_clear(root: Path, query_id: str) -> None:
+    document, place = _image_place(root, query_id)
+    if "schema:image" not in place:
+        raise ValueError(f"image not recorded: {query_id}")
+    del place["schema:image"]
+    validate_jsonld_document(document)
+    _write_json(root / "data/places.jsonld", document)
+
+
+def _image_review(root: Path) -> None:
+    document = _read_json(root / "data/places.jsonld")
+    validate_jsonld_document(document)
+    names = {q["id"]: q["name"] for q in load_queries(root)} if (root / "inputs/facilities.json").exists() else {}
+    metadata = {}
+    commons_path = root / "imports/commons/raw.json"
+    if commons_path.exists():
+        metadata = {_image_key(key): value for key, value in (_read_json(commons_path).get("files") or {}).items()}
+    for place in document["@graph"]:
+        image = place.get("schema:image")
+        if not isinstance(image, dict) or set(image) != {"@id"} or not isinstance(image.get("@id"), str):
+            continue
+        title = commons_file_title(image["@id"])
+        identifier = place["@id"].removeprefix("urn:uuid:")
+        name = names.get(identifier, identifier)
+        meta = metadata.get(_image_key(title))
+        if not isinstance(meta, dict) or not meta.get("url") or not meta.get("license"):
+            print(f"unresolved {name}\n  id={identifier}\n  file={title}")
+            continue
+        print(f"resolved {name}\n  id={identifier}\n  file={title}\n  license={meta.get('licenseUrl') or meta['license']}")
+        if meta.get("artist"):
+            print(f"  artist={meta['artist']}")
 
 
 def _documents(root:Path) -> list[tuple[Path,dict[str,Any]]]:
@@ -105,6 +156,17 @@ def main(argv:list[str]|None=None)->int:
         p.add_argument("root",nargs="?",default=".")
         p.add_argument("place_id")
         p.add_argument("url")
+    image=subs.add_parser("image",help="maintain the curated Commons image reference of a place")
+    commands=image.add_subparsers(dest="action",required=True)
+    image_set=commands.add_parser("set")
+    image_set.add_argument("root",nargs="?",default=".")
+    image_set.add_argument("query_id")
+    image_set.add_argument("file")
+    image_clear=commands.add_parser("clear")
+    image_clear.add_argument("root",nargs="?",default=".")
+    image_clear.add_argument("query_id")
+    image_review=commands.add_parser("review")
+    image_review.add_argument("root",nargs="?",default=".")
     args=parser.parse_args(argv)
     load_dotenv(getattr(args, "root", "."))
     try:
@@ -169,6 +231,11 @@ def main(argv:list[str]|None=None)->int:
             validate_jsonld_document(document)
             _write_json(places_path,document)
             return 0
+        if args.command=="image":
+            root=Path(args.root)
+            if args.action=="set": _image_set(root,args.query_id,args.file); return 0
+            if args.action=="clear": _image_clear(root,args.query_id); return 0
+            if args.action=="review": _image_review(root); return 0
         if args.command=="assoc":
             root=Path(args.root)
             queries=load_queries(root)

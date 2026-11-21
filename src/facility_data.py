@@ -6,11 +6,14 @@ import copy
 import json
 import math
 import re
+import sys
 import time
 import uuid
 from datetime import datetime, timedelta
 from pathlib import Path
 from typing import Any
+
+from src.commons_files import commons_file_title, is_commons_file_page
 
 
 _QID = re.compile(r"^Q[1-9][0-9]*$")
@@ -112,14 +115,16 @@ def _reject_legacy(document: Any) -> None:
     reject(document, "document")
 
 
-def _validate_place(record: dict, path: str, *, allow_image: bool, allow_keywords: bool = False, term_ids: set[str] | None = None) -> None:
+def _validate_place(record: dict, path: str, *, image_form: str, allow_keywords: bool = False, term_ids: set[str] | None = None) -> None:
     identifier = record.get("@id")
     if not isinstance(identifier, str) or not _URN_UUID.fullmatch(identifier): raise ValueError(f"JSON-LD {path} @id must be a urn:uuid UUID")
     if not isinstance(record.get("@type"), list) or "schema:Place" not in record["@type"]: raise ValueError(f"JSON-LD {path} @type must contain schema:Place")
     image = record.get("schema:image")
     if image is not None:
-        if not allow_image: raise ValueError(f"JSON-LD {path} must not contain schema:image: the canonical dataset carries associations only")
-        if not _valid_image(image): raise ValueError(f"JSON-LD {path} schema:image must be a single schema:ImageObject with schema:contentUrl, schema:license and an optional schema:creator")
+        if image_form == "reference":
+            if not _valid_commons_reference(image): raise ValueError(f"JSON-LD {path} schema:image must be a Commons file page reference with only an @id")
+        elif not _valid_image(image):
+            raise ValueError(f"JSON-LD {path} schema:image must be a single schema:ImageObject with schema:contentUrl, schema:license and an optional schema:creator")
     geo = record.get("schema:geo")
     if "geo:hasGeometry" in record or "geo:asGeoJSON" in record or not isinstance(geo, dict) or geo.get("@type") != "schema:GeoCoordinates" or not _valid_coordinates([geo.get("schema:longitude"), geo.get("schema:latitude")]): raise ValueError(f"JSON-LD {path} schema:geo must be schema:GeoCoordinates with valid schema:latitude and schema:longitude")
     identifiers = record.get("schema:identifier", [])
@@ -161,7 +166,7 @@ def validate_jsonld_document(document: Any) -> None:
         identifier = record.get("@id")
         if identifier in seen: raise ValueError(f"JSON-LD {path} @id duplicates a previous record: {identifier}")
         seen.add(identifier)
-        _validate_place(record, path, allow_image=False)
+        _validate_place(record, path, image_form="reference")
 
 
 def _validate_term(record: dict, path: str) -> str:
@@ -265,7 +270,11 @@ def validate_published_document(document: Any) -> None:
         _require_context(document, sh=True)
         if places and "schema:Place" not in shape_targets: raise ValueError("published dataset needs a shape targeting schema:Place")
     for record, path in places:
-        _validate_place(record, path, allow_image=True, allow_keywords=True, term_ids=term_ids)
+        _validate_place(record, path, image_form="object", allow_keywords=True, term_ids=term_ids)
+
+
+def _valid_commons_reference(image: Any) -> bool:
+    return isinstance(image, dict) and set(image) == {"@id"} and isinstance(image.get("@id"), str) and is_commons_file_page(image["@id"])
 
 
 def _valid_image(image: Any) -> bool:
@@ -437,31 +446,65 @@ def _image_file_name(place: dict[str, Any], osm_files: dict[str, Any], p18_files
     return None
 
 
+def _manual_image_title(place: dict[str, Any]) -> str | None:
+    image = place.get("schema:image")
+    if not isinstance(image, dict) or set(image) != {"@id"} or not isinstance(image.get("@id"), str):
+        return None
+    try:
+        return commons_file_title(image["@id"])
+    except ValueError:
+        return None
+
+
+def _image_object(meta: dict[str, Any]) -> dict[str, Any]:
+    image = {
+        "@type": ["schema:ImageObject"],
+        "schema:contentUrl": meta["url"],
+        "schema:license": meta.get("licenseUrl") or meta["license"],
+    }
+    if meta.get("artist"):
+        image["schema:creator"] = {"@type": ["schema:Person"], "schema:name": meta["artist"]}
+    return image
+
+
 def _apply_images(root: Path, document: dict[str, Any]) -> None:
+    manual = {}
+    for place in document["@graph"]:
+        title = _manual_image_title(place)
+        if title:
+            manual[place["@id"]] = title
+        place.pop("schema:image", None)
     osm_mirror, wikidata_mirror, commons_path = root / "site/mirrors/osm.json", root / "site/mirrors/wikidata.json", root / "imports/commons/raw.json"
-    if not (osm_mirror.exists() and wikidata_mirror.exists() and commons_path.exists()): return
-    osm_files = {f"{element.get('type')}/{element.get('id')}": (element.get("tags") or {}).get("wikimedia_commons") for element in _read_json(osm_mirror).get("elements", []) if isinstance(element, dict)}
+    if not commons_path.exists():
+        for place_id, title in manual.items():
+            print(f"WARNING: Commons metadata for {title} is unavailable; no image is published for {place_id}", file=sys.stderr)
+        return
+    osm_files = {}
+    if osm_mirror.exists():
+        osm_files = {f"{element.get('type')}/{element.get('id')}": (element.get("tags") or {}).get("wikimedia_commons") for element in _read_json(osm_mirror).get("elements", []) if isinstance(element, dict)}
     p18_files = {}
-    for qid, entity in _read_json(wikidata_mirror).get("entities", {}).items():
-        claims = (entity.get("claims") or {}).get("P18", [])
-        value = claims[0].get("mainsnak", {}).get("datavalue", {}).get("value") if claims else None
-        if isinstance(value, str) and value:
-            p18_files[qid] = value if value.startswith("File:") else f"File:{value}"
+    if wikidata_mirror.exists():
+        for qid, entity in _read_json(wikidata_mirror).get("entities", {}).items():
+            claims = (entity.get("claims") or {}).get("P18", [])
+            value = claims[0].get("mainsnak", {}).get("datavalue", {}).get("value") if claims else None
+            if isinstance(value, str) and value:
+                p18_files[qid] = value if value.startswith("File:") else f"File:{value}"
     commons = _read_json(commons_path)
     metadata = {_image_key(key): value for key, value in (commons.get("files") or {}).items()}
     categories = commons.get("categories") or {}
     for place in document["@graph"]:
+        manual_title = manual.get(place["@id"])
+        if manual_title:
+            meta = metadata.get(_image_key(manual_title))
+            if not isinstance(meta, dict) or not meta.get("url") or not meta.get("license"):
+                print(f"WARNING: Commons metadata for {manual_title} is incomplete; no image is published for {place['@id']}", file=sys.stderr)
+                continue
+            place["schema:image"] = _image_object(meta)
+            continue
         name = _image_file_name(place, osm_files, p18_files, categories)
         meta = metadata.get(_image_key(name)) if name else None
         if not isinstance(meta, dict) or not meta.get("url") or not meta.get("license"): continue
-        image = {
-            "@type": ["schema:ImageObject"],
-            "schema:contentUrl": meta["url"],
-            "schema:license": meta.get("licenseUrl") or meta["license"],
-        }
-        if meta.get("artist"):
-            image["schema:creator"] = {"@type": ["schema:Person"], "schema:name": meta["artist"]}
-        place["schema:image"] = image
+        place["schema:image"] = _image_object(meta)
 
 
 def main(argv: list[str] | None = None) -> int:

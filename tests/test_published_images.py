@@ -1,10 +1,14 @@
+import contextlib
+import io
 import json
 import tempfile
 import unittest
 from pathlib import Path
 
+from src.commons_files import commons_file_page
 from src.fac_cli import main as fac_main
 from src.facility_data import _write_json, build_repository, validate_jsonld_document, validate_published_document
+from src.resolve_osm_candidates import apply_decisions
 
 ROOT = Path(__file__).resolve().parents[1]
 A = '019c0000-0000-7000-8000-000000000001'
@@ -99,6 +103,20 @@ def setup_root(directory):
     return root
 
 
+def add_manual_image(root, title='File:Manual.jpg', metadata=True):
+    document = json.loads((root / 'data/places.jsonld').read_text())
+    place = next(p for p in document['@graph'] if p['@id'] == f'urn:uuid:{A}')
+    place['schema:image'] = {'@id': commons_file_page(title)}
+    _write_json(root / 'data/places.jsonld', document)
+    if metadata:
+        commons = json.loads((root / 'imports/commons/raw.json').read_text())
+        commons['files'][title] = {
+            'url': 'https://upload.wikimedia.org/wikipedia/commons/m/manual.jpg',
+            'license': 'CC0', 'licenseUrl': None, 'artist': '手動作者'}
+        _write_json(root / 'imports/commons/raw.json', commons)
+    return title
+
+
 class PublishedImageTests(unittest.TestCase):
     def images(self, root):
         published = json.loads(build_repository(root).read_text())
@@ -124,6 +142,60 @@ class PublishedImageTests(unittest.TestCase):
             self.assertEqual('https://upload.wikimedia.org/wikipedia/commons/k/spaced.jpg', images[I]['schema:contentUrl'])
             self.assertEqual('空白作者', images[I]['schema:creator']['schema:name'])
 
+    def test_manual_reference_wins_over_p18_and_osm_tags(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = setup_root(directory)
+            add_manual_image(root)
+            image = self.images(root)[A]
+            self.assertEqual('https://upload.wikimedia.org/wikipedia/commons/m/manual.jpg', image['schema:contentUrl'])
+            self.assertEqual('CC0', image['schema:license'])
+            self.assertEqual('手動作者', image['schema:creator']['schema:name'])
+
+    def test_manual_reference_without_metadata_does_not_fall_back(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = setup_root(directory)
+            add_manual_image(root, metadata=False)
+            stderr = io.StringIO()
+            with contextlib.redirect_stderr(stderr):
+                image = self.images(root)[A]
+            self.assertIsNone(image)
+            self.assertIn('File:Manual.jpg', stderr.getvalue())
+            self.assertIn(f'urn:uuid:{A}', stderr.getvalue())
+
+    def test_manual_reference_is_published_without_mirrors(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            _write_json(root / 'data/places.jsonld', {'@context': CONTEXT, '@graph': [
+                {**place(A), 'schema:image': {'@id': commons_file_page('File:Manual.jpg')}},
+            ]})
+            _write_json(root / 'imports/commons/raw.json', {'files': {
+                'File:Manual.jpg': {'url': 'https://upload.wikimedia.org/wikipedia/commons/m/manual.jpg',
+                                    'license': 'CC0', 'licenseUrl': None, 'artist': '手動作者'},
+            }})
+            image = self.images(root)[A]
+            self.assertEqual('https://upload.wikimedia.org/wikipedia/commons/m/manual.jpg', image['schema:contentUrl'])
+
+    def test_manual_reference_survives_an_association_change(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = setup_root(directory)
+            add_manual_image(root)
+            document = json.loads((root / 'data/places.jsonld').read_text())
+            entry = {'status': 'decided', 'choice': 'node/99',
+                     'evidence': {'candidates': [{'recordId': 'node/99', 'coordinates': [139.76, 35.69], 'qid': None}]}}
+            updated = apply_decisions(document, [{'id': A, 'name': 'n', 'coordinates': COORD}], {A: entry})
+            record = next(p for p in updated['@graph'] if p['@id'] == f'urn:uuid:{A}')
+            self.assertEqual({'@id': commons_file_page('File:Manual.jpg')}, record['schema:image'])
+            self.assertEqual(['https://www.openstreetmap.org/node/99'], record['rdfs:seeAlso'])
+            validate_jsonld_document(updated)
+
+    def test_manual_reference_cleared_returns_to_automatic_selection(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = setup_root(directory)
+            add_manual_image(root)
+            self.assertEqual('https://upload.wikimedia.org/wikipedia/commons/m/manual.jpg', self.images(root)[A]['schema:contentUrl'])
+            self.assertEqual(0, fac_main(['image', 'clear', str(root), A]))
+            self.assertEqual('https://upload.wikimedia.org/wikipedia/commons/a/first.jpg', self.images(root)[A]['schema:contentUrl'])
+
     def test_missing_categories_map_leaves_category_records_image_free(self):
         with tempfile.TemporaryDirectory() as directory:
             root = setup_root(directory)
@@ -135,7 +207,7 @@ class PublishedImageTests(unittest.TestCase):
             self.assertIsNone(images[G])
             self.assertIsNotNone(images[A])
 
-    def test_canonical_source_stays_image_free(self):
+    def test_canonical_source_stays_image_free_without_a_manual_reference(self):
         with tempfile.TemporaryDirectory() as directory:
             root = setup_root(directory)
             build_repository(root)
@@ -156,10 +228,27 @@ class ImageValidationTests(unittest.TestCase):
     def valid_document(self, image):
         return {'@context': CONTEXT, '@graph': [{**place(A), 'schema:image': image}]}
 
-    def test_canonical_document_rejects_schema_image(self):
+    def test_canonical_document_accepts_a_commons_file_page_reference(self):
+        validate_jsonld_document(self.valid_document({'@id': commons_file_page('File:Chiyoda.jpg')}))
+
+    def test_canonical_document_rejects_a_derived_image_object(self):
         with self.assertRaises(ValueError):
             validate_jsonld_document(self.valid_document({'@type': ['schema:ImageObject'], 'schema:contentUrl': 'https://x/y.jpg',
                 'schema:license': 'CC0', 'schema:creator': {'@type': ['schema:Person'], 'schema:name': '作者'}}))
+
+    def test_canonical_document_rejects_other_reference_shapes(self):
+        cases = [
+            {'@id': 'File:Chiyoda.jpg'},
+            {'@id': 'https://example.com/wiki/File:Chiyoda.jpg'},
+            {'@id': 'https://commons.wikimedia.org/wiki/Category:Chiyoda'},
+            {'@id': 'https://commons.wikimedia.org/wiki/File:Chiyoda.jpg?uselang=ja'},
+            {'@id': commons_file_page('File:Chiyoda.jpg'), 'schema:license': 'CC0'},
+            {'@id': commons_file_page('File:Chiyoda.jpg'), '@type': 'schema:ImageObject'},
+        ]
+        for image in cases:
+            with self.subTest(image=image):
+                with self.assertRaises(ValueError):
+                    validate_jsonld_document(self.valid_document(image))
 
     def test_published_document_accepts_a_valid_image(self):
         validate_published_document(self.valid_document({'@type': ['schema:ImageObject'], 'schema:contentUrl': 'https://x/y.jpg',

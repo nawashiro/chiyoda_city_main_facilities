@@ -12,6 +12,7 @@ from typing import Any
 from urllib.parse import urlencode
 from urllib.request import Request, urlopen
 
+from src.commons_files import commons_file_title
 from src.facility_data import _read_json, _write_json
 from src.http_utils import read_limited_response
 
@@ -63,6 +64,16 @@ def collect_file_names(root: str | Path) -> list[str]:
                 value = claim.get("mainsnak", {}).get("datavalue", {}).get("value")
                 if isinstance(value, str) and value:
                     names.add(_common_title(value))
+    places_path = root / "data/places.jsonld"
+    if places_path.exists():
+        for place in _read_json(places_path).get("@graph", []):
+            image = place.get("schema:image") if isinstance(place, dict) else None
+            if not isinstance(image, dict) or set(image) != {"@id"} or not isinstance(image.get("@id"), str):
+                continue
+            try:
+                names.add(commons_file_title(image["@id"]))
+            except ValueError:
+                continue
     return sorted(names)
 
 

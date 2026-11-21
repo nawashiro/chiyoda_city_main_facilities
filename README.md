@@ -10,6 +10,7 @@ OpenStreetMapの取得、施設の照合、確定分の反映、GitHub Pagesへ�
 | --- | --- |
 | 検索対象を追加・編集する | [CLI](docs/reference/cli.md)、[データ契約](docs/reference/data-contracts.md) |
 | 実地調査で確定した接続先を反映する | [CLI](docs/reference/cli.md)の`assoc` |
+| 施設の画像を指定する | [CLI](docs/reference/cli.md)の`image` |
 | 更新を再実行する | [OpenStreetMapの更新](docs/how-to/update-osm.md) |
 | 通知された候補を判断する | [Issueでの確認・修正](docs/how-to/review-osm-candidates.md) |
 | 版を固定して配布する | [データセットのリリース](docs/how-to/release-dataset.md) |

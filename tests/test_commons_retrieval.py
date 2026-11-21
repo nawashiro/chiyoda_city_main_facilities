@@ -5,6 +5,7 @@ import unittest
 from pathlib import Path
 from urllib.parse import parse_qs, urlparse
 
+from src.commons_files import commons_file_page
 from src.facility_data import _write_json
 from src.commons_retrieval import COMMONS_API, _artist_text, _query_files, collect_categories, collect_file_names, resolve_categories, run_commons_retrieval
 from src.osm_maintenance import update
@@ -54,6 +55,9 @@ def commons_response(titles):
         elif title == 'File:代表.jpg':
             pages[4] = {'title': title, 'imageinfo': [{'url': 'https://upload.wikimedia.org/wikipedia/commons/e/代表.jpg',
                 'extmetadata': {'LicenseShortName': {'value': 'CC0'}, 'Artist': {'value': '代表作者'}}}]}
+        elif title == 'File:Manual.jpg':
+            pages[5] = {'title': title, 'imageinfo': [{'url': 'https://upload.wikimedia.org/wikipedia/commons/m/manual.jpg',
+                'extmetadata': {'LicenseShortName': {'value': 'CC0'}, 'Artist': {'value': '手動作者'}}}]}
         elif title == 'File:Gone.jpg':
             pages[3] = {'title': title, 'missing': ''}
     return json.dumps({'query': {'pages': pages}}).encode()
@@ -87,6 +91,14 @@ class CollectFileNamesTests(unittest.TestCase):
             _write_json(root / 'site/mirrors/osm.json', osm_mirror())
             _write_json(root / 'site/mirrors/wikidata.json', wikidata_mirror())
             self.assertEqual(['File:Chiyoda-first.jpg', 'File:Chiyoda-second.jpg', 'File:Chiyoda.jpg', 'File:別施設.jpg'], collect_file_names(root))
+
+    def test_collects_manual_reference_from_canonical(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            document = canonical()
+            document['@graph'][0]['schema:image'] = {'@id': commons_file_page('File:Manual.jpg')}
+            _write_json(root / 'data/places.jsonld', document)
+            self.assertEqual(['File:Manual.jpg'], collect_file_names(root))
 
     def test_collects_category_tags(self):
         with tempfile.TemporaryDirectory() as directory:
@@ -192,6 +204,20 @@ class CommonsRetrievalTests(unittest.TestCase):
             self.assertEqual({'sourceId': 'commons', 'retrievedAt': '2026-11-14T00:00:00+00:00',
                               'endpoint': COMMONS_API, 'fileCount': 5, 'pages': 1,
                               'rawSha256': hashlib.sha256(raw_path.read_bytes()).hexdigest()}, metadata)
+
+    def test_retrieval_saves_manual_reference_metadata(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = self.setup_root(directory)
+            document = json.loads((root / 'data/places.jsonld').read_text())
+            document['@graph'][0]['schema:image'] = {'@id': commons_file_page('File:Manual.jpg')}
+            _write_json(root / 'data/places.jsonld', document)
+
+            raw_path = run_commons_retrieval(root, 'at', FakeCommons())
+
+            files = json.loads(raw_path.read_text())['files']
+            self.assertEqual('https://upload.wikimedia.org/wikipedia/commons/m/manual.jpg', files['File:Manual.jpg']['url'])
+            self.assertEqual('CC0', files['File:Manual.jpg']['license'])
+            self.assertEqual('手動作者', files['File:Manual.jpg']['artist'])
 
     def test_paging_over_fifty_files(self):
         with tempfile.TemporaryDirectory() as directory:

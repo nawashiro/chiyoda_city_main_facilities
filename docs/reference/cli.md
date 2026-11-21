@@ -72,6 +72,23 @@ python3 -m src.facility_data build .
 
 入力が不正な場合、コマンドは `ERROR: <理由>` を出力し、終了コード 1 で停止します。
 
+## 画像を指定する
+
+```sh
+./fac image set . SEARCH_ID "File:Chiyoda_Ward_Office.jpg"
+./fac image set . SEARCH_ID "https://commons.wikimedia.org/wiki/File:Chiyoda_Ward_Office.jpg"
+./fac image clear . SEARCH_ID
+./fac image review .
+```
+
+`image set`は、正本`data/places.jsonld`のPlace recordへCommonsファイルページのIRI参照を一つ書きます。`File:`タイトルとCommonsファイルページURLを受け付け、空白・アンダースコアを正規化します。`Category:`、`Special:`、直接アップロードURLは受け付けません。
+
+`image set`はCommons APIを呼びません。手動参照のファイルは月次のCommons取得の対象になり、次のビルドで公開recordの`schema:ImageObject`へ反映されます。指定直後はメタデータが未取得のため、公開物に画像は現れません。
+
+`image clear`は手動参照を外し、Wikidata P18、OSMの`File:`タグ、OSMの`Category:`タグによる自動選択へ戻します。画像を付けない指定ではありません。
+
+`image review`は読み取り専用で、手動参照ごとに、保存済みの`imports/commons/raw.json`と照合した結果を`resolved`または`unresolved`として出力します。`unresolved`は、ファイルのメタデータが未取得、またはライセンスが不完全であることを示します。ビルドは、手動参照のメタデータが得られないとき、自動候補へフォールバックせず、画像なしの公開recordを生成して警告を出します。
+
 ## カテゴリ判断を確認する
 
 ```sh
