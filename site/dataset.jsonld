@@ -1201,8 +1201,14 @@
         "@type": [
           "schema:ImageObject"
         ],
-        "schema:contentUrl": "https://upload.wikimedia.org/wikipedia/commons/5/5a/Imperial_Palace_East_Garden_Japan_1989_air.jpg",
-        "schema:license": "Attribution"
+        "schema:contentUrl": "https://upload.wikimedia.org/wikipedia/commons/2/27/East_Gardens_of_Tokyo_Imperial_Palace_%2829458724206%29.jpg",
+        "schema:license": "https://creativecommons.org/licenses/by/2.0",
+        "schema:creator": {
+          "@type": [
+            "schema:Person"
+          ],
+          "schema:name": "Sylvain Kalache from San Francisco, USA"
+        }
       },
       "schema:keywords": [
         {

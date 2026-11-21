@@ -825,7 +825,10 @@
       "rdfs:seeAlso": [
         "https://www.openstreetmap.org/relation/5415394",
         "https://www.wikidata.org/entity/Q6631907"
-      ]
+      ],
+      "schema:image": {
+        "@id": "https://commons.wikimedia.org/wiki/File:East_Gardens_of_Tokyo_Imperial_Palace_(29458724206).jpg"
+      }
     },
     {
       "@id": "urn:uuid:019fa880-5cd5-79f3-8608-d5a71f5492f7",

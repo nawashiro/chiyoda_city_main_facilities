@@ -110,9 +110,10 @@ class PrepareReleaseTests(unittest.TestCase):
         self.assertTrue(script.is_file(), f"missing release preparation script: {script}")
         self.assertTrue(canonical.is_file(), f"missing canonical JSON-LD source: {canonical}")
         canonical_bytes = canonical.read_bytes()
+        dataset_bytes = (ROOT / "site/dataset.jsonld").read_bytes()
         version = "2026.11.14"
         expected = {
-            "dataset-2026.11.14.jsonld": canonical_bytes,
+            "dataset-2026.11.14.jsonld": dataset_bytes,
             "osm-2026.11.14.json": b'{"elements": []}',
             "wikidata-2026.11.14.json": b'{"entities": {}}',
         }
@@ -121,7 +122,7 @@ class PrepareReleaseTests(unittest.TestCase):
             temporary_root = Path(temporary_directory)
             site_dir = temporary_root / "site"
             (site_dir / "mirrors").mkdir(parents=True)
-            (site_dir / "dataset.jsonld").write_bytes(canonical_bytes)
+            (site_dir / "dataset.jsonld").write_bytes(dataset_bytes)
             (site_dir / "mirrors/osm.json").write_bytes(expected["osm-2026.11.14.json"])
             (site_dir / "mirrors/wikidata.json").write_bytes(
                 expected["wikidata-2026.11.14.json"]

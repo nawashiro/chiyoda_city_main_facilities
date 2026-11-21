@@ -75,7 +75,11 @@ class DatasetPublicationTests(unittest.TestCase):
             by_id = {record["@id"]: record for record in place_nodes(published)}
             for record in place_nodes(canonical_document):
                 published_record = by_id[record["@id"]]
-                self.assertEqual(record, {key: value for key, value in published_record.items() if key != "schema:keywords"})
+                derived = ("schema:image", "schema:keywords")
+                self.assertEqual(
+                    {key: value for key, value in record.items() if key not in derived},
+                    {key: value for key, value in published_record.items() if key not in derived},
+                )
                 entry = decisions.get(record["@id"].removeprefix("urn:uuid:"))
                 if entry is None:
                     self.assertNotIn("schema:keywords", published_record)
