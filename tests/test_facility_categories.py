@@ -274,6 +274,29 @@ class RefreshTests(unittest.TestCase):
             decisions = json.loads((root / "data/categories.json").read_text(encoding="utf-8"))
             self.assertNotIn(UUID, decisions["facilities"])
 
+    def test_association_removal_withdraws_the_decision(self):
+        record = canonical_record()
+        record.pop("rdfs:seeAlso")
+        decisions = {"version": 1, "facilities": {UUID: {"category": "1512", "method": "rule", "osmId": "node/123"}}}
+        temporary, root = repository(record=record, decisions=decisions)
+        with temporary:
+            _document, report = facility_categories.refresh(root)
+            remaining = json.loads((root / "data/categories.json").read_text(encoding="utf-8"))
+            self.assertNotIn(UUID, remaining["facilities"])
+            self.assertEqual([], report["stale"])
+
+    def test_human_decision_without_association_is_kept(self):
+        record = canonical_record()
+        record.pop("rdfs:seeAlso")
+        decisions = {"version": 1, "facilities": {UUID: {
+            "category": "1499", "method": "human", "editor": "tester",
+            "editedAt": "2026-11-20T00:00:00Z", "osmId": None}}}
+        temporary, root = repository(record=record, decisions=decisions)
+        with temporary:
+            facility_categories.refresh(root)
+            remaining = json.loads((root / "data/categories.json").read_text(encoding="utf-8"))
+            self.assertEqual("1499", remaining["facilities"][UUID]["category"])
+
     def test_facility_without_place_is_not_classified(self):
         temporary, root = repository()
         with temporary:

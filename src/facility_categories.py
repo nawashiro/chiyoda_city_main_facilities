@@ -356,10 +356,12 @@ def refresh(root: Path, *, judge=None, elements: list | None = None, document: d
         uuid = query["id"]
         if uuid in held:
             continue
+        entry = decisions["facilities"].get(uuid)
         current = current_id(places.get(uuid, {}))
         if current is None:
+            if entry and entry.get("osmId") is not None:
+                del decisions["facilities"][uuid]
             continue
-        entry = decisions["facilities"].get(uuid)
         if entry and entry.get("osmId") == current:
             continue
         proposal = proposals.get(uuid)

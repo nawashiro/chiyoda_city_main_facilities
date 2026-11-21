@@ -110,6 +110,11 @@ GIF POIコード表を語彙の正本とし、OSMタグと施設名称からの�
 - **WHEN** 施設にOSM関連付けがない
 - **THEN** システムは規則とJevでカテゴリを決めず、未分類のまま保ちます
 
+#### Scenario: Association removal withdraws the decision
+
+- **WHEN** 施設のOSM関連付けが解除されます
+- **THEN** システムはその施設のカテゴリ判断を取り消し、未分類のまま保ちます
+
 #### Scenario: Unresolved category is presented
 
 - **WHEN** カテゴリを確定できない施設が残る

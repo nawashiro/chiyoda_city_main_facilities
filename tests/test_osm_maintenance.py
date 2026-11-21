@@ -727,6 +727,23 @@ class IntegrationTests(unittest.TestCase):
             update(root, github=github)
             self.assertEqual(after, (root/'data/places.jsonld').read_bytes())
 
+    def test_confirmed_none_withdraws_the_category_decision(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = self.setup_root(directory)
+            _write_json(root/'data/category-vocabulary.jsonld', category_vocabulary('1601'))
+            _write_json(root/'data/category-rules.json', {'version': 1, 'rules': [
+                {'id': 'name', 'category': '1601', 'nameIncludes': ['千代田']}]})
+            _write_json(root/'data/places.jsonld', document(place(osm='node/1'), place(B)))
+            _write_json(root/'data/categories.json', {'version': 1, 'facilities': {
+                A: {'category': '1601', 'method': 'rule', 'osmId': 'node/1'}}})
+            entry = reviewed_entry()
+            _write_json(root/'data/osm-decisions.json', {'version': 1, 'facilities': {A: entry}})
+            build_repository(root)
+            update(root, github=FakeGitHub(checked(entry['issueBody'], 'none')))
+            self.assertNotIn(A, json.loads((root/'data/categories.json').read_text())['facilities'])
+            published = json.loads(build_repository(root).read_text())
+            self.assertNotIn('schema:keywords', published['@graph'][0])
+
     def test_changed_input_does_not_invalidate_saved_candidate_answer(self):
         with tempfile.TemporaryDirectory() as directory:
             root = self.setup_root(directory)
