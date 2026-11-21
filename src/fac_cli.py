@@ -11,6 +11,7 @@ from typing import Any
 from src.commons_files import commons_file_page, commons_file_title
 from src.facility_data import _image_key, _read_json, _write_json, barrier_free_webpage, load_queries, new_uuid7, validate_jsonld_document, validate_published_document, validate_search_document
 from src.resolve_osm_candidates import apply_decisions, current_id, evidence_hash, hold_entry, osm_candidate, validate_hold
+from src.osm_maintenance import verified_snapshot
 from src import facility_categories
 from src.env_utils import load_dotenv
 
@@ -19,7 +20,19 @@ def _write(path: Path, document: dict[str, Any]) -> None:
     issues=validate_search_document(document)
     if issues: raise ValueError("; ".join(issues))
     path.parent.mkdir(parents=True,exist_ok=True); path.write_text(json.dumps(document,ensure_ascii=False,indent=2)+"\n",encoding="utf-8")
-def _hold(root: Path, query_id: str, reason: str | None, editor: str | None) -> None:
+def _retained_osm_snapshot(root: Path) -> tuple[set[str] | None, str | None, str | None]:
+    """Return retained OSM element ids, the snapshot version, and why it is unreadable."""
+    try:
+        snapshot = verified_snapshot(root)
+    except FileNotFoundError:
+        return None, None, "保持スナップショットが無い"
+    except (OSError, ValueError, KeyError):
+        return None, None, "保持スナップショットが取得メタと一致しない"
+    ids = {f"{element.get('type')}/{element.get('id')}" for element in snapshot.get("elements", [])}
+    return ids, snapshot.get("version"), None
+
+
+def _hold(root: Path, query_id: str, reason: str | None, editor: str | None, previous: str | None = None) -> None:
     if not isinstance(reason, str) or not reason.strip():
         raise ValueError("reason is required: pass --reason with --hold")
     if not any(query["id"] == query_id for query in load_queries(root)):
@@ -32,7 +45,7 @@ def _hold(root: Path, query_id: str, reason: str | None, editor: str | None) -> 
     if not editor:
         raise ValueError("editor is required: pass --editor or set git user.name")
     now = datetime.now(timezone.utc).isoformat(timespec="seconds").replace("+00:00", "Z")
-    entry = hold_entry(current_id(place), reason.strip(), editor, now)
+    entry = hold_entry(previous or current_id(place), reason.strip(), editor, now)
     issues = validate_hold(entry)
     if issues:
         raise ValueError("; ".join(issues))
@@ -249,6 +262,14 @@ def main(argv:list[str]|None=None)->int:
                 candidate=None
             else:
                 candidate=osm_candidate(choice)
+            if candidate is not None:
+                retained,version,problem=_retained_osm_snapshot(root)
+                if problem is not None:
+                    print(f"WARNING: {problem}ため、{choice} の収録を確認していません")
+                elif choice not in retained:
+                    reason=f"OSMミラー（{version}）に要素未収録のため自動保留。ミラー更新後に assoc --osm-id で再確認"
+                    print(f"WARNING: {choice} は保持スナップショットに未収録のため、保留として記録しました。ミラー更新後に同じ --osm-id で再実行すると確定します")
+                    _hold(root,args.query_id,reason,args.editor,previous=choice); return 0
             evidence={"target":{k:query[k] for k in ("id","name","coordinates","qid") if k in query},
                       "candidates":[] if candidate is None else [candidate]}
             editor=args.editor or subprocess.run(["git","config","--get","user.name"],cwd=root,capture_output=True,text=True).stdout.strip()

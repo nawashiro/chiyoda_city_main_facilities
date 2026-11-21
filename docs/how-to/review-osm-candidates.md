@@ -35,4 +35,6 @@ OSM要素が実地調査なしでは確定できない施設は、保留とし�
 
 保留の記録でOSMとWikidataの参照とカテゴリ判断が外れ、UUIDと座標は残ります。保留中の施設は月次更新の関連付け再評価と確認Issueの対象になりません。
 
+`./fac assoc --osm-id`で指定した要素が保持スナップショット`imports/openstreetmap/raw.json`に未収録の場合も、保留として自動で記録されます。取得より後に作られた要素や、取得時点で名称のなかった要素がこれに当たります。ミラー更新後に同じ`--osm-id`で再実行すると、保留が人の確定判断に置き換わります。
+
 実地調査で接続先を確定したら`./fac assoc . SEARCH_ID --osm-id node/123456789`、接続先がないと確定したら`./fac assoc . SEARCH_ID --choice none`で記録します。どちらも保留を解除するので、必要なら`./fac category assign . SEARCH_ID POI_CODE`でカテゴリを判断します。

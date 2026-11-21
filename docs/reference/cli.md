@@ -66,6 +66,10 @@ python3 -m src.facility_data build .
 
 `assoc` は実地調査で確定したOSM要素を人の判断として正本に反映します。OSM APIから要素の名称・座標・タグを取得し、確認Issueと同じ根拠として`data/osm-decisions.json`へ保存し、`data/places.jsonld`へ参照と座標を適用します。`--choice none`は「該当なし」を記録し、既存のOSM参照を解除します。
 
+`--osm-id`は記録の前に、指定された要素が保持スナップショット`imports/openstreetmap/raw.json`に収録されているかを、`imports/openstreetmap/retrieval.json`とハッシュを照合して確認します。収録されていない場合は`WARNING`を表示し、指定要素を`previous`とする保留を自動の理由つきで記録します。参照と座標は適用しません。ミラー更新後に同じ`--osm-id`で再実行すると、保留が人の確定判断に置き換わります。
+
+`imports/openstreetmap/raw.json`が無い、またはハッシュが一致しない場合は、照合しなかった`WARNING`を表示し、指定要素を人の確定判断として記録します。この取得物はgitignore対象のため、fresh clone直後はこの経路になります。
+
 `--hold`は実地調査を待つ保留を記録します。`--reason`を必須とし、OSMとWikidataの参照を解除してUUID・座標・既存の`schema:subjectOf`を残し、カテゴリ判断を取り消します。保留中は月次更新の関連付け再評価、Jev、確認Issueの対象になりません。解除は`--osm-id`または`--choice none`で行います。公開物は次のビルドで更新します。
 
 編集者は`--editor NAME`を指定するか、リポジトリのgit `user.name`から取ります。

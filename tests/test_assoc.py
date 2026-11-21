@@ -1,3 +1,6 @@
+import contextlib
+import hashlib
+import io
 import json
 import shutil
 import unittest
@@ -50,6 +53,27 @@ class AssocTests(unittest.TestCase):
         with patch("src.fac_cli.osm_candidate") as fetch_osm_candidate:
             fetch_osm_candidate.side_effect = lambda record_id, fetch=None: real_osm_candidate(record_id, fetch=lambda url: osm_json(elements()))
             return fac_cli.main(["assoc", str(self.root), self.query_id, "--editor", "tester", *args])
+
+    def run_assoc_output(self, *args, elements):
+        buffer = io.StringIO()
+        with contextlib.redirect_stdout(buffer):
+            code = self.run_assoc(*args, elements=elements)
+        return code, buffer.getvalue()
+
+    def write_snapshot(self, elements, version="202611200100"):
+        directory = self.root / "imports/openstreetmap"
+        directory.mkdir(parents=True, exist_ok=True)
+        raw = {"version": version, "elements": elements}
+        payload = (json.dumps(raw, ensure_ascii=False, indent=2) + "\n").encode("utf-8")
+        (directory / "raw.json").write_bytes(payload)
+        (directory / "retrieval.json").write_text(json.dumps(
+            {"rawSha256": hashlib.sha256(payload).hexdigest(), "rawVersion": version}), encoding="utf-8")
+
+    def element(self):
+        return [{"type": "node", "id": 7, "lat": 35.6882993, "lon": 139.7365076, "tags": {"name": "千代田区立テスト児童館"}}]
+
+    def ledger_entry(self):
+        return json.loads((self.root / "data/osm-decisions.json").read_text(encoding="utf-8"))["facilities"].get(self.query_id)
 
     def test_associates_node_as_human_decision(self):
         nodes = [{"type": "node", "id": 7, "lat": 35.6882993, "lon": 139.7365076,
@@ -171,6 +195,66 @@ class AssocTests(unittest.TestCase):
         entry = json.loads((self.root / "data/osm-decisions.json").read_text(encoding="utf-8"))["facilities"][self.query_id]
         self.assertEqual("decided", entry["status"])
         self.assertEqual("none", entry["choice"])
+
+    def test_snapshot_with_the_element_records_a_decision(self):
+        self.seed_place()
+        self.write_snapshot(self.element())
+        code, output = self.run_assoc_output("--osm-id", "node/7", elements=self.element)
+        self.assertEqual(0, code)
+        self.assertNotIn("未収録", output)
+        self.assertEqual("decided", self.ledger_entry()["status"])
+        place = json.loads((self.root / "data/places.jsonld").read_text(encoding="utf-8"))["@graph"][0]
+        self.assertEqual(["https://www.openstreetmap.org/node/7"], place["rdfs:seeAlso"])
+        self.assertEqual(139.7365076, place["schema:geo"]["schema:longitude"])
+
+    def test_snapshot_without_the_element_records_a_hold(self):
+        self.seed_place()
+        self.write_snapshot([{"type": "node", "id": 1, "lat": 35.68, "lon": 139.73, "tags": {"name": "別の施設"}}])
+        code, output = self.run_assoc_output("--osm-id", "node/7", elements=self.element)
+        self.assertEqual(0, code)
+        self.assertIn("未収録", output)
+        entry = self.ledger_entry()
+        self.assertEqual("hold", entry["status"])
+        self.assertEqual("node/7", entry["previous"])
+        self.assertIn("202611200100", entry["reason"])
+        self.assertEqual("tester", entry["human"]["editor"])
+        place = json.loads((self.root / "data/places.jsonld").read_text(encoding="utf-8"))["@graph"][0]
+        self.assertNotIn("rdfs:seeAlso", place)
+        self.assertEqual({"@type": "schema:GeoCoordinates", "schema:longitude": 139.736548, "schema:latitude": 35.688289}, place["schema:geo"])
+
+    def test_snapshot_hold_withdraws_the_category_decision(self):
+        self.seed_place()
+        self.write_snapshot([])
+        self.assertEqual(0, self.run_assoc("--osm-id", "node/7", elements=self.element))
+        categories = json.loads((self.root / "data/categories.json").read_text(encoding="utf-8"))["facilities"]
+        self.assertNotIn(self.query_id, categories)
+
+    def test_unreadable_snapshot_records_a_decision(self):
+        self.seed_place()
+        code, output = self.run_assoc_output("--osm-id", "node/7", elements=self.element)
+        self.assertEqual(0, code)
+        self.assertIn("保持スナップショットが無い", output)
+        self.assertEqual("decided", self.ledger_entry()["status"])
+        self.write_snapshot([])
+        (self.root / "imports/openstreetmap/retrieval.json").write_text(
+            json.dumps({"rawSha256": "0" * 64, "rawVersion": "202611200100"}), encoding="utf-8")
+        code, output = self.run_assoc_output("--osm-id", "node/7", elements=self.element)
+        self.assertEqual(0, code)
+        self.assertIn("一致しない", output)
+        self.assertEqual("decided", self.ledger_entry()["status"])
+
+    def test_snapshot_hold_is_lifted_after_the_mirror_update(self):
+        self.seed_place()
+        self.write_snapshot([])
+        self.assertEqual(0, self.run_assoc("--osm-id", "node/7", elements=self.element))
+        self.assertEqual("hold", self.ledger_entry()["status"])
+        self.write_snapshot(self.element())
+        self.assertEqual(0, self.run_assoc("--osm-id", "node/7", elements=self.element))
+        entry = self.ledger_entry()
+        self.assertEqual("decided", entry["status"])
+        self.assertEqual("node/7", entry["choice"])
+        place = json.loads((self.root / "data/places.jsonld").read_text(encoding="utf-8"))["@graph"][0]
+        self.assertEqual(["https://www.openstreetmap.org/node/7"], place["rdfs:seeAlso"])
 
     def test_missing_element_writes_nothing(self):
         before_places = (self.root / "data/places.jsonld").read_text(encoding="utf-8")
