@@ -595,9 +595,6 @@
             "schema:name": "東京バリアフリーマップ"
           }
         }
-      ],
-      "rdfs:seeAlso": [
-        "https://www.openstreetmap.org/relation/9323146"
       ]
     },
     {
@@ -1833,9 +1830,6 @@
       "@id": "urn:uuid:01a1f74a-56c5-7fdc-9022-ac0ab000f2c1",
       "@type": [
         "schema:Place"
-      ],
-      "rdfs:seeAlso": [
-        "https://www.openstreetmap.org/way/187756645"
       ],
       "schema:geo": {
         "@type": "schema:GeoCoordinates",
