@@ -532,8 +532,8 @@
       ],
       "schema:geo": {
         "@type": "schema:GeoCoordinates",
-        "schema:longitude": 139.769885,
-        "schema:latitude": 35.7012402
+        "schema:longitude": 139.7698588,
+        "schema:latitude": 35.70120285
       },
       "schema:subjectOf": [
         {
@@ -557,8 +557,8 @@
       ],
       "schema:geo": {
         "@type": "schema:GeoCoordinates",
-        "schema:longitude": 139.7395948,
-        "schema:latitude": 35.6869274
+        "schema:longitude": 139.73959480000002,
+        "schema:latitude": 35.686927350000005
       },
       "schema:subjectOf": [
         {
@@ -822,13 +822,13 @@
         "schema:longitude": 139.7571878,
         "schema:latitude": 35.686472050000006
       },
+      "schema:image": {
+        "@id": "https://commons.wikimedia.org/wiki/File:East_Gardens_of_Tokyo_Imperial_Palace_(29458724206).jpg"
+      },
       "rdfs:seeAlso": [
         "https://www.openstreetmap.org/relation/5415394",
         "https://www.wikidata.org/entity/Q6631907"
-      ],
-      "schema:image": {
-        "@id": "https://commons.wikimedia.org/wiki/File:East_Gardens_of_Tokyo_Imperial_Palace_(29458724206).jpg"
-      }
+      ]
     },
     {
       "@id": "urn:uuid:019fa880-5cd5-79f3-8608-d5a71f5492f7",
@@ -1553,8 +1553,7 @@
         "schema:latitude": 35.69749255
       },
       "rdfs:seeAlso": [
-        "https://www.openstreetmap.org/way/675832452",
-        "https://www.wikidata.org/entity/Q6751576"
+        "https://www.openstreetmap.org/way/675832452"
       ]
     },
     {
@@ -1687,11 +1686,11 @@
       ],
       "schema:geo": {
         "@type": "schema:GeoCoordinates",
-        "schema:longitude": 139.7465227,
-        "schema:latitude": 35.6972953
+        "schema:longitude": 139.7463641,
+        "schema:latitude": 35.6971909
       },
       "rdfs:seeAlso": [
-        "https://www.openstreetmap.org/way/460729041",
+        "https://www.openstreetmap.org/node/14344607026",
         "https://www.wikidata.org/entity/Q81916362"
       ]
     },
@@ -1827,7 +1826,7 @@
       },
       "rdfs:seeAlso": [
         "https://www.openstreetmap.org/way/620327839",
-        "https://www.wikidata.org/entity/Q97168414"
+        "https://www.wikidata.org/entity/Q81916365"
       ]
     },
     {
@@ -1849,28 +1848,28 @@
       "@type": [
         "schema:Place"
       ],
-      "rdfs:seeAlso": [
-        "https://www.openstreetmap.org/node/2263796343"
-      ],
       "schema:geo": {
         "@type": "schema:GeoCoordinates",
         "schema:longitude": 139.7696731,
         "schema:latitude": 35.7011916
-      }
+      },
+      "rdfs:seeAlso": [
+        "https://www.openstreetmap.org/node/2263796343"
+      ]
     },
     {
       "@id": "urn:uuid:01a1f74a-a0c2-74dc-b23b-01397190d364",
       "@type": [
         "schema:Place"
       ],
-      "rdfs:seeAlso": [
-        "https://www.openstreetmap.org/node/14337525601"
-      ],
       "schema:geo": {
         "@type": "schema:GeoCoordinates",
         "schema:longitude": 139.7787853,
         "schema:latitude": 35.6992391
-      }
+      },
+      "rdfs:seeAlso": [
+        "https://www.openstreetmap.org/node/14337525601"
+      ]
     }
   ]
 }

@@ -1,6 +1,6 @@
 {
   "sourceId": "wikidata",
-  "retrievedAt": "2026-11-18T03:15:13+00:00",
+  "retrievedAt": "2026-11-21T02:55:32+00:00",
   "entities": {
     "Q106020484": {
       "pageid": 101358885,
@@ -7379,8 +7379,8 @@
       "pageid": 107969927,
       "ns": 0,
       "title": "Q113160405",
-      "lastrevid": 2063662699,
-      "modified": "2024-01-28T05:17:21Z",
+      "lastrevid": 2572463142,
+      "modified": "2026-11-20T06:03:55Z",
       "type": "item",
       "id": "Q113160405",
       "labels": {
@@ -7490,6 +7490,23 @@
             },
             "type": "statement",
             "id": "Q113160405$40E0BFCC-F4FE-40DA-8A4E-236497CB3270",
+            "rank": "normal"
+          }
+        ],
+        "P18": [
+          {
+            "mainsnak": {
+              "snaktype": "value",
+              "property": "P18",
+              "hash": "cb4b3eba4d35e9c6cab2526a5ea7779e5dc66236",
+              "datavalue": {
+                "value": "Yoshihiro Yonezawa Memorial Library of Manga and Subcultures 2024-02-15.jpg",
+                "type": "string"
+              },
+              "datatype": "commonsMedia"
+            },
+            "type": "statement",
+            "id": "Q113160405$d84605c0-44d7-65f8-f01d-b2b3957e0aa6",
             "rank": "normal"
           }
         ]
@@ -52566,8 +52583,8 @@
       "pageid": 61719706,
       "ns": 0,
       "title": "Q61886799",
-      "lastrevid": 2087063102,
-      "modified": "2024-02-25T18:03:09Z",
+      "lastrevid": 2572456576,
+      "modified": "2026-11-20T05:45:10Z",
       "type": "item",
       "id": "Q61886799",
       "labels": {
@@ -53077,6 +53094,23 @@
             "id": "Q61886799$0a039058-4ef1-fca1-6d0b-f141485727cd",
             "rank": "normal"
           }
+        ],
+        "P18": [
+          {
+            "mainsnak": {
+              "snaktype": "value",
+              "property": "P18",
+              "hash": "a2a3a207d3c1ee1ad2dfe0262a633483c005bf7a",
+              "datavalue": {
+                "value": "千代田区立昌平まちかど図書館.jpg",
+                "type": "string"
+              },
+              "datatype": "commonsMedia"
+            },
+            "type": "statement",
+            "id": "Q61886799$6c776c0b-4cb3-4cb2-4a3d-212914fef2e4",
+            "rank": "normal"
+          }
         ]
       },
       "sitelinks": {}
@@ -53085,8 +53119,8 @@
       "pageid": 61719707,
       "ns": 0,
       "title": "Q61886800",
-      "lastrevid": 2087063114,
-      "modified": "2024-02-25T18:03:10Z",
+      "lastrevid": 2572459888,
+      "modified": "2026-11-20T05:54:57Z",
       "type": "item",
       "id": "Q61886800",
       "labels": {
@@ -53614,6 +53648,23 @@
             },
             "type": "statement",
             "id": "Q61886800$289f38bc-4ab6-ceef-abf3-c97bc059236b",
+            "rank": "normal"
+          }
+        ],
+        "P18": [
+          {
+            "mainsnak": {
+              "snaktype": "value",
+              "property": "P18",
+              "hash": "99f92b4ecd420815c8ad81f50bc0ac57aa584c3a",
+              "datavalue": {
+                "value": "千代田区立神田まちかど図書館.jpg",
+                "type": "string"
+              },
+              "datatype": "commonsMedia"
+            },
+            "type": "statement",
+            "id": "Q61886800$14f6dc50-4dee-18c0-6bde-6267e860ed39",
             "rank": "normal"
           }
         ]
@@ -54935,735 +54986,6 @@
         "zhwiki": {
           "site": "zhwiki",
           "title": "皇居東御苑",
-          "badges": []
-        }
-      }
-    },
-    "Q6751576": {
-      "pageid": 6595567,
-      "ns": 0,
-      "title": "Q6751576",
-      "lastrevid": 2433653043,
-      "modified": "2025-11-25T05:11:26Z",
-      "type": "item",
-      "id": "Q6751576",
-      "labels": {
-        "en": {
-          "language": "en",
-          "value": "Manseibashi Station"
-        },
-        "ja": {
-          "language": "ja",
-          "value": "万世橋駅"
-        },
-        "zh": {
-          "language": "zh",
-          "value": "萬世橋車站"
-        },
-        "de": {
-          "language": "de",
-          "value": "Bahnhof Manseibashi"
-        },
-        "fr": {
-          "language": "fr",
-          "value": "Manseibashi"
-        },
-        "tr": {
-          "language": "tr",
-          "value": "Manseibashi İstasyonu"
-        }
-      },
-      "descriptions": {
-        "en": {
-          "language": "en",
-          "value": "former railway stations in Tokyo, Japan"
-        },
-        "nl": {
-          "language": "nl",
-          "value": "metrostation in Japan"
-        },
-        "id": {
-          "language": "id",
-          "value": "stasiun kereta api metro di Jepang"
-        },
-        "de": {
-          "language": "de",
-          "value": "ehemaliger Bahnhof in Tokio, Japan"
-        },
-        "fr": {
-          "language": "fr",
-          "value": "station du métro de Tokyo"
-        },
-        "zh": {
-          "language": "zh",
-          "value": "曾存在於東京的2座車站"
-        },
-        "ja": {
-          "language": "ja",
-          "value": "かつて東京都に存在した駅"
-        },
-        "tr": {
-          "language": "tr",
-          "value": "Tokyo'da eski tren istasyonu"
-        }
-      },
-      "aliases": {
-        "ja": [
-          {
-            "language": "ja",
-            "value": "萬世橋駅"
-          }
-        ],
-        "fr": [
-          {
-            "language": "fr",
-            "value": "gare de Manseibashi"
-          }
-        ]
-      },
-      "claims": {
-        "P31": [
-          {
-            "mainsnak": {
-              "snaktype": "value",
-              "property": "P31",
-              "hash": "76f61481a47d0ade2248798960cf543050305e7e",
-              "datavalue": {
-                "value": {
-                  "entity-type": "item",
-                  "numeric-id": 21484471,
-                  "id": "Q21484471"
-                },
-                "type": "wikibase-entityid"
-              },
-              "datatype": "wikibase-item"
-            },
-            "type": "statement",
-            "id": "Q6751576$ADF90891-9D3A-4391-8737-4A3C90C5C729",
-            "rank": "normal",
-            "references": [
-              {
-                "hash": "a29a646602abf65105ed0f39a44231c962ece9ee",
-                "snaks": {
-                  "P143": [
-                    {
-                      "snaktype": "value",
-                      "property": "P143",
-                      "hash": "c6f1777471211df31724ac60175786f3872c83e9",
-                      "datavalue": {
-                        "value": {
-                          "entity-type": "item",
-                          "numeric-id": 177837,
-                          "id": "Q177837"
-                        },
-                        "type": "wikibase-entityid"
-                      },
-                      "datatype": "wikibase-item"
-                    }
-                  ]
-                },
-                "snaks-order": [
-                  "P143"
-                ]
-              }
-            ]
-          }
-        ],
-        "P17": [
-          {
-            "mainsnak": {
-              "snaktype": "value",
-              "property": "P17",
-              "hash": "997d810d9c19d22030f26f6c23c29923ba2df934",
-              "datavalue": {
-                "value": {
-                  "entity-type": "item",
-                  "numeric-id": 188712,
-                  "id": "Q188712"
-                },
-                "type": "wikibase-entityid"
-              },
-              "datatype": "wikibase-item"
-            },
-            "type": "statement",
-            "id": "Q6751576$2582CA4D-8BDF-407F-B860-816641DA3FD6",
-            "rank": "normal"
-          }
-        ],
-        "P646": [
-          {
-            "mainsnak": {
-              "snaktype": "value",
-              "property": "P646",
-              "hash": "3f5665300f49f332e549d8ed924c0e68ad0235ab",
-              "datavalue": {
-                "value": "/m/027w7r3",
-                "type": "string"
-              },
-              "datatype": "external-id"
-            },
-            "type": "statement",
-            "id": "Q6751576$3E7E05DB-1F31-4D0A-B7A1-E1AA0BB9900C",
-            "rank": "normal",
-            "references": [
-              {
-                "hash": "2b00cb481cddcac7623114367489b5c194901c4a",
-                "snaks": {
-                  "P248": [
-                    {
-                      "snaktype": "value",
-                      "property": "P248",
-                      "hash": "a94b740202b097dd33355e0e6c00e54b9395e5e0",
-                      "datavalue": {
-                        "value": {
-                          "entity-type": "item",
-                          "numeric-id": 15241312,
-                          "id": "Q15241312"
-                        },
-                        "type": "wikibase-entityid"
-                      },
-                      "datatype": "wikibase-item"
-                    }
-                  ],
-                  "P577": [
-                    {
-                      "snaktype": "value",
-                      "property": "P577",
-                      "hash": "fde79ecb015112d2f29229ccc1ec514ed3e71fa2",
-                      "datavalue": {
-                        "value": {
-                          "time": "+2013-10-28T00:00:00Z",
-                          "timezone": 0,
-                          "before": 0,
-                          "after": 0,
-                          "precision": 11,
-                          "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
-                        },
-                        "type": "time"
-                      },
-                      "datatype": "time"
-                    }
-                  ]
-                },
-                "snaks-order": [
-                  "P248",
-                  "P577"
-                ]
-              }
-            ]
-          }
-        ],
-        "P2581": [
-          {
-            "mainsnak": {
-              "snaktype": "value",
-              "property": "P2581",
-              "hash": "52d60b47bdcdd05a1549563a189d2445423c297f",
-              "datavalue": {
-                "value": "03798477n",
-                "type": "string"
-              },
-              "datatype": "external-id"
-            },
-            "type": "statement",
-            "id": "Q6751576$ED21D1FE-CC47-4FD5-BAD0-4D43EDCF1D01",
-            "rank": "normal",
-            "references": [
-              {
-                "hash": "248ac337a217a5f5eed7139a82a4e60931611af0",
-                "snaks": {
-                  "P248": [
-                    {
-                      "snaktype": "value",
-                      "property": "P248",
-                      "hash": "25b816aab41db18565946259c950aed6de05dd1e",
-                      "datavalue": {
-                        "value": {
-                          "entity-type": "item",
-                          "numeric-id": 4837690,
-                          "id": "Q4837690"
-                        },
-                        "type": "wikibase-entityid"
-                      },
-                      "datatype": "wikibase-item"
-                    }
-                  ]
-                },
-                "snaks-order": [
-                  "P248"
-                ]
-              }
-            ]
-          }
-        ],
-        "P131": [
-          {
-            "mainsnak": {
-              "snaktype": "value",
-              "property": "P131",
-              "hash": "97cd1c414741eec04d260cae6e0de326ed6a77b1",
-              "datavalue": {
-                "value": {
-                  "entity-type": "item",
-                  "numeric-id": 11590562,
-                  "id": "Q11590562"
-                },
-                "type": "wikibase-entityid"
-              },
-              "datatype": "wikibase-item"
-            },
-            "type": "statement",
-            "id": "Q6751576$85EE12AD-B66E-49AF-9189-DD70C89727A2",
-            "rank": "normal",
-            "references": [
-              {
-                "hash": "489ffeab7a5c82943c8b77abc5cd364d4cde76fc",
-                "snaks": {
-                  "P143": [
-                    {
-                      "snaktype": "value",
-                      "property": "P143",
-                      "hash": "e4f6d9441d0600513c4533c672b5ab472dc73694",
-                      "datavalue": {
-                        "value": {
-                          "entity-type": "item",
-                          "numeric-id": 328,
-                          "id": "Q328"
-                        },
-                        "type": "wikibase-entityid"
-                      },
-                      "datatype": "wikibase-item"
-                    }
-                  ],
-                  "P4656": [
-                    {
-                      "snaktype": "value",
-                      "property": "P4656",
-                      "hash": "b7dc7af62865fb257d34c9d4571b9e6e32c0fd05",
-                      "datavalue": {
-                        "value": "https://en.wikipedia.org/w/index.php?title=Manseibashi_Station&oldid=811105304",
-                        "type": "string"
-                      },
-                      "datatype": "url"
-                    }
-                  ]
-                },
-                "snaks-order": [
-                  "P143",
-                  "P4656"
-                ]
-              }
-            ]
-          }
-        ],
-        "P921": [
-          {
-            "mainsnak": {
-              "snaktype": "value",
-              "property": "P921",
-              "hash": "5277249e772a0b260d78575e94783315830da74c",
-              "datavalue": {
-                "value": {
-                  "entity-type": "item",
-                  "numeric-id": 124512498,
-                  "id": "Q124512498"
-                },
-                "type": "wikibase-entityid"
-              },
-              "datatype": "wikibase-item"
-            },
-            "type": "statement",
-            "id": "Q6751576$8a0a85c7-494d-33e2-46d6-e1280e009579",
-            "rank": "normal",
-            "references": [
-              {
-                "hash": "a29a646602abf65105ed0f39a44231c962ece9ee",
-                "snaks": {
-                  "P143": [
-                    {
-                      "snaktype": "value",
-                      "property": "P143",
-                      "hash": "c6f1777471211df31724ac60175786f3872c83e9",
-                      "datavalue": {
-                        "value": {
-                          "entity-type": "item",
-                          "numeric-id": 177837,
-                          "id": "Q177837"
-                        },
-                        "type": "wikibase-entityid"
-                      },
-                      "datatype": "wikibase-item"
-                    }
-                  ]
-                },
-                "snaks-order": [
-                  "P143"
-                ]
-              }
-            ]
-          },
-          {
-            "mainsnak": {
-              "snaktype": "value",
-              "property": "P921",
-              "hash": "07af5617856aaf891c80d0229321fc062ebb5a62",
-              "datavalue": {
-                "value": {
-                  "entity-type": "item",
-                  "numeric-id": 124512525,
-                  "id": "Q124512525"
-                },
-                "type": "wikibase-entityid"
-              },
-              "datatype": "wikibase-item"
-            },
-            "type": "statement",
-            "id": "Q6751576$b340533f-45fc-bb29-a236-639b6a2e2a94",
-            "rank": "normal",
-            "references": [
-              {
-                "hash": "a29a646602abf65105ed0f39a44231c962ece9ee",
-                "snaks": {
-                  "P143": [
-                    {
-                      "snaktype": "value",
-                      "property": "P143",
-                      "hash": "c6f1777471211df31724ac60175786f3872c83e9",
-                      "datavalue": {
-                        "value": {
-                          "entity-type": "item",
-                          "numeric-id": 177837,
-                          "id": "Q177837"
-                        },
-                        "type": "wikibase-entityid"
-                      },
-                      "datatype": "wikibase-item"
-                    }
-                  ]
-                },
-                "snaks-order": [
-                  "P143"
-                ]
-              }
-            ]
-          }
-        ],
-        "P373": [
-          {
-            "mainsnak": {
-              "snaktype": "value",
-              "property": "P373",
-              "hash": "156fe635926e27de55e2a03615468162efe4dbd1",
-              "datavalue": {
-                "value": "Manseibashi Station",
-                "type": "string"
-              },
-              "datatype": "string"
-            },
-            "type": "statement",
-            "id": "Q6751576$b78e7ee0-55df-4dd9-8b55-ed929f0c33ec",
-            "rank": "normal"
-          }
-        ],
-        "P1619": [
-          {
-            "mainsnak": {
-              "snaktype": "value",
-              "property": "P1619",
-              "hash": "72cb92b2de3b6bbfeda59c3c976d238c656fb433",
-              "datavalue": {
-                "value": {
-                  "time": "+1912-04-01T00:00:00Z",
-                  "timezone": 0,
-                  "before": 0,
-                  "after": 0,
-                  "precision": 11,
-                  "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
-                },
-                "type": "time"
-              },
-              "datatype": "time"
-            },
-            "type": "statement",
-            "id": "Q6751576$A7135C74-36D5-41A9-8D20-0EC20DC603C5",
-            "rank": "normal",
-            "references": [
-              {
-                "hash": "30d1b8076d0d08c176aa8475534fa92e4da5c636",
-                "snaks": {
-                  "P143": [
-                    {
-                      "snaktype": "value",
-                      "property": "P143",
-                      "hash": "c6f1777471211df31724ac60175786f3872c83e9",
-                      "datavalue": {
-                        "value": {
-                          "entity-type": "item",
-                          "numeric-id": 177837,
-                          "id": "Q177837"
-                        },
-                        "type": "wikibase-entityid"
-                      },
-                      "datatype": "wikibase-item"
-                    }
-                  ],
-                  "P4656": [
-                    {
-                      "snaktype": "value",
-                      "property": "P4656",
-                      "hash": "42808c9ed45f62b620ba22927781442bfa675da2",
-                      "datavalue": {
-                        "value": "https://ja.wikipedia.org/?curid=20535",
-                        "type": "string"
-                      },
-                      "datatype": "url"
-                    }
-                  ],
-                  "P813": [
-                    {
-                      "snaktype": "value",
-                      "property": "P813",
-                      "hash": "ada3eb68726a05b9f07e34683e5c78b25c52f941",
-                      "datavalue": {
-                        "value": {
-                          "time": "+2024-03-22T00:00:00Z",
-                          "timezone": 0,
-                          "before": 0,
-                          "after": 0,
-                          "precision": 11,
-                          "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
-                        },
-                        "type": "time"
-                      },
-                      "datatype": "time"
-                    }
-                  ]
-                },
-                "snaks-order": [
-                  "P143",
-                  "P4656",
-                  "P813"
-                ]
-              }
-            ]
-          }
-        ],
-        "P625": [
-          {
-            "mainsnak": {
-              "snaktype": "value",
-              "property": "P625",
-              "hash": "22372fbff47457522138b846f243a8f1c84195c7",
-              "datavalue": {
-                "value": {
-                  "latitude": 35.696944,
-                  "longitude": 139.770278,
-                  "altitude": null,
-                  "precision": 0.022122868584338793,
-                  "globe": "http://www.wikidata.org/entity/Q2"
-                },
-                "type": "globecoordinate"
-              },
-              "datatype": "globe-coordinate"
-            },
-            "type": "statement",
-            "id": "Q6751576$0102481d-42a8-45ed-9195-ce0527c5b7ab",
-            "rank": "normal",
-            "references": [
-              {
-                "hash": "9a24f7c0208b05d6be97077d855671d1dfdbc0dd",
-                "snaks": {
-                  "P143": [
-                    {
-                      "snaktype": "value",
-                      "property": "P143",
-                      "hash": "d38375ffe6fe142663ff55cd783aa4df4301d83d",
-                      "datavalue": {
-                        "value": {
-                          "entity-type": "item",
-                          "numeric-id": 48183,
-                          "id": "Q48183"
-                        },
-                        "type": "wikibase-entityid"
-                      },
-                      "datatype": "wikibase-item"
-                    }
-                  ]
-                },
-                "snaks-order": [
-                  "P143"
-                ]
-              }
-            ]
-          }
-        ],
-        "P5817": [
-          {
-            "mainsnak": {
-              "snaktype": "value",
-              "property": "P5817",
-              "hash": "bf41c80ae512fd5a17ab377274c6b26ce451ed4b",
-              "datavalue": {
-                "value": {
-                  "entity-type": "item",
-                  "numeric-id": 11639308,
-                  "id": "Q11639308"
-                },
-                "type": "wikibase-entityid"
-              },
-              "datatype": "wikibase-item"
-            },
-            "type": "statement",
-            "id": "Q6751576$9939BE3C-533F-407C-A660-BDEDE7E0CD50",
-            "rank": "normal"
-          }
-        ],
-        "P127": [
-          {
-            "mainsnak": {
-              "snaktype": "value",
-              "property": "P127",
-              "hash": "4dc78c0de7ea035a955d01c2f6e725c942fe19f6",
-              "datavalue": {
-                "value": {
-                  "entity-type": "item",
-                  "numeric-id": 249654,
-                  "id": "Q249654"
-                },
-                "type": "wikibase-entityid"
-              },
-              "datatype": "wikibase-item"
-            },
-            "type": "statement",
-            "id": "Q6751576$1AAE1475-9C17-4476-B9D8-A3A3701E1AE9",
-            "rank": "normal",
-            "references": [
-              {
-                "hash": "f589f139e39bcb8b9a5fb9878005898eadac44e2",
-                "snaks": {
-                  "P143": [
-                    {
-                      "snaktype": "value",
-                      "property": "P143",
-                      "hash": "f30cbd35620c4ea6d0633aaf0210a8916130469b",
-                      "datavalue": {
-                        "value": {
-                          "entity-type": "item",
-                          "numeric-id": 8447,
-                          "id": "Q8447"
-                        },
-                        "type": "wikibase-entityid"
-                      },
-                      "datatype": "wikibase-item"
-                    }
-                  ],
-                  "P4656": [
-                    {
-                      "snaktype": "value",
-                      "property": "P4656",
-                      "hash": "09e7e34d18db7149d4d28cce5987cadb8e4284b2",
-                      "datavalue": {
-                        "value": "https://fr.wikipedia.org/w/index.php?title=Gare_de_Manseibashi&oldid=222860444",
-                        "type": "string"
-                      },
-                      "datatype": "url"
-                    }
-                  ]
-                },
-                "snaks-order": [
-                  "P143",
-                  "P4656"
-                ]
-              }
-            ]
-          }
-        ],
-        "P18": [
-          {
-            "mainsnak": {
-              "snaktype": "value",
-              "property": "P18",
-              "hash": "af414e159504b9d4975da24af94c52833d0bb458",
-              "datavalue": {
-                "value": "Manseibashi Station original.jpg",
-                "type": "string"
-              },
-              "datatype": "commonsMedia"
-            },
-            "type": "statement",
-            "id": "Q6751576$7D869D59-D5AC-4A50-84F1-C5CE1AE6ECD9",
-            "rank": "normal",
-            "references": [
-              {
-                "hash": "31fb1ee30321361f6ea952f5821f7abe55c04bae",
-                "snaks": {
-                  "P143": [
-                    {
-                      "snaktype": "value",
-                      "property": "P143",
-                      "hash": "d38375ffe6fe142663ff55cd783aa4df4301d83d",
-                      "datavalue": {
-                        "value": {
-                          "entity-type": "item",
-                          "numeric-id": 48183,
-                          "id": "Q48183"
-                        },
-                        "type": "wikibase-entityid"
-                      },
-                      "datatype": "wikibase-item"
-                    }
-                  ],
-                  "P4656": [
-                    {
-                      "snaktype": "value",
-                      "property": "P4656",
-                      "hash": "ef1d29e64d303853c73a9d91c2981a5e4eec11d1",
-                      "datavalue": {
-                        "value": "https://de.wikipedia.org/w/index.php?title=Bahnhof_Manseibashi&oldid=245649767",
-                        "type": "string"
-                      },
-                      "datatype": "url"
-                    }
-                  ]
-                },
-                "snaks-order": [
-                  "P143",
-                  "P4656"
-                ]
-              }
-            ]
-          }
-        ]
-      },
-      "sitelinks": {
-        "commonswiki": {
-          "site": "commonswiki",
-          "title": "Category:Manseibashi Station",
-          "badges": []
-        },
-        "dewiki": {
-          "site": "dewiki",
-          "title": "Bahnhof Manseibashi",
-          "badges": []
-        },
-        "enwiki": {
-          "site": "enwiki",
-          "title": "Manseibashi Station",
-          "badges": []
-        },
-        "frwiki": {
-          "site": "frwiki",
-          "title": "Gare de Manseibashi",
-          "badges": []
-        },
-        "jawiki": {
-          "site": "jawiki",
-          "title": "万世橋駅",
-          "badges": []
-        },
-        "zhwiki": {
-          "site": "zhwiki",
-          "title": "萬世橋車站",
           "badges": []
         }
       }
@@ -57277,6 +56599,1185 @@
         "jawiki": {
           "site": "jawiki",
           "title": "千代田区立富士見小学校",
+          "badges": []
+        }
+      }
+    },
+    "Q81916365": {
+      "pageid": 81274491,
+      "ns": 0,
+      "title": "Q81916365",
+      "lastrevid": 2558872876,
+      "modified": "2026-10-19T18:13:23Z",
+      "type": "item",
+      "id": "Q81916365",
+      "labels": {
+        "ja": {
+          "language": "ja",
+          "value": "千代田区立千代田小学校"
+        },
+        "tr": {
+          "language": "tr",
+          "value": "Chiyoda Bölgesi Chiyoda İlköğretim Okulu"
+        }
+      },
+      "descriptions": {
+        "ja": {
+          "language": "ja",
+          "value": "東京都千代田区神田司町にある小学校"
+        },
+        "nl": {
+          "language": "nl",
+          "value": "Japanse basisschool in Chiyoda, Japan"
+        },
+        "tr": {
+          "language": "tr",
+          "value": "Tokyo'da ilköğretim okulu"
+        },
+        "ryu": {
+          "language": "ryu",
+          "value": "大和ぬ小学校"
+        },
+        "ary": {
+          "language": "ary",
+          "value": "مدرسة ابتدائية ف اليابان"
+        },
+        "fr": {
+          "language": "fr",
+          "value": "école primaire au Japon"
+        },
+        "ko": {
+          "language": "ko",
+          "value": "일본의 초등학교"
+        },
+        "it": {
+          "language": "it",
+          "value": "scuola primaria in Giappone"
+        },
+        "pt": {
+          "language": "pt",
+          "value": "escola primária no Japão"
+        },
+        "af": {
+          "language": "af",
+          "value": "Laerskool — Japan"
+        },
+        "ar": {
+          "language": "ar",
+          "value": "مدرسة ابتدائية — اليابان"
+        },
+        "az": {
+          "language": "az",
+          "value": "İbtidai məktəb — Yaponiya"
+        },
+        "be": {
+          "language": "be",
+          "value": "пачатковая школа — Японія"
+        }
+      },
+      "aliases": {
+        "ja": [
+          {
+            "language": "ja",
+            "value": "千代田小学校"
+          }
+        ]
+      },
+      "claims": {
+        "P126": [
+          {
+            "mainsnak": {
+              "snaktype": "value",
+              "property": "P126",
+              "hash": "5a7cca3f214145e8cdf7ccb57cf94e7210687efc",
+              "datavalue": {
+                "value": {
+                  "entity-type": "item",
+                  "numeric-id": 214051,
+                  "id": "Q214051"
+                },
+                "type": "wikibase-entityid"
+              },
+              "datatype": "wikibase-item"
+            },
+            "type": "statement",
+            "id": "Q81916365$19D273EF-3E90-41ED-91D3-B6DEC9938EB4",
+            "rank": "normal",
+            "references": [
+              {
+                "hash": "a6423bd4283b9ccb571c222e38042207df5a370f",
+                "snaks": {
+                  "P854": [
+                    {
+                      "snaktype": "value",
+                      "property": "P854",
+                      "hash": "2527bcdb2a82f2b800f9292753fb16f77e602efa",
+                      "datavalue": {
+                        "value": "http://www.kyoiku.metro.tokyo.jp/administration/statistics_and_research/list_of_public_school/files/school_lists2019/shougakkou-ichiran.xlsx",
+                        "type": "string"
+                      },
+                      "datatype": "url"
+                    }
+                  ],
+                  "P813": [
+                    {
+                      "snaktype": "value",
+                      "property": "P813",
+                      "hash": "7c51240bb79efdd8bec9f7ef60d9998db3f00f47",
+                      "datavalue": {
+                        "value": {
+                          "time": "+2020-01-13T00:00:00Z",
+                          "timezone": 0,
+                          "before": 0,
+                          "after": 0,
+                          "precision": 11,
+                          "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+                        },
+                        "type": "time"
+                      },
+                      "datatype": "time"
+                    }
+                  ]
+                },
+                "snaks-order": [
+                  "P854",
+                  "P813"
+                ]
+              }
+            ]
+          }
+        ],
+        "P2196": [
+          {
+            "mainsnak": {
+              "snaktype": "value",
+              "property": "P2196",
+              "hash": "674d65808298d7e810db5d5e0a07d7269bee606b",
+              "datavalue": {
+                "value": {
+                  "amount": "+291",
+                  "unit": "1"
+                },
+                "type": "quantity"
+              },
+              "datatype": "quantity"
+            },
+            "type": "statement",
+            "qualifiers": {
+              "P585": [
+                {
+                  "snaktype": "value",
+                  "property": "P585",
+                  "hash": "8794035db7534c9441596a87ce8bfaa8ee683d64",
+                  "datavalue": {
+                    "value": {
+                      "time": "+2019-10-24T00:00:00Z",
+                      "timezone": 0,
+                      "before": 0,
+                      "after": 0,
+                      "precision": 11,
+                      "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+                    },
+                    "type": "time"
+                  },
+                  "datatype": "time"
+                }
+              ]
+            },
+            "qualifiers-order": [
+              "P585"
+            ],
+            "id": "Q81916365$CE26C508-3E6B-4A39-830A-190603E39CA0",
+            "rank": "normal",
+            "references": [
+              {
+                "hash": "a6423bd4283b9ccb571c222e38042207df5a370f",
+                "snaks": {
+                  "P854": [
+                    {
+                      "snaktype": "value",
+                      "property": "P854",
+                      "hash": "2527bcdb2a82f2b800f9292753fb16f77e602efa",
+                      "datavalue": {
+                        "value": "http://www.kyoiku.metro.tokyo.jp/administration/statistics_and_research/list_of_public_school/files/school_lists2019/shougakkou-ichiran.xlsx",
+                        "type": "string"
+                      },
+                      "datatype": "url"
+                    }
+                  ],
+                  "P813": [
+                    {
+                      "snaktype": "value",
+                      "property": "P813",
+                      "hash": "7c51240bb79efdd8bec9f7ef60d9998db3f00f47",
+                      "datavalue": {
+                        "value": {
+                          "time": "+2020-01-13T00:00:00Z",
+                          "timezone": 0,
+                          "before": 0,
+                          "after": 0,
+                          "precision": 11,
+                          "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+                        },
+                        "type": "time"
+                      },
+                      "datatype": "time"
+                    }
+                  ]
+                },
+                "snaks-order": [
+                  "P854",
+                  "P813"
+                ]
+              }
+            ]
+          }
+        ],
+        "P2868": [
+          {
+            "mainsnak": {
+              "snaktype": "value",
+              "property": "P2868",
+              "hash": "14ff6e60b1f3798226f1537383c7710fe5dbd4e1",
+              "datavalue": {
+                "value": {
+                  "entity-type": "item",
+                  "numeric-id": 1080794,
+                  "id": "Q1080794"
+                },
+                "type": "wikibase-entityid"
+              },
+              "datatype": "wikibase-item"
+            },
+            "type": "statement",
+            "id": "Q81916365$A7FA8103-BA77-4E5A-9152-B28C734B80AF",
+            "rank": "normal"
+          }
+        ],
+        "P17": [
+          {
+            "mainsnak": {
+              "snaktype": "value",
+              "property": "P17",
+              "hash": "55178c20e031f1579d34d802f16f6b9951b631e1",
+              "datavalue": {
+                "value": {
+                  "entity-type": "item",
+                  "numeric-id": 17,
+                  "id": "Q17"
+                },
+                "type": "wikibase-entityid"
+              },
+              "datatype": "wikibase-item"
+            },
+            "type": "statement",
+            "id": "Q81916365$4368A5D2-D282-4AE2-B475-18F9DBAD7216",
+            "rank": "normal",
+            "references": [
+              {
+                "hash": "a29a646602abf65105ed0f39a44231c962ece9ee",
+                "snaks": {
+                  "P143": [
+                    {
+                      "snaktype": "value",
+                      "property": "P143",
+                      "hash": "c6f1777471211df31724ac60175786f3872c83e9",
+                      "datavalue": {
+                        "value": {
+                          "entity-type": "item",
+                          "numeric-id": 177837,
+                          "id": "Q177837"
+                        },
+                        "type": "wikibase-entityid"
+                      },
+                      "datatype": "wikibase-item"
+                    }
+                  ]
+                },
+                "snaks-order": [
+                  "P143"
+                ]
+              }
+            ]
+          }
+        ],
+        "P1329": [
+          {
+            "mainsnak": {
+              "snaktype": "value",
+              "property": "P1329",
+              "hash": "4200512d21747f7ce7ad12ceb9e9c2bfcc875ea1",
+              "datavalue": {
+                "value": "+81-3-3256-6768",
+                "type": "string"
+              },
+              "datatype": "string"
+            },
+            "type": "statement",
+            "id": "Q81916365$F1C75303-6F2B-449D-BDD7-199CE244F752",
+            "rank": "normal",
+            "references": [
+              {
+                "hash": "a6423bd4283b9ccb571c222e38042207df5a370f",
+                "snaks": {
+                  "P854": [
+                    {
+                      "snaktype": "value",
+                      "property": "P854",
+                      "hash": "2527bcdb2a82f2b800f9292753fb16f77e602efa",
+                      "datavalue": {
+                        "value": "http://www.kyoiku.metro.tokyo.jp/administration/statistics_and_research/list_of_public_school/files/school_lists2019/shougakkou-ichiran.xlsx",
+                        "type": "string"
+                      },
+                      "datatype": "url"
+                    }
+                  ],
+                  "P813": [
+                    {
+                      "snaktype": "value",
+                      "property": "P813",
+                      "hash": "7c51240bb79efdd8bec9f7ef60d9998db3f00f47",
+                      "datavalue": {
+                        "value": {
+                          "time": "+2020-01-13T00:00:00Z",
+                          "timezone": 0,
+                          "before": 0,
+                          "after": 0,
+                          "precision": 11,
+                          "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+                        },
+                        "type": "time"
+                      },
+                      "datatype": "time"
+                    }
+                  ]
+                },
+                "snaks-order": [
+                  "P854",
+                  "P813"
+                ]
+              }
+            ]
+          }
+        ],
+        "P131": [
+          {
+            "mainsnak": {
+              "snaktype": "value",
+              "property": "P131",
+              "hash": "10e6b5fbf17d41b7e096dd94c75fa31fa24c15c9",
+              "datavalue": {
+                "value": {
+                  "entity-type": "item",
+                  "numeric-id": 214051,
+                  "id": "Q214051"
+                },
+                "type": "wikibase-entityid"
+              },
+              "datatype": "wikibase-item"
+            },
+            "type": "statement",
+            "id": "Q81916365$2DA3A14F-58D4-4A6F-BEDD-42A55EAAD2DC",
+            "rank": "normal",
+            "references": [
+              {
+                "hash": "a29a646602abf65105ed0f39a44231c962ece9ee",
+                "snaks": {
+                  "P143": [
+                    {
+                      "snaktype": "value",
+                      "property": "P143",
+                      "hash": "c6f1777471211df31724ac60175786f3872c83e9",
+                      "datavalue": {
+                        "value": {
+                          "entity-type": "item",
+                          "numeric-id": 177837,
+                          "id": "Q177837"
+                        },
+                        "type": "wikibase-entityid"
+                      },
+                      "datatype": "wikibase-item"
+                    }
+                  ]
+                },
+                "snaks-order": [
+                  "P143"
+                ]
+              }
+            ]
+          }
+        ],
+        "P6375": [
+          {
+            "mainsnak": {
+              "snaktype": "value",
+              "property": "P6375",
+              "hash": "fbc47184e447963120bff5da04e73fd1fcb6aab6",
+              "datavalue": {
+                "value": {
+                  "text": "東京都千代田区神田司町2-16",
+                  "language": "ja"
+                },
+                "type": "monolingualtext"
+              },
+              "datatype": "monolingualtext"
+            },
+            "type": "statement",
+            "id": "Q81916365$227FF732-1887-4C8C-9D08-6DC3710EDCB1",
+            "rank": "normal",
+            "references": [
+              {
+                "hash": "a6423bd4283b9ccb571c222e38042207df5a370f",
+                "snaks": {
+                  "P854": [
+                    {
+                      "snaktype": "value",
+                      "property": "P854",
+                      "hash": "2527bcdb2a82f2b800f9292753fb16f77e602efa",
+                      "datavalue": {
+                        "value": "http://www.kyoiku.metro.tokyo.jp/administration/statistics_and_research/list_of_public_school/files/school_lists2019/shougakkou-ichiran.xlsx",
+                        "type": "string"
+                      },
+                      "datatype": "url"
+                    }
+                  ],
+                  "P813": [
+                    {
+                      "snaktype": "value",
+                      "property": "P813",
+                      "hash": "7c51240bb79efdd8bec9f7ef60d9998db3f00f47",
+                      "datavalue": {
+                        "value": {
+                          "time": "+2020-01-13T00:00:00Z",
+                          "timezone": 0,
+                          "before": 0,
+                          "after": 0,
+                          "precision": 11,
+                          "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+                        },
+                        "type": "time"
+                      },
+                      "datatype": "time"
+                    }
+                  ]
+                },
+                "snaks-order": [
+                  "P854",
+                  "P813"
+                ]
+              },
+              {
+                "hash": "a29a646602abf65105ed0f39a44231c962ece9ee",
+                "snaks": {
+                  "P143": [
+                    {
+                      "snaktype": "value",
+                      "property": "P143",
+                      "hash": "c6f1777471211df31724ac60175786f3872c83e9",
+                      "datavalue": {
+                        "value": {
+                          "entity-type": "item",
+                          "numeric-id": 177837,
+                          "id": "Q177837"
+                        },
+                        "type": "wikibase-entityid"
+                      },
+                      "datatype": "wikibase-item"
+                    }
+                  ]
+                },
+                "snaks-order": [
+                  "P143"
+                ]
+              }
+            ]
+          }
+        ],
+        "P625": [
+          {
+            "mainsnak": {
+              "snaktype": "value",
+              "property": "P625",
+              "hash": "1268e848e77ea2e3fc5d19dd849d04ae2a2eb7a1",
+              "datavalue": {
+                "value": {
+                  "latitude": 35.69340277777778,
+                  "longitude": 139.76833888888888,
+                  "altitude": null,
+                  "precision": 2.777777777777778e-06,
+                  "globe": "http://www.wikidata.org/entity/Q2"
+                },
+                "type": "globecoordinate"
+              },
+              "datatype": "globe-coordinate"
+            },
+            "type": "statement",
+            "id": "Q81916365$FC535AD1-B4FD-4731-8C60-F3FB002C965D",
+            "rank": "normal",
+            "references": [
+              {
+                "hash": "a29a646602abf65105ed0f39a44231c962ece9ee",
+                "snaks": {
+                  "P143": [
+                    {
+                      "snaktype": "value",
+                      "property": "P143",
+                      "hash": "c6f1777471211df31724ac60175786f3872c83e9",
+                      "datavalue": {
+                        "value": {
+                          "entity-type": "item",
+                          "numeric-id": 177837,
+                          "id": "Q177837"
+                        },
+                        "type": "wikibase-entityid"
+                      },
+                      "datatype": "wikibase-item"
+                    }
+                  ]
+                },
+                "snaks-order": [
+                  "P143"
+                ]
+              }
+            ]
+          }
+        ],
+        "P281": [
+          {
+            "mainsnak": {
+              "snaktype": "value",
+              "property": "P281",
+              "hash": "f64764cea64750dadc01b78c08c9c9d40f338a7b",
+              "datavalue": {
+                "value": "101-0048",
+                "type": "string"
+              },
+              "datatype": "string"
+            },
+            "type": "statement",
+            "id": "Q81916365$C7B4851E-9959-4B45-91F8-693293CBC30D",
+            "rank": "normal",
+            "references": [
+              {
+                "hash": "a6423bd4283b9ccb571c222e38042207df5a370f",
+                "snaks": {
+                  "P854": [
+                    {
+                      "snaktype": "value",
+                      "property": "P854",
+                      "hash": "2527bcdb2a82f2b800f9292753fb16f77e602efa",
+                      "datavalue": {
+                        "value": "http://www.kyoiku.metro.tokyo.jp/administration/statistics_and_research/list_of_public_school/files/school_lists2019/shougakkou-ichiran.xlsx",
+                        "type": "string"
+                      },
+                      "datatype": "url"
+                    }
+                  ],
+                  "P813": [
+                    {
+                      "snaktype": "value",
+                      "property": "P813",
+                      "hash": "7c51240bb79efdd8bec9f7ef60d9998db3f00f47",
+                      "datavalue": {
+                        "value": {
+                          "time": "+2020-01-13T00:00:00Z",
+                          "timezone": 0,
+                          "before": 0,
+                          "after": 0,
+                          "precision": 11,
+                          "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+                        },
+                        "type": "time"
+                      },
+                      "datatype": "time"
+                    }
+                  ]
+                },
+                "snaks-order": [
+                  "P854",
+                  "P813"
+                ]
+              }
+            ]
+          }
+        ],
+        "P31": [
+          {
+            "mainsnak": {
+              "snaktype": "value",
+              "property": "P31",
+              "hash": "d06913aa6e9893e231b1e72b43f2179e95c2aabf",
+              "datavalue": {
+                "value": {
+                  "entity-type": "item",
+                  "numeric-id": 5358913,
+                  "id": "Q5358913"
+                },
+                "type": "wikibase-entityid"
+              },
+              "datatype": "wikibase-item"
+            },
+            "type": "statement",
+            "id": "Q81916365$17B0A458-6E2E-43E1-8197-B9C189B2A45F",
+            "rank": "normal",
+            "references": [
+              {
+                "hash": "a29a646602abf65105ed0f39a44231c962ece9ee",
+                "snaks": {
+                  "P143": [
+                    {
+                      "snaktype": "value",
+                      "property": "P143",
+                      "hash": "c6f1777471211df31724ac60175786f3872c83e9",
+                      "datavalue": {
+                        "value": {
+                          "entity-type": "item",
+                          "numeric-id": 177837,
+                          "id": "Q177837"
+                        },
+                        "type": "wikibase-entityid"
+                      },
+                      "datatype": "wikibase-item"
+                    }
+                  ]
+                },
+                "snaks-order": [
+                  "P143"
+                ]
+              }
+            ]
+          }
+        ],
+        "P2671": [
+          {
+            "mainsnak": {
+              "snaktype": "value",
+              "property": "P2671",
+              "hash": "68cd031b5295f7e2492383fc7de5d3cc100dab76",
+              "datavalue": {
+                "value": "/g/1thlzff1",
+                "type": "string"
+              },
+              "datatype": "external-id"
+            },
+            "type": "statement",
+            "id": "Q81916365$85284162-981B-4043-A74C-3FE224535795",
+            "rank": "normal"
+          }
+        ],
+        "P856": [
+          {
+            "mainsnak": {
+              "snaktype": "value",
+              "property": "P856",
+              "hash": "43ab5a5815dc71285fe6af88f1b04503be6ffe23",
+              "datavalue": {
+                "value": "https://chiyoda.schoolweb.ne.jp/1310166/",
+                "type": "string"
+              },
+              "datatype": "url"
+            },
+            "type": "statement",
+            "qualifiers": {
+              "P407": [
+                {
+                  "snaktype": "value",
+                  "property": "P407",
+                  "hash": "d858d1b9f6e6e383f38dfbe706d102f056c07312",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 5287,
+                      "id": "Q5287"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ]
+            },
+            "qualifiers-order": [
+              "P407"
+            ],
+            "id": "Q81916365$6A2ABC53-9217-4C10-BF18-17433E8389C7",
+            "rank": "normal",
+            "references": [
+              {
+                "hash": "a29a646602abf65105ed0f39a44231c962ece9ee",
+                "snaks": {
+                  "P143": [
+                    {
+                      "snaktype": "value",
+                      "property": "P143",
+                      "hash": "c6f1777471211df31724ac60175786f3872c83e9",
+                      "datavalue": {
+                        "value": {
+                          "entity-type": "item",
+                          "numeric-id": 177837,
+                          "id": "Q177837"
+                        },
+                        "type": "wikibase-entityid"
+                      },
+                      "datatype": "wikibase-item"
+                    }
+                  ]
+                },
+                "snaks-order": [
+                  "P143"
+                ]
+              }
+            ]
+          }
+        ],
+        "P373": [
+          {
+            "mainsnak": {
+              "snaktype": "value",
+              "property": "P373",
+              "hash": "55ecb59ac490951947055d5f7613f96871adc7f2",
+              "datavalue": {
+                "value": "Chiyoda elementary school, Chiyoda",
+                "type": "string"
+              },
+              "datatype": "string"
+            },
+            "type": "statement",
+            "id": "Q81916365$C45CFA2D-1A05-45EB-B0E4-16AF112A18BB",
+            "rank": "normal",
+            "references": [
+              {
+                "hash": "a29a646602abf65105ed0f39a44231c962ece9ee",
+                "snaks": {
+                  "P143": [
+                    {
+                      "snaktype": "value",
+                      "property": "P143",
+                      "hash": "c6f1777471211df31724ac60175786f3872c83e9",
+                      "datavalue": {
+                        "value": {
+                          "entity-type": "item",
+                          "numeric-id": 177837,
+                          "id": "Q177837"
+                        },
+                        "type": "wikibase-entityid"
+                      },
+                      "datatype": "wikibase-item"
+                    }
+                  ]
+                },
+                "snaks-order": [
+                  "P143"
+                ]
+              }
+            ]
+          }
+        ],
+        "P18": [
+          {
+            "mainsnak": {
+              "snaktype": "value",
+              "property": "P18",
+              "hash": "740b5a608e8a8ef2b53c9618bebea127da85df8e",
+              "datavalue": {
+                "value": "Chiyoda elementary school, Chiyoda 03.jpg",
+                "type": "string"
+              },
+              "datatype": "commonsMedia"
+            },
+            "type": "statement",
+            "id": "Q81916365$54292141-19AE-4A65-A5DB-E1A4E3DD79CF",
+            "rank": "normal",
+            "references": [
+              {
+                "hash": "a29a646602abf65105ed0f39a44231c962ece9ee",
+                "snaks": {
+                  "P143": [
+                    {
+                      "snaktype": "value",
+                      "property": "P143",
+                      "hash": "c6f1777471211df31724ac60175786f3872c83e9",
+                      "datavalue": {
+                        "value": {
+                          "entity-type": "item",
+                          "numeric-id": 177837,
+                          "id": "Q177837"
+                        },
+                        "type": "wikibase-entityid"
+                      },
+                      "datatype": "wikibase-item"
+                    }
+                  ]
+                },
+                "snaks-order": [
+                  "P143"
+                ]
+              }
+            ]
+          }
+        ],
+        "P11127": [
+          {
+            "mainsnak": {
+              "snaktype": "value",
+              "property": "P11127",
+              "hash": "28bcbd287626c124bc5ca0142d971b7426beb70f",
+              "datavalue": {
+                "value": "B113210100068",
+                "type": "string"
+              },
+              "datatype": "external-id"
+            },
+            "type": "statement",
+            "id": "Q81916365$4EAA0F7B-3A7C-47A8-B76B-BCC0F0C45913",
+            "rank": "normal"
+          }
+        ],
+        "P10610": [
+          {
+            "mainsnak": {
+              "snaktype": "value",
+              "property": "P10610",
+              "hash": "ea7258d659212750087d7bad900b6b951289c645",
+              "datavalue": {
+                "value": {
+                  "amount": "+28",
+                  "unit": "1"
+                },
+                "type": "quantity"
+              },
+              "datatype": "quantity"
+            },
+            "type": "statement",
+            "qualifiers": {
+              "P585": [
+                {
+                  "snaktype": "value",
+                  "property": "P585",
+                  "hash": "8794035db7534c9441596a87ce8bfaa8ee683d64",
+                  "datavalue": {
+                    "value": {
+                      "time": "+2019-10-24T00:00:00Z",
+                      "timezone": 0,
+                      "before": 0,
+                      "after": 0,
+                      "precision": 11,
+                      "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+                    },
+                    "type": "time"
+                  },
+                  "datatype": "time"
+                }
+              ]
+            },
+            "qualifiers-order": [
+              "P585"
+            ],
+            "id": "Q81916365$3CEF94AE-0D60-4EFC-92E8-23C6199877A7",
+            "rank": "normal",
+            "references": [
+              {
+                "hash": "675ccf110064b6b3dce294e5fb9cc10359a4dc56",
+                "snaks": {
+                  "P854": [
+                    {
+                      "snaktype": "value",
+                      "property": "P854",
+                      "hash": "8b0cdefafe269a6c0af5680a532958ec90b9f497",
+                      "datavalue": {
+                        "value": "https://www.kyoiku.metro.tokyo.jp/administration/statistics_and_research/list_of_public_school/files/school_lists2019/shougakkou-ichiran.xlsx",
+                        "type": "string"
+                      },
+                      "datatype": "url"
+                    }
+                  ],
+                  "P813": [
+                    {
+                      "snaktype": "value",
+                      "property": "P813",
+                      "hash": "7c51240bb79efdd8bec9f7ef60d9998db3f00f47",
+                      "datavalue": {
+                        "value": {
+                          "time": "+2020-01-13T00:00:00Z",
+                          "timezone": 0,
+                          "before": 0,
+                          "after": 0,
+                          "precision": 11,
+                          "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+                        },
+                        "type": "time"
+                      },
+                      "datatype": "time"
+                    }
+                  ]
+                },
+                "snaks-order": [
+                  "P854",
+                  "P813"
+                ]
+              }
+            ]
+          }
+        ],
+        "P2670": [
+          {
+            "mainsnak": {
+              "snaktype": "value",
+              "property": "P2670",
+              "hash": "cfc949ffe48e39120a44ee860f45345c2f8dbcf1",
+              "datavalue": {
+                "value": {
+                  "entity-type": "item",
+                  "numeric-id": 18204,
+                  "id": "Q18204"
+                },
+                "type": "wikibase-entityid"
+              },
+              "datatype": "wikibase-item"
+            },
+            "type": "statement",
+            "qualifiers": {
+              "P1114": [
+                {
+                  "snaktype": "value",
+                  "property": "P1114",
+                  "hash": "71d823523591deb1ee7acf2f8a9fe5249a8b382c",
+                  "datavalue": {
+                    "value": {
+                      "amount": "+11",
+                      "unit": "1"
+                    },
+                    "type": "quantity"
+                  },
+                  "datatype": "quantity"
+                }
+              ],
+              "P585": [
+                {
+                  "snaktype": "value",
+                  "property": "P585",
+                  "hash": "8794035db7534c9441596a87ce8bfaa8ee683d64",
+                  "datavalue": {
+                    "value": {
+                      "time": "+2019-10-24T00:00:00Z",
+                      "timezone": 0,
+                      "before": 0,
+                      "after": 0,
+                      "precision": 11,
+                      "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+                    },
+                    "type": "time"
+                  },
+                  "datatype": "time"
+                }
+              ]
+            },
+            "qualifiers-order": [
+              "P1114",
+              "P585"
+            ],
+            "id": "Q81916365$AF80A056-564F-4A25-B25A-5A7B111151A0",
+            "rank": "normal",
+            "references": [
+              {
+                "hash": "a6423bd4283b9ccb571c222e38042207df5a370f",
+                "snaks": {
+                  "P854": [
+                    {
+                      "snaktype": "value",
+                      "property": "P854",
+                      "hash": "2527bcdb2a82f2b800f9292753fb16f77e602efa",
+                      "datavalue": {
+                        "value": "http://www.kyoiku.metro.tokyo.jp/administration/statistics_and_research/list_of_public_school/files/school_lists2019/shougakkou-ichiran.xlsx",
+                        "type": "string"
+                      },
+                      "datatype": "url"
+                    }
+                  ],
+                  "P813": [
+                    {
+                      "snaktype": "value",
+                      "property": "P813",
+                      "hash": "7c51240bb79efdd8bec9f7ef60d9998db3f00f47",
+                      "datavalue": {
+                        "value": {
+                          "time": "+2020-01-13T00:00:00Z",
+                          "timezone": 0,
+                          "before": 0,
+                          "after": 0,
+                          "precision": 11,
+                          "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+                        },
+                        "type": "time"
+                      },
+                      "datatype": "time"
+                    }
+                  ]
+                },
+                "snaks-order": [
+                  "P854",
+                  "P813"
+                ]
+              }
+            ]
+          }
+        ],
+        "P276": [
+          {
+            "mainsnak": {
+              "snaktype": "value",
+              "property": "P276",
+              "hash": "1864205e1f9a93ad7a81a114f9d59d9e3df657aa",
+              "datavalue": {
+                "value": {
+                  "entity-type": "item",
+                  "numeric-id": 3346524,
+                  "id": "Q3346524"
+                },
+                "type": "wikibase-entityid"
+              },
+              "datatype": "wikibase-item"
+            },
+            "type": "statement",
+            "id": "Q81916365$185486ec-4b64-e77f-d9c4-6311d27eb937",
+            "rank": "normal",
+            "references": [
+              {
+                "hash": "a29a646602abf65105ed0f39a44231c962ece9ee",
+                "snaks": {
+                  "P143": [
+                    {
+                      "snaktype": "value",
+                      "property": "P143",
+                      "hash": "c6f1777471211df31724ac60175786f3872c83e9",
+                      "datavalue": {
+                        "value": {
+                          "entity-type": "item",
+                          "numeric-id": 177837,
+                          "id": "Q177837"
+                        },
+                        "type": "wikibase-entityid"
+                      },
+                      "datatype": "wikibase-item"
+                    }
+                  ]
+                },
+                "snaks-order": [
+                  "P143"
+                ]
+              }
+            ]
+          }
+        ],
+        "P571": [
+          {
+            "mainsnak": {
+              "snaktype": "value",
+              "property": "P571",
+              "hash": "01eab08a08d18f948505ddd6c5767e9d26e52cc5",
+              "datavalue": {
+                "value": {
+                  "time": "+1993-04-01T00:00:00Z",
+                  "timezone": 0,
+                  "before": 0,
+                  "after": 0,
+                  "precision": 11,
+                  "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+                },
+                "type": "time"
+              },
+              "datatype": "time"
+            },
+            "type": "statement",
+            "id": "Q81916365$b59cdae1-4452-a07f-6981-89678577cb28",
+            "rank": "normal",
+            "references": [
+              {
+                "hash": "a29a646602abf65105ed0f39a44231c962ece9ee",
+                "snaks": {
+                  "P143": [
+                    {
+                      "snaktype": "value",
+                      "property": "P143",
+                      "hash": "c6f1777471211df31724ac60175786f3872c83e9",
+                      "datavalue": {
+                        "value": {
+                          "entity-type": "item",
+                          "numeric-id": 177837,
+                          "id": "Q177837"
+                        },
+                        "type": "wikibase-entityid"
+                      },
+                      "datatype": "wikibase-item"
+                    }
+                  ]
+                },
+                "snaks-order": [
+                  "P143"
+                ]
+              }
+            ]
+          }
+        ],
+        "P1619": [
+          {
+            "mainsnak": {
+              "snaktype": "value",
+              "property": "P1619",
+              "hash": "f485d87d6e3b032319087ea09c8c6c6f6c82eccd",
+              "datavalue": {
+                "value": {
+                  "time": "+1993-04-01T00:00:00Z",
+                  "timezone": 0,
+                  "before": 0,
+                  "after": 0,
+                  "precision": 11,
+                  "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+                },
+                "type": "time"
+              },
+              "datatype": "time"
+            },
+            "type": "statement",
+            "id": "Q81916365$f46e3033-4e4f-513c-2df3-8688ace869ba",
+            "rank": "normal",
+            "references": [
+              {
+                "hash": "a29a646602abf65105ed0f39a44231c962ece9ee",
+                "snaks": {
+                  "P143": [
+                    {
+                      "snaktype": "value",
+                      "property": "P143",
+                      "hash": "c6f1777471211df31724ac60175786f3872c83e9",
+                      "datavalue": {
+                        "value": {
+                          "entity-type": "item",
+                          "numeric-id": 177837,
+                          "id": "Q177837"
+                        },
+                        "type": "wikibase-entityid"
+                      },
+                      "datatype": "wikibase-item"
+                    }
+                  ]
+                },
+                "snaks-order": [
+                  "P143"
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      "sitelinks": {
+        "commonswiki": {
+          "site": "commonswiki",
+          "title": "Category:Chiyoda elementary school, Chiyoda",
+          "badges": []
+        },
+        "jawiki": {
+          "site": "jawiki",
+          "title": "千代田区立千代田小学校",
           "badges": []
         }
       }
@@ -59663,1189 +60164,6 @@
         "jawiki": {
           "site": "jawiki",
           "title": "明治大学博物館",
-          "badges": []
-        }
-      }
-    },
-    "Q97168414": {
-      "pageid": 81274491,
-      "ns": 0,
-      "title": "Q81916365",
-      "lastrevid": 2558872876,
-      "modified": "2026-10-19T18:13:23Z",
-      "redirects": {
-        "from": "Q97168414",
-        "to": "Q81916365"
-      },
-      "type": "item",
-      "id": "Q81916365",
-      "labels": {
-        "ja": {
-          "language": "ja",
-          "value": "千代田区立千代田小学校"
-        },
-        "tr": {
-          "language": "tr",
-          "value": "Chiyoda Bölgesi Chiyoda İlköğretim Okulu"
-        }
-      },
-      "descriptions": {
-        "ja": {
-          "language": "ja",
-          "value": "東京都千代田区神田司町にある小学校"
-        },
-        "nl": {
-          "language": "nl",
-          "value": "Japanse basisschool in Chiyoda, Japan"
-        },
-        "tr": {
-          "language": "tr",
-          "value": "Tokyo'da ilköğretim okulu"
-        },
-        "ryu": {
-          "language": "ryu",
-          "value": "大和ぬ小学校"
-        },
-        "ary": {
-          "language": "ary",
-          "value": "مدرسة ابتدائية ف اليابان"
-        },
-        "fr": {
-          "language": "fr",
-          "value": "école primaire au Japon"
-        },
-        "ko": {
-          "language": "ko",
-          "value": "일본의 초등학교"
-        },
-        "it": {
-          "language": "it",
-          "value": "scuola primaria in Giappone"
-        },
-        "pt": {
-          "language": "pt",
-          "value": "escola primária no Japão"
-        },
-        "af": {
-          "language": "af",
-          "value": "Laerskool — Japan"
-        },
-        "ar": {
-          "language": "ar",
-          "value": "مدرسة ابتدائية — اليابان"
-        },
-        "az": {
-          "language": "az",
-          "value": "İbtidai məktəb — Yaponiya"
-        },
-        "be": {
-          "language": "be",
-          "value": "пачатковая школа — Японія"
-        }
-      },
-      "aliases": {
-        "ja": [
-          {
-            "language": "ja",
-            "value": "千代田小学校"
-          }
-        ]
-      },
-      "claims": {
-        "P126": [
-          {
-            "mainsnak": {
-              "snaktype": "value",
-              "property": "P126",
-              "hash": "5a7cca3f214145e8cdf7ccb57cf94e7210687efc",
-              "datavalue": {
-                "value": {
-                  "entity-type": "item",
-                  "numeric-id": 214051,
-                  "id": "Q214051"
-                },
-                "type": "wikibase-entityid"
-              },
-              "datatype": "wikibase-item"
-            },
-            "type": "statement",
-            "id": "Q81916365$19D273EF-3E90-41ED-91D3-B6DEC9938EB4",
-            "rank": "normal",
-            "references": [
-              {
-                "hash": "a6423bd4283b9ccb571c222e38042207df5a370f",
-                "snaks": {
-                  "P854": [
-                    {
-                      "snaktype": "value",
-                      "property": "P854",
-                      "hash": "2527bcdb2a82f2b800f9292753fb16f77e602efa",
-                      "datavalue": {
-                        "value": "http://www.kyoiku.metro.tokyo.jp/administration/statistics_and_research/list_of_public_school/files/school_lists2019/shougakkou-ichiran.xlsx",
-                        "type": "string"
-                      },
-                      "datatype": "url"
-                    }
-                  ],
-                  "P813": [
-                    {
-                      "snaktype": "value",
-                      "property": "P813",
-                      "hash": "7c51240bb79efdd8bec9f7ef60d9998db3f00f47",
-                      "datavalue": {
-                        "value": {
-                          "time": "+2020-01-13T00:00:00Z",
-                          "timezone": 0,
-                          "before": 0,
-                          "after": 0,
-                          "precision": 11,
-                          "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
-                        },
-                        "type": "time"
-                      },
-                      "datatype": "time"
-                    }
-                  ]
-                },
-                "snaks-order": [
-                  "P854",
-                  "P813"
-                ]
-              }
-            ]
-          }
-        ],
-        "P2196": [
-          {
-            "mainsnak": {
-              "snaktype": "value",
-              "property": "P2196",
-              "hash": "674d65808298d7e810db5d5e0a07d7269bee606b",
-              "datavalue": {
-                "value": {
-                  "amount": "+291",
-                  "unit": "1"
-                },
-                "type": "quantity"
-              },
-              "datatype": "quantity"
-            },
-            "type": "statement",
-            "qualifiers": {
-              "P585": [
-                {
-                  "snaktype": "value",
-                  "property": "P585",
-                  "hash": "8794035db7534c9441596a87ce8bfaa8ee683d64",
-                  "datavalue": {
-                    "value": {
-                      "time": "+2019-10-24T00:00:00Z",
-                      "timezone": 0,
-                      "before": 0,
-                      "after": 0,
-                      "precision": 11,
-                      "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
-                    },
-                    "type": "time"
-                  },
-                  "datatype": "time"
-                }
-              ]
-            },
-            "qualifiers-order": [
-              "P585"
-            ],
-            "id": "Q81916365$CE26C508-3E6B-4A39-830A-190603E39CA0",
-            "rank": "normal",
-            "references": [
-              {
-                "hash": "a6423bd4283b9ccb571c222e38042207df5a370f",
-                "snaks": {
-                  "P854": [
-                    {
-                      "snaktype": "value",
-                      "property": "P854",
-                      "hash": "2527bcdb2a82f2b800f9292753fb16f77e602efa",
-                      "datavalue": {
-                        "value": "http://www.kyoiku.metro.tokyo.jp/administration/statistics_and_research/list_of_public_school/files/school_lists2019/shougakkou-ichiran.xlsx",
-                        "type": "string"
-                      },
-                      "datatype": "url"
-                    }
-                  ],
-                  "P813": [
-                    {
-                      "snaktype": "value",
-                      "property": "P813",
-                      "hash": "7c51240bb79efdd8bec9f7ef60d9998db3f00f47",
-                      "datavalue": {
-                        "value": {
-                          "time": "+2020-01-13T00:00:00Z",
-                          "timezone": 0,
-                          "before": 0,
-                          "after": 0,
-                          "precision": 11,
-                          "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
-                        },
-                        "type": "time"
-                      },
-                      "datatype": "time"
-                    }
-                  ]
-                },
-                "snaks-order": [
-                  "P854",
-                  "P813"
-                ]
-              }
-            ]
-          }
-        ],
-        "P2868": [
-          {
-            "mainsnak": {
-              "snaktype": "value",
-              "property": "P2868",
-              "hash": "14ff6e60b1f3798226f1537383c7710fe5dbd4e1",
-              "datavalue": {
-                "value": {
-                  "entity-type": "item",
-                  "numeric-id": 1080794,
-                  "id": "Q1080794"
-                },
-                "type": "wikibase-entityid"
-              },
-              "datatype": "wikibase-item"
-            },
-            "type": "statement",
-            "id": "Q81916365$A7FA8103-BA77-4E5A-9152-B28C734B80AF",
-            "rank": "normal"
-          }
-        ],
-        "P17": [
-          {
-            "mainsnak": {
-              "snaktype": "value",
-              "property": "P17",
-              "hash": "55178c20e031f1579d34d802f16f6b9951b631e1",
-              "datavalue": {
-                "value": {
-                  "entity-type": "item",
-                  "numeric-id": 17,
-                  "id": "Q17"
-                },
-                "type": "wikibase-entityid"
-              },
-              "datatype": "wikibase-item"
-            },
-            "type": "statement",
-            "id": "Q81916365$4368A5D2-D282-4AE2-B475-18F9DBAD7216",
-            "rank": "normal",
-            "references": [
-              {
-                "hash": "a29a646602abf65105ed0f39a44231c962ece9ee",
-                "snaks": {
-                  "P143": [
-                    {
-                      "snaktype": "value",
-                      "property": "P143",
-                      "hash": "c6f1777471211df31724ac60175786f3872c83e9",
-                      "datavalue": {
-                        "value": {
-                          "entity-type": "item",
-                          "numeric-id": 177837,
-                          "id": "Q177837"
-                        },
-                        "type": "wikibase-entityid"
-                      },
-                      "datatype": "wikibase-item"
-                    }
-                  ]
-                },
-                "snaks-order": [
-                  "P143"
-                ]
-              }
-            ]
-          }
-        ],
-        "P1329": [
-          {
-            "mainsnak": {
-              "snaktype": "value",
-              "property": "P1329",
-              "hash": "4200512d21747f7ce7ad12ceb9e9c2bfcc875ea1",
-              "datavalue": {
-                "value": "+81-3-3256-6768",
-                "type": "string"
-              },
-              "datatype": "string"
-            },
-            "type": "statement",
-            "id": "Q81916365$F1C75303-6F2B-449D-BDD7-199CE244F752",
-            "rank": "normal",
-            "references": [
-              {
-                "hash": "a6423bd4283b9ccb571c222e38042207df5a370f",
-                "snaks": {
-                  "P854": [
-                    {
-                      "snaktype": "value",
-                      "property": "P854",
-                      "hash": "2527bcdb2a82f2b800f9292753fb16f77e602efa",
-                      "datavalue": {
-                        "value": "http://www.kyoiku.metro.tokyo.jp/administration/statistics_and_research/list_of_public_school/files/school_lists2019/shougakkou-ichiran.xlsx",
-                        "type": "string"
-                      },
-                      "datatype": "url"
-                    }
-                  ],
-                  "P813": [
-                    {
-                      "snaktype": "value",
-                      "property": "P813",
-                      "hash": "7c51240bb79efdd8bec9f7ef60d9998db3f00f47",
-                      "datavalue": {
-                        "value": {
-                          "time": "+2020-01-13T00:00:00Z",
-                          "timezone": 0,
-                          "before": 0,
-                          "after": 0,
-                          "precision": 11,
-                          "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
-                        },
-                        "type": "time"
-                      },
-                      "datatype": "time"
-                    }
-                  ]
-                },
-                "snaks-order": [
-                  "P854",
-                  "P813"
-                ]
-              }
-            ]
-          }
-        ],
-        "P131": [
-          {
-            "mainsnak": {
-              "snaktype": "value",
-              "property": "P131",
-              "hash": "10e6b5fbf17d41b7e096dd94c75fa31fa24c15c9",
-              "datavalue": {
-                "value": {
-                  "entity-type": "item",
-                  "numeric-id": 214051,
-                  "id": "Q214051"
-                },
-                "type": "wikibase-entityid"
-              },
-              "datatype": "wikibase-item"
-            },
-            "type": "statement",
-            "id": "Q81916365$2DA3A14F-58D4-4A6F-BEDD-42A55EAAD2DC",
-            "rank": "normal",
-            "references": [
-              {
-                "hash": "a29a646602abf65105ed0f39a44231c962ece9ee",
-                "snaks": {
-                  "P143": [
-                    {
-                      "snaktype": "value",
-                      "property": "P143",
-                      "hash": "c6f1777471211df31724ac60175786f3872c83e9",
-                      "datavalue": {
-                        "value": {
-                          "entity-type": "item",
-                          "numeric-id": 177837,
-                          "id": "Q177837"
-                        },
-                        "type": "wikibase-entityid"
-                      },
-                      "datatype": "wikibase-item"
-                    }
-                  ]
-                },
-                "snaks-order": [
-                  "P143"
-                ]
-              }
-            ]
-          }
-        ],
-        "P6375": [
-          {
-            "mainsnak": {
-              "snaktype": "value",
-              "property": "P6375",
-              "hash": "fbc47184e447963120bff5da04e73fd1fcb6aab6",
-              "datavalue": {
-                "value": {
-                  "text": "東京都千代田区神田司町2-16",
-                  "language": "ja"
-                },
-                "type": "monolingualtext"
-              },
-              "datatype": "monolingualtext"
-            },
-            "type": "statement",
-            "id": "Q81916365$227FF732-1887-4C8C-9D08-6DC3710EDCB1",
-            "rank": "normal",
-            "references": [
-              {
-                "hash": "a6423bd4283b9ccb571c222e38042207df5a370f",
-                "snaks": {
-                  "P854": [
-                    {
-                      "snaktype": "value",
-                      "property": "P854",
-                      "hash": "2527bcdb2a82f2b800f9292753fb16f77e602efa",
-                      "datavalue": {
-                        "value": "http://www.kyoiku.metro.tokyo.jp/administration/statistics_and_research/list_of_public_school/files/school_lists2019/shougakkou-ichiran.xlsx",
-                        "type": "string"
-                      },
-                      "datatype": "url"
-                    }
-                  ],
-                  "P813": [
-                    {
-                      "snaktype": "value",
-                      "property": "P813",
-                      "hash": "7c51240bb79efdd8bec9f7ef60d9998db3f00f47",
-                      "datavalue": {
-                        "value": {
-                          "time": "+2020-01-13T00:00:00Z",
-                          "timezone": 0,
-                          "before": 0,
-                          "after": 0,
-                          "precision": 11,
-                          "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
-                        },
-                        "type": "time"
-                      },
-                      "datatype": "time"
-                    }
-                  ]
-                },
-                "snaks-order": [
-                  "P854",
-                  "P813"
-                ]
-              },
-              {
-                "hash": "a29a646602abf65105ed0f39a44231c962ece9ee",
-                "snaks": {
-                  "P143": [
-                    {
-                      "snaktype": "value",
-                      "property": "P143",
-                      "hash": "c6f1777471211df31724ac60175786f3872c83e9",
-                      "datavalue": {
-                        "value": {
-                          "entity-type": "item",
-                          "numeric-id": 177837,
-                          "id": "Q177837"
-                        },
-                        "type": "wikibase-entityid"
-                      },
-                      "datatype": "wikibase-item"
-                    }
-                  ]
-                },
-                "snaks-order": [
-                  "P143"
-                ]
-              }
-            ]
-          }
-        ],
-        "P625": [
-          {
-            "mainsnak": {
-              "snaktype": "value",
-              "property": "P625",
-              "hash": "1268e848e77ea2e3fc5d19dd849d04ae2a2eb7a1",
-              "datavalue": {
-                "value": {
-                  "latitude": 35.69340277777778,
-                  "longitude": 139.76833888888888,
-                  "altitude": null,
-                  "precision": 2.777777777777778e-06,
-                  "globe": "http://www.wikidata.org/entity/Q2"
-                },
-                "type": "globecoordinate"
-              },
-              "datatype": "globe-coordinate"
-            },
-            "type": "statement",
-            "id": "Q81916365$FC535AD1-B4FD-4731-8C60-F3FB002C965D",
-            "rank": "normal",
-            "references": [
-              {
-                "hash": "a29a646602abf65105ed0f39a44231c962ece9ee",
-                "snaks": {
-                  "P143": [
-                    {
-                      "snaktype": "value",
-                      "property": "P143",
-                      "hash": "c6f1777471211df31724ac60175786f3872c83e9",
-                      "datavalue": {
-                        "value": {
-                          "entity-type": "item",
-                          "numeric-id": 177837,
-                          "id": "Q177837"
-                        },
-                        "type": "wikibase-entityid"
-                      },
-                      "datatype": "wikibase-item"
-                    }
-                  ]
-                },
-                "snaks-order": [
-                  "P143"
-                ]
-              }
-            ]
-          }
-        ],
-        "P281": [
-          {
-            "mainsnak": {
-              "snaktype": "value",
-              "property": "P281",
-              "hash": "f64764cea64750dadc01b78c08c9c9d40f338a7b",
-              "datavalue": {
-                "value": "101-0048",
-                "type": "string"
-              },
-              "datatype": "string"
-            },
-            "type": "statement",
-            "id": "Q81916365$C7B4851E-9959-4B45-91F8-693293CBC30D",
-            "rank": "normal",
-            "references": [
-              {
-                "hash": "a6423bd4283b9ccb571c222e38042207df5a370f",
-                "snaks": {
-                  "P854": [
-                    {
-                      "snaktype": "value",
-                      "property": "P854",
-                      "hash": "2527bcdb2a82f2b800f9292753fb16f77e602efa",
-                      "datavalue": {
-                        "value": "http://www.kyoiku.metro.tokyo.jp/administration/statistics_and_research/list_of_public_school/files/school_lists2019/shougakkou-ichiran.xlsx",
-                        "type": "string"
-                      },
-                      "datatype": "url"
-                    }
-                  ],
-                  "P813": [
-                    {
-                      "snaktype": "value",
-                      "property": "P813",
-                      "hash": "7c51240bb79efdd8bec9f7ef60d9998db3f00f47",
-                      "datavalue": {
-                        "value": {
-                          "time": "+2020-01-13T00:00:00Z",
-                          "timezone": 0,
-                          "before": 0,
-                          "after": 0,
-                          "precision": 11,
-                          "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
-                        },
-                        "type": "time"
-                      },
-                      "datatype": "time"
-                    }
-                  ]
-                },
-                "snaks-order": [
-                  "P854",
-                  "P813"
-                ]
-              }
-            ]
-          }
-        ],
-        "P31": [
-          {
-            "mainsnak": {
-              "snaktype": "value",
-              "property": "P31",
-              "hash": "d06913aa6e9893e231b1e72b43f2179e95c2aabf",
-              "datavalue": {
-                "value": {
-                  "entity-type": "item",
-                  "numeric-id": 5358913,
-                  "id": "Q5358913"
-                },
-                "type": "wikibase-entityid"
-              },
-              "datatype": "wikibase-item"
-            },
-            "type": "statement",
-            "id": "Q81916365$17B0A458-6E2E-43E1-8197-B9C189B2A45F",
-            "rank": "normal",
-            "references": [
-              {
-                "hash": "a29a646602abf65105ed0f39a44231c962ece9ee",
-                "snaks": {
-                  "P143": [
-                    {
-                      "snaktype": "value",
-                      "property": "P143",
-                      "hash": "c6f1777471211df31724ac60175786f3872c83e9",
-                      "datavalue": {
-                        "value": {
-                          "entity-type": "item",
-                          "numeric-id": 177837,
-                          "id": "Q177837"
-                        },
-                        "type": "wikibase-entityid"
-                      },
-                      "datatype": "wikibase-item"
-                    }
-                  ]
-                },
-                "snaks-order": [
-                  "P143"
-                ]
-              }
-            ]
-          }
-        ],
-        "P2671": [
-          {
-            "mainsnak": {
-              "snaktype": "value",
-              "property": "P2671",
-              "hash": "68cd031b5295f7e2492383fc7de5d3cc100dab76",
-              "datavalue": {
-                "value": "/g/1thlzff1",
-                "type": "string"
-              },
-              "datatype": "external-id"
-            },
-            "type": "statement",
-            "id": "Q81916365$85284162-981B-4043-A74C-3FE224535795",
-            "rank": "normal"
-          }
-        ],
-        "P856": [
-          {
-            "mainsnak": {
-              "snaktype": "value",
-              "property": "P856",
-              "hash": "43ab5a5815dc71285fe6af88f1b04503be6ffe23",
-              "datavalue": {
-                "value": "https://chiyoda.schoolweb.ne.jp/1310166/",
-                "type": "string"
-              },
-              "datatype": "url"
-            },
-            "type": "statement",
-            "qualifiers": {
-              "P407": [
-                {
-                  "snaktype": "value",
-                  "property": "P407",
-                  "hash": "d858d1b9f6e6e383f38dfbe706d102f056c07312",
-                  "datavalue": {
-                    "value": {
-                      "entity-type": "item",
-                      "numeric-id": 5287,
-                      "id": "Q5287"
-                    },
-                    "type": "wikibase-entityid"
-                  },
-                  "datatype": "wikibase-item"
-                }
-              ]
-            },
-            "qualifiers-order": [
-              "P407"
-            ],
-            "id": "Q81916365$6A2ABC53-9217-4C10-BF18-17433E8389C7",
-            "rank": "normal",
-            "references": [
-              {
-                "hash": "a29a646602abf65105ed0f39a44231c962ece9ee",
-                "snaks": {
-                  "P143": [
-                    {
-                      "snaktype": "value",
-                      "property": "P143",
-                      "hash": "c6f1777471211df31724ac60175786f3872c83e9",
-                      "datavalue": {
-                        "value": {
-                          "entity-type": "item",
-                          "numeric-id": 177837,
-                          "id": "Q177837"
-                        },
-                        "type": "wikibase-entityid"
-                      },
-                      "datatype": "wikibase-item"
-                    }
-                  ]
-                },
-                "snaks-order": [
-                  "P143"
-                ]
-              }
-            ]
-          }
-        ],
-        "P373": [
-          {
-            "mainsnak": {
-              "snaktype": "value",
-              "property": "P373",
-              "hash": "55ecb59ac490951947055d5f7613f96871adc7f2",
-              "datavalue": {
-                "value": "Chiyoda elementary school, Chiyoda",
-                "type": "string"
-              },
-              "datatype": "string"
-            },
-            "type": "statement",
-            "id": "Q81916365$C45CFA2D-1A05-45EB-B0E4-16AF112A18BB",
-            "rank": "normal",
-            "references": [
-              {
-                "hash": "a29a646602abf65105ed0f39a44231c962ece9ee",
-                "snaks": {
-                  "P143": [
-                    {
-                      "snaktype": "value",
-                      "property": "P143",
-                      "hash": "c6f1777471211df31724ac60175786f3872c83e9",
-                      "datavalue": {
-                        "value": {
-                          "entity-type": "item",
-                          "numeric-id": 177837,
-                          "id": "Q177837"
-                        },
-                        "type": "wikibase-entityid"
-                      },
-                      "datatype": "wikibase-item"
-                    }
-                  ]
-                },
-                "snaks-order": [
-                  "P143"
-                ]
-              }
-            ]
-          }
-        ],
-        "P18": [
-          {
-            "mainsnak": {
-              "snaktype": "value",
-              "property": "P18",
-              "hash": "740b5a608e8a8ef2b53c9618bebea127da85df8e",
-              "datavalue": {
-                "value": "Chiyoda elementary school, Chiyoda 03.jpg",
-                "type": "string"
-              },
-              "datatype": "commonsMedia"
-            },
-            "type": "statement",
-            "id": "Q81916365$54292141-19AE-4A65-A5DB-E1A4E3DD79CF",
-            "rank": "normal",
-            "references": [
-              {
-                "hash": "a29a646602abf65105ed0f39a44231c962ece9ee",
-                "snaks": {
-                  "P143": [
-                    {
-                      "snaktype": "value",
-                      "property": "P143",
-                      "hash": "c6f1777471211df31724ac60175786f3872c83e9",
-                      "datavalue": {
-                        "value": {
-                          "entity-type": "item",
-                          "numeric-id": 177837,
-                          "id": "Q177837"
-                        },
-                        "type": "wikibase-entityid"
-                      },
-                      "datatype": "wikibase-item"
-                    }
-                  ]
-                },
-                "snaks-order": [
-                  "P143"
-                ]
-              }
-            ]
-          }
-        ],
-        "P11127": [
-          {
-            "mainsnak": {
-              "snaktype": "value",
-              "property": "P11127",
-              "hash": "28bcbd287626c124bc5ca0142d971b7426beb70f",
-              "datavalue": {
-                "value": "B113210100068",
-                "type": "string"
-              },
-              "datatype": "external-id"
-            },
-            "type": "statement",
-            "id": "Q81916365$4EAA0F7B-3A7C-47A8-B76B-BCC0F0C45913",
-            "rank": "normal"
-          }
-        ],
-        "P10610": [
-          {
-            "mainsnak": {
-              "snaktype": "value",
-              "property": "P10610",
-              "hash": "ea7258d659212750087d7bad900b6b951289c645",
-              "datavalue": {
-                "value": {
-                  "amount": "+28",
-                  "unit": "1"
-                },
-                "type": "quantity"
-              },
-              "datatype": "quantity"
-            },
-            "type": "statement",
-            "qualifiers": {
-              "P585": [
-                {
-                  "snaktype": "value",
-                  "property": "P585",
-                  "hash": "8794035db7534c9441596a87ce8bfaa8ee683d64",
-                  "datavalue": {
-                    "value": {
-                      "time": "+2019-10-24T00:00:00Z",
-                      "timezone": 0,
-                      "before": 0,
-                      "after": 0,
-                      "precision": 11,
-                      "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
-                    },
-                    "type": "time"
-                  },
-                  "datatype": "time"
-                }
-              ]
-            },
-            "qualifiers-order": [
-              "P585"
-            ],
-            "id": "Q81916365$3CEF94AE-0D60-4EFC-92E8-23C6199877A7",
-            "rank": "normal",
-            "references": [
-              {
-                "hash": "675ccf110064b6b3dce294e5fb9cc10359a4dc56",
-                "snaks": {
-                  "P854": [
-                    {
-                      "snaktype": "value",
-                      "property": "P854",
-                      "hash": "8b0cdefafe269a6c0af5680a532958ec90b9f497",
-                      "datavalue": {
-                        "value": "https://www.kyoiku.metro.tokyo.jp/administration/statistics_and_research/list_of_public_school/files/school_lists2019/shougakkou-ichiran.xlsx",
-                        "type": "string"
-                      },
-                      "datatype": "url"
-                    }
-                  ],
-                  "P813": [
-                    {
-                      "snaktype": "value",
-                      "property": "P813",
-                      "hash": "7c51240bb79efdd8bec9f7ef60d9998db3f00f47",
-                      "datavalue": {
-                        "value": {
-                          "time": "+2020-01-13T00:00:00Z",
-                          "timezone": 0,
-                          "before": 0,
-                          "after": 0,
-                          "precision": 11,
-                          "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
-                        },
-                        "type": "time"
-                      },
-                      "datatype": "time"
-                    }
-                  ]
-                },
-                "snaks-order": [
-                  "P854",
-                  "P813"
-                ]
-              }
-            ]
-          }
-        ],
-        "P2670": [
-          {
-            "mainsnak": {
-              "snaktype": "value",
-              "property": "P2670",
-              "hash": "cfc949ffe48e39120a44ee860f45345c2f8dbcf1",
-              "datavalue": {
-                "value": {
-                  "entity-type": "item",
-                  "numeric-id": 18204,
-                  "id": "Q18204"
-                },
-                "type": "wikibase-entityid"
-              },
-              "datatype": "wikibase-item"
-            },
-            "type": "statement",
-            "qualifiers": {
-              "P1114": [
-                {
-                  "snaktype": "value",
-                  "property": "P1114",
-                  "hash": "71d823523591deb1ee7acf2f8a9fe5249a8b382c",
-                  "datavalue": {
-                    "value": {
-                      "amount": "+11",
-                      "unit": "1"
-                    },
-                    "type": "quantity"
-                  },
-                  "datatype": "quantity"
-                }
-              ],
-              "P585": [
-                {
-                  "snaktype": "value",
-                  "property": "P585",
-                  "hash": "8794035db7534c9441596a87ce8bfaa8ee683d64",
-                  "datavalue": {
-                    "value": {
-                      "time": "+2019-10-24T00:00:00Z",
-                      "timezone": 0,
-                      "before": 0,
-                      "after": 0,
-                      "precision": 11,
-                      "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
-                    },
-                    "type": "time"
-                  },
-                  "datatype": "time"
-                }
-              ]
-            },
-            "qualifiers-order": [
-              "P1114",
-              "P585"
-            ],
-            "id": "Q81916365$AF80A056-564F-4A25-B25A-5A7B111151A0",
-            "rank": "normal",
-            "references": [
-              {
-                "hash": "a6423bd4283b9ccb571c222e38042207df5a370f",
-                "snaks": {
-                  "P854": [
-                    {
-                      "snaktype": "value",
-                      "property": "P854",
-                      "hash": "2527bcdb2a82f2b800f9292753fb16f77e602efa",
-                      "datavalue": {
-                        "value": "http://www.kyoiku.metro.tokyo.jp/administration/statistics_and_research/list_of_public_school/files/school_lists2019/shougakkou-ichiran.xlsx",
-                        "type": "string"
-                      },
-                      "datatype": "url"
-                    }
-                  ],
-                  "P813": [
-                    {
-                      "snaktype": "value",
-                      "property": "P813",
-                      "hash": "7c51240bb79efdd8bec9f7ef60d9998db3f00f47",
-                      "datavalue": {
-                        "value": {
-                          "time": "+2020-01-13T00:00:00Z",
-                          "timezone": 0,
-                          "before": 0,
-                          "after": 0,
-                          "precision": 11,
-                          "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
-                        },
-                        "type": "time"
-                      },
-                      "datatype": "time"
-                    }
-                  ]
-                },
-                "snaks-order": [
-                  "P854",
-                  "P813"
-                ]
-              }
-            ]
-          }
-        ],
-        "P276": [
-          {
-            "mainsnak": {
-              "snaktype": "value",
-              "property": "P276",
-              "hash": "1864205e1f9a93ad7a81a114f9d59d9e3df657aa",
-              "datavalue": {
-                "value": {
-                  "entity-type": "item",
-                  "numeric-id": 3346524,
-                  "id": "Q3346524"
-                },
-                "type": "wikibase-entityid"
-              },
-              "datatype": "wikibase-item"
-            },
-            "type": "statement",
-            "id": "Q81916365$185486ec-4b64-e77f-d9c4-6311d27eb937",
-            "rank": "normal",
-            "references": [
-              {
-                "hash": "a29a646602abf65105ed0f39a44231c962ece9ee",
-                "snaks": {
-                  "P143": [
-                    {
-                      "snaktype": "value",
-                      "property": "P143",
-                      "hash": "c6f1777471211df31724ac60175786f3872c83e9",
-                      "datavalue": {
-                        "value": {
-                          "entity-type": "item",
-                          "numeric-id": 177837,
-                          "id": "Q177837"
-                        },
-                        "type": "wikibase-entityid"
-                      },
-                      "datatype": "wikibase-item"
-                    }
-                  ]
-                },
-                "snaks-order": [
-                  "P143"
-                ]
-              }
-            ]
-          }
-        ],
-        "P571": [
-          {
-            "mainsnak": {
-              "snaktype": "value",
-              "property": "P571",
-              "hash": "01eab08a08d18f948505ddd6c5767e9d26e52cc5",
-              "datavalue": {
-                "value": {
-                  "time": "+1993-04-01T00:00:00Z",
-                  "timezone": 0,
-                  "before": 0,
-                  "after": 0,
-                  "precision": 11,
-                  "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
-                },
-                "type": "time"
-              },
-              "datatype": "time"
-            },
-            "type": "statement",
-            "id": "Q81916365$b59cdae1-4452-a07f-6981-89678577cb28",
-            "rank": "normal",
-            "references": [
-              {
-                "hash": "a29a646602abf65105ed0f39a44231c962ece9ee",
-                "snaks": {
-                  "P143": [
-                    {
-                      "snaktype": "value",
-                      "property": "P143",
-                      "hash": "c6f1777471211df31724ac60175786f3872c83e9",
-                      "datavalue": {
-                        "value": {
-                          "entity-type": "item",
-                          "numeric-id": 177837,
-                          "id": "Q177837"
-                        },
-                        "type": "wikibase-entityid"
-                      },
-                      "datatype": "wikibase-item"
-                    }
-                  ]
-                },
-                "snaks-order": [
-                  "P143"
-                ]
-              }
-            ]
-          }
-        ],
-        "P1619": [
-          {
-            "mainsnak": {
-              "snaktype": "value",
-              "property": "P1619",
-              "hash": "f485d87d6e3b032319087ea09c8c6c6f6c82eccd",
-              "datavalue": {
-                "value": {
-                  "time": "+1993-04-01T00:00:00Z",
-                  "timezone": 0,
-                  "before": 0,
-                  "after": 0,
-                  "precision": 11,
-                  "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
-                },
-                "type": "time"
-              },
-              "datatype": "time"
-            },
-            "type": "statement",
-            "id": "Q81916365$f46e3033-4e4f-513c-2df3-8688ace869ba",
-            "rank": "normal",
-            "references": [
-              {
-                "hash": "a29a646602abf65105ed0f39a44231c962ece9ee",
-                "snaks": {
-                  "P143": [
-                    {
-                      "snaktype": "value",
-                      "property": "P143",
-                      "hash": "c6f1777471211df31724ac60175786f3872c83e9",
-                      "datavalue": {
-                        "value": {
-                          "entity-type": "item",
-                          "numeric-id": 177837,
-                          "id": "Q177837"
-                        },
-                        "type": "wikibase-entityid"
-                      },
-                      "datatype": "wikibase-item"
-                    }
-                  ]
-                },
-                "snaks-order": [
-                  "P143"
-                ]
-              }
-            ]
-          }
-        ]
-      },
-      "sitelinks": {
-        "commonswiki": {
-          "site": "commonswiki",
-          "title": "Category:Chiyoda elementary school, Chiyoda",
-          "badges": []
-        },
-        "jawiki": {
-          "site": "jawiki",
-          "title": "千代田区立千代田小学校",
           "badges": []
         }
       }

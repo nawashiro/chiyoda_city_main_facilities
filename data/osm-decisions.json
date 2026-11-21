@@ -274,18 +274,18 @@
               139.768436,
               35.693195700000004
             ],
-            "qid": "Q97168414",
+            "qid": "Q81916365",
             "tags": {
               "amenity": "school",
               "name": "千代田区立 千代田小学校",
               "name:en": "Chiyoda Elementary School",
               "name:ja": "千代田小学校",
-              "wikidata": "Q97168414"
+              "wikidata": "Q81916365"
             }
           }
         ]
       },
-      "evidenceHash": "35d5720d877fcde77ac5326fab5484ba2cd553fc46cc0304990ddbdbbafa3c0d",
+      "evidenceHash": "70c38dd988418dfbcdcdcc6c1f5fa19ea53d5337f45266b2b5bea5d335feb1f3",
       "current": "node/5285952021",
       "status": "decided",
       "choice": "node/5285952021",
@@ -2410,13 +2410,13 @@
       "evidenceHash": "725dacefc09a0086d8ecbb57713e0194dbf9d3a1381f6dc3ad1b2302df77f001",
       "current": "node/13735063550",
       "status": "decided",
-      "choice": "node/13735063550",
-      "method": "human",
       "human": {
         "choice": "node/13735063550",
         "editor": "Navi",
         "editedAt": "2026-11-18T14:13:10Z"
-      }
+      },
+      "choice": "node/13735063550",
+      "method": "human"
     },
     "019fa880-5cd5-7031-bc8e-250d0074827b": {
       "evidence": {
@@ -2668,11 +2668,290 @@
         },
         "candidates": [
           {
+            "recordId": "node/12357285597",
+            "name": "きたろう",
+            "coordinates": [
+              139.7702571,
+              35.7009252
+            ],
+            "qid": null,
+            "tags": {
+              "amenity": "restaurant",
+              "name": "きたろう"
+            }
+          },
+          {
+            "recordId": "node/1916515190",
+            "name": "ショップインバース",
+            "coordinates": [
+              139.7704026,
+              35.7011371
+            ],
+            "qid": null,
+            "tags": {
+              "name": "ショップインバース",
+              "name:en": "Shop inverse",
+              "website": "https://www.shop-inverse.com/"
+            }
+          },
+          {
+            "recordId": "node/1916524834",
+            "name": "神田寺",
+            "coordinates": [
+              139.7703476,
+              35.7013571
+            ],
+            "qid": "Q106020484",
+            "tags": {
+              "amenity": "place_of_worship",
+              "name": "神田寺",
+              "name:en": "Kandadera Temple",
+              "religion": "buddhist",
+              "wikidata": "Q106020484"
+            }
+          },
+          {
+            "recordId": "node/2059303798",
+            "name": "昌平まちかど図書館",
+            "coordinates": [
+              139.7700608,
+              35.7013313
+            ],
+            "qid": "Q61886799",
+            "tags": {
+              "amenity": "library",
+              "name": "昌平まちかど図書館",
+              "name:en": "Shouhei-Machikado-Library",
+              "operator": "千代田区立図書館",
+              "website": "http://www.library.chiyoda.tokyo.jp",
+              "wikidata": "Q61886799"
+            }
+          },
+          {
+            "recordId": "node/2263796343",
+            "name": "神田児童館",
+            "coordinates": [
+              139.7696731,
+              35.7011916
+            ],
+            "qid": null,
+            "tags": {
+              "amenity": "community_centre",
+              "name": "神田児童館",
+              "name:en": "Kanda Children's Hall"
+            }
+          },
+          {
+            "recordId": "node/2276456238",
+            "name": "Cafe & Bar B-Cats",
+            "coordinates": [
+              139.7702629,
+              35.7009676
+            ],
+            "qid": null,
+            "tags": {
+              "amenity": "cafe",
+              "name": "Cafe & Bar B-Cats"
+            }
+          },
+          {
+            "recordId": "node/2276456261",
+            "name": "ポポンデッタ",
+            "coordinates": [
+              139.7695255,
+              35.7008538
+            ],
+            "qid": null,
+            "tags": {
+              "addr:block_number": "3",
+              "addr:city": "千代田区",
+              "addr:housenumber": "3",
+              "addr:neighbourhood": "外神田三丁目",
+              "brand": "ポポンデッタ",
+              "name": "ポポンデッタ",
+              "name:en": "Popondetta",
+              "name:ja": "ポポンデッタ",
+              "website": "https://www.popondetta.com/"
+            }
+          },
+          {
+            "recordId": "node/3889725822",
+            "name": "千代田区エリアマップ",
+            "coordinates": [
+              139.7693687,
+              35.7010833
+            ],
+            "qid": null,
+            "tags": {
+              "name": "千代田区エリアマップ",
+              "name:en": "Chiyoda City Area Map"
+            }
+          },
+          {
+            "recordId": "node/3889728062",
+            "name": "らーめん影武者",
+            "coordinates": [
+              139.7694675,
+              35.7013433
+            ],
+            "qid": null,
+            "tags": {
+              "amenity": "restaurant",
+              "name": "らーめん影武者",
+              "name:en": "Ramen Kagemusha"
+            }
+          },
+          {
+            "recordId": "node/4069489663",
+            "name": "影武者",
+            "coordinates": [
+              139.7702603,
+              35.7009334
+            ],
+            "qid": null,
+            "tags": {
+              "name": "影武者"
+            }
+          },
+          {
+            "recordId": "node/4937999268",
+            "name": "昌平幼稚園",
+            "coordinates": [
+              139.769695,
+              35.7012596
+            ],
+            "qid": null,
+            "tags": {
+              "amenity": "childcare",
+              "name": "昌平幼稚園",
+              "name:en": "Shouhei-Kindergarten"
+            }
+          },
+          {
+            "recordId": "node/4937999269",
+            "name": "小学館アカデミー昌平保育園",
+            "coordinates": [
+              139.7697345,
+              35.7012543
+            ],
+            "qid": null,
+            "tags": {
+              "amenity": "childcare",
+              "name": "小学館アカデミー昌平保育園",
+              "name:en": "SHOGAKUKAN ACADEMY Shohei Nursery School"
+            }
+          },
+          {
+            "recordId": "node/4937999270",
+            "name": "神田児童館掲示板",
+            "coordinates": [
+              139.7698337,
+              35.7014256
+            ],
+            "qid": null,
+            "tags": {
+              "name": "神田児童館掲示板"
+            }
+          },
+          {
+            "recordId": "node/4959669430",
+            "name": "校歌",
+            "coordinates": [
+              139.769783,
+              35.7015377
+            ],
+            "qid": null,
+            "tags": {
+              "name": "校歌"
+            }
+          },
+          {
+            "recordId": "node/5026546643",
+            "name": "Pasta Blue Berry",
+            "coordinates": [
+              139.7694672,
+              35.7014256
+            ],
+            "qid": null,
+            "tags": {
+              "amenity": "restaurant",
+              "name": "Pasta Blue Berry"
+            }
+          },
+          {
+            "recordId": "node/5031532361",
+            "name": "Park Gallery",
+            "coordinates": [
+              139.7695544,
+              35.7015541
+            ],
+            "qid": null,
+            "tags": {
+              "name": "Park Gallery"
+            }
+          },
+          {
+            "recordId": "node/5052550371",
+            "name": "神田寺幼稚園",
+            "coordinates": [
+              139.7702913,
+              35.7013831
+            ],
+            "qid": null,
+            "tags": {
+              "amenity": "kindergarten",
+              "name": "神田寺幼稚園",
+              "name:en": "Kandadera Kindergarten",
+              "operator": "学校法人真理学園"
+            }
+          },
+          {
+            "recordId": "node/5052550373",
+            "name": "滝沢馬琴住居跡",
+            "coordinates": [
+              139.7697486,
+              35.7015377
+            ],
+            "qid": null,
+            "tags": {
+              "name": "滝沢馬琴住居跡"
+            }
+          },
+          {
+            "recordId": "relation/16309259",
+            "name": "外神田三丁目",
+            "coordinates": [
+              139.77037554999998,
+              35.701341049999996
+            ],
+            "qid": null,
+            "tags": {
+              "name": "外神田三丁目",
+              "name:en": "Soto-Kanda 3",
+              "name:ja": "外神田三丁目"
+            }
+          },
+          {
+            "recordId": "relation/16310455",
+            "name": "外神田",
+            "coordinates": [
+              139.76994505,
+              35.7011045
+            ],
+            "qid": "Q3347175",
+            "tags": {
+              "name": "外神田",
+              "name:en": "Soto-Kanda",
+              "name:ja": "外神田",
+              "wikidata": "Q3347175"
+            }
+          },
+          {
             "recordId": "way/173230196",
             "name": "昌平童夢館",
             "coordinates": [
-              139.769885,
-              35.7012402
+              139.7698588,
+              35.70120285
             ],
             "qid": null,
             "tags": {
@@ -2683,19 +2962,116 @@
               "name": "昌平童夢館",
               "name:en": "Shohei Domukan Children's Hall"
             }
+          },
+          {
+            "recordId": "way/46982684",
+            "name": "千代田区立 昌平小学校",
+            "coordinates": [
+              139.7698485,
+              35.70118755
+            ],
+            "qid": "Q81916367",
+            "tags": {
+              "amenity": "school",
+              "name": "千代田区立 昌平小学校",
+              "name:en": "Shohei Elementary School",
+              "wikidata": "Q81916367"
+            }
+          },
+          {
+            "recordId": "way/88982665",
+            "name": "神田寺ビル",
+            "coordinates": [
+              139.77034605,
+              35.70113055
+            ],
+            "qid": null,
+            "tags": {
+              "addr:block_number": "4",
+              "addr:city": "千代田区",
+              "addr:housenumber": "10",
+              "addr:neighbourhood": "外神田三丁目",
+              "building": "retail",
+              "name": "神田寺ビル"
+            }
+          },
+          {
+            "recordId": "way/88982681",
+            "name": "川六ビル",
+            "coordinates": [
+              139.77018705,
+              35.70097215
+            ],
+            "qid": null,
+            "tags": {
+              "addr:housenumber": "16",
+              "building": "yes",
+              "name": "川六ビル",
+              "name:en": "Kawaroku Building"
+            }
+          },
+          {
+            "recordId": "way/88982682",
+            "name": "竹本ビル",
+            "coordinates": [
+              139.77025165,
+              35.70096545
+            ],
+            "qid": null,
+            "tags": {
+              "addr:block_number": "4",
+              "addr:housenumber": "16",
+              "addr:neighbourhood": "外神田三丁目",
+              "building": "yes",
+              "name": "竹本ビル"
+            }
+          },
+          {
+            "recordId": "way/88999567",
+            "name": "エアホープ",
+            "coordinates": [
+              139.7697336,
+              35.7007787
+            ],
+            "qid": null,
+            "tags": {
+              "addr:block_number": "3",
+              "addr:city": "千代田区",
+              "addr:neighbourhood": "外神田三丁目",
+              "building": "commercial",
+              "name": "エアホープ",
+              "name:en": "Air Hope",
+              "office": "company"
+            }
+          },
+          {
+            "recordId": "way/92190824",
+            "name": "千代田区立外神田住宅",
+            "coordinates": [
+              139.769456,
+              35.701206
+            ],
+            "qid": null,
+            "tags": {
+              "addr:block_number": "4",
+              "addr:housenumber": "1",
+              "addr:neighbourhood": "外神田三丁目",
+              "building": "apartments",
+              "name": "千代田区立外神田住宅"
+            }
           }
         ]
       },
-      "evidenceHash": "fae1b3a60e275165a343a5b27fbf5002e83e1420f7d526966cd3111a991059e4",
+      "evidenceHash": "7c5a1415b57790c9b2bb41e5a62c16fcb7f49104b9fbf899cf7850de0863fc55",
       "current": "way/173230196",
       "status": "decided",
-      "choice": "way/173230196",
-      "method": "human",
       "human": {
         "choice": "way/173230196",
         "editor": "Navi",
         "editedAt": "2026-11-20T04:48:49Z"
-      }
+      },
+      "choice": "way/173230196",
+      "method": "human"
     },
     "019fa880-5cd5-7285-88ba-ab05a68eb601": {
       "evidence": {
@@ -4540,31 +4916,157 @@
         },
         "candidates": [
           {
-            "recordId": "relation/9323146",
-            "name": "西神田コスモス館",
+            "recordId": "node/12945536601",
+            "name": "ovgo Baker Cookie Factory Shop",
             "coordinates": [
-              139.754802,
-              35.6988974
+              139.7543521,
+              35.6985577
             ],
             "qid": null,
             "tags": {
+              "name": "ovgo Baker Cookie Factory Shop",
+              "website": "https://ovgobaker.com"
+            }
+          },
+          {
+            "recordId": "node/1420797864",
+            "name": "西神田保育園",
+            "coordinates": [
+              139.754708,
+              35.698804
+            ],
+            "qid": null,
+            "tags": {
+              "addr:full": "東京都千代田区西神田2-6-2",
+              "amenity": "childcare",
+              "name": "西神田保育園",
+              "name:en": "Nishi-kanda Nursery",
+              "name:ja": "西神田保育園",
+              "operator": "東京都千代田区"
+            }
+          },
+          {
+            "recordId": "node/1655927382",
+            "name": "西神田児童・家庭支援センター",
+            "coordinates": [
+              139.754706,
+              35.698887
+            ],
+            "qid": null,
+            "tags": {
+              "addr:block_number": "6",
+              "addr:city": "千代田区",
+              "addr:housenumber": "2",
+              "addr:neighbourhood": "西神田二丁目",
+              "amenity": "social_facility",
+              "name": "西神田児童・家庭支援センター",
+              "operator": "東京都千代田区",
+              "social_facility": "assisted_living"
+            }
+          },
+          {
+            "recordId": "node/3794695440",
+            "name": "西神田コスモス館",
+            "coordinates": [
+              139.7550503,
+              35.6986747
+            ],
+            "qid": null,
+            "tags": {
+              "name": "西神田コスモス館"
+            }
+          },
+          {
+            "recordId": "node/3794707263",
+            "name": "西神田公園(北側)",
+            "coordinates": [
+              139.7550935,
+              35.6985744
+            ],
+            "qid": null,
+            "tags": {
+              "amenity": "bicycle_rental",
+              "brand": "Docomo Bike Share",
+              "name": "西神田公園(北側)",
+              "name:en": "Docomo Bike Share",
+              "name:ja": "西神田公園(北側)",
+              "operator": "ドコモ・バイクシェア",
+              "operator:wikidata": "Q55533296"
+            }
+          },
+          {
+            "recordId": "node/4603367541",
+            "name": "サブウェイ",
+            "coordinates": [
+              139.7548472,
+              35.6993204
+            ],
+            "qid": null,
+            "tags": {
+              "amenity": "fast_food",
+              "brand": "サブウェイ",
+              "name": "サブウェイ",
+              "name:en": "Subway",
+              "name:ja": "サブウェイ",
+              "operator": "サブウェイ"
+            }
+          },
+          {
+            "recordId": "relation/3545352",
+            "name": "西神田二丁目",
+            "coordinates": [
+              139.7551953,
+              35.698694849999995
+            ],
+            "qid": null,
+            "tags": {
+              "name": "西神田二丁目",
+              "name:en": "Nishikanda 2",
+              "name:ja": "西神田二丁目"
+            }
+          },
+          {
+            "recordId": "way/175993983",
+            "name": "日本大学法学部図書館",
+            "coordinates": [
+              139.7546685,
+              35.69922285
+            ],
+            "qid": null,
+            "tags": {
+              "amenity": "university",
               "building": "yes",
-              "name": "西神田コスモス館",
-              "operator": "千代田区"
+              "name": "日本大学法学部図書館",
+              "name:en": "Library of Nihon University College of Law",
+              "name:ja": "日本大学法学部図書館"
             }
           }
         ]
       },
-      "evidenceHash": "5efac0229c9a3f50bdebc9f38037a488a517ff99dfd20bce0edbb5c5ad1f67a8",
+      "evidenceHash": "2daf89ed337b56d91a15906eab00177d0c49a64871e7da6497306584e2339e2b",
       "current": "relation/9323146",
-      "status": "decided",
-      "choice": "relation/9323146",
-      "method": "human",
-      "human": {
-        "choice": "relation/9323146",
-        "editor": "Navi",
-        "editedAt": "2026-11-20T04:49:51Z"
-      }
+      "status": "needs_review",
+      "jev": {
+        "choice": "node/3794695440",
+        "confidence": 0.85,
+        "probabilities": {
+          "node/12945536601": 0.0,
+          "node/1420797864": 0.0,
+          "node/1655927382": 0.1,
+          "node/3794695440": 0.87,
+          "node/3794707263": 0.0,
+          "node/4603367541": 0.0,
+          "relation/3545352": 0.0,
+          "way/175993983": 0.0,
+          "none": 0.03
+        },
+        "usage": {
+          "input_tokens": 1583,
+          "output_tokens": 98
+        },
+        "model": "jev-1.14.0"
+      },
+      "reason": "Jevの信頼度が閾値に届きません。"
     },
     "019fa880-5cd5-7b37-bb94-a2151c0cdef0": {
       "evidence": {
@@ -4748,6 +5250,49 @@
         },
         "candidates": [
           {
+            "recordId": "node/1420784761",
+            "name": "東京社会保険事務局麹町事務所",
+            "coordinates": [
+              139.74249,
+              35.690402
+            ],
+            "qid": null,
+            "tags": {
+              "building": "public",
+              "name": "東京社会保険事務局麹町事務所"
+            }
+          },
+          {
+            "recordId": "node/1420800550",
+            "name": "麹町社会保険事務所",
+            "coordinates": [
+              139.7424816,
+              35.6904006
+            ],
+            "qid": null,
+            "tags": {
+              "building": "public",
+              "name": "麹町社会保険事務所",
+              "office": "government",
+              "operator": "日本年金機構",
+              "operator:wikidata": "Q11508070"
+            }
+          },
+          {
+            "recordId": "node/14394442840",
+            "name": "藍cafe",
+            "coordinates": [
+              139.7422866,
+              35.6902784
+            ],
+            "qid": null,
+            "tags": {
+              "amenity": "cafe",
+              "name": "藍cafe",
+              "website": "https://www.ai-port.jp/kojimachi/aicafe/"
+            }
+          },
+          {
             "recordId": "node/14394442841",
             "name": "子育てひろば あい・ぽーと麹町",
             "coordinates": [
@@ -4764,16 +5309,16 @@
           }
         ]
       },
-      "evidenceHash": "72ec75cdef0d368ffab7aab7901dd0c7a701789215ff2be1923b8c199f831758",
+      "evidenceHash": "6f250138bd7f423a502014f5a850250c4884c9b8efc6df6ad30325c571cb776c",
       "current": "node/14394442841",
       "status": "decided",
-      "choice": "node/14394442841",
-      "method": "human",
       "human": {
         "choice": "node/14394442841",
         "editor": "Navi",
         "editedAt": "2026-11-19T04:14:30Z"
-      }
+      },
+      "choice": "node/14394442841",
+      "method": "human"
     },
     "019fa880-5cd5-7bae-838d-111510f35ee9": {
       "evidence": {
@@ -5373,11 +5918,75 @@
         },
         "candidates": [
           {
+            "recordId": "node/11436157007",
+            "name": "いきいきプラザ一番町（西側駐輪場）",
+            "coordinates": [
+              139.739327,
+              35.687031
+            ],
+            "qid": null,
+            "tags": {
+              "amenity": "bicycle_rental",
+              "brand": "Docomo Bike Share",
+              "name": "いきいきプラザ一番町（西側駐輪場）",
+              "name:ja": "いきいきプラザ一番町（西側駐輪場）"
+            }
+          },
+          {
+            "recordId": "node/1655905663",
+            "name": "千代田区立一番町高齢者在宅介護支援センター",
+            "coordinates": [
+              139.739284,
+              35.68699
+            ],
+            "qid": null,
+            "tags": {
+              "addr:block_number": "12",
+              "addr:city": "千代田区",
+              "addr:neighbourhood": "一番町",
+              "amenity": "social_facility",
+              "name": "千代田区立一番町高齢者在宅介護支援センター",
+              "operator": "東京都千代田区",
+              "social_facility": "outreach"
+            }
+          },
+          {
+            "recordId": "node/1655920549",
+            "name": "千代田区立一番町特別養護老人ホーム",
+            "coordinates": [
+              139.739296,
+              35.686958
+            ],
+            "qid": null,
+            "tags": {
+              "addr:block_number": "12",
+              "addr:city": "千代田区",
+              "addr:neighbourhood": "一番町",
+              "amenity": "social_facility",
+              "name": "千代田区立一番町特別養護老人ホーム",
+              "operator": "社会福祉法人博仁会",
+              "social_facility": "group_home"
+            }
+          },
+          {
+            "recordId": "node/5024233119",
+            "name": "いきいきプラザ一番町",
+            "coordinates": [
+              139.7394739,
+              35.687162
+            ],
+            "qid": null,
+            "tags": {
+              "name": "いきいきプラザ一番町",
+              "operator": "千代田区"
+            }
+          },
+          {
             "recordId": "way/144866171",
             "name": "いきいきプラザ一番町",
             "coordinates": [
-              139.7395948,
-              35.6869274
+              139.73959480000002,
+              35.686927350000005
             ],
             "qid": null,
             "tags": {
@@ -5386,19 +5995,32 @@
               "name": "いきいきプラザ一番町",
               "operator": "社会福祉法人カメリア会"
             }
+          },
+          {
+            "recordId": "way/31151436",
+            "name": "番町中央通り",
+            "coordinates": [
+              139.73948934999999,
+              35.68720165
+            ],
+            "qid": null,
+            "tags": {
+              "name": "番町中央通り",
+              "name:en": "Bancho Chuo-dori"
+            }
           }
         ]
       },
-      "evidenceHash": "7c220bd43d5ea6f2440529fbdba995afec5142e32cb3b47494a95bf04379e0ac",
+      "evidenceHash": "210004d1bb8b3d98ba4353f6dbd18a39d98129715fe1d81791f0e17f992ead21",
       "current": "way/144866171",
       "status": "decided",
-      "choice": "way/144866171",
-      "method": "human",
       "human": {
         "choice": "way/144866171",
         "editor": "Navi",
         "editedAt": "2026-11-20T04:48:57Z"
-      }
+      },
+      "choice": "way/144866171",
+      "method": "human"
     },
     "019fa880-5cd5-7d22-aef4-68b4e1172660": {
       "evidence": {
@@ -12432,24 +13054,36 @@
         },
         "candidates": [
           {
+            "recordId": "node/8995417645",
+            "name": "万世橋駅 跡地",
+            "coordinates": [
+              139.7695765,
+              35.6975133
+            ],
+            "qid": "Q6751576",
+            "tags": {
+              "name": "万世橋駅 跡地",
+              "wikidata": "Q6751576"
+            }
+          },
+          {
             "recordId": "way/675832452",
             "name": "マーチ エキュート 神田万世橋",
             "coordinates": [
               139.7698128,
               35.69749255
             ],
-            "qid": "Q6751576",
+            "qid": null,
             "tags": {
               "alt_name": "mAAch ecute",
               "building": "retail",
               "name": "マーチ エキュート 神田万世橋",
-              "name:en": "Maach ecute Kanda Manseibashi",
-              "wikidata": "Q6751576"
+              "name:en": "Maach ecute Kanda Manseibashi"
             }
           }
         ]
       },
-      "evidenceHash": "afa80d6399dd9adc127d7808a520b808615dad01a86e123c4b28e772796a92d6",
+      "evidenceHash": "463596326a3fe1114a77c0c4ad3de26117f4af676724ca5e094b0604c9bc88b9",
       "current": "way/675832452",
       "status": "decided",
       "choice": "way/675832452",
@@ -12909,35 +13543,28 @@
         },
         "candidates": [
           {
-            "recordId": "way/460729041",
+            "recordId": "node/14344607026",
             "name": "千代田区立 富士見小学校",
             "coordinates": [
-              139.7465227,
-              35.6972953
+              139.7463641,
+              35.6971909
             ],
             "qid": "Q81916362",
             "tags": {
               "amenity": "school",
-              "building": "yes",
               "name": "千代田区立 富士見小学校",
               "name:en": "Fujimi Elementary School",
-              "operator": "千代田区",
               "website": "https://chiyoda.schoolweb.ne.jp/1310164",
               "wikidata": "Q81916362"
             }
           }
         ]
       },
-      "evidenceHash": "638fbaa8828ff2c9a3c21143d791126cda52c87e64e491d7eb93a2f98e433176",
+      "evidenceHash": "1ce33f67ea767507d0c78a74149f2035628053d01ae43a0642d2c23023188c0b",
       "current": "way/460729041",
       "status": "decided",
-      "choice": "way/460729041",
-      "method": "human",
-      "human": {
-        "choice": "way/460729041",
-        "editor": "Navi",
-        "editedAt": "2026-11-20T04:50:31Z"
-      }
+      "choice": "node/14344607026",
+      "method": "qid"
     },
     "01a1e8ab-f14e-7d43-bf8c-022b06f17c7c": {
       "evidence": {
@@ -12956,6 +13583,7 @@
             ],
             "qid": "Q11405295",
             "tags": {
+              "amenity": "school",
               "name": "千代田区立 お茶の水小学校",
               "name:en": "Ochanomizu Elementary School",
               "wikidata": "Q11405295"
@@ -12963,7 +13591,7 @@
           }
         ]
       },
-      "evidenceHash": "996ca777de76ffec38924e1853e4466a2eb62efc4befa86843ccb41094e0c7ec",
+      "evidenceHash": "a334d263ed5e2d6ce3c901b4b3389ffa33a340b18ee59355f456598af2ff2e6d",
       "current": "way/184577228",
       "status": "decided",
       "choice": "way/184577228",
@@ -12984,18 +13612,18 @@
               139.768436,
               35.693195700000004
             ],
-            "qid": "Q97168414",
+            "qid": "Q81916365",
             "tags": {
               "amenity": "school",
               "name": "千代田区立 千代田小学校",
               "name:en": "Chiyoda Elementary School",
               "name:ja": "千代田小学校",
-              "wikidata": "Q97168414"
+              "wikidata": "Q81916365"
             }
           }
         ]
       },
-      "evidenceHash": "45e5cc79c5a6f19b505c42831cf3fc24e84389aca24780810a4b585720fceb55",
+      "evidenceHash": "62bb11384e630e9fcbdcfe15ab7251babd80843da64e72803cd8ea1f60b18d2c",
       "current": "way/620327839",
       "status": "decided",
       "human": {
@@ -13503,33 +14131,260 @@
         },
         "candidates": [
           {
-            "recordId": "way/187756645",
-            "name": "神田さくら館",
+            "recordId": "node/1420770192",
+            "name": "千代田区立神田まちかど図書館",
             "coordinates": [
-              139.7684565,
-              35.6931405
+              139.7683614,
+              35.6929651
+            ],
+            "qid": "Q61886800",
+            "tags": {
+              "amenity": "library",
+              "name": "千代田区立神田まちかど図書館",
+              "name:en": "Kanda Community Library",
+              "wikidata": "Q61886800"
+            }
+          },
+          {
+            "recordId": "node/1420770197",
+            "name": "千代田幼稚園",
+            "coordinates": [
+              139.76839,
+              35.692934
+            ],
+            "qid": null,
+            "tags": {
+              "addr:full": "東京都千代田区神田司町2-16",
+              "amenity": "kindergarten",
+              "name": "千代田幼稚園",
+              "name:en": "Chiyoda Kindergarten",
+              "operator": "東京都千代田区"
+            }
+          },
+          {
+            "recordId": "node/5283363638",
+            "name": "アフタースクールさくら",
+            "coordinates": [
+              139.7683015,
+              35.6930306
+            ],
+            "qid": null,
+            "tags": {
+              "amenity": "prep_school",
+              "name": "アフタースクールさくら"
+            }
+          },
+          {
+            "recordId": "node/5283363644",
+            "name": "マミーズエンジェル千代田保育園",
+            "coordinates": [
+              139.7682197,
+              35.6933908
+            ],
+            "qid": null,
+            "tags": {
+              "amenity": "childcare",
+              "name": "マミーズエンジェル千代田保育園"
+            }
+          },
+          {
+            "recordId": "node/5285945917",
+            "name": "千代田区総合防災案内板",
+            "coordinates": [
+              139.7681828,
+              35.6928901
+            ],
+            "qid": null,
+            "tags": {
+              "name": "千代田区総合防災案内板"
+            }
+          },
+          {
+            "recordId": "node/5285945918",
+            "name": "千代田区からのお知らせ",
+            "coordinates": [
+              139.7681881,
+              35.6928782
+            ],
+            "qid": null,
+            "tags": {
+              "name": "千代田区からのお知らせ"
+            }
+          },
+          {
+            "recordId": "node/5285945920",
+            "name": "教育研究所 児童・家庭支援センター さくらキッズ",
+            "coordinates": [
+              139.768293,
+              35.6928957
+            ],
+            "qid": null,
+            "tags": {
+              "name": "教育研究所 児童・家庭支援センター さくらキッズ"
+            }
+          },
+          {
+            "recordId": "node/5285952021",
+            "name": "教育研究所 児童・家庭支援センター さくらキッズ",
+            "coordinates": [
+              139.7683265,
+              35.692996
+            ],
+            "qid": null,
+            "tags": {
+              "addr:block_number": "16",
+              "addr:city": "千代田区",
+              "addr:neighbourhood": "2",
+              "addr:quarter": "神田司町",
+              "amenity": "community_centre",
+              "name": "教育研究所 児童・家庭支援センター さくらキッズ",
+              "website": "https://www.city.chiyoda.lg.jp/koho/kosodate/kosodate/ko-hattatsu/sakura-kids.html"
+            }
+          },
+          {
+            "recordId": "node/8930433491",
+            "name": "千代田区からのお知らせ",
+            "coordinates": [
+              139.7687597,
+              35.6930439
+            ],
+            "qid": null,
+            "tags": {
+              "name": "千代田区からのお知らせ"
+            }
+          },
+          {
+            "recordId": "node/8931799985",
+            "name": "枝松製作所",
+            "coordinates": [
+              139.768283,
+              35.6935223
+            ],
+            "qid": null,
+            "tags": {
+              "name": "枝松製作所",
+              "office": "company"
+            }
+          },
+          {
+            "recordId": "node/8931799986",
+            "name": "玉寿司",
+            "coordinates": [
+              139.7681884,
+              35.6935033
+            ],
+            "qid": null,
+            "tags": {
+              "amenity": "restaurant",
+              "name": "玉寿司"
+            }
+          },
+          {
+            "recordId": "way/187756642",
+            "name": "千代田区役所 神田公園出張所・区民館",
+            "coordinates": [
+              139.76813835000002,
+              35.69274685
             ],
             "qid": null,
             "tags": {
               "amenity": "community_centre",
               "building": "yes",
-              "name": "神田さくら館",
+              "name": "千代田区役所 神田公園出張所・区民館",
+              "name:en": "Chiyoda city Kanda-koen branch office and community center",
               "operator": "千代田区",
-              "website": "https://www.city.chiyoda.lg.jp/shisetsu/bunka/kandasakura.html"
+              "website": "https://www.city.chiyoda.lg.jp/shisetsu/kuyakusho/kandakoen-shuchojo.html"
+            }
+          },
+          {
+            "recordId": "way/187756691",
+            "name": "NTT神田",
+            "coordinates": [
+              139.76861209999998,
+              35.6927357
+            ],
+            "qid": null,
+            "tags": {
+              "building": "commercial",
+              "name": "NTT神田"
+            }
+          },
+          {
+            "recordId": "way/231665293",
+            "name": "第二小林ビル",
+            "coordinates": [
+              139.76827079999998,
+              35.6935274
+            ],
+            "qid": null,
+            "tags": {
+              "building": "yes",
+              "name": "第二小林ビル"
+            }
+          },
+          {
+            "recordId": "way/546746166",
+            "name": "神田消防団第二分団機材置場",
+            "coordinates": [
+              139.76802105000002,
+              35.6932252
+            ],
+            "qid": null,
+            "tags": {
+              "building": "warehouse",
+              "name": "神田消防団第二分団機材置場"
+            }
+          },
+          {
+            "recordId": "way/620327839",
+            "name": "千代田区立 千代田小学校",
+            "coordinates": [
+              139.768436,
+              35.693195700000004
+            ],
+            "qid": "Q81916365",
+            "tags": {
+              "amenity": "school",
+              "name": "千代田区立 千代田小学校",
+              "name:en": "Chiyoda Elementary School",
+              "name:ja": "千代田小学校",
+              "wikidata": "Q81916365"
             }
           }
         ]
       },
-      "evidenceHash": "a5bc202e56baa79408c9f4f0e4ff950b4d075e440f4ead3cb3e0b3e7b418c46c",
+      "evidenceHash": "5578de075785284e9cbcb7bbaf3fba320096642777b640d8db0ec929e8f71af8",
       "current": "way/187756645",
-      "status": "decided",
-      "choice": "way/187756645",
-      "method": "human",
-      "human": {
-        "choice": "way/187756645",
-        "editor": "Navi",
-        "editedAt": "2026-11-20T04:50:12Z"
-      }
+      "status": "needs_review",
+      "jev": {
+        "choice": "none",
+        "confidence": 0.52,
+        "probabilities": {
+          "node/1420770192": 0.06,
+          "node/1420770197": 0.0,
+          "node/8931799986": 0.0,
+          "way/187756642": 0.09,
+          "way/187756691": 0.0,
+          "way/231665293": 0.02,
+          "way/546746166": 0.0,
+          "way/620327839": 0.02,
+          "node/5283363638": 0.01,
+          "node/5283363644": 0.0,
+          "node/5285945917": 0.01,
+          "node/5285945918": 0.0,
+          "node/5285945920": 0.02,
+          "node/5285952021": 0.22,
+          "node/8930433491": 0.0,
+          "node/8931799985": 0.0,
+          "none": 0.55
+        },
+        "usage": {
+          "input_tokens": 2591,
+          "output_tokens": 174
+        },
+        "model": "jev-1.14.0"
+      },
+      "reason": "Jevの信頼度が閾値に届きません。"
     },
     "01a1f74a-7ced-7363-a7e6-08976d268c4d": {
       "evidence": {
@@ -13543,6 +14398,73 @@
         },
         "candidates": [
           {
+            "recordId": "node/11799182728",
+            "name": "あきは",
+            "coordinates": [
+              139.7694565,
+              35.7015614
+            ],
+            "qid": null,
+            "tags": {
+              "amenity": "restaurant",
+              "name": "あきは"
+            }
+          },
+          {
+            "recordId": "node/11799182729",
+            "name": "Shisha Bar まどい",
+            "coordinates": [
+              139.7694719,
+              35.7015612
+            ],
+            "qid": null,
+            "tags": {
+              "amenity": "bar",
+              "name": "Shisha Bar まどい"
+            }
+          },
+          {
+            "recordId": "node/11799182730",
+            "name": "みんなでトレカ!!",
+            "coordinates": [
+              139.7694759,
+              35.7015843
+            ],
+            "qid": null,
+            "tags": {
+              "name": "みんなでトレカ!!"
+            }
+          },
+          {
+            "recordId": "node/14050165221",
+            "name": "とんとん",
+            "coordinates": [
+              139.7694742,
+              35.7016049
+            ],
+            "qid": null,
+            "tags": {
+              "name": "とんとん"
+            }
+          },
+          {
+            "recordId": "node/2059303798",
+            "name": "昌平まちかど図書館",
+            "coordinates": [
+              139.7700608,
+              35.7013313
+            ],
+            "qid": "Q61886799",
+            "tags": {
+              "amenity": "library",
+              "name": "昌平まちかど図書館",
+              "name:en": "Shouhei-Machikado-Library",
+              "operator": "千代田区立図書館",
+              "website": "http://www.library.chiyoda.tokyo.jp",
+              "wikidata": "Q61886799"
+            }
+          },
+          {
             "recordId": "node/2263796343",
             "name": "神田児童館",
             "coordinates": [
@@ -13555,19 +14477,323 @@
               "name": "神田児童館",
               "name:en": "Kanda Children's Hall"
             }
+          },
+          {
+            "recordId": "node/2276456261",
+            "name": "ポポンデッタ",
+            "coordinates": [
+              139.7695255,
+              35.7008538
+            ],
+            "qid": null,
+            "tags": {
+              "addr:block_number": "3",
+              "addr:city": "千代田区",
+              "addr:housenumber": "3",
+              "addr:neighbourhood": "外神田三丁目",
+              "brand": "ポポンデッタ",
+              "name": "ポポンデッタ",
+              "name:en": "Popondetta",
+              "name:ja": "ポポンデッタ",
+              "website": "https://www.popondetta.com/"
+            }
+          },
+          {
+            "recordId": "node/2822499021",
+            "name": "昌平小学校入口",
+            "coordinates": [
+              139.7692635,
+              35.7014274
+            ],
+            "qid": null,
+            "tags": {
+              "name": "昌平小学校入口",
+              "name:en": "Shoheishogakko"
+            }
+          },
+          {
+            "recordId": "node/3889725822",
+            "name": "千代田区エリアマップ",
+            "coordinates": [
+              139.7693687,
+              35.7010833
+            ],
+            "qid": null,
+            "tags": {
+              "name": "千代田区エリアマップ",
+              "name:en": "Chiyoda City Area Map"
+            }
+          },
+          {
+            "recordId": "node/3889725841",
+            "name": "昌平小学校入口",
+            "coordinates": [
+              139.7693502,
+              35.7014222
+            ],
+            "qid": null,
+            "tags": {
+              "name": "昌平小学校入口"
+            }
+          },
+          {
+            "recordId": "node/3889728062",
+            "name": "らーめん影武者",
+            "coordinates": [
+              139.7694675,
+              35.7013433
+            ],
+            "qid": null,
+            "tags": {
+              "amenity": "restaurant",
+              "name": "らーめん影武者",
+              "name:en": "Ramen Kagemusha"
+            }
+          },
+          {
+            "recordId": "node/4937999268",
+            "name": "昌平幼稚園",
+            "coordinates": [
+              139.769695,
+              35.7012596
+            ],
+            "qid": null,
+            "tags": {
+              "amenity": "childcare",
+              "name": "昌平幼稚園",
+              "name:en": "Shouhei-Kindergarten"
+            }
+          },
+          {
+            "recordId": "node/4937999269",
+            "name": "小学館アカデミー昌平保育園",
+            "coordinates": [
+              139.7697345,
+              35.7012543
+            ],
+            "qid": null,
+            "tags": {
+              "amenity": "childcare",
+              "name": "小学館アカデミー昌平保育園",
+              "name:en": "SHOGAKUKAN ACADEMY Shohei Nursery School"
+            }
+          },
+          {
+            "recordId": "node/4937999270",
+            "name": "神田児童館掲示板",
+            "coordinates": [
+              139.7698337,
+              35.7014256
+            ],
+            "qid": null,
+            "tags": {
+              "name": "神田児童館掲示板"
+            }
+          },
+          {
+            "recordId": "node/4959669430",
+            "name": "校歌",
+            "coordinates": [
+              139.769783,
+              35.7015377
+            ],
+            "qid": null,
+            "tags": {
+              "name": "校歌"
+            }
+          },
+          {
+            "recordId": "node/5026546643",
+            "name": "Pasta Blue Berry",
+            "coordinates": [
+              139.7694672,
+              35.7014256
+            ],
+            "qid": null,
+            "tags": {
+              "amenity": "restaurant",
+              "name": "Pasta Blue Berry"
+            }
+          },
+          {
+            "recordId": "node/5031532361",
+            "name": "Park Gallery",
+            "coordinates": [
+              139.7695544,
+              35.7015541
+            ],
+            "qid": null,
+            "tags": {
+              "name": "Park Gallery"
+            }
+          },
+          {
+            "recordId": "node/5052550373",
+            "name": "滝沢馬琴住居跡",
+            "coordinates": [
+              139.7697486,
+              35.7015377
+            ],
+            "qid": null,
+            "tags": {
+              "name": "滝沢馬琴住居跡"
+            }
+          },
+          {
+            "recordId": "relation/16310455",
+            "name": "外神田",
+            "coordinates": [
+              139.76994505,
+              35.7011045
+            ],
+            "qid": "Q3347175",
+            "tags": {
+              "name": "外神田",
+              "name:en": "Soto-Kanda",
+              "name:ja": "外神田",
+              "wikidata": "Q3347175"
+            }
+          },
+          {
+            "recordId": "way/173230196",
+            "name": "昌平童夢館",
+            "coordinates": [
+              139.7698588,
+              35.70120285
+            ],
+            "qid": null,
+            "tags": {
+              "addr:block_number": "4",
+              "addr:housenumber": "7",
+              "addr:neighbourhood": "3丁目",
+              "building": "school",
+              "name": "昌平童夢館",
+              "name:en": "Shohei Domukan Children's Hall"
+            }
+          },
+          {
+            "recordId": "way/24989774",
+            "name": "昌平橋通り",
+            "coordinates": [
+              139.76934495,
+              35.701372649999996
+            ],
+            "qid": null,
+            "tags": {
+              "name": "昌平橋通り",
+              "name:en": "Shoheibashi Street",
+              "name:ja": "昌平橋通り"
+            }
+          },
+          {
+            "recordId": "way/277789325",
+            "name": "昌平橋通り",
+            "coordinates": [
+              139.76942845,
+              35.70159275
+            ],
+            "qid": null,
+            "tags": {
+              "name": "昌平橋通り",
+              "name:en": "Shoheibashi Street",
+              "name:ja": "昌平橋通り"
+            }
+          },
+          {
+            "recordId": "way/46982684",
+            "name": "千代田区立 昌平小学校",
+            "coordinates": [
+              139.7698485,
+              35.70118755
+            ],
+            "qid": "Q81916367",
+            "tags": {
+              "amenity": "school",
+              "name": "千代田区立 昌平小学校",
+              "name:en": "Shohei Elementary School",
+              "wikidata": "Q81916367"
+            }
+          },
+          {
+            "recordId": "way/88999546",
+            "name": "レイルウェイビル",
+            "coordinates": [
+              139.76950349999998,
+              35.7008214
+            ],
+            "qid": null,
+            "tags": {
+              "addr:block_number": "3",
+              "addr:city": "千代田区",
+              "addr:housenumber": "3",
+              "addr:neighbourhood": "外神田三丁目",
+              "building": "yes",
+              "name": "レイルウェイビル"
+            }
+          },
+          {
+            "recordId": "way/88999556",
+            "name": "秋葉原槇町ビル",
+            "coordinates": [
+              139.76941575,
+              35.70082615
+            ],
+            "qid": null,
+            "tags": {
+              "addr:block_number": "3",
+              "addr:city": "千代田区",
+              "addr:neighbourhood": "外神田三丁目",
+              "building": "commercial",
+              "name": "秋葉原槇町ビル",
+              "name:en": "Akihabara Makihara Building"
+            }
+          },
+          {
+            "recordId": "way/88999567",
+            "name": "エアホープ",
+            "coordinates": [
+              139.7697336,
+              35.7007787
+            ],
+            "qid": null,
+            "tags": {
+              "addr:block_number": "3",
+              "addr:city": "千代田区",
+              "addr:neighbourhood": "外神田三丁目",
+              "building": "commercial",
+              "name": "エアホープ",
+              "name:en": "Air Hope",
+              "office": "company"
+            }
+          },
+          {
+            "recordId": "way/92190824",
+            "name": "千代田区立外神田住宅",
+            "coordinates": [
+              139.769456,
+              35.701206
+            ],
+            "qid": null,
+            "tags": {
+              "addr:block_number": "4",
+              "addr:housenumber": "1",
+              "addr:neighbourhood": "外神田三丁目",
+              "building": "apartments",
+              "name": "千代田区立外神田住宅"
+            }
           }
         ]
       },
-      "evidenceHash": "684422e9d6ece4216ac0d412da1439dfe2231658f060ee766b5d493f3a0aa9aa",
+      "evidenceHash": "fe48271994970d42b7deb5e5655490ebbaf5a199d8238fc42b2fc9fac6a8d955",
       "current": "node/2263796343",
       "status": "decided",
-      "choice": "node/2263796343",
-      "method": "human",
       "human": {
         "choice": "node/2263796343",
         "editor": "Navi",
         "editedAt": "2026-11-20T04:50:21Z"
-      }
+      },
+      "choice": "node/2263796343",
+      "method": "human"
     },
     "01a1f74a-a0c2-74dc-b23b-01397190d364": {
       "evidence": {
@@ -13580,6 +14806,24 @@
           ]
         },
         "candidates": [
+          {
+            "recordId": "node/13468335880",
+            "name": "ちよだパークサイドプラザ区民図書室",
+            "coordinates": [
+              139.7788067,
+              35.6992879
+            ],
+            "qid": null,
+            "tags": {
+              "addr:block_number": "1",
+              "addr:city": "千代田区",
+              "addr:neighbourhood": "神田和泉町",
+              "amenity": "library",
+              "name": "ちよだパークサイドプラザ区民図書室",
+              "operator": "千代田区",
+              "website": "https://www.city.chiyoda.lg.jp/shisetsu/toshokan/parkside-tosho.html"
+            }
+          },
           {
             "recordId": "node/14337525601",
             "name": "いずみこどもプラザ",
@@ -13594,19 +14838,99 @@
               "operator": "千代田区",
               "operator:wikidata": "Q214051"
             }
+          },
+          {
+            "recordId": "node/14337531401",
+            "name": "ちよだパークサイドプラザ",
+            "coordinates": [
+              139.778781,
+              35.6991784
+            ],
+            "qid": null,
+            "tags": {
+              "amenity": "community_centre",
+              "name": "ちよだパークサイドプラザ",
+              "operator": "千代田区",
+              "operator:wikidata": "Q214051",
+              "website": "https://www.city.chiyoda.lg.jp/shisetsu/bunka/parkside.html"
+            }
+          },
+          {
+            "recordId": "node/5665860805",
+            "name": "千代田区立いずみこども園",
+            "coordinates": [
+              139.778304,
+              35.6993449
+            ],
+            "qid": null,
+            "tags": {
+              "amenity": "childcare",
+              "name": "千代田区立いずみこども園",
+              "operator": "千代田区",
+              "operator:wikidata": "Q214051",
+              "website": "https://chiyoda.schoolweb.ne.jp/1380033"
+            }
+          },
+          {
+            "recordId": "node/5746689924",
+            "name": "和泉公園（西側入口）",
+            "coordinates": [
+              139.7789316,
+              35.6988162
+            ],
+            "qid": null,
+            "tags": {
+              "amenity": "bicycle_rental",
+              "brand": "ドコモ・バイクシェア",
+              "name": "和泉公園（西側入口）",
+              "name:en": "Izumi Park(Western Entrance)",
+              "name:ja": "和泉公園（西側入口）",
+              "operator": "ドコモ・バイクシェア",
+              "operator:wikidata": "Q55533296"
+            }
+          },
+          {
+            "recordId": "way/217378904",
+            "name": "和泉公園",
+            "coordinates": [
+              139.7791959,
+              35.69904685
+            ],
+            "qid": "Q42311501",
+            "tags": {
+              "name": "和泉公園",
+              "name:en": "Izumi Park",
+              "name:ja": "和泉公園",
+              "wikidata": "Q42311501"
+            }
+          },
+          {
+            "recordId": "way/217378912",
+            "name": "千代田区立 和泉小学校",
+            "coordinates": [
+              139.77848645,
+              35.69910685000001
+            ],
+            "qid": "Q81916370",
+            "tags": {
+              "amenity": "school",
+              "name": "千代田区立 和泉小学校",
+              "name:en": "Izumi Elementary School",
+              "wikidata": "Q81916370"
+            }
           }
         ]
       },
-      "evidenceHash": "d98b25612e3749fc24414e00e431c5ba28f59a2776f6c854717b0201a092a280",
+      "evidenceHash": "07903bcf9431dfddc795bfd7d5398d5d3e87ed496cccd3d5fe7a94ed083ea9df",
       "current": "node/14337525601",
       "status": "decided",
-      "choice": "node/14337525601",
-      "method": "human",
       "human": {
         "choice": "node/14337525601",
         "editor": "Navi",
         "editedAt": "2026-11-20T04:50:26Z"
-      }
+      },
+      "choice": "node/14337525601",
+      "method": "human"
     }
   }
 }

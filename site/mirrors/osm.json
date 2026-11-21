@@ -1,5 +1,5 @@
 {
-  "version": "202611160100",
+  "version": "202611200100",
   "elements": [
     {
       "type": "node",
@@ -1026,6 +1026,7 @@
         "phone": "+81-3-5211-1571",
         "website": "https://www.tokyoshigoto.jp/",
         "wikidata": "Q11524020",
+        "wikimedia_commons": "File:東京しごとセンター.jpg",
         "wikipedia": "ja:東京しごとセンター"
       }
     },
@@ -1052,7 +1053,8 @@
         "name": "CINEMALICE",
         "name:ja_kana": "シネマリス",
         "phone": "+81-3-6803-3214",
-        "website": "https://cinemalice.theater/"
+        "website": "https://cinemalice.theater/",
+        "wikimedia_commons": "File:映画館「CINEMALICE」入口.jpg"
       }
     },
     {
@@ -1129,6 +1131,38 @@
         "opening_hours": "Mo-Sa 09:00-17:00",
         "phone": "+81332343084",
         "website": "https://www.city.chiyoda.lg.jp/koho/kosodate/jidocenter/ichiran/4bancho.html"
+      }
+    },
+    {
+      "type": "node",
+      "id": 14344607026,
+      "lon": 139.7463641,
+      "lat": 35.6971909,
+      "tags": {
+        "amenity": "school",
+        "education": "school",
+        "name": "千代田区立 富士見小学校",
+        "name:en": "Fujimi Elementary School",
+        "name:es": "Escuela primaria Fujimi",
+        "phone": "+81-3-3263-1006",
+        "website": "https://chiyoda.schoolweb.ne.jp/1310164",
+        "wikidata": "Q81916362",
+        "wikipedia": "ja:千代田区立富士見小学校"
+      }
+    },
+    {
+      "type": "node",
+      "id": 14394442841,
+      "lon": 139.7422072,
+      "lat": 35.6903081,
+      "tags": {
+        "amenity": "childcare",
+        "name": "子育てひろば あい・ぽーと麹町",
+        "operator": "NPO法人あい・ぽーとステーション",
+        "operator:type": "public",
+        "phone": "+81-3-3556-8471",
+        "website": "https://www.ai-port.jp/kojimachi/",
+        "wikimedia_commons": "File:千代田区 子育てひろば あい・ぽーと麹町.png"
       }
     },
     {
@@ -1375,7 +1409,8 @@
         "name:ja-Hira": "とうごうこうえん",
         "name:ja-Latn": "Tōgō Kōen",
         "source": "Survey",
-        "wikidata": "Q42311484"
+        "wikidata": "Q42311484",
+        "wikimedia_commons": "File:東郷元帥記念公園.jpg"
       }
     },
     {
@@ -1480,6 +1515,24 @@
         "wikidata": "Q2855971",
         "wikimedia_commons": "Category:Yūshūkan",
         "wikipedia": "ja:遊就館"
+      }
+    },
+    {
+      "type": "way",
+      "id": 144866171,
+      "center": {
+        "lon": 139.73959480000002,
+        "lat": 35.686927350000005
+      },
+      "tags": {
+        "amenity": "social_facility",
+        "building": "yes",
+        "name": "いきいきプラザ一番町",
+        "operator": "社会福祉法人カメリア会",
+        "operator:type": "public",
+        "phone": "+81-3-3265-6311",
+        "social_facility:for": "senior",
+        "source": "Bing,2007-04"
       }
     },
     {
@@ -1635,6 +1688,7 @@
         "lat": 35.6971733
       },
       "tags": {
+        "amenity": "school",
         "area": "yes",
         "name": "千代田区立 お茶の水小学校",
         "name:en": "Ochanomizu Elementary School",
@@ -1644,7 +1698,6 @@
         "opening_date": "2023-05",
         "source": "KSJ2",
         "source_ref": "http://nlftp.mlit.go.jp/ksj/jpgis/datalist/KsjTmplt-P02-v2_0.html",
-        "was:amenity": "school",
         "wikidata": "Q11405295",
         "wikipedia": "ja:千代田区立お茶の水小学校"
       }
@@ -1665,7 +1718,8 @@
         "name:ja-Hira": "きんかこうえん",
         "operator": "千代田区",
         "smoking": "no",
-        "wikidata": "Q42311499"
+        "wikidata": "Q42311499",
+        "wikimedia_commons": "File:千代田区錦華公園.jpg"
       }
     },
     {
@@ -1905,7 +1959,8 @@
       "tags": {
         "leisure": "park",
         "name": "神田児童公園",
-        "wikidata": "Q42311502"
+        "wikidata": "Q42311502",
+        "wikimedia_commons": "File:神田児童公園.jpg"
       }
     },
     {
@@ -1925,7 +1980,7 @@
         "note:ja": "国土数値情報（公共施設データ）平成19年　国土交通省",
         "source": "KSJ2",
         "source_ref": "http://nlftp.mlit.go.jp/ksj/jpgis/datalist/KsjTmplt-P02-v2_0.html",
-        "wikidata": "Q97168414",
+        "wikidata": "Q81916365",
         "wikimedia_commons": "Category:Chiyoda elementary school, Chiyoda",
         "wikipedia": "ja:千代田区立千代田小学校"
       }
@@ -2005,9 +2060,7 @@
         "name": "マーチ エキュート 神田万世橋",
         "name:en": "Maach ecute Kanda Manseibashi",
         "was:railway": "station",
-        "wikidata": "Q6751576",
-        "wikimedia_commons": "Category:Manseibashi Station",
-        "wikipedia": "ja:万世橋駅"
+        "wikimedia_commons": "Category:MAAch ecute Kanda-Manseibashi"
       }
     },
     {
