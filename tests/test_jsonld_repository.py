@@ -115,16 +115,12 @@ class JsonLdRepositoryArtifactTests(unittest.TestCase):
                     self.assertFalse(any("wam" in uri.casefold() for uri in links))
 
                     identifiers = record.get("schema:identifier", [])
-                    self.assertTrue(
-                        all(
-                            isinstance(item, dict)
-                            and item.get("@type") == "schema:PropertyValue"
-                            and item.get("schema:propertyID") == "gif-poi"
-                            for item in identifiers
-                        ),
-                        "public records may only carry gif-poi category identifiers",
+                    self.assertEqual(
+                        [],
+                        [item for item in identifiers if item.get("schema:propertyID") == "gif-poi"],
+                        "canonical records must not carry gif-poi identifiers; categories live in the published graph",
                     )
-                    self.assertNotIn("schema:additionalType", record)
+                    self.assertNotIn("schema:keywords", record, "canonical records must not carry published category references")
 
                 osm_links = [
                     uri

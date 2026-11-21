@@ -71,6 +71,8 @@ class FacLinkCommandTests(unittest.TestCase):
         root = Path(self.tmp.name)
         (root / "data").mkdir()
         (root / "data/places.jsonld").write_text(json.dumps(document(), ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+        (root / "site").mkdir()
+        (root / "site/dataset.jsonld").write_bytes(b"previous publication")
         self.root = root
 
     def fac(self, *argv):
@@ -86,6 +88,7 @@ class FacLinkCommandTests(unittest.TestCase):
         self.assertEqual(0, result.returncode, result.stdout + result.stderr)
         removed = json.loads((self.root / "data/places.jsonld").read_text())
         self.assertNotIn("https://www.lwd.tokyo/public#:~:text=a", [p["schema:url"] for p in removed["@graph"][0]["schema:subjectOf"]])
+        self.assertEqual(b"previous publication", (self.root / "site/dataset.jsonld").read_bytes())
 
     def test_add_rejects_disallowed_domain(self):
         result = self.fac("link", "add", self.tmp.name, "01900000-0000-7000-8000-000000000001", "https://example.com/page")

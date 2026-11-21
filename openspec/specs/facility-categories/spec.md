@@ -2,27 +2,38 @@
 
 ## Purpose
 
-GIF POIコード表を語彙の正本とし、OSMタグと施設名称からの翻訳規則とJev、人手で決めた施設ごとのカテゴリを確定した判断として保存します。保存済み判断だけを公開にgif-poi識別子で渡し、名称やタグの変化で判断を再審査しません。
+GIF POIコード表を語彙の正本とし、OSMタグと施設名称からの翻訳規則とJev、人手で決めた施設ごとのカテゴリを確定した判断として保存します。保存済み判断だけをカテゴリtermへの`schema:keywords`として公開し、名称やタグの変化で判断を再審査しません。
 
 ## Requirements
 
-### Requirement: Category name dictionary from the GIF POI code table
-システム SHALL デジタル庁GIFのPOIコード表から採用したカテゴリの名前辞書を、語彙文書`data/category-names.jsonld`に定義します。辞書 MUST schema.orgの`DefinedTermSet`で構成し、`@id` MUST 公開URL `https://nawashiro.github.io/chiyoda_city_main_facilities/category-names.jsonld`です。各term MUST `schema:DefinedTerm`で、`@id`は辞書のURLにGIF POIコードの4桁fragmentを付けたterm URLを持ち、GIFの分類を指す日本語の表示名を持ちます。表示名はGIFの項目名と一致する必要はありません。表示名は人が決め、GIFの分類名を基礎にします。コードが指す分類の範囲を変えません。辞書 MUST GIFへの出典や体系名の参照を含みません。出典はDatasetのmetadataで表現します。
+### Requirement: Category vocabulary source is a non-public DefinedTermSet
+システム SHALL デジタル庁GIFのPOIコード表から採用したカテゴリの語彙を、非公開ソース`data/category-vocabulary.jsonld`に定義します。語彙 MUST `schema:DefinedTermSet`と、採用したカテゴリごとの`schema:DefinedTerm`で構成します。各term MUST `urn:uuid:`の`@id`と、GIFの分類を指す日本語の`schema:name`を持ちます。term MUST HTTP URIのterm URLを持ちません（MUST NOT）。語彙ソース MUST 公開distributionとして配布されません（MUST NOT）。
 
-#### Scenario: Name dictionary is inspected
+#### Scenario: Category vocabulary source is inspected
 
-- **WHEN** 利用者が名前辞書を取得します
-- **THEN** 各termは`#4桁コード`のterm URLと日本語の表示名を持ちます
+- **WHEN** 利用者が`data/category-vocabulary.jsonld`を点検します
+- **THEN** 各termはUUIDと日本語の表示名を持ちます
 
 #### Scenario: Display name differs from the item name
 
 - **WHEN** 収録施設の実態に合わせてGIFの項目名と異なる表示名を付けます
 - **THEN** コードは採用した版の分類を指したまま、表示名だけが変わります
 
-#### Scenario: Dictionary stays a name list
+### Requirement: Category terms carry GIF-POI identifiers
+各カテゴリterm MUST GIF POIコードを表す`schema:identifier`の`schema:PropertyValue`（`propertyID`が`gif-poi`、`value`が4桁コード）を持ちます。表示名は人が決め、GIFの分類名を基礎にします。コードが指す分類の範囲を変えません。
 
-- **WHEN** 名前辞書を点検します
-- **THEN** 出典や体系名の参照は含まれません
+#### Scenario: Category term identifier is inspected
+
+- **WHEN** 利用者がカテゴリtermの`schema:identifier`を点検します
+- **THEN** `propertyID`が`gif-poi`の4桁コードを取得できます
+
+### Requirement: Category vocabulary source carries no provenance or rules
+語彙 MUST GIFへの出典URLやライセンス表示、判断のmethod、翻訳規則の根拠を含みません。出典はDatasetのmetadataで表現します。
+
+#### Scenario: Vocabulary stays a category list
+
+- **WHEN** 語彙ソースを点検します
+- **THEN** GIFへの出典URL、ライセンス表示、判断のmethod、翻訳規則の根拠を含みません
 
 #### Scenario: Adopted version is documented
 
@@ -56,12 +67,12 @@ GIF POIコード表を語彙の正本とし、OSMタグと施設名称からの�
 - **THEN** rule判断は確定せず、施設は未解決のまま残ります
 
 ### Requirement: Frozen category decisions
-システム SHALL 施設ごとのカテゴリ判断を`data/categories.json`に、`method: rule`、`method: jev`、`method: human`のいずれかで確定した判断として保存します。公開生成 MUST 保存済み判断だけを使います。判断のない施設 MUST 分類なしのrecordとして公開し続けます。判断が語彙にないコードを持つとき、検証と公開 MUST 失敗します。
+システム SHALL 施設ごとのカテゴリ判断を`data/categories.json`に、`method: rule`、`method: jev`、`method: human`のいずれかで確定した判断として保存します。公開生成 MUST 保存済み判断だけを使い、判断のコードをカテゴリtermへの`schema:keywords`として公開recordに適用します。判断のない施設 MUST 分類なしのrecordとして公開し続けます。Place record MUST `gif-poi`の`schema:identifier`を持ちません（MUST NOT）。判断が語彙にないコードを持つとき、検証と公開 MUST 失敗します。
 
 #### Scenario: Decided record keeps its category
 
 - **WHEN** 判断の保存後に公開生成を実行します
-- **THEN** recordは保存済みのカテゴリをgif-poi識別子として持ちます
+- **THEN** recordはカテゴリtermへの`schema:keywords`を持ちます
 
 #### Scenario: Undecided record stays uncategorized
 
@@ -87,12 +98,12 @@ GIF POIコード表を語彙の正本とし、OSMタグと施設名称からの�
 - **THEN** その施設のカテゴリ判断を現在の根拠で再評価します
 
 ### Requirement: Category maintenance follows the OSM update
-システム SHALL 月次更新および手動再実行の完了時に、語彙`data/category-names.jsonld`と規則`data/category-rules.json`が存在する場合、未決定および関連付けが変わった施設のカテゴリを再評価します。カテゴリ再評価の対象 MUST OSM関連付けのある施設に限ります。システム MUST 関連付け済みでカテゴリを確定できない施設をカテゴリ確認Issueに提示します。語彙または規則がない場合、システム MUST カテゴリ処理を省略し、OSM更新を継続します。
+システム SHALL 月次更新および手動再実行の完了時に、語彙`data/category-vocabulary.jsonld`と規則`data/category-rules.json`が存在する場合、未決定および関連付けが変わった施設のカテゴリを再評価します。カテゴリ再評価の対象 MUST OSM関連付けのある施設に限ります。システム MUST 関連付け済みでカテゴリを確定できない施設をカテゴリ確認Issueに提示します。語彙または規則がない場合、システム MUST カテゴリ処理を省略し、OSM更新を継続します。
 
 #### Scenario: Monthly update decides a category
 
 - **WHEN** 月次更新で未分類施設のOSM関連付けが確定する
-- **THEN** システムは規則またはJevでカテゴリ判断を記録し、公開recordにgif-poi識別子を適用します
+- **THEN** システムは規則またはJevでカテゴリ判断を記録し、公開recordにカテゴリtermへの`schema:keywords`を適用します
 
 #### Scenario: Unassociated facility is not auto-classified
 
@@ -133,12 +144,13 @@ GIF POIコード表を語彙の正本とし、OSMタグと施設名称からの�
 - **THEN** システムは失敗を報告し、判断記録を変更しません
 
 ### Requirement: Human category decisions through the CLI
-システム SHALL 専用CLIの`category`サブコマンドで人の判断を記録・取り消しできるようにします。`assign` MUST 語彙にあるPOIコードだけを受理し、`method: human`の判断を判断記録へ保存します。`clear` MUST 判断を取り消して施設を未分類へ戻します。`review` MUST ruleで確定した提案と、確定していない施設の一覧を示します。
+システム SHALL 専用CLIの`category`サブコマンドで人の判断を記録・取り消しできるようにします。`assign` MUST 語彙にあるPOIコードだけを受理し、`method: human`の判断を判断記録へ保存します。`clear` MUST 判断を取り消して施設を未分類へ戻します。`assign`と`clear` MUST place recordを変更せず、判断記録だけを更新します。公開recordへの反映はビルドが行います。`review` MUST ruleで確定した提案と、確定していない施設の一覧を示します。
 
 #### Scenario: Assign records a human decision
 
 - **WHEN** 保守者が`./fac category assign <uuid> 1499 --editor <editor>`を実行します
 - **THEN** `method: human`の判断を判断記録へ保存します
+- **AND** place recordは変更されません
 
 #### Scenario: Assign rejects unknown codes
 
@@ -149,15 +161,15 @@ GIF POIコード表を語彙の正本とし、OSMタグと施設名称からの�
 
 - **WHEN** 保守者が判断のある施設に`clear`を実行します
 - **THEN** 判断は取り消され、施設は未分類へ戻ります
+- **AND** place recordは変更されません
 
 ### Requirement: Association hold suspends category decisions
-
-システム SHALL 関連付けを保留した施設のカテゴリ判断を取り消し、保留中は規則・Jevによるカテゴリ判断とカテゴリ確認Issueへの提示を行いません。システム MUST 保留の解除後に、確定した関連付けを根拠にカテゴリを再評価できるようにします。
+システム SHALL 関連付けを保留した施設のカテゴリ判断を取り消し、保留中は規則・Jevによるカテゴリ判断とカテゴリ確認Issueへの提示を行いません。システム MUST 保留の解除後に、確定した関連付けを根拠にカテゴリを再評価できるようにします。公開recordへの反映はビルドが行います。
 
 #### Scenario: Hold withdraws the category decision
 
 - **WHEN** 保守者が施設のOSM関連付けを保留として記録します
-- **THEN** その施設のカテゴリ判断は取り消され、公開recordからgif-poi識別子が外れます
+- **THEN** その施設のカテゴリ判断は取り消され、次のビルドで公開recordから`schema:keywords`が外れます
 
 #### Scenario: Held facility is not presented
 

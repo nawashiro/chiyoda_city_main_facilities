@@ -11,20 +11,19 @@ from src.resolve_osm_candidates import osm_candidate as real_osm_candidate
 
 REPO = Path(__file__).resolve().parents[1]
 CONTEXT = {"@version": 1.1, "schema": "https://schema.org/", "rdfs": "http://www.w3.org/2000/01/rdf-schema#"}
-VOCABULARY = {
-    "@context": {"@version": 1.1, "schema": "https://schema.org/"},
-    "@type": "schema:DefinedTermSet",
-    "@id": "https://nawashiro.github.io/chiyoda_city_main_facilities/category-names.jsonld",
-    "schema:name": "テスト語彙",
-    "schema:hasDefinedTerm": [
-        {"@type": "schema:DefinedTerm",
-         "@id": "https://nawashiro.github.io/chiyoda_city_main_facilities/category-names.jsonld#1403",
-         "schema:name": "児童館（児童センター）"},
-        {"@type": "schema:DefinedTerm",
-         "@id": "https://nawashiro.github.io/chiyoda_city_main_facilities/category-names.jsonld#1499",
-         "schema:name": "その他の社会福祉施設"},
-    ],
-}
+def _vocabulary():
+    from src.facility_categories import category_set_id, category_term_id
+    terms = [{
+        "@id": category_term_id(code), "@type": "schema:DefinedTerm", "schema:name": name,
+        "schema:inDefinedTermSet": {"@id": category_set_id()},
+        "schema:identifier": {"@type": "schema:PropertyValue", "schema:propertyID": "gif-poi", "schema:value": code},
+    } for code, name in (("1403", "児童館（児童センター）"), ("1499", "その他の社会福祉施設"))]
+    return {"@context": {"@version": 1.1, "schema": "https://schema.org/"},
+            "@graph": [{"@id": category_set_id(), "@type": "schema:DefinedTermSet", "schema:name": "テスト語彙",
+                        "schema:hasDefinedTerm": [{"@id": term["@id"]} for term in terms]}, *terms]}
+
+
+VOCABULARY = _vocabulary()
 
 
 def osm_json(elements):
@@ -56,7 +55,10 @@ class AssocTests(unittest.TestCase):
         nodes = [{"type": "node", "id": 7, "lat": 35.6882993, "lon": 139.7365076,
                   "tags": {"name": "千代田区立テスト児童館", "amenity": "community_centre",
                            "website": "https://example.test/a.html", "check_date": "2026-11-03"}}]
+        (self.root / "site").mkdir()
+        (self.root / "site/dataset.jsonld").write_bytes(b"previous publication")
         self.assertEqual(0, self.run_assoc("--osm-id", "node/7", elements=lambda: nodes))
+        self.assertEqual(b"previous publication", (self.root / "site/dataset.jsonld").read_bytes())
         place = json.loads((self.root / "data/places.jsonld").read_text(encoding="utf-8"))["@graph"][0]
         self.assertEqual([f"https://www.openstreetmap.org/node/7"], place["rdfs:seeAlso"])
         self.assertEqual({"@type": "schema:GeoCoordinates", "schema:longitude": 139.7365076, "schema:latitude": 35.6882993}, place["schema:geo"])
@@ -105,14 +107,13 @@ class AssocTests(unittest.TestCase):
         self.places["@graph"] = [{
             "@id": f"urn:uuid:{self.query_id}", "@type": ["schema:Place"],
             "schema:geo": {"@type": "schema:GeoCoordinates", "schema:longitude": 139.736548, "schema:latitude": 35.688289},
-            "schema:identifier": [{"@type": "schema:PropertyValue", "schema:propertyID": "gif-poi", "schema:value": "1403"}],
             "schema:subjectOf": [barrier_free_webpage("https://walkingnavi.com/list_route.php?grp=5&no=57&lang=ja")],
             "rdfs:seeAlso": ["https://www.openstreetmap.org/node/7", "https://www.wikidata.org/entity/Q1"],
         }]
         (self.root / "data/places.jsonld").write_text(json.dumps(self.places, ensure_ascii=False), encoding="utf-8")
         (self.root / "site").mkdir()
-        (self.root / "site/places.jsonld").write_text(json.dumps(self.places, ensure_ascii=False), encoding="utf-8")
-        (self.root / "data/category-names.jsonld").write_text(json.dumps(VOCABULARY, ensure_ascii=False), encoding="utf-8")
+        (self.root / "site/places.jsonld").write_bytes(b"previous publication")
+        (self.root / "data/category-vocabulary.jsonld").write_text(json.dumps(VOCABULARY, ensure_ascii=False), encoding="utf-8")
         (self.root / "data/categories.json").write_text(json.dumps({"version": 1, "facilities": {
             self.query_id: {"category": "1403", "method": "human", "editor": "tester",
                             "editedAt": "2026-11-01T00:00:00Z", "osmId": "node/7"}}}, ensure_ascii=False), encoding="utf-8")
@@ -131,7 +132,7 @@ class AssocTests(unittest.TestCase):
         self.assertEqual("node/7", entry["previous"])
         self.assertEqual("tester", entry["human"]["editor"])
         self.assertTrue(entry["human"]["editedAt"])
-        self.assertEqual(place, json.loads((self.root / "site/places.jsonld").read_text(encoding="utf-8"))["@graph"][0])
+        self.assertEqual(b"previous publication", (self.root / "site/places.jsonld").read_bytes())
         self.assertNotIn(self.query_id, json.loads((self.root / "data/categories.json").read_text(encoding="utf-8"))["facilities"])
 
     def test_hold_requires_a_reason(self):

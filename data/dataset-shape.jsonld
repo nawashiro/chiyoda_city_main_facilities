@@ -1,0 +1,178 @@
+{
+  "@context": {
+    "@version": 1.1,
+    "schema": "https://schema.org/",
+    "sh": "http://www.w3.org/ns/shacl#"
+  },
+  "@graph": [
+    {
+      "@id": "urn:uuid:b28603f3-f70e-5bef-a778-573e1c720fd7",
+      "@type": "sh:NodeShape",
+      "sh:targetClass": {
+        "@id": "schema:Place"
+      },
+      "sh:property": [
+        {
+          "sh:path": {
+            "@id": "schema:geo"
+          },
+          "sh:minCount": 1,
+          "sh:maxCount": 1,
+          "sh:class": {
+            "@id": "schema:GeoCoordinates"
+          },
+          "sh:node": {
+            "@type": "sh:NodeShape",
+            "sh:property": [
+              {
+                "sh:path": {
+                  "@id": "schema:longitude"
+                },
+                "sh:minCount": 1
+              },
+              {
+                "sh:path": {
+                  "@id": "schema:latitude"
+                },
+                "sh:minCount": 1
+              }
+            ]
+          }
+        },
+        {
+          "sh:path": {
+            "@id": "schema:image"
+          },
+          "sh:maxCount": 1,
+          "sh:class": {
+            "@id": "schema:ImageObject"
+          },
+          "sh:node": {
+            "@type": "sh:NodeShape",
+            "sh:property": [
+              {
+                "sh:path": {
+                  "@id": "schema:contentUrl"
+                },
+                "sh:minCount": 1
+              },
+              {
+                "sh:path": {
+                  "@id": "schema:license"
+                },
+                "sh:minCount": 1
+              },
+              {
+                "sh:path": {
+                  "@id": "schema:creator"
+                },
+                "sh:maxCount": 1,
+                "sh:class": {
+                  "@id": "schema:Person"
+                },
+                "sh:node": {
+                  "@type": "sh:NodeShape",
+                  "sh:property": [
+                    {
+                      "sh:path": {
+                        "@id": "schema:name"
+                      },
+                      "sh:minCount": 1
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        },
+        {
+          "sh:path": {
+            "@id": "schema:keywords"
+          },
+          "sh:class": {
+            "@id": "schema:DefinedTerm"
+          }
+        },
+        {
+          "sh:path": {
+            "@id": "rdfs:seeAlso"
+          },
+          "sh:nodeKind": {
+            "@id": "sh:IRI"
+          }
+        }
+      ]
+    },
+    {
+      "@id": "urn:uuid:63880d3d-cfa2-5051-99b9-aaf36f03217a",
+      "@type": "sh:NodeShape",
+      "sh:targetClass": {
+        "@id": "schema:DefinedTerm"
+      },
+      "sh:property": [
+        {
+          "sh:path": {
+            "@id": "schema:name"
+          },
+          "sh:minCount": 1
+        },
+        {
+          "sh:path": {
+            "@id": "schema:inDefinedTermSet"
+          },
+          "sh:minCount": 1,
+          "sh:class": {
+            "@id": "schema:DefinedTermSet"
+          }
+        },
+        {
+          "sh:path": {
+            "@id": "schema:identifier"
+          },
+          "sh:minCount": 1,
+          "sh:class": {
+            "@id": "schema:PropertyValue"
+          },
+          "sh:node": {
+            "@type": "sh:NodeShape",
+            "sh:property": [
+              {
+                "sh:path": {
+                  "@id": "schema:propertyID"
+                },
+                "sh:hasValue": "gif-poi"
+              },
+              {
+                "sh:path": {
+                  "@id": "schema:value"
+                },
+                "sh:pattern": "^[0-9]{4}$"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "@id": "urn:uuid:ed572142-7bd9-548d-ad6c-4d37ca4fc018",
+      "@type": "sh:NodeShape",
+      "sh:targetClass": {
+        "@id": "schema:DefinedTermSet"
+      },
+      "sh:property": [
+        {
+          "sh:path": {
+            "@id": "schema:name"
+          },
+          "sh:minCount": 1
+        },
+        {
+          "sh:path": {
+            "@id": "schema:hasDefinedTerm"
+          },
+          "sh:minCount": 1
+        }
+      ]
+    }
+  ]
+}

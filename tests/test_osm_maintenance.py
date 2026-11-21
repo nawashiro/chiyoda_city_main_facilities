@@ -53,10 +53,15 @@ def ledger():
 
 
 def category_vocabulary(*codes):
-    url = 'https://nawashiro.github.io/chiyoda_city_main_facilities/category-names.jsonld'
+    from src.facility_categories import category_set_id, category_term_id
+    terms = [{
+        '@id': category_term_id(code), '@type': 'schema:DefinedTerm', 'schema:name': f'ラベル{code}',
+        'schema:inDefinedTermSet': {'@id': category_set_id()},
+        'schema:identifier': {'@type': 'schema:PropertyValue', 'schema:propertyID': 'gif-poi', 'schema:value': code},
+    } for code in codes]
     return {'@context': {'@version': 1.1, 'schema': 'https://schema.org/'},
-            '@type': 'schema:DefinedTermSet', '@id': url, 'schema:name': 'テスト語彙',
-            'schema:hasDefinedTerm': [{'@type': 'schema:DefinedTerm', '@id': f'{url}#{code}', 'schema:name': f'ラベル{code}'} for code in codes]}
+            '@graph': [{'@id': category_set_id(), '@type': 'schema:DefinedTermSet', 'schema:name': 'テスト語彙',
+                        'schema:hasDefinedTerm': [{'@id': term['@id']} for term in terms]}, *terms]}
 
 
 def judgement(choice='node/1', confidence=.95):
@@ -550,7 +555,7 @@ class CategoryMaintenanceTests(unittest.TestCase):
         payload = (root/'imports/openstreetmap/raw.json').read_bytes()
         _write_json(root/'imports/openstreetmap/retrieval.json', {'rawSha256': hashlib.sha256(payload).hexdigest(), 'rawVersion': '20261027'})
         if vocabulary:
-            _write_json(root/'data/category-names.jsonld', category_vocabulary('1601'))
+            _write_json(root/'data/category-vocabulary.jsonld', category_vocabulary('1601'))
             _write_json(root/'data/category-rules.json', {'version': 1, 'rules': [{'id': 'hospital-tag', 'category': '1601', 'tags': {'amenity': 'hospital'}}]})
         return root
 
@@ -603,7 +608,7 @@ class CategoryMaintenanceTests(unittest.TestCase):
             decisions = json.loads((root/'data/categories.json').read_text())
             self.assertEqual({'category': '1601', 'method': 'rule', 'osmId': 'node/1'}, decisions['facilities'][A])
             updated = json.loads((root/'data/places.jsonld').read_text())
-            self.assertEqual([{'@type': 'schema:PropertyValue', 'schema:propertyID': 'gif-poi', 'schema:value': '1601'}], updated['@graph'][0]['schema:identifier'])
+            self.assertNotIn('schema:identifier', updated['@graph'][0])
 
     def test_update_skips_category_maintenance_without_vocabulary(self):
         with tempfile.TemporaryDirectory() as directory:
@@ -666,10 +671,9 @@ class IntegrationTests(unittest.TestCase):
     def test_update_keeps_a_hold_unassociated_and_uncategorized(self):
         with tempfile.TemporaryDirectory() as directory:
             root = self.setup_root(directory)
-            _write_json(root/'data/category-names.jsonld', category_vocabulary('1601'))
+            _write_json(root/'data/category-vocabulary.jsonld', category_vocabulary('1601'))
             _write_json(root/'data/category-rules.json', {'version': 1, 'rules': []})
             linked = place(osm='node/1')
-            linked['schema:identifier'] = [{'@type': 'schema:PropertyValue', 'schema:propertyID': 'gif-poi', 'schema:value': '1601'}]
             _write_json(root/'data/places.jsonld', document(linked, place(B)))
             _write_json(root/'data/osm-decisions.json', {'version': 1, 'facilities': {A: {
                 'status': 'hold', 'reason': '実地調査待ち', 'previous': 'node/1',
@@ -710,7 +714,7 @@ class IntegrationTests(unittest.TestCase):
             self.assertIn('rdfs:seeAlso', public['@graph'][0])
             self.assertNotIn('rdfs:seeAlso', public['@graph'][1])
             self.assertNotIn('facilities', public)
-            self.assertEqual({'mirrors', 'places.jsonld'}, {p.name for p in (root/'site').iterdir()})
+            self.assertEqual({'mirrors', 'dataset.jsonld'}, {p.name for p in (root/'site').iterdir()})
             # Human application uses only the newly confirmed facility in latest data.
             public['@graph'][0]['schema:geo']['schema:longitude'] = 139.749
             _write_json(root/'data/places.jsonld', public)

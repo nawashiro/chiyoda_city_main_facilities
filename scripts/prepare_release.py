@@ -16,13 +16,11 @@ _REPOSITORY_ROOT = Path(__file__).resolve().parents[1]
 if str(_REPOSITORY_ROOT) not in sys.path:
     sys.path.insert(0, str(_REPOSITORY_ROOT))
 
-from src.facility_categories import validate_vocabulary
 from src.facility_data import validate_published_document
 
 
 _ASSETS = (
-    ("places.jsonld", "places-{}.jsonld"),
-    ("category-names.jsonld", "category-names-{}.jsonld"),
+    ("dataset.jsonld", "dataset-{}.jsonld"),
     ("mirrors/osm.json", "osm-{}.json"),
     ("mirrors/wikidata.json", "wikidata-{}.json"),
 )
@@ -57,7 +55,6 @@ def main(argv: list[str] | None = None) -> int:
     try:
         payloads = [(template, (site_dir / source).read_bytes()) for source, template in _ASSETS]
         validate_published_document(json.loads(payloads[0][1]))
-        validate_vocabulary(json.loads(payloads[1][1]))
     except (OSError, UnicodeDecodeError, json.JSONDecodeError, TypeError, ValueError) as error:
         print(f"ERROR: unable to prepare release assets: {error}", file=sys.stderr)
         return 1

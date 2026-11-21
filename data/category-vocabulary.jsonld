@@ -1,0 +1,367 @@
+{
+  "@context": {
+    "@version": 1.1,
+    "schema": "https://schema.org/"
+  },
+  "@graph": [
+    {
+      "@id": "urn:uuid:d9ec0cbf-db5a-5a98-931c-770d58a40f33",
+      "@type": "schema:DefinedTermSet",
+      "schema:name": "千代田区区民向け施設データのカテゴリ語彙",
+      "schema:hasDefinedTerm": [
+        {
+          "@id": "urn:uuid:dcd140ab-7b88-56d2-972d-50be8464230c"
+        },
+        {
+          "@id": "urn:uuid:316c6e1f-35e6-517e-8e44-c3cec7b9857d"
+        },
+        {
+          "@id": "urn:uuid:5d8de05b-d5af-5b3a-8b8a-a896967ce25e"
+        },
+        {
+          "@id": "urn:uuid:33024dbb-56ed-5a40-b656-5d3b2b68b60e"
+        },
+        {
+          "@id": "urn:uuid:2094c46c-6751-5560-9c63-e6063c39292a"
+        },
+        {
+          "@id": "urn:uuid:0aff2a95-f2b4-5584-82d1-63b8770c80c7"
+        },
+        {
+          "@id": "urn:uuid:48dbc3b1-117c-5dc9-8029-20c3320f7781"
+        },
+        {
+          "@id": "urn:uuid:d28e0a53-bfb4-53ae-9b4f-eef2ea7881be"
+        },
+        {
+          "@id": "urn:uuid:2205a59f-200d-5346-8bd6-077985e0f999"
+        },
+        {
+          "@id": "urn:uuid:1249bae9-f68e-59e8-bfd8-d85a76f4b54d"
+        },
+        {
+          "@id": "urn:uuid:511342cf-c380-50e6-b0c6-5c3e698d5d2f"
+        },
+        {
+          "@id": "urn:uuid:d4d8074f-f7d1-5fab-9df5-d751e3e1cc21"
+        },
+        {
+          "@id": "urn:uuid:e5aaf3dd-4a63-5ee5-9f7b-8b07013c4d1b"
+        },
+        {
+          "@id": "urn:uuid:c8fe25cb-a169-51d1-bf7c-7f1e28e96c5c"
+        },
+        {
+          "@id": "urn:uuid:c19296b9-7bcc-5d7b-b714-e7b3adc48f88"
+        },
+        {
+          "@id": "urn:uuid:930b048c-4b4d-516e-99db-0859db653b21"
+        },
+        {
+          "@id": "urn:uuid:d86ec5df-4fc5-5aa7-aff3-3bfab4d6044e"
+        },
+        {
+          "@id": "urn:uuid:6d30ebca-db97-57f1-8b90-5472f940a730"
+        },
+        {
+          "@id": "urn:uuid:5e39eca0-e02b-5366-bacd-0ef8f65dfb9c"
+        },
+        {
+          "@id": "urn:uuid:ba0b5b31-918f-5fe7-84ee-8dd87232975a"
+        },
+        {
+          "@id": "urn:uuid:8e222f92-c9b4-5cf6-866a-6175b120f29a"
+        },
+        {
+          "@id": "urn:uuid:4524d665-f076-549d-b0fe-16e5462c2730"
+        }
+      ]
+    },
+    {
+      "@id": "urn:uuid:dcd140ab-7b88-56d2-972d-50be8464230c",
+      "@type": "schema:DefinedTerm",
+      "schema:name": "寺院",
+      "schema:inDefinedTermSet": {
+        "@id": "urn:uuid:d9ec0cbf-db5a-5a98-931c-770d58a40f33"
+      },
+      "schema:identifier": {
+        "@type": "schema:PropertyValue",
+        "schema:propertyID": "gif-poi",
+        "schema:value": "0702"
+      }
+    },
+    {
+      "@id": "urn:uuid:316c6e1f-35e6-517e-8e44-c3cec7b9857d",
+      "@type": "schema:DefinedTerm",
+      "schema:name": "教会",
+      "schema:inDefinedTermSet": {
+        "@id": "urn:uuid:d9ec0cbf-db5a-5a98-931c-770d58a40f33"
+      },
+      "schema:identifier": {
+        "@type": "schema:PropertyValue",
+        "schema:propertyID": "gif-poi",
+        "schema:value": "0703"
+      }
+    },
+    {
+      "@id": "urn:uuid:5d8de05b-d5af-5b3a-8b8a-a896967ce25e",
+      "@type": "schema:DefinedTerm",
+      "schema:name": "博物館",
+      "schema:inDefinedTermSet": {
+        "@id": "urn:uuid:d9ec0cbf-db5a-5a98-931c-770d58a40f33"
+      },
+      "schema:identifier": {
+        "@type": "schema:PropertyValue",
+        "schema:propertyID": "gif-poi",
+        "schema:value": "0801"
+      }
+    },
+    {
+      "@id": "urn:uuid:33024dbb-56ed-5a40-b656-5d3b2b68b60e",
+      "@type": "schema:DefinedTerm",
+      "schema:name": "美術館",
+      "schema:inDefinedTermSet": {
+        "@id": "urn:uuid:d9ec0cbf-db5a-5a98-931c-770d58a40f33"
+      },
+      "schema:identifier": {
+        "@type": "schema:PropertyValue",
+        "schema:propertyID": "gif-poi",
+        "schema:value": "0802"
+      }
+    },
+    {
+      "@id": "urn:uuid:2094c46c-6751-5560-9c63-e6063c39292a",
+      "@type": "schema:DefinedTerm",
+      "schema:name": "記念・資料館",
+      "schema:inDefinedTermSet": {
+        "@id": "urn:uuid:d9ec0cbf-db5a-5a98-931c-770d58a40f33"
+      },
+      "schema:identifier": {
+        "@type": "schema:PropertyValue",
+        "schema:propertyID": "gif-poi",
+        "schema:value": "0803"
+      }
+    },
+    {
+      "@id": "urn:uuid:0aff2a95-f2b4-5584-82d1-63b8770c80c7",
+      "@type": "schema:DefinedTerm",
+      "schema:name": "銭湯",
+      "schema:inDefinedTermSet": {
+        "@id": "urn:uuid:d9ec0cbf-db5a-5a98-931c-770d58a40f33"
+      },
+      "schema:identifier": {
+        "@type": "schema:PropertyValue",
+        "schema:propertyID": "gif-poi",
+        "schema:value": "0903"
+      }
+    },
+    {
+      "@id": "urn:uuid:48dbc3b1-117c-5dc9-8029-20c3320f7781",
+      "@type": "schema:DefinedTerm",
+      "schema:name": "都市公園",
+      "schema:inDefinedTermSet": {
+        "@id": "urn:uuid:d9ec0cbf-db5a-5a98-931c-770d58a40f33"
+      },
+      "schema:identifier": {
+        "@type": "schema:PropertyValue",
+        "schema:propertyID": "gif-poi",
+        "schema:value": "1003"
+      }
+    },
+    {
+      "@id": "urn:uuid:d28e0a53-bfb4-53ae-9b4f-eef2ea7881be",
+      "@type": "schema:DefinedTerm",
+      "schema:name": "庭園",
+      "schema:inDefinedTermSet": {
+        "@id": "urn:uuid:d9ec0cbf-db5a-5a98-931c-770d58a40f33"
+      },
+      "schema:identifier": {
+        "@type": "schema:PropertyValue",
+        "schema:propertyID": "gif-poi",
+        "schema:value": "1004"
+      }
+    },
+    {
+      "@id": "urn:uuid:2205a59f-200d-5346-8bd6-077985e0f999",
+      "@type": "schema:DefinedTerm",
+      "schema:name": "映画館",
+      "schema:inDefinedTermSet": {
+        "@id": "urn:uuid:d9ec0cbf-db5a-5a98-931c-770d58a40f33"
+      },
+      "schema:identifier": {
+        "@type": "schema:PropertyValue",
+        "schema:propertyID": "gif-poi",
+        "schema:value": "1011"
+      }
+    },
+    {
+      "@id": "urn:uuid:1249bae9-f68e-59e8-bfd8-d85a76f4b54d",
+      "@type": "schema:DefinedTerm",
+      "schema:name": "職業安定所",
+      "schema:inDefinedTermSet": {
+        "@id": "urn:uuid:d9ec0cbf-db5a-5a98-931c-770d58a40f33"
+      },
+      "schema:identifier": {
+        "@type": "schema:PropertyValue",
+        "schema:propertyID": "gif-poi",
+        "schema:value": "1219"
+      }
+    },
+    {
+      "@id": "urn:uuid:511342cf-c380-50e6-b0c6-5c3e698d5d2f",
+      "@type": "schema:DefinedTerm",
+      "schema:name": "市役所・東京都の区役所",
+      "schema:inDefinedTermSet": {
+        "@id": "urn:uuid:d9ec0cbf-db5a-5a98-931c-770d58a40f33"
+      },
+      "schema:identifier": {
+        "@type": "schema:PropertyValue",
+        "schema:propertyID": "gif-poi",
+        "schema:value": "1302"
+      }
+    },
+    {
+      "@id": "urn:uuid:d4d8074f-f7d1-5fab-9df5-d751e3e1cc21",
+      "@type": "schema:DefinedTerm",
+      "schema:name": "役場支所及び出張所",
+      "schema:inDefinedTermSet": {
+        "@id": "urn:uuid:d9ec0cbf-db5a-5a98-931c-770d58a40f33"
+      },
+      "schema:identifier": {
+        "@type": "schema:PropertyValue",
+        "schema:propertyID": "gif-poi",
+        "schema:value": "1304"
+      }
+    },
+    {
+      "@id": "urn:uuid:e5aaf3dd-4a63-5ee5-9f7b-8b07013c4d1b",
+      "@type": "schema:DefinedTerm",
+      "schema:name": "産業支援施設",
+      "schema:inDefinedTermSet": {
+        "@id": "urn:uuid:d9ec0cbf-db5a-5a98-931c-770d58a40f33"
+      },
+      "schema:identifier": {
+        "@type": "schema:PropertyValue",
+        "schema:propertyID": "gif-poi",
+        "schema:value": "1306"
+      }
+    },
+    {
+      "@id": "urn:uuid:c8fe25cb-a169-51d1-bf7c-7f1e28e96c5c",
+      "@type": "schema:DefinedTerm",
+      "schema:name": "公民館",
+      "schema:inDefinedTermSet": {
+        "@id": "urn:uuid:d9ec0cbf-db5a-5a98-931c-770d58a40f33"
+      },
+      "schema:identifier": {
+        "@type": "schema:PropertyValue",
+        "schema:propertyID": "gif-poi",
+        "schema:value": "1307"
+      }
+    },
+    {
+      "@id": "urn:uuid:c19296b9-7bcc-5d7b-b714-e7b3adc48f88",
+      "@type": "schema:DefinedTerm",
+      "schema:name": "保育所・託児所",
+      "schema:inDefinedTermSet": {
+        "@id": "urn:uuid:d9ec0cbf-db5a-5a98-931c-770d58a40f33"
+      },
+      "schema:identifier": {
+        "@type": "schema:PropertyValue",
+        "schema:propertyID": "gif-poi",
+        "schema:value": "1402"
+      }
+    },
+    {
+      "@id": "urn:uuid:930b048c-4b4d-516e-99db-0859db653b21",
+      "@type": "schema:DefinedTerm",
+      "schema:name": "児童館（児童センター）",
+      "schema:inDefinedTermSet": {
+        "@id": "urn:uuid:d9ec0cbf-db5a-5a98-931c-770d58a40f33"
+      },
+      "schema:identifier": {
+        "@type": "schema:PropertyValue",
+        "schema:propertyID": "gif-poi",
+        "schema:value": "1403"
+      }
+    },
+    {
+      "@id": "urn:uuid:d86ec5df-4fc5-5aa7-aff3-3bfab4d6044e",
+      "@type": "schema:DefinedTerm",
+      "schema:name": "その他の社会福祉施設",
+      "schema:inDefinedTermSet": {
+        "@id": "urn:uuid:d9ec0cbf-db5a-5a98-931c-770d58a40f33"
+      },
+      "schema:identifier": {
+        "@type": "schema:PropertyValue",
+        "schema:propertyID": "gif-poi",
+        "schema:value": "1499"
+      }
+    },
+    {
+      "@id": "urn:uuid:6d30ebca-db97-57f1-8b90-5472f940a730",
+      "@type": "schema:DefinedTerm",
+      "schema:name": "小学校",
+      "schema:inDefinedTermSet": {
+        "@id": "urn:uuid:d9ec0cbf-db5a-5a98-931c-770d58a40f33"
+      },
+      "schema:identifier": {
+        "@type": "schema:PropertyValue",
+        "schema:propertyID": "gif-poi",
+        "schema:value": "1503"
+      }
+    },
+    {
+      "@id": "urn:uuid:5e39eca0-e02b-5366-bacd-0ef8f65dfb9c",
+      "@type": "schema:DefinedTerm",
+      "schema:name": "図書館",
+      "schema:inDefinedTermSet": {
+        "@id": "urn:uuid:d9ec0cbf-db5a-5a98-931c-770d58a40f33"
+      },
+      "schema:identifier": {
+        "@type": "schema:PropertyValue",
+        "schema:propertyID": "gif-poi",
+        "schema:value": "1512"
+      }
+    },
+    {
+      "@id": "urn:uuid:ba0b5b31-918f-5fe7-84ee-8dd87232975a",
+      "@type": "schema:DefinedTerm",
+      "schema:name": "病院",
+      "schema:inDefinedTermSet": {
+        "@id": "urn:uuid:d9ec0cbf-db5a-5a98-931c-770d58a40f33"
+      },
+      "schema:identifier": {
+        "@type": "schema:PropertyValue",
+        "schema:propertyID": "gif-poi",
+        "schema:value": "1601"
+      }
+    },
+    {
+      "@id": "urn:uuid:8e222f92-c9b4-5cf6-866a-6175b120f29a",
+      "@type": "schema:DefinedTerm",
+      "schema:name": "保健所",
+      "schema:inDefinedTermSet": {
+        "@id": "urn:uuid:d9ec0cbf-db5a-5a98-931c-770d58a40f33"
+      },
+      "schema:identifier": {
+        "@type": "schema:PropertyValue",
+        "schema:propertyID": "gif-poi",
+        "schema:value": "1606"
+      }
+    },
+    {
+      "@id": "urn:uuid:4524d665-f076-549d-b0fe-16e5462c2730",
+      "@type": "schema:DefinedTerm",
+      "schema:name": "商業施設",
+      "schema:inDefinedTermSet": {
+        "@id": "urn:uuid:d9ec0cbf-db5a-5a98-931c-770d58a40f33"
+      },
+      "schema:identifier": {
+        "@type": "schema:PropertyValue",
+        "schema:propertyID": "gif-poi",
+        "schema:value": "2603"
+      }
+    }
+  ]
+}

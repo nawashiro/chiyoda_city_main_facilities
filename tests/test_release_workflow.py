@@ -51,7 +51,7 @@ class ReleaseWorkflowTests(unittest.TestCase):
             "workflow must use a GitHub Release upload action",
         )
 
-        for asset_marker in ("places-", "category-names-", "osm-", "wikidata-"):
+        for asset_marker in ("dataset-", "osm-", "wikidata-"):
             with self.subTest(asset_marker=asset_marker):
                 self.assertIn(asset_marker, workflow)
         self.assertIn("files: release/*", workflow)
@@ -63,6 +63,11 @@ class ReleaseWorkflowTests(unittest.TestCase):
             (ROOT / ".github/workflows/release-jsonld.yml").exists(),
             "the legacy release workflow must be removed",
         )
+
+    def test_update_workflow_validates_the_dataset_graph(self):
+        workflow = (ROOT / ".github/workflows/update-osm.yml").read_text(encoding="utf-8")
+        self.assertIn("jsonld-validate --published site/dataset.jsonld", workflow)
+        self.assertNotIn("site/places.jsonld", workflow)
 
     def _workflow_step_containing(self, workflow, marker):
         lines = workflow.splitlines()
@@ -105,11 +110,9 @@ class PrepareReleaseTests(unittest.TestCase):
         self.assertTrue(script.is_file(), f"missing release preparation script: {script}")
         self.assertTrue(canonical.is_file(), f"missing canonical JSON-LD source: {canonical}")
         canonical_bytes = canonical.read_bytes()
-        vocabulary_bytes = (ROOT / "data/category-names.jsonld").read_bytes()
         version = "2026.11.14"
         expected = {
-            "places-2026.11.14.jsonld": canonical_bytes,
-            "category-names-2026.11.14.jsonld": vocabulary_bytes,
+            "dataset-2026.11.14.jsonld": canonical_bytes,
             "osm-2026.11.14.json": b'{"elements": []}',
             "wikidata-2026.11.14.json": b'{"entities": {}}',
         }
@@ -118,8 +121,7 @@ class PrepareReleaseTests(unittest.TestCase):
             temporary_root = Path(temporary_directory)
             site_dir = temporary_root / "site"
             (site_dir / "mirrors").mkdir(parents=True)
-            (site_dir / "places.jsonld").write_bytes(canonical_bytes)
-            (site_dir / "category-names.jsonld").write_bytes(vocabulary_bytes)
+            (site_dir / "dataset.jsonld").write_bytes(canonical_bytes)
             (site_dir / "mirrors/osm.json").write_bytes(expected["osm-2026.11.14.json"])
             (site_dir / "mirrors/wikidata.json").write_bytes(
                 expected["wikidata-2026.11.14.json"]
@@ -131,7 +133,7 @@ class PrepareReleaseTests(unittest.TestCase):
             outputs = sorted(path for path in output_dir.iterdir() if path.is_file())
             self.assertEqual(
                 sorted(expected), [path.name for path in outputs],
-                "release must prepare four versioned assets",
+                "release must prepare three versioned assets",
             )
             for name, payload in expected.items():
                 self.assertEqual(payload, (output_dir / name).read_bytes(), name)
@@ -143,7 +145,7 @@ class PrepareReleaseTests(unittest.TestCase):
             temporary_root = Path(temporary_directory)
             site_dir = temporary_root / "site"
             (site_dir / "mirrors").mkdir(parents=True)
-            (site_dir / "places.jsonld").write_bytes(
+            (site_dir / "dataset.jsonld").write_bytes(
                 (ROOT / "data/places.jsonld").read_bytes()
             )
             completed = self._run_prepare(site_dir, temporary_root / "release", "×invalid")
@@ -156,7 +158,7 @@ class PrepareReleaseTests(unittest.TestCase):
             temporary_root = Path(temporary_directory)
             site_dir = temporary_root / "site"
             (site_dir / "mirrors").mkdir(parents=True)
-            (site_dir / "places.jsonld").write_bytes(b"{}")
+            (site_dir / "dataset.jsonld").write_bytes(b"{}")
             (site_dir / "mirrors/osm.json").write_bytes(b"{}")
             (site_dir / "mirrors/wikidata.json").write_bytes(b"{}")
             output_dir = temporary_root / "release"

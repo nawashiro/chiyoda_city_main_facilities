@@ -16,13 +16,13 @@ OpenStreetMapの取得、施設の照合、確定分の反映、GitHub Pagesへ�
 
 データ変更の検証は、`validate.yml`がPull Requestとmainへのpushで実行します。
 
-GitHub Pagesは`site/`の配布物を、GitHub Releasesは同じコミットのビルドから`places-<版>.jsonld`、`osm-<版>.json`、`wikidata-<版>.json`を配布します。形式と関連参照は[データ契約](docs/reference/data-contracts.md)、再利用条件は[出典とライセンス](docs/reference/sources-and-licenses.md)を参照してください。
+GitHub Pagesは`site/dataset.jsonld`と両ミラーを配布します。GitHub Releasesは同じコミットのビルドから`dataset-<版>.jsonld`、`osm-<版>.json`、`wikidata-<版>.json`を配布します。形式と関連参照は[データ契約](docs/reference/data-contracts.md)、再利用条件は[出典とライセンス](docs/reference/sources-and-licenses.md)を参照してください。
 
 ## リポジトリの構成
 
 | 場所 | 内容 |
 | --- | --- |
-| `data/` | 施設の正本`places.jsonld`、判断記録`osm-decisions.json`、更新元`sources.json` |
+| `data/` | 施設の正本`places.jsonld`、カテゴリ語彙`category-vocabulary.jsonld`、record形状`dataset-shape.jsonld`、カテゴリ判断`categories.json`、OSM判断`osm-decisions.json`、更新元`sources.json` |
 | `imports/` | OSMの取得元・バージョン・ハッシュの記録 |
 | `inputs/` | 検索対象`facilities.json`（人が編集） |
 | `site/` | GitHub Pagesの配布物 |

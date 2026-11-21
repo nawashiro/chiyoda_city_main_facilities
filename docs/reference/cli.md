@@ -6,9 +6,19 @@
 
 ```sh
 ./fac jsonld-validate data/places.jsonld
+./fac jsonld-validate --published site/dataset.jsonld
+./fac jsonld-validate --vocabulary data/category-vocabulary.jsonld
 ```
 
-成功時、コマンドは出力しません。
+引数なしは施設の正本、`--published`はカテゴリ語彙とrecord形状を含む公開グラフ、`--vocabulary`は非公開のカテゴリ語彙ソースを検証します。成功時、コマンドは出力しません。
+
+## 公開物をビルドする
+
+```sh
+python3 -m src.facility_data build .
+```
+
+正本`data/places.jsonld`、カテゴリ語彙、形状、判断記録から`site/dataset.jsonld`を合成します。正本は変更しません。公開recordへのカテゴリ反映と画像の付与はこのビルドで行います。
 
 ## 検索入力を確認する
 
@@ -44,7 +54,7 @@
 ./fac in rm . SEARCH_ID
 ```
 
-`in rm` は `SEARCH_ID` の検索入力を `queries` から取り除き、同じIDのPlace recordを `data/places.jsonld` と `site/places.jsonld` から、判断記録を `data/osm-decisions.json` からも取り除きます。除去された施設を参照する外部のURIは無効になりますが、過去の公開版はGitHub Releaseの版固定スナップショットで引き続き取得できます。
+`in rm` は `SEARCH_ID` の検索入力を `queries` から取り除き、同じIDのPlace recordを `data/places.jsonld` から、判断記録を `data/osm-decisions.json` からも取り除きます。公開物は次のビルドで更新します。除去された施設を参照する外部のURIは無効になりますが、過去の公開版はGitHub Releaseの版固定スナップショットで引き続き取得できます。
 
 ## 実地調査の関連付けを反映する
 
@@ -56,7 +66,7 @@
 
 `assoc` は実地調査で確定したOSM要素を人の判断として正本に反映します。OSM APIから要素の名称・座標・タグを取得し、確認Issueと同じ根拠として`data/osm-decisions.json`へ保存し、`data/places.jsonld`へ参照と座標を適用します。`--choice none`は「該当なし」を記録し、既存のOSM参照を解除します。
 
-`--hold`は実地調査を待つ保留を記録します。`--reason`を必須とし、OSMとWikidataの参照を解除してUUID・座標・既存の`schema:subjectOf`を残し、カテゴリ判断を取り消します。保留中は月次更新の関連付け再評価、Jev、確認Issueの対象になりません。解除は`--osm-id`または`--choice none`で行います。
+`--hold`は実地調査を待つ保留を記録します。`--reason`を必須とし、OSMとWikidataの参照を解除してUUID・座標・既存の`schema:subjectOf`を残し、カテゴリ判断を取り消します。保留中は月次更新の関連付け再評価、Jev、確認Issueの対象になりません。解除は`--osm-id`または`--choice none`で行います。公開物は次のビルドで更新します。
 
 編集者は`--editor NAME`を指定するか、リポジトリのgit `user.name`から取ります。
 
@@ -76,7 +86,7 @@
 ./fac category assign . SEARCH_ID POI_CODE --editor NAME
 ```
 
-`assign`は、語彙`data/category-names.jsonld`にある4桁のPOIコードだけを受け付けます。判断は`method: human`として`data/categories.json`へ保存し、`data/places.jsonld`と、あれば`site/places.jsonld`のrecordへ`gif-poi`識別子として適用します。placeのない検索入力には記録できないため、先にOSMの関連付けを確定してください。
+`assign`は、語彙`data/category-vocabulary.jsonld`にある4桁のPOIコードだけを受け付けます。判断は`method: human`として`data/categories.json`へ保存します。place recordは変更せず、公開recordへの`schema:keywords`の反映はビルドが行います。placeのない検索入力には記録できないため、先にOSMの関連付けを確定してください。
 
 編集者は`--editor NAME`を指定するか、リポジトリのgit `user.name`から取ります。
 
@@ -86,7 +96,7 @@
 ./fac category clear . SEARCH_ID
 ```
 
-`clear`は判断を取り消し、施設を未分類へ戻します。
+`clear`は判断を取り消し、施設を未分類へ戻します。place recordは変更せず、公開recordは次のビルドで未分類になります。
 
 ## 未決定のカテゴリを再評価する
 
@@ -95,7 +105,7 @@
 ./fac category refresh . --present
 ```
 
-`refresh`は規則`data/category-rules.json`で、OSM関連付けのある未決定施設と、関連付けが変わった施設だけを再評価します。関連付けのない検索入力は未分類のままです。環境変数`TYPESAFE_API_KEY`があれば、規則で決まらない施設をJevで判定します。`--present`は、カテゴリを確定できない施設をGitHubのカテゴリ確認Issueに提示し、`GITHUB_REPOSITORY`と`GH_TOKEN`が必要です。
+`refresh`は規則`data/category-rules.json`で、OSM関連付けのある未決定施設と、関連付けが変わった施設だけを再評価します。関連付けのない検索入力は未分類のままです。環境変数`TYPESAFE_API_KEY`があれば、規則で決まらない施設をJevで判定します。`--present`は、カテゴリを確定できない施設をGitHubのカテゴリ確認Issueに提示し、`GITHUB_REPOSITORY`と`GH_TOKEN`が必要です。公開recordへの反映はビルドが行います。
 
 ## カテゴリの反映を検証する
 
@@ -104,7 +114,7 @@
 ./fac category review .
 ```
 
-`jsonld-validate`は、`gif-poi`識別子が語彙にある4桁のPOIコードかを検証します。`category review`は、確定した判断、未分類の施設、保留中の施設を一覧で示します。
+`jsonld-validate`は、正本に`gif-poi`識別子が残っていないこと、公開recordの`schema:keywords`が語彙のtermを指すこと、カテゴリtermが名前と`gif-poi`識別子を持つことを検証します。`category review`は、確定した判断、未分類の施設、保留中の施設を一覧で示します。
 
 ## 保存済み判断を再提示する
 

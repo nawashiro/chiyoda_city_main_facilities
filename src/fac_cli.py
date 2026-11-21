@@ -41,23 +41,18 @@ def _hold(root: Path, query_id: str, reason: str | None, editor: str | None) -> 
     ledger = copy.deepcopy(ledger)
     ledger["facilities"][query_id] = entry
     place.pop("rdfs:seeAlso", None)
-    codes = None
     categories_path = root / "data/categories.json"
-    if categories_path.exists() and (root / "data/category-names.jsonld").exists():
+    if categories_path.exists() and (root / "data/category-vocabulary.jsonld").exists():
         codes = facility_categories.load_vocabulary(root)
         categories = _read_json(categories_path)
         issues = facility_categories.validate_decisions(categories, codes)
         if issues:
             raise ValueError("; ".join(issues))
         categories["facilities"].pop(query_id, None)
-        facility_categories.apply_categories(document, categories, codes)
         _write_json(categories_path, categories)
-    validate_jsonld_document(document, category_codes=set(codes) if codes else None)
+    validate_jsonld_document(document)
     _write_json(root / "data/osm-decisions.json", ledger)
     _write_json(root / "data/places.jsonld", document)
-    published = root / "site/places.jsonld"
-    if published.is_file():
-        _write_json(published, document)
 
 
 def _documents(root:Path) -> list[tuple[Path,dict[str,Any]]]:
@@ -71,7 +66,7 @@ def _documents(root:Path) -> list[tuple[Path,dict[str,Any]]]:
 def main(argv:list[str]|None=None)->int:
     parser=argparse.ArgumentParser(prog="fac",description="Maintain canonical JSON-LD facility data")
     subs=parser.add_subparsers(dest="command",required=True)
-    validate=subs.add_parser("jsonld-validate"); validate.add_argument("path"); validate.add_argument("--published",action="store_true",help="validate the published distribution, which may carry derived schema:image")
+    validate=subs.add_parser("jsonld-validate"); validate.add_argument("path"); validate.add_argument("--published",action="store_true",help="validate the published dataset graph, which may carry derived schema:image, categories and shapes"); validate.add_argument("--vocabulary",action="store_true",help="validate the non-public category vocabulary source")
     inp=subs.add_parser("in",help="maintain OSM search inputs"); commands=inp.add_subparsers(dest="input",required=True)
     for name in ("ls","get","add","set","rm"):
         p=commands.add_parser(name); p.add_argument("root",nargs="?",default=".")
@@ -115,18 +110,11 @@ def main(argv:list[str]|None=None)->int:
     try:
         if args.command=="jsonld-validate":
             document=_read(Path(args.path))
-            if document.get("@type")=="schema:DefinedTermSet":
+            if args.vocabulary:
                 from src.facility_categories import validate_vocabulary
                 validate_vocabulary(document)
                 return 0
-            codes=None
-            for parent in [Path(args.path).resolve(), *Path(args.path).resolve().parents]:
-                candidate=parent/"data/category-names.jsonld"
-                if candidate.exists():
-                    from src.facility_categories import load_vocabulary
-                    codes=set(load_vocabulary(parent))
-                    break
-            (validate_published_document if args.published else validate_jsonld_document)(document, category_codes=codes)
+            (validate_published_document if args.published else validate_jsonld_document)(document)
             return 0
         if args.command=="category":
             root=Path(args.root)
@@ -180,8 +168,6 @@ def main(argv:list[str]|None=None)->int:
             else: place.pop("schema:subjectOf",None)
             validate_jsonld_document(document)
             _write_json(places_path,document)
-            published=root/"site/places.jsonld"
-            if published.is_file(): _write_json(published,document)
             return 0
         if args.command=="assoc":
             root=Path(args.root)
@@ -235,13 +221,11 @@ def main(argv:list[str]|None=None)->int:
             places["@graph"]=[p for p in places["@graph"] if p["@id"]!=identifier]
             validate_jsonld_document(places)
             _write_json(root/"data/places.jsonld",places)
-            published=root/"site/places.jsonld"
-            if published.is_file(): _write_json(published,places)
             ledger=_read_json(root/"data/osm-decisions.json")
             if ledger.get("version")!=1 or not isinstance(ledger.get("facilities"),dict): raise ValueError("invalid OSM decision ledger")
             ledger["facilities"].pop(query["id"],None)
             _write_json(root/"data/osm-decisions.json",ledger)
-            if (root/"data/categories.json").exists() and (root/"data/category-names.jsonld").exists():
+            if (root/"data/categories.json").exists() and (root/"data/category-vocabulary.jsonld").exists():
                 codes=facility_categories.load_vocabulary(root)
                 categories=_read_json(root/"data/categories.json")
                 issues=facility_categories.validate_decisions(categories,codes)

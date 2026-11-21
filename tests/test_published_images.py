@@ -189,10 +189,10 @@ class FacValidationTests(unittest.TestCase):
         with tempfile.TemporaryDirectory() as directory:
             root = setup_root(directory)
             build_repository(root)
-            enriched = json.loads((root / 'site/places.jsonld').read_text())
+            enriched = json.loads((root / 'site/dataset.jsonld').read_text())
             self.assertTrue(any('schema:image' in p for p in enriched['@graph']))
-            self.assertEqual(0, fac_main(['jsonld-validate', '--published', str(root / 'site/places.jsonld')]))
-            self.assertNotEqual(0, fac_main(['jsonld-validate', str(root / 'site/places.jsonld')]))
+            self.assertEqual(0, fac_main(['jsonld-validate', '--published', str(root / 'site/dataset.jsonld')]))
+            self.assertNotEqual(0, fac_main(['jsonld-validate', str(root / 'site/dataset.jsonld')]))
             self.assertEqual(0, fac_main(['jsonld-validate', str(root / 'data/places.jsonld')]))
 
 

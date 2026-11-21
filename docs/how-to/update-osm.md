@@ -12,7 +12,7 @@ workflowは`contents: write`、`issues: write`、`pages: write`、`id-token: wri
 
 1. Actions → **Update OpenStreetMap data** → **Run workflow**で`main`を選びます。
 2. `process`で取得・照合・検証、必要なデータコミットとpush、その後のIssue提示が成功したことを確認します。
-3. `publish`の対象SHAとPagesの公開結果を確認します。Pages公開URLの`places.jsonld`が配布物です。
+3. `publish`の対象SHAとPagesの公開結果を確認します。Pages公開URLの`dataset.jsonld`が配布物です。
 4. 確認Issueがあれば[Issueでの確認・修正](review-osm-candidates.md)を行います。
 
 APIや取得の障害ではIssue回答を求めず実行を失敗させます。Actionsのログで原因を直し、再実行してください。公開だけ失敗した場合は失敗したjobを再実行できます。mainが進んで対象SHAが古くなった場合はworkflow全体を再実行します。

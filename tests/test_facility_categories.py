@@ -4,6 +4,7 @@ import unittest
 from pathlib import Path
 
 from src import facility_categories
+from src.facility_categories import category_set_id, category_term_id
 from src.facility_data import _write_json, validate_jsonld_document
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -12,19 +13,31 @@ UUID = "01990000-0000-7000-8000-000000000001"
 
 def term(code):
     return {
+        "@id": category_term_id(code),
         "@type": "schema:DefinedTerm",
-        "@id": f"https://nawashiro.github.io/chiyoda_city_main_facilities/category-names.jsonld#{code}",
         "schema:name": f"ラベル{code}",
+        "schema:inDefinedTermSet": {"@id": category_set_id()},
+        "schema:identifier": {
+            "@type": "schema:PropertyValue",
+            "schema:propertyID": "gif-poi",
+            "schema:value": code,
+        },
     }
 
 
 def vocabulary(*codes):
+    terms = [term(code) for code in codes]
     return {
         "@context": {"@version": 1.1, "schema": "https://schema.org/"},
-        "@type": "schema:DefinedTermSet",
-        "@id": "https://nawashiro.github.io/chiyoda_city_main_facilities/category-names.jsonld",
-        "schema:name": "テスト語彙",
-        "schema:hasDefinedTerm": [term(code) for code in codes],
+        "@graph": [
+            {
+                "@id": category_set_id(),
+                "@type": "schema:DefinedTermSet",
+                "schema:name": "テスト語彙",
+                "schema:hasDefinedTerm": [{"@id": item["@id"]} for item in terms],
+            },
+            *terms,
+        ],
     }
 
 
@@ -48,7 +61,7 @@ def canonical_record():
 def repository(record=None, name="テスト美術館", decisions=None):
     temporary = tempfile.TemporaryDirectory()
     root = Path(temporary.name)
-    _write_json(root / "data/category-names.jsonld", vocabulary("1512", "0801", "0802", "1499"))
+    _write_json(root / "data/category-vocabulary.jsonld", vocabulary("1512", "0801", "0802", "1499"))
     _write_json(root / "data/category-rules.json", rules())
     document = {"@context": {"@version": 1.1, "schema": "https://schema.org/", "rdfs": "http://www.w3.org/2000/01/rdf-schema#"},
                 "@graph": [record or canonical_record()]}
@@ -68,28 +81,43 @@ def jev_result(choice, confidence):
 
 
 class VocabularyValidationTests(unittest.TestCase):
-    def test_valid_vocabulary_passes(self):
-        facility_categories.validate_vocabulary(vocabulary("1512"))
+    def setUp(self):
+        self.document = vocabulary("1512")
 
-    def test_rejects_non_four_digit_fragment(self):
+    def term(self):
+        return next(node for node in self.document["@graph"] if node.get("@type") == "schema:DefinedTerm")
+
+    def test_valid_vocabulary_passes(self):
+        facility_categories.validate_vocabulary(self.document)
+
+    def test_rejects_non_four_digit_code(self):
+        self.term()["schema:identifier"]["schema:value"] = "703"
         with self.assertRaises(ValueError):
-            facility_categories.validate_vocabulary(vocabulary("703"))
+            facility_categories.validate_vocabulary(self.document)
 
     def test_rejects_duplicate_terms(self):
         with self.assertRaises(ValueError):
             facility_categories.validate_vocabulary(vocabulary("1512", "1512"))
 
-    def test_rejects_provenance_in_the_dictionary(self):
-        broken = vocabulary("1512")
-        broken["schema:citation"] = {"@type": "schema:CreativeWork", "schema:version": "v2.4"}
+    def test_rejects_provenance_in_the_vocabulary(self):
+        self.document["@graph"][0]["schema:citation"] = {"@type": "schema:CreativeWork", "schema:version": "v2.4"}
         with self.assertRaises(ValueError):
-            facility_categories.validate_vocabulary(broken)
+            facility_categories.validate_vocabulary(self.document)
 
-    def test_rejects_identifier_in_terms(self):
-        broken = vocabulary("1512")
-        broken["schema:hasDefinedTerm"][0]["schema:identifier"] = {"@type": "schema:PropertyValue", "schema:propertyID": "gif-poi", "schema:value": "1512"}
+    def test_rejects_http_term_url(self):
+        self.term()["@id"] = "https://nawashiro.github.io/chiyoda_city_main_facilities/category-vocabulary.jsonld#1512"
         with self.assertRaises(ValueError):
-            facility_categories.validate_vocabulary(broken)
+            facility_categories.validate_vocabulary(self.document)
+
+    def test_rejects_uuid_mismatch(self):
+        self.term()["@id"] = "urn:uuid:01990000-0000-7000-8000-000000000099"
+        with self.assertRaises(ValueError):
+            facility_categories.validate_vocabulary(self.document)
+
+    def test_rejects_missing_identifier(self):
+        self.term().pop("schema:identifier")
+        with self.assertRaises(ValueError):
+            facility_categories.validate_vocabulary(self.document)
 
 
 class RulesTests(unittest.TestCase):
@@ -137,18 +165,18 @@ class HospitalAndSchoolRuleTests(unittest.TestCase):
 
 
 class DecisionAndApplyTests(unittest.TestCase):
-    def test_apply_adds_and_removes_gif_poi_identifiers(self):
+    def test_apply_adds_and_removes_keywords(self):
         temporary, root = repository()
         with temporary:
             codes = facility_categories.load_vocabulary(root)
             decisions = {"version": 1, "facilities": {UUID: {"category": "0801", "method": "rule", "osmId": "node/123"}}}
             document = json.loads((root / "data/places.jsonld").read_text(encoding="utf-8"))
-            self.assertEqual([], facility_categories.apply_categories(document, decisions, codes))
-            validate_jsonld_document(document, category_codes=set(codes))
-            self.assertEqual([{"@type": "schema:PropertyValue", "schema:propertyID": "gif-poi", "schema:value": "0801"}], document["@graph"][0]["schema:identifier"])
-            stale = {"version": 1, "facilities": {UUID: {"category": "0801", "method": "rule", "osmId": "way/999"}}}
-            self.assertEqual([UUID], facility_categories.apply_categories(document, stale, codes))
+            self.assertEqual([], facility_categories.apply_category_terms(document, decisions, codes))
+            self.assertEqual([{"@id": codes["0801"]["@id"]}], document["@graph"][0]["schema:keywords"])
             self.assertNotIn("schema:identifier", document["@graph"][0])
+            stale = {"version": 1, "facilities": {UUID: {"category": "0801", "method": "rule", "osmId": "way/999"}}}
+            self.assertEqual([UUID], facility_categories.apply_category_terms(document, stale, codes))
+            self.assertNotIn("schema:keywords", document["@graph"][0])
 
     def test_rejects_unknown_code_and_bad_method(self):
         temporary, root = repository()
@@ -159,18 +187,22 @@ class DecisionAndApplyTests(unittest.TestCase):
                     issues = facility_categories.validate_decisions({"version": 1, "facilities": {UUID: entry}}, codes)
                     self.assertTrue(issues)
 
-    def test_record_rejects_non_adopted_code(self):
+    def test_record_rejects_gif_poi_identifier(self):
         record = canonical_record()
-        record["schema:identifier"] = [{"@type": "schema:PropertyValue", "schema:propertyID": "gif-poi", "schema:value": "9999"}]
+        record["schema:identifier"] = [{"@type": "schema:PropertyValue", "schema:propertyID": "gif-poi", "schema:value": "0801"}]
         with self.assertRaises(ValueError):
             validate_jsonld_document(
                 {"@context": {"@version": 1.1, "schema": "https://schema.org/", "rdfs": "http://www.w3.org/2000/01/rdf-schema#"}, "@graph": [record]},
-                category_codes={"0801", "0802", "1512", "1499"},
             )
 
-    def test_record_rejects_additional_type_classification(self):
+    def test_record_allows_additional_type(self):
         record = canonical_record()
         record["schema:additionalType"] = ["https://example.com/x"]
+        validate_jsonld_document({"@context": {"@version": 1.1, "schema": "https://schema.org/", "rdfs": "http://www.w3.org/2000/01/rdf-schema#"}, "@graph": [record]})
+
+    def test_canonical_record_rejects_keywords(self):
+        record = canonical_record()
+        record["schema:keywords"] = [{"@id": category_term_id("0801")}]
         with self.assertRaises(ValueError):
             validate_jsonld_document({"@context": {"@version": 1.1, "schema": "https://schema.org/", "rdfs": "http://www.w3.org/2000/01/rdf-schema#"}, "@graph": [record]})
 
@@ -195,7 +227,7 @@ class RefreshTests(unittest.TestCase):
             entry = decisions["facilities"][UUID]
             self.assertEqual(("1499", "jev"), (entry["category"], entry["method"]))
             self.assertEqual({}, report["unresolved"])
-            self.assertEqual([{"@type": "schema:PropertyValue", "schema:propertyID": "gif-poi", "schema:value": "1499"}], document["@graph"][0]["schema:identifier"])
+            self.assertNotIn("schema:identifier", document["@graph"][0])
 
     def test_low_confidence_result_stays_unresolved(self):
         temporary, root = repository(record={**canonical_record(), "rdfs:seeAlso": ["https://www.openstreetmap.org/node/999"]}, name="なぞの施設")
@@ -259,13 +291,23 @@ class RefreshTests(unittest.TestCase):
         decisions = {"version": 1, "facilities": {UUID: {"category": "1512", "method": "rule", "osmId": "node/456"}}}
         temporary, root = repository(decisions=decisions)
         with temporary:
+            before = (root / "data/places.jsonld").read_bytes()
             _document, report = facility_categories.refresh(root)
             self.assertEqual([UUID], report["stale"])
             self.assertEqual([UUID], report["pending"])
             decisions = json.loads((root / "data/categories.json").read_text(encoding="utf-8"))
             self.assertEqual("1512", decisions["facilities"][UUID]["category"])
-            document = json.loads((root / "data/places.jsonld").read_text(encoding="utf-8"))
-            self.assertNotIn("schema:identifier", document["@graph"][0])
+            self.assertEqual(before, (root / "data/places.jsonld").read_bytes())
+            self.assertNotIn("schema:identifier", json.loads(before)["@graph"][0])
+
+    def test_refresh_does_not_change_places(self):
+        temporary, root = repository()
+        with temporary:
+            before = (root / "data/places.jsonld").read_bytes()
+            (root / "site/dataset.jsonld").write_bytes(b"previous publication")
+            facility_categories.refresh(root)
+            self.assertEqual(before, (root / "data/places.jsonld").read_bytes())
+            self.assertEqual(b"previous publication", (root / "site/dataset.jsonld").read_bytes())
 
 
 class CliDecisionTests(unittest.TestCase):
@@ -281,15 +323,20 @@ class CliDecisionTests(unittest.TestCase):
     def test_assign_records_human_decision_and_clear_reverts(self):
         temporary, root = repository()
         with temporary:
+            before = (root / "data/places.jsonld").read_bytes()
+            (root / "site/dataset.jsonld").write_bytes(b"previous publication")
             code, _output = self._main("category", "assign", str(root), UUID, "0801", "--editor", "tester")
             self.assertEqual(0, code)
             decisions = json.loads((root / "data/categories.json").read_text(encoding="utf-8"))
             entry = decisions["facilities"][UUID]
             self.assertEqual(("human", "0801", "tester"), (entry["method"], entry["category"], entry["editor"]))
+            self.assertEqual(before, (root / "data/places.jsonld").read_bytes())
             code, _output = self._main("category", "clear", str(root), UUID)
             self.assertEqual(0, code)
             decisions = json.loads((root / "data/categories.json").read_text(encoding="utf-8"))
             self.assertNotIn(UUID, decisions["facilities"])
+            self.assertEqual(before, (root / "data/places.jsonld").read_bytes())
+            self.assertEqual(b"previous publication", (root / "site/dataset.jsonld").read_bytes())
 
     def test_assign_rejects_unknown_code(self):
         temporary, root = repository()
@@ -321,20 +368,6 @@ class UnresolvedFacilityTests(unittest.TestCase):
 
 class CategoryReviewIssueTests(unittest.TestCase):
     def test_unresolved_facilities_are_presented_as_one_issue(self):
-        class FakeGitHub:
-            def __init__(self):
-                self.created = None
-
-            def api(self, path, data=None, method=None):
-                self.created = (path, data)
-                return {}
-
-            def find_issue(self, query_id, marker=None):
-                return None
-
-            def issue(self, number):
-                return {"state": "OPEN"}
-
         from src.github_osm_review import GitHub
         github = GitHub.__new__(GitHub)
         github.repository = "example/repo"

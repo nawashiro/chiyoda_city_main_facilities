@@ -89,7 +89,7 @@ def update(root, *, refresh=False, github=None, judge=None, category_judge=None,
 
 
 def _maintain_categories(root, updated, *, judge, raw):
-    if not (Path(root) / "data/category-names.jsonld").exists() or not (Path(root) / "data/category-rules.json").exists():
+    if not (Path(root) / "data/category-vocabulary.jsonld").exists() or not (Path(root) / "data/category-rules.json").exists():
         return updated
     updated, report = facility_categories.refresh(root, judge=judge, elements=raw.get("elements") if raw else None, document=updated)
     if judge is None and report["pending"]:
@@ -104,7 +104,7 @@ def present(root, github):
         if entry.get("status") == "needs_review":
             github.save_issue(query_id, entry)
     github.save_unmatched(ledger["facilities"])
-    if (root / "data/category-names.jsonld").exists() and (root / "data/category-rules.json").exists():
+    if (root / "data/category-vocabulary.jsonld").exists() and (root / "data/category-rules.json").exists():
         github.save_category_review(facility_categories.unresolved_facilities(root))
 
 

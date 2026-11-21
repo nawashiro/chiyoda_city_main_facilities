@@ -20,6 +20,33 @@ class FacCommandTests(unittest.TestCase):
         self.assertEqual(0, result.returncode, result.stderr)
         self.assertEqual("", result.stdout)
 
+    def test_fac_validates_vocabulary_and_published_graph(self):
+        for arguments in (
+            ["jsonld-validate", "--vocabulary", "data/category-vocabulary.jsonld"],
+            ["jsonld-validate", "--published", "site/dataset.jsonld"],
+        ):
+            with self.subTest(arguments=arguments):
+                result = subprocess.run(
+                    ["./fac", *arguments],
+                    cwd=ROOT,
+                    check=False,
+                    capture_output=True,
+                    text=True,
+                )
+                self.assertEqual(0, result.returncode, result.stderr)
+                self.assertEqual("", result.stdout)
+
+    def test_one_time_migration_command_is_removed(self):
+        result = subprocess.run(
+            ["./fac", "category", "--help"],
+            cwd=ROOT,
+            check=False,
+            capture_output=True,
+            text=True,
+        )
+        self.assertEqual(0, result.returncode, result.stderr)
+        self.assertNotIn("migrate", result.stdout)
+
     def test_user_facing_markdown_uses_fac_instead_of_the_module_command(self):
         stale_examples = [
             str(path.relative_to(ROOT))

@@ -8,7 +8,7 @@ GitHub Actions の `release` workflow を `main` ブランチに対して起動�
 
 1. checkout したコミットが `main` の最新であることを確認し、テストとビルドを実行します。
 2. 実行日の UTC 日付 `YYYY.MM.DD` をタグにします。タグが既に存在するときは失敗して終わります。タグの移動と上書きはしません。
-3. Release を公開し、`places-<タグ>.jsonld`、`osm-<タグ>.json`、`wikidata-<タグ>.json` を添付します。リリースノートは workflow が生成します。
+3. Release を公開し、`dataset-<タグ>.jsonld`、`osm-<タグ>.json`、`wikidata-<タグ>.json` を添付します。リリースノートは workflow が生成します。
 
 テストまたはビルドが失敗したときは、Release とタグを作成せずに終わります。原因を取り除いてから起動し直します。
 

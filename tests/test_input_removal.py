@@ -42,11 +42,11 @@ class InputRemovalTests(unittest.TestCase):
         self.assertEqual([place(self.kept)], json.loads((self.root / "data/places.jsonld").read_text(encoding="utf-8"))["@graph"])
         self.assertEqual({self.kept}, set(json.loads((self.root / "data/osm-decisions.json").read_text(encoding="utf-8"))["facilities"]))
 
-    def test_rm_also_updates_the_published_copy(self):
+    def test_rm_leaves_the_published_copy_to_the_build(self):
         (self.root / "site").mkdir()
-        (self.root / "site/places.jsonld").write_text(json.dumps(self.places, ensure_ascii=False), encoding="utf-8")
+        (self.root / "site/places.jsonld").write_bytes(b"previous publication")
         self.assertEqual(0, fac_cli.main(["in", "rm", str(self.root), self.removed]))
-        self.assertEqual([place(self.kept)], json.loads((self.root / "site/places.jsonld").read_text(encoding="utf-8"))["@graph"])
+        self.assertEqual(b"previous publication", (self.root / "site/places.jsonld").read_bytes())
 
     def test_rm_without_a_matching_query_fails(self):
         self.assertEqual(1, fac_cli.main(["in", "rm", str(self.root), new_uuid7()]))

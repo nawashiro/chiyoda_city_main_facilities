@@ -4,6 +4,7 @@ from __future__ import annotations
 import json
 import os
 import re
+import uuid
 from datetime import datetime, timezone
 from pathlib import Path
 from urllib.request import Request, urlopen
@@ -19,48 +20,105 @@ from src.facility_data import (
 from src.http_utils import read_limited_response
 from src.resolve_osm_candidates import MODEL, THRESHOLD, current_id, encoded, validate_choice
 
-VOCABULARY_URL = "https://nawashiro.github.io/chiyoda_city_main_facilities/category-names.jsonld"
+VOCABULARY_PATH = "data/category-vocabulary.jsonld"
+VOCABULARY_NAME = "千代田区区民向け施設データのカテゴリ語彙"
+CATEGORY_NAMESPACE = uuid.uuid5(uuid.NAMESPACE_URL, "https://nawashiro.github.io/chiyoda_city_main_facilities/category-vocabulary")
 POI_CODE = re.compile(r"^[0-9]{4}$")
 TERMS_KEY = "schema:hasDefinedTerm"
+Vocabulary = dict[str, dict]
+_SET_KEYS = {"@id", "@type", "schema:name", TERMS_KEY}
+_TERM_KEYS = {"@id", "@type", "schema:name", "schema:inDefinedTermSet", "schema:identifier"}
+
+
+def category_set_id() -> str:
+    return f"urn:uuid:{uuid.uuid5(CATEGORY_NAMESPACE, 'category-vocabulary')}"
+
+
+def category_term_id(code: str) -> str:
+    if not isinstance(code, str) or not POI_CODE.fullmatch(code):
+        raise ValueError(f"category code must be four digits: {code}")
+    return f"urn:uuid:{uuid.uuid5(CATEGORY_NAMESPACE, f'gif-poi:{code}')}"
+
+
+def _type_contains(node: dict, name: str) -> bool:
+    value = node.get("@type")
+    return value == name or (isinstance(value, list) and name in value)
+
+
+def _gif_poi_identifier(term: dict) -> str:
+    identifier = term.get("schema:identifier")
+    if not isinstance(identifier, dict):
+        raise ValueError("category term must carry one schema:identifier")
+    if set(identifier) - {"@type", "schema:propertyID", "schema:value"}:
+        raise ValueError("category term schema:identifier carries unexpected fields")
+    if identifier.get("@type") != "schema:PropertyValue" or identifier.get("schema:propertyID") != "gif-poi":
+        raise ValueError("category term schema:identifier must be a gif-poi PropertyValue")
+    value = identifier.get("schema:value")
+    if not isinstance(value, str) or not POI_CODE.fullmatch(value):
+        raise ValueError(f"category term gif-poi code must be four digits: {value}")
+    return value
 
 
 def validate_vocabulary(document) -> None:
     if not isinstance(document, dict):
-        raise ValueError("category name dictionary must be an object")
+        raise ValueError("category vocabulary must be an object")
     context = document.get("@context")
     if not isinstance(context, dict) or context.get("@version") != 1.1 or context.get("schema") != "https://schema.org/":
-        raise ValueError("category name dictionary @context must declare the schema prefix")
-    if document.get("@type") != "schema:DefinedTermSet":
-        raise ValueError("category name dictionary must be a schema:DefinedTermSet")
-    if document.get("@id") != VOCABULARY_URL:
-        raise ValueError(f"category name dictionary @id must be {VOCABULARY_URL}")
-    if set(document) - {"@context", "@type", "@id", "schema:name", TERMS_KEY}:
-        raise ValueError("category name dictionary carries names only")
-    if not isinstance(document.get("schema:name"), str) or not document["schema:name"].strip():
-        raise ValueError("category name dictionary needs a schema:name")
-    terms = document.get(TERMS_KEY)
-    if not isinstance(terms, list) or not terms:
-        raise ValueError("category name dictionary must define at least one term")
-    codes: dict[str, str] = {}
-    for index, term in enumerate(terms):
-        if not isinstance(term, dict) or term.get("@type") != "schema:DefinedTerm":
-            raise ValueError(f"category term {index} must be a schema:DefinedTerm")
-        if set(term) - {"@type", "@id", "schema:name"}:
-            raise ValueError(f"category term {index} carries a name only")
+        raise ValueError("category vocabulary @context must declare the schema prefix")
+    if set(document) - {"@context", "@graph"}:
+        raise ValueError("category vocabulary carries a @graph only")
+    graph = document.get("@graph")
+    if not isinstance(graph, list) or not graph:
+        raise ValueError("category vocabulary @graph must be a non-empty list")
+    sets = [node for node in graph if isinstance(node, dict) and _type_contains(node, "schema:DefinedTermSet")]
+    terms = [node for node in graph if isinstance(node, dict) and _type_contains(node, "schema:DefinedTerm")]
+    if len(sets) != 1:
+        raise ValueError("category vocabulary must define exactly one schema:DefinedTermSet")
+    if len(sets) + len(terms) != len(graph):
+        raise ValueError("category vocabulary @graph may contain only the term set and terms")
+    term_set = sets[0]
+    if term_set.get("@id") != category_set_id():
+        raise ValueError(f"category term set @id must be {category_set_id()}")
+    if set(term_set) - _SET_KEYS:
+        raise ValueError("category term set carries unexpected fields")
+    if not isinstance(term_set.get("schema:name"), str) or not term_set["schema:name"].strip():
+        raise ValueError("category term set needs a schema:name")
+    references = term_set.get(TERMS_KEY)
+    if not isinstance(references, list) or not references:
+        raise ValueError("category term set must reference at least one term")
+    if any(not isinstance(item, dict) or set(item) != {"@id"} or not isinstance(item.get("@id"), str) for item in references):
+        raise ValueError("category term set references must be {@id} objects")
+    if len({item["@id"] for item in references}) != len(references):
+        raise ValueError("category term set references a term twice")
+    if not terms:
+        raise ValueError("category vocabulary must define at least one term")
+    by_id: dict[str, dict] = {}
+    codes: set[str] = set()
+    for term in terms:
         identifier = term.get("@id")
-        if not isinstance(identifier, str) or not identifier.startswith(VOCABULARY_URL + "#"):
-            raise ValueError(f"category term {index} @id must be a term URL of the dictionary")
-        code = identifier.removeprefix(VOCABULARY_URL + "#")
-        if not POI_CODE.fullmatch(code):
-            raise ValueError(f"category term {index} fragment must be a 4-digit POI code: {code}")
+        if not isinstance(identifier, str) or not identifier.startswith("urn:uuid:"):
+            raise ValueError("category term @id must be a urn:uuid")
+        if identifier in by_id:
+            raise ValueError(f"category term @id is defined twice: {identifier}")
+        if set(term) - _TERM_KEYS:
+            raise ValueError(f"category term carries unexpected fields: {identifier}")
         if not isinstance(term.get("schema:name"), str) or not term["schema:name"].strip():
-            raise ValueError(f"category term {code} needs a schema:name")
+            raise ValueError(f"category term needs a schema:name: {identifier}")
+        code = _gif_poi_identifier(term)
         if code in codes:
             raise ValueError(f"category term {code} is defined twice")
-        codes[code] = term["schema:name"]
+        codes.add(code)
+        if identifier != category_term_id(code):
+            raise ValueError(f"category term {code} @id must be {category_term_id(code)}")
+        term_set_ref = term.get("schema:inDefinedTermSet")
+        if not isinstance(term_set_ref, dict) or term_set_ref != {"@id": category_set_id()}:
+            raise ValueError(f"category term {code} must point to the category term set")
+        by_id[identifier] = term
+    if {item["@id"] for item in references} != set(by_id):
+        raise ValueError("category term set must reference every term exactly once")
 
 
-def validate_rules(document, codes: dict[str, str]) -> list[str]:
+def validate_rules(document, codes: Vocabulary) -> list[str]:
     issues: list[str] = []
     if not isinstance(document, dict):
         return ["category rules must be an object"]
@@ -156,13 +214,14 @@ def validate_decisions(document, codes: dict[str, str]) -> list[str]:
     return issues
 
 
-def load_vocabulary(root: Path) -> dict[str, str]:
-    document = _read_json(Path(root) / "data/category-names.jsonld")
+def load_vocabulary(root: Path) -> Vocabulary:
+    document = _read_json(Path(root) / VOCABULARY_PATH)
     validate_vocabulary(document)
-    return {term["@id"].removeprefix(VOCABULARY_URL + "#"): term["schema:name"] for term in document[TERMS_KEY]}
+    terms = [node for node in document["@graph"] if _type_contains(node, "schema:DefinedTerm")]
+    return {_gif_poi_identifier(term): term for term in terms}
 
 
-def load_rules(root: Path, codes: dict[str, str]) -> list[dict]:
+def load_rules(root: Path, codes: Vocabulary) -> list[dict]:
     document = _read_json(Path(root) / "data/category-rules.json")
     issues = validate_rules(document, codes)
     if issues:
@@ -170,7 +229,7 @@ def load_rules(root: Path, codes: dict[str, str]) -> list[dict]:
     return document["rules"]
 
 
-def load_decisions(root: Path, codes: dict[str, str]) -> dict:
+def load_decisions(root: Path, codes: Vocabulary) -> dict:
     document = _read_json(Path(root) / "data/categories.json") if (Path(root) / "data/categories.json").exists() else {"version": 1, "facilities": {}}
     issues = validate_decisions(document, codes)
     if issues:
@@ -230,30 +289,38 @@ def unresolved_facilities(root: Path, document: dict | None = None) -> list[dict
             if uuid not in held and (uuid not in decisions["facilities"] or uuid not in places or uuid in stale)]
 
 
-def apply_categories(document: dict, decisions: dict, codes: dict[str, str]) -> list[str]:
-    places = {p["@id"].removeprefix("urn:uuid:"): p for p in document["@graph"]}
+def apply_category_terms(document: dict, decisions: dict, vocabulary: Vocabulary) -> list[str]:
+    places = {p["@id"].removeprefix("urn:uuid:"): p for p in document["@graph"] if "schema:Place" in p.get("@type", [])}
     stale = stale_facilities(decisions, places)
     for place in document["@graph"]:
+        if "schema:Place" not in place.get("@type", []):
+            continue
         uuid = place["@id"].removeprefix("urn:uuid:")
+        place.pop("schema:keywords", None)
+        identifiers = place.get("schema:identifier")
+        if isinstance(identifiers, list):
+            kept = [item for item in identifiers if not (isinstance(item, dict) and item.get("schema:propertyID") == "gif-poi")]
+            if kept:
+                place["schema:identifier"] = kept
+            else:
+                place.pop("schema:identifier", None)
         entry = decisions["facilities"].get(uuid)
-        others = [item for item in place.get("schema:identifier", []) if isinstance(item, dict) and item.get("schema:propertyID") != "gif-poi"]
         if entry and uuid not in stale:
-            others.append({"@type": "schema:PropertyValue", "schema:propertyID": "gif-poi", "schema:value": entry["category"]})
-        if others:
-            place["schema:identifier"] = others
-        else:
-            place.pop("schema:identifier", None)
-        place.pop("schema:additionalType", None)
+            code = entry["category"]
+            term = vocabulary.get(code)
+            if term is None:
+                raise ValueError(f"category decision references a code outside the vocabulary: {code}")
+            place["schema:keywords"] = [{"@id": term["@id"]}]
     return stale
 
 
-def _request_category(evidence: dict, codes: dict[str, str], api_key: str | None = None) -> dict:
+def _request_category(evidence: dict, codes: Vocabulary, api_key: str | None = None) -> dict:
     key = api_key or os.environ.get("TYPESAFE_API_KEY")
     if not key:
         raise ValueError("TYPESAFE_API_KEY is required")
     options = {f"candidate_{index}": code for index, code in enumerate(sorted(codes))}
     state = encoded(evidence).decode()
-    criteria = {key_: f"The facility belongs to the category {codes[code]} (GIF POI code {code})." for key_, code in options.items()}
+    criteria = {key_: f"The facility belongs to the category {codes[code]['schema:name']} (GIF POI code {code})." for key_, code in options.items()}
     criteria["none"] = "None of the categories fits the facility."
     question = {
         "type": "choice",
@@ -272,7 +339,6 @@ def _request_category(evidence: dict, codes: dict[str, str], api_key: str | None
 def refresh(root: Path, *, judge=None, elements: list | None = None, document: dict | None = None) -> tuple[dict, dict]:
     """Re-evaluate undecided and stale OSM-associated facilities: rules first, then Jev."""
     root = Path(root)
-    write_document = document is None
     codes = load_vocabulary(root)
     rules = load_rules(root, codes)
     decisions = load_decisions(root, codes)
@@ -280,7 +346,8 @@ def refresh(root: Path, *, judge=None, elements: list | None = None, document: d
     held = set(held_facilities(root))
     if document is None:
         document = _read_json(root / "data/places.jsonld")
-    places = {p["@id"].removeprefix("urn:uuid:"): p for p in document["@graph"]}
+    validate_jsonld_document(document)
+    places = {p["@id"].removeprefix("urn:uuid:"): p for p in document["@graph"] if "schema:Place" in p.get("@type", [])}
     tags_by_id = element_tags(root, elements)
     proposals = rule_proposals(rules, queries, places, tags_by_id)
     unresolved: dict[str, dict] = {}
@@ -319,14 +386,8 @@ def refresh(root: Path, *, judge=None, elements: list | None = None, document: d
     issues = validate_decisions(decisions, codes)
     if issues:
         raise ValueError("; ".join(issues))
-    stale = apply_categories(document, decisions, codes)
-    validate_jsonld_document(document, category_codes=set(codes))
+    stale = stale_facilities(decisions, places)
     _write_json(root / "data/categories.json", decisions)
-    if write_document:
-        _write_json(root / "data/places.jsonld", document)
-        published = root / "site/places.jsonld"
-        if published.is_file():
-            _write_json(published, document)
     return document, {"unresolved": unresolved, "stale": [uuid for uuid in stale if uuid not in held],
                       "pending": [q["id"] for q in pending]}
 
@@ -340,6 +401,7 @@ def assign(root: Path, query_id: str, code: str, editor: str) -> None:
     if not any(q["id"] == query_id for q in queries):
         raise ValueError(f"search input not found: {query_id}")
     document = _read_json(root / "data/places.jsonld")
+    validate_jsonld_document(document)
     place = next((p for p in document["@graph"] if p["@id"].removeprefix("urn:uuid:") == query_id), None)
     if place is None:
         raise ValueError(f"place not found: {query_id}")
@@ -352,13 +414,7 @@ def assign(root: Path, query_id: str, code: str, editor: str) -> None:
     issues = validate_decisions(decisions, codes)
     if issues:
         raise ValueError("; ".join(issues))
-    apply_categories(document, decisions, codes)
-    validate_jsonld_document(document, category_codes=set(codes))
     _write_json(root / "data/categories.json", decisions)
-    _write_json(root / "data/places.jsonld", document)
-    published = root / "site/places.jsonld"
-    if published.is_file():
-        _write_json(published, document)
 
 
 def clear(root: Path, query_id: str) -> None:
@@ -368,17 +424,12 @@ def clear(root: Path, query_id: str) -> None:
     if query_id not in decisions["facilities"]:
         raise ValueError(f"category decision not found: {query_id}")
     document = _read_json(root / "data/places.jsonld")
+    validate_jsonld_document(document)
     place = next((p for p in document["@graph"] if p["@id"].removeprefix("urn:uuid:") == query_id), None)
     if place is None:
         raise ValueError(f"place not found: {query_id}")
     del decisions["facilities"][query_id]
-    apply_categories(document, decisions, codes)
-    validate_jsonld_document(document, category_codes=set(codes))
     _write_json(root / "data/categories.json", decisions)
-    _write_json(root / "data/places.jsonld", document)
-    published = root / "site/places.jsonld"
-    if published.is_file():
-        _write_json(published, document)
 
 
 def review(root: Path) -> dict:
