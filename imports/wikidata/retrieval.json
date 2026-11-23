@@ -1,8 +1,8 @@
 {
   "sourceId": "wikidata",
-  "retrievedAt": "2026-11-21T03:35:00+00:00",
+  "retrievedAt": "2026-11-23T06:33:50+00:00",
   "endpoint": "https://www.wikidata.org/w/api.php",
-  "qidCount": 100,
-  "pages": 2,
-  "rawSha256": "a15e5efde467136b4f5aa6b6fc96d80c57a38a78f84f5e44e56365c786734cb3"
+  "qidCount": 101,
+  "pages": 3,
+  "rawSha256": "d4cb41946666c076024c41c86f188f39b372db4a218d51ac4a56246c84e6bf54"
 }

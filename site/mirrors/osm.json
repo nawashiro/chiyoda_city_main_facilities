@@ -1961,6 +1961,28 @@
     },
     {
       "type": "way",
+      "id": 460729041,
+      "center": {
+        "lon": 139.74648645,
+        "lat": 35.697262800000004
+      },
+      "tags": {
+        "amenity": "school",
+        "building": "yes",
+        "name": "千代田区立 富士見小学校",
+        "name:en": "Fujimi Elementary School",
+        "name:es": "Escuela primaria Fujimi",
+        "operator": "千代田区",
+        "operator:type": "public",
+        "source": "Bing",
+        "website": "https://chiyoda.schoolweb.ne.jp/1310164",
+        "wikidata": "Q81916362",
+        "wikipeda": "ja:千代田区立富士見小学校",
+        "wikipedia": "ja:千代田区立富士見小学校"
+      }
+    },
+    {
+      "type": "way",
       "id": 515133705,
       "center": {
         "lon": 139.76793585000001,

@@ -297,7 +297,8 @@
         "schema:latitude": 35.7009442
       },
       "rdfs:seeAlso": [
-        "https://www.openstreetmap.org/node/1420763756"
+        "https://www.openstreetmap.org/node/1420763756",
+        "https://www.wikidata.org/entity/Q17988745"
       ]
     },
     {
@@ -582,8 +583,8 @@
       ],
       "schema:geo": {
         "@type": "schema:GeoCoordinates",
-        "schema:longitude": 139.754802,
-        "schema:latitude": 35.6988974
+        "schema:longitude": 139.75482245,
+        "schema:latitude": 35.698873899999995
       },
       "schema:subjectOf": [
         {
@@ -1686,11 +1687,11 @@
       ],
       "schema:geo": {
         "@type": "schema:GeoCoordinates",
-        "schema:longitude": 139.7463641,
-        "schema:latitude": 35.6971909
+        "schema:longitude": 139.74648645,
+        "schema:latitude": 35.697262800000004
       },
       "rdfs:seeAlso": [
-        "https://www.openstreetmap.org/node/14344607026",
+        "https://www.openstreetmap.org/way/460729041",
         "https://www.wikidata.org/entity/Q81916362"
       ]
     },
@@ -1836,8 +1837,8 @@
       ],
       "schema:geo": {
         "@type": "schema:GeoCoordinates",
-        "schema:longitude": 139.7684565,
-        "schema:latitude": 35.6931405
+        "schema:longitude": 139.7684299,
+        "schema:latitude": 35.69319055
       },
       "rdfs:seeAlso": [
         "https://www.openstreetmap.org/way/187756645"
