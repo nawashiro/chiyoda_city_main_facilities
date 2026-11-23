@@ -52,6 +52,39 @@ def coordinate_matcher(coordinates: list[list[float]]):
     return matches
 
 
+QUERY_REGION_PADDING_DEGREES = 0.001
+
+
+def _within(bounds: tuple[float, float, float, float], center: dict[str, float]) -> bool:
+    south, west, north, east = bounds
+    return south <= center["lat"] <= north and west <= center["lon"] <= east
+
+
+def query_region(coordinates: Iterable[Iterable[float]]) -> tuple[float, float, float, float] | None:
+    """Bounds that cover every 50m neighbour of the search coordinates.
+
+    The degree padding exceeds the 50m neighbour radius at the latitude of the
+    search area, so the bounds can only reject elements that cannot match.
+    """
+    bounds = _merge_bounds((float(lat), float(lon), float(lat), float(lon)) for lon, lat in coordinates)
+    if bounds is None:
+        return None
+    south, west, north, east = bounds
+    return (south - QUERY_REGION_PADDING_DEGREES, west - QUERY_REGION_PADDING_DEGREES,
+            north + QUERY_REGION_PADDING_DEGREES, east + QUERY_REGION_PADDING_DEGREES)
+
+
+def selection_predicate(selected_ids: set[tuple[str, int]], qids: set[str], region: tuple[float, float, float, float] | None, chiyoda_bbox: tuple[float, float, float, float], coordinate_matches: Callable[[float, float], bool]):
+    """Return a predicate that decides inclusion before any tag lookup can be materialized."""
+    def selectable(kind: str, identifier: int, center: dict[str, float], wikidata: Callable[[], object]) -> bool:
+        if (kind, identifier) in selected_ids:
+            return True
+        if region is not None and _within(region, center) and coordinate_matches(center["lon"], center["lat"]):
+            return True
+        return _within(chiyoda_bbox, center) and wikidata() in qids
+    return selectable
+
+
 def relation_out_center(relation_id: str, members: Iterable[Mapping[str, object]], node_coordinates: Mapping[int, tuple[float, float]], way_bounds: Mapping[int, tuple[float, float, float, float]], warn: Callable[[str], None]) -> dict[str, float] | None:
     """Return an Overpass-compatible center from available direct members."""
     bounds = []
@@ -87,8 +120,7 @@ def extract_elements(pbf_path: Path, typed_ids: set[str], qids: set[str], coordi
         raise RuntimeError("local OSM mirror extraction requires osmium") from error
 
     selected_ids = {(item.split("/", 1)[0], int(item.split("/", 1)[1])) for item in typed_ids}
-    coordinate_matches = coordinate_matcher(coordinates)
-    south, west, north, east = chiyoda_bbox
+    selectable = selection_predicate(selected_ids, qids, query_region(coordinates), chiyoda_bbox, coordinate_matcher(coordinates))
     required_nodes: set[int] = set()
     required_ways: set[int] = set()
 
@@ -103,22 +135,15 @@ def extract_elements(pbf_path: Path, typed_ids: set[str], qids: set[str], coordi
     relation_ways: dict[int, tuple[float, float, float, float]] = {}
     selected: dict[tuple[str, int], dict[str, Any]] = {}
 
-    def include(kind: str, identifier: int, tags: dict[str, str], center: dict[str, float]) -> bool:
-        if (kind, identifier) in selected_ids:
-            return True
-        if tags.get("wikidata") in qids and south <= center["lat"] <= north and west <= center["lon"] <= east:
-            return True
-        return coordinate_matches(center["lon"], center["lat"])
-
     class Geometry(osmium.SimpleHandler):
         def node(self, node):
             if not node.location.valid(): return
             lon, lat = float(node.location.lon), float(node.location.lat)
             if node.id in required_nodes: relation_nodes[node.id] = (lon, lat)
-            tags = dict(node.tags)
             center = {"lon": lon, "lat": lat}
-            if include("node", node.id, tags, center):
-                selected[("node", node.id)] = {"type": "node", "id": node.id, "lon": lon, "lat": lat, "tags": tags}
+            if not selectable("node", node.id, center, lambda: node.tags.get("wikidata")):
+                return
+            selected[("node", node.id)] = {"type": "node", "id": node.id, "lon": lon, "lat": lat, "tags": dict(node.tags)}
         def way(self, way):
             points = []
             missing = []
@@ -131,9 +156,10 @@ def extract_elements(pbf_path: Path, typed_ids: set[str], qids: set[str], coordi
             bounds = _merge_bounds((lon, lat, lon, lat) for lon, lat in points)
             if bounds is None: return
             if way.id in required_ways: relation_ways[way.id] = bounds
-            center = _center(bounds); tags = dict(way.tags)
-            if include("way", way.id, tags, center):
-                selected[("way", way.id)] = {"type": "way", "id": way.id, "center": center, "tags": tags}
+            center = _center(bounds)
+            if not selectable("way", way.id, center, lambda: way.tags.get("wikidata")):
+                return
+            selected[("way", way.id)] = {"type": "way", "id": way.id, "center": center, "tags": dict(way.tags)}
 
     Geometry().apply_file(str(pbf_path), locations=True, idx="flex_mem")
 
@@ -143,7 +169,7 @@ def extract_elements(pbf_path: Path, typed_ids: set[str], qids: set[str], coordi
             center = relation_out_center(f"relation/{relation.id}", members, relation_nodes, relation_ways, lambda message: warnings.warn(message, RuntimeWarning))
             if center is None: return
             tags = dict(relation.tags)
-            if include("relation", relation.id, tags, center):
+            if selectable("relation", relation.id, center, lambda: tags.get("wikidata")):
                 selected[("relation", relation.id)] = {"type": "relation", "id": relation.id, "center": center, "tags": tags}
 
     Relations().apply_file(str(pbf_path))
