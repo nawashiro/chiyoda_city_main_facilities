@@ -4905,12 +4905,41 @@
       "method": "source_record"
     },
     "019fa880-5cd5-7b01-9dd8-2e4787f423aa": {
-      "status": "hold",
-      "reason": "OSMミラー（2026-11-20T01:00Z）に要素が未収録。ミラー更新後の再確認まで保留",
-      "previous": "relation/9323146",
+      "evidence": {
+        "target": {
+          "id": "019fa880-5cd5-7b01-9dd8-2e4787f423aa",
+          "name": "西神田コスモス館",
+          "coordinates": [
+            139.7547057,
+            35.6988874
+          ]
+        },
+        "candidates": [
+          {
+            "recordId": "relation/9323146",
+            "name": "西神田コスモス館",
+            "coordinates": [
+              139.754802,
+              35.6988974
+            ],
+            "qid": null,
+            "tags": {
+              "building": "yes",
+              "name": "西神田コスモス館",
+              "operator": "千代田区"
+            }
+          }
+        ]
+      },
+      "evidenceHash": "5efac0229c9a3f50bdebc9f38037a488a517ff99dfd20bce0edbb5c5ad1f67a8",
+      "current": "relation/9323146",
+      "status": "decided",
+      "choice": "relation/9323146",
+      "method": "human",
       "human": {
+        "choice": "relation/9323146",
         "editor": "Navi",
-        "editedAt": "2026-11-21T03:53:46Z"
+        "editedAt": "2026-11-23T05:43:38Z"
       }
     },
     "019fa880-5cd5-7b37-bb94-a2151c0cdef0": {
@@ -13965,12 +13994,43 @@
       "method": "human"
     },
     "01a1f74a-56c5-7fdc-9022-ac0ab000f2c1": {
-      "status": "hold",
-      "reason": "OSMミラー（2026-11-20T01:00Z）に要素が未収録。ミラー更新後の再確認まで保留",
-      "previous": "way/187756645",
+      "evidence": {
+        "target": {
+          "id": "01a1f74a-56c5-7fdc-9022-ac0ab000f2c1",
+          "name": "神田さくら館",
+          "coordinates": [
+            139.7684459,
+            35.693118
+          ]
+        },
+        "candidates": [
+          {
+            "recordId": "way/187756645",
+            "name": "神田さくら館",
+            "coordinates": [
+              139.7684565,
+              35.6931405
+            ],
+            "qid": null,
+            "tags": {
+              "amenity": "community_centre",
+              "building": "yes",
+              "name": "神田さくら館",
+              "operator": "千代田区",
+              "website": "https://www.city.chiyoda.lg.jp/shisetsu/bunka/kandasakura.html"
+            }
+          }
+        ]
+      },
+      "evidenceHash": "a5bc202e56baa79408c9f4f0e4ff950b4d075e440f4ead3cb3e0b3e7b418c46c",
+      "current": "way/187756645",
+      "status": "decided",
+      "choice": "way/187756645",
+      "method": "human",
       "human": {
+        "choice": "way/187756645",
         "editor": "Navi",
-        "editedAt": "2026-11-21T03:53:46Z"
+        "editedAt": "2026-11-23T05:43:39Z"
       }
     },
     "01a1f74a-7ced-7363-a7e6-08976d268c4d": {

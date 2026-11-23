@@ -1,5 +1,5 @@
 {
-  "version": "202611200100",
+  "version": "202611210100",
   "elements": [
     {
       "type": "node",
@@ -77,13 +77,19 @@
       "lat": 35.7009442,
       "tags": {
         "amenity": "library",
-        "name": "㈶石川文化事業財団お茶の水図書館",
-        "name:en": "Ochanomizu Library, Ishikawa Cultural Enterprise Foundation",
-        "name:ru": "Библиотека Отяномидзу, Фонд учреждений культуры Исикава",
+        "name": "石川武美記念図書館",
+        "name:en": "Ishikawa Takeyoshi Memorial Library",
         "note": "National-Land Numerical Information (Public Facility) 2006, MLIT Japan",
         "note:ja": "国土数値情報（公共施設データ）平成19年　国土交通省",
+        "official_name": "一般財団法人石川武美記念図書館",
+        "opening_hours": "Mo-We,Fr-Sa 09:00-16:00; PH off; Dec 29-Jan 3 off",
+        "operator": "一般財団法人石川武美記念図書館",
+        "operator:type": "private",
         "source": "KSJ2",
-        "source_ref": "http://nlftp.mlit.go.jp/ksj/jpgis/datalist/KsjTmplt-P02-v2_0.html"
+        "source_ref": "http://nlftp.mlit.go.jp/ksj/jpgis/datalist/KsjTmplt-P02-v2_0.html",
+        "website": "https://www.ochato.or.jp/",
+        "wikidata": "Q17988745",
+        "wikipedia": "ja:石川武美記念図書館"
       }
     },
     {
@@ -129,12 +135,13 @@
       "tags": {
         "amenity": "hospital",
         "healthcare": "hospital",
-        "name": "佐々木研究所附属杏雲堂病院",
+        "name": "杏雲堂病院",
         "name:en": "Kyoundo Hospital",
         "name:es": "Hospital Kyoundo",
-        "name:ja": "佐々木研究所附属杏雲堂病院",
+        "name:ja": "杏雲堂病院",
         "note": "National-Land Numerical Information (Public Facility) 2006, MLIT Japan",
         "note:ja": "国土数値情報（公共施設データ）平成19年　国土交通省",
+        "official_name": "佐々木研究所附属杏雲堂病院",
         "source": "KSJ2",
         "source_ref": "http://nlftp.mlit.go.jp/ksj/jpgis/datalist/KsjTmplt-P02-v2_0.html",
         "wheelchair": "yes"
@@ -387,11 +394,12 @@
         "amenity": "hospital",
         "fixme": "addr:fullを機械付与した時点でオリジナルと位置が32.2m変化しています",
         "healthcare": "hospital",
-        "name": "東京都教職員互助会三楽病院",
+        "name": "三楽病院",
         "name:en": "Sanraku Hospital",
-        "name:ja": "東京都教職員互助会三楽病院",
+        "name:ja": "三楽病院",
         "note": "National-Land Numerical Information (Public Facility) 2006, MLIT Japan",
         "note:ja": "国土数値情報（公共施設データ）平成19年 国土交通省",
+        "official_name": "東京都教職員互助会三楽病院",
         "operator:type": "private",
         "source": "KSJ2",
         "source_ref": "http://nlftp.mlit.go.jp/ksj/jpgis/datalist/KsjTmplt-P02-v2_0.html",
@@ -428,8 +436,8 @@
         "amenity": "townhall",
         "email": "izumibashi@city.chiyoda.lg.jp",
         "fax": "+81-3-5256-1238",
-        "name": "千代田区役所和泉橋出張所",
-        "name:en": "Chiyoda City Office Izumibashi Branch",
+        "name": "千代田区 和泉橋出張所",
+        "name:en": "Chiyoda City Izumibashi Branch Office",
         "opening_hours": "Mo-Fr 08:30-17:00; PH off; Dec 29-Jan 03 off",
         "operator": "千代田区",
         "phone": "+81-3-3253-4931",
@@ -511,7 +519,7 @@
         "amenity": "library",
         "contact:phone": "+81 3 3251 5641",
         "level": "0",
-        "name": "昌平まちかど図書館",
+        "name": "千代田区立昌平まちかど図書館",
         "name:en": "Shouhei-Machikado-Library",
         "opening_hours": "09:00-20:00",
         "operator": "千代田区立図書館",
@@ -978,7 +986,7 @@
         "description": "障害のある方が利用できる施設です。講習会・リハビリテーションや、グループホーム・ショートステイの機能があります。",
         "fax": "+81-3-3291-0608",
         "internet_access": "wlan",
-        "name": "千代田区立障害者福祉センター　えみふる",
+        "name": "千代田区立障害者福祉センター えみふる",
         "opening_hours": "Mo-Fr 09:00-21:00; Sa-Su 09:00-17:00; PH 09:00-17:00; Su[2] off",
         "operator": "社会福祉法人武蔵野会",
         "operator:type": "public",
@@ -1131,23 +1139,6 @@
         "opening_hours": "Mo-Sa 09:00-17:00",
         "phone": "+81332343084",
         "website": "https://www.city.chiyoda.lg.jp/koho/kosodate/jidocenter/ichiran/4bancho.html"
-      }
-    },
-    {
-      "type": "node",
-      "id": 14344607026,
-      "lon": 139.7463641,
-      "lat": 35.6971909,
-      "tags": {
-        "amenity": "school",
-        "education": "school",
-        "name": "千代田区立 富士見小学校",
-        "name:en": "Fujimi Elementary School",
-        "name:es": "Escuela primaria Fujimi",
-        "phone": "+81-3-3263-1006",
-        "website": "https://chiyoda.schoolweb.ne.jp/1310164",
-        "wikidata": "Q81916362",
-        "wikipedia": "ja:千代田区立富士見小学校"
       }
     },
     {
@@ -1645,10 +1636,10 @@
       "tags": {
         "amenity": "school",
         "education": "school",
-        "name": "千代田区立麹町小学校",
+        "name": "千代田区立 麹町小学校",
         "name:en": "Kōjimachi Chidoya elementary school",
         "name:es": "Escuela primaria de Chiyoda Kōjimachi",
-        "name:ja": "千代田区立麹町小学校",
+        "name:ja": "千代田区立 麹町小学校",
         "note": "National-Land Numerical Information (Public Facility) 2006, MLIT Japan",
         "note:ja": "国土数値情報（公共施設データ）平成19年　国土交通省",
         "source": "KSJ2,Bing 2010",
@@ -1734,7 +1725,7 @@
         "building": "yes",
         "email": "kandakouen@city.chiyoda.lg.jp",
         "fax": "+81-3-5256-1239",
-        "name": "千代田区役所 神田公園出張所・区民館",
+        "name": "千代田区 神田公園出張所・区民館",
         "name:en": "Chiyoda city Kanda-koen branch office and community center",
         "opening_hours": "Mo-Fr 08:30-17:00; PH off; Dec 29-Jan 03 off",
         "operator": "千代田区",
@@ -1743,6 +1734,25 @@
         "source": "Bing",
         "website": "https://www.city.chiyoda.lg.jp/shisetsu/kuyakusho/kandakoen-shuchojo.html",
         "wikimedia_commons": "File:Chiyoda Ward Office Kanda Park Branch Office.jpg"
+      }
+    },
+    {
+      "type": "way",
+      "id": 187756645,
+      "center": {
+        "lon": 139.7684299,
+        "lat": 35.69319055
+      },
+      "tags": {
+        "amenity": "community_centre",
+        "building": "yes",
+        "community_centre": "cultural_centre",
+        "name": "神田さくら館",
+        "operator": "千代田区",
+        "operator:type": "public",
+        "phone": "+81-3-3256-6061",
+        "source": "Bing",
+        "website": "https://www.city.chiyoda.lg.jp/shisetsu/bunka/kandasakura.html"
       }
     },
     {
@@ -1758,7 +1768,7 @@
         "building:levels": "8",
         "email": "manseibashi@city.chiyoda.lg.jp",
         "fax": "+81-3-5256-1240",
-        "name": "千代田区役所 万世橋出張所・区民館",
+        "name": "千代田区 万世橋出張所・区民館",
         "name:en": "Chiyoda City Manseibashi Branch Office / Citizen Hall",
         "opening_hours": "Mo-Fr 08:30-17:00; PH off; Dec 29-Jan 03 off",
         "operator": "千代田区",
@@ -2018,10 +2028,10 @@
       "tags": {
         "amenity": "school",
         "education": "school",
-        "name": "千代田区立番町小学校",
+        "name": "千代田区立 番町小学校",
         "name:en": "Chiyoda elementary school",
         "name:es": "Escuela primaria Chiyoda",
-        "name:ja": "千代田区立番町小学校",
+        "name:ja": "千代田区立 番町小学校",
         "note": "National-Land Numerical Information (Public Facility) 2006, MLIT Japan",
         "note:ja": "国土数値情報（公共施設データ）平成19年 国土交通省",
         "source": "KSJ2",
@@ -2182,6 +2192,22 @@
         "wikidata": "Q6631907",
         "wikimedia_commons": "Category:East Gardens of Tokyo Imperial Palace",
         "wikipedia": "ja:皇居東御苑"
+      }
+    },
+    {
+      "type": "relation",
+      "id": 9323146,
+      "center": {
+        "lon": 139.75482245,
+        "lat": 35.698873899999995
+      },
+      "tags": {
+        "building": "yes",
+        "name": "西神田コスモス館",
+        "operator": "千代田区",
+        "operator:type": "public",
+        "source": "Bing",
+        "type": "multipolygon"
       }
     },
     {
